@@ -55,6 +55,16 @@ All providers use the OpenAI Python SDK via `base_url` swap. Zero vendor lock-in
 - **Methodology Page**: Full pipeline transparency, AI disclaimers
 - **Bilingual**: Complete pt-BR and en-US support via react-i18next
 
+## Current Implementation Status
+
+- Phase 03 complete: RSS collection pipeline and consolidation.
+- Phase 04 complete: frontend MVP scaffold in `site/` with:
+  - React + Vite static generation;
+  - bilingual app shell (`PT | EN`);
+  - countdown, navigation, and route placeholders;
+  - data-driven `NewsFeed` + `SourceFilter` + `MethodologyBadge`;
+  - responsive desktop/mobile feed baseline aligned to WF-01 and WF-11.
+
 ## Pre-candidates Tracked (March 2026)
 
 | Name | Party | Status |

@@ -5,6 +5,16 @@ Format based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 
 ## [Unreleased]
 
+### Added — Phase 4: Frontend MVP
+- `site/` React frontend scaffold with Vite + SSG (`vite-react-ssg`) and route pre-rendering
+- `site/vite.config.js` with React plugin, `@/` alias, and `/data` proxy to repository `data/`
+- `site/src/locales/pt-BR/common.json` and `site/src/locales/en-US/common.json` for bilingual UI labels
+- App shell in `site/src/App.jsx` + `site/src/main.jsx` with router, nav, countdown, language toggle, and placeholder routes
+- Data layer `site/src/hooks/useData.js` with in-memory cache and standardized loading/error handling
+- Feed UI components: `NewsFeed`, `SourceFilter`, `MethodologyBadge`, `Nav`, `CountdownTimer`, `LanguageSwitcher`
+- Homepage layout `site/src/pages/Home.jsx` with WF-01-inspired 70/30 split and responsive behavior aligned to WF-11
+- `site/index.html` metadata updates (viewport, description, OG tags, RSS autodiscovery links)
+
 ### Added — Phase 3: RSS Collection
 - `data/sources.json` with RSS, party, and poll source metadata for the Foca collection tier
 - `data/articles.json` seed document for article storage bootstrap

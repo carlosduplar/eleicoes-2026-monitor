@@ -114,7 +114,7 @@ Deliverables:
 - Basic article schema validation
 - Status: completed with collector/build scripts and dedicated unit tests.
 
-## Phase 4 — Frontend MVP
+## Phase 4 — Frontend MVP (DONE)
 
 Deliverables:
 - `site/` — React + Vite + vite-ssg scaffold
@@ -127,6 +127,7 @@ Deliverables:
 - App shell with routing (react-router-dom)
 - Follow WF-01 wireframe for layout
 - ADR: 003
+- Status: completed with Vite SSG scaffold, bilingual app shell, NewsFeed MVP, and validated dev/build commands.
 
 ## Phase 5 — CI/CD
 

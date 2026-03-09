@@ -20,3 +20,21 @@
 
 ### Observacoes
 - O consolidator emite warnings de schema quando `relevance_score` e `null`, sem remover registros, conforme especificacao da fase.
+
+## 2026-03-09 — Fase 04 (Frontend MVP)
+
+### Entregas implementadas
+- Scaffold completo em `site/` com React + Vite + SSG (`vite-react-ssg`) e rotas estaticas.
+- `site/vite.config.js` com plugin React, alias `@` para `src/` e proxy `/data` para a pasta raiz `data/`.
+- i18n com `react-i18next` (default/fallback `pt-BR`) e locales `pt-BR` + `en-US`.
+- App shell (`Nav`, `CountdownTimer`, rotas, footer) em `site/src/App.jsx` e inicializacao em `site/src/main.jsx`.
+- Hook `useData` com cache em memoria para evitar re-fetch.
+- Componentes de feed: `NewsFeed`, `SourceFilter`, `LanguageSwitcher`, `MethodologyBadge`.
+- Pagina `Home` com layout 70/30 alinhado ao WF-01 e responsividade para mobile (390px, WF-11).
+- `site/index.html` atualizado com meta tags base, Open Graph padrao pt-BR e autodiscovery de RSS (`/feed.xml`, `/feed-en.xml`).
+
+### Validacao executada
+- `cd site && npm install`
+- `cd site && npm run dev` (servidor sobe em `http://localhost:5173/`)
+- `Invoke-WebRequest http://localhost:5173/data/articles.json` retorna HTTP 200 (proxy `/data` validado)
+- `cd site && npm run build` (gera HTML estatico em `site/dist/` para todas as 6 rotas da fase)
