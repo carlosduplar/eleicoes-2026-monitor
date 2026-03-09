@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=390px, initial-scale=1.0">
+<title>WF-12 — Mobile Quiz | Portal Eleições BR 2026</title>
+<style>
+*{margin:0;padding:0;box-sizing:border-box}:root{--navy:#1A2E4A;--gold:#B8961E;--bg:#F5F7FA;--surface:#FFF;--muted:#EDF2F7;--text:#1A202C;--text2:#4A5568;--border:#E2E8F0}body{font-family:Inter,system-ui,sans-serif;background:var(--bg);color:var(--text);line-height:1.5;max-width:390px;margin:0 auto}
+.header{position:sticky;top:0;z-index:50;background:var(--surface);border-bottom:1px solid var(--border);padding:12px 16px;display:flex;align-items:center;justify-content:space-between}
+.logo{font-size:16px;font-weight:700;color:var(--navy);text-decoration:none}
+.countdown{background:var(--navy);color:#fff;text-align:center;padding:6px;font-size:12px}
+.quiz-body{padding:20px 16px}
+.progress-bar{display:flex;align-items:center;gap:8px;margin-bottom:20px}
+.progress-track{flex:1;height:2px;background:var(--muted);border-radius:1px;overflow:hidden}
+.progress-fill{height:100%;background:var(--navy);width:37.5%}
+.topic-chip{display:inline-flex;align-items:center;gap:4px;border:1px solid var(--navy);color:var(--navy);border-radius:20px;padding:4px 10px;font-size:13px;font-weight:500;margin-bottom:16px}
+h2{font-family:Georgia,serif;font-size:22px;font-weight:700;line-height:1.3;margin-bottom:16px}
+.option{width:100%;border:2px solid var(--border);border-radius:8px;padding:14px 16px;margin-bottom:10px;cursor:pointer;text-align:left;background:transparent;font-size:13px;line-height:1.5;display:flex;align-items:flex-start;gap:10px}
+.option.selected{border-color:var(--navy);background:var(--muted)}
+.radio{width:18px;height:18px;border-radius:50%;border:2px solid var(--border);flex-shrink:0;margin-top:1px;display:flex;align-items:center;justify-content:center}
+.option.selected .radio{border-color:var(--navy);background:var(--navy)}
+.radio-dot{width:7px;height:7px;border-radius:50%;background:#fff;display:none}
+.option.selected .radio-dot{display:block}
+.next-btn{width:100%;background:var(--navy);color:#fff;border:none;border-radius:6px;padding:12px;font-size:14px;font-weight:500;cursor:pointer;margin-top:16px}
+/* Result state */
+.result-section{padding:20px 16px}
+.top-result{background:linear-gradient(135deg,rgba(26,58,107,.06),rgba(26,58,107,.02));border:1px solid var(--border);border-radius:8px;padding:20px;margin-bottom:16px;text-align:center}
+.avatar-sm{width:64px;height:64px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:20px;font-weight:700;color:#fff;background:#1A3A6B;margin:0 auto 8px}
+.rank-item{display:flex;align-items:center;gap:10px;margin-bottom:10px}
+.rank-dot{width:28px;height:28px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:700;color:#fff;flex-shrink:0}
+.rank-bar{flex:1;height:6px;background:var(--muted);border-radius:9999px;overflow:hidden}
+.rank-fill{height:100%;border-radius:9999px}
+.methodology{font-size:10px;color:var(--text2);border-left:2px solid var(--gold);padding-left:8px;margin:16px 0}
+.btn-row{display:flex;gap:8px;margin-top:16px}
+.btn-primary{flex:1;background:var(--navy);color:#fff;border:none;border-radius:6px;padding:10px;font-size:13px;font-weight:500;text-align:center;text-decoration:none}
+.btn-outline{flex:1;border:2px solid var(--navy);color:var(--navy);background:transparent;border-radius:6px;padding:10px;font-size:13px;font-weight:500;text-align:center;text-decoration:none}
+.bottom-nav{position:fixed;bottom:0;left:50%;transform:translateX(-50%);width:390px;display:flex;border-top:1px solid var(--border);background:var(--surface);z-index:50}
+.bottom-nav a{flex:1;display:flex;flex-direction:column;align-items:center;gap:2px;padding:8px 0;font-size:10px;font-weight:500;color:var(--text2);text-decoration:none}
+.bottom-nav a.active{color:var(--navy)}
+</style>
+</head>
+<body>
+<header class="header">
+  <a href="#" class="logo">🇧🇷 Eleições 2026</a>
+  <span style="font-size:11px;color:var(--text2)"><span style="color:var(--navy);font-weight:600">PT</span> | EN</span>
+</header>
+<div class="countdown">📅 211 dias para o 1.º turno</div>
+
+<!-- QUESTION STATE -->
+<div class="quiz-body">
+  <div class="progress-bar">
+    <div class="progress-track"><div class="progress-fill"></div></div>
+    <span style="font-size:11px;color:var(--text2)">3 de 8</span>
+  </div>
+
+  <div class="topic-chip">💊 Saúde e SUS</div>
+
+  <h2>Qual deve ser o papel do Estado no financiamento do sistema de saúde público?</h2>
+
+  <button class="option"><div class="radio"><div class="radio-dot"></div></div>Saúde integralmente pública e universal</button>
+  <button class="option"><div class="radio"><div class="radio-dot"></div></div>Parcerias público-privadas ampliam o acesso</button>
+  <button class="option selected"><div class="radio"><div class="radio-dot"></div></div>Incentivo fiscal para planos privados</button>
+  <button class="option"><div class="radio"><div class="radio-dot"></div></div>Descentralizar para estados e municípios</button>
+
+  <button class="next-btn">Próxima →</button>
+  <p style="text-align:center;margin-top:12px;font-size:11px;color:var(--text2)">Como funciona o quiz? ⓘ</p>
+</div>
+
+<hr style="border:none;border-top:3px solid var(--gold);margin:32px 16px">
+
+<!-- RESULT STATE -->
+<div class="result-section">
+  <h2 style="font-size:22px;text-align:center">Seu perfil político</h2>
+  <p style="font-size:13px;color:var(--text2);text-align:center;margin-bottom:16px">Você mais se identifica com:</p>
+
+  <div class="top-result">
+    <div class="avatar-sm">TF</div>
+    <h3 style="font-size:18px;font-weight:700;font-family:Inter,sans-serif">Tarcísio de Freitas</h3>
+    <span style="display:inline-block;border-radius:9999px;padding:2px 10px;font-size:11px;font-weight:500;color:#fff;background:#1A3A6B;margin:4px 0 8px">Republicanos</span>
+    <p style="font-size:18px;font-weight:700;color:#1A3A6B">78%</p>
+    <button style="width:100%;background:var(--gold);color:#fff;border:none;border-radius:6px;padding:10px;font-size:13px;font-weight:500;margin-top:12px;cursor:pointer">📤 Compartilhar</button>
+  </div>
+
+  <h3 style="font-size:16px;font-weight:600;margin-bottom:12px;font-family:Inter,sans-serif">Ranking</h3>
+  <div class="rank-item"><div class="rank-dot" style="background:#1A3A6B">T</div><div style="flex:1"><span style="font-size:12px;font-weight:500">Tarcísio</span><div class="rank-bar"><div class="rank-fill" style="width:78%;background:#1A3A6B"></div></div></div><span style="font-size:13px;font-weight:600;width:32px;text-align:right">78%</span></div>
+  <div class="rank-item"><div class="rank-dot" style="background:#CC0000">L</div><div style="flex:1"><span style="font-size:12px;font-weight:500">Lula</span><div class="rank-bar"><div class="rank-fill" style="width:62%;background:#CC0000"></div></div></div><span style="font-size:13px;font-weight:600;width:32px;text-align:right">62%</span></div>
+  <div class="rank-item"><div class="rank-dot" style="background:#FF8200">C</div><div style="flex:1"><span style="font-size:12px;font-weight:500">Caiado</span><div class="rank-bar"><div class="rank-fill" style="width:45%;background:#FF8200"></div></div></div><span style="font-size:13px;font-weight:600;width:32px;text-align:right">45%</span></div>
+  <div class="rank-item"><div class="rank-dot" style="background:#FF6600">Z</div><div style="flex:1"><span style="font-size:12px;font-weight:500">Zema</span><div class="rank-bar"><div class="rank-fill" style="width:38%;background:#FF6600"></div></div></div><span style="font-size:13px;font-weight:600;width:32px;text-align:right">38%</span></div>
+  <div class="rank-item"><div class="rank-dot" style="background:#002776">F</div><div style="flex:1"><span style="font-size:12px;font-weight:500">Flávio</span><div class="rank-bar"><div class="rank-fill" style="width:31%;background:#002776"></div></div></div><span style="font-size:13px;font-weight:600;width:32px;text-align:right">31%</span></div>
+
+  <div class="methodology">ⓘ Baseado em declarações verificadas. Não representa pesquisa eleitoral.</div>
+
+  <div class="btn-row">
+    <a href="#" class="btn-primary">Ver perfil →</a>
+    <a href="#" class="btn-outline">Refazer</a>
+  </div>
+</div>
+
+<div style="height:60px"></div>
+
+<nav class="bottom-nav">
+  <a href="#"><span style="font-size:18px">🏠</span>Início</a>
+  <a href="#"><span style="font-size:18px">📊</span>Sentimento</a>
+  <a href="#"><span style="font-size:18px">🗳️</span>Pesquisas</a>
+  <a href="#" class="active"><span style="font-size:18px">🎯</span>Quiz</a>
+  <a href="#"><span style="font-size:18px">⋯</span>Mais</a>
+</nav>
+</body>
+</html>

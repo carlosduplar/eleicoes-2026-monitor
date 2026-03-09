@@ -1,0 +1,101 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://example.com/schemas/quiz.json",
+  "title": "Quiz",
+  "description": "Questoes do quiz de afinidade politica com posicoes verificadas dos candidatos.",
+  "type": "object",
+  "required": ["generated_at", "ordered_topics", "topics"],
+  "properties": {
+    "generated_at": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "ordered_topics": {
+      "type": "array",
+      "items": { "type": "string" },
+      "description": "IDs dos topicos ordenados por divergence_score decrescente (10-15 topicos).",
+      "minItems": 1,
+      "maxItems": 15
+    },
+    "topics": {
+      "type": "object",
+      "description": "Chave: topic_id. Valor: objeto com questao e opcoes.",
+      "additionalProperties": {
+        "$ref": "#/definitions/QuizTopic"
+      }
+    }
+  },
+  "definitions": {
+    "QuizTopic": {
+      "type": "object",
+      "required": ["divergence_score", "question_pt", "question_en", "options"],
+      "properties": {
+        "divergence_score": {
+          "type": "number",
+          "minimum": 0,
+          "maximum": 1,
+          "description": "Grau de divergencia entre candidatos neste topico (0.0-1.0)."
+        },
+        "question_pt": {
+          "type": "string",
+          "description": "Pergunta do quiz em portugues. NAO revela candidatos."
+        },
+        "question_en": {
+          "type": "string",
+          "description": "Pergunta do quiz em ingles."
+        },
+        "options": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/QuizOption"
+          },
+          "minItems": 2,
+          "maxItems": 6,
+          "description": "Opcoes de resposta. Cada opcao corresponde a posicao de um candidato."
+        }
+      }
+    },
+    "QuizOption": {
+      "type": "object",
+      "required": ["id", "text_pt", "text_en", "weight", "candidate_slug", "confidence"],
+      "properties": {
+        "id": {
+          "type": "string",
+          "pattern": "^opt_[a-z]$",
+          "description": "ID da opcao (opt_a, opt_b, etc)."
+        },
+        "text_pt": {
+          "type": "string",
+          "description": "Texto da opcao em portugues. NAO menciona candidato."
+        },
+        "text_en": {
+          "type": "string",
+          "description": "Texto da opcao em ingles."
+        },
+        "weight": {
+          "type": "integer",
+          "minimum": -2,
+          "maximum": 2,
+          "description": "Peso da posicao no espectro: -2 contra, 0 neutro, +2 favor."
+        },
+        "candidate_slug": {
+          "type": "string",
+          "description": "Slug do candidato cuja posicao esta opcao representa. NUNCA exibido na UI durante perguntas."
+        },
+        "source_pt": {
+          "type": "string",
+          "description": "Fonte da declaracao em portugues. Revelada SOMENTE no resultado."
+        },
+        "source_en": {
+          "type": "string",
+          "description": "Fonte da declaracao em ingles."
+        },
+        "confidence": {
+          "type": "string",
+          "enum": ["high", "medium"],
+          "description": "Apenas posicoes high/medium sao publicadas no quiz."
+        }
+      }
+    }
+  }
+}

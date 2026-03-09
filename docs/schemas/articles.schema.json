@@ -1,0 +1,165 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://example.com/schemas/articles.json",
+  "title": "Articles",
+  "description": "Feed principal de artigos coletados pelo pipeline (max 500 mais recentes).",
+  "type": "array",
+  "items": {
+    "$ref": "#/definitions/Article"
+  },
+  "definitions": {
+    "Article": {
+      "type": "object",
+      "required": ["id", "url", "title", "source", "published_at", "collected_at", "status"],
+      "properties": {
+        "id": {
+          "type": "string",
+          "description": "sha256(url.encode())[:16] — deduplicacao idempotente.",
+          "pattern": "^[a-f0-9]{16}$"
+        },
+        "url": {
+          "type": "string",
+          "format": "uri"
+        },
+        "title": {
+          "type": "string",
+          "minLength": 1
+        },
+        "source": {
+          "type": "string",
+          "description": "Nome do veiculo (ex: 'G1 Politica')."
+        },
+        "source_category": {
+          "type": "string",
+          "enum": ["mainstream", "politics", "magazine", "international", "institutional", "party"]
+        },
+        "published_at": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "collected_at": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "status": {
+          "type": "string",
+          "enum": ["raw", "validated", "curated"],
+          "description": "Estagio no pipeline: raw (Foca), validated (Editor), curated (Editor-chefe)."
+        },
+        "relevance_score": {
+          "type": "number",
+          "minimum": 0,
+          "maximum": 1,
+          "description": "Score de relevancia eleitoral (0.0-1.0), atribuido pelo Foca."
+        },
+        "candidates_mentioned": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "description": "Slugs dos candidatos mencionados."
+        },
+        "topics": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "enum": [
+              "economia", "seguranca", "saude", "educacao",
+              "meio_ambiente", "corrupcao", "armas", "privatizacao",
+              "previdencia", "politica_ext", "lgbtq", "aborto",
+              "indigenas", "impostos", "midia", "eleicoes"
+            ]
+          }
+        },
+        "narrative_cluster_id": {
+          "type": ["string", "null"],
+          "description": "ID do cluster narrativo (duplicatas de mesmo fato)."
+        },
+        "summaries": {
+          "type": "object",
+          "properties": {
+            "pt-BR": { "type": "string" },
+            "en-US": { "type": "string" }
+          },
+          "description": "Resumos bilingues gerados pelo Editor. Ausentes em artigos raw."
+        },
+        "sentiment_score": {
+          "type": "number",
+          "minimum": -1,
+          "maximum": 1,
+          "description": "Score de sentimento geral (-1 negativo, +1 positivo)."
+        },
+        "sentiment_per_candidate": {
+          "type": "object",
+          "additionalProperties": {
+            "type": "string",
+            "enum": ["positivo", "neutro", "negativo"]
+          },
+          "description": "Sentimento por candidato mencionado."
+        },
+        "confidence_score": {
+          "type": "number",
+          "minimum": 0,
+          "maximum": 1,
+          "description": "Confianca do Editor na qualidade do processamento."
+        },
+        "prominence_score": {
+          "type": "number",
+          "minimum": 0,
+          "maximum": 1,
+          "description": "Score de destaque atribuido pelo Editor-chefe."
+        },
+        "needs_editor_review": {
+          "type": "boolean",
+          "description": "Flag do Foca: relevance_score < 0.7 ou artigo ambiguo."
+        },
+        "editor_note": {
+          "type": ["string", "null"],
+          "description": "Nota do Editor sobre artigos com problemas."
+        },
+        "edit_history": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "required": ["tier", "at", "provider", "action"],
+            "properties": {
+              "tier": {
+                "type": "string",
+                "enum": ["foca", "editor", "editor-chefe"]
+              },
+              "at": {
+                "type": "string",
+                "format": "date-time"
+              },
+              "provider": {
+                "type": "string"
+              },
+              "action": {
+                "type": "string",
+                "enum": ["collected", "validated", "curated"]
+              },
+              "changes": {
+                "type": "array",
+                "items": { "type": "string" }
+              }
+            }
+          }
+        },
+        "ai_provider_foca": {
+          "type": "string",
+          "description": "Modelo usado pelo Foca."
+        },
+        "ai_provider_editor": {
+          "type": "string",
+          "description": "Modelo usado pelo Editor."
+        },
+        "disclaimer_pt": {
+          "type": "string"
+        },
+        "disclaimer_en": {
+          "type": "string"
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Wireframes — Portal Eleições BR 2026</title>
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:Inter,system-ui,sans-serif;background:#F5F7FA;color:#1A202C;line-height:1.5;padding:32px}
+.container{max-width:800px;margin:0 auto}
+h1{font-family:Georgia,serif;font-size:32px;font-weight:700;margin-bottom:8px}
+p{color:#4A5568;margin-bottom:24px}
+.grid{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+.card{background:#fff;border:1px solid #E2E8F0;border-radius:8px;padding:20px;text-decoration:none;color:#1A202C;transition:box-shadow .2s,transform .2s}
+.card:hover{box-shadow:0 4px 12px rgba(0,0,0,.08);transform:translateY(-2px)}
+.wf-id{font-size:12px;font-weight:600;color:#B8961E;text-transform:uppercase;letter-spacing:.5px;margin-bottom:4px}
+.card h3{font-size:16px;font-weight:600;margin-bottom:4px}
+.card p{font-size:13px;color:#4A5568;margin-bottom:4px}
+.route{font-size:11px;color:#4A5568;font-family:monospace;background:#EDF2F7;padding:2px 6px;border-radius:4px}
+.viewport{font-size:11px;color:#4A5568;margin-top:4px}
+</style>
+</head>
+<body>
+<div class="container">
+<h1>🇧🇷 Wireframes — Portal Eleições BR 2026</h1>
+<p>11 telas exportadas como HTML standalone. Clique para visualizar.</p>
+
+<div class="grid">
+  <a href="WF-01-feed-desktop.html" class="card">
+    <div class="wf-id">WF-01</div>
+    <h3>Feed Desktop</h3>
+    <p>Página inicial com feed de notícias, filtros e sidebar</p>
+    <span class="route">/</span>
+    <div class="viewport">1280px</div>
+  </a>
+
+  <a href="WF-02-03-sentiment-dashboard.html" class="card">
+    <div class="wf-id">WF-02/03</div>
+    <h3>Sentiment Dashboard</h3>
+    <p>Heatmap de sentimento candidato × tema/fonte</p>
+    <span class="route">/sentimento</span>
+    <div class="viewport">1280px</div>
+  </a>
+
+  <a href="WF-04-poll-tracker.html" class="card">
+    <div class="wf-id">WF-04</div>
+    <h3>Poll Tracker</h3>
+    <p>Gráfico temporal e tabela de pesquisas</p>
+    <span class="route">/pesquisas</span>
+    <div class="viewport">1280px</div>
+  </a>
+
+  <a href="WF-05-quiz-question-desktop.html" class="card">
+    <div class="wf-id">WF-05</div>
+    <h3>Quiz Pergunta (Desktop)</h3>
+    <p>Tela de pergunta do quiz de afinidade</p>
+    <span class="route">/quiz</span>
+    <div class="viewport">1280px</div>
+  </a>
+
+  <a href="WF-06-quiz-result-desktop.html" class="card">
+    <div class="wf-id">WF-06</div>
+    <h3>Quiz Resultado (Desktop)</h3>
+    <p>Ranking, radar chart, fontes e MethodologyBadge</p>
+    <span class="route">/quiz/resultado</span>
+    <div class="viewport">1280px</div>
+  </a>
+
+  <a href="WF-07-candidate-profile-desktop.html" class="card">
+    <div class="wf-id">WF-07</div>
+    <h3>Perfil de Candidato</h3>
+    <p>Hero, tabs de posições e sidebar sticky</p>
+    <span class="route">/candidato/[slug]</span>
+    <div class="viewport">1280px</div>
+  </a>
+
+  <a href="WF-08-candidate-comparison.html" class="card">
+    <div class="wf-id">WF-08</div>
+    <h3>Comparação de Candidatos</h3>
+    <p>Tabela de posições lado a lado</p>
+    <span class="route">/comparar/[a]-vs-[b]</span>
+    <div class="viewport">1280px</div>
+  </a>
+
+  <a href="WF-09-methodology.html" class="card">
+    <div class="wf-id">WF-09</div>
+    <h3>Metodologia</h3>
+    <p>Pipeline, providers, limitações, disclaimer</p>
+    <span class="route">/metodologia</span>
+    <div class="viewport">1280px</div>
+  </a>
+
+  <a href="WF-10-case-study.html" class="card">
+    <div class="wf-id">WF-10</div>
+    <h3>Caso de Uso</h3>
+    <p>Documentação longform com tech stack sidebar</p>
+    <span class="route">/sobre/caso-de-uso</span>
+    <div class="viewport">1280px</div>
+  </a>
+
+  <a href="WF-11-mobile-feed.html" class="card">
+    <div class="wf-id">WF-11</div>
+    <h3>Mobile Feed</h3>
+    <p>Feed de notícias mobile com bottom nav</p>
+    <span class="route">/ (390px)</span>
+    <div class="viewport">390px</div>
+  </a>
+
+  <a href="WF-12-mobile-quiz.html" class="card">
+    <div class="wf-id">WF-12</div>
+    <h3>Mobile Quiz</h3>
+    <p>Pergunta + resultado mobile com bottom nav</p>
+    <span class="route">/quiz (390px)</span>
+    <div class="viewport">390px</div>
+  </a>
+</div>
+</div>
+</body>
+</html>

@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>WF-09 — Metodologia | Portal Eleições BR 2026</title>
+<style>
+*{margin:0;padding:0;box-sizing:border-box}:root{--navy:#1A2E4A;--gold:#B8961E;--bg:#F5F7FA;--surface:#FFF;--muted:#EDF2F7;--text:#1A202C;--text2:#4A5568;--border:#E2E8F0}body{font-family:Inter,system-ui,sans-serif;background:var(--bg);color:var(--text);line-height:1.5}h1,h2{font-family:Georgia,'Times New Roman',serif}.container{max-width:1280px;margin:0 auto;padding:0 2rem}.header{position:sticky;top:0;z-index:50;background:var(--surface);border-bottom:1px solid var(--border)}.header-inner{display:flex;align-items:center;justify-content:space-between;height:56px}.logo{display:flex;align-items:center;gap:8px;font-size:18px;font-weight:700;color:var(--navy);text-decoration:none}nav{display:flex;gap:24px}nav a{font-size:14px;font-weight:500;color:var(--text2);text-decoration:none}nav a.active{color:var(--navy);font-weight:600;text-decoration:underline;text-decoration-color:var(--gold);text-underline-offset:6px;text-decoration-thickness:2px}.lang{font-size:12px;font-weight:500}.lang .active{color:var(--navy);font-weight:600;text-decoration:underline;text-decoration-color:var(--gold);text-underline-offset:4px;text-decoration-thickness:2px}.lang span{color:var(--text2)}.countdown{background:var(--navy);color:#fff;text-align:center;padding:8px;font-size:13px}.card{background:var(--surface);border:1px solid var(--border);border-radius:8px;padding:20px;margin-bottom:16px}
+.disclaimer{border-left:3px solid var(--gold);background:rgba(184,150,30,.05);padding:16px 20px;border-radius:0 8px 8px 0;margin-bottom:32px}
+.step{display:flex;gap:16px;margin-bottom:16px}
+.step-num{width:32px;height:32px;border-radius:50%;background:var(--navy);color:#fff;display:flex;align-items:center;justify-content:center;font-size:14px;font-weight:700;flex-shrink:0}
+table{width:100%;border-collapse:collapse;font-size:14px}th,td{padding:8px;text-align:left}th{font-weight:500;color:var(--text2)}tr+tr{border-top:1px solid var(--border)}
+.badge-free{display:inline-flex;align-items:center;gap:4px;border-radius:9999px;padding:2px 10px;font-size:11px;font-weight:500;background:rgba(72,187,120,.15);color:#48BB78}
+.badge-paid{display:inline-flex;align-items:center;gap:4px;border-radius:9999px;padding:2px 10px;font-size:11px;font-weight:500;background:rgba(246,173,85,.15);color:#F6AD55}
+footer{background:var(--navy);color:#fff;padding:48px 0}footer h3{font-size:12px;font-weight:600;text-transform:uppercase;letter-spacing:.5px;opacity:.8;margin-bottom:12px}footer p,footer a{font-size:14px;opacity:.7;color:#fff;text-decoration:none}.footer-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:32px}.footer-bottom{margin-top:32px;border-top:1px solid rgba(255,255,255,.2);padding-top:16px;text-align:center;font-size:12px;opacity:.5}
+</style>
+</head>
+<body>
+<header class="header"><div class="container header-inner"><a href="#" class="logo">🇧🇷 Portal Eleições BR 2026</a><nav><a href="#">Notícias</a><a href="#">Sentimento</a><a href="#">Pesquisas</a><a href="#">Candidatos</a><a href="#">Quiz</a><a href="#" class="active">Metodologia</a></nav><div class="lang"><span class="active">PT</span> <span>|</span> <span>EN</span></div></div></header>
+<div class="countdown">📅 211 dias para o 1.º turno · 4 de outubro de 2026</div>
+
+<div style="max-width:768px;margin:0 auto;padding:32px 2rem 48px">
+<h1 style="font-size:28px;font-weight:700;margin-bottom:24px">Metodologia e Transparência</h1>
+
+<div class="disclaimer">
+<p style="font-size:14px;color:var(--text2);line-height:1.7">Este portal é um projeto independente, sem filiação partidária ou financiamento eleitoral. Não há intervenção editorial: os artigos são coletados automaticamente de fontes públicas, os resumos são gerados por inteligência artificial, e as análises de sentimento são derivadas algoritmicamente. O código-fonte completo está disponível em <a href="#" style="color:var(--gold);font-weight:500">github.com/carlosduplar/eleicoes-2026-monitor ↗</a>.</p>
+</div>
+
+<h2 style="font-size:20px;font-weight:600;margin-bottom:16px">Como funciona o pipeline</h2>
+<div style="margin-bottom:32px">
+  <div class="card step"><div class="step-num">1</div><div><h3 style="font-size:14px;font-weight:600;font-family:Inter,sans-serif">Coleta</h3><p style="font-size:14px;color:var(--text2)">RSS de 20+ veículos, scraping de sites partidários e institutos de pesquisa. Execução a cada 30 minutos via GitHub Actions.</p></div></div>
+  <div class="card step"><div class="step-num">2</div><div><h3 style="font-size:14px;font-weight:600;font-family:Inter,sans-serif">Sumarização</h3><p style="font-size:14px;color:var(--text2)">Modelos de linguagem open-source geram resumos bilíngues (pt-BR/en-US). Cadeia de fallback com 5 providers.</p></div></div>
+  <div class="card step"><div class="step-num">3</div><div><h3 style="font-size:14px;font-weight:600;font-family:Inter,sans-serif">Análise de sentimento</h3><p style="font-size:14px;color:var(--text2)">Scores algorítmicos refletem o tom das notícias coletadas. Candidato × tema e × fonte.</p></div></div>
+  <div class="card step"><div class="step-num">4</div><div><h3 style="font-size:14px;font-weight:600;font-family:Inter,sans-serif">Pesquisas eleitorais</h3><p style="font-size:14px;color:var(--text2)">Coletadas automaticamente dos institutos. Dados originais sem modificação.</p></div></div>
+  <div class="card step"><div class="step-num">5</div><div><h3 style="font-size:14px;font-weight:600;font-family:Inter,sans-serif">Quiz de Afinidade</h3><p style="font-size:14px;color:var(--text2)">Posições extraídas de declarações verificadas. Fontes reveladas apenas no resultado.</p></div></div>
+</div>
+
+<h2 style="font-size:20px;font-weight:600;margin-bottom:16px">Provedores de IA</h2>
+<div class="card" style="overflow-x:auto;margin-bottom:32px">
+<table><thead><tr><th>Prioridade</th><th>Provider</th><th>Modelos</th><th>Custo</th></tr></thead>
+<tbody>
+<tr><td style="font-weight:500">1º</td><td>NVIDIA NIM</td><td style="color:var(--text2)">Qwen3.5-397B, MiniMax-M2.5, Kimi-K2.5</td><td><span class="badge-free">Gratuito</span></td></tr>
+<tr><td style="font-weight:500">2º</td><td>OpenRouter</td><td style="color:var(--text2)">Trinity Large, Step-3.5-Flash</td><td><span class="badge-free">Gratuito (200/dia)</span></td></tr>
+<tr><td style="font-weight:500">3º</td><td>Ollama Cloud</td><td style="color:var(--text2)">minimax-m2.5:cloud</td><td><span class="badge-free">Gratuito</span></td></tr>
+<tr><td style="font-weight:500">4º</td><td>Vertex AI</td><td style="color:var(--text2)">Gemini 2.5 Flash Lite</td><td><span class="badge-paid">$10/mês</span></td></tr>
+<tr><td style="font-weight:500">5º</td><td>Xiaomi MiMo</td><td style="color:var(--text2)">MiMo-V2-Flash</td><td><span class="badge-paid">Pago</span></td></tr>
+</tbody></table>
+</div>
+
+<h2 style="font-size:20px;font-weight:600;margin-bottom:16px">Limitações conhecidas</h2>
+<div class="card" style="margin-bottom:32px">
+<ul style="list-style:none;padding:0;font-size:14px;color:var(--text2)">
+<li style="margin-bottom:8px">• Modelos de IA podem cometer erros de interpretação</li>
+<li style="margin-bottom:8px">• Cobertura de fontes pode ter viés de disponibilidade</li>
+<li style="margin-bottom:8px">• Posições de candidatos evoluem; pipeline atualiza diariamente</li>
+<li>• Análise de sentimento não equivale a pesquisa de opinião</li>
+</ul>
+</div>
+
+<h2 style="font-size:20px;font-weight:600;margin-bottom:16px">Candidatos monitorados (9)</h2>
+<div class="card">
+<p style="font-size:14px;color:var(--text2);margin-bottom:8px">Lula (PT), Flávio Bolsonaro (PL), Tarcísio de Freitas (Republicanos), Ronaldo Caiado (União Brasil), Romeu Zema (Novo), Ratinho Jr (PSD), Eduardo Leite (PSD), Aldo Rebelo (DC), Renan Santos (Missão)</p>
+<p style="font-size:12px;color:var(--text2);font-style:italic">Atualizado em março de 2026. Sujeito a alterações após convenções partidárias (20 jul–5 ago 2026).</p>
+</div>
+
+<div style="text-align:center;margin-top:32px">
+<h3 style="font-size:14px;font-weight:600;margin-bottom:8px">Encontrou um erro?</h3>
+<a href="#" style="font-size:14px;color:var(--gold);text-decoration:none">Abrir issue no GitHub ↗</a>
+</div>
+</div>
+
+<footer><div class="container"><div class="footer-grid"><div><h3>Portal Eleições BR 2026</h3><p>Monitoramento independente das eleições 2026.</p></div><div><h3>Navegação</h3><p><a href="#">Notícias</a> · <a href="#">Sentimento</a> · <a href="#">Pesquisas</a> · <a href="#">Quiz</a></p></div><div><h3>Transparência</h3><p><a href="#">Metodologia</a> · <a href="#">Caso de Uso</a> · <a href="#">Código-fonte ↗</a></p></div></div><div class="footer-bottom">© 2026 Portal Eleições BR 2026</div></div></footer>
+</body>
+</html>

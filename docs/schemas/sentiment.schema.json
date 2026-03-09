@@ -1,0 +1,55 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://example.com/schemas/sentiment.json",
+  "title": "Sentiment",
+  "description": "Scores de sentimento candidato x tema e candidato x fonte, calculados pelo pipeline de IA.",
+  "type": "object",
+  "required": ["updated_at", "article_count", "methodology_url", "disclaimer_pt", "disclaimer_en", "by_topic", "by_source"],
+  "properties": {
+    "updated_at": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "article_count": {
+      "type": "integer",
+      "minimum": 0,
+      "description": "Total de artigos analisados."
+    },
+    "methodology_url": {
+      "type": "string",
+      "const": "/metodologia"
+    },
+    "disclaimer_pt": {
+      "type": "string",
+      "description": "Disclaimer obrigatorio em portugues."
+    },
+    "disclaimer_en": {
+      "type": "string",
+      "description": "Disclaimer obrigatorio em ingles."
+    },
+    "by_topic": {
+      "type": "object",
+      "description": "Scores por candidato por topico. Chave: slug do candidato. Valor: objeto topico -> score.",
+      "additionalProperties": {
+        "type": "object",
+        "additionalProperties": {
+          "type": "number",
+          "minimum": -1,
+          "maximum": 1
+        }
+      }
+    },
+    "by_source": {
+      "type": "object",
+      "description": "Scores por candidato por categoria de fonte. Chave: slug do candidato. Valor: objeto categoria -> score.",
+      "additionalProperties": {
+        "type": "object",
+        "additionalProperties": {
+          "type": "number",
+          "minimum": -1,
+          "maximum": 1
+        }
+      }
+    }
+  }
+}

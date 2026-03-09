@@ -1,0 +1,94 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://example.com/schemas/polls.json",
+  "title": "Polls",
+  "description": "Historico de pesquisas eleitorais coletadas dos institutos.",
+  "type": "array",
+  "items": {
+    "$ref": "#/definitions/Poll"
+  },
+  "definitions": {
+    "Poll": {
+      "type": "object",
+      "required": ["id", "institute", "published_at", "collected_at", "type", "results"],
+      "properties": {
+        "id": {
+          "type": "string",
+          "description": "sha256(institute + published_at)[:16]",
+          "pattern": "^[a-f0-9]{16}$"
+        },
+        "institute": {
+          "type": "string",
+          "enum": ["Datafolha", "Quaest", "AtlasIntel", "Parana Pesquisas", "PoderData", "Real Time Big Data"],
+          "description": "Nome do instituto de pesquisa."
+        },
+        "published_at": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "collected_at": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "type": {
+          "type": "string",
+          "enum": ["estimulada", "espontanea"],
+          "description": "Tipo de pesquisa: estimulada (lista de candidatos) ou espontanea."
+        },
+        "sample_size": {
+          "type": "integer",
+          "minimum": 1,
+          "description": "Tamanho da amostra."
+        },
+        "margin_of_error": {
+          "type": "number",
+          "minimum": 0,
+          "maximum": 10,
+          "description": "Margem de erro em pontos percentuais."
+        },
+        "confidence_level": {
+          "type": "number",
+          "minimum": 0,
+          "maximum": 100,
+          "description": "Nivel de confianca (tipicamente 95%)."
+        },
+        "tse_registration": {
+          "type": ["string", "null"],
+          "description": "Numero de registro no TSE."
+        },
+        "source_url": {
+          "type": "string",
+          "format": "uri"
+        },
+        "results": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/PollResult"
+          },
+          "description": "Resultados por candidato."
+        }
+      }
+    },
+    "PollResult": {
+      "type": "object",
+      "required": ["candidate_slug", "candidate_name", "percentage"],
+      "properties": {
+        "candidate_slug": {
+          "type": "string"
+        },
+        "candidate_name": {
+          "type": "string"
+        },
+        "percentage": {
+          "type": "number",
+          "minimum": 0,
+          "maximum": 100
+        },
+        "variation": {
+          "type": ["number", "null"],
+          "description": "Variacao em relacao a pesquisa anterior do mesmo instituto."
+        }
+      }
+    }
+  }
+}
