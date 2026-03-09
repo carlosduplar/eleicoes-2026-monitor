@@ -92,7 +92,7 @@ Deliverables:
 - Seed `data/` with empty but schema-valid JSON files
 - ADR: 000, 001
 
-## Phase 2 — AI Client
+## Phase 2 — AI Client (DONE)
 
 Deliverables:
 - `scripts/ai_client.py` — multi-provider fallback chain (NVIDIA NIM -> OpenRouter -> Ollama -> Vertex -> MiMo)
@@ -102,8 +102,9 @@ Deliverables:
 - NVIDIA NIM model selection by task
 - Unit tests for fallback logic (mocked providers)
 - ADR: 002
+- Status: completed and validated with pytest.
 
-## Phase 3 — RSS Collection
+## Phase 3 — RSS Collection (DONE)
 
 Deliverables:
 - `scripts/collect_rss.py` — 20+ RSS sources, feedparser, sha256 dedup
@@ -111,6 +112,7 @@ Deliverables:
 - `data/sources.json` — metadata for all sources
 - Idempotency: running twice produces same output
 - Basic article schema validation
+- Status: completed with collector/build scripts and dedicated unit tests.
 
 ## Phase 4 — Frontend MVP
 

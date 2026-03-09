@@ -111,3 +111,47 @@ chat.completions.create, and where to read returned assistant text content in Py
 ÔùÅ read_powershell
   Ôöö 68 lines...
 
+ÔùÅ read_powershell
+  Ôöö 7 lines...
+
+ÔùÅ Validate ai_client import and tests
+  $ python -c "import scripts.ai_client" && python -m pytest scripts/test_ai_client.py -v
+  Ôöö 207 lines...
+
+ÔùÅ Edit scripts/test_ai_client.py
+
+ÔùÅ Re-run ai_client import and tests
+  $ python -c "import scripts.ai_client" && python -m pytest scripts/test_ai_client.py -v
+  Ôöö 15 lines...
+
+ÔùÅ Todo started:
+
+ÔùÅ Validate usage JSON and inspect git changes
+  $ python -c "import json, pathlib; p=pathlib.Path('data/ai_usage.json');
+  json.loads(p.read_text(encoding='utf-8')); print('ai_usage.json valid')" && git --no-pager status
+  --short
+  Ôöö 8 lines...
+
+ÔùÅ List all changed files before commit
+  $ git --no-pager status --short --untracked-files=all
+  Ôöö 10 lines...
+
+ÔùÅ Stage all changes and commit phase 02
+  $ git add -A && git commit -m "feat: phase 02 complete" -m "Co-authored-by: Copilot
+  <223556219+Copilot@users.noreply.github.com>"
+  Ôöö 10 lines...
+
+ÔùÅ Todo completed: complete-phase-handoff
+
+ÔùÅ Create phase completion sentinel and check status
+  $ New-Item -Path plans/phase-02-arch.DONE -ItemType File -Force | Out-Null; git --no-pager status
+  --short
+  Ôöö 3 lines...
+
+
+Total usage est:        1 Premium request
+API time spent:         22m 6s
+Total session time:     1h 2m 4s
+Total code changes:     +809 -2
+Breakdown by AI model:
+ gpt-5.3-codex           1.5m in, 27.1k out, 1.3m cached (Est. 1 Premium request)

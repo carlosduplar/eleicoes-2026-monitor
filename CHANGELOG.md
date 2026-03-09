@@ -5,6 +5,13 @@ Format based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 
 ## [Unreleased]
 
+### Added — Phase 3: RSS Collection
+- `data/sources.json` with RSS, party, and poll source metadata for the Foca collection tier
+- `data/articles.json` seed document for article storage bootstrap
+- `scripts/collect_rss.py` RSS collector with active-source filtering, `sha256(url)[:16]` deduplication, UTC collection timestamp, and per-feed error tolerance
+- `scripts/build_data.py` consolidator with deduplication, published date ordering, 500-item cap, and schema validation warnings
+- `scripts/test_collect_rss.py` unit tests for id generation, dedup behavior, idempotent double run, feed failure resilience, size limit, and sort order
+
 ### Added — Phase 1: Core Scaffold
 - `PLAN.md` — Master implementation plan with 17 phases
 - `README.md` — Bilingual project overview
