@@ -68,6 +68,31 @@ Usado para:
 4. `extract_candidate_position()` retorna `null` se evidencia insuficiente (nao inventa)
 5. Uso rastreado em `data/ai_usage.json` para auditoria e billing
 
+## Implementation Notes
+
+### Variaveis de ambiente obrigatorias
+
+- `NVIDIA_API_KEY`
+- `OPENROUTER_API_KEY`
+- `OLLAMA_API_KEY`
+- `VERTEX_ACCESS_TOKEN`
+- `VERTEX_BASE_URL`
+- `XIAOMI_MIMO_API_KEY`
+
+### Arquivo de uso
+
+- Caminho: `data/ai_usage.json`
+- Formato: objeto JSON com chaves `{provider}_{YYYY-MM-DD}` e valor inteiro acumulado
+- Leitura: `_load_usage()`
+- Escrita: `_save_usage()` (cria diretorio pai automaticamente com `mkdir(parents=True, exist_ok=True)`)
+
+### Como adicionar um novo provider na cadeia
+
+1. Adicionar a configuracao no retorno de `_provider_chain_for_task()` com `name`, `base_url`, `key_env`, `model`, `paid` e limites opcionais.
+2. Declarar o secret correspondente no ambiente (GitHub Actions/local) e referenciar em `key_env`.
+3. Se houver limite de cota, adicionar a regra de skip em `_call_with_fallback_for_task()`.
+4. Manter o cliente padrao `openai.OpenAI(api_key=key, base_url=url)` para preservar zero lock-in.
+
 ## Consequencias
 
 - Pipeline funciona com qualquer combinacao de providers disponiveis
