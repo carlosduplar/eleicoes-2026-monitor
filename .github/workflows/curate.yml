@@ -1,0 +1,46 @@
+name: Curate (Editor-chefe)
+
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: "0 * * * *"
+
+permissions:
+  contents: write
+
+jobs:
+  curate:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    env:
+      NVIDIA_API_KEY: ${{ secrets.NVIDIA_API_KEY }}
+      OPENROUTER_API_KEY: ${{ secrets.OPENROUTER_API_KEY }}
+      OLLAMA_API_KEY: ${{ secrets.OLLAMA_API_KEY }}
+      VERTEX_ACCESS_TOKEN: ${{ secrets.VERTEX_ACCESS_TOKEN }}
+      VERTEX_BASE_URL: ${{ secrets.VERTEX_BASE_URL }}
+      XIAOMI_MIMO_API_KEY: ${{ secrets.XIAOMI_MIMO_API_KEY }}
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 1
+
+      - name: Setup Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+          cache: "pip"
+
+      - name: Install dependencies
+        run: pip install -r requirements.txt
+
+      - name: Curate content
+        continue-on-error: true
+        run: python scripts/curate.py
+
+      - name: Commit curated outputs
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "action@github.com"
+          git add data/curated_feed.json data/weekly_briefing.json data/quiz.json data/.curate_last_run 2>/dev/null || true
+          git diff --staged --quiet || (git commit -m "chore(ci): editor-chefe curation update" && git push)

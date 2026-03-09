@@ -305,3 +305,40 @@ with providers
 
 ÔùÅ Edit README.md
 
+ÔùÅ Todo started: phase04-validate-and-finish
+
+ÔùÅ Run repo tests and final site build
+  $ Set-Location 'C:\projects\eleicoes-2026-monitor'; python -m pytest -q && Set-Location
+  'C:\projects\eleicoes-2026-monitor\site'; npm run build
+  Ôöö 34 lines...
+
+ÔùÅ Edit site\src\components\NewsFeed.jsx
+
+ÔùÅ Edit site\src\locales\pt-BR\common.json
+
+ÔùÅ Edit site\src\locales\en-US\common.json
+
+ÔùÅ Rebuild after raw badge text update
+  $ Set-Location 'C:\projects\eleicoes-2026-monitor\site'; npm run build
+  Ôöö 30 lines...
+
+ÔùÅ List directory site
+  Ôöö 7 files found
+
+ÔùÅ Inspect modified files before commit
+  $ git --no-pager status --short
+  Ôöö 11 lines...
+
+ÔùÅ Stage all, commit phase 04, and create DONE sentinel
+  $ Set-Location 'C:\projects\eleicoes-2026-monitor'; git add -A; git commit -m "feat: phase 04
+  complete" -m "Co-authored-by: Copilot <223556219+Copilot@users.noreply.github.com>"; New-Item
+  -Path 'plans\phase-04-arch.DONE' -ItemType File -Force
+  Ôöö 33 lines...
+
+
+Total usage est:        1 Premium request
+API time spent:         35m 32s
+Total session time:     1h 39m 31s
+Total code changes:     +1454 -23
+Breakdown by AI model:
+ gpt-5.3-codex           8.2m in, 41.6k out, 7.6m cached (Est. 1 Premium request)

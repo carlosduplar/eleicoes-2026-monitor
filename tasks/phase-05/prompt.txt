@@ -1,0 +1,28 @@
+You are implementing Phase 05 of the Portal Eleicoes BR 2026 project.
+
+Your context:
+- Project rules: .github/copilot-instructions.md
+- Handoff protocol: docs/agent-protocol.md
+- This phase spec: plans/phase-05-arch.md
+- JSON schemas (must not deviate): docs/schemas/
+
+TASK: Implement ALL deliverables listed in plans/phase-05-arch.md.
+
+RULES (non-negotiable):
+- Do NOT ask for confirmation, input, or clarification at any point.
+- Do NOT skip any deliverable listed in the spec.
+- Do NOT proceed to Phase 6 or any other phase.
+- Follow the coding conventions in .github/copilot-instructions.md exactly.
+- If tests are defined in the spec, run them and fix all failures before finishing.
+- All Python scripts must be idempotent (safe to run twice without duplicating data).
+- All shell commands must use PowerShell 7 syntax (Windows 11 environment).
+
+COMPLETION (do this when ALL deliverables are done):
+1. git add -A
+2. git commit -m "feat: phase 05 complete"
+3. New-Item -Path plans/phase-05-arch.DONE -ItemType File -Force
+4. STOP.
+
+ESCALATION (if same error occurs 3+ times):
+1. Write tasks/phase-05/ESCALATION.md with the full error, attempt count, and hypothesis.
+2. STOP immediately — do not retry.

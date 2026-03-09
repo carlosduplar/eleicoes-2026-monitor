@@ -5,6 +5,30 @@ Format based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 
 ## [Unreleased]
 
+### Added - Phase 5: CI/CD
+- `.github/workflows/collect.yml` (Foca tier): 10-minute cron + manual dispatch, collection + AI processing chain, soft-fail optional steps, and idempotent commit skip when no changes.
+- `.github/workflows/validate.yml` (Editor tier): push trigger on `data/raw/**`, 30-minute cron fallback, AI validation/build steps, and commit of `data/articles.json` + `data/sentiment.json`.
+- `.github/workflows/curate.yml` (Editor-chefe tier): hourly cron + manual dispatch, `continue-on-error` curation execution, and commit of curated outputs including `.curate_last_run`.
+- `.github/workflows/deploy.yml`: GitHub Pages build/deploy pipeline on push to `main` for `site/**`, `data/**`, and `docs/case-study/**`.
+- `.github/workflows/watchdog.yml`: daily health check pipeline that writes and commits `data/pipeline_health.json`.
+- Phase-guard stubs to keep workflows green before later phases:
+  - `scripts/collect_parties.py`
+  - `scripts/collect_polls.py`
+  - `scripts/collect_social.py`
+  - `scripts/summarize.py`
+  - `scripts/analyze_sentiment.py`
+  - `scripts/generate_rss_feed.py`
+  - `scripts/generate_seo_pages.py`
+  - `scripts/curate.py` (with 90-minute skip logic using `data/.curate_last_run`)
+  - `scripts/watchdog.py`
+- Seed pipeline files:
+  - `data/pipeline_errors.json`
+  - `data/pipeline_health.json`
+  - `data/.curate_last_run`
+
+### Changed
+- `README.md`: documented the one-time operator action to configure `Settings > Pages > Source = GitHub Actions`.
+
 ### Added — Phase 4: Frontend MVP
 - `site/` React frontend scaffold with Vite + SSG (`vite-react-ssg`) and route pre-rendering
 - `site/vite.config.js` with React plugin, `@/` alias, and `/data` proxy to repository `data/`

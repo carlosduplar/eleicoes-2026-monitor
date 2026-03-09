@@ -143,6 +143,14 @@ python scripts/build_data.py
 cd site && npm run dev
 ```
 
+## GitHub Pages Setup (one-time)
+
+After Phase 05 workflow setup, repository operators must configure Pages once:
+
+1. Go to `Settings > Pages`
+2. Set `Source` to `GitHub Actions`
+3. Save
+
 ## Documentation
 
 - [PLAN.md](PLAN.md) — Master implementation plan (17 phases)

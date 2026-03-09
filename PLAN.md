@@ -129,7 +129,7 @@ Deliverables:
 - ADR: 003
 - Status: completed with Vite SSG scaffold, bilingual app shell, NewsFeed MVP, and validated dev/build commands.
 
-## Phase 5 — CI/CD
+## Phase 5 — CI/CD (DONE)
 
 Deliverables:
 - `.github/workflows/collect.yml` — cron 10min (Foca tier)
@@ -139,6 +139,7 @@ Deliverables:
 - `.github/workflows/watchdog.yml` — daily 6h UTC, pipeline health
 - GitHub Pages enabled via Settings
 - Validate with `workflow_dispatch` manual trigger
+- Status: completed with all 5 workflows, required stubs/seed files, and local validation runs.
 
 ## Phase 6 — AI Pipeline
 

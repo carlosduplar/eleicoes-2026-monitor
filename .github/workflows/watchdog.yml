@@ -1,0 +1,38 @@
+name: Watchdog
+
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: "0 6 * * *"
+
+permissions:
+  contents: write
+
+jobs:
+  watchdog:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 1
+
+      - name: Setup Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+          cache: "pip"
+
+      - name: Install dependencies
+        run: pip install -r requirements.txt
+
+      - name: Run watchdog
+        run: python scripts/watchdog.py
+
+      - name: Commit watchdog output
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "action@github.com"
+          git add data/pipeline_health.json
+          git diff --staged --quiet || (git commit -m "chore(ci): watchdog pipeline health update" && git push)

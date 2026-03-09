@@ -38,3 +38,40 @@
 - `cd site && npm run dev` (server starts at `http://localhost:5173/`)
 - `Invoke-WebRequest http://localhost:5173/data/articles.json` returned HTTP 200 (confirmed `/data` proxy)
 - `cd site && npm run build` (generated static HTML in `site/dist/` for all 6 phase routes)
+
+## 2026-03-09 — Phase 05 (CI/CD)
+
+### Implemented deliverables
+- GitHub Actions workflows added under `.github/workflows/`:
+  - `collect.yml` (Foca tier, 10-minute cron + `workflow_dispatch`)
+  - `validate.yml` (Editor tier, push on `data/raw/**` + 30-minute cron + `workflow_dispatch`)
+  - `curate.yml` (Editor-chefe tier, hourly cron + `workflow_dispatch`, with `continue-on-error` on curation step)
+  - `deploy.yml` (GitHub Pages deploy on push to `main` with path filters)
+  - `watchdog.yml` (daily health check at 06:00 UTC + `workflow_dispatch`)
+- Stubs added for scripts planned for later phases:
+  - `collect_parties.py`, `collect_polls.py`, `collect_social.py`
+  - `summarize.py`, `analyze_sentiment.py`
+  - `generate_rss_feed.py`, `generate_seo_pages.py`
+- `scripts/curate.py` added with 90-minute skip logic backed by `data/.curate_last_run`.
+- `scripts/watchdog.py` added to generate `data/pipeline_health.json`.
+- Pipeline seed files ensured:
+  - `data/pipeline_errors.json`
+  - `data/pipeline_health.json`
+  - `data/ai_usage.json` (already present)
+  - `data/.curate_last_run`
+- README updated with the required one-time Pages operator action: `Settings > Pages > Source = GitHub Actions`.
+
+### Validation run
+- `python -m pytest -q` (existing Python suite)
+- `python scripts/collect_rss.py`
+- `python scripts/collect_parties.py`
+- `python scripts/collect_polls.py`
+- `python scripts/collect_social.py`
+- `python scripts/summarize.py`
+- `python scripts/analyze_sentiment.py`
+- `python scripts/build_data.py`
+- `python scripts/generate_rss_feed.py`
+- `python scripts/curate.py` (first run writes timestamp)
+- `python scripts/curate.py` (second run validates <90 minute skip)
+- `python scripts/watchdog.py`
+- `python scripts/generate_seo_pages.py`
