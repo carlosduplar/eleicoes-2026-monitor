@@ -12,12 +12,13 @@
 
     Agent mapping:
     - Phase 0      : manual (Stitch MCP + ADR 000)
-    - Phase 1      : manual (Opus/Sonnet — architecture + schemas)
-    - Phases 2+    : gpt-5.3-codex via copilot CLI (this script)
+    - Phase 1      : manual (Opus — architecture + schemas)
+    - Phases 2+    : two Copilot invocations per phase (this script):
+                     1. Planner  (claude-opus-4.6)          — writes task spec
+                     2. Implementor (gpt-5.3-codex, xhigh) — implements from spec
 
-    NOTE: `opencode run` (non-interactive) + project opencode.json with
-    permission:* allow is the documented way to skip all approval prompts
-    in unattended/CI runs. The Copilot CLI equivalent is --autopilot --no-ask-user.
+    NOTE: --autopilot + --no-ask-user is the functional equivalent of
+    unattended/yolo mode for the Copilot CLI.
 
 .PARAMETER DryRun
     Print what would be dispatched without actually invoking Copilot.
@@ -34,8 +35,14 @@
 .PARAMETER Parallel
     Run phases 2/3/4 in parallel using Start-Job. Default: false (sequential).
 
+.PARAMETER PlannerModel
+    Copilot model for the planning step (writes task spec). Default: claude-opus-4.6.
+
 .PARAMETER Model
-    Copilot model to use for implementation phases. Default: gpt-5.3-codex.
+    Copilot model for the implementation step. Default: gpt-5.3-codex.
+
+.PARAMETER Variant
+    Model variant (reasoning effort) for the implementation step. Default: xhigh.
 
 .EXAMPLE
     # Normal run from phase 2 onwards
@@ -49,9 +56,6 @@
 
     # Run phases 2/3/4 in parallel, then sequential from 5
     pwsh conductor.ps1 -Parallel
-
-    # Use a different model
-    pwsh conductor.ps1 -Model claude-sonnet-4.6
 #>
 
 param(
@@ -60,15 +64,10 @@ param(
     [int]$MaxPhase = 17,
     [int]$StartPhase = 2,
     [switch]$Parallel,
-    # Tatico agent: Copilot (writes task specs from arch specs)
-    [string]$TacticModel      = "gpt-5.3-codex",
-    # Operacional agent: OpenCode/MiniMax (implements from task specs)
-    [string]$OperacionalModel = "opencode/minimax-m2.5-free",
-    # Backward-compat alias — if set, overrides TacticModel
-    [string]$Model            = ""
+    [string]$PlannerModel = "claude-opus-4.6",
+    [string]$Model        = "gpt-5.3-codex",
+    [string]$Variant      = "xhigh"
 )
-
-if ($Model -ne "") { $TacticModel = $Model }
 
 Set-StrictMode -Version Latest
 $ErrorActionPreference = "Stop"
@@ -77,11 +76,6 @@ $RepoRoot = $PSScriptRoot
 $PlansDir = Join-Path $RepoRoot "plans"
 $TasksDir = Join-Path $RepoRoot "tasks"
 $LogDir   = Join-Path $RepoRoot ".conductor-logs"
-
-# opencode.json written to the repo root so `opencode run` picks it up as the
-# project-level config. `"permission":{"*":"allow"}` is the documented way to
-# skip all interactive approval prompts in unattended/CI runs.
-$OpencodeConfigJson = '{"$schema":"https://opencode.ai/config.json","permission":{"*":"allow"}}'
 
 # ---------------------------------------------------------------------------
 # Helpers
@@ -131,43 +125,42 @@ function Get-EscalationPath {
 function New-TaskFiles {
     param([int]$Phase)
 
-    $padded           = $Phase.ToString("D2")
-    $taskDir          = Join-Path $TasksDir "phase-$padded"
-    $taskFile         = Join-Path $taskDir  "task.md"
-    $tacticPromptFile = Join-Path $taskDir  "tactic-prompt.txt"
-    $opPromptFile     = Join-Path $taskDir  "operacional-prompt.txt"
-    $taskSpecFile     = Join-Path $taskDir  "task-01-spec.md"
-    $taskSpecDone     = Join-Path $taskDir  "task-01-spec.DONE"
-    $archDone         = Join-Path $PlansDir "phase-$padded-arch.DONE"
+    $padded          = $Phase.ToString("D2")
+    $taskDir         = Join-Path $TasksDir "phase-$padded"
+    $taskFile        = Join-Path $taskDir  "task.md"
+    $plannerPrompt   = Join-Path $taskDir  "planner-prompt.txt"
+    $implPrompt      = Join-Path $taskDir  "impl-prompt.txt"
+    $taskSpecFile    = Join-Path $taskDir  "task-01-spec.md"
+    $taskSpecDone    = Join-Path $taskDir  "task-01-spec.DONE"
+    $sentinelFile    = Join-Path $PlansDir "phase-$padded-arch.DONE"
 
     New-Item -ItemType Directory -Path $taskDir -Force | Out-Null
 
-    # Human-readable task card
     $taskContent = @"
 # Task: Phase $padded
 
 Dispatched by conductor.ps1 at $(Get-Date -Format "yyyy-MM-ddTHH:mm:ssZ")
-Tatico model      : $TacticModel
-Operacional model : $OperacionalModel
+Planner     : $PlannerModel
+Implementor : $Model (variant: $Variant)
 
 ## Agent roles
 
-- Tatico (Copilot $TacticModel): reads plans/phase-$padded-arch.md, writes tasks/phase-$padded/task-01-spec.md
-- Operacional (OpenCode $OperacionalModel): reads task-01-spec.md, implements deliverables, commits, pushes
+- Planner  ($PlannerModel)         : reads plans/phase-$padded-arch.md, writes tasks/phase-$padded/task-01-spec.md
+- Implementor ($Model / $Variant)  : reads task-01-spec.md, implements deliverables, commits, pushes
 
 ## Escalation protocol
 
 If the same error occurs 3+ times, write tasks/phase-$padded/ESCALATION.md and stop.
 "@
 
-    # --- Tatico prompt (Copilot): produce a task spec, do NOT implement ---
-    $tacticPrompt = @"
-You are the TATICO agent for Portal Eleicoes BR 2026 (Phase $padded).
+    # Planner prompt: Opus reads the arch spec, writes the task spec — no code
+    $plannerContent = @"
+You are the PLANNER for Portal Eleicoes BR 2026 (Phase $padded).
 
 YOUR ONLY JOB: Read the architecture spec and write a detailed implementation task spec.
 DO NOT write any application code. DO NOT implement any deliverable.
 
-INPUT: plans/phase-$padded-arch.md
+INPUT:  plans/phase-$padded-arch.md
 
 OUTPUT: tasks/phase-$padded/task-01-spec.md
 
@@ -192,18 +185,19 @@ COMPLETION (do this as the very last action):
   STOP — do not proceed to implementation.
 "@
 
-    # --- Operacional prompt (OpenCode/MiniMax): implement from task spec ---
-    $operacionalPrompt = @"
-You are the OPERACIONAL agent for Portal Eleicoes BR 2026 (Phase $padded).
+    # Implementor prompt: Codex reads the task spec, implements, commits
+    $implContent = @"
+You are the IMPLEMENTOR for Portal Eleicoes BR 2026 (Phase $padded).
 
 YOUR JOB: Implement EVERYTHING in the attached task spec using a RALPH loop.
   Run tests -> Assert pass -> Loop on failure (max 3 attempts) -> Push on pass -> Halt on 3x failure
 
-ATTACHED SPEC: tasks/phase-$padded/task-01-spec.md
+TASK SPEC: tasks/phase-$padded/task-01-spec.md
 
 RULES (non-negotiable):
 - Do NOT skip any deliverable in the spec.
 - Do NOT proceed to any other phase.
+- Do NOT ask for confirmation, input, or clarification at any point.
 - All Python scripts must be idempotent (safe to run twice without duplicating data).
 - All shell commands must use PowerShell 7 syntax (Windows 11).
 - Follow .github/copilot-instructions.md coding conventions exactly.
@@ -221,178 +215,24 @@ ESCALATION (if same error occurs 3+ times):
 2. STOP immediately — do not retry.
 "@
 
-    Set-Content -Path $taskFile         -Value $taskContent       -Encoding UTF8
-    Set-Content -Path $tacticPromptFile -Value $tacticPrompt      -Encoding UTF8
-    Set-Content -Path $opPromptFile     -Value $operacionalPrompt -Encoding UTF8
+    Set-Content -Path $taskFile      -Value $taskContent    -Encoding UTF8
+    Set-Content -Path $plannerPrompt -Value $plannerContent -Encoding UTF8
+    Set-Content -Path $implPrompt    -Value $implContent    -Encoding UTF8
 
     return @{
-        TaskFile         = $taskFile
-        TacticPromptFile = $tacticPromptFile
-        OpPromptFile     = $opPromptFile
-        TaskSpecFile     = $taskSpecFile
-        TaskSpecDone     = $taskSpecDone
-        Sentinel         = $archDone
-        Escalation       = Get-EscalationPath -Phase $Phase
-        LogFile          = Join-Path $LogDir "phase-$padded-$(Get-Date -Format 'yyyyMMdd-HHmmss').log"
+        TaskFile      = $taskFile
+        PlannerPrompt = $plannerPrompt
+        ImplPrompt    = $implPrompt
+        TaskSpecFile  = $taskSpecFile
+        TaskSpecDone  = $taskSpecDone
+        Sentinel      = $sentinelFile
+        Escalation    = Get-EscalationPath -Phase $Phase
+        LogFile       = Join-Path $LogDir "phase-$padded-$(Get-Date -Format 'yyyyMMdd-HHmmss').log"
     }
 }
 
 # ---------------------------------------------------------------------------
-# Tier 1: Tatico — Copilot writes task-01-spec.md (no implementation)
-# ---------------------------------------------------------------------------
-
-function Invoke-Tactic {
-    param([int]$Phase, [hashtable]$Files)
-
-    $padded = $Phase.ToString("D2")
-
-    if ($DryRun) {
-        Write-Phase "DRY RUN — Tatico: would invoke copilot --model $TacticModel" "DarkGray"
-        New-Item -Path $Files.TaskSpecDone -ItemType File -Force | Out-Null
-        return $true
-    }
-
-    $prompt = Get-Content $Files.TacticPromptFile -Raw
-    Write-Phase "Phase $padded — Tatico ($TacticModel): writing task spec..." "Cyan"
-
-    try {
-        & copilot `
-            --model $TacticModel `
-            -p $prompt `
-            --yolo `
-            --autopilot `
-            --no-ask-user `
-            --add-dir $RepoRoot `
-            2>&1 | Tee-Object -FilePath ($Files.LogFile -replace '\.log$', '-tactic.log')
-
-        Write-Phase "Phase $padded — Tatico process exited." "DarkGray"
-    }
-    catch {
-        Write-Phase "Phase $padded — Tatico invocation error: $_" "Red"
-        return $false
-    }
-
-    return $true
-}
-
-# ---------------------------------------------------------------------------
-# Wait for task-01-spec.DONE (Tatico output sentinel)
-# ---------------------------------------------------------------------------
-
-function Wait-ForTaskSpec {
-    param([int]$Phase, [hashtable]$Files)
-
-    $padded  = $Phase.ToString("D2")
-    $elapsed = 0
-    $timeout = 30 * 60  # 30-minute timeout for spec writing
-    $dots    = 0
-
-    Write-Phase "Phase $padded — waiting for task spec (timeout: 30min)..." "Cyan"
-
-    while ($true) {
-        Start-Sleep -Seconds $PollIntervalSeconds
-        $elapsed += $PollIntervalSeconds
-
-        if (Test-Path $Files.TaskSpecDone) {
-            Write-Host ""
-            Write-Phase "Phase $padded — task-01-spec.DONE detected." "Green"
-            return $true
-        }
-
-        if (Test-Path $Files.Escalation) {
-            Write-Host ""
-            Write-Phase "Phase $padded — ESCALATION during Tatico phase!" "Red"
-            Write-Host (Get-Content $Files.Escalation -Raw) -ForegroundColor Yellow
-            return $false
-        }
-
-        if ($elapsed -ge $timeout) {
-            Write-Host ""
-            Write-Phase "Phase $padded — TIMEOUT waiting for task spec." "Red"
-            return $false
-        }
-
-        $dots++
-        Write-Host "." -NoNewline
-        if ($dots % 20 -eq 0) {
-            Write-Host " ($([int]($elapsed/60))m)" -NoNewline
-        }
-    }
-}
-
-# ---------------------------------------------------------------------------
-# Tier 2: Operacional — OpenCode/MiniMax implements from task spec
-# ---------------------------------------------------------------------------
-
-function Invoke-Operacional {
-    param([int]$Phase, [hashtable]$Files)
-
-    $padded = $Phase.ToString("D2")
-
-    if ($DryRun) {
-        Write-Phase "DRY RUN — Operacional: would invoke opencode run -m $OperacionalModel --dir <repo> <prompt>" "DarkGray"
-        Start-Sleep -Seconds 2
-        New-Item -Path $Files.Sentinel -ItemType File -Force | Out-Null
-        Write-Phase "DRY RUN — created sentinel $($Files.Sentinel)" "DarkGray"
-        return $true
-    }
-
-    # Embed the task spec path in the prompt so opencode reads it
-    $basePrompt  = Get-Content $Files.OpPromptFile -Raw
-    $specContent = if (Test-Path $Files.TaskSpecFile) {
-        Get-Content $Files.TaskSpecFile -Raw
-    } else {
-        "Task spec not found — fall back to plans/phase-$padded-arch.md"
-    }
-    $fullPrompt = "$basePrompt`n`n--- TASK SPEC ---`n$specContent"
-
-    Write-Phase "Phase $padded — Operacional ($OperacionalModel): implementing..." "Cyan"
-
-    # Ensure project-level opencode.json has permission:* allow so `opencode run`
-    # never blocks waiting for interactive approval (equivalent to --yolo).
-    $configFile = Join-Path $RepoRoot "opencode.json"
-    $hadExistingConfig     = Test-Path $configFile
-    $existingConfigContent = if ($hadExistingConfig) { Get-Content $configFile -Raw } else { $null }
-    try {
-        Set-Content -Path $configFile -Value $OpencodeConfigJson -Encoding UTF8
-
-        # `opencode run` is the non-interactive subcommand — it never launches the
-        # TUI and never pauses to ask for permission. The project opencode.json
-        # (written above) sets permission:* allow for all tool calls.
-        # OPENCODE_CONFIG is set as a belt-and-suspenders override of the user's
-        # global config so the allow-all policy is guaranteed to be active.
-        $env:OPENCODE_CONFIG = $configFile
-        try {
-            & opencode run `
-                -m $OperacionalModel `
-                --dir $RepoRoot `
-                $fullPrompt `
-                2>&1 | Tee-Object -FilePath ($Files.LogFile -replace '\.log$', '-operacional.log')
-        }
-        finally {
-            Remove-Item Env:OPENCODE_CONFIG -ErrorAction SilentlyContinue
-        }
-
-        Write-Phase "Phase $padded — Operacional process exited." "DarkGray"
-    }
-    catch {
-        Write-Phase "Phase $padded — Operacional invocation error: $_" "Red"
-        return $false
-    }
-    finally {
-        # Restore opencode.json to its prior state
-        if ($hadExistingConfig) {
-            Set-Content -Path $configFile -Value $existingConfigContent -Encoding UTF8
-        } else {
-            Remove-Item -Path $configFile -Force -ErrorAction SilentlyContinue
-        }
-    }
-
-    return $true
-}
-
-# ---------------------------------------------------------------------------
-# Invoke-Phase: orchestrates Tatico -> Wait -> Operacional for one phase
+# Invoke Copilot for one phase (Planner -> spec -> Implementor)
 # ---------------------------------------------------------------------------
 
 function Invoke-Phase {
@@ -409,26 +249,94 @@ function Invoke-Phase {
     Write-Phase "Phase $padded — creating task files..." "Cyan"
     New-Item -ItemType Directory -Path $LogDir -Force | Out-Null
     $files = New-TaskFiles -Phase $Phase
-    Write-Phase "  tactic prompt : $($files.TacticPromptFile)" "DarkGray"
-    Write-Phase "  op prompt     : $($files.OpPromptFile)"     "DarkGray"
-    Write-Phase "  log dir       : $LogDir"                    "DarkGray"
+    Write-Phase "  planner prompt : $($files.PlannerPrompt)" "DarkGray"
+    Write-Phase "  impl prompt    : $($files.ImplPrompt)"    "DarkGray"
+    Write-Phase "  log dir        : $LogDir"                 "DarkGray"
 
-    # --- Tier 1: Tatico ---
-    $tacticOk = Invoke-Tactic -Phase $Phase -Files $files
-    if (-not $tacticOk) { return $false }
-
-    # If task spec was already present (e.g., manually written), skip wait
-    if (-not (Test-Path $files.TaskSpecDone)) {
-        $specReady = Wait-ForTaskSpec -Phase $Phase -Files $files
-        if (-not $specReady) {
-            Write-Phase "Phase $padded — task spec not ready; aborting Operacional dispatch." "Red"
-            return $false
-        }
+    if ($DryRun) {
+        Write-Phase "DRY RUN — planner  : copilot --model $PlannerModel -p <prompt> --yolo --autopilot --no-ask-user" "DarkGray"
+        Write-Phase "DRY RUN — impl     : copilot --model $Model --variant $Variant -p <prompt> --yolo --autopilot --no-ask-user" "DarkGray"
+        Start-Sleep -Seconds 2
+        New-Item -Path $files.Sentinel -ItemType File -Force | Out-Null
+        Write-Phase "DRY RUN — created sentinel $($files.Sentinel)" "DarkGray"
+        return $true
     }
 
-    # --- Tier 2: Operacional ---
-    $opOk = Invoke-Operacional -Phase $Phase -Files $files
-    return $opOk
+    # --- Step 1: Planner (Opus) writes task-01-spec.md ---
+    # Skip if spec was already written (e.g., manually or from a previous run)
+    if (-not (Test-Path $files.TaskSpecDone)) {
+        $plannerText = Get-Content $files.PlannerPrompt -Raw
+        Write-Phase "Phase $padded — Planner ($PlannerModel): writing task spec..." "Cyan"
+        try {
+            & copilot `
+                --model $PlannerModel `
+                -p $plannerText `
+                --yolo `
+                --autopilot `
+                --no-ask-user `
+                --add-dir $RepoRoot `
+                2>&1 | Tee-Object -FilePath ($files.LogFile -replace '\.log$', '-planner.log')
+            Write-Phase "Phase $padded — Planner process exited." "DarkGray"
+        }
+        catch {
+            Write-Phase "Phase $padded — Planner invocation error: $_" "Red"
+            return $false
+        }
+
+        # Wait up to 30 min for the spec sentinel
+        $elapsed = 0; $timeout = 30 * 60; $dots = 0
+        Write-Phase "Phase $padded — waiting for task-01-spec.DONE (timeout: 30min)..." "Cyan"
+        while (-not (Test-Path $files.TaskSpecDone)) {
+            if (Test-Path $files.Escalation) {
+                Write-Host ""
+                Write-Phase "Phase $padded — ESCALATION during planner step!" "Red"
+                Write-Host (Get-Content $files.Escalation -Raw) -ForegroundColor Yellow
+                return $false
+            }
+            if ($elapsed -ge $timeout) {
+                Write-Host ""
+                Write-Phase "Phase $padded — TIMEOUT waiting for task spec." "Red"
+                return $false
+            }
+            Start-Sleep -Seconds $PollIntervalSeconds
+            $elapsed += $PollIntervalSeconds
+            $dots++; Write-Host "." -NoNewline
+            if ($dots % 20 -eq 0) { Write-Host " ($([int]($elapsed/60))m)" -NoNewline }
+        }
+        Write-Host ""
+        Write-Phase "Phase $padded — task-01-spec.DONE detected." "Green"
+    } else {
+        Write-Phase "Phase $padded — task-01-spec.DONE already present, skipping planner." "DarkGray"
+    }
+
+    # --- Step 2: Implementor (Codex xhigh) implements from task spec ---
+    $implText = Get-Content $files.ImplPrompt -Raw
+    $specText = if (Test-Path $files.TaskSpecFile) {
+        Get-Content $files.TaskSpecFile -Raw
+    } else {
+        "Task spec not found — fall back to plans/phase-$padded-arch.md"
+    }
+    $fullImpl = "$implText`n`n--- TASK SPEC ---`n$specText"
+
+    Write-Phase "Phase $padded — Implementor ($Model / $Variant): implementing..." "Cyan"
+    try {
+        & copilot `
+            --model $Model `
+            --variant $Variant `
+            -p $fullImpl `
+            --yolo `
+            --autopilot `
+            --no-ask-user `
+            --add-dir $RepoRoot `
+            2>&1 | Tee-Object -FilePath ($files.LogFile -replace '\.log$', '-impl.log')
+        Write-Phase "Phase $padded — Implementor process exited." "DarkGray"
+    }
+    catch {
+        Write-Phase "Phase $padded — Implementor invocation error: $_" "Red"
+        return $false
+    }
+
+    return $true
 }
 
 # ---------------------------------------------------------------------------
@@ -443,7 +351,7 @@ function Wait-ForPhase {
     $timeout = 90 * 60   # 90-minute hard timeout per phase
     $dots    = 0
 
-    Write-Phase "Phase $padded — polling for completion (timeout: 90min)..." "Cyan"
+    Write-Phase "Phase $padded ÔÇö polling for completion (timeout: 90min)..." "Cyan"
 
     while ($true) {
         Start-Sleep -Seconds $PollIntervalSeconds
@@ -451,13 +359,13 @@ function Wait-ForPhase {
 
         if (Test-Path $Files.Sentinel) {
             Write-Host ""
-            Write-Phase "Phase $padded — .DONE sentinel detected." "Green"
+            Write-Phase "Phase $padded ÔÇö .DONE sentinel detected." "Green"
             return "done"
         }
 
         if (Test-Path $Files.Escalation) {
             Write-Host ""
-            Write-Phase "Phase $padded — ESCALATION.md detected!" "Red"
+            Write-Phase "Phase $padded ÔÇö ESCALATION.md detected!" "Red"
             Write-Phase "File: $($Files.Escalation)" "Red"
             Write-Host (Get-Content $Files.Escalation -Raw) -ForegroundColor Yellow
             return "escalation"
@@ -465,7 +373,7 @@ function Wait-ForPhase {
 
         if ($elapsed -ge $timeout) {
             Write-Host ""
-            Write-Phase "Phase $padded — TIMEOUT after $([int]($timeout/60)) minutes." "Red"
+            Write-Phase "Phase $padded ÔÇö TIMEOUT after $([int]($timeout/60)) minutes." "Red"
             return "timeout"
         }
 
@@ -479,7 +387,6 @@ function Wait-ForPhase {
 
 # ---------------------------------------------------------------------------
 # Parallel dispatch for phases 2, 3, 4
-# Each phase runs in its own sub-conductor process to get the full three-tier flow.
 # ---------------------------------------------------------------------------
 
 function Invoke-ParallelPhases {
@@ -491,33 +398,39 @@ function Invoke-ParallelPhases {
     foreach ($phase in $Phases) {
         $padded = $phase.ToString("D2")
         if (-not (Get-PhaseSpec -Phase $phase)) {
-            Write-Phase "Phase $padded — no spec, skipping parallel slot." "Yellow"
+            Write-Phase "Phase $padded ÔÇö no spec, skipping parallel slot." "Yellow"
             continue
         }
 
-        Write-Phase "Phase $padded — launching sub-conductor..." "Cyan"
+        $files  = New-TaskFiles -Phase $phase
+        $logFile = $files.LogFile
+        New-Item -ItemType Directory -Path $LogDir -Force | Out-Null
 
-        $conductorScript = Join-Path $PSScriptRoot "conductor.ps1"
+        Write-Phase "Phase $padded ÔÇö launching background job..." "Cyan"
+
         $job = Start-Job -ScriptBlock {
-            param($script, $phase, $dryRun, $tacticModel, $opModel, $pollInterval)
-            $args = @(
-                "-StartPhase", $phase,
-                "-MaxPhase",   $phase,
-                "-TacticModel", $tacticModel,
-                "-OperacionalModel", $opModel,
-                "-PollIntervalSeconds", $pollInterval
-            )
-            if ($dryRun) { $args += "-DryRun" }
-            & pwsh -NonInteractive -File $script @args 2>&1
-        } -ArgumentList $conductorScript, $phase, $DryRun.IsPresent, $TacticModel, $OperacionalModel, $PollIntervalSeconds
+            param($repoRoot, $model, $promptFile, $logFile, $dryRun)
+            Set-Location $repoRoot
+            $prompt = Get-Content $promptFile -Raw
+            if ($dryRun) {
+                Start-Sleep -Seconds 5
+            } else {
+                & copilot `
+                    --model $model `
+                    -p $prompt `
+                    --yolo `
+                    --autopilot `
+                    --no-ask-user `
+                    --add-dir $repoRoot `
+                    2>&1 | Out-File $logFile -Encoding UTF8
+            }
+        } -ArgumentList $RepoRoot, $Model, $files.PromptFile, $logFile, $DryRun.IsPresent
 
-        $sentinel  = Join-Path $PlansDir "$padded-arch.DONE" # checked via Get-CompletedPhases
-        $sentinel  = Join-Path $PlansDir "phase-$padded-arch.DONE"
         $jobs += @{
-            Phase      = $phase
-            Job        = $job
-            Sentinel   = $sentinel
-            Escalation = Get-EscalationPath -Phase $phase
+            Phase     = $phase
+            Job       = $job
+            Sentinel  = $files.Sentinel
+            Escalation = $files.Escalation
         }
     }
 
@@ -535,23 +448,21 @@ function Invoke-ParallelPhases {
 
             if (Test-Path $entry.Sentinel) {
                 Write-Host ""
-                Write-Phase "Phase $padded — DONE." "Green"
-                Receive-Job -Job $entry.Job -ErrorAction SilentlyContinue | Out-Null
-                Remove-Job  -Job $entry.Job -Force -ErrorAction SilentlyContinue
+                Write-Phase "Phase $padded ÔÇö DONE." "Green"
+                Remove-Job -Job $entry.Job -Force -ErrorAction SilentlyContinue
                 continue
             }
             if (Test-Path $entry.Escalation) {
                 Write-Host ""
-                Write-Phase "Phase $padded — ESCALATION!" "Red"
-                Receive-Job -Job $entry.Job -ErrorAction SilentlyContinue | Out-Null
-                Remove-Job  -Job $entry.Job -Force -ErrorAction SilentlyContinue
+                Write-Phase "Phase $padded ÔÇö ESCALATION!" "Red"
+                Remove-Job -Job $entry.Job -Force -ErrorAction SilentlyContinue
                 continue
             }
             if ($entry.Job.State -in @("Failed", "Stopped")) {
                 Write-Host ""
-                Write-Phase "Phase $padded — background job $($entry.Job.State)." "Red"
+                Write-Phase "Phase $padded ÔÇö background job $($entry.Job.State)." "Red"
                 Receive-Job -Job $entry.Job -ErrorAction SilentlyContinue | Write-Host
-                Remove-Job  -Job $entry.Job -Force -ErrorAction SilentlyContinue
+                Remove-Job -Job $entry.Job -Force -ErrorAction SilentlyContinue
                 continue
             }
 
@@ -575,16 +486,13 @@ function Start-Conductor {
     Write-Host " Portal Eleicoes BR 2026 - Conductor"   -ForegroundColor Cyan
     Write-Host "========================================" -ForegroundColor Cyan
     Write-Host ""
-    Write-Host "Repo root         : $RepoRoot"
-    Write-Host "Tatico model      : $TacticModel  (Copilot)"
-    Write-Host "Operacional model : $OperacionalModel  (OpenCode)"
-    Write-Host "Poll interval     : ${PollIntervalSeconds}s"
-    Write-Host "Start phase       : $StartPhase"
-    Write-Host "Max phase         : $MaxPhase"
-    Write-Host "Parallel          : $Parallel"
-    Write-Host "Dry run           : $DryRun"
-    Write-Host ""
-    Write-Host "QA tier (Gemini): start conductor-qa.ps1 in a separate terminal." -ForegroundColor DarkGray
+    Write-Host "Repo root     : $RepoRoot"
+    Write-Host "Model         : $Model"
+    Write-Host "Poll interval : ${PollIntervalSeconds}s"
+    Write-Host "Start phase   : $StartPhase"
+    Write-Host "Max phase     : $MaxPhase"
+    Write-Host "Parallel      : $Parallel"
+    Write-Host "Dry run       : $DryRun"
     Write-Host ""
 
     $completed = Get-CompletedPhases
@@ -622,13 +530,13 @@ function Start-Conductor {
 
         # Already done (e.g. from a parallel run)
         if (Test-Path $sentinel) {
-            Write-Phase "Phase $padded — already done, skipping." "DarkGray"
+            Write-Phase "Phase $padded ÔÇö already done, skipping." "DarkGray"
             continue
         }
 
-        # Spec not yet written — wait for Opus/Sonnet to deliver it
+        # Spec not yet written ÔÇö wait for Opus/Sonnet to deliver it
         if (-not (Get-PhaseSpec -Phase $next)) {
-            Write-Phase "Phase $padded — waiting for plans/phase-$padded-arch.md..." "Yellow"
+            Write-Phase "Phase $padded ÔÇö waiting for plans/phase-$padded-arch.md..." "Yellow"
             Start-Sleep -Seconds $PollIntervalSeconds
             continue
         }
@@ -650,7 +558,7 @@ function Start-Conductor {
                 Write-Host ""
             }
             "escalation" {
-                Write-Phase "Conductor paused — escalation at phase $padded." "Red"
+                Write-Phase "Conductor paused ÔÇö escalation at phase $padded." "Red"
                 Write-Phase "Fix tasks/phase-$padded/ESCALATION.md, then resume:" "Yellow"
                 Write-Phase "  pwsh conductor.ps1 -StartPhase $next" "Yellow"
                 exit 1
