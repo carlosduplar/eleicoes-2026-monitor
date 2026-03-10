@@ -46,6 +46,9 @@ jobs:
           python scripts/collect_polls.py || echo "polls failed, continuing"
           python scripts/collect_social.py || echo "social failed, continuing"
 
+      - name: Scrape article content
+        run: python scripts/scrape_articles.py || echo "scrape failed, continuing"
+
       - name: AI processing
         run: |
           python scripts/summarize.py || echo "summarize failed, continuing"
