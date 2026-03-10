@@ -20,6 +20,10 @@ USAGE_FILE = ROOT_DIR / "data" / "ai_usage.json"
 
 OPENROUTER_DAILY_MAX = 200
 
+# In-process circuit breaker: skip providers after this many consecutive failures per run.
+_CIRCUIT_BREAKER_THRESHOLD = 3
+_provider_failure_counts: dict[str, int] = {}
+
 VALID_TOPICS = {
     "economia",
     "seguranca",
@@ -159,21 +163,33 @@ def _extract_content_from_response(response: object) -> str:
 
     message = getattr(choices[0], "message", None)
     content = getattr(message, "content", None)
+
     if isinstance(content, str):
         cleaned = content.strip()
         if cleaned:
             return cleaned
-        raise ValueError("Provider response content is empty.")
+        # empty string — thinking model may have put answer in reasoning_content; fall through
 
     if isinstance(content, list):
+        # Handle content blocks from thinking/multimodal models.
+        # Prefer items with type "text" or "output_text"; ignore "thinking" blocks.
         chunks: list[str] = []
         for item in content:
-            if isinstance(item, dict):
+            if not isinstance(item, dict):
+                continue
+            item_type = item.get("type", "text")
+            if item_type in ("text", "output_text"):
                 maybe_text = item.get("text")
                 if isinstance(maybe_text, str) and maybe_text.strip():
                     chunks.append(maybe_text.strip())
         if chunks:
             return " ".join(chunks).strip()
+
+    # Some NVIDIA thinking models surface the final answer in reasoning_content when
+    # the content field is empty. Use it only as a last resort.
+    reasoning = getattr(message, "reasoning_content", None)
+    if isinstance(reasoning, str) and reasoning.strip():
+        return reasoning.strip()
 
     raise ValueError("Provider response content is not text.")
 
@@ -220,6 +236,11 @@ def _call_with_fallback_for_task(
             logger.info("[AI] %s skipped: missing base URL.", name)
             continue
 
+        # Circuit breaker: skip providers that have failed too many times this run.
+        if _provider_failure_counts.get(name, 0) >= _CIRCUIT_BREAKER_THRESHOLD:
+            logger.info("[AI] %s skipped: circuit breaker open (%d consecutive failures).", name, _provider_failure_counts[name])
+            continue
+
         if name == "openrouter":
             daily_max = int(provider.get("daily_max", OPENROUTER_DAILY_MAX))
             usage_key = f"openrouter_{today}"
@@ -235,6 +256,8 @@ def _call_with_fallback_for_task(
                 user=user,
                 max_tokens=max_tokens,
             )
+            # Success — reset failure counter for this provider.
+            _provider_failure_counts[name] = 0
             usage_key = f"{name}_{today}"
             usage[usage_key] = usage.get(usage_key, 0) + 1
             _save_usage(usage)
@@ -245,6 +268,7 @@ def _call_with_fallback_for_task(
                 "paid": bool(provider["paid"]),
             }
         except Exception as exc:
+            _provider_failure_counts[name] = _provider_failure_counts.get(name, 0) + 1
             error_messages.append(f"{name}: {exc}")
             logger.warning("[AI] %s failed: %s", name, exc)
 

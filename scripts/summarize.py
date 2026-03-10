@@ -245,7 +245,36 @@ def _summaries_are_both_empty(article: dict[str, Any]) -> bool:
 
 def _summaries_are_complete(article: dict[str, Any]) -> bool:
     summaries = _normalize_summaries(article.get("summaries"))
-    return bool(summaries["pt-BR"]) and bool(summaries["en-US"])
+    return bool(summaries["pt-BR"]) and bool(summaries["en-US"]) 
+
+
+def _validate_content_integrity(content: str, title: str) -> tuple[bool, str]:
+    """
+    Validate minimal content integrity before calling LLMs.
+    Returns (is_valid, reason_if_invalid).
+    Criteria:
+      - Content must be non-empty and not equal to the title fallback
+      - At least 120 characters or at least 15 words
+      - Must contain alphabetic characters and a sentence terminator (.!?)
+      - At least 80% printable characters
+    """
+    if not isinstance(content, str) or not content.strip():
+        return False, "empty content"
+    if content.strip() == (title.strip() if isinstance(title, str) else ""):
+        return False, "content equals title fallback"
+    s = content.strip()
+    word_count = len(s.split())
+    if len(s) < 120 and word_count < 15:
+        return False, f"content too short ({len(s)} chars, {word_count} words)"
+    if not any(c.isalpha() for c in s):
+        return False, "no alphabetic characters"
+    if not any(p in s for p in ('.', '!', '?')):
+        return False, "no sentence terminator"
+    printable_count = sum(1 for c in s if c.isprintable())
+    ratio = printable_count / max(1, len(s))
+    if ratio < 0.8:
+        return False, f"low printable ratio {ratio:.2f}"
+    return True, ""
 
 
 def _should_process(article: dict[str, Any]) -> bool:
@@ -257,25 +286,6 @@ def _should_process(article: dict[str, Any]) -> bool:
     return _summaries_are_both_empty(article)
 
 
-def _extract_language_summary(result: dict[str, Any], language: str, title: str) -> str:
-    summaries = _normalize_summaries(result.get("summaries"))
-    summary = summaries.get(language, "").strip()
-    if summary:
-        return summary
-    fallback = result.get("summary")
-    if isinstance(fallback, str) and fallback.strip():
-        return fallback.strip()
-    return title
-
-
-def _merge_sentiment_labels(*values: object) -> dict[str, str]:
-    merged: dict[str, str] = {}
-    for value in values:
-        for candidate, sentiment in _normalize_sentiment_per_candidate(value).items():
-            merged[candidate] = sentiment
-    return merged
-
-
 def _compute_sentiment_score(labels: dict[str, str]) -> float:
     if not labels:
         return 0.0
@@ -283,25 +293,6 @@ def _compute_sentiment_score(labels: dict[str, str]) -> float:
     if not scores:
         return 0.0
     return round(sum(scores) / len(scores), 4)
-
-
-def _compute_confidence_score(
-    title: str,
-    pt_result: dict[str, Any],
-    en_result: dict[str, Any],
-) -> float:
-    if bool(pt_result.get("_parse_error")) or bool(en_result.get("_parse_error")):
-        return 0.6
-
-    pt_summary = _extract_language_summary(pt_result, "pt-BR", title)
-    en_summary = _extract_language_summary(en_result, "en-US", title)
-    required_fields = ("candidates_mentioned", "topics", "sentiment_per_candidate")
-    has_required_fields = all(field in pt_result and field in en_result for field in required_fields)
-    has_non_fallback_summaries = pt_summary != title and en_summary != title
-
-    if has_required_fields and has_non_fallback_summaries:
-        return 1.0
-    return 0.8
 
 
 def _append_edit_history(article: dict[str, Any], provider: str) -> None:
@@ -320,12 +311,13 @@ def _append_edit_history(article: dict[str, Any], provider: str) -> None:
     article["edit_history"] = history
 
 
-def summarize_articles() -> tuple[int, int, int]:
+def summarize_articles(limit: int = 30) -> tuple[int, int, int]:
     articles, wrapper = _load_articles_document()
 
     summarized_count = 0
     error_count = 0
     skipped_done_count = 0
+    processed_this_run = 0
 
     for article in articles:
         _ensure_article_defaults(article)
@@ -335,6 +327,10 @@ def summarize_articles() -> tuple[int, int, int]:
                 skipped_done_count += 1
             continue
 
+        if processed_this_run >= limit:
+            logger.info("Per-run limit of %d articles reached; deferring the rest to next run.", limit)
+            break
+
         article_id = article.get("id") if isinstance(article.get("id"), str) else None
         title = article.get("title") if isinstance(article.get("title"), str) and article.get("title", "").strip() else "(sem título)"
         raw_content = article.get("content")
@@ -343,9 +339,24 @@ def summarize_articles() -> tuple[int, int, int]:
             logger.warning("Article %s has no content; falling back to title for summarization.", article_id or "<missing-id>")
             content = title
 
+        # Validate content integrity before calling LLMs.
+        is_valid, reason = _validate_content_integrity(content, title)
+        if not is_valid:
+            error_count += 1
+            logger.warning("Skipping LLM summarization for article %s: %s", article_id or "<missing-id>", reason)
+            _append_pipeline_error(
+                script="summarize.py",
+                article_id=article_id,
+                provider=None,
+                message=f"content validation failed: {reason}",
+            )
+            continue
+
+        processed_this_run += 1
+
+        # Single LLM call per article — the prompt already requests both pt-BR and en-US.
         try:
-            pt_result = ai_client.summarize_article(title=title, content=content, language="pt-BR")
-            en_result = ai_client.summarize_article(title=title, content=content, language="en-US")
+            result = ai_client.summarize_article(title=title, content=content, language="pt-BR")
         except Exception as exc:
             error_count += 1
             _append_pipeline_error(
@@ -357,40 +368,23 @@ def summarize_articles() -> tuple[int, int, int]:
             logger.warning("Summarization failed for article %s: %s", article_id or "<missing-id>", exc)
             continue
 
+        raw_summaries = result.get("summaries")
+        pt_summary = raw_summaries.get("pt-BR", "").strip() if isinstance(raw_summaries, dict) else ""
+        en_summary = raw_summaries.get("en-US", "").strip() if isinstance(raw_summaries, dict) else ""
         summaries = {
-            "pt-BR": _extract_language_summary(pt_result, "pt-BR", title),
-            "en-US": _extract_language_summary(en_result, "en-US", title),
+            "pt-BR": pt_summary or title,
+            "en-US": en_summary or title,
         }
-        if not summaries["pt-BR"]:
-            summaries["pt-BR"] = title
-        if not summaries["en-US"]:
-            summaries["en-US"] = title
 
-        merged_candidates: list[str] = []
-        for candidate in _normalize_candidate_list(pt_result.get("candidates_mentioned")) + _normalize_candidate_list(
-            en_result.get("candidates_mentioned")
-        ):
-            if candidate not in merged_candidates:
-                merged_candidates.append(candidate)
+        merged_candidates = _normalize_candidate_list(result.get("candidates_mentioned"))
+        merged_topics = _normalize_topics(result.get("topics"))
+        merged_sentiment = _normalize_sentiment_per_candidate(result.get("sentiment_per_candidate"))
 
-        merged_topics: list[str] = []
-        for topic in _normalize_topics(pt_result.get("topics")) + _normalize_topics(en_result.get("topics")):
-            if topic not in merged_topics:
-                merged_topics.append(topic)
+        provider = result.get("_ai_provider") if isinstance(result.get("_ai_provider"), str) else "unknown"
+        model = result.get("_ai_model") if isinstance(result.get("_ai_model"), str) else "unknown"
 
-        merged_sentiment = _merge_sentiment_labels(
-            pt_result.get("sentiment_per_candidate"),
-            en_result.get("sentiment_per_candidate"),
-        )
-
-        provider = pt_result.get("_ai_provider") if isinstance(pt_result.get("_ai_provider"), str) else "unknown"
-        model = pt_result.get("_ai_model") if isinstance(pt_result.get("_ai_model"), str) else "unknown"
-        if provider == "unknown" and isinstance(en_result.get("_ai_provider"), str):
-            provider = en_result["_ai_provider"]  # type: ignore[index]
-        if model == "unknown" and isinstance(en_result.get("_ai_model"), str):
-            model = en_result["_ai_model"]  # type: ignore[index]
-
-        confidence_score = _compute_confidence_score(title=title, pt_result=pt_result, en_result=en_result)
+        has_real_summaries = pt_summary and pt_summary != title and en_summary and en_summary != title
+        confidence_score = 1.0 if has_real_summaries and not result.get("_parse_error") else 0.8
 
         article["summaries"] = summaries
         article["candidates_mentioned"] = merged_candidates
@@ -418,8 +412,13 @@ def summarize_articles() -> tuple[int, int, int]:
 
 
 def main() -> None:
+    import argparse
     logging.basicConfig(level=logging.INFO, format="%(levelname)s: %(message)s")
-    summarize_articles()
+    parser = argparse.ArgumentParser(description="Editor-tier article summarization")
+    parser.add_argument("--limit", "-n", type=int, default=30,
+                        help="Maximum articles to process per run (default: 30)")
+    args = parser.parse_args()
+    summarize_articles(limit=args.limit)
 
 
 if __name__ == "__main__":
