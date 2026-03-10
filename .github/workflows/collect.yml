@@ -48,8 +48,8 @@ jobs:
 
       - name: AI processing
         run: |
-          python scripts/summarize.py || echo "summarize failed, continuing"
-          python scripts/analyze_sentiment.py || echo "sentiment failed, continuing"
+          python scripts/summarize.py
+          python scripts/analyze_sentiment.py
           python scripts/build_data.py
           python scripts/generate_rss_feed.py || echo "rss feed failed, continuing"
 
