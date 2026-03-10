@@ -52,6 +52,15 @@ MARKDOWN_JSON_RE = re.compile(
     r"^\s*```(?:json)?\s*(.*?)\s*```\s*$", re.IGNORECASE | re.DOTALL
 )
 
+# These NVIDIA models run in "thinking" mode by default and surface the chain-of-thought
+# in `reasoning_content` while leaving `content` empty. For JSON tasks we MUST disable
+# thinking so the final answer arrives in `content`.
+_THINKING_DISABLE_EXTRA_BODY: dict[str, dict[str, object]] = {
+    "qwen/qwen3-235b-a22b-thinking-2507": {"chat_template_kwargs": {"enable_thinking": False}},
+    "qwen/qwen3.5-397b-a17b": {"chat_template_kwargs": {"enable_thinking": False}},
+    "moonshotai/kimi-k2.5": {"enable_thinking": False},
+}
+
 NVIDIA_MODELS: dict[str, str] = {
     "summarization": "qwen/qwen3.5-397b-a17b",
     "sentiment": "minimaxai/minimax-m2.5",
@@ -192,11 +201,19 @@ def _extract_content_from_response(response: object) -> str:
             return " ".join(chunks).strip()
 
     # Some NVIDIA thinking models surface the final answer in reasoning_content when
-    # the content field is empty. Use it only as a last resort.
+    # the content field is empty. Try to extract a JSON block first; if that fails
+    # we raise rather than returning raw prose that would break every JSON parser.
     reasoning = getattr(message, "reasoning_content", None)
     if isinstance(reasoning, str) and reasoning.strip():
-        logger.warning("[AI] Using reasoning_content as response (content was empty)")
-        return reasoning.strip()
+        json_block = _extract_last_json_block(reasoning.strip())
+        if json_block:
+            logger.warning("[AI] Extracted JSON block from reasoning_content (content was empty)")
+            return json_block
+        logger.warning(
+            "[AI] reasoning_content has no parseable JSON block; skipping provider. "
+            "Tip: add this model to _THINKING_DISABLE_EXTRA_BODY to suppress thinking mode."
+        )
+        raise ValueError("Provider returned only prose reasoning_content with no JSON.")
 
     logger.warning(
         "[AI] Provider response content is not text. content=%r, reasoning=%r",
@@ -214,14 +231,21 @@ def _request_completion(
     max_tokens: int,
 ) -> str:
     client = openai.OpenAI(api_key=api_key, base_url=provider["base_url"])
-    response = client.chat.completions.create(
-        model=provider["model"],
-        max_tokens=max_tokens,
-        messages=[
+    kwargs: dict[str, object] = {
+        "model": provider["model"],
+        "max_tokens": max_tokens,
+        "messages": [
             {"role": "system", "content": system},
             {"role": "user", "content": user},
         ],
-    )
+    }
+    # Disable thinking mode for NVIDIA thinking models so the answer lands in
+    # `content` as clean JSON rather than being buried in `reasoning_content`.
+    if provider.get("name") == "nvidia":
+        disable_body = _THINKING_DISABLE_EXTRA_BODY.get(provider.get("model", ""))
+        if disable_body:
+            kwargs["extra_body"] = disable_body
+    response = client.chat.completions.create(**kwargs)  # type: ignore[arg-type]
     return _extract_content_from_response(response)
 
 
@@ -304,6 +328,37 @@ def call_with_fallback(system: str, user: str, max_tokens: int = 500) -> Provide
         max_tokens=max_tokens,
         task="summarization",
     )
+
+
+def _extract_last_json_block(text: str) -> str | None:
+    """Return the last parseable JSON object found in *text*, or None.
+
+    Used as a last-resort fallback when a thinking model surfaces its chain-of-
+    thought in ``reasoning_content`` (which may contain an embedded JSON answer)
+    instead of returning clean JSON in ``content``.
+    """
+    for match in reversed(list(re.finditer(r"\{", text))):
+        pos = match.start()
+        depth = 0
+        end = -1
+        for i, ch in enumerate(text[pos:]):
+            if ch == "{":
+                depth += 1
+            elif ch == "}":
+                depth -= 1
+                if depth == 0:
+                    end = pos + i + 1
+                    break
+        if end == -1:
+            continue
+        candidate = text[pos:end]
+        try:
+            parsed = json.loads(candidate)
+            if isinstance(parsed, dict):
+                return candidate
+        except (json.JSONDecodeError, ValueError):
+            continue
+    return None
 
 
 def _strip_markdown_code_fence(text: str) -> str:

@@ -75,6 +75,27 @@ ELECTIONS_KEYWORDS: frozenset[str] = frozenset({
 VALID_SENTIMENT_LABELS = {"positivo", "neutro", "negativo"}
 SENTIMENT_TO_SCORE = {"positivo": 1.0, "neutro": 0.0, "negativo": -1.0}
 
+# Phrases that indicate the scraper hit a bot-detection / error page instead of real content.
+# Checked against the first 600 chars of content (case-insensitive) before any LLM call.
+_BLOCKED_CONTENT_PATTERNS: frozenset[str] = frozenset({
+    "access denied",
+    "403 forbidden",
+    "404 not found",
+    "please enable javascript",
+    "just a moment",
+    "checking your browser",
+    "cloudflare",
+    "ddos protection",
+    "one more step",
+    "verify you are human",
+    "are you a robot",
+    "captcha",
+    "enable cookies",
+    "you have been blocked",
+    "security check",
+    "please wait while we check",
+})
+
 CANONICAL_CANDIDATE_SLUGS = {
     "lula",
     "flavio-bolsonaro",
@@ -286,6 +307,7 @@ def _validate_content_integrity(content: str, title: str) -> tuple[bool, str]:
       - At least 120 characters or at least 15 words
       - Must contain alphabetic characters and a sentence terminator (.!?)
       - At least 80% printable characters
+      - Must not look like a bot-detection / error page
     """
     if not isinstance(content, str) or not content.strip():
         return False, "empty content"
@@ -303,6 +325,11 @@ def _validate_content_integrity(content: str, title: str) -> tuple[bool, str]:
     ratio = printable_count / max(1, len(s))
     if ratio < 0.8:
         return False, f"low printable ratio {ratio:.2f}"
+    # Detect bot-detection / error pages
+    snippet = s[:600].lower()
+    for pattern in _BLOCKED_CONTENT_PATTERNS:
+        if pattern in snippet:
+            return False, f"blocked/error page detected: '{pattern}'"
     return True, ""
 
 
