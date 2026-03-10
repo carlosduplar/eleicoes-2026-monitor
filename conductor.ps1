@@ -15,8 +15,9 @@
     - Phase 1      : manual (Opus/Sonnet — architecture + schemas)
     - Phases 2+    : gpt-5.3-codex via copilot CLI (this script)
 
-    NOTE: --reasoning-effort is not configurable via CLI flags as of March 2026.
-    --autopilot + --no-ask-user is the functional equivalent for unattended runs.
+    NOTE: `opencode run` (non-interactive) + project opencode.json with
+    permission:* allow is the documented way to skip all approval prompts
+    in unattended/CI runs. The Copilot CLI equivalent is --autopilot --no-ask-user.
 
 .PARAMETER DryRun
     Print what would be dispatched without actually invoking Copilot.
@@ -76,6 +77,11 @@ $RepoRoot = $PSScriptRoot
 $PlansDir = Join-Path $RepoRoot "plans"
 $TasksDir = Join-Path $RepoRoot "tasks"
 $LogDir   = Join-Path $RepoRoot ".conductor-logs"
+
+# opencode.json written to the repo root so `opencode run` picks it up as the
+# project-level config. `"permission":{"*":"allow"}` is the documented way to
+# skip all interactive approval prompts in unattended/CI runs.
+$OpencodeConfigJson = '{"$schema":"https://opencode.ai/config.json","permission":{"*":"allow"}}'
 
 # ---------------------------------------------------------------------------
 # Helpers
@@ -324,7 +330,7 @@ function Invoke-Operacional {
     $padded = $Phase.ToString("D2")
 
     if ($DryRun) {
-        Write-Phase "DRY RUN — Operacional: would invoke opencode -m $OperacionalModel --prompt <prompt>" "DarkGray"
+        Write-Phase "DRY RUN — Operacional: would invoke opencode run -m $OperacionalModel --dir <repo> <prompt>" "DarkGray"
         Start-Sleep -Seconds 2
         New-Item -Path $Files.Sentinel -ItemType File -Force | Out-Null
         Write-Phase "DRY RUN — created sentinel $($Files.Sentinel)" "DarkGray"
@@ -332,23 +338,40 @@ function Invoke-Operacional {
     }
 
     # Embed the task spec path in the prompt so opencode reads it
-    $basePrompt   = Get-Content $Files.OpPromptFile -Raw
-    $specContent  = if (Test-Path $Files.TaskSpecFile) {
+    $basePrompt  = Get-Content $Files.OpPromptFile -Raw
+    $specContent = if (Test-Path $Files.TaskSpecFile) {
         Get-Content $Files.TaskSpecFile -Raw
     } else {
         "Task spec not found — fall back to plans/phase-$padded-arch.md"
     }
-    $fullPrompt   = "$basePrompt`n`n--- TASK SPEC ---`n$specContent"
+    $fullPrompt = "$basePrompt`n`n--- TASK SPEC ---`n$specContent"
 
     Write-Phase "Phase $padded — Operacional ($OperacionalModel): implementing..." "Cyan"
 
-    # Run opencode from the repo root so relative paths resolve correctly
-    Push-Location $RepoRoot
+    # Ensure project-level opencode.json has permission:* allow so `opencode run`
+    # never blocks waiting for interactive approval (equivalent to --yolo).
+    $configFile = Join-Path $RepoRoot "opencode.json"
+    $hadExistingConfig     = Test-Path $configFile
+    $existingConfigContent = if ($hadExistingConfig) { Get-Content $configFile -Raw } else { $null }
     try {
-        & opencode `
-            -m $OperacionalModel `
-            --prompt $fullPrompt `
-            2>&1 | Tee-Object -FilePath ($Files.LogFile -replace '\.log$', '-operacional.log')
+        Set-Content -Path $configFile -Value $OpencodeConfigJson -Encoding UTF8
+
+        # `opencode run` is the non-interactive subcommand — it never launches the
+        # TUI and never pauses to ask for permission. The project opencode.json
+        # (written above) sets permission:* allow for all tool calls.
+        # OPENCODE_CONFIG is set as a belt-and-suspenders override of the user's
+        # global config so the allow-all policy is guaranteed to be active.
+        $env:OPENCODE_CONFIG = $configFile
+        try {
+            & opencode run `
+                -m $OperacionalModel `
+                --dir $RepoRoot `
+                $fullPrompt `
+                2>&1 | Tee-Object -FilePath ($Files.LogFile -replace '\.log$', '-operacional.log')
+        }
+        finally {
+            Remove-Item Env:OPENCODE_CONFIG -ErrorAction SilentlyContinue
+        }
 
         Write-Phase "Phase $padded — Operacional process exited." "DarkGray"
     }
@@ -357,7 +380,12 @@ function Invoke-Operacional {
         return $false
     }
     finally {
-        Pop-Location
+        # Restore opencode.json to its prior state
+        if ($hadExistingConfig) {
+            Set-Content -Path $configFile -Value $existingConfigContent -Encoding UTF8
+        } else {
+            Remove-Item -Path $configFile -Force -ErrorAction SilentlyContinue
+        }
     }
 
     return $true

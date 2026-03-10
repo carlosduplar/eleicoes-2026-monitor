@@ -1,0 +1,170 @@
+Vou come├ºar lendo as instru├º├Áes e o spec da Fase 07 para mapear todos os entreg├íveis, depois implemento em lote e valido com os testes/comandos exigidos.
+
+ÔùÅ Read .github\copilot-instructions.md
+  Ôöö 67 lines read
+
+ÔùÅ Read plans\phase-07-arch.md
+  Ôöö 142 lines read
+
+ÔùÅ Read docs\agent-protocol.md
+  Ôöö 89 lines read
+
+ÔùÅ Glob "docs\schemas\*.json" in C:\projects\eleicoes-2026-monitor
+  Ôöö No matches found
+
+ÔùÅ SQL: Seed phase 07 todos
+  Ôöö 5 row(s) inserted. Last inserted row ID: 5.
+
+ÔùÅ SQL: Add todo dependencies
+  Ôöö 7 row(s) inserted. Last inserted row ID: 7.
+
+ÔùÅ Glob "docs\schemas\*.schema.json" in C:\projects\eleicoes-2026-monitor
+  Ôöö No matches found
+
+ÔùÅ Glob "site\src\locales\**\common.json" in C:\projects\eleicoes-2026-monitor
+  Ôöö No matches found
+
+ÔùÅ Glob "site\src\**\*Sentiment*.{js,jsx,ts,tsx}" in C:\projects\eleicoes-2026-monitor
+  Ôöö No matches found
+
+ÔùÅ Create session plan and inspect git status
+  $ $planPath =
+  'C:\Users\carlos.mello\.copilot\session-state\008eba7a-628b-4411-a8dd-7e6dfce789d3\plan.md';
+  @'
+  # Phase 07 Plan...
+  Ôöö 26 lines...
+
+Agora vou mapear a estrutura existente (componentes, rotas, hook `useData`, locales e schema) para aplicar a implementa├º├úo da Fase 07 sem quebrar padr├Áes do projeto.
+
+ÔùÅ Read docs\adr\000-wireframes.md
+  Ôöö 160 lines read
+
+ÔùÅ Read PLAN.md
+  Ôöö 262 lines read
+
+ÔùÅ Explore: Map phase07 files
+  ÔùÅ Read site\package.json
+    Ôöö 27 lines read
+  ÔùÅ Count JSX files
+    $ Get-ChildItem -Path "C:\projects\eleicoes-2026-monitor\site\src" -Recurse -Filter "*.jsx" -o
+    Name | Measure-Object | Select-Object -ExpandProperty Count
+    Ôöö 6 lines...
+
+ÔùÅ Read site\src\App.jsx
+  Ôöö 73 lines read
+
+ÔùÅ Read site\src\hooks\useData.js
+  Ôöö 48 lines read
+
+ÔùÅ Read site\src\styles.css
+  Ôöö 468 lines read
+
+ÔùÅ Read site\src\pages\SentimentPage.jsx
+  Ôöö 14 lines read
+
+ÔùÅ Read site\src\locales\pt-BR\common.json
+  Ôöö 88 lines read
+
+ÔùÅ Read site\src\locales\en-US\common.json
+  Ôöö 88 lines read
+
+ÔùÅ Read data\sentiment.json
+  Ôöö 9 lines read
+
+ÔùÅ Read site\src\components\MethodologyBadge.jsx
+  Ôöö 15 lines read
+
+ÔùÅ Read docs\schemas\sentiment.schema.json
+  Ôöö 55 lines read
+
+ÔùÅ Todo started: phase07-i18n-utils
+
+ÔùÅ Read site\src\components\NewsFeed.jsx
+  Ôöö 171 lines read
+
+ÔùÅ Read site\src\pages\MethodologyPage.jsx
+  Ôöö 14 lines read
+
+ÔùÅ Read site\src\pages\PollsPage.jsx
+  Ôöö 14 lines read
+
+ÔùÅ Read docs\wireframes\WF-02-03-sentiment-dashboard.html
+  Ôöö 94 lines read
+
+ÔùÅ List directory site\src
+  Ôöö 7 files found
+
+ÔùÅ List directory site\src\components
+  Ôöö 6 files found
+
+ÔùÅ List directory site\src\pages
+  Ôöö 6 files found
+
+ÔùÅ List directory data
+  Ôöö 7 files found
+
+ÔùÅ Read site\package.json
+  Ôöö 27 lines read
+
+ÔùÅ Read requirements.txt
+  Ôöö 8 lines read
+
+Ô£ù Read site\jsconfig.json
+  Path does not exist
+
+ÔùÅ Read site\vite.config.js
+  Ôöö 35 lines read
+
+ÔùÅ Edit site/src/components/MethodologyBadge.jsx
+
+ÔùÅ Create site/src/components/SentimentDashboard.jsx
+
+ÔùÅ Create site/src/utils/candidateColors.js
+
+ÔùÅ Edit site/src/pages/SentimentPage.jsx
+
+ÔùÅ Edit site/src/locales/pt-BR/common.json
+
+ÔùÅ Edit site/src/locales/en-US/common.json
+
+ÔùÅ Edit site/src/styles.css
+
+ÔùÅ Todo started:
+
+ÔùÅ Read site\src\styles.css lines 300-520
+  Ôöö 221 lines read
+
+ÔùÅ Read site\src\components\SentimentDashboard.jsx
+  Ôöö 187 lines read
+
+ÔùÅ Read site\src\pages\SentimentPage.jsx
+  Ôöö 33 lines read
+
+Implementa├º├úo principal est├í pronta; vou rodar o build agora para validar tudo e ent├úo finalizar commit/sentinel da fase.
+
+ÔùÅ Run frontend build
+  $ Set-Location 'C:\projects\eleicoes-2026-monitor\site'; npm run build
+  Ôöö 30 lines...
+
+ÔùÅ Todo started: phase07-validate-commit
+
+ÔùÅ Review git status before commit
+  $ Set-Location 'C:\projects\eleicoes-2026-monitor'; git --no-pager status --short
+  Ôöö 15 lines...
+
+ÔùÅ Stage all, commit phase 07, create DONE file
+  $ Set-Location 'C:\projects\eleicoes-2026-monitor'; git add -A; git commit -m "feat: phase 07
+  complete" -m "Co-authored-by: Copilot <223556219+Copilot@users.noreply.github.com>"; New-Item
+  -Path 'plans\phase-07-arch.DONE' -ItemType File -Force | Out-Null; git --no-pager status --short
+  Ôöö 15 lines...
+
+ÔùÅ Todo completed: phase07-validate-commit
+
+
+Total usage est:        1 Premium request
+API time spent:         6m 23s
+Total session time:     7m 10s
+Total code changes:     +462 -13
+Breakdown by AI model:
+ gpt-5.3-codex           1.3m in, 15.1k out, 1.2m cached (Est. 1 Premium request)
+ claude-haiku-4.5        302.5k in, 9.9k out, 268.3k cached (Est. 0 Premium requests)
