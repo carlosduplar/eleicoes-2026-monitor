@@ -107,3 +107,58 @@
 ÔùÅ Read data\.curate_last_run
   Ôöö 1 line read
 
+ÔùÅ Edit .github/workflows/collect.yml
+
+ÔùÅ Edit data/.curate_last_run
+
+ÔùÅ Todo completed: phase05-implement-workflows
+
+ÔùÅ Todo completed: phase05-create-stubs-seeds
+
+ÔùÅ Todo completed: phase05-update-docs
+
+ÔùÅ Todo started: phase05-validate
+
+ÔùÅ Run post-change verification
+  $ Set-Location 'C:\projects\eleicoes-2026-monitor';
+  Write-Host '--- pytest'; python -m pytest -q; $pytestExit = $LASTEXITCODE; Write-Host
+  "pytest_exit=$pytestExit";
+  Write-Host '--- site build'; npm --prefix site run build; $buildExit = $LASTEXITCODE;
+  Write-Host "build_exit=$buildExit";...
+  Ôöö 60 lines...
+
+ÔùÅ Read .github\workflows\collect.yml lines 47-55
+  Ôöö 8 lines read
+
+ÔùÅ Read data\.curate_last_run
+  Ôöö 1 line read
+
+ÔùÅ Read data\pipeline_health.json
+  Ôöö 5 lines read
+
+ÔùÅ Show git status and diff summary
+  $ Set-Location 'C:\projects\eleicoes-2026-monitor'; git --no-pager status --short; Write-Host
+  '---'; git --no-pager diff --name-only;
+  Ôöö 11 lines...
+
+ÔùÅ Todo completed: phase05-validate
+
+ÔùÅ Todo started: phase05-commit-sentinel
+
+ÔùÅ Stage, commit, and create phase sentinel
+  $ Set-Location 'C:\projects\eleicoes-2026-monitor';
+  git add -A;
+  git commit -m "feat: phase 05 complete" -m "Co-authored-by: Copilot
+  <223556219+Copilot@users.noreply.github.com>";
+  New-Item -Path 'plans/phase-05-arch.DONE' -ItemType File -Force | Out-Null;...
+  Ôöö 11 lines...
+
+ÔùÅ Todo completed: phase05-commit-sentinel
+
+
+Total usage est:        1 Premium request
+API time spent:         4m 2s
+Total session time:     4m 54s
+Total code changes:     +4 -3
+Breakdown by AI model:
+ gpt-5.3-codex           729.1k in, 11.5k out, 656.1k cached (Est. 1 Premium request)

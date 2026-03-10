@@ -6,8 +6,10 @@ function MethodologyBadge() {
 
   return (
     <Link className="methodology-badge" to="/metodologia">
-      <span aria-hidden="true">i</span>
-      {t('methodology_badge')}
+      <span className="methodology-badge-icon" aria-hidden="true">
+        {'\u24D8'}
+      </span>
+      <span>{t('methodology_badge')}</span>
     </Link>
   );
 }
