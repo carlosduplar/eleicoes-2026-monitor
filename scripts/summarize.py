@@ -43,6 +43,35 @@ VALID_TOPICS = {
     "eleicoes",
 }
 
+# Normalized (no accents, lowercase) substrings that signal elections relevance.
+# Articles whose title matches NONE of these are marked "irrelevant" and skipped
+# before any LLM call, avoiding wasted API quota on health, tech, sports, etc.
+ELECTIONS_KEYWORDS: frozenset[str] = frozenset({
+    # election mechanics
+    "eleicao", "eleicoes", "eleitoral", "eleitor", "eleitores",
+    "candidato", "candidatos", "candidatura", "candidaturas",
+    "voto", "votos", "votacao", "votar", "urna", "urnas",
+    "tse", "segundo turno", "primeiro turno", "coligacao", "ficha limpa",
+    # offices & institutions
+    "presidente", "presidencia", "presidencial",
+    "governador", "governadores",
+    "senado", "senador", "senadores",
+    "deputado", "deputados",
+    "congresso", "parlamento", "legislativo",
+    # party / political
+    "partido", "partidos", "politico", "politica", "politicos",
+    "governo federal",
+    "campanha",
+    # candidate names
+    "lula", "bolsonaro", "tarcisio", "caiado", "zema",
+    "ratinho", "eduardo leite", "aldo rebelo", "renan santos",
+    # policy topics central to the 2026 race
+    "corrupcao", "imposto", "tributacao", "previdencia",
+    "privatizacao", "armamento", "reforma tributaria",
+    "reforma administrativa", "seguranca publica",
+    "indigena", "indigenas", "amazonia",
+})
+
 VALID_SENTIMENT_LABELS = {"positivo", "neutro", "negativo"}
 SENTIMENT_TO_SCORE = {"positivo": 1.0, "neutro": 0.0, "negativo": -1.0}
 
@@ -277,6 +306,18 @@ def _validate_content_integrity(content: str, title: str) -> tuple[bool, str]:
     return True, ""
 
 
+def _is_elections_relevant(title: str) -> bool:
+    """Return True if the article title contains at least one elections keyword.
+
+    Uses the same accent-stripping normalization as _normalize_text so accented
+    Portuguese characters are handled correctly.
+    """
+    if not isinstance(title, str) or not title.strip():
+        return False
+    normalized = _normalize_text(title)
+    return any(kw in normalized for kw in ELECTIONS_KEYWORDS)
+
+
 def _should_process(article: dict[str, Any]) -> bool:
     if article.get("status") != "raw":
         return False
@@ -327,12 +368,21 @@ def summarize_articles(limit: int = 30) -> tuple[int, int, int]:
                 skipped_done_count += 1
             continue
 
+        article_id = article.get("id") if isinstance(article.get("id"), str) else None
+        title = article.get("title") if isinstance(article.get("title"), str) and article.get("title", "").strip() else "(sem título)"
+
+        # Relevance gate: skip articles that are clearly not elections-related.
+        # Broad RSS feeds (UOL, IstoÉ, Veja, BBC) include health, tech, sports, etc.
+        # Mark them "irrelevant" so future runs also skip without re-checking.
+        if not _is_elections_relevant(title):
+            article["status"] = "irrelevant"
+            logger.info("Skipping irrelevant article %s: %r", article_id or "<missing-id>", title)
+            continue
+
         if processed_this_run >= limit:
             logger.info("Per-run limit of %d articles reached; deferring the rest to next run.", limit)
             break
 
-        article_id = article.get("id") if isinstance(article.get("id"), str) else None
-        title = article.get("title") if isinstance(article.get("title"), str) and article.get("title", "").strip() else "(sem título)"
         raw_content = article.get("content")
         content = raw_content.strip() if isinstance(raw_content, str) else ""
         if not content:
