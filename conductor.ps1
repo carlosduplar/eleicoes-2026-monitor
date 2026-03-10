@@ -59,8 +59,15 @@ param(
     [int]$MaxPhase = 17,
     [int]$StartPhase = 2,
     [switch]$Parallel,
-    [string]$Model = "gpt-5.3-codex"
+    # Tatico agent: Copilot (writes task specs from arch specs)
+    [string]$TacticModel      = "gpt-5.3-codex",
+    # Operacional agent: OpenCode/MiniMax (implements from task specs)
+    [string]$OperacionalModel = "opencode/minimax-m2.5-free",
+    # Backward-compat alias — if set, overrides TacticModel
+    [string]$Model            = ""
 )
+
+if ($Model -ne "") { $TacticModel = $Model }
 
 Set-StrictMode -Version Latest
 $ErrorActionPreference = "Stop"
