@@ -98,6 +98,55 @@ function Get-PhaseSpec {
     return ""
 }
 
+# Parse the Gemini log for fallback markers and create sentinel files when the
+# agent could not use write_file/run_shell_command (tool not available in session).
+function Resolve-QAFromLog {
+    param(
+        [string]$LogPath,
+        [string]$ReportJsonPath,
+        [string]$DonePath,
+        [string]$FailPath
+    )
+
+    $content = Get-Content $LogPath -Raw -ErrorAction SilentlyContinue
+    if (-not $content) { return }
+
+    # Extract JSON block between markers
+    if ($content -match '(?s)---QA-JSON-BEGIN---\s*(.*?)\s*---QA-JSON-END---') {
+        $jsonText = $Matches[1].Trim()
+        try {
+            # Validate it parses before saving
+            $null = $jsonText | ConvertFrom-Json
+            $jsonText | Set-Content $ReportJsonPath -Encoding UTF8
+        } catch {
+            # Malformed JSON — keep going, sentinel logic still applies
+        }
+    }
+
+    # Sentinel marker takes precedence over everything else
+    if ($content -match '---QA-SENTINEL:\s*(DONE|FAIL)---') {
+        $marker = $Matches[1]
+        if ($marker -eq 'DONE') {
+            New-Item -Path $DonePath -ItemType File -Force | Out-Null
+        } else {
+            New-Item -Path $FailPath -ItemType File -Force | Out-Null
+        }
+        return
+    }
+
+    # No explicit marker — try to infer from JSON recommendation field
+    if (Test-Path $ReportJsonPath) {
+        try {
+            $report = Get-Content $ReportJsonPath -Raw | ConvertFrom-Json
+            if ($report.passed -eq $true -or $report.recommendation -eq 'pass') {
+                New-Item -Path $DonePath -ItemType File -Force | Out-Null
+            } elseif ($report.passed -eq $false -or $report.recommendation -eq 'fail') {
+                New-Item -Path $FailPath -ItemType File -Force | Out-Null
+            }
+        } catch { }
+    }
+}
+
 # ---------------------------------------------------------------------------
 # Run Gemini QA for one phase
 # ---------------------------------------------------------------------------
@@ -151,11 +200,21 @@ COMPLETION:
 - If QA fails:  New-Item -Path qa/phase-$padded-report.FAIL -ItemType File -Force
   (Also include details in the issues array of the JSON report.)
 
+FALLBACK OUTPUT — MANDATORY regardless of whether file-creation tools succeed:
+Always print the complete JSON report between these exact markers (no extra text on marker lines):
+---QA-JSON-BEGIN---
+{ ...full JSON report... }
+---QA-JSON-END---
+
+Then, as the absolute last line of your output, print exactly one of:
+---QA-SENTINEL: DONE---
+---QA-SENTINEL: FAIL---
+
 RULES:
 - Do NOT modify any application code.
 - Do NOT commit anything.
 - Use PowerShell 7 syntax for all shell commands (Windows 11).
-- STOP after writing the report and sentinel.
+- STOP after writing the report, sentinel, and FALLBACK OUTPUT markers.
 "@
 
     Write-QA "Phase $padded — invoking Gemini ($Model)..." "Cyan"
@@ -173,6 +232,13 @@ RULES:
     catch {
         Write-QA "Phase $padded — Gemini invocation error: $_" "Red"
         return "error"
+    }
+
+    # If Gemini couldn't create sentinel files (write_file unavailable), parse the
+    # log for FALLBACK OUTPUT markers and create them here in the conductor.
+    if (-not (Test-Path $reportDone) -and -not (Test-Path $reportFail)) {
+        Resolve-QAFromLog -LogPath $logFile -ReportJsonPath $reportJson `
+                          -DonePath $reportDone -FailPath $reportFail
     }
 
     if (Test-Path $reportDone) {
