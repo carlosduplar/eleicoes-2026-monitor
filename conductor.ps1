@@ -398,38 +398,33 @@ function Invoke-ParallelPhases {
     foreach ($phase in $Phases) {
         $padded = $phase.ToString("D2")
         if (-not (Get-PhaseSpec -Phase $phase)) {
-            Write-Phase "Phase $padded ÔÇö no spec, skipping parallel slot." "Yellow"
+            Write-Phase "Phase $padded — no spec, skipping parallel slot." "Yellow"
             continue
         }
 
-        $files  = New-TaskFiles -Phase $phase
-        $logFile = $files.LogFile
         New-Item -ItemType Directory -Path $LogDir -Force | Out-Null
+        Write-Phase "Phase $padded — launching sub-conductor..." "Cyan"
 
-        Write-Phase "Phase $padded ÔÇö launching background job..." "Cyan"
-
+        $conductorScript = Join-Path $PSScriptRoot "conductor.ps1"
         $job = Start-Job -ScriptBlock {
-            param($repoRoot, $model, $promptFile, $logFile, $dryRun)
-            Set-Location $repoRoot
-            $prompt = Get-Content $promptFile -Raw
-            if ($dryRun) {
-                Start-Sleep -Seconds 5
-            } else {
-                & copilot `
-                    --model $model `
-                    -p $prompt `
-                    --yolo `
-                    --autopilot `
-                    --no-ask-user `
-                    --add-dir $repoRoot `
-                    2>&1 | Out-File $logFile -Encoding UTF8
-            }
-        } -ArgumentList $RepoRoot, $Model, $files.PromptFile, $logFile, $DryRun.IsPresent
+            param($script, $phase, $dryRun, $plannerModel, $model, $variant, $pollInterval)
+            $args = @(
+                "-StartPhase", $phase,
+                "-MaxPhase",   $phase,
+                "-PlannerModel", $plannerModel,
+                "-Model", $model,
+                "-Variant", $variant,
+                "-PollIntervalSeconds", $pollInterval
+            )
+            if ($dryRun) { $args += "-DryRun" }
+            & pwsh -NonInteractive -File $script @args 2>&1
+        } -ArgumentList $conductorScript, $phase, $DryRun.IsPresent, $PlannerModel, $Model, $Variant, $PollIntervalSeconds
 
+        $files = New-TaskFiles -Phase $phase
         $jobs += @{
-            Phase     = $phase
-            Job       = $job
-            Sentinel  = $files.Sentinel
+            Phase      = $phase
+            Job        = $job
+            Sentinel   = $files.Sentinel
             Escalation = $files.Escalation
         }
     }
@@ -448,21 +443,23 @@ function Invoke-ParallelPhases {
 
             if (Test-Path $entry.Sentinel) {
                 Write-Host ""
-                Write-Phase "Phase $padded ÔÇö DONE." "Green"
-                Remove-Job -Job $entry.Job -Force -ErrorAction SilentlyContinue
+                Write-Phase "Phase $padded — DONE." "Green"
+                Receive-Job -Job $entry.Job -ErrorAction SilentlyContinue | Out-Null
+                Remove-Job  -Job $entry.Job -Force -ErrorAction SilentlyContinue
                 continue
             }
             if (Test-Path $entry.Escalation) {
                 Write-Host ""
-                Write-Phase "Phase $padded ÔÇö ESCALATION!" "Red"
-                Remove-Job -Job $entry.Job -Force -ErrorAction SilentlyContinue
+                Write-Phase "Phase $padded — ESCALATION!" "Red"
+                Receive-Job -Job $entry.Job -ErrorAction SilentlyContinue | Out-Null
+                Remove-Job  -Job $entry.Job -Force -ErrorAction SilentlyContinue
                 continue
             }
             if ($entry.Job.State -in @("Failed", "Stopped")) {
                 Write-Host ""
-                Write-Phase "Phase $padded ÔÇö background job $($entry.Job.State)." "Red"
+                Write-Phase "Phase $padded — background job $($entry.Job.State)." "Red"
                 Receive-Job -Job $entry.Job -ErrorAction SilentlyContinue | Write-Host
-                Remove-Job -Job $entry.Job -Force -ErrorAction SilentlyContinue
+                Remove-Job  -Job $entry.Job -Force -ErrorAction SilentlyContinue
                 continue
             }
 
@@ -487,7 +484,8 @@ function Start-Conductor {
     Write-Host "========================================" -ForegroundColor Cyan
     Write-Host ""
     Write-Host "Repo root     : $RepoRoot"
-    Write-Host "Model         : $Model"
+    Write-Host "Planner       : $PlannerModel"
+    Write-Host "Implementor   : $Model (variant: $Variant)"
     Write-Host "Poll interval : ${PollIntervalSeconds}s"
     Write-Host "Start phase   : $StartPhase"
     Write-Host "Max phase     : $MaxPhase"
