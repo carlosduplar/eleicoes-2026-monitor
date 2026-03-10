@@ -1,13 +1,13 @@
 # Task: Phase 08
 
-Dispatched by conductor.ps1 at 2026-03-10T13:08:54Z
-Tatico model      : gpt-5.3-codex
-Operacional model : opencode/minimax-m2.5-free
+Dispatched by conductor.ps1 at 2026-03-10T14:34:36Z
+Planner     : claude-opus-4.6
+Implementor : gpt-5.3-codex
 
 ## Agent roles
 
-- Tatico (Copilot gpt-5.3-codex): reads plans/phase-08-arch.md, writes tasks/phase-08/task-01-spec.md
-- Operacional (OpenCode opencode/minimax-m2.5-free): reads task-01-spec.md, implements deliverables, commits, pushes
+- Planner  (claude-opus-4.6)         : reads plans/phase-08-arch.md, writes tasks/phase-08/task-01-spec.md
+- Implementor (gpt-5.3-codex)  : reads task-01-spec.md, implements deliverables, commits, pushes
 
 ## Escalation protocol
 
