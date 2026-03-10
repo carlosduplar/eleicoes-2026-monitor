@@ -43,7 +43,7 @@ param(
     [int]$PollIntervalSeconds = 30,
     [int]$MaxPhase            = 17,
     [int]$StartPhase          = 2,
-    [string]$Model            = "gemini-2.5-flash"
+    [string]$Model            = "gemini-3-flash-preview"
 )
 
 Set-StrictMode -Version Latest
@@ -161,12 +161,14 @@ RULES:
     Write-QA "Phase $padded — invoking Gemini ($Model)..." "Cyan"
 
     try {
+        # Out-File only — Tee-Object would flood the function's return pipeline,
+        # causing $result in the caller to be an array of hundreds of output lines.
         & gemini `
             -m $Model `
             --prompt $qaPrompt `
-            2>&1 | Tee-Object -FilePath $logFile
+            2>&1 | Out-File -FilePath $logFile -Encoding UTF8
 
-        Write-QA "Phase $padded — Gemini process exited." "DarkGray"
+        Write-QA "Phase $padded — Gemini process exited. Log: $logFile" "DarkGray"
     }
     catch {
         Write-QA "Phase $padded — Gemini invocation error: $_" "Red"
@@ -242,14 +244,13 @@ while ($true) {
 
     foreach ($phase in $ready) {
         $result = Invoke-QA -Phase $phase
-        Write-QA "Phase $($phase.ToString('D2')) result: $result" $(
-            switch ($result) {
-                "passed"       { "Green" }
-                "failed"       { "Red" }
-                "inconclusive" { "Yellow" }
-                default        { "Red" }
-            }
-        )
+        # Resolve color outside Write-QA to avoid array-to-ConsoleColor binding errors
+        $color = switch ([string]$result) {
+            "passed" { "Green" }
+            "failed" { "Red" }
+            default  { "Yellow" }
+        }
+        Write-QA "Phase $($phase.ToString('D2')) result: $result" $color
         Write-Host ""
     }
 }
