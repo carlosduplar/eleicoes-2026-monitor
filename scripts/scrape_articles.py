@@ -95,7 +95,7 @@ def extract_text_from_page(page: Any) -> str:
     return ""
 
 
-def scrape_articles() -> tuple[int, int]:
+def scrape_articles(limit: int = 100) -> tuple[int, int]:
     articles = load_articles()
     articles_need_content = [
         a for a in articles if not a.get("content") and a.get("status") == "raw"
@@ -104,6 +104,12 @@ def scrape_articles() -> tuple[int, int]:
     if not articles_need_content:
         print("No articles need content scraping")
         return 0, 0
+
+    # Apply limit
+    articles_need_content = articles_need_content[:limit]
+    print(
+        f"Processing max {limit} articles (of {len(articles) - sum(1 for a in articles if a.get('content'))} needing content)"
+    )
 
     scraped = 0
     errors = 0
@@ -151,8 +157,19 @@ def scrape_articles() -> tuple[int, int]:
 
 
 def main() -> None:
+    import argparse
+
     logging.basicConfig(level=logging.INFO, format="%(levelname)s: %(message)s")
-    scrape_articles()
+    parser = argparse.ArgumentParser(description="Article scraping pipeline")
+    parser.add_argument(
+        "--limit",
+        "-n",
+        type=int,
+        default=100,
+        help="Maximum articles to scrape (default: 100)",
+    )
+    args = parser.parse_args()
+    scrape_articles(limit=args.limit)
 
 
 if __name__ == "__main__":

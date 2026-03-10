@@ -48,7 +48,9 @@ VALID_STANCES = {"favor", "against", "neutral", "unclear"}
 VALID_CONFIDENCE = {"high", "medium", "low"}
 HIGH_OR_MEDIUM_CONFIDENCE = {"high", "medium"}
 
-MARKDOWN_JSON_RE = re.compile(r"^\s*```(?:json)?\s*(.*?)\s*```\s*$", re.IGNORECASE | re.DOTALL)
+MARKDOWN_JSON_RE = re.compile(
+    r"^\s*```(?:json)?\s*(.*?)\s*```\s*$", re.IGNORECASE | re.DOTALL
+)
 
 NVIDIA_MODELS: dict[str, str] = {
     "summarization": "qwen/qwen3.5-397b-a17b",
@@ -141,7 +143,9 @@ def _load_usage() -> dict[str, int]:
         return {}
 
     if not isinstance(parsed, dict):
-        logger.warning("[AI] Usage file has invalid structure (expected object): %s", USAGE_FILE)
+        logger.warning(
+            "[AI] Usage file has invalid structure (expected object): %s", USAGE_FILE
+        )
         return {}
 
     usage: dict[str, int] = {}
@@ -168,7 +172,9 @@ def _extract_content_from_response(response: object) -> str:
         cleaned = content.strip()
         if cleaned:
             return cleaned
-        # empty string — thinking model may have put answer in reasoning_content; fall through
+        logger.warning(
+            "[AI] Provider returned empty string content, checking reasoning_content"
+        )
 
     if isinstance(content, list):
         # Handle content blocks from thinking/multimodal models.
@@ -189,8 +195,14 @@ def _extract_content_from_response(response: object) -> str:
     # the content field is empty. Use it only as a last resort.
     reasoning = getattr(message, "reasoning_content", None)
     if isinstance(reasoning, str) and reasoning.strip():
+        logger.warning("[AI] Using reasoning_content as response (content was empty)")
         return reasoning.strip()
 
+    logger.warning(
+        "[AI] Provider response content is not text. content=%r, reasoning=%r",
+        str(content)[:200] if content else None,
+        str(reasoning)[:200] if reasoning else None,
+    )
     raise ValueError("Provider response content is not text.")
 
 
@@ -238,14 +250,20 @@ def _call_with_fallback_for_task(
 
         # Circuit breaker: skip providers that have failed too many times this run.
         if _provider_failure_counts.get(name, 0) >= _CIRCUIT_BREAKER_THRESHOLD:
-            logger.info("[AI] %s skipped: circuit breaker open (%d consecutive failures).", name, _provider_failure_counts[name])
+            logger.info(
+                "[AI] %s skipped: circuit breaker open (%d consecutive failures).",
+                name,
+                _provider_failure_counts[name],
+            )
             continue
 
         if name == "openrouter":
             daily_max = int(provider.get("daily_max", OPENROUTER_DAILY_MAX))
             usage_key = f"openrouter_{today}"
             if usage.get(usage_key, 0) >= daily_max:
-                logger.warning("[AI] openrouter skipped: daily limit reached (%s).", daily_max)
+                logger.warning(
+                    "[AI] openrouter skipped: daily limit reached (%s).", daily_max
+                )
                 continue
 
         try:
@@ -272,7 +290,9 @@ def _call_with_fallback_for_task(
             error_messages.append(f"{name}: {exc}")
             logger.warning("[AI] %s failed: %s", name, exc)
 
-    error_details = "; ".join(error_messages) if error_messages else "no providers configured"
+    error_details = (
+        "; ".join(error_messages) if error_messages else "no providers configured"
+    )
     raise RuntimeError(f"All AI providers failed ({error_details}).")
 
 
@@ -366,7 +386,9 @@ def _normalize_summaries(
     return summaries
 
 
-def summarize_article(title: str, content: str, language: str = "pt-BR") -> dict[str, object]:
+def summarize_article(
+    title: str, content: str, language: str = "pt-BR"
+) -> dict[str, object]:
     """Generate bilingual summary, entities, and sentiment labels from article text."""
     preferred_language = "en-US" if language == "en-US" else "pt-BR"
     language_hint = (
@@ -414,15 +436,23 @@ Retorne JSON:
         return {
             "summary": summaries[preferred_language],
             "summaries": summaries,
-            "candidates_mentioned": _to_clean_string_list(parsed.get("candidates_mentioned")),
+            "candidates_mentioned": _to_clean_string_list(
+                parsed.get("candidates_mentioned")
+            ),
             "topics": _normalize_topics(parsed.get("topics")),
-            "sentiment_per_candidate": _normalize_sentiment_map(parsed.get("sentiment_per_candidate")),
+            "sentiment_per_candidate": _normalize_sentiment_map(
+                parsed.get("sentiment_per_candidate")
+            ),
             "_ai_provider": response["provider"],
             "_ai_model": response["model"],
             "_language": preferred_language,
         }
     except (json.JSONDecodeError, ValueError, TypeError) as exc:
         logger.warning("[AI] summarize_article parse failure: %s", exc)
+        logger.warning(
+            "[AI] Raw response content: %r",
+            response["content"][:500] if response.get("content") else None,
+        )
         fallback_summaries = {"pt-BR": title, "en-US": title}
         return {
             "summary": fallback_summaries[preferred_language],
@@ -445,7 +475,9 @@ def _normalize_optional_text(value: object) -> str | None:
     return None
 
 
-def _normalize_optional_int(value: object, min_value: int, max_value: int) -> int | None:
+def _normalize_optional_int(
+    value: object, min_value: int, max_value: int
+) -> int | None:
     if isinstance(value, int) and min_value <= value <= max_value:
         return value
     if isinstance(value, str) and value.isdigit():
@@ -455,7 +487,9 @@ def _normalize_optional_int(value: object, min_value: int, max_value: int) -> in
     return None
 
 
-def extract_candidate_position(candidate: str, topic_id: str, snippets: list[str]) -> dict[str, object]:
+def extract_candidate_position(
+    candidate: str, topic_id: str, snippets: list[str]
+) -> dict[str, object]:
     """Extract a verifiable candidate stance from snippets, filtering low-confidence output."""
     if not snippets:
         return {
@@ -513,7 +547,9 @@ Retorne JSON:
     stance_raw = parsed.get("stance")
     confidence_raw = parsed.get("confidence")
     stance = stance_raw.strip().lower() if isinstance(stance_raw, str) else "unclear"
-    confidence = confidence_raw.strip().lower() if isinstance(confidence_raw, str) else "low"
+    confidence = (
+        confidence_raw.strip().lower() if isinstance(confidence_raw, str) else "low"
+    )
     if stance not in VALID_STANCES:
         stance = "unclear"
     if confidence not in VALID_CONFIDENCE:
@@ -521,7 +557,9 @@ Retorne JSON:
 
     position_pt = _normalize_optional_text(parsed.get("position_pt"))
     position_en = _normalize_optional_text(parsed.get("position_en"))
-    best_index = _normalize_optional_int(parsed.get("best_source_snippet_index"), 1, len(snippets))
+    best_index = _normalize_optional_int(
+        parsed.get("best_source_snippet_index"), 1, len(snippets)
+    )
 
     if confidence not in HIGH_OR_MEDIUM_CONFIDENCE or stance == "unclear":
         position_pt = None
