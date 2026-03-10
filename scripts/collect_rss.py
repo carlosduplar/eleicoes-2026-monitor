@@ -24,6 +24,7 @@ ARTICLES_FILE = DATA_DIR / "articles.json"
 REQUEST_TIMEOUT_SECONDS = 15
 USER_AGENT = "eleicoes-2026-monitor/1.0 (+https://github.com/carlosduplar/eleicoes-2026-monitor)"
 DEFAULT_SCHEMA_PATH = "../docs/schemas/articles.schema.json"
+RSS_BODY_MIN_CHARS = 200
 
 
 @dataclass
@@ -193,6 +194,41 @@ def _extract_published_at(entry: dict[str, Any], fallback_iso: str) -> str:
     return fallback_iso
 
 
+def _strip_html(html_text: str) -> str:
+    """Strip HTML tags and normalize whitespace using BeautifulSoup."""
+    from bs4 import BeautifulSoup
+    return " ".join(BeautifulSoup(html_text, "lxml").get_text(" ", strip=True).split())
+
+
+def _extract_rss_body(entry: dict[str, Any]) -> str:
+    """Extract plain-text body from an RSS/Atom entry.
+
+    Feedparser already fetches and parses the body — we just haven't been using it.
+    Priority:
+      1. entry["content"] list (maps from <content:encoded> in RSS 2.0, <content> in Atom)
+      2. entry["summary"] (<description> in RSS, <summary> in Atom)
+    Returns empty string if nothing usable is found.
+    """
+    # Try content:encoded / Atom <content> first (usually the full article body).
+    for item in entry.get("content") or []:
+        if not isinstance(item, dict):
+            continue
+        value = item.get("value", "")
+        if isinstance(value, str) and len(value.strip()) >= RSS_BODY_MIN_CHARS:
+            text = _strip_html(value)
+            if len(text) >= RSS_BODY_MIN_CHARS:
+                return text
+
+    # Fall back to <description> / Atom <summary>.
+    summary = entry.get("summary", "")
+    if isinstance(summary, str) and len(summary.strip()) >= RSS_BODY_MIN_CHARS:
+        text = _strip_html(summary)
+        if len(text) >= RSS_BODY_MIN_CHARS:
+            return text
+
+    return ""
+
+
 def collect_articles() -> tuple[int, int, int]:
     """Collect new RSS entries and append unseen articles to data/articles.json."""
     sources = load_active_rss_sources()
@@ -205,6 +241,7 @@ def collect_articles() -> tuple[int, int, int]:
     }
 
     new_articles: list[dict[str, Any]] = []
+    prefilled = 0
     errors = 0
 
     for source in sources:
@@ -228,6 +265,8 @@ def collect_articles() -> tuple[int, int, int]:
                 continue
 
             collected_at = utc_now_iso()
+            rss_body = _extract_rss_body(entry)
+
             article: dict[str, Any] = {
                 "id": article_id,
                 "url": article_url,
@@ -241,6 +280,9 @@ def collect_articles() -> tuple[int, int, int]:
                 "topics": [],
                 "summaries": {"pt-BR": "", "en-US": ""},
             }
+            if rss_body:
+                article["content"] = rss_body
+                prefilled += 1
             if source_category:
                 article["source_category"] = source_category
 
@@ -253,7 +295,10 @@ def collect_articles() -> tuple[int, int, int]:
     elif not ARTICLES_FILE.exists():
         _save_articles_document(document)
 
-    print(f"Collected {len(new_articles)} new articles from {len(sources)} sources ({errors} errors)")
+    print(
+        f"Collected {len(new_articles)} new articles from {len(sources)} sources "
+        f"({prefilled} with RSS body pre-filled, {errors} errors)"
+    )
     return len(new_articles), len(sources), errors
 
 

@@ -78,12 +78,13 @@ def test_summarize_sets_validated_status(tmp_data_paths: dict[str, Path], monkey
             {
                 "id": "bbbbbbbbbbbbbbbb",
                 "url": "https://example.com/b",
-                "title": "Economia em debate",
+                "title": "Lula e Tarcisio disputam segundo turno, aponta pesquisa",
                 "source": "Fonte",
                 "source_category": "mainstream",
                 "published_at": "2026-03-09T13:00:00Z",
                 "collected_at": "2026-03-09T13:10:00Z",
                 "status": "raw",
+                "content": "Pesquisa Datafolha divulgada nesta terca-feira aponta que Lula e Tarcisio de Freitas estao empatados na corrida presidencial de 2026, com ambos chegando ao segundo turno segundo o cenario mais provavel. O levantamento ouviu 3.000 eleitores em todo o territorio nacional.",
                 "summaries": {"pt-BR": "", "en-US": ""},
             }
         ],
@@ -128,12 +129,13 @@ def test_summarize_handles_ai_failure(tmp_data_paths: dict[str, Path], monkeypat
             {
                 "id": "cccccccccccccccc",
                 "url": "https://example.com/c",
-                "title": "Falha de IA",
+                "title": "Candidato a presidente falha em debate eleitoral",
                 "source": "Fonte",
                 "source_category": "mainstream",
                 "published_at": "2026-03-09T14:00:00Z",
                 "collected_at": "2026-03-09T14:10:00Z",
                 "status": "raw",
+                "content": "O candidato a presidente teve um desempenho fraco no debate eleitoral transmitido ao vivo pela televisao. Analistas politicos apontam que a performance pode afetar as intencoes de voto nas eleicoes de 2026.",
                 "summaries": {"pt-BR": "", "en-US": ""},
             }
         ],
