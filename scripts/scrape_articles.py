@@ -125,6 +125,34 @@ def _fetch_url_plain(url: str) -> str:
     return response.text
 
 
+def _make_playwright_fetcher() -> tuple[Any, Any]:
+    """Start a Playwright browser and return (fetch_fn, close_fn), or (None, no-op) if unavailable."""
+    try:
+        from playwright.sync_api import sync_playwright  # type: ignore[import]
+        pw = sync_playwright().start()
+        browser = pw.chromium.launch(headless=True)
+        context = browser.new_context(user_agent=USER_AGENT)
+        logger.info("Playwright browser ready as fallback")
+
+        def fetch(url: str) -> str:
+            page = context.new_page()
+            try:
+                page.goto(url, timeout=REQUEST_TIMEOUT_SECONDS * 1000, wait_until="domcontentloaded")
+                return page.content()
+            finally:
+                page.close()
+
+        def close() -> None:
+            context.close()
+            browser.close()
+            pw.stop()
+
+        return fetch, close
+    except Exception as exc:
+        logger.warning("Playwright unavailable: %s", exc)
+        return None, lambda: None
+
+
 def scrape_articles(limit: int = 100) -> tuple[int, int]:
     articles = load_articles()
     articles_need_content = [
@@ -145,24 +173,42 @@ def scrape_articles(limit: int = 100) -> tuple[int, int]:
     if brightdata_key:
         logger.info("Using Bright Data Web Unlocker (zone: %s)", BRIGHTDATA_ZONE)
     else:
-        logger.warning("BRIGHTDATA_API_KEY not set — falling back to plain requests (bot-blocked sites will fail)")
+        logger.warning("BRIGHTDATA_API_KEY not set — skipping BrightData")
+
+    pw_fetch, pw_close = _make_playwright_fetcher()
 
     scraped = 0
     errors = 0
 
-    for i, article in enumerate(articles_need_content):
-        article_id = article.get("id", "?")
-        url = article.get("url", "")
-        if not url:
-            continue
+    try:
+        for i, article in enumerate(articles_need_content):
+            article_id = article.get("id", "?")
+            url = article.get("url", "")
+            if not url:
+                continue
 
-        try:
-            if brightdata_key:
-                html = _fetch_url_brightdata(url, brightdata_key)
-            else:
-                html = _fetch_url_plain(url)
+            content = ""
 
-            content = _extract_text_from_html(html)
+            if brightdata_key and not content:
+                try:
+                    html = _fetch_url_brightdata(url, brightdata_key)
+                    content = _extract_text_from_html(html)
+                except Exception as exc:
+                    logger.warning("BrightData failed for %s: %s", article_id, exc)
+
+            if not content and pw_fetch:
+                try:
+                    html = pw_fetch(url)
+                    content = _extract_text_from_html(html)
+                except Exception as exc:
+                    logger.warning("Playwright failed for %s: %s", article_id, exc)
+
+            if not content:
+                try:
+                    html = _fetch_url_plain(url)
+                    content = _extract_text_from_html(html)
+                except Exception as exc:
+                    logger.warning("Plain request failed for %s: %s", article_id, exc)
 
             if content and len(content) > 50:
                 article["content"] = content
@@ -173,9 +219,8 @@ def scrape_articles(limit: int = 100) -> tuple[int, int]:
             else:
                 errors += 1
                 logger.warning("No content extracted for %s", article_id)
-        except Exception as exc:
-            errors += 1
-            logger.warning("Failed to scrape %s: %s", article_id, exc)
+    finally:
+        pw_close()
 
     if scraped > 0:
         save_articles(articles)
