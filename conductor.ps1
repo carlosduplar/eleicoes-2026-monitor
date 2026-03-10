@@ -14,8 +14,8 @@
     - Phase 0      : manual (Stitch MCP + ADR 000)
     - Phase 1      : manual (Opus — architecture + schemas)
     - Phases 2+    : two Copilot invocations per phase (this script):
-                     1. Planner  (claude-opus-4.6)          — writes task spec
-                     2. Implementor (gpt-5.3-codex, xhigh) — implements from spec
+                     1. Planner  (claude-opus-4.6)   — writes task spec
+                     2. Implementor (gpt-5.3-codex)  — implements from spec
 
     NOTE: --autopilot + --no-ask-user is the functional equivalent of
     unattended/yolo mode for the Copilot CLI.
@@ -41,9 +41,6 @@
 .PARAMETER Model
     Copilot model for the implementation step. Default: gpt-5.3-codex.
 
-.PARAMETER Variant
-    Model variant (reasoning effort) for the implementation step. Default: xhigh.
-
 .EXAMPLE
     # Normal run from phase 2 onwards
     pwsh conductor.ps1
@@ -65,8 +62,7 @@ param(
     [int]$StartPhase = 2,
     [switch]$Parallel,
     [string]$PlannerModel = "claude-opus-4.6",
-    [string]$Model        = "gpt-5.3-codex",
-    [string]$Variant      = "xhigh"
+    [string]$Model        = "gpt-5.3-codex"
 )
 
 Set-StrictMode -Version Latest
@@ -141,12 +137,12 @@ function New-TaskFiles {
 
 Dispatched by conductor.ps1 at $(Get-Date -Format "yyyy-MM-ddTHH:mm:ssZ")
 Planner     : $PlannerModel
-Implementor : $Model (variant: $Variant)
+Implementor : $Model
 
 ## Agent roles
 
 - Planner  ($PlannerModel)         : reads plans/phase-$padded-arch.md, writes tasks/phase-$padded/task-01-spec.md
-- Implementor ($Model / $Variant)  : reads task-01-spec.md, implements deliverables, commits, pushes
+- Implementor ($Model)  : reads task-01-spec.md, implements deliverables, commits, pushes
 
 ## Escalation protocol
 
@@ -255,7 +251,7 @@ function Invoke-Phase {
 
     if ($DryRun) {
         Write-Phase "DRY RUN — planner  : copilot --model $PlannerModel -p <prompt> --yolo --autopilot --no-ask-user" "DarkGray"
-        Write-Phase "DRY RUN — impl     : copilot --model $Model --variant $Variant -p <prompt> --yolo --autopilot --no-ask-user" "DarkGray"
+        Write-Phase "DRY RUN — impl     : copilot --model $Model -p <prompt> --yolo --autopilot --no-ask-user" "DarkGray"
         Start-Sleep -Seconds 2
         New-Item -Path $files.Sentinel -ItemType File -Force | Out-Null
         Write-Phase "DRY RUN — created sentinel $($files.Sentinel)" "DarkGray"
@@ -309,7 +305,7 @@ function Invoke-Phase {
         Write-Phase "Phase $padded — task-01-spec.DONE already present, skipping planner." "DarkGray"
     }
 
-    # --- Step 2: Implementor (Codex xhigh) implements from task spec ---
+    # --- Step 2: Implementor (Codex) implements from task spec ---
     $implText = Get-Content $files.ImplPrompt -Raw
     $specText = if (Test-Path $files.TaskSpecFile) {
         Get-Content $files.TaskSpecFile -Raw
@@ -318,11 +314,10 @@ function Invoke-Phase {
     }
     $fullImpl = "$implText`n`n--- TASK SPEC ---`n$specText"
 
-    Write-Phase "Phase $padded — Implementor ($Model / $Variant): implementing..." "Cyan"
+    Write-Phase "Phase $padded — Implementor ($Model): implementing..." "Cyan"
     try {
         & copilot `
             --model $Model `
-            --variant $Variant `
             -p $fullImpl `
             --yolo `
             --autopilot `
@@ -407,18 +402,17 @@ function Invoke-ParallelPhases {
 
         $conductorScript = Join-Path $PSScriptRoot "conductor.ps1"
         $job = Start-Job -ScriptBlock {
-            param($script, $phase, $dryRun, $plannerModel, $model, $variant, $pollInterval)
+            param($script, $phase, $dryRun, $plannerModel, $model, $pollInterval)
             $args = @(
                 "-StartPhase", $phase,
                 "-MaxPhase",   $phase,
                 "-PlannerModel", $plannerModel,
                 "-Model", $model,
-                "-Variant", $variant,
                 "-PollIntervalSeconds", $pollInterval
             )
             if ($dryRun) { $args += "-DryRun" }
             & pwsh -NonInteractive -File $script @args 2>&1
-        } -ArgumentList $conductorScript, $phase, $DryRun.IsPresent, $PlannerModel, $Model, $Variant, $PollIntervalSeconds
+        } -ArgumentList $conductorScript, $phase, $DryRun.IsPresent, $PlannerModel, $Model, $PollIntervalSeconds
 
         $files = New-TaskFiles -Phase $phase
         $jobs += @{
@@ -485,7 +479,7 @@ function Start-Conductor {
     Write-Host ""
     Write-Host "Repo root     : $RepoRoot"
     Write-Host "Planner       : $PlannerModel"
-    Write-Host "Implementor   : $Model (variant: $Variant)"
+    Write-Host "Implementor   : $Model"
     Write-Host "Poll interval : ${PollIntervalSeconds}s"
     Write-Host "Start phase   : $StartPhase"
     Write-Host "Max phase     : $MaxPhase"
