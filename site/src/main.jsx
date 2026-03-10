@@ -5,7 +5,9 @@ import { ViteReactSSG } from 'vite-react-ssg';
 
 import { routes } from './App';
 import enCommon from './locales/en-US/common.json';
+import enMethodology from './locales/en-US/methodology.json';
 import ptCommon from './locales/pt-BR/common.json';
+import ptMethodology from './locales/pt-BR/methodology.json';
 import './styles.css';
 
 const HelmetProvider = ReactHelmetAsync.HelmetProvider || ReactHelmetAsync.default?.HelmetProvider;
@@ -24,14 +26,14 @@ const getSavedLanguage = () => {
 if (!i18n.isInitialized) {
   i18n.use(initReactI18next).init({
     resources: {
-      'pt-BR': { common: ptCommon },
-      'en-US': { common: enCommon },
+      'pt-BR': { common: ptCommon, methodology: ptMethodology },
+      'en-US': { common: enCommon, methodology: enMethodology },
     },
     lng: getSavedLanguage(),
     fallbackLng: 'pt-BR',
     interpolation: { escapeValue: false },
     defaultNS: 'common',
-    ns: ['common'],
+    ns: ['common', 'methodology'],
     supportedLngs: SUPPORTED_LANGUAGES,
     react: {
       useSuspense: false,

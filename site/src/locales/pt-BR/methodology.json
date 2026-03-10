@@ -1,0 +1,46 @@
+{
+  "title": "Metodologia",
+  "subtitle": "Como funciona o Portal Eleições BR 2026",
+  "disclaimer": {
+    "heading": "Declaração de Independência",
+    "body": "Este portal é um projeto independente, sem filiação partidária ou financiamento eleitoral. Não há intervenção editorial de nenhuma forma: os artigos são coletados automaticamente de fontes públicas, os resumos são gerados por inteligência artificial, e as análises de sentimento são derivadas algoritmicamente. O código-fonte completo está disponível para consulta e auditoria pública em github.com/carlosduplar/eleicoes-2026-monitor."
+  },
+  "pipeline": {
+    "heading": "Como funciona o pipeline",
+    "collection": {
+      "label": "Coleta",
+      "body": "RSS de 20 veículos + scraping de sites partidários e institutos de pesquisa, a cada 10 minutos via GitHub Actions."
+    },
+    "summarization": {
+      "label": "Sumarização",
+      "body": "Modelos de linguagem open-source com fallback hierárquico: NVIDIA NIM (gratuito) → OpenRouter (gratuito, 200 req/dia) → Ollama Cloud (gratuito) → Vertex AI Gemini 2.5 Flash Lite (pago prioritário) → MiMo V2 Flash."
+    },
+    "sentiment": {
+      "label": "Sentimento",
+      "body": "Análise algorítmica do tom das notícias coletadas. Os scores refletem o tom das manchetes e resumos — não uma avaliação editorial ou pesquisa de opinião."
+    },
+    "polls": {
+      "label": "Pesquisas Eleitorais",
+      "body": "Dados coletados automaticamente dos sites dos institutos. Reproduzidos sem modificação editorial."
+    },
+    "quiz": {
+      "label": "Quiz de Afinidade",
+      "body": "Posições extraídas de declarações verificadas nas notícias coletadas. Fontes exibidas no resultado — nunca durante as perguntas."
+    }
+  },
+  "limitations": {
+    "heading": "Limitações conhecidas",
+    "items": [
+      "Modelos de IA podem cometer erros de interpretação.",
+      "A cobertura de fontes pode ter viés de disponibilidade — veículos sem RSS não são incluídos.",
+      "Posições de candidatos evoluem ao longo da campanha; o pipeline atualiza diariamente.",
+      "Análise de sentimento não equivale a pesquisa de opinião."
+    ]
+  },
+  "error_reporting": {
+    "heading": "Reportar erros",
+    "body": "Encontrou um erro? Abra uma issue no repositório público.",
+    "cta": "Abrir issue no GitHub"
+  },
+  "repo_link": "https://github.com/carlosduplar/eleicoes-2026-monitor"
+}
