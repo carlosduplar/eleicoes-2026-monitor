@@ -106,7 +106,7 @@ def _fetch_url_brightdata(url: str, api_key: str) -> str:
             "Authorization": f"Bearer {api_key}",
             "Content-Type": "application/json",
         },
-        json={"zone": BRIGHTDATA_ZONE, "url": url, "format": "raw"},
+        json={"zone": BRIGHTDATA_ZONE, "url": url, "format": "raw", "method": "GET", "direct": True},
         timeout=REQUEST_TIMEOUT_SECONDS,
     )
     response.raise_for_status()
