@@ -9,6 +9,16 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 
 - Planning artifact for optional extension: `plans/phase-17-arch.md` (Vertex AI Search).
 
+### Changed
+
+- `scripts/curate.py` now implements full Editor-chefe curation flow: prominence scoring, `validated` -> `curated` promotion, `curated_feed.json` + `weekly_briefing.json` generation, quiz refresh trigger, and 90-minute cadence gate.
+- `.github/workflows/curate.yml` now stages `data/articles.json` so curation promotions persist across runs.
+- `.github/workflows/collect.yml` now executes `summarize.py` and `analyze_sentiment.py` directly (without legacy stub fallbacks), matching Phase 06 behavior.
+
+### Fixed
+
+- `scripts/watchdog.py` no longer writes a stub payload; it now emits structured freshness/error diagnostics per pipeline output in `data/pipeline_health.json`.
+
 ## [1.0.0] - 2026-03-11
 
 ### Added
