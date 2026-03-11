@@ -553,6 +553,296 @@ p {
   font-size: clamp(1.6rem, 1.3rem + 1vw, 2rem);
 }
 
+/* Candidate and Comparison Pages — Phase 12 */
+.candidate-page {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.candidate-breadcrumb {
+  font-size: 0.82rem;
+  color: var(--text-secondary);
+}
+
+.candidate-breadcrumb a,
+.candidate-back-link {
+  color: var(--brand-navy);
+  text-decoration: none;
+}
+
+.candidate-breadcrumb a:hover,
+.candidate-back-link:hover {
+  text-decoration: underline;
+}
+
+.candidate-layout {
+  display: grid;
+  grid-template-columns: minmax(0, 2fr) minmax(260px, 1fr);
+  gap: 1rem;
+}
+
+.candidate-main,
+.candidate-sidebar {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.candidate-hero,
+.candidate-card,
+.candidate-list-card,
+.comparison-hero-card {
+  background: var(--brand-surface);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+}
+
+.candidate-hero {
+  border-top: 6px solid var(--brand-navy);
+  padding: 1.1rem 1.25rem;
+}
+
+.candidate-hero h1,
+.comparison-header h1 {
+  font-size: clamp(1.45rem, 1.2rem + 0.7vw, 1.9rem);
+  margin-bottom: 0.45rem;
+}
+
+.candidate-status {
+  display: inline-flex;
+  align-items: center;
+  border-radius: 999px;
+  padding: 0.2rem 0.6rem;
+  font-size: 0.72rem;
+  background: rgb(26 46 74 / 10%);
+  color: var(--brand-navy);
+  margin-top: 0.55rem;
+  font-weight: 600;
+}
+
+.candidate-card {
+  padding: 1rem 1.1rem;
+}
+
+.candidate-card h2,
+.candidate-card h3 {
+  font-family: Inter, system-ui, -apple-system, Segoe UI, Roboto, sans-serif;
+  font-size: 1rem;
+  margin-bottom: 0.5rem;
+}
+
+.candidate-muted {
+  color: var(--text-secondary);
+  font-size: 0.84rem;
+}
+
+.candidate-article-list {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 0.85rem;
+}
+
+.candidate-article-list a {
+  color: var(--text-primary);
+  text-decoration: none;
+  font-weight: 500;
+}
+
+.candidate-article-list a:hover {
+  text-decoration: underline;
+}
+
+.candidate-sentiment-chart {
+  width: 100%;
+  height: 270px;
+}
+
+.candidate-poll-value {
+  font-size: 1.15rem;
+  font-weight: 700;
+  margin-bottom: 0.25rem;
+}
+
+.candidate-state-card {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.55rem;
+}
+
+.candidate-spinner {
+  width: 14px;
+  height: 14px;
+  border: 2px solid var(--border);
+  border-top-color: var(--brand-navy);
+  border-radius: 50%;
+  animation: candidate-spin 0.7s linear infinite;
+}
+
+@keyframes candidate-spin {
+  0% {
+    transform: rotate(0deg);
+  }
+
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+.candidates-title {
+  font-size: clamp(1.5rem, 1.2rem + 0.75vw, 1.85rem);
+}
+
+.candidates-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 1rem;
+}
+
+.candidate-list-card {
+  padding: 0.9rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.55rem;
+}
+
+.candidate-list-head {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.6rem;
+}
+
+.candidate-list-dot {
+  width: 11px;
+  height: 11px;
+  border-radius: 50%;
+  flex-shrink: 0;
+  margin-top: 0.45rem;
+}
+
+.candidate-list-head h2 {
+  font-family: Inter, system-ui, -apple-system, Segoe UI, Roboto, sans-serif;
+  font-size: 1.02rem;
+  margin: 0;
+}
+
+.candidate-list-head p {
+  color: var(--text-secondary);
+  font-size: 0.78rem;
+}
+
+.candidate-list-party {
+  font-size: 0.86rem;
+}
+
+.candidate-profile-link {
+  text-decoration: none;
+  color: var(--brand-navy);
+  font-size: 0.85rem;
+  font-weight: 600;
+}
+
+.candidate-profile-link:hover {
+  text-decoration: underline;
+}
+
+.comparison-header {
+  margin-top: 0.15rem;
+}
+
+.comparison-hero-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 1rem;
+}
+
+.comparison-hero-card {
+  border-top: 6px solid var(--brand-navy);
+  padding: 0.85rem;
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.comparison-avatar {
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  color: #ffffff;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.95rem;
+  font-weight: 700;
+  flex-shrink: 0;
+}
+
+.comparison-hero-card h2 {
+  font-family: Inter, system-ui, -apple-system, Segoe UI, Roboto, sans-serif;
+  font-size: 1rem;
+  margin: 0 0 0.2rem;
+}
+
+.comparison-hero-card p {
+  color: var(--text-secondary);
+  font-size: 0.84rem;
+}
+
+.comparison-table-wrap {
+  overflow-x: auto;
+}
+
+.comparison-table {
+  width: 100%;
+  min-width: 720px;
+  border-collapse: collapse;
+}
+
+.comparison-table th,
+.comparison-table td {
+  border-bottom: 1px solid var(--border);
+  text-align: left;
+  vertical-align: top;
+  padding: 0.65rem;
+  font-size: 0.86rem;
+}
+
+.comparison-table th {
+  font-size: 0.8rem;
+  font-weight: 600;
+}
+
+.comparison-topic-details + .comparison-topic-details {
+  margin-top: 0.65rem;
+  padding-top: 0.65rem;
+  border-top: 1px solid var(--border);
+}
+
+.comparison-topic-details summary {
+  cursor: pointer;
+  font-weight: 600;
+  font-size: 0.88rem;
+}
+
+.comparison-topic-columns {
+  margin-top: 0.5rem;
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 0.75rem;
+}
+
+.comparison-topic-columns h4 {
+  margin: 0 0 0.35rem;
+  font-size: 0.9rem;
+}
+
+.comparison-topic-columns p {
+  font-size: 0.84rem;
+}
+
 .site-footer {
   background: var(--brand-navy);
   color: #ffffff;
@@ -799,6 +1089,19 @@ p {
   .methodology-page {
     max-width: 100%;
   }
+
+  .candidate-layout,
+  .comparison-topic-columns {
+    grid-template-columns: 1fr;
+  }
+
+  .candidates-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .comparison-hero-grid {
+    grid-template-columns: 1fr;
+  }
 }
 
 @media (max-width: 390px) {
@@ -831,6 +1134,14 @@ p {
 
   .sentiment-table th:first-child {
     min-width: 150px;
+  }
+
+  .candidates-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .comparison-table {
+    min-width: 620px;
   }
 }
 

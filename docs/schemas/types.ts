@@ -164,6 +164,14 @@ export interface Candidate {
   color: string; // hex
   twitter: string;
   status: 'pre-candidate' | 'speculated' | 'confirmed' | 'withdrawn';
+  bio_pt: string;
+  bio_en: string;
+  photo_url: string | null;
+  tse_registration_url: string | null;
+}
+
+export interface CandidatesFile {
+  candidates: Candidate[];
 }
 
 // --- AI Usage (data/ai_usage.json) ---

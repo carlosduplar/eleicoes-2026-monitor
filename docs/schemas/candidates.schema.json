@@ -1,0 +1,62 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "Candidates",
+  "type": "object",
+  "required": ["candidates"],
+  "properties": {
+    "candidates": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": [
+          "slug",
+          "name",
+          "full_name",
+          "party",
+          "party_site",
+          "color",
+          "twitter",
+          "status",
+          "bio_pt",
+          "bio_en",
+          "photo_url",
+          "tse_registration_url"
+        ],
+        "properties": {
+          "slug": {
+            "type": "string",
+            "enum": [
+              "lula",
+              "flavio-bolsonaro",
+              "tarcisio",
+              "caiado",
+              "zema",
+              "ratinho-jr",
+              "eduardo-leite",
+              "aldo-rebelo",
+              "renan-santos"
+            ]
+          },
+          "name": { "type": "string" },
+          "full_name": { "type": "string" },
+          "party": { "type": "string" },
+          "party_site": { "type": "string", "format": "uri" },
+          "color": { "type": "string", "pattern": "^#[0-9A-Fa-f]{6}$" },
+          "twitter": { "type": "string" },
+          "status": {
+            "type": "string",
+            "enum": ["pre-candidate", "speculated", "confirmed", "withdrawn"]
+          },
+          "bio_pt": { "type": "string" },
+          "bio_en": { "type": "string" },
+          "photo_url": { "type": ["string", "null"] },
+          "tse_registration_url": { "type": ["string", "null"] }
+        },
+        "additionalProperties": false
+      },
+      "minItems": 9,
+      "maxItems": 9
+    }
+  },
+  "additionalProperties": false
+}

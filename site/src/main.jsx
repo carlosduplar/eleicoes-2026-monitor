@@ -4,8 +4,10 @@ import { initReactI18next } from 'react-i18next';
 import { ViteReactSSG } from 'vite-react-ssg';
 
 import { routes } from './App';
+import enCandidates from './locales/en-US/candidates.json';
 import enCommon from './locales/en-US/common.json';
 import enMethodology from './locales/en-US/methodology.json';
+import ptCandidates from './locales/pt-BR/candidates.json';
 import ptCommon from './locales/pt-BR/common.json';
 import ptMethodology from './locales/pt-BR/methodology.json';
 import './styles.css';
@@ -26,14 +28,14 @@ const getSavedLanguage = () => {
 if (!i18n.isInitialized) {
   i18n.use(initReactI18next).init({
     resources: {
-      'pt-BR': { common: ptCommon, methodology: ptMethodology },
-      'en-US': { common: enCommon, methodology: enMethodology },
+      'pt-BR': { common: ptCommon, methodology: ptMethodology, candidates: ptCandidates },
+      'en-US': { common: enCommon, methodology: enMethodology, candidates: enCandidates },
     },
     lng: getSavedLanguage(),
     fallbackLng: 'pt-BR',
     interpolation: { escapeValue: false },
     defaultNS: 'common',
-    ns: ['common', 'methodology'],
+    ns: ['common', 'methodology', 'candidates'],
     supportedLngs: SUPPORTED_LANGUAGES,
     react: {
       useSuspense: false,

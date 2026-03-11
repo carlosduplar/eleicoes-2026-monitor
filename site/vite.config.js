@@ -31,5 +31,33 @@ export default defineConfig({
     script: 'defer',
     dirStyle: 'nested',
     formatting: 'none',
+    includedRoutes: (paths) => {
+      const candidateSlugs = [
+        'lula',
+        'flavio-bolsonaro',
+        'tarcisio',
+        'caiado',
+        'zema',
+        'ratinho-jr',
+        'eduardo-leite',
+        'aldo-rebelo',
+        'renan-santos',
+      ];
+      const comparisonPairs = [
+        'lula-vs-tarcisio',
+        'lula-vs-caiado',
+        'tarcisio-vs-caiado',
+        'tarcisio-vs-ratinho-jr',
+        'lula-vs-zema',
+        'caiado-vs-ratinho-jr',
+        'lula-vs-ratinho-jr',
+        'tarcisio-vs-zema',
+      ];
+      return [
+        ...paths,
+        ...candidateSlugs.map((slug) => `/candidato/${slug}`),
+        ...comparisonPairs.map((pair) => `/comparar/${pair}`),
+      ];
+    },
   },
 });

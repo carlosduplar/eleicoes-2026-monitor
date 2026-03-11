@@ -1,0 +1,16 @@
+/*
+  Cache-Control: public, max-age=1800, stale-while-revalidate=300
+  X-Content-Type-Options: nosniff
+  X-Frame-Options: DENY
+  Referrer-Policy: strict-origin-when-cross-origin
+
+/data/*.json
+  Cache-Control: public, max-age=1800, stale-while-revalidate=300
+  Access-Control-Allow-Origin: *
+
+/feed*.xml
+  Cache-Control: public, max-age=1800
+  Content-Type: application/rss+xml; charset=utf-8
+
+/quiz*
+  Cache-Control: public, max-age=3600

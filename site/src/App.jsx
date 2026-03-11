@@ -4,7 +4,9 @@ import { useTranslation } from 'react-i18next';
 
 import CountdownTimer from './components/CountdownTimer';
 import Nav from './components/Nav';
+import CandidatePage from './pages/CandidatePage';
 import CandidatesPage from './pages/CandidatesPage';
+import ComparisonPage from './pages/ComparisonPage';
 import Home from './pages/Home';
 import MethodologyPage from './pages/MethodologyPage';
 import PollsPage from './pages/PollsPage';
@@ -67,6 +69,8 @@ export const routes = [
       { path: 'sentimento', element: <SentimentPage /> },
       { path: 'pesquisas', element: <PollsPage /> },
       { path: 'candidatos', element: <CandidatesPage /> },
+      { path: 'candidato/:slug', element: <CandidatePage /> },
+      { path: 'comparar/:pairSlug', element: <ComparisonPage /> },
       { path: 'quiz/resultado', element: <QuizResult /> },
       { path: 'quiz', element: <QuizPage /> },
       { path: 'metodologia', element: <MethodologyPage /> },
