@@ -11,10 +11,10 @@ from typing import Any
 
 try:
     from scripts import ai_client
+    from scripts.ai_client import _provider_failure_counts, _CIRCUIT_BREAKER_THRESHOLD
 except ImportError:  # pragma: no cover - direct script execution path
     import ai_client  # type: ignore[no-redef]
-
-from scripts.ai_client import _provider_failure_counts, _CIRCUIT_BREAKER_THRESHOLD
+    from ai_client import _provider_failure_counts, _CIRCUIT_BREAKER_THRESHOLD  # type: ignore[no-redef]
 
 logger = logging.getLogger(__name__)
 
