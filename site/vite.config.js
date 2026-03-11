@@ -7,6 +7,7 @@ const repoRoot = path.resolve(projectRoot, '..');
 const dataDirectory = path.resolve(repoRoot, 'data').replace(/\\/g, '/');
 
 export default defineConfig({
+  base: '/eleicoes-2026-monitor/',
   plugins: [react()],
   resolve: {
     alias: {
