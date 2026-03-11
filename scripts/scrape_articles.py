@@ -106,10 +106,19 @@ def _fetch_url_brightdata(url: str, api_key: str) -> str:
             "Authorization": f"Bearer {api_key}",
             "Content-Type": "application/json",
         },
-        json={"zone": BRIGHTDATA_ZONE, "url": url, "format": "raw", "method": "GET", "direct": True},
+        json={"zone": BRIGHTDATA_ZONE, "url": url, "format": "raw"},
         timeout=REQUEST_TIMEOUT_SECONDS,
     )
-    response.raise_for_status()
+    if response.status_code != 200:
+        raise Exception(
+            f"BrightData API error: {response.status_code} - {response.text[:500]}"
+        )
+    try:
+        data = response.json()
+        if "error" in data:
+            raise Exception(f"BrightData API error: {data.get('error')}")
+    except json.JSONDecodeError:
+        pass
     return response.text
 
 
@@ -129,6 +138,7 @@ def _make_playwright_fetcher() -> tuple[Any, Any]:
     """Start a Playwright browser and return (fetch_fn, close_fn), or (None, no-op) if unavailable."""
     try:
         from playwright.sync_api import sync_playwright  # type: ignore[import]
+
         pw = sync_playwright().start()
         browser = pw.chromium.launch(headless=True)
         context = browser.new_context(user_agent=USER_AGENT)
@@ -137,7 +147,11 @@ def _make_playwright_fetcher() -> tuple[Any, Any]:
         def fetch(url: str) -> str:
             page = context.new_page()
             try:
-                page.goto(url, timeout=REQUEST_TIMEOUT_SECONDS * 1000, wait_until="domcontentloaded")
+                page.goto(
+                    url,
+                    timeout=REQUEST_TIMEOUT_SECONDS * 1000,
+                    wait_until="domcontentloaded",
+                )
                 return page.content()
             finally:
                 page.close()
@@ -194,7 +208,9 @@ def scrape_articles(limit: int = 100) -> tuple[int, int]:
                     html = _fetch_url_brightdata(url, brightdata_key)
                     content = _extract_text_from_html(html)
                 except Exception as exc:
-                    logger.warning("BrightData failed for %s: %s", article_id, exc)
+                    logger.warning(
+                        "BrightData failed for %s (%s): %s", article_id, url, exc
+                    )
 
             if not content and pw_fetch:
                 try:
