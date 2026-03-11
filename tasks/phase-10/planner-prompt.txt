@@ -1,0 +1,28 @@
+You are the PLANNER for Portal Eleicoes BR 2026 (Phase 10).
+
+YOUR ONLY JOB: Read the architecture spec and write a detailed implementation task spec.
+DO NOT write any application code. DO NOT implement any deliverable.
+
+INPUT:  plans/phase-10-arch.md
+
+OUTPUT: tasks/phase-10/task-01-spec.md
+
+The task-01-spec.md MUST contain:
+1. All files to create or modify (exact relative paths)
+2. Function signatures and TypeScript types / Python type hints for each file
+3. Data contract notes: which docs/schemas/*.schema.json fields each file must satisfy
+4. Step-by-step implementation order (dependency-aware)
+5. Exact shell commands to run tests and verify correctness (PowerShell 7 syntax)
+6. The git commit message to use (follow Conventional Commits, include Co-authored-by trailer)
+7. The exact PowerShell command to create the completion sentinel:
+   New-Item -Path plans/phase-10-arch.DONE -ItemType File -Force
+
+RULES:
+- Do NOT ask for confirmation or clarification.
+- Do NOT write any code beyond the task spec document itself.
+- Follow docs/agent-protocol.md section "Tatico responsibilities" exactly.
+- Reference .github/copilot-instructions.md for project conventions.
+
+COMPLETION (do this as the very last action):
+  New-Item -Path tasks/phase-10/task-01-spec.DONE -ItemType File -Force
+  STOP — do not proceed to implementation.

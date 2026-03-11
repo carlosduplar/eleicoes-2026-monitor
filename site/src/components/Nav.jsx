@@ -10,6 +10,7 @@ const navItems = [
   { to: '/candidatos', key: 'candidatos' },
   { to: '/quiz', key: 'quiz' },
   { to: '/metodologia', key: 'metodologia' },
+  { to: '/sobre/caso-de-uso', key: 'caso_de_uso' },
 ];
 
 function Nav() {

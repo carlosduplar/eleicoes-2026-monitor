@@ -7,6 +7,7 @@ import Nav from './components/Nav';
 import CandidatePage from './pages/CandidatePage';
 import CandidatesPage from './pages/CandidatesPage';
 import ComparisonPage from './pages/ComparisonPage';
+import CaseStudyPage from './pages/CaseStudyPage';
 import Home from './pages/Home';
 import MethodologyPage from './pages/MethodologyPage';
 import PollsPage from './pages/PollsPage';
@@ -74,6 +75,7 @@ export const routes = [
       { path: 'quiz/resultado', element: <QuizResult /> },
       { path: 'quiz', element: <QuizPage /> },
       { path: 'metodologia', element: <MethodologyPage /> },
+      { path: 'sobre/caso-de-uso', element: <CaseStudyPage /> },
     ],
   },
 ];

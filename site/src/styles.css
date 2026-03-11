@@ -1145,6 +1145,222 @@ p {
   }
 }
 
+/* --- Case Study Page --- */
+
+.case-study-page {
+  max-width: 1100px;
+  margin: 0 auto;
+  padding-bottom: 2rem;
+}
+
+.case-study-breadcrumb {
+  font-size: 0.8rem;
+  color: var(--text-secondary);
+  margin-bottom: 1.5rem;
+}
+
+.case-study-breadcrumb a {
+  color: var(--brand-gold);
+  text-decoration: none;
+}
+
+.case-study-breadcrumb a:hover {
+  text-decoration: underline;
+}
+
+.case-study-breadcrumb span {
+  margin: 0 0.4rem;
+}
+
+.case-study-header {
+  margin-bottom: 2rem;
+}
+
+.case-study-header h1 {
+  font-size: clamp(1.5rem, 1.2rem + 0.8vw, 2rem);
+  font-family: Georgia, 'Times New Roman', serif;
+  margin-bottom: 0.35rem;
+}
+
+.case-study-subtitle {
+  color: var(--text-secondary);
+  font-size: 1rem;
+  margin-bottom: 0.75rem;
+}
+
+.case-study-meta {
+  color: var(--text-secondary);
+  font-size: 0.85rem;
+  display: flex;
+  gap: 1rem;
+  margin-bottom: 1rem;
+}
+
+.case-study-layout {
+  display: grid;
+  grid-template-columns: 1fr 240px;
+  gap: 2rem;
+  align-items: start;
+}
+
+/* Main markdown content */
+.case-study-content {
+  min-width: 0;
+  line-height: 1.75;
+  font-size: 0.95rem;
+}
+
+.case-study-content h2 {
+  font-size: 1.3rem;
+  font-weight: 600;
+  font-family: Georgia, 'Times New Roman', serif;
+  margin-top: 2rem;
+  margin-bottom: 0.75rem;
+  padding-top: 1rem;
+  border-top: 1px solid var(--border);
+}
+
+.case-study-content h3 {
+  font-size: 1.05rem;
+  font-weight: 600;
+  margin-top: 1.25rem;
+  margin-bottom: 0.5rem;
+}
+
+.case-study-content p {
+  margin-bottom: 0.85rem;
+  color: var(--text-primary);
+}
+
+.case-study-content ul,
+.case-study-content ol {
+  margin-bottom: 0.85rem;
+  padding-left: 1.5rem;
+}
+
+.case-study-content li {
+  margin-bottom: 0.3rem;
+}
+
+.case-study-content code {
+  background: var(--brand-muted);
+  padding: 0.15rem 0.35rem;
+  border-radius: 4px;
+  font-size: 0.85em;
+}
+
+.case-study-content a {
+  color: var(--brand-gold);
+  text-decoration: none;
+}
+
+.case-study-content a:hover {
+  text-decoration: underline;
+}
+
+/* Sticky TOC sidebar */
+.case-study-toc {
+  position: sticky;
+  top: 1.5rem;
+  background: var(--brand-surface);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 1rem 1.25rem;
+}
+
+.case-study-toc h2 {
+  font-size: 0.8rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: var(--text-secondary);
+  margin-bottom: 0.75rem;
+}
+
+.case-study-toc ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.case-study-toc li {
+  margin-bottom: 0.4rem;
+}
+
+.case-study-toc a {
+  color: var(--text-secondary);
+  text-decoration: none;
+  font-size: 0.8rem;
+  line-height: 1.4;
+  display: block;
+  padding: 0.15rem 0;
+}
+
+.case-study-toc a:hover,
+.case-study-toc a.active {
+  color: var(--brand-navy);
+  font-weight: 500;
+}
+
+/* Skeleton loading state */
+.case-study-skeleton {
+  animation: skeleton-pulse 1.5s ease-in-out infinite;
+}
+
+.case-study-skeleton-line {
+  height: 1rem;
+  background: var(--brand-muted);
+  border-radius: 4px;
+  margin-bottom: 0.5rem;
+}
+
+.case-study-skeleton-line:nth-child(odd) {
+  width: 90%;
+}
+
+.case-study-skeleton-line:nth-child(even) {
+  width: 75%;
+}
+
+.case-study-skeleton-heading {
+  height: 1.5rem;
+  width: 50%;
+  background: var(--brand-muted);
+  border-radius: 4px;
+  margin-top: 1.5rem;
+  margin-bottom: 0.75rem;
+}
+
+@keyframes skeleton-pulse {
+  0%,
+  100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.4;
+  }
+}
+
+/* Error state */
+.case-study-error {
+  text-align: center;
+  padding: 3rem 1rem;
+  color: var(--text-secondary);
+  font-size: 0.95rem;
+}
+
+/* Responsive: collapse TOC on mobile */
+@media (max-width: 768px) {
+  .case-study-layout {
+    grid-template-columns: 1fr;
+  }
+
+  .case-study-toc {
+    position: static;
+    margin-bottom: 1.5rem;
+  }
+}
+
 /* Quiz — Phase 11 */
 .quiz-progress {
   width: 100%;

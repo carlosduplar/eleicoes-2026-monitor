@@ -50,7 +50,7 @@ jobs:
       - name: Copy case-study into public assets
         run: |
           mkdir -p site/public/case-study
-          cp -r docs/case-study/. site/public/case-study/ || true
+          cp -r docs/case-study/. site/public/case-study/
 
       - name: Build static site
         run: |

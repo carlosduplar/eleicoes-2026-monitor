@@ -57,6 +57,7 @@ export default defineConfig({
         ...paths,
         ...candidateSlugs.map((slug) => `/candidato/${slug}`),
         ...comparisonPairs.map((pair) => `/comparar/${pair}`),
+        '/sobre/caso-de-uso',
       ];
     },
   },
