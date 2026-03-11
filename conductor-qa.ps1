@@ -183,6 +183,8 @@ YOUR JOB:
 4. Check JSON data files conform to docs/schemas/*.schema.json.
 5. Check no console errors on the built site (if applicable).
 
+CRITICAL RULE: If you cannot run tests (shell commands not available) OR if any test fails, you MUST set "passed": false and "recommendation": "fail" or "needs-review". Never report "passed": true when tests were skipped or failed. The QA is useless if it cannot verify the code actually works.
+
 REPORT: Write qa/phase-$padded-report.json with this exact schema:
 {
   "phase": $Phase,
@@ -222,8 +224,10 @@ RULES:
     try {
         # Out-File only — Tee-Object would flood the function's return pipeline,
         # causing $result in the caller to be an array of hundreds of output lines.
+        # --approval-mode yolo enables shell commands and tool execution without prompting.
         & gemini `
             -m $Model `
+            --approval-mode yolo `
             --prompt $qaPrompt `
             2>&1 | Out-File -FilePath $logFile -Encoding UTF8
 
