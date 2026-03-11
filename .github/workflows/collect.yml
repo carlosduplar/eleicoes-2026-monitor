@@ -13,6 +13,7 @@ jobs:
     runs-on: ubuntu-latest
     timeout-minutes: 25
     env:
+      FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: true
       BRIGHTDATA_API_KEY: ${{ secrets.BRIGHTDATA_API_KEY }}
       BRIGHTDATA_ZONE: ${{ secrets.BRIGHTDATA_ZONE }}
       NVIDIA_API_KEY: ${{ secrets.NVIDIA_API_KEY }}
