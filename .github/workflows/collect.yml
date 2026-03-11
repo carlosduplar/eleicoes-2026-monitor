@@ -58,6 +58,13 @@ jobs:
           python scripts/build_data.py
           python scripts/generate_rss_feed.py
 
+      - name: Index to Vertex AI Search
+        env:
+          GOOGLE_APPLICATION_CREDENTIALS_JSON: ${{ secrets.GOOGLE_APPLICATION_CREDENTIALS_JSON }}
+          VERTEX_SEARCH_ENGINE_ID: ${{ secrets.VERTEX_SEARCH_ENGINE_ID }}
+          GCP_PROJECT_ID: ${{ secrets.GCP_PROJECT_ID }}
+        run: python scripts/index_to_vertex_search.py || echo "[warn] Vertex indexing failed, continuing"
+
       - name: Commit data updates
         run: |
           git config user.name "github-actions[bot]"

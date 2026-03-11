@@ -1,6 +1,8 @@
+import { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 
 import { useData } from '@/hooks/useData';
+import { useSearch } from '@/hooks/useSearch';
 import MethodologyBadge from './MethodologyBadge';
 
 const statusToClass = {
@@ -78,6 +80,8 @@ function toMinutesAgo(value) {
 function NewsFeed({ selectedCategory }) {
   const { t, i18n } = useTranslation('common');
   const { data, loading, error } = useData('articles');
+  const [searchQuery, setSearchQuery] = useState('');
+  const [debouncedQuery, setDebouncedQuery] = useState('');
 
   const articles = normalizeArticles(data);
   const visibleArticles = articles.filter((article) => {
@@ -86,11 +90,23 @@ function NewsFeed({ selectedCategory }) {
     }
     return toSourceCategory(article) === selectedCategory;
   });
+  const { results: searchResults, loading: searchLoading, isVertexSearch } = useSearch(debouncedQuery, articles);
+  const displayedArticles = debouncedQuery ? searchResults : visibleArticles;
+  const isSearchActive = debouncedQuery.length > 0;
 
   const lastUpdatedAt = Array.isArray(data)
     ? visibleArticles[0]?.collected_at
     : data?.last_updated || visibleArticles[0]?.collected_at;
   const updatedMinutes = toMinutesAgo(lastUpdatedAt);
+
+  useEffect(() => {
+    const debounceId = setTimeout(() => {
+      setDebouncedQuery(searchQuery.trim());
+    }, 300);
+    return () => {
+      clearTimeout(debounceId);
+    };
+  }, [searchQuery]);
 
   if (loading) {
     return (
@@ -110,25 +126,37 @@ function NewsFeed({ selectedCategory }) {
     );
   }
 
-  if (visibleArticles.length === 0) {
-    return (
-      <section className="feed-stack">
-        <div className="feed-heading">
-          <h1>{t('home.feed_title')}</h1>
-        </div>
-        <article className="feed-state-card">{t('feed.empty')}</article>
-        <MethodologyBadge />
-      </section>
-    );
-  }
-
   return (
     <section className="feed-stack">
       <div className="feed-heading">
         <h1>{t('home.feed_title')}</h1>
         <span>{t('feed.updated_ago', { minutes: updatedMinutes })}</span>
       </div>
-      {visibleArticles.map((article) => {
+      <div className="feed-search">
+        <input
+          type="search"
+          value={searchQuery}
+          onChange={(event) => setSearchQuery(event.target.value)}
+          placeholder={t('search.placeholder')}
+          aria-label={t('search.aria_label')}
+          className="feed-search-input"
+        />
+        {isSearchActive && (
+          <span className="feed-search-badge">
+            {isVertexSearch ? t('search.semantic_badge') : t('search.local_badge')}
+          </span>
+        )}
+        {searchLoading && (
+          <span className="feed-search-spinner" role="status" aria-label={t('search.loading')} />
+        )}
+      </div>
+      {isSearchActive && displayedArticles.length === 0 && (
+        <article className="feed-state-card">{t('search.no_results', { query: debouncedQuery })}</article>
+      )}
+      {!isSearchActive && displayedArticles.length === 0 && (
+        <article className="feed-state-card">{t('feed.empty')}</article>
+      )}
+      {displayedArticles.map((article) => {
         const sourceCategory = toSourceCategory(article);
         const sourceName = toSourceName(article, t('feed.unknown_source'));
         const summary = toSummary(article, i18n.language, t('feed.analysis_in_progress'));
