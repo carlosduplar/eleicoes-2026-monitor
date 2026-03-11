@@ -9,6 +9,7 @@ import Home from './pages/Home';
 import MethodologyPage from './pages/MethodologyPage';
 import PollsPage from './pages/PollsPage';
 import QuizPage from './pages/QuizPage';
+import QuizResult from './pages/QuizResult';
 import SentimentPage from './pages/SentimentPage';
 
 const Helmet = ReactHelmetAsync.Helmet || ReactHelmetAsync.default?.Helmet;
@@ -66,6 +67,7 @@ export const routes = [
       { path: 'sentimento', element: <SentimentPage /> },
       { path: 'pesquisas', element: <PollsPage /> },
       { path: 'candidatos', element: <CandidatesPage /> },
+      { path: 'quiz/resultado', element: <QuizResult /> },
       { path: 'quiz', element: <QuizPage /> },
       { path: 'metodologia', element: <MethodologyPage /> },
     ],
