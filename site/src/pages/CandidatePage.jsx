@@ -181,7 +181,7 @@ function CandidateArticles({ slug, articles, lang, t }) {
         <ul className="candidate-article-list">
           {recentArticles.map((article) => (
             <li key={article.id || article.url}>
-              <a href={article.url} rel="noreferrer" target="_blank">
+              <a href={article.url} rel="noopener noreferrer" target="_blank">
                 {article.title}
               </a>
               <p className="candidate-muted">
@@ -235,7 +235,7 @@ function CandidateTSELink({ candidate, t }) {
   return (
     <section className="candidate-card">
       <h2>{t('tse_registration')}</h2>
-      <a href={candidate.tse_registration_url} rel="noreferrer" target="_blank">
+      <a href={candidate.tse_registration_url} rel="noopener noreferrer" target="_blank">
         {t('tse_link_text')}
       </a>
     </section>

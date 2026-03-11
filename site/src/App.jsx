@@ -1,5 +1,5 @@
 import * as ReactHelmetAsync from 'react-helmet-async';
-import { Outlet } from 'react-router-dom';
+import { Outlet, useLocation } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 
 import BottomNav from './components/BottomNav';
@@ -17,19 +17,67 @@ import QuizResult from './pages/QuizResult';
 import SentimentPage from './pages/SentimentPage';
 
 const Helmet = ReactHelmetAsync.Helmet || ReactHelmetAsync.default?.Helmet;
+const CANONICAL_BASE_URL = 'https://eleicoes2026.com.br';
+
+function toMetaLabelFromSlug(value) {
+  if (!value) {
+    return '';
+  }
+  return value
+    .split('-')
+    .filter(Boolean)
+    .map((part) => `${part.slice(0, 1).toUpperCase()}${part.slice(1)}`)
+    .join(' ');
+}
 
 function AppShell() {
   const { t } = useTranslation('common');
+  const { pathname } = useLocation();
+  const normalizedPath = pathname !== '/' ? pathname.replace(/\/+$/, '') : '/';
+
+  const pathLabels = {
+    '/': t('home.feed_title'),
+    '/sentimento': t('sentiment.title'),
+    '/pesquisas': t('polls.title'),
+    '/quiz': t('quiz.title'),
+    '/quiz/resultado': t('quiz.result_title'),
+    '/metodologia': t('nav.metodologia'),
+    '/candidatos': t('nav.candidatos'),
+    '/sobre/caso-de-uso': t('nav.caso_de_uso'),
+  };
+
+  let routeLabel = pathLabels[normalizedPath] || '';
+  if (!routeLabel && normalizedPath.startsWith('/candidato/')) {
+    routeLabel = `${t('nav.candidatos')} - ${toMetaLabelFromSlug(normalizedPath.split('/')[2] || '')}`;
+  }
+  if (!routeLabel && normalizedPath.startsWith('/comparar/')) {
+    const pairSlug = normalizedPath.split('/')[2] || '';
+    routeLabel = `${t('nav.candidatos')} - ${toMetaLabelFromSlug(pairSlug.replace('-vs-', '-'))}`;
+  }
+  if (!routeLabel) {
+    routeLabel = t('brand');
+  }
+
+  const title = routeLabel === t('brand') ? t('brand') : `${routeLabel} | ${t('brand')}`;
+  const description = routeLabel === t('brand') ? t('meta.description') : `${routeLabel} - ${t('meta.description')}`;
+  const canonicalPath = normalizedPath === '/' ? '' : normalizedPath;
+  const canonicalUrl = `${CANONICAL_BASE_URL}${canonicalPath}`;
 
   return (
     <div className="app-shell">
       <Helmet>
-        <title>{t('brand')}</title>
-        <meta name="description" content={t('meta.description')} />
+        <title>{title}</title>
+        <meta name="description" content={description} />
+        <link rel="canonical" href={canonicalUrl} />
+        <meta property="og:title" content={title} />
+        <meta property="og:description" content={description} />
       </Helmet>
+      <a className="skip-link" href="#main-content">
+        {t('a11y.skip_to_content')}
+      </a>
       <Nav />
       <CountdownTimer />
-      <main className="container app-main main-content">
+      <main id="main-content" className="container app-main main-content">
         <Outlet />
       </main>
       <footer className="site-footer">

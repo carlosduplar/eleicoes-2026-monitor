@@ -55,12 +55,15 @@ No recorte de publicacao desta fase, os numeros consolidados sao:
 - 21 fontes RSS ativas em `data/sources.json`, alem de 8 fontes partidarias e 6 fontes de pesquisas.
 - 9 candidatos modelados em `data/candidates.json`.
 - Cadencia de pipeline com coletor em 10 minutos, validacao em 30 minutos e curadoria em janela aproximada de 90 minutos.
-- Build estatico de referencia com 24 paginas pre-renderizadas, incluindo rotas dinamicas de candidatos e comparacoes.
+- Build estatico de referencia com 25 paginas pre-renderizadas, incluindo rotas dinamicas de candidatos e comparacoes.
+- Suite Python com 61 testes passando (`python -m pytest scripts/ -v --tb=short`).
+- Suite Playwright com 24 testes passando contra o site buildado (`npx playwright test`).
+- Quatro relatorios formais de QA gerados em `qa/phase-16-*.md` (security, SEO, code review, accessibility).
 
 Esses numeros importam menos como marketing e mais como prova de escala operacional sob restricao de custo. O projeto nao depende de infraestrutura premium para manter cobertura tecnica relevante.
 
 ## Proximos passos
-Os proximos marcos seguem o roteiro ja definido no PLAN. A Phase 14 amplia coleta de partidos e social para enriquecer cobertura alem de RSS, sem quebrar idempotencia nem contratos de schema. A Phase 15 foca polimento mobile: breakpoints, navegacao inferior e ergonomia de toque para manter qualidade em 390px, alinhada aos wireframes WF-11 e WF-12.
+Com a Phase 16 concluida, o baseline de qualidade (testes automatizados + auditorias de seguranca/SEO/acessibilidade + revisao tecnica) esta fechado para release `1.0.0`.
 
-A Phase 16 fecha o ciclo com QA final: testes automatizados, revisao de seguranca, auditoria de SEO e revisao tecnica de alto sinal. Esse fechamento e critico para transformar o portal de prototipo funcional em referencia robusta de monitoramento eleitoral aberto. Depois disso, a extensao opcional com Vertex AI Search pode ser avaliada com base em custo, utilidade de busca semantica e impacto real para usuario final.
+O proximo marco tecnico permanece a extensao opcional da Phase 17 (Vertex AI Search), a ser avaliada por custo, utilidade de busca semantica e impacto real para usuario final. Em paralelo, o projeto deve manter operacao continua dos workflows, monitoramento de qualidade de dados e atualizacao editorial dos artefatos bilingues.
 

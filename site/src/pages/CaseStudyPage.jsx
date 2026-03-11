@@ -16,6 +16,33 @@ function slugify(text) {
     .replace(/^-|-$/g, '');
 }
 
+function escapeHtmlAttr(value) {
+  return String(value)
+    .replace(/&/g, '&amp;')
+    .replace(/"/g, '&quot;')
+    .replace(/'/g, '&#39;')
+    .replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;');
+}
+
+function sanitizeUrl(rawUrl) {
+  if (!rawUrl || typeof rawUrl !== 'string') {
+    return '';
+  }
+  if (rawUrl.startsWith('#') || rawUrl.startsWith('/')) {
+    return rawUrl;
+  }
+  try {
+    const parsed = new URL(rawUrl, 'https://eleicoes2026.com.br');
+    if (parsed.protocol === 'http:' || parsed.protocol === 'https:' || parsed.protocol === 'mailto:' || parsed.protocol === 'tel:') {
+      return rawUrl;
+    }
+  } catch {
+    return '';
+  }
+  return '';
+}
+
 const markedRenderer = new marked.Renderer();
 markedRenderer.heading = function heading({ tokens, depth }) {
   const text = this.parser.parseInline(tokens);
@@ -24,6 +51,30 @@ markedRenderer.heading = function heading({ tokens, depth }) {
     return `<h${depth} id="${id}">${text}</h${depth}>`;
   }
   return `<h${depth}>${text}</h${depth}>`;
+};
+markedRenderer.html = function html() {
+  return '';
+};
+markedRenderer.link = function link({ href, title, tokens }) {
+  const safeHref = sanitizeUrl(href);
+  const text = this.parser.parseInline(tokens);
+  if (!safeHref) {
+    return text;
+  }
+  const titleAttr = title ? ` title="${escapeHtmlAttr(title)}"` : '';
+  const isExternal = /^https?:\/\//i.test(safeHref);
+  const relAttr = isExternal ? ' rel="noopener noreferrer"' : '';
+  const targetAttr = isExternal ? ' target="_blank"' : '';
+  return `<a href="${escapeHtmlAttr(safeHref)}"${titleAttr}${relAttr}${targetAttr}>${text}</a>`;
+};
+markedRenderer.image = function image({ href, title, text }) {
+  const safeSrc = sanitizeUrl(href);
+  if (!safeSrc) {
+    return '';
+  }
+  const titleAttr = title ? ` title="${escapeHtmlAttr(title)}"` : '';
+  const altText = escapeHtmlAttr(text || '');
+  return `<img src="${escapeHtmlAttr(safeSrc)}" alt="${altText}"${titleAttr} loading="lazy" />`;
 };
 marked.use({ renderer: markedRenderer });
 
@@ -116,7 +167,7 @@ function CaseStudyPage() {
   }, [t, i18n.language]);
 
   const tocItems = headings.length > 0 ? headings : fallbackHeadings;
-  const html = useMemo(() => (content ? marked.parse(content) : ''), [content]);
+  const html = useMemo(() => (content ? String(marked.parse(content)) : ''), [content]);
   const readingMinutes = useMemo(() => (content ? calculateReadingTime(content) : 0), [content]);
   const updatedDate = useMemo(() => new Date().toLocaleDateString(language), [language]);
   const caseStudyJsonLd = useMemo(

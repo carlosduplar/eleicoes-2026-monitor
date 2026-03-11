@@ -55,12 +55,15 @@ At the publication snapshot of this phase, the measurable baseline is:
 - 21 active RSS sources in `data/sources.json`, plus 8 party sources and 6 polling sources.
 - 9 candidates modeled in `data/candidates.json`.
 - Pipeline cadence with collector every 10 minutes, validator every 30 minutes, and curator on an approximately 90-minute window.
-- A reference static build producing 24 pre-rendered pages, including dynamic candidate and comparison routes.
+- A reference static build producing 25 pre-rendered pages, including dynamic candidate and comparison routes.
+- Python suite with 61 passing tests (`python -m pytest scripts/ -v --tb=short`).
+- Playwright suite with 24 passing tests against the built site (`npx playwright test`).
+- Four formal QA artifacts in `qa/phase-16-*.md` (security, SEO, code review, accessibility).
 
 These numbers are not marketing decoration; they demonstrate operational scope under strict cost constraints and static hosting limitations.
 
 ## Next steps
-Next milestones remain aligned with PLAN. Phase 14 expands party and social collection to broaden coverage beyond RSS while preserving idempotency and schema contracts. Phase 15 focuses on mobile polish: breakpoint review, bottom navigation, and touch ergonomics at 390px aligned with WF-11 and WF-12.
+With Phase 16 complete, the `1.0.0` quality baseline is now established through automated tests and formal security/SEO/accessibility/code-review audits.
 
-Phase 16 closes the cycle with final QA: automated tests, security review, SEO audit, and high-signal technical review. That stage is essential to move from a functional prototype to a robust open election monitoring reference. After that, the optional Vertex AI Search extension can be evaluated based on cost, semantic retrieval quality, and actual user value.
+The next technical milestone remains the optional Phase 17 extension (Vertex AI Search), to be evaluated by cost, semantic retrieval usefulness, and measurable user value. In parallel, the project should maintain continuous workflow operation, data-quality monitoring, and bilingual documentation updates.
 

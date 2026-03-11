@@ -12,6 +12,7 @@ PIPELINE_HEALTH_FILE = Path("data/pipeline_health.json")
 def main() -> None:
     health = {
         "checked_at": datetime.now(timezone.utc).replace(microsecond=0).isoformat().replace("+00:00", "Z"),
+        "workflows": {},
         "status": "ok",
         "notes": "Watchdog stub - full implementation Phase 16.",
     }

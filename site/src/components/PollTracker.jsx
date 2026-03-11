@@ -214,7 +214,7 @@ function PollTracker() {
         <div className="sentiment-head">
           <h1>{t('polls.title')}</h1>
           <label htmlFor="poll-institute-filter">
-            <span style={{ display: 'none' }}>{t('polls.institute_label')}</span>
+            <span className="sr-only">{t('polls.institute_label')}</span>
             <select
               id="poll-institute-filter"
               className="sentiment-toggle"

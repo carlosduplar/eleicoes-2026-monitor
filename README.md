@@ -1,170 +1,117 @@
 # Portal Eleicoes BR 2026
 
-Monitoramento em tempo real das eleicoes presidenciais brasileiras de 2026.
-Real-time monitoring of Brazil's 2026 presidential elections.
+[![Collect](https://github.com/carlosduplar/eleicoes-2026-monitor/actions/workflows/collect.yml/badge.svg)](https://github.com/carlosduplar/eleicoes-2026-monitor/actions/workflows/collect.yml)
+[![Deploy](https://github.com/carlosduplar/eleicoes-2026-monitor/actions/workflows/deploy.yml/badge.svg)](https://github.com/carlosduplar/eleicoes-2026-monitor/actions/workflows/deploy.yml)
+[![Watchdog](https://github.com/carlosduplar/eleicoes-2026-monitor/actions/workflows/watchdog.yml/badge.svg)](https://github.com/carlosduplar/eleicoes-2026-monitor/actions/workflows/watchdog.yml)
 
----
+> Live: https://carlosduplar.github.io/eleicoes-2026-monitor/
 
-## About
+## What is this? / O que e isto?
 
-A bilingual (pt-BR / en-US) static portal that aggregates news, sentiment analysis, polling data, and a political affinity quiz for Brazil's 2026 presidential race. Built on GitHub Pages with automated AI-powered pipelines running every 10-30 minutes.
+Portal Eleicoes BR 2026 is a bilingual static portal (pt-BR and en-US) that monitors election news, sentiment, polling, and candidate positioning signals for Brazil's 2026 presidential cycle. It combines a Python ingestion pipeline, AI-assisted enrichment, and a React + Vite SSG frontend published to GitHub Pages.
+
+O Portal Eleicoes BR 2026 e um portal estatico bilingue (pt-BR e en-US) para monitorar noticias, sentimento, pesquisas e sinais de posicionamento de candidatos na eleicao presidencial de 2026. O projeto combina pipeline Python de ingestao, enriquecimento com IA e frontend React + Vite SSG publicado no GitHub Pages.
+
+## Screenshot
+
+![Homepage light mode](docs/homepage-light.png)
 
 ## Architecture
 
-```
-Pipeline (Python 3.12)          Frontend (React + Vite SSG)
-  collect_rss.py  ──┐
-  collect_polls.py ─┤           site/src/
-  collect_parties.py┤             pages/       ← SSG pre-rendered
-  ai_client.py ─────┤             components/  ← NewsFeed, PollTracker, Quiz...
-  summarize.py ─────┤             locales/     ← pt-BR, en-US
-  build_data.py ────┘             hooks/       ← useData, useQuiz
-        │                              │
-        ▼                              ▼
-    data/*.json  ──────────►  GitHub Pages (static)
-        │
-    GitHub Actions (cron 10/30/90 min)
-```
-
-### Newsroom Model
-
-| Role | Frequency | Responsibility |
-|------|-----------|----------------|
-| **Foca** (collector) | 10 min | RSS collection, dedup, relevance scoring |
-| **Editor** (validator) | 30 min | Bilingual summaries, sentiment, topic validation |
-| **Editor-chefe** (curator) | ~90 min | Prominence ranking, weekly briefing, quiz positions |
-
-### AI Provider Chain (free-first)
-
-1. NVIDIA NIM (free dev credits)
-2. OpenRouter (free, 200 req/day)
-3. Ollama Cloud (free)
-4. Vertex AI / Gemini (paid, $10/mo)
-5. MiMo (paid fallback)
-
-All providers use the OpenAI Python SDK via `base_url` swap. Zero vendor lock-in.
-
-## Features
-
-- **News Feed**: Aggregated from 20+ RSS sources with real-time updates
-- **Sentiment Dashboard**: Candidate x topic heatmap with source transparency
-- **Polling Tracker**: Historical line charts from 6 major institutes
-- **Political Affinity Quiz**: 15-topic progressive funnel, candidate reveal only in results
-- **Candidate Profiles**: SEO-optimized pages with positions, polling, and sentiment
-- **Candidate Comparison**: Side-by-side comparison with data visualizations
-- **Methodology Page**: Full pipeline transparency, AI disclaimers
-- **Bilingual**: Complete pt-BR and en-US support via react-i18next
-
-## Current Implementation Status
-
-- Phase 03 complete: RSS collection pipeline and consolidation.
-- Phase 04 complete: frontend MVP scaffold in `site/` with:
-  - React + Vite static generation;
-  - bilingual app shell (`PT | EN`);
-  - countdown, navigation, and route placeholders;
-  - data-driven `NewsFeed` + `SourceFilter` + `MethodologyBadge`;
-  - responsive desktop/mobile feed baseline aligned to WF-01 and WF-11.
-
-## Pre-candidates Tracked (March 2026)
-
-| Name | Party | Status |
-|------|-------|--------|
-| Lula | PT | Pre-candidate |
-| Flavio Bolsonaro | PL | Pre-candidate |
-| Tarcisio de Freitas | Republicanos | Speculated |
-| Ronaldo Caiado | Uniao Brasil | Pre-candidate |
-| Romeu Zema | Novo | Pre-candidate |
-| Ratinho Jr | PSD | Speculated |
-| Eduardo Leite | PSD | Pre-candidate |
-| Aldo Rebelo | DC | Pre-candidate |
-| Renan Santos | Missao | Pre-candidate |
-
-## Tech Stack
-
-| Layer | Technology |
-|-------|------------|
-| Hosting | GitHub Pages |
-| CDN | Cloudflare Free |
-| CI/CD | GitHub Actions (cron) |
-| Frontend | React + Vite + vite-plugin-ssg |
-| i18n | react-i18next |
-| SEO | react-helmet-async + JSON-LD |
-| Pipeline | Python 3.12 (feedparser, BeautifulSoup, Playwright) |
-| AI | Multi-provider via OpenAI SDK |
-
-## Project Structure
-
-```
-eleicoes-2026-monitor/
-  .github/workflows/     ← CI/CD pipelines
-  scripts/               ← Python collection + AI processing
-  data/                  ← JSON data files (auto-generated)
-  site/                  ← React + Vite frontend
-  docs/
-    adr/                 ← Architecture Decision Records
-    schemas/             ← JSON Schema + TypeScript types
-    wireframes/          ← HTML standalone wireframes (WF-01 to WF-12)
-    case-study/          ← Living documentation (pt-BR, en-US)
-  plans/                 ← Phase specs for Codex agents
-  PLAN.md                ← Master implementation plan
-  CHANGELOG.md           ← Version history
-  conductor.ps1          ← Multi-agent orchestrator
+```text
+Sources (RSS, polls, parties, social)
+                |
+                v
+      scripts/collect_*.py  (Foca, ~10 min)
+                |
+                v
+   scripts/summarize.py + analyze_sentiment.py
+           (Editor, ~30 min)
+                |
+                v
+    scripts/curate.py + quiz extraction
+        (Editor-chefe, ~90 min)
+                |
+                v
+ data/*.json  -> schema validation -> git commit
+                |
+                v
+ React + Vite + vite-plugin-ssg (site/)
+                |
+                v
+      GitHub Pages + Cloudflare CDN
 ```
 
-## Development
+## Running Locally
 
-### Prerequisites
-
-- Python 3.12+
-- Node.js 20 LTS
-- PowerShell 7 (for conductor.ps1)
-
-### Setup
-
-```bash
-# Python dependencies
+```powershell
+# from repository root
 pip install -r requirements.txt
 
-# Frontend dependencies
-cd site && npm install
+Push-Location site
+npm install
+npm run dev
+Pop-Location
 ```
 
-### Running
-
-```bash
-# Orchestrate all agents
-pwsh conductor.ps1
-
-# Or run individual scripts
+```powershell
+# run data pipeline scripts from root
 python scripts/collect_rss.py
 python scripts/build_data.py
-
-# Frontend dev server
-cd site && npm run dev
+python scripts/curate.py
 ```
 
-## GitHub Pages Setup (one-time)
+```powershell
+# tests
+python -m pytest scripts/ -v --tb=short
+Push-Location site
+npx playwright install chromium
+npx playwright test
+Pop-Location
+```
 
-After Phase 05 workflow setup, repository operators must configure Pages once:
+## Required GitHub Secrets
 
-1. Go to `Settings > Pages`
-2. Set `Source` to `GitHub Actions`
-3. Save
+| Secret | Used by | Description |
+|---|---|---|
+| `BRIGHTDATA_API_KEY` | `collect.yml` | Bright Data API key for fallback scraping |
+| `BRIGHTDATA_ZONE` | `collect.yml` | Bright Data zone identifier |
+| `NVIDIA_API_KEY` | `collect.yml`, `validate.yml`, `curate.yml`, `update-quiz.yml` | NVIDIA NIM provider |
+| `OPENROUTER_API_KEY` | `collect.yml`, `validate.yml`, `curate.yml`, `update-quiz.yml` | OpenRouter provider |
+| `OLLAMA_API_KEY` | `collect.yml`, `validate.yml`, `curate.yml`, `update-quiz.yml` | Ollama Cloud provider |
+| `VERTEX_ACCESS_TOKEN` | `collect.yml`, `validate.yml`, `curate.yml`, `update-quiz.yml` | Vertex/Gemini access token |
+| `VERTEX_BASE_URL` | `collect.yml`, `validate.yml`, `curate.yml`, `update-quiz.yml` | Vertex/Gemini endpoint base URL |
+| `XIAOMI_MIMO_API_KEY` | `collect.yml`, `validate.yml`, `curate.yml` | MiMo fallback provider |
+| `TWITTER_BEARER_TOKEN` | `collect.yml` | Social collection token |
+| `YOUTUBE_API_KEY` | `collect.yml` | YouTube collection key |
 
-## Documentation
+## Pre-candidates (March 2026)
 
-- [PLAN.md](PLAN.md) — Master implementation plan (17 phases)
-- [Architecture Decision Records](docs/adr/) — ADR 000-003+
-- [Data Schemas](docs/schemas/) — JSON Schema + TypeScript types
-- [Agent Protocol](docs/agent-protocol.md) — Multi-agent handoff protocol
-- [Wireframes](docs/wireframes/) — HTML standalone wireframes
+| Name | Party | Status |
+|---|---|---|
+| Luiz Inacio Lula da Silva | PT | pre-candidate |
+| Flavio Nantes Bolsonaro | PL | pre-candidate |
+| Tarcisio Gomes de Freitas | Republicanos | speculated |
+| Ronaldo Ramos Caiado | Uniao Brasil | pre-candidate |
+| Romeu Zema Neto | Novo | pre-candidate |
+| Carlos Roberto Massa Junior | PSD | speculated |
+| Eduardo Figueiredo Cavalheiro Leite | PSD | pre-candidate |
+| Jose Aldo Rebelo Figueiredo | DC | pre-candidate |
+| Renan Franco Santos | Missao | pre-candidate |
 
-## Disclaimers
+## Architecture Decision Records
 
-- Sentiment analysis is algorithmic and does not represent polling data
-- Quiz results are based on verified public declarations, not endorsements
-- All AI-generated content is labeled with methodology badges
-- This is an academic/educational project, not affiliated with any political party
+- [ADR-000: Wireframes](docs/adr/000-wireframes.md)
+- [ADR-001: Hosting](docs/adr/001-hosting.md)
+- [ADR-002: AI Providers](docs/adr/002-ai-providers.md)
+- [ADR-003: i18n Strategy](docs/adr/003-i18n-strategy.md)
+- [ADR-004: SEO and GEO Strategy](docs/adr/004-seo-geo-strategy.md)
+- [ADR-005: Quiz Affinity System](docs/adr/005-quiz-affinity-system.md)
+- [ADR-006: Transparency and Methodology](docs/adr/006-transparency-methodology.md)
+
+## Contributing
+
+Open a GitHub issue describing the bug/feature and the expected behavior before opening a pull request.
 
 ## License
 
