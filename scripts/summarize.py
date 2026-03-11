@@ -464,6 +464,8 @@ def _append_edit_history(article: dict[str, Any], provider: str) -> None:
 
 def _all_providers_unavailable() -> bool:
     """Check if all AI providers have their circuit breakers open."""
+    if not _provider_failure_counts:
+        return False
     return all(
         count >= _CIRCUIT_BREAKER_THRESHOLD
         for count in _provider_failure_counts.values()
