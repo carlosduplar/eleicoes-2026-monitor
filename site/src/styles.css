@@ -1112,7 +1112,8 @@ p {
 
   .source-filter-button {
     font-size: 11px;
-    padding: 0.2rem 0.65rem;
+    padding: 10px 12px;
+    min-height: 44px;
   }
 
   .feed-card-content h3 {
@@ -1528,5 +1529,218 @@ p {
   .quiz-option-card {
     font-size: 0.84rem;
     padding: 0.85rem;
+  }
+}
+
+/* --- Bottom Nav (Phase 15) --- */
+
+.bottom-nav {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  z-index: 1000;
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  height: calc(60px + env(safe-area-inset-bottom));
+  padding-bottom: env(safe-area-inset-bottom);
+  background: var(--brand-surface);
+  border-top: 1px solid var(--border);
+}
+
+.bottom-nav-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-width: 44px;
+  min-height: 44px;
+  padding: 6px 8px;
+  text-decoration: none;
+  color: var(--text-secondary);
+  font-size: 10px;
+  font-family: Inter, system-ui, sans-serif;
+  gap: 2px;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.bottom-nav-item svg {
+  width: 24px;
+  height: 24px;
+}
+
+.bottom-nav-label {
+  font-size: 10px;
+  line-height: 1.2;
+}
+
+.bottom-nav-item--active {
+  color: var(--brand-navy);
+}
+
+/* Hide bottom nav on desktop */
+@media (min-width: 769px) {
+  .bottom-nav {
+    display: none;
+  }
+}
+
+/* Hide desktop nav on mobile, show bottom nav */
+@media (max-width: 768px) {
+  .top-nav {
+    display: none;
+  }
+
+  .main-content {
+    padding-bottom: 72px;
+  }
+}
+
+/* Immersive quiz: hide nav/footer when body has this class */
+body.quiz-immersive .top-nav,
+body.quiz-immersive .bottom-nav,
+body.quiz-immersive .countdown-bar,
+body.quiz-immersive .site-footer {
+  display: none;
+}
+
+body.quiz-immersive .main-content {
+  padding-bottom: 0;
+}
+
+/* On mobile: quiz fills viewport */
+@media (max-width: 768px) {
+  body.quiz-immersive .app-main {
+    min-height: 100dvh;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    padding-top: 0;
+  }
+
+  body.quiz-immersive .quiz-progress {
+    height: 4px;
+    margin-bottom: 1rem;
+  }
+
+  body.quiz-immersive .quiz-option-card {
+    min-height: 56px;
+    font-size: 0.95rem;
+    padding: 1rem;
+  }
+
+  body.quiz-immersive .quiz-next-btn {
+    min-height: 56px;
+    font-size: 1rem;
+    margin-top: auto;
+  }
+}
+
+/* Touch target compliance: all interactive elements >= 44px (Phase 15) */
+@media (max-width: 768px) {
+  .source-filter-button {
+    min-height: 44px;
+    min-width: 44px;
+    padding: 10px 16px;
+  }
+
+  .lang-button {
+    min-height: 44px;
+    min-width: 44px;
+    padding: 10px 12px;
+  }
+
+  .methodology-badge {
+    min-height: 44px;
+    display: inline-flex;
+    align-items: center;
+    padding: 8px 12px;
+  }
+
+  .quiz-option-card {
+    min-height: 56px;
+  }
+
+  .quiz-next-btn {
+    min-height: 48px;
+  }
+
+  .quiz-restart-btn {
+    min-height: 48px;
+  }
+
+  .quiz-share-btn {
+    min-height: 48px;
+  }
+
+  .sentiment-toggle {
+    min-height: 44px;
+    padding: 10px 16px;
+  }
+
+  .top-link {
+    min-height: 44px;
+    display: inline-flex;
+    align-items: center;
+  }
+}
+
+/* Mobile component layout fixes (Phase 15) */
+@media (max-width: 430px) {
+  /* NewsFeed: single-column, full width cards */
+  .feed-card {
+    grid-template-columns: 1fr;
+  }
+
+  .feed-card-content h3 {
+    font-size: 1rem;
+  }
+
+  /* PollTracker: chart full width, legend below */
+  .recharts-wrapper {
+    width: 100% !important;
+  }
+
+  /* CandidatePage: single column, hero shrinks */
+  .candidate-layout {
+    grid-template-columns: 1fr;
+  }
+
+  .candidate-hero img {
+    max-height: 200px;
+    object-fit: cover;
+  }
+
+  /* ComparisonPage: stacked panels, not side-by-side */
+  .comparison-hero-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .comparison-topic-columns {
+    grid-template-columns: 1fr;
+  }
+
+  /* MethodologyPage: single column, no sidebar feel */
+  .methodology-page {
+    max-width: 100%;
+    padding: 0 0.5rem;
+  }
+
+  /* CaseStudyPage: collapsed TOC */
+  .case-study-layout {
+    grid-template-columns: 1fr;
+  }
+
+  .case-study-toc {
+    position: static;
+    margin-bottom: 1rem;
+  }
+
+  /* SentimentDashboard: heatmap horizontal scroll is OK */
+  .sentiment-table-container,
+  .sentiment-table-wrap {
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
   }
 }

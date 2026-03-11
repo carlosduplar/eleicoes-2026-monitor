@@ -2,6 +2,7 @@ import * as ReactHelmetAsync from 'react-helmet-async';
 import { Outlet } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 
+import BottomNav from './components/BottomNav';
 import CountdownTimer from './components/CountdownTimer';
 import Nav from './components/Nav';
 import CandidatePage from './pages/CandidatePage';
@@ -28,7 +29,7 @@ function AppShell() {
       </Helmet>
       <Nav />
       <CountdownTimer />
-      <main className="container app-main">
+      <main className="container app-main main-content">
         <Outlet />
       </main>
       <footer className="site-footer">
@@ -57,6 +58,7 @@ function AppShell() {
         </div>
         <div className="container footer-bottom">{t('footer.copyright')}</div>
       </footer>
+      <BottomNav />
     </div>
   );
 }
