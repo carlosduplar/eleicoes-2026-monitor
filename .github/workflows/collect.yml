@@ -8,6 +8,10 @@ on:
 permissions:
   contents: write
 
+concurrency:
+  group: collect-${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: false
+
 jobs:
   collect:
     runs-on: ubuntu-latest
@@ -24,6 +28,9 @@ jobs:
       XIAOMI_MIMO_API_KEY: ${{ secrets.XIAOMI_MIMO_API_KEY }}
       TWITTER_BEARER_TOKEN: ${{ secrets.TWITTER_BEARER_TOKEN }}
       YOUTUBE_API_KEY: ${{ secrets.YOUTUBE_API_KEY }}
+      SCRAPE_LIMIT: "40"
+      SUMMARIZE_LIMIT: "12"
+      SENTIMENT_LIMIT: "12"
     steps:
       - name: Checkout
         uses: actions/checkout@v4
@@ -50,12 +57,20 @@ jobs:
           python scripts/collect_social.py || echo "[warn] collect_social failed"
 
       - name: Scrape article content
-        run: python scripts/scrape_articles.py || echo "scrape failed, continuing"
+        run: python scripts/scrape_articles.py --limit "${SCRAPE_LIMIT}" || echo "scrape failed, continuing"
 
-      - name: AI processing
+      - name: AI summarization (chunked)
+        env:
+          NVIDIA_API_KEY: ""
+        run: python scripts/summarize.py --limit "${SUMMARIZE_LIMIT}"
+
+      - name: AI sentiment (chunked)
+        env:
+          NVIDIA_API_KEY: ""
+        run: python scripts/analyze_sentiment.py --limit "${SENTIMENT_LIMIT}"
+
+      - name: Build derived data
         run: |
-          python scripts/summarize.py
-          python scripts/analyze_sentiment.py
           python scripts/build_data.py
           python scripts/generate_rss_feed.py
 
