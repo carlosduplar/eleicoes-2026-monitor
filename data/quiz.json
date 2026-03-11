@@ -3,25 +3,25 @@
   "ordered_topics": [
     "eleicoes",
     "politica_ext",
+    "seguranca",
     "corrupcao",
-    "economia",
-    "seguranca"
+    "economia"
   ],
   "topics": {
     "eleicoes": {
-      "divergence_score": 1.0,
+      "divergence_score": 0.5,
       "question_pt": "Qual mudanca deve ser prioridade no sistema eleitoral brasileiro?",
       "question_en": "Which change should be prioritized in Brazil's electoral system?",
       "options": [
         {
           "id": "opt_a",
-          "text_pt": "O presidente o candidato tem 64% de desaprovação entre os evangélicos e 51% de desaprovação no geral, segundo pesquisa Ipsos-Ipec.",
-          "text_en": "President the candidate has 64% disapproval among evangelicals and 51% disapproval overall, according to Ipsos-Ipec survey.",
-          "weight": -2,
+          "text_pt": "O presidente o candidato tem 64% de desaprovação entre os evangélicos e 51% no geral, mas é aprovado por 43% da população, com avaliação de 33% como ótimo/bom.",
+          "text_en": "President the candidate has 64% disapproval among evangelicals and 51% overall, but is approved by 43% of the population, with an evaluation of 33% as great/good.",
+          "weight": 0,
           "candidate_slug": "lula",
           "confidence": "high",
-          "source_pt": "Trecho 1: A avaliação de Lula entre os evangélicos e católicos, segundo nova pesquisa Ipsos-Ipec. Nova pesquisa Ipsos-Ipec mostra que o presidente Lula tem 64% de desaprovação entre os evangélicos, contra 51% no geral. Entre os ca",
-          "source_en": "Snippet 1: A avaliação de Lula entre os evangélicos e católicos, segundo nova pesquisa Ipsos-Ipec. Nova pesquisa Ipsos-Ipec mostra que o presidente Lula tem 64% de desaprovação entre os evangélicos, contra 51% no geral. Entre os ca"
+          "source_pt": "Trecho 3: Lula é desaprovado por 51% e aprovado por 43%, diz Ipsos-Ipec. Pesquisa Ipsos-Ipec mostra que 51% desaprovam o governo Lula e 43% aprovam. Avaliação do governo aponta 33% como ótimo/bom, 24% regular e 40% ruim/péssimo. M",
+          "source_en": "Snippet 3: Lula é desaprovado por 51% e aprovado por 43%, diz Ipsos-Ipec. Pesquisa Ipsos-Ipec mostra que 51% desaprovam o governo Lula e 43% aprovam. Avaliação do governo aponta 33% como ótimo/bom, 24% regular e 40% ruim/péssimo. M"
         },
         {
           "id": "opt_b",
@@ -45,8 +45,8 @@
         },
         {
           "id": "opt_d",
-          "text_pt": "A pesquisa indica um empate técnico entre o candidato e o candidato em Minas Gerais, com o candidato ligeiramente à frente no primeiro turno e o candidato mais próximo no segundo turno.",
-          "text_en": "The poll indicates a technical tie between the candidate and the candidate in Minas Gerais, with the candidate slightly ahead in the first round and the candidate closer in the second round.",
+          "text_pt": "o candidato está empatado tecnicamente com o candidato e o candidato em Minas Gerais, segundo pesquisa do Paraná Pesquisas.",
+          "text_en": "the candidate is technically tied with the candidate and the candidate in Minas Gerais, according to a survey by Paraná Pesquisas.",
           "weight": 0,
           "candidate_slug": "zema",
           "confidence": "high",
@@ -66,24 +66,24 @@
       ]
     },
     "politica_ext": {
-      "divergence_score": 1.0,
+      "divergence_score": 0.5,
       "question_pt": "Qual postura internacional o Brasil deve priorizar nos proximos anos?",
       "question_en": "Which international posture should Brazil prioritize in the coming years?",
       "options": [
         {
           "id": "opt_a",
-          "text_pt": "O texto não apresenta uma posição clara sobre o candidato, mas menciona críticas de opositores e dados de aprovação/desaprovação.",
-          "text_en": "The text does not present a clear position on candidate the candidate, but mentions criticisms from opponents and approval/disapproval data.",
-          "weight": 0,
+          "text_pt": "O governador de Goiás, Ronaldo o candidato, criticou duramente o presidente o candidato, chamando-o de 'embaixador oficial do narcotráfico e das facções criminosas do Brasil'.",
+          "text_en": "The Governor of Goiás, Ronaldo the candidate, harshly criticized President the candidate, calling him the 'official ambassador of drug trafficking and criminal factions in Brazil'.",
+          "weight": -2,
           "candidate_slug": "lula",
           "confidence": "high",
-          "source_pt": "Trecho 3: Lula é desaprovado por 51% e aprovado por 43%, diz Ipsos-Ipec. Pesquisa Ipsos-Ipec mostra que 51% desaprovam o governo Lula e 43% aprovam. Avaliação do governo aponta 33% como ótimo/bom, 24% regular e 40% ruim/péssimo. M",
-          "source_en": "Snippet 3: Lula é desaprovado por 51% e aprovado por 43%, diz Ipsos-Ipec. Pesquisa Ipsos-Ipec mostra que 51% desaprovam o governo Lula e 43% aprovam. Avaliação do governo aponta 33% como ótimo/bom, 24% regular e 40% ruim/péssimo. M"
+          "source_pt": "Trecho 1: “Embaixador oficial do narcotráfico”, diz Caiado sobre Lula. O governador de Goiás, Ronaldo Caiado, criticou duramente o presidente Lula, chamando-o de 'embaixador oficial do narcotráfico e das facções criminosas do Bras",
+          "source_en": "Snippet 1: “Embaixador oficial do narcotráfico”, diz Caiado sobre Lula. O governador de Goiás, Ronaldo Caiado, criticou duramente o presidente Lula, chamando-o de 'embaixador oficial do narcotráfico e das facções criminosas do Bras"
         },
         {
           "id": "opt_b",
-          "text_pt": "contra a ausência de o candidato na posse de Kast no Chile",
-          "text_en": "against the candidate's absence at Kast's inauguration in Chile",
+          "text_pt": "Crítica à ausência do presidente o candidato na posse de Kast no Chile, classificando-a como 'transborda intolerância'.",
+          "text_en": "Criticism of President the candidate's absence at Kast's inauguration in Chile, calling it 'overflows intolerance'.",
           "weight": -2,
           "candidate_slug": "flavio-bolsonaro",
           "confidence": "high",
@@ -92,18 +92,55 @@
         },
         {
           "id": "opt_c",
-          "text_pt": "favor",
-          "text_en": "in favor",
-          "weight": 2,
+          "text_pt": "posicao em portugues, ou null",
+          "text_en": "position in English, or null",
+          "weight": 0,
           "candidate_slug": "tarcisio",
-          "confidence": "high",
+          "confidence": "medium",
           "source_pt": "Trecho 1: O que Valdemar planeja após encontro com Eduardo Bolsonaro nos EUA. Valdemar Costa Neto se reuniu com Eduardo Bolsonaro nos EUA para definir estratégias eleitorais do PL, incluindo candidaturas em São Paulo. Eles discuti",
           "source_en": "Snippet 1: O que Valdemar planeja após encontro com Eduardo Bolsonaro nos EUA. Valdemar Costa Neto se reuniu com Eduardo Bolsonaro nos EUA para definir estratégias eleitorais do PL, incluindo candidaturas em São Paulo. Eles discuti"
         },
         {
           "id": "opt_d",
-          "text_pt": "o candidato criticou duramente o presidente o candidato, chamando-o de 'embaixador oficial do narcotráfico e das facções criminosas do Brasil'",
-          "text_en": "the candidate harshly criticized President the candidate, calling him 'the official ambassador of drug trafficking and criminal factions in Brazil'",
+          "text_pt": "Contra o presidente o candidato, acusando-o de ser um 'embaixador oficial do narcotráfico e das facções criminosas do Brasil'",
+          "text_en": "Against President the candidate, accusing him of being an 'official ambassador of drug trafficking and criminal factions in Brazil'",
+          "weight": -2,
+          "candidate_slug": "caiado",
+          "confidence": "high",
+          "source_pt": "Trecho 1: “Embaixador oficial do narcotráfico”, diz Caiado sobre Lula. O governador de Goiás, Ronaldo Caiado, criticou duramente o presidente Lula, chamando-o de 'embaixador oficial do narcotráfico e das facções criminosas do Bras",
+          "source_en": "Snippet 1: “Embaixador oficial do narcotráfico”, diz Caiado sobre Lula. O governador de Goiás, Ronaldo Caiado, criticou duramente o presidente Lula, chamando-o de 'embaixador oficial do narcotráfico e das facções criminosas do Bras"
+        }
+      ]
+    },
+    "seguranca": {
+      "divergence_score": 0.5,
+      "question_pt": "Qual estrategia deve guiar a politica nacional de seguranca publica?",
+      "question_en": "Which strategy should guide national public security policy?",
+      "options": [
+        {
+          "id": "opt_a",
+          "text_pt": "O governo de o candidato está trabalhando para impedir que facções criminosas como PCC e Comando Vermelho sejam classificadas como organizações terroristas pelos EUA, preocupado com impactos econômicos e políticos internos.",
+          "text_en": "the candidate's government is working to prevent criminal factions like PCC and Comando Vermelho from being classified as terrorist organizations by the US, concerned about internal economic and political impacts.",
+          "weight": -2,
+          "candidate_slug": "lula",
+          "confidence": "high",
+          "source_pt": "Trecho 3: Lula age para barrar classificação de PCC e CV como terroristas. O governo Lula está organizando uma força-tarefa para impedir ou adiar a classificação do Comando Vermelho e PCC como organizações terroristas pelos EUA. A",
+          "source_en": "Snippet 3: Lula age para barrar classificação de PCC e CV como terroristas. O governo Lula está organizando uma força-tarefa para impedir ou adiar a classificação do Comando Vermelho e PCC como organizações terroristas pelos EUA. A"
+        },
+        {
+          "id": "opt_b",
+          "text_pt": "O governo o candidato de Freitas está investigando um vazamento de fotos do empresário Daniel Vorcaro durante sua entrada no sistema prisional paulista.",
+          "text_en": "The the candidate de Freitas government is investigating a leak of photos of businessman Daniel Vorcaro during his entry into the São Paulo prison system.",
+          "weight": 0,
+          "candidate_slug": "tarcisio",
+          "confidence": "high",
+          "source_pt": "Trecho 1: Gestão Tarcísio investiga vazamento de fotos de Vorcaro na prisão. A Polícia Penal do governo Tarcísio de Freitas abriu uma apuração interna para identificar o responsável pelo vazamento das fotos do empresário Daniel Vo",
+          "source_en": "Snippet 1: Gestão Tarcísio investiga vazamento de fotos de Vorcaro na prisão. A Polícia Penal do governo Tarcísio de Freitas abriu uma apuração interna para identificar o responsável pelo vazamento das fotos do empresário Daniel Vo"
+        },
+        {
+          "id": "opt_c",
+          "text_pt": "contra o presidente o candidato, acusando-o de ser um 'embaixador oficial do narcotráfico e das facções criminosas do Brasil'",
+          "text_en": "against President the candidate, accusing him of being an 'official ambassador of drug trafficking and criminal factions in Brazil'",
           "weight": -2,
           "candidate_slug": "caiado",
           "confidence": "high",
@@ -113,42 +150,42 @@
       ]
     },
     "corrupcao": {
-      "divergence_score": 0.5,
+      "divergence_score": 0.0,
       "question_pt": "Qual medida e mais efetiva para reduzir corrupcao na administracao publica?",
       "question_en": "Which measure is most effective to reduce corruption in public administration?",
       "options": [
         {
           "id": "opt_a",
-          "text_pt": "o candidato é desaprovado por 51% e aprovado por 43%, diz Ipsos-Ipec",
-          "text_en": "the candidate is disapproved by 51% and approved by 43%, says Ipsos-Ipec",
-          "weight": 0,
+          "text_pt": "Contra corrupção",
+          "text_en": "Against corruption",
+          "weight": -2,
           "candidate_slug": "lula",
-          "confidence": "high",
-          "source_pt": "Trecho 2: Lula é desaprovado por 51% e aprovado por 43%, diz Ipsos-Ipec. Pesquisa Ipsos-Ipec mostra que 51% desaprovam o governo Lula e 43% aprovam. Avaliação do governo aponta 33% como ótimo/bom, 24% regular e 40% ruim/péssimo. M",
-          "source_en": "Snippet 2: Lula é desaprovado por 51% e aprovado por 43%, diz Ipsos-Ipec. Pesquisa Ipsos-Ipec mostra que 51% desaprovam o governo Lula e 43% aprovam. Avaliação do governo aponta 33% como ótimo/bom, 24% regular e 40% ruim/péssimo. M"
+          "confidence": "medium",
+          "source_pt": "Trecho 1: Pesquisa aponta que 51% desaprovam Lula e 43% aprovam; avaliação ótima e boa cresce 3 pontos. Pesquisa Ipsos/Ipec mostra que 51% desaprovam gestão de Lula e 43% aprovam. Avaliação ótima e boa cresceu 3 pontos em relação ",
+          "source_en": "Snippet 1: Pesquisa aponta que 51% desaprovam Lula e 43% aprovam; avaliação ótima e boa cresce 3 pontos. Pesquisa Ipsos/Ipec mostra que 51% desaprovam gestão de Lula e 43% aprovam. Avaliação ótima e boa cresceu 3 pontos em relação "
         },
         {
           "id": "opt_b",
-          "text_pt": "o candidato se opõe à indicação de Jorge Messias para o STF",
-          "text_en": "the candidate opposes Jorge Messias's nomination to the STF",
+          "text_pt": "Contra acusações de corrupção envolvendo seu filho",
+          "text_en": "Against corruption accusations involving his son",
           "weight": -2,
           "candidate_slug": "flavio-bolsonaro",
-          "confidence": "high",
-          "source_pt": "Trecho 1: Kassio pede vista e adia por 15 dias decisão sobre futuro político de Castro. Ministro Kassio Nunes Marques pediu vista e suspendeu por 15 dias o julgamento no TSE que pode tornar inelegível o governador do Rio, Cláudio ",
-          "source_en": "Snippet 1: Kassio pede vista e adia por 15 dias decisão sobre futuro político de Castro. Ministro Kassio Nunes Marques pediu vista e suspendeu por 15 dias o julgamento no TSE que pode tornar inelegível o governador do Rio, Cláudio "
+          "confidence": "medium",
+          "source_pt": "Trecho 2: PT muda tática após pesquisa e compara tratamento dado a Lulinha e a Flávio pelos pais presidentes. O PT lançará uma ofensiva nas redes sociais comparando como Lula e Bolsonaro lidaram com suspeitas envolvendo seus filho",
+          "source_en": "Snippet 2: PT muda tática após pesquisa e compara tratamento dado a Lulinha e a Flávio pelos pais presidentes. O PT lançará uma ofensiva nas redes sociais comparando como Lula e Bolsonaro lidaram com suspeitas envolvendo seus filho"
         }
       ]
     },
     "economia": {
-      "divergence_score": 0.5,
+      "divergence_score": 0.0,
       "question_pt": "Qual deve ser a prioridade na politica economica do governo federal?",
       "question_en": "What should be the federal government's top economic policy priority?",
       "options": [
         {
           "id": "opt_a",
-          "text_pt": "O governo o candidato tem 51% de desaprovação e 43% de aprovação segundo pesquisa Ipsos-Ipec",
-          "text_en": "President the candidate's government has 51% disapproval and 43% approval according to Ipsos-Ipec poll",
-          "weight": 0,
+          "text_pt": "posicao em portugues, ou null",
+          "text_en": "position in English, or null",
+          "weight": -2,
           "candidate_slug": "lula",
           "confidence": "high",
           "source_pt": "Trecho 1: Pesquisa aponta que 51% desaprovam Lula e 43% aprovam; avaliação ótima e boa cresce 3 pontos. Pesquisa Ipsos/Ipec mostra que 51% desaprovam gestão de Lula e 43% aprovam. Avaliação ótima e boa cresceu 3 pontos em relação ",
@@ -163,43 +200,6 @@
           "confidence": "high",
           "source_pt": "Trecho 1: Datafolha: novo voo político de Haddad começa com eleitor mais desconfiado da economia. Ministro da Fazenda Fernando Haddad deixará o cargo para disputar eleições, provavelmente o governo de São Paulo, em um momento de d",
           "source_en": "Snippet 1: Datafolha: novo voo político de Haddad começa com eleitor mais desconfiado da economia. Ministro da Fazenda Fernando Haddad deixará o cargo para disputar eleições, provavelmente o governo de São Paulo, em um momento de d"
-        }
-      ]
-    },
-    "seguranca": {
-      "divergence_score": 0.5,
-      "question_pt": "Qual estrategia deve guiar a politica nacional de seguranca publica?",
-      "question_en": "Which strategy should guide national public security policy?",
-      "options": [
-        {
-          "id": "opt_a",
-          "text_pt": "O governo de o candidato está trabalhando para impedir que o PCC e o Comando Vermelho sejam classificados como organizações terroristas pelos EUA, temendo impactos econômicos e políticos internos.",
-          "text_en": "the candidate's government is working to prevent the PCC and Comando Vermelho from being classified as terrorist organizations by the US, fearing internal economic and political impacts.",
-          "weight": -2,
-          "candidate_slug": "lula",
-          "confidence": "high",
-          "source_pt": "Trecho 3: Lula age para barrar classificação de PCC e CV como terroristas. O governo Lula está organizando uma força-tarefa para impedir ou adiar a classificação do Comando Vermelho e PCC como organizações terroristas pelos EUA. A",
-          "source_en": "Snippet 3: Lula age para barrar classificação de PCC e CV como terroristas. O governo Lula está organizando uma força-tarefa para impedir ou adiar a classificação do Comando Vermelho e PCC como organizações terroristas pelos EUA. A"
-        },
-        {
-          "id": "opt_b",
-          "text_pt": "O governo o candidato de Freitas abriu uma apuração interna para investigar o vazamento de fotos de Daniel Vorcaro durante sua prisão, indicando uma postura de responsabilização e transparência.",
-          "text_en": "The government of the candidate de Freitas has opened an internal investigation to probe the leak of photos of Daniel Vorcaro during his arrest, indicating a stance of accountability and transparency.",
-          "weight": 0,
-          "candidate_slug": "tarcisio",
-          "confidence": "medium",
-          "source_pt": "Trecho 1: Gestão Tarcísio investiga vazamento de fotos de Vorcaro na prisão. A Polícia Penal do governo Tarcísio de Freitas abriu uma apuração interna para identificar o responsável pelo vazamento das fotos do empresário Daniel Vo",
-          "source_en": "Snippet 1: Gestão Tarcísio investiga vazamento de fotos de Vorcaro na prisão. A Polícia Penal do governo Tarcísio de Freitas abriu uma apuração interna para identificar o responsável pelo vazamento das fotos do empresário Daniel Vo"
-        },
-        {
-          "id": "opt_c",
-          "text_pt": "Contra a atuação de o candidato na segurança pública",
-          "text_en": "Against the candidate's actions in public security",
-          "weight": -2,
-          "candidate_slug": "caiado",
-          "confidence": "high",
-          "source_pt": "Trecho 1: “Embaixador oficial do narcotráfico”, diz Caiado sobre Lula. O governador de Goiás, Ronaldo Caiado, criticou duramente o presidente Lula, chamando-o de 'embaixador oficial do narcotráfico e das facções criminosas do Bras",
-          "source_en": "Snippet 1: “Embaixador oficial do narcotráfico”, diz Caiado sobre Lula. O governador de Goiás, Ronaldo Caiado, criticou duramente o presidente Lula, chamando-o de 'embaixador oficial do narcotráfico e das facções criminosas do Bras"
         }
       ]
     }
