@@ -44,9 +44,9 @@ jobs:
       - name: Collect sources
         run: |
           python scripts/collect_rss.py
-          python scripts/collect_parties.py || echo "parties failed, continuing"
-          python scripts/collect_polls.py || echo "polls failed, continuing"
-          python scripts/collect_social.py || echo "social failed, continuing"
+          python scripts/collect_parties.py || echo "[warn] collect_parties failed"
+          python scripts/collect_polls.py || echo "[warn] collect_polls failed"
+          python scripts/collect_social.py || echo "[warn] collect_social failed"
 
       - name: Scrape article content
         run: python scripts/scrape_articles.py || echo "scrape failed, continuing"

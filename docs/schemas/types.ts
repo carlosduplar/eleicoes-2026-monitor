@@ -43,7 +43,8 @@ export type SourceCategory =
   | 'magazine'
   | 'international'
   | 'institutional'
-  | 'party';
+  | 'party'
+  | 'social';
 
 export type ArticleStatus = 'raw' | 'validated' | 'curated';
 export type SentimentLabel = 'positivo' | 'neutro' | 'negativo';
