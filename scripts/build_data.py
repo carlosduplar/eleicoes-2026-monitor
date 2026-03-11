@@ -31,7 +31,12 @@ class ArticlesDocument:
 
 def utc_now_iso() -> str:
     """Return UTC timestamp in ISO 8601 format with Z suffix."""
-    return datetime.now(timezone.utc).replace(microsecond=0).isoformat().replace("+00:00", "Z")
+    return (
+        datetime.now(timezone.utc)
+        .replace(microsecond=0)
+        .isoformat()
+        .replace("+00:00", "Z")
+    )
 
 
 def _load_json(path: Path) -> Any:
@@ -40,12 +45,16 @@ def _load_json(path: Path) -> Any:
 
 def _load_articles_document() -> ArticlesDocument:
     if not ARTICLES_FILE.exists():
-        return ArticlesDocument(articles=[], wrapped=True, schema_path=DEFAULT_SCHEMA_PATH)
+        return ArticlesDocument(
+            articles=[], wrapped=True, schema_path=DEFAULT_SCHEMA_PATH
+        )
 
     payload = _load_json(ARTICLES_FILE)
     if isinstance(payload, list):
         articles = [item for item in payload if isinstance(item, dict)]
-        return ArticlesDocument(articles=articles, wrapped=False, schema_path=DEFAULT_SCHEMA_PATH)
+        return ArticlesDocument(
+            articles=articles, wrapped=False, schema_path=DEFAULT_SCHEMA_PATH
+        )
 
     if isinstance(payload, dict):
         raw_articles = payload.get("articles", [])
@@ -54,7 +63,9 @@ def _load_articles_document() -> ArticlesDocument:
             if not isinstance(schema_path, str) or not schema_path.strip():
                 schema_path = DEFAULT_SCHEMA_PATH
             articles = [item for item in raw_articles if isinstance(item, dict)]
-            return ArticlesDocument(articles=articles, wrapped=True, schema_path=schema_path)
+            return ArticlesDocument(
+                articles=articles, wrapped=True, schema_path=schema_path
+            )
 
     raise ValueError(f"Unsupported articles structure in {ARTICLES_FILE}")
 
@@ -96,7 +107,9 @@ def _parse_iso8601(value: object) -> datetime:
     return parsed.astimezone(timezone.utc)
 
 
-def _deduplicate_by_id(articles: list[dict[str, Any]]) -> tuple[list[dict[str, Any]], int]:
+def _deduplicate_by_id(
+    articles: list[dict[str, Any]],
+) -> tuple[list[dict[str, Any]], int]:
     deduplicated: list[dict[str, Any]] = []
     seen_ids: set[str] = set()
     duplicates_removed = 0
@@ -131,17 +144,36 @@ def _load_article_validator() -> Draft7Validator:
     raise ValueError("Could not resolve Article schema definition for validation.")
 
 
+NUMBER_FIELDS = [
+    "relevance_score",
+    "sentiment_score",
+    "confidence_score",
+    "prominence_score",
+]
+
+
+def _normalize_null_numbers(article: dict[str, Any]) -> None:
+    for field in NUMBER_FIELDS:
+        if article.get(field) is None:
+            article[field] = 0.0
+
+
 def _validate_articles(articles: list[dict[str, Any]]) -> int:
     validator = _load_article_validator()
     invalid_count = 0
 
     for article in articles:
+        _normalize_null_numbers(article)
         errors = sorted(validator.iter_errors(article), key=lambda err: list(err.path))
         if not errors:
             continue
         invalid_count += 1
         article_id = article.get("id", "<missing-id>")
-        logger.warning("Schema validation warning for article %s: %s", article_id, errors[0].message)
+        logger.warning(
+            "Schema validation warning for article %s: %s",
+            article_id,
+            errors[0].message,
+        )
 
     return invalid_count
 
@@ -150,7 +182,9 @@ def consolidate_articles() -> tuple[int, int, int]:
     """Deduplicate, sort, trim, and validate article data."""
     document = _load_articles_document()
     deduplicated, duplicates_removed = _deduplicate_by_id(document.articles)
-    deduplicated.sort(key=lambda article: _parse_iso8601(article.get("published_at")), reverse=True)
+    deduplicated.sort(
+        key=lambda article: _parse_iso8601(article.get("published_at")), reverse=True
+    )
 
     trimmed_count = max(0, len(deduplicated) - ARTICLE_LIMIT)
     if trimmed_count:

@@ -43,5 +43,5 @@ jobs:
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "action@github.com"
-          git add data/curated_feed.json data/weekly_briefing.json data/quiz.json data/.curate_last_run 2>/dev/null || true
+          git add data/articles.json data/curated_feed.json data/weekly_briefing.json data/quiz.json data/.curate_last_run 2>/dev/null || true
           git diff --staged --quiet || (git commit -m "chore(ci): editor-chefe curation update" && git push)

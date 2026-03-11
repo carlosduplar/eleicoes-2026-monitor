@@ -1,5 +1,71 @@
 {
-  "checked_at": "2026-03-11T06:51:36Z",
-  "status": "ok",
-  "notes": "Watchdog stub - full implementation Phase 16."
+  "checked_at": "2026-03-11T14:46:25Z",
+  "status": "error",
+  "workflows": {
+    "foca_collect": {
+      "status": "ok",
+      "path": "data\\articles.json",
+      "exists": true,
+      "last_update": "2026-03-11T14:05:54Z",
+      "age_minutes": 40,
+      "stale_after_minutes": 120,
+      "details": "foca_collect data freshness is within expected window"
+    },
+    "editor_validate": {
+      "status": "stale",
+      "path": "data\\sentiment.json",
+      "exists": true,
+      "last_update": "2026-03-10T23:58:06Z",
+      "age_minutes": 888,
+      "stale_after_minutes": 180,
+      "details": "editor_validate data is older than expected freshness window"
+    },
+    "editor_chefe_curate": {
+      "status": "missing",
+      "path": "data\\curated_feed.json",
+      "exists": false,
+      "last_update": null,
+      "age_minutes": null,
+      "stale_after_minutes": 240,
+      "details": "editor_chefe_curate output not found"
+    },
+    "weekly_briefing": {
+      "status": "missing",
+      "path": "data\\weekly_briefing.json",
+      "exists": false,
+      "last_update": null,
+      "age_minutes": null,
+      "stale_after_minutes": 1440,
+      "details": "weekly_briefing output not found"
+    },
+    "quiz_refresh": {
+      "status": "ok",
+      "path": "data\\quiz.json",
+      "exists": true,
+      "last_update": "2026-03-10T23:54:23Z",
+      "age_minutes": 892,
+      "stale_after_minutes": 2160,
+      "details": "quiz_refresh data freshness is within expected window"
+    },
+    "polls_collect": {
+      "status": "stale",
+      "path": "data\\polls.json",
+      "exists": true,
+      "last_update": "2026-03-10T13:41:37Z",
+      "age_minutes": 1504,
+      "stale_after_minutes": 1440,
+      "details": "polls_collect data is older than expected freshness window"
+    }
+  },
+  "error_summary": {
+    "exists": true,
+    "total_errors": 1112,
+    "last_24h_errors": 78,
+    "by_tier": {
+      "editor": 1103,
+      "foca": 9
+    },
+    "last_error_at": "2026-03-11T00:05:18Z"
+  },
+  "notes": "Missing required outputs: editor_chefe_curate, weekly_briefing."
 }
