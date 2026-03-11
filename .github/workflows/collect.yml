@@ -63,7 +63,8 @@ jobs:
           git config user.name "github-actions[bot]"
           git config user.email "action@github.com"
           git fetch origin
-          git pull --rebase origin master
+          git reset --hard origin/master
+          git pull --rebase origin master || true
           git add data/
           git add site/public/feed*.xml 2>/dev/null || true
           git diff --staged --quiet || (git commit -m "chore(ci): foca automated data refresh" && git push)

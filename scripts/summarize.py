@@ -4,10 +4,15 @@ from __future__ import annotations
 
 import json
 import logging
+import sys
 import unicodedata
 from datetime import datetime, timezone
 from pathlib import Path
 from typing import Any
+
+SCRIPT_DIR = Path(__file__).resolve().parent
+if str(SCRIPT_DIR.parent) not in sys.path:
+    sys.path.insert(0, str(SCRIPT_DIR.parent))
 
 try:
     from scripts import ai_client
@@ -358,6 +363,8 @@ def _ensure_article_defaults(article: dict[str, Any]) -> None:
         article["sentiment_score"] = 0.0
     if not isinstance(article.get("confidence_score"), (int, float)):
         article["confidence_score"] = 0.0
+    if not isinstance(article.get("relevance_score"), (int, float)):
+        article["relevance_score"] = 0.0
 
 
 def _summaries_are_both_empty(article: dict[str, Any]) -> bool:
@@ -498,7 +505,7 @@ def summarize_articles(limit: int = 30) -> tuple[int, int, int]:
         # Relevance gate: skip articles that are clearly not elections-related.
         # Broad RSS feeds (UOL, IstoÉ, Veja, BBC) include health, tech, sports, etc.
         # Mark them "irrelevant" so future runs also skip without re-checking.
-        if not _is_elections_relevant(title):
+        if not _is_elections_relevant(str(title)):
             article["status"] = "irrelevant"
             logger.info(
                 "Skipping irrelevant article %s: %r",
@@ -524,7 +531,7 @@ def summarize_articles(limit: int = 30) -> tuple[int, int, int]:
             content = title
 
         # Validate content integrity before calling LLMs.
-        is_valid, reason = _validate_content_integrity(content, title)
+        is_valid, reason = _validate_content_integrity(str(content), str(title))
         if not is_valid:
             error_count += 1
             logger.warning(
@@ -551,7 +558,7 @@ def summarize_articles(limit: int = 30) -> tuple[int, int, int]:
 
         try:
             result = ai_client.summarize_article(
-                title=title, content=content, language="pt-BR"
+                title=str(title), content=str(content), language="pt-BR"
             )
         except Exception as exc:
             error_count += 1
@@ -626,7 +633,7 @@ def summarize_articles(limit: int = 30) -> tuple[int, int, int]:
         else:
             article["status"] = "validated"
             article["editor_note"] = None
-            _append_edit_history(article, provider=provider)
+            _append_edit_history(article, provider=str(provider))
 
         summarized_count += 1
 
