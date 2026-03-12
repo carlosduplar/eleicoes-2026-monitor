@@ -15,7 +15,7 @@ const CANDIDATE_SLUGS = [
 
 test.describe('Quiz neutrality', () => {
   test('no candidate slug visible during questions', async ({ page }) => {
-    await page.goto('/quiz');
+    await page.goto('quiz');
     await page.waitForLoadState('networkidle');
 
     const emptyState = page.getByText(/Quiz temporariamente indisponivel|Quiz temporarily unavailable/i);

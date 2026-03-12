@@ -3,7 +3,7 @@ import { expect, test } from '../../site/node_modules/@playwright/test/index.js'
 
 test.describe('Sentiment Dashboard', () => {
   test('heatmap grid renders', async ({ page }) => {
-    await page.goto('/sentimento');
+    await page.goto('sentimento');
     await page.waitForLoadState('networkidle');
 
     const table = page.locator('.sentiment-table');
@@ -15,7 +15,7 @@ test.describe('Sentiment Dashboard', () => {
   });
 
   test('toggle between Por Tema and Por Fonte', async ({ page }) => {
-    await page.goto('/sentimento');
+    await page.goto('sentimento');
     await page.waitForLoadState('networkidle');
 
     const byTopic = page.getByRole('button', { name: /Por Tema|By Topic/i });
@@ -33,8 +33,8 @@ test.describe('Sentiment Dashboard', () => {
   });
 
   test('methodology badge is present', async ({ page }) => {
-    await page.goto('/sentimento');
-    await expect(page.locator('.methodology-badge').first()).toBeVisible();
+    await page.goto('sentimento');
+    await expect(page.locator('.methodology-badge').first()).toBeVisible();     
   });
 });
 
