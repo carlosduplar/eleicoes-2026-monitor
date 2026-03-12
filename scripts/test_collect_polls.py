@@ -199,25 +199,38 @@ def test_institute_failure_does_not_crash(isolated_workspace: dict[str, Path], m
 
 
 def test_polls_schema_valid(isolated_workspace: dict[str, Path]) -> None:
-    polls_payload = [
-        {
-            "id": collect_polls.build_poll_id("Datafolha", "2026-03-01"),
-            "institute": "Datafolha",
-            "published_at": "2026-03-01T00:00:00Z",
-            "collected_at": "2026-03-10T10:00:00Z",
-            "type": "estimulada",
-            "sample_size": 2000,
-            "margin_of_error": 2.0,
-            "results": [
-                {"candidate_slug": "lula", "candidate_name": "Lula", "percentage": 35.0},
-                {"candidate_slug": "tarcisio", "candidate_name": "Tarcisio", "percentage": 22.0},
-            ],
-        }
-    ]
+    polls_payload = {
+        "$schema": "../docs/schemas/polls.schema.json",
+        "polls": [
+            {
+                "id": collect_polls.build_poll_id("Datafolha", "2026-03-01"),
+                "institute": "Datafolha",
+                "published_at": "2026-03-01T00:00:00Z",
+                "collected_at": "2026-03-10T10:00:00Z",
+                "type": "estimulada",
+                "sample_size": 2000,
+                "margin_of_error": 2.0,
+                "results": [
+                    {
+                        "candidate_slug": "lula",
+                        "candidate_name": "Lula",
+                        "percentage": 35.0,
+                    },
+                    {
+                        "candidate_slug": "tarcisio",
+                        "candidate_name": "Tarcisio",
+                        "percentage": 22.0,
+                    },
+                ],
+            }
+        ],
+        "last_updated": "2026-03-10T10:00:00Z",
+        "total_count": 1,
+    }
     _write_json(isolated_workspace["polls"], polls_payload)
 
     schema = json.loads(isolated_workspace["schema"].read_text(encoding="utf-8"))
-    polls = _read_polls(isolated_workspace["polls"])
+    saved_payload = json.loads(isolated_workspace["polls"].read_text(encoding="utf-8"))
     validator = Draft7Validator(schema)
-    errors = [err.message for err in validator.iter_errors(polls)]
+    errors = [err.message for err in validator.iter_errors(saved_payload)]
     assert not errors, errors[:5]

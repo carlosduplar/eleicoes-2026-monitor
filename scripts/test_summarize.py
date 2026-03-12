@@ -181,7 +181,11 @@ def test_sentiment_has_disclaimers(tmp_data_paths: dict[str, Path], monkeypatch:
     monkeypatch.setattr(
         analyze_sentiment.ai_client,
         "call_with_fallback",
-        lambda **_kwargs: {"content": json.dumps({"scores": {"lula": 0.4}}), "provider": "nvidia", "model": "model"},
+        lambda **_kwargs: {
+            "content": json.dumps({"article_0": {"lula": 0.4}}),
+            "provider": "nvidia",
+            "model": "model",
+        },
     )
 
     payload = analyze_sentiment.analyze_sentiment()
@@ -216,14 +220,21 @@ def test_sentiment_is_idempotent(tmp_data_paths: dict[str, Path], monkeypatch: p
     monkeypatch.setattr(
         analyze_sentiment.ai_client,
         "call_with_fallback",
-        lambda **_kwargs: {"content": json.dumps({"scores": {"lula": 0.2}}), "provider": "nvidia", "model": "model"},
+        lambda **_kwargs: {
+            "content": json.dumps({"article_0": {"lula": 0.2}}),
+            "provider": "nvidia",
+            "model": "model",
+        },
     )
 
-    analyze_sentiment.analyze_sentiment()
+    first_payload = analyze_sentiment.analyze_sentiment()
     first_output = tmp_data_paths["sentiment"].read_text(encoding="utf-8")
-    analyze_sentiment.analyze_sentiment()
+    second_payload = analyze_sentiment.analyze_sentiment()
     second_output = tmp_data_paths["sentiment"].read_text(encoding="utf-8")
 
+    assert first_payload["article_count"] == 1
+    assert first_payload["by_topic"]["lula"]["economia"] == 0.2
+    assert first_payload == second_payload
     assert first_output == second_output
 
 
