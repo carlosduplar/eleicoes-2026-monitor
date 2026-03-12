@@ -655,6 +655,112 @@ p {
   color: var(--text-secondary);
 }
 
+.sidebar-poll-meta {
+  font-size: 0.75rem;
+  color: var(--text-secondary);
+  margin-bottom: 0.5rem;
+}
+
+.poll-bar {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  margin-bottom: 0.45rem;
+}
+
+.poll-name {
+  width: 80px;
+  font-size: 0.75rem;
+  font-weight: 500;
+}
+
+.poll-track {
+  flex: 1;
+  height: 8px;
+  border-radius: 9999px;
+  background: var(--brand-muted);
+  overflow: hidden;
+}
+
+.poll-fill {
+  height: 100%;
+  border-radius: 9999px;
+}
+
+.poll-pct {
+  width: 36px;
+  text-align: right;
+  font-size: 0.75rem;
+  font-weight: 600;
+}
+
+.cta-btn {
+  display: block;
+  margin-top: 0.75rem;
+  border-radius: 6px;
+  background: var(--brand-navy);
+  color: #fff;
+  text-align: center;
+  text-decoration: none;
+  font-size: 0.88rem;
+  font-weight: 500;
+  padding: 0.55rem 0.8rem;
+}
+
+.cta-btn:hover {
+  opacity: 0.92;
+}
+
+.cand-link {
+  display: flex;
+  align-items: center;
+  gap: 0.45rem;
+  font-size: 0.88rem;
+  color: var(--text-primary);
+  text-decoration: none;
+  margin-bottom: 0.42rem;
+}
+
+.cand-link:hover {
+  color: var(--brand-navy);
+}
+
+.cand-avatar {
+  width: 24px;
+  height: 24px;
+  border-radius: 9999px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.68rem;
+  font-weight: 700;
+  color: #fff;
+  flex-shrink: 0;
+}
+
+.cand-party {
+  font-size: 0.75rem;
+  color: var(--text-secondary);
+}
+
+.link-accent {
+  display: inline-block;
+  margin-top: 0.45rem;
+  font-size: 0.78rem;
+  font-weight: 600;
+  color: var(--brand-gold);
+  text-decoration: none;
+}
+
+.link-accent:hover {
+  text-decoration: underline;
+}
+
+.home-sidebar .error-state {
+  margin: 0;
+  font-size: 0.9rem;
+}
+
 .placeholder-page h1 {
   margin-bottom: 0.5rem;
   font-size: clamp(1.6rem, 1.3rem + 1vw, 2rem);
@@ -974,6 +1080,16 @@ p {
 .site-footer li {
   color: rgb(255 255 255 / 80%);
   font-size: 0.88rem;
+}
+
+.site-footer a {
+  color: rgb(255 255 255 / 80%);
+  text-decoration: none;
+}
+
+.site-footer a:hover {
+  color: #ffffff;
+  text-decoration: underline;
 }
 
 .site-footer ul {
