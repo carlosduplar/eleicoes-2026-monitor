@@ -75,6 +75,8 @@ ELECTIONS_HIGH_SIGNAL_KEYWORDS: frozenset[str] = frozenset(
         "plano de governo",
         "segundo turno",
         "primeiro turno",
+        "turno",
+        "terceira via",
         "presidencia",
         "presidencial",
         "pre candidato",
@@ -462,7 +464,7 @@ def _is_elections_relevant(
     if high_signal_hits >= 1 and (candidate_hits >= 1 or context_hits >= 1):
         return True
 
-    if candidate_hits >= 1 and ("2026" in normalized_text or high_signal_hits >= 1):
+    if candidate_hits >= 1 and off_topic_hits < 2:
         return True
 
     if source_category_normalized in {"party", "institutional"} and high_signal_hits >= 1:
