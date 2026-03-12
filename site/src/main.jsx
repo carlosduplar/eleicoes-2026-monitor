@@ -52,7 +52,7 @@ if (!i18n.isInitialized) {
         'case-study': enCaseStudy,
       },
     },
-    lng: getSavedLanguage(),
+    lng: DEFAULT_LANGUAGE,
     fallbackLng: 'pt-BR',
     interpolation: { escapeValue: false },
     defaultNS: 'common',
@@ -83,11 +83,11 @@ export const createRoot = ViteReactSSG(
     if (!isClient) {
       return;
     }
+    applyDocumentLanguage(i18n.language);
     const savedLanguage = getSavedLanguage();
     if (savedLanguage !== i18n.language) {
       void i18n.changeLanguage(savedLanguage);
     }
-    applyDocumentLanguage(savedLanguage);
     i18n.off('languageChanged', applyDocumentLanguage);
     i18n.on('languageChanged', applyDocumentLanguage);
   },

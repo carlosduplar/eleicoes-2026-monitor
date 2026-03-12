@@ -106,7 +106,7 @@ function useMarkdownContent(language) {
       setLoading(true);
       setError(null);
       try {
-        const response = await fetch(`/case-study/${language}.md`, {
+        const response = await fetch(`${import.meta.env.BASE_URL}case-study/${language}.md`, {
           signal: controller.signal,
         });
         if (!response.ok) {
@@ -169,7 +169,11 @@ function CaseStudyPage() {
   const tocItems = headings.length > 0 ? headings : fallbackHeadings;
   const html = useMemo(() => (content ? String(marked.parse(content)) : ''), [content]);
   const readingMinutes = useMemo(() => (content ? calculateReadingTime(content) : 0), [content]);
-  const updatedDate = useMemo(() => new Date().toLocaleDateString(language), [language]);
+  const [updatedDate, setUpdatedDate] = useState('');
+
+  useEffect(() => {
+    setUpdatedDate(new Date().toLocaleDateString(language));
+  }, [language]);
   const caseStudyJsonLd = useMemo(
     () => ({
       '@context': 'https://schema.org',
@@ -205,7 +209,7 @@ function CaseStudyPage() {
         <p className="case-study-subtitle">{t('subtitle')}</p>
         <div className="case-study-meta">
           {!loading && !error && <span>{t('reading_time', { minutes: readingMinutes })}</span>}
-          <span>{t('last_updated', { date: updatedDate })}</span>
+          <span>{t('last_updated', { date: updatedDate || '--' })}</span>
           <span>{t('share')}</span>
         </div>
         <Link to="/">{t('back_to_home')}</Link>

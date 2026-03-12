@@ -1,5 +1,5 @@
 import * as ReactHelmetAsync from 'react-helmet-async';
-import { Outlet, useLocation } from 'react-router-dom';
+import { Link, Outlet, useLocation } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 
 import BottomNav from './components/BottomNav';
@@ -89,18 +89,34 @@ function AppShell() {
           <div>
             <h3>{t('footer.nav_title')}</h3>
             <ul>
-              <li>{t('nav.noticias')}</li>
-              <li>{t('nav.sentimento')}</li>
-              <li>{t('nav.pesquisas')}</li>
-              <li>{t('nav.quiz')}</li>
+              <li>
+                <Link to="/">{t('nav.noticias')}</Link>
+              </li>
+              <li>
+                <Link to="/sentimento">{t('nav.sentimento')}</Link>
+              </li>
+              <li>
+                <Link to="/pesquisas">{t('nav.pesquisas')}</Link>
+              </li>
+              <li>
+                <Link to="/quiz">{t('nav.quiz')}</Link>
+              </li>
             </ul>
           </div>
           <div>
             <h3>{t('footer.transparency_title')}</h3>
             <ul>
-              <li>{t('nav.metodologia')}</li>
-              <li>{t('footer.transparency_open_source')}</li>
-              <li>{t('footer.transparency_disclaimer')}</li>
+              <li>
+                <Link to="/metodologia">{t('nav.metodologia')}</Link>
+              </li>
+              <li>
+                <a href="https://github.com/carlosduplar/eleicoes-2026-monitor" target="_blank" rel="noopener noreferrer">
+                  {t('footer.transparency_open_source')}
+                </a>
+              </li>
+              <li>
+                <Link to="/sobre/caso-de-uso">{t('footer.transparency_disclaimer')}</Link>
+              </li>
             </ul>
           </div>
         </div>

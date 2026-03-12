@@ -1,6 +1,13 @@
 import { useEffect, useState } from 'react';
 
 const memoryCache = new Map();
+const buildDataUrl = (filename) => {
+  const encodedFilename = encodeURIComponent(filename);
+  if (import.meta.env.DEV) {
+    return `/data/${encodedFilename}.json`;
+  }
+  return `${import.meta.env.BASE_URL}data/${encodedFilename}.json`;
+};
 
 export function useData(filename) {
   const [data, setData] = useState(() => memoryCache.get(filename) ?? null);
@@ -20,7 +27,7 @@ export function useData(filename) {
       setLoading(true);
       setError(null);
       try {
-        const response = await fetch(`/data/${filename}.json`);
+        const response = await fetch(buildDataUrl(filename));
         if (!response.ok) {
           throw new Error(`Request failed: ${response.status}`);
         }
