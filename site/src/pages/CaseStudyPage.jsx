@@ -94,6 +94,26 @@ function extractHeadings(markdown) {
   return headings;
 }
 
+function stripLeadingMarkdownH1(markdown) {
+  const lines = markdown.split(/\r?\n/);
+  const firstContentIndex = lines.findIndex((line) => line.trim().length > 0);
+
+  if (firstContentIndex === -1) {
+    return markdown;
+  }
+
+  if (!/^#\s+/.test(lines[firstContentIndex])) {
+    return markdown;
+  }
+
+  lines.splice(firstContentIndex, 1);
+  if (lines[firstContentIndex] && lines[firstContentIndex].trim() === '') {
+    lines.splice(firstContentIndex, 1);
+  }
+
+  return lines.join('\n');
+}
+
 function useMarkdownContent(language) {
   const [content, setContent] = useState(null);
   const [loading, setLoading] = useState(true);
@@ -146,13 +166,17 @@ function CaseStudyPage() {
   const { t: tCommon } = useTranslation('common');
   const language = i18n.language === 'en-US' ? 'en-US' : 'pt-BR';
   const { content, loading, error } = useMarkdownContent(language);
+  const contentWithoutTopHeading = useMemo(
+    () => (content ? stripLeadingMarkdownH1(content) : ''),
+    [content],
+  );
 
   const headings = useMemo(() => {
-    if (!content) {
+    if (!contentWithoutTopHeading) {
       return [];
     }
-    return extractHeadings(content);
-  }, [content]);
+    return extractHeadings(contentWithoutTopHeading);
+  }, [contentWithoutTopHeading]);
 
   const fallbackHeadings = useMemo(() => {
     const sectionNames = t('sections', { returnObjects: true });
@@ -167,8 +191,14 @@ function CaseStudyPage() {
   }, [t, i18n.language]);
 
   const tocItems = headings.length > 0 ? headings : fallbackHeadings;
-  const html = useMemo(() => (content ? String(marked.parse(content)) : ''), [content]);
-  const readingMinutes = useMemo(() => (content ? calculateReadingTime(content) : 0), [content]);
+  const html = useMemo(
+    () => (contentWithoutTopHeading ? String(marked.parse(contentWithoutTopHeading)) : ''),
+    [contentWithoutTopHeading],
+  );
+  const readingMinutes = useMemo(
+    () => (contentWithoutTopHeading ? calculateReadingTime(contentWithoutTopHeading) : 0),
+    [contentWithoutTopHeading],
+  );
   const [updatedDate, setUpdatedDate] = useState('');
 
   useEffect(() => {
