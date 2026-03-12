@@ -71,9 +71,9 @@ hint: Updates were rejected because the remote contains work that you do not hav
 
 **Warnings in Successful Runs:**
 - **Node.js Deprecation Warnings** (same as Collect)
-- **NVIDIA API Failures:**
-  - `WARNING: [AI] nvidia failed: 404 page not found` - The NVIDIA API endpoint is returning 404 errors
-  - `INFO: [AI] nvidia skipped: circuit breaker open (3 consecutive failures)` - After 3 failures, the circuit breaker opens and skips NVIDIA
+- **NVIDIA API Failures (RESOLVED 2026-03-12):**
+  - Previously: `WARNING: [AI] nvidia failed: 404 page not found` - Fixed by updating from deprecated `meta/llama3-70b` to `moonshotai/kimi-k2.5`
+  - Previously: `INFO: [AI] nvidia skipped: circuit breaker open` - Resolved with new model chain
 
 ---
 
@@ -138,9 +138,8 @@ hint: Updates were rejected because the remote contains work that you do not hav
 
 **Warnings:**
 - **Node.js Deprecation Warnings**
-- **NVIDIA API Failures:**
-  - `WARNING: [AI] nvidia failed: 404 page not found`
-  - `INFO: [AI] nvidia skipped: circuit breaker open (3 consecutive failures)`
+- **NVIDIA API Failures (RESOLVED 2026-03-12):**
+  - Previously: `WARNING: [AI] nvidia failed: 404 page not found` - Fixed by updating to `moonshotai/kimi-k2.5`
 - **JSON Parse Error:**
   - `WARNING: [AI] extract_candidate_position parse failure: Unterminated string starting at: line 2 column 18 (char 19)`
 
@@ -179,9 +178,9 @@ HttpError: An error occurred while processing your request. Please try again lat
    - Multiple workflows trying to push simultaneously cause race conditions
    - **Fix:** Add `git fetch origin` and `git pull --rebase origin master` before push, or implement a locking mechanism
 
-2. **NVIDIA API 404 Errors**
-   - `https://integrate.api.nvidia.com/v1/chat/completions` returns 404
-   - **Fix:** Verify the NVIDIA API endpoint URL and API key configuration
+2. **NVIDIA API 404 Errors (RESOLVED 2026-03-12)**
+   - Previously: `https://integrate.api.nvidia.com/v1/chat/completions` returns 404 for deprecated `meta/llama3-70b`
+   - **Fix Applied:** Updated to `moonshotai/kimi-k2.5` as primary, with `minimax-m2.5` and `nemotron-3-super` as fallbacks
 
 ### High Priority
 

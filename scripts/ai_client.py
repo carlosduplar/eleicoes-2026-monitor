@@ -60,8 +60,11 @@ _THINKING_DISABLE_EXTRA_BODY: dict[str, dict[str, object]] = {
         "chat_template_kwargs": {"enable_thinking": False}
     },
     "qwen/qwen3.5-397b-a17b": {"chat_template_kwargs": {"enable_thinking": False}},
-    "moonshotai/kimi-k2.5": {"enable_thinking": False},
-    "minimaxai/minimax-m2.5": {"enable_thinking": False},
+    "moonshotai/kimi-k2.5": {"chat_template_kwargs": {"enable_thinking": False}},
+    "minimaxai/minimax-m2.5": {"chat_template_kwargs": {"enable_thinking": False}},
+    "nvidia/nemotron-3-super-120b-a12b": {
+        "chat_template_kwargs": {"enable_thinking": False}
+    },
 }
 
 NVIDIA_MODELS: dict[str, str] = {
