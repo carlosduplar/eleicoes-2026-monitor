@@ -49,6 +49,9 @@ jobs:
       - name: Install Playwright Chromium
         run: playwright install chromium --with-deps
 
+      - name: Sync editorial feedback
+        run: python scripts/sync_editor_feedback.py
+
       - name: Collect sources
         run: |
           python scripts/collect_rss.py

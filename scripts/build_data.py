@@ -11,12 +11,18 @@ from typing import Any
 
 from jsonschema import Draft7Validator
 
+try:
+    from scripts import editor_feedback
+except ImportError:  # pragma: no cover - direct script execution path
+    import editor_feedback  # type: ignore[no-redef]
+
 logger = logging.getLogger(__name__)
 
 ROOT_DIR = Path(__file__).resolve().parents[1]
 DATA_DIR = ROOT_DIR / "data"
 SCHEMA_FILE = ROOT_DIR / "docs" / "schemas" / "articles.schema.json"
 ARTICLES_FILE = DATA_DIR / "articles.json"
+EDITOR_FEEDBACK_FILE = DATA_DIR / "editor_feedback.json"
 
 ARTICLE_LIMIT = 500
 DEFAULT_SCHEMA_PATH = "../docs/schemas/articles.schema.json"
@@ -182,25 +188,42 @@ def consolidate_articles() -> tuple[int, int, int]:
     """Deduplicate, sort, trim, and validate article data."""
     document = _load_articles_document()
     deduplicated, duplicates_removed = _deduplicate_by_id(document.articles)
-    deduplicated.sort(
+    feedback = editor_feedback.load_editor_feedback(EDITOR_FEEDBACK_FILE)
+    feedback_sync_count = editor_feedback.add_irrelevant_article_ids(feedback, deduplicated)
+
+    published_articles: list[dict[str, Any]] = []
+    filtered_out_count = 0
+    for article in deduplicated:
+        if article.get("status") == "irrelevant":
+            filtered_out_count += 1
+            continue
+        if editor_feedback.feedback_reason_for_article(article, feedback) is not None:
+            filtered_out_count += 1
+            continue
+        published_articles.append(article)
+
+    published_articles.sort(
         key=lambda article: _parse_iso8601(article.get("published_at")), reverse=True
     )
 
-    trimmed_count = max(0, len(deduplicated) - ARTICLE_LIMIT)
+    trimmed_count = max(0, len(published_articles) - ARTICLE_LIMIT)
     if trimmed_count:
-        deduplicated = deduplicated[:ARTICLE_LIMIT]
+        published_articles = published_articles[:ARTICLE_LIMIT]
 
-    _validate_articles(deduplicated)
+    _validate_articles(published_articles)
 
-    if deduplicated != document.articles or not ARTICLES_FILE.exists():
-        document.articles = deduplicated
+    if feedback_sync_count > 0 or not EDITOR_FEEDBACK_FILE.exists():
+        editor_feedback.save_editor_feedback(feedback, EDITOR_FEEDBACK_FILE)
+
+    if published_articles != document.articles or not ARTICLES_FILE.exists():
+        document.articles = published_articles
         _save_articles_document(document)
 
     print(
-        f"Consolidated: {len(deduplicated)} articles "
-        f"({duplicates_removed} removed as duplicates, {trimmed_count} trimmed by limit)"
+        f"Consolidated: {len(published_articles)} published articles "
+        f"({duplicates_removed} duplicates removed, {filtered_out_count} filtered by relevance/editor feedback, {trimmed_count} trimmed by limit)"
     )
-    return len(deduplicated), duplicates_removed, trimmed_count
+    return len(published_articles), duplicates_removed, trimmed_count
 
 
 def main() -> None:

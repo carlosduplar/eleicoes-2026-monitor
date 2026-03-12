@@ -70,6 +70,21 @@ npx playwright test
 Pop-Location
 ```
 
+## Editorial feedback loop (self-healing)
+
+The ingestion pipeline now supports an editorial feedback file: `data/editor_feedback.json`.
+
+- Mark an article as irrelevant by setting `"status": "irrelevant"` in `data/articles.json`.
+- On each collect run, `scripts/sync_editor_feedback.py` stores those article IDs in `editor_feedback.json`.
+- `scripts/collect_rss.py` skips URLs/IDs/sources/title patterns present in that file.
+- `scripts/build_data.py` publishes only non-irrelevant articles and keeps the feedback list updated.
+
+You can also add manual rules in `editor_feedback.json`:
+
+- `blocked_title_keywords`
+- `blocked_url_substrings`
+- `blocked_sources`
+
 ## Required GitHub Secrets
 
 | Secret | Used by | Description |

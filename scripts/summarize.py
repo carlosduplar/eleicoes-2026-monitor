@@ -21,12 +21,18 @@ except ImportError:  # pragma: no cover - direct script execution path
     import ai_client  # type: ignore[no-redef]
     from ai_client import _provider_failure_counts, _CIRCUIT_BREAKER_THRESHOLD  # type: ignore[no-redef]
 
+try:
+    from scripts import editor_feedback
+except ImportError:  # pragma: no cover - direct script execution path
+    import editor_feedback  # type: ignore[no-redef]
+
 logger = logging.getLogger(__name__)
 
 ROOT_DIR = Path(__file__).resolve().parents[1]
 DATA_DIR = ROOT_DIR / "data"
 ARTICLES_FILE = DATA_DIR / "articles.json"
 PIPELINE_ERRORS_FILE = DATA_DIR / "pipeline_errors.json"
+EDITOR_FEEDBACK_FILE = DATA_DIR / "editor_feedback.json"
 
 DISCLAIMER_PT = "Análise algorítmica. Não representa pesquisa de opinião."
 DISCLAIMER_EN = "Algorithmic analysis. Does not represent polling data."
@@ -50,12 +56,9 @@ VALID_TOPICS = {
     "eleicoes",
 }
 
-# Normalized (no accents, lowercase) substrings that signal elections relevance.
-# Articles whose title matches NONE of these are marked "irrelevant" and skipped
-# before any LLM call, avoiding wasted API quota on health, tech, sports, etc.
-ELECTIONS_KEYWORDS: frozenset[str] = frozenset(
+# High-precision election signals: if these are absent, the article is likely generic politics.
+ELECTIONS_HIGH_SIGNAL_KEYWORDS: frozenset[str] = frozenset(
     {
-        # election mechanics
         "eleicao",
         "eleicoes",
         "eleitoral",
@@ -64,63 +67,79 @@ ELECTIONS_KEYWORDS: frozenset[str] = frozenset(
         "candidato",
         "candidatos",
         "candidatura",
-        "candidaturas",
-        "voto",
-        "votos",
-        "votacao",
-        "votar",
-        "urna",
-        "urnas",
-        "tse",
+        "campanha eleitoral",
+        "intencao de voto",
+        "pesquisa eleitoral",
+        "pesquisa de voto",
+        "debate presidencial",
+        "plano de governo",
         "segundo turno",
         "primeiro turno",
-        "coligacao",
-        "ficha limpa",
-        # offices & institutions
-        "presidente",
         "presidencia",
         "presidencial",
-        "governador",
-        "governadores",
-        "senado",
-        "senador",
-        "senadores",
-        "deputado",
-        "deputados",
-        "congresso",
-        "parlamento",
-        "legislativo",
-        # party / political
-        "partido",
-        "partidos",
-        "politico",
-        "politica",
-        "politicos",
-        "governo federal",
-        "campanha",
-        # candidate names
+        "pre candidato",
+        "pre-candidato",
+        "urna",
+        "urnas",
+        "votacao",
+        "voto",
+        "votos",
+        "tse",
+        "reeleicao",
+        "reeleito",
+        "2026",
+    }
+)
+
+CANDIDATE_SIGNAL_KEYWORDS: frozenset[str] = frozenset(
+    {
         "lula",
         "bolsonaro",
+        "flavio bolsonaro",
         "tarcisio",
         "caiado",
         "zema",
-        "ratinho",
+        "ratinho jr",
         "eduardo leite",
         "aldo rebelo",
         "renan santos",
-        # policy topics central to the 2026 race
-        "corrupcao",
-        "imposto",
-        "tributacao",
-        "previdencia",
-        "privatizacao",
-        "armamento",
-        "reforma tributaria",
-        "reforma administrativa",
-        "seguranca publica",
-        "indigena",
-        "indigenas",
-        "amazonia",
+    }
+)
+
+BRAZIL_CONTEXT_KEYWORDS: frozenset[str] = frozenset(
+    {
+        "brasil",
+        "brasileiro",
+        "brasileira",
+        "brasilia",
+        "palacio do planalto",
+        "planalto",
+        "governo federal",
+        "camara dos deputados",
+        "senado federal",
+        "tse",
+        "stf",
+        "supremo",
+    }
+)
+
+OFF_TOPIC_KEYWORDS: frozenset[str] = frozenset(
+    {
+        "futebol",
+        "esporte",
+        "campeonato",
+        "novela",
+        "entretenimento",
+        "celebridade",
+        "filme",
+        "serie",
+        "horoscopo",
+        "receita",
+        "culinaria",
+        "bem estar",
+        "saude",
+        "dieta",
+        "musica",
     }
 )
 
@@ -412,16 +431,44 @@ def _validate_content_integrity(content: str, title: str) -> tuple[bool, str]:
     return True, ""
 
 
-def _is_elections_relevant(title: str) -> bool:
-    """Return True if the article title contains at least one elections keyword.
+def _keyword_hits(text: str, keywords: frozenset[str]) -> int:
+    return sum(1 for keyword in keywords if keyword in text)
 
-    Uses the same accent-stripping normalization as _normalize_text so accented
-    Portuguese characters are handled correctly.
-    """
+
+def _is_elections_relevant(
+    title: str,
+    content: str = "",
+    source_category: str = "",
+) -> bool:
+    """Return True when election-specific signals are strong enough."""
     if not isinstance(title, str) or not title.strip():
         return False
-    normalized = _normalize_text(title)
-    return any(kw in normalized for kw in ELECTIONS_KEYWORDS)
+    normalized_title = _normalize_text(title)
+    normalized_content = _normalize_text(content)[:800] if isinstance(content, str) else ""
+    normalized_text = f"{normalized_title} {normalized_content}".strip()
+    source_category_normalized = source_category.strip().lower() if isinstance(source_category, str) else ""
+
+    high_signal_hits = _keyword_hits(normalized_text, ELECTIONS_HIGH_SIGNAL_KEYWORDS)
+    candidate_hits = _keyword_hits(normalized_text, CANDIDATE_SIGNAL_KEYWORDS)
+    context_hits = _keyword_hits(normalized_text, BRAZIL_CONTEXT_KEYWORDS)
+    off_topic_hits = _keyword_hits(normalized_text, OFF_TOPIC_KEYWORDS)
+
+    if off_topic_hits >= 2 and high_signal_hits == 0 and candidate_hits == 0:
+        return False
+
+    if high_signal_hits >= 2:
+        return True
+
+    if high_signal_hits >= 1 and (candidate_hits >= 1 or context_hits >= 1):
+        return True
+
+    if candidate_hits >= 1 and ("2026" in normalized_text or high_signal_hits >= 1):
+        return True
+
+    if source_category_normalized in {"party", "institutional"} and high_signal_hits >= 1:
+        return True
+
+    return False
 
 
 def _should_process(article: dict[str, Any]) -> bool:
@@ -474,6 +521,8 @@ def _all_providers_unavailable() -> bool:
 
 def summarize_articles(limit: int = 30) -> tuple[int, int, int]:
     articles, wrapper = _load_articles_document()
+    feedback = editor_feedback.load_editor_feedback(EDITOR_FEEDBACK_FILE)
+    feedback_changed = bool(editor_feedback.add_irrelevant_article_ids(feedback, articles))
 
     summarized_count = 0
     error_count = 0
@@ -482,6 +531,8 @@ def summarize_articles(limit: int = 30) -> tuple[int, int, int]:
     _circuit_breaker_logged = False
 
     if _all_providers_unavailable():
+        if feedback_changed or not EDITOR_FEEDBACK_FILE.exists():
+            editor_feedback.save_editor_feedback(feedback, EDITOR_FEEDBACK_FILE)
         logger.warning(
             "All AI providers unavailable (circuit breakers open); skipping LLM processing"
         )
@@ -503,12 +554,35 @@ def summarize_articles(limit: int = 30) -> tuple[int, int, int]:
             and article.get("title", "").strip()
             else "(sem título)"
         )
+        source_category = article.get("source_category")
+        source_category_value = source_category if isinstance(source_category, str) else ""
+        raw_content = article.get("content")
+        content_for_relevance = raw_content if isinstance(raw_content, str) else ""
+
+        feedback_reason = editor_feedback.feedback_reason_for_article(article, feedback)
+        if feedback_reason is not None:
+            article["status"] = "irrelevant"
+            if editor_feedback.add_article_id_to_feedback(feedback, article):
+                feedback_changed = True
+            logger.info(
+                "Skipping article %s due to editorial feedback (%s): %r",
+                article_id or "<missing-id>",
+                feedback_reason,
+                title,
+            )
+            continue
 
         # Relevance gate: skip articles that are clearly not elections-related.
         # Broad RSS feeds (UOL, IstoÉ, Veja, BBC) include health, tech, sports, etc.
         # Mark them "irrelevant" so future runs also skip without re-checking.
-        if not _is_elections_relevant(str(title)):
+        if not _is_elections_relevant(
+            title=str(title),
+            content=str(content_for_relevance),
+            source_category=source_category_value,
+        ):
             article["status"] = "irrelevant"
+            if editor_feedback.add_article_id_to_feedback(feedback, article):
+                feedback_changed = True
             logger.info(
                 "Skipping irrelevant article %s: %r",
                 article_id or "<missing-id>",
@@ -523,7 +597,6 @@ def summarize_articles(limit: int = 30) -> tuple[int, int, int]:
             )
             break
 
-        raw_content = article.get("content")
         content = raw_content.strip() if isinstance(raw_content, str) else ""
         if not content:
             logger.warning(
@@ -642,6 +715,9 @@ def summarize_articles(limit: int = 30) -> tuple[int, int, int]:
             _append_edit_history(article, provider=str(provider))
 
         summarized_count += 1
+
+    if feedback_changed or not EDITOR_FEEDBACK_FILE.exists():
+        editor_feedback.save_editor_feedback(feedback, EDITOR_FEEDBACK_FILE)
 
     _save_articles_document(articles, wrapper)
     print(

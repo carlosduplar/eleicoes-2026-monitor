@@ -1,0 +1,74 @@
+{
+  "audit_metadata": {
+    "timestamp": "2026-03-12T08:56:00Z",
+    "tool": "Playwright (Chrome)",
+    "status": "SUCCESS",
+    "execution_errors": 0
+  },
+  "page_1_case_study": {
+    "url": "https://carlosduplar.github.io/eleicoes-2026-monitor/sobre/caso-de-uso",
+    "selector": ".case-study-layout",
+    "status": "FOUND",
+    "grid_detected": true,
+    "content_width_concern": "NEEDS_VISUAL_REVIEW",
+    "screenshot": "01-caso-de-uso-full.png",
+    "findings": "Grid layout container exists in DOM. Visual assessment of content column width requires screenshot inspection."
+  },
+  "page_2_quiz": {
+    "url": "https://carlosduplar.github.io/eleicoes-2026-monitor/quiz",
+    "body_class": "quiz-immersive",
+    "top_nav": {
+      "selector": ".top-nav",
+      "display": "none",
+      "visible": false,
+      "reason": "CSS display: none rule applied via quiz-immersive body class"
+    },
+    "site_footer": {
+      "selector": ".site-footer",
+      "display": "none",
+      "visible": false,
+      "reason": "CSS display: none rule applied via quiz-immersive body class"
+    },
+    "screenshot": "02-quiz-full.png",
+    "findings": "Both navigation elements intentionally hidden for immersive quiz experience. CSS rule pattern likely: body.quiz-immersive .top-nav { display: none; }"
+  },
+  "page_3_candidate_lula": {
+    "url": "https://carlosduplar.github.io/eleicoes-2026-monitor/candidato/lula",
+    "language": "pt-BR",
+    "bio_text_current": "Presidente em exercicio e pre-candidato do PT a eleicao presidencial de 2026.",
+    "bio_text_corrected": "Presidente em exercício e pré-candidato do PT a eleição presidencial de 2026.",
+    "missing_accents": [
+      {
+        "word_rendered": "exercicio",
+        "word_correct": "exercício",
+        "accent_type": "acute",
+        "accent_char": "é"
+      },
+      {
+        "word_rendered": "pre",
+        "word_correct": "pré",
+        "accent_type": "acute",
+        "accent_char": "é"
+      },
+      {
+        "word_rendered": "eleicao",
+        "word_correct": "eleição",
+        "accent_type": "tilde",
+        "accent_char": "ã"
+      }
+    ],
+    "missing_accents_count": 3,
+    "screenshot": "03-candidato-lula-full.png",
+    "findings": "Portuguese pt-BR text missing diacritical marks. Likely UTF-8 encoding or font-family support issue."
+  },
+  "recommendations": {
+    "page_1": "Verify content column width in screenshot. If <60% viewport width, consider expanding margins or adjusting grid template.",
+    "page_2": "Navigation hiding is working as designed. Confirm this is intentional for quiz UX.",
+    "page_3": [
+      "Check HTML meta charset is UTF-8: <meta charset='UTF-8'>",
+      "Verify database encoding supports UTF-8 for candidate profiles",
+      "Ensure CSS font-family includes Latin Extended support",
+      "Review build process for character escaping during SSG/build"
+    ]
+  }
+}

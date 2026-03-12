@@ -14,12 +14,18 @@ from urllib.request import Request, urlopen
 
 import feedparser
 
+try:
+    from scripts import editor_feedback
+except ImportError:  # pragma: no cover - direct script execution path
+    import editor_feedback  # type: ignore[no-redef]
+
 logger = logging.getLogger(__name__)
 
 ROOT_DIR = Path(__file__).resolve().parents[1]
 DATA_DIR = ROOT_DIR / "data"
 SOURCES_FILE = DATA_DIR / "sources.json"
 ARTICLES_FILE = DATA_DIR / "articles.json"
+EDITOR_FEEDBACK_FILE = DATA_DIR / "editor_feedback.json"
 
 REQUEST_TIMEOUT_SECONDS = 15
 USER_AGENT = "eleicoes-2026-monitor/1.0 (+https://github.com/carlosduplar/eleicoes-2026-monitor)"
@@ -245,6 +251,7 @@ def collect_articles() -> tuple[int, int, int]:
     """Collect new RSS entries and append unseen articles to data/articles.json."""
     sources = load_active_rss_sources()
     document = _load_articles_document()
+    feedback = editor_feedback.load_editor_feedback(EDITOR_FEEDBACK_FILE)
     existing_ids = {
         article_id
         for article in document.articles
@@ -255,6 +262,7 @@ def collect_articles() -> tuple[int, int, int]:
     new_articles: list[dict[str, Any]] = []
     prefilled = 0
     errors = 0
+    skipped_by_feedback = 0
 
     for source in sources:
         source_name = source["name"]
@@ -273,6 +281,20 @@ def collect_articles() -> tuple[int, int, int]:
                 continue
 
             article_id = build_article_id(article_url)
+            article_title = _extract_entry_title(entry, article_url)
+            feedback_reason = editor_feedback.feedback_reason_for_article(
+                {
+                    "id": article_id,
+                    "url": article_url,
+                    "title": article_title,
+                    "source": source_name,
+                },
+                feedback,
+            )
+            if feedback_reason is not None:
+                skipped_by_feedback += 1
+                continue
+
             if article_id in existing_ids:
                 continue
 
@@ -282,7 +304,7 @@ def collect_articles() -> tuple[int, int, int]:
             article: dict[str, Any] = {
                 "id": article_id,
                 "url": article_url,
-                "title": _extract_entry_title(entry, article_url),
+                "title": article_title,
                 "source": source_name,
                 "published_at": _extract_published_at(entry, collected_at),
                 "collected_at": collected_at,
@@ -309,7 +331,7 @@ def collect_articles() -> tuple[int, int, int]:
 
     print(
         f"Collected {len(new_articles)} new articles from {len(sources)} sources "
-        f"({prefilled} with RSS body pre-filled, {errors} errors)"
+        f"({prefilled} with RSS body pre-filled, {errors} errors, {skipped_by_feedback} skipped by editorial feedback)"
     )
     return len(new_articles), len(sources), errors
 

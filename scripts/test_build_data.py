@@ -36,6 +36,10 @@ def _read_articles(path: Path) -> list[dict[str, Any]]:
     raise AssertionError(f"Unexpected articles payload in {path}")
 
 
+def _read_feedback(path: Path) -> dict[str, Any]:
+    return json.loads(path.read_text(encoding="utf-8"))
+
+
 def _make_article(
     url: str = "https://example.com/1",
     title: str = "Test",
@@ -62,12 +66,31 @@ def _make_article(
 def data_dir(tmp_path: Path, monkeypatch: pytest.MonkeyPatch) -> Path:
     """Redirect build_data paths to tmp_path for isolation."""
     articles_file = tmp_path / "data" / "articles.json"
+    feedback_file = tmp_path / "data" / "editor_feedback.json"
     schema_file = tmp_path / "docs" / "schemas" / "articles.schema.json"
     schema_file.parent.mkdir(parents=True, exist_ok=True)
     schema_file.write_text(Path("docs/schemas/articles.schema.json").read_text(encoding="utf-8"), encoding="utf-8")
+    feedback_file.parent.mkdir(parents=True, exist_ok=True)
+    feedback_file.write_text(
+        json.dumps(
+            {
+                "$schema": "../docs/schemas/editor_feedback.schema.json",
+                "updated_at": None,
+                "irrelevant_article_ids": [],
+                "blocked_title_keywords": [],
+                "blocked_url_substrings": [],
+                "blocked_sources": [],
+            },
+            indent=2,
+            ensure_ascii=False,
+        )
+        + "\n",
+        encoding="utf-8",
+    )
 
     monkeypatch.setattr(build_data, "ARTICLES_FILE", articles_file)
     monkeypatch.setattr(build_data, "SCHEMA_FILE", schema_file)
+    monkeypatch.setattr(build_data, "EDITOR_FEEDBACK_FILE", feedback_file)
     return articles_file.parent
 
 
@@ -200,4 +223,29 @@ def test_idempotent_double_run(data_dir: Path) -> None:
     second_output = articles_file.read_text(encoding="utf-8")
 
     assert first_output == second_output
+
+
+def test_build_data_filters_irrelevant_and_syncs_feedback(data_dir: Path) -> None:
+    """Irrelevant articles should be removed from published list and remembered in feedback."""
+    articles_file = data_dir / "articles.json"
+    feedback_file = data_dir / "editor_feedback.json"
+    irrelevant_url = "https://example.com/irrelevant"
+    _write_articles(
+        articles_file,
+        [
+            _make_article(url=irrelevant_url, status="irrelevant", title="Receita de bolo"),
+            _make_article(url="https://example.com/relevant", status="validated", title="Pesquisa presidencial 2026"),
+        ],
+    )
+
+    count, duplicates_removed, trimmed = build_data.consolidate_articles()
+    saved_articles = _read_articles(articles_file)
+    feedback_payload = _read_feedback(feedback_file)
+
+    assert count == 1
+    assert duplicates_removed == 0
+    assert trimmed == 0
+    assert len(saved_articles) == 1
+    assert saved_articles[0]["url"] == "https://example.com/relevant"
+    assert hashlib.sha256(irrelevant_url.encode("utf-8")).hexdigest()[:16] in feedback_payload["irrelevant_article_ids"]
 

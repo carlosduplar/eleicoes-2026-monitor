@@ -46,7 +46,7 @@ export type SourceCategory =
   | 'party'
   | 'social';
 
-export type ArticleStatus = 'raw' | 'validated' | 'curated';
+export type ArticleStatus = 'raw' | 'validated' | 'curated' | 'irrelevant';
 export type SentimentLabel = 'positivo' | 'neutro' | 'negativo';
 export type Stance = 'favor' | 'against' | 'neutral' | 'unclear';
 export type Confidence = 'high' | 'medium' | 'low';
