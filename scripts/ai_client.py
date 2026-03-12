@@ -60,8 +60,11 @@ _THINKING_DISABLE_EXTRA_BODY: dict[str, dict[str, object]] = {
         "chat_template_kwargs": {"enable_thinking": False}
     },
     "qwen/qwen3.5-397b-a17b": {"chat_template_kwargs": {"enable_thinking": False}},
-    "moonshotai/kimi-k2.5": {"chat_template_kwargs": {"enable_thinking": False}},
-    "minimaxai/minimax-m2.5": {"chat_template_kwargs": {"enable_thinking": False}},
+    # Kimi K2.5 and MiniMax M2.5 are served via the NVIDIA official API, which uses
+    # {"thinking": {"type": "disabled"}} — NOT chat_template_kwargs.enable_thinking.
+    # See: https://docs.api.nvidia.com/nim/reference/moonshotai-kimi-k2-5
+    "moonshotai/kimi-k2.5": {"thinking": {"type": "disabled"}},
+    "minimaxai/minimax-m2.5": {"thinking": {"type": "disabled"}},
     "nvidia/nemotron-3-super-120b-a12b": {
         "chat_template_kwargs": {"enable_thinking": False}
     },
@@ -204,10 +207,23 @@ def _extract_content_from_response(response: object) -> str:
     if isinstance(content, str):
         cleaned = content.strip()
         if cleaned:
-            return cleaned
-        logger.warning(
-            "[AI] Provider returned empty string content, checking reasoning_content"
-        )
+            if "<think>" in cleaned:
+                # Strip inline <think>...</think> blocks emitted by models that embed
+                # chain-of-thought in the content field (e.g. MiniMax M2.5 via SGLang
+                # without a dedicated reasoning parser).
+                stripped = re.sub(r"<think>.*?</think>\s*", "", cleaned, flags=re.DOTALL).strip()
+                if stripped:
+                    return stripped
+                logger.warning(
+                    "[AI] Provider returned only <think> content with no final answer; "
+                    "checking reasoning_content"
+                )
+            else:
+                return cleaned
+        else:
+            logger.warning(
+                "[AI] Provider returned empty string content, checking reasoning_content"
+            )
 
     if isinstance(content, list):
         # Handle content blocks from thinking/multimodal models.
