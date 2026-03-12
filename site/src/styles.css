@@ -325,32 +325,29 @@ p {
 }
 
 .feed-card {
-  display: grid;
-  grid-template-columns: 180px 1fr;
-  gap: 1rem;
-  padding: 1rem;
-}
-
-.feed-image-placeholder {
-  border-radius: 8px;
-  min-height: 120px;
-  background: linear-gradient(135deg, var(--brand-muted), #d8e0ea);
-  color: var(--text-secondary);
   display: flex;
-  align-items: center;
-  justify-content: center;
-  text-align: center;
-  font-size: 0.75rem;
-  padding: 0.75rem;
+  flex-direction: column;
+  gap: 0.7rem;
+  padding: 1rem;
 }
 
 .feed-card-content h3 {
   font-size: 1.05rem;
   font-weight: 600;
-  margin-bottom: 0.35rem;
+  margin-bottom: 0.4rem;
 }
 
-.feed-card-content p {
+.feed-title-link {
+  color: var(--text-primary);
+  text-decoration: none;
+}
+
+.feed-title-link:hover {
+  color: var(--brand-navy);
+  text-decoration: underline;
+}
+
+.feed-snippet {
   color: var(--text-secondary);
   font-size: 0.9rem;
   margin-bottom: 0.75rem;
@@ -418,6 +415,41 @@ p {
   background: var(--brand-muted);
   color: var(--text-secondary);
   padding: 0.15rem 0.5rem;
+}
+
+.feed-source-link {
+  color: var(--brand-navy);
+  text-decoration: none;
+  font-weight: 500;
+}
+
+.feed-source-link:hover {
+  text-decoration: underline;
+}
+
+.feed-pagination {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 0.8rem;
+  flex-wrap: wrap;
+  color: var(--text-secondary);
+  font-size: 0.8rem;
+}
+
+.feed-load-more-btn {
+  border: 1px solid var(--brand-navy);
+  background: var(--brand-navy);
+  color: #ffffff;
+  border-radius: 6px;
+  padding: 0.45rem 0.8rem;
+  font-size: 0.8rem;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.feed-load-more-btn:hover {
+  opacity: 0.92;
 }
 
 .methodology-badge {
@@ -1289,7 +1321,7 @@ p {
   }
 
   .feed-card {
-    grid-template-columns: 1fr;
+    gap: 0.65rem;
   }
 
   .sentiment-head {
@@ -1299,10 +1331,6 @@ p {
 
   .sentiment-skeleton-row {
     grid-template-columns: 160px repeat(6, minmax(52px, 1fr));
-  }
-
-  .feed-image-placeholder {
-    min-height: 150px;
   }
 
   .footer-grid {
@@ -1343,7 +1371,7 @@ p {
     font-size: 1rem;
   }
 
-  .feed-card-content p {
+  .feed-snippet {
     font-size: 0.84rem;
   }
 
@@ -1918,7 +1946,7 @@ body.quiz-immersive .main-content {
   }
 
   .feed-card {
-    grid-template-columns: 1fr;
+    gap: 0.6rem;
   }
 
   .feed-card-content h3 {

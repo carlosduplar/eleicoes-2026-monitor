@@ -10,6 +10,8 @@ const statusToClass = {
   validated: 'status-validated',
   curated: 'status-curated',
 };
+const PAGE_SIZE = 20;
+const MAX_SNIPPET_CHARS = 220;
 
 function normalizeArticles(payload) {
   if (Array.isArray(payload)) {
@@ -48,6 +50,38 @@ function toSummary(article, language, fallbackText) {
   return article.summaries[language] || article.summaries['pt-BR'] || fallbackText;
 }
 
+function truncateText(value, maxChars) {
+  if (typeof value !== 'string') {
+    return '';
+  }
+  const normalized = value.replace(/\s+/g, ' ').trim();
+  if (!normalized) {
+    return '';
+  }
+  if (normalized.length <= maxChars) {
+    return normalized;
+  }
+  return `${normalized.slice(0, maxChars).trimEnd()}...`;
+}
+
+function toSnippet(article, language, fallbackText) {
+  const rawContent = typeof article?.content === 'string' ? article.content : '';
+  const contentSnippet = truncateText(rawContent, MAX_SNIPPET_CHARS);
+  if (contentSnippet) {
+    return contentSnippet;
+  }
+  const summary = toSummary(article, language, fallbackText);
+  return truncateText(summary, MAX_SNIPPET_CHARS) || fallbackText;
+}
+
+function toArticleUrl(article) {
+  if (typeof article?.url !== 'string') {
+    return null;
+  }
+  const cleaned = article.url.trim();
+  return cleaned || null;
+}
+
 function toPublishedLabel(value, language) {
   if (!value) {
     return '--';
@@ -82,8 +116,12 @@ function NewsFeed({ selectedCategory }) {
   const { data, loading, error } = useData('articles');
   const [searchQuery, setSearchQuery] = useState('');
   const [debouncedQuery, setDebouncedQuery] = useState('');
+  const [visibleCount, setVisibleCount] = useState(PAGE_SIZE);
+  const language = i18n.language === 'en-US' ? 'en-US' : 'pt-BR';
 
-  const articles = normalizeArticles(data);
+  const articles = normalizeArticles(data).filter(
+    (article) => article && typeof article === 'object' && article.status !== 'irrelevant',
+  );
   const visibleArticles = articles.filter((article) => {
     if (selectedCategory === 'all') {
       return true;
@@ -91,7 +129,11 @@ function NewsFeed({ selectedCategory }) {
     return toSourceCategory(article) === selectedCategory;
   });
   const { results: searchResults, loading: searchLoading, isVertexSearch } = useSearch(debouncedQuery, articles);
-  const displayedArticles = debouncedQuery ? searchResults : visibleArticles;
+  const displayedArticles = (debouncedQuery ? searchResults : visibleArticles).filter(
+    (article) => article && typeof article === 'object' && article.status !== 'irrelevant',
+  );
+  const paginatedArticles = displayedArticles.slice(0, visibleCount);
+  const hasMoreArticles = displayedArticles.length > paginatedArticles.length;
   const isSearchActive = debouncedQuery.length > 0;
 
   const lastUpdatedAt = Array.isArray(data)
@@ -107,6 +149,10 @@ function NewsFeed({ selectedCategory }) {
       clearTimeout(debounceId);
     };
   }, [searchQuery]);
+
+  useEffect(() => {
+    setVisibleCount(PAGE_SIZE);
+  }, [selectedCategory, debouncedQuery]);
 
   if (loading) {
     return (
@@ -156,10 +202,11 @@ function NewsFeed({ selectedCategory }) {
       {!isSearchActive && displayedArticles.length === 0 && (
         <article className="feed-state-card">{t('feed.empty')}</article>
       )}
-      {displayedArticles.map((article) => {
+      {paginatedArticles.map((article) => {
         const sourceCategory = toSourceCategory(article);
         const sourceName = toSourceName(article, t('feed.unknown_source'));
-        const summary = toSummary(article, i18n.language, t('feed.analysis_in_progress'));
+        const snippet = toSnippet(article, language, t('feed.analysis_in_progress'));
+        const articleUrl = toArticleUrl(article);
         const statusKey = article.status || 'raw';
         const isValidated = statusKey === 'validated';
         const isCurated = statusKey === 'curated';
@@ -171,7 +218,6 @@ function NewsFeed({ selectedCategory }) {
 
         return (
           <article key={article.id || article.url || article.title} className="feed-card">
-            <div className="feed-image-placeholder">{t('feed.image_placeholder')}</div>
             <div className="feed-card-content">
               <div className="feed-card-badges">
                 <span className="feed-category-badge">{t(`feed.categories.${sourceCategory}`)}</span>
@@ -179,18 +225,48 @@ function NewsFeed({ selectedCategory }) {
                   {statusLabel}
                 </span>
               </div>
-              <h3>{article.title}</h3>
-              <p>{summary}</p>
+              <h3>
+                {articleUrl ? (
+                  <a className="feed-title-link" href={articleUrl} target="_blank" rel="noopener noreferrer">
+                    {article.title}
+                  </a>
+                ) : (
+                  article.title
+                )}
+              </h3>
+              <p className="feed-snippet">{snippet}</p>
               <div className="feed-meta">
                 <span>{sourceName}</span>
                 <span aria-hidden="true">{'\u00B7'}</span>
                 <span>{toPublishedLabel(article.published_at, i18n.language)}</span>
                 <span className="feed-tag">{t(`feed.filters.${sourceCategory}`)}</span>
+                {articleUrl ? (
+                  <>
+                    <span aria-hidden="true">{'\u00B7'}</span>
+                    <a className="feed-source-link" href={articleUrl} target="_blank" rel="noopener noreferrer">
+                      {t('feed.read_source')}
+                    </a>
+                  </>
+                ) : null}
               </div>
             </div>
           </article>
         );
       })}
+      {displayedArticles.length > 0 && (
+        <div className="feed-pagination">
+          <span>{t('feed.showing_count', { shown: paginatedArticles.length, total: displayedArticles.length })}</span>
+          {hasMoreArticles ? (
+            <button
+              type="button"
+              className="feed-load-more-btn"
+              onClick={() => setVisibleCount((current) => current + PAGE_SIZE)}
+            >
+              {t('feed.load_more')}
+            </button>
+          ) : null}
+        </div>
+      )}
       <MethodologyBadge />
     </section>
   );

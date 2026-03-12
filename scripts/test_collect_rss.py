@@ -29,6 +29,20 @@ def _seed_articles(path: Path, articles: list[dict[str, Any]]) -> None:
     )
 
 
+def _seed_editor_feedback(path: Path, payload: dict[str, Any] | None = None) -> None:
+    default_payload: dict[str, Any] = {
+        "$schema": "../docs/schemas/editor_feedback.schema.json",
+        "updated_at": None,
+        "irrelevant_article_ids": [],
+        "blocked_title_keywords": [],
+        "blocked_url_substrings": [],
+        "blocked_sources": [],
+    }
+    if payload:
+        default_payload.update(payload)
+    _write_json(path, default_payload)
+
+
 def _read_articles(path: Path) -> list[dict[str, Any]]:
     payload = json.loads(path.read_text(encoding="utf-8"))
     if isinstance(payload, list):
@@ -58,15 +72,18 @@ def _article(url: str, published_at: str, title: str = "Title") -> dict[str, Any
 
 
 @pytest.fixture
-def isolated_files(tmp_path: Path, monkeypatch: pytest.MonkeyPatch) -> tuple[Path, Path]:
+def isolated_files(tmp_path: Path, monkeypatch: pytest.MonkeyPatch) -> tuple[Path, Path, Path]:
     sources_path = tmp_path / "sources.json"
     articles_path = tmp_path / "articles.json"
+    feedback_path = tmp_path / "editor_feedback.json"
 
     monkeypatch.setattr(collect_rss, "SOURCES_FILE", sources_path)
     monkeypatch.setattr(collect_rss, "ARTICLES_FILE", articles_path)
+    monkeypatch.setattr(collect_rss, "EDITOR_FEEDBACK_FILE", feedback_path)
     monkeypatch.setattr(build_data, "ARTICLES_FILE", articles_path)
+    monkeypatch.setattr(build_data, "EDITOR_FEEDBACK_FILE", feedback_path)
 
-    return sources_path, articles_path
+    return sources_path, articles_path, feedback_path
 
 
 def test_article_id_is_sha256_prefix() -> None:
@@ -76,14 +93,15 @@ def test_article_id_is_sha256_prefix() -> None:
 
 
 def test_dedup_skips_existing_articles(
-    isolated_files: tuple[Path, Path],
+    isolated_files: tuple[Path, Path, Path],
     monkeypatch: pytest.MonkeyPatch,
 ) -> None:
-    sources_path, articles_path = isolated_files
+    sources_path, articles_path, feedback_path = isolated_files
     _seed_sources(
         sources_path,
         [{"name": "Source A", "url": "https://feed.example/a.xml", "category": "mainstream", "active": True}],
     )
+    _seed_editor_feedback(feedback_path)
 
     existing_url = "https://news.example/item-1"
     _seed_articles(articles_path, [_article(existing_url, "2026-03-15T10:00:00Z", title="Existing")])
@@ -116,15 +134,16 @@ def test_dedup_skips_existing_articles(
 
 
 def test_idempotent_double_run(
-    isolated_files: tuple[Path, Path],
+    isolated_files: tuple[Path, Path, Path],
     monkeypatch: pytest.MonkeyPatch,
 ) -> None:
-    sources_path, articles_path = isolated_files
+    sources_path, articles_path, feedback_path = isolated_files
     _seed_sources(
         sources_path,
         [{"name": "Source A", "url": "https://feed.example/a.xml", "category": "mainstream", "active": True}],
     )
     _seed_articles(articles_path, [])
+    _seed_editor_feedback(feedback_path)
 
     monkeypatch.setattr(
         collect_rss,
@@ -148,10 +167,10 @@ def test_idempotent_double_run(
 
 
 def test_feed_error_does_not_crash(
-    isolated_files: tuple[Path, Path],
+    isolated_files: tuple[Path, Path, Path],
     monkeypatch: pytest.MonkeyPatch,
 ) -> None:
-    sources_path, articles_path = isolated_files
+    sources_path, articles_path, feedback_path = isolated_files
     _seed_sources(
         sources_path,
         [
@@ -160,6 +179,7 @@ def test_feed_error_does_not_crash(
         ],
     )
     _seed_articles(articles_path, [])
+    _seed_editor_feedback(feedback_path)
 
     def fake_fetch(url: str) -> list[dict[str, str]]:
         if "bad.xml" in url:
@@ -182,8 +202,9 @@ def test_feed_error_does_not_crash(
     assert len(articles) == 1
 
 
-def test_build_data_limits_500(isolated_files: tuple[Path, Path]) -> None:
-    _sources_path, articles_path = isolated_files
+def test_build_data_limits_500(isolated_files: tuple[Path, Path, Path]) -> None:
+    _sources_path, articles_path, feedback_path = isolated_files
+    _seed_editor_feedback(feedback_path)
     base_time = datetime(2026, 3, 1, 0, 0, tzinfo=timezone.utc)
     articles = [
         _article(
@@ -204,8 +225,9 @@ def test_build_data_limits_500(isolated_files: tuple[Path, Path]) -> None:
     assert len(saved_articles) == 500
 
 
-def test_build_data_sorts_by_date(isolated_files: tuple[Path, Path]) -> None:
-    _sources_path, articles_path = isolated_files
+def test_build_data_sorts_by_date(isolated_files: tuple[Path, Path, Path]) -> None:
+    _sources_path, articles_path, feedback_path = isolated_files
+    _seed_editor_feedback(feedback_path)
     _seed_articles(
         articles_path,
         [
@@ -223,3 +245,49 @@ def test_build_data_sorts_by_date(isolated_files: tuple[Path, Path]) -> None:
         "https://news.example/middle",
         "https://news.example/older",
     ]
+
+
+def test_collect_skips_urls_flagged_in_editor_feedback(
+    isolated_files: tuple[Path, Path, Path],
+    monkeypatch: pytest.MonkeyPatch,
+) -> None:
+    sources_path, articles_path, feedback_path = isolated_files
+    _seed_sources(
+        sources_path,
+        [{"name": "Source A", "url": "https://feed.example/a.xml", "category": "mainstream", "active": True}],
+    )
+    _seed_articles(articles_path, [])
+
+    blocked_url = "https://news.example/blocked-item"
+    _seed_editor_feedback(
+        feedback_path,
+        payload={
+            "irrelevant_article_ids": [collect_rss.build_article_id(blocked_url)],
+        },
+    )
+
+    monkeypatch.setattr(
+        collect_rss,
+        "fetch_feed_entries",
+        lambda _url: [
+            {
+                "link": blocked_url,
+                "title": "Blocked item",
+                "published": "Sat, 15 Mar 2026 10:00:00 GMT",
+            },
+            {
+                "link": "https://news.example/allowed-item",
+                "title": "Allowed item",
+                "published": "Sat, 15 Mar 2026 11:00:00 GMT",
+            },
+        ],
+    )
+
+    new_count, source_count, error_count = collect_rss.collect_articles()
+    articles = _read_articles(articles_path)
+
+    assert new_count == 1
+    assert source_count == 1
+    assert error_count == 0
+    assert len(articles) == 1
+    assert articles[0]["url"] == "https://news.example/allowed-item"

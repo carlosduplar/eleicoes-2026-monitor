@@ -1,0 +1,234 @@
+- generic [ref=e3]:
+  - link "Ir para o conteúdo principal" [ref=e4] [cursor=pointer]:
+    - /url: "#main-content"
+  - banner [ref=e5]:
+    - generic [ref=e6]:
+      - link "Portal Eleicoes BR 2026" [ref=e7] [cursor=pointer]:
+        - /url: /eleicoes-2026-monitor/
+      - navigation "Navegação principal" [ref=e8]:
+        - link "Notícias" [ref=e9] [cursor=pointer]:
+          - /url: /eleicoes-2026-monitor/
+        - link "Sentimento" [ref=e10] [cursor=pointer]:
+          - /url: /eleicoes-2026-monitor/sentimento
+        - link "Pesquisas" [ref=e11] [cursor=pointer]:
+          - /url: /eleicoes-2026-monitor/pesquisas
+        - link "Candidatos" [ref=e12] [cursor=pointer]:
+          - /url: /eleicoes-2026-monitor/candidatos
+        - link "Quiz" [ref=e13] [cursor=pointer]:
+          - /url: /eleicoes-2026-monitor/quiz
+        - link "Metodologia" [ref=e14] [cursor=pointer]:
+          - /url: /eleicoes-2026-monitor/metodologia
+        - link "Caso de Uso" [ref=e15] [cursor=pointer]:
+          - /url: /eleicoes-2026-monitor/sobre/caso-de-uso
+      - generic "Trocar idioma" [ref=e16]:
+        - button "PT" [ref=e17] [cursor=pointer]
+        - generic [ref=e18]: "|"
+        - button "EN" [ref=e19] [cursor=pointer]
+  - generic [ref=e21]: 📅 206 dias para o 1.º turno · 4 de outubro de 2026
+  - main [ref=e22]:
+    - article [ref=e23]:
+      - navigation "Caso de Uso" [ref=e24]:
+        - link "Portal Eleicoes BR 2026" [ref=e25] [cursor=pointer]:
+          - /url: /eleicoes-2026-monitor/
+        - text: ">Sobre>Caso de Uso"
+      - generic [ref=e26]:
+        - 'heading "Caso de Uso: Desenvolvimento com IA" [level=1] [ref=e27]'
+        - paragraph [ref=e28]: Como construímos um portal eleitoral em tempo real usando múltiplos agentes de IA
+        - generic [ref=e29]:
+          - generic [ref=e114]: 8 min de leitura
+          - generic [ref=e30]: Atualizado em 12/03/2026
+          - generic [ref=e31]: Compartilhar este caso de uso
+        - link "Voltar ao portal" [ref=e32] [cursor=pointer]:
+          - /url: /eleicoes-2026-monitor/
+      - generic [ref=e33]:
+        - complementary "Neste artigo" [ref=e34]:
+          - heading "Neste artigo" [level=2] [ref=e35]
+          - list [ref=e36]:
+            - listitem [ref=e115]:
+              - link "Sumario executivo" [ref=e116] [cursor=pointer]:
+                - /url: "#sumario-executivo"
+            - listitem [ref=e39]:
+              - link "Stack e arquitetura" [ref=e117] [cursor=pointer]:
+                - /url: "#stack-e-arquitetura"
+            - listitem [ref=e41]:
+              - link "Hierarquia de agentes" [ref=e118] [cursor=pointer]:
+                - /url: "#hierarquia-de-agentes"
+            - listitem [ref=e119]:
+              - link "Pipeline de ingestao" [ref=e120] [cursor=pointer]:
+                - /url: "#pipeline-de-ingestao"
+            - listitem [ref=e121]:
+              - link "Decisoes tecnicas registradas" [ref=e122] [cursor=pointer]:
+                - /url: "#decisoes-tecnicas-registradas"
+            - listitem [ref=e123]:
+              - link "Licoes aprendidas" [ref=e124] [cursor=pointer]:
+                - /url: "#licoes-aprendidas"
+            - listitem [ref=e125]:
+              - link "Numeros do projeto" [ref=e126] [cursor=pointer]:
+                - /url: "#numeros-do-projeto"
+            - listitem [ref=e127]:
+              - link "Proximos passos" [ref=e128] [cursor=pointer]:
+                - /url: "#proximos-passos"
+        - generic [ref=e129]:
+          - 'heading "Caso de Uso: Portal Eleicoes BR 2026" [level=1] [ref=e130]'
+          - heading "Sumario executivo" [level=2] [ref=e131]
+          - paragraph [ref=e132]: "O Portal Eleicoes BR 2026 foi concebido como um produto de transparencia publica: um portal bilingue (pt-BR e en-US) para monitorar noticias, sentimento, pesquisas e posicionamentos de pre-candidatos da eleicao presidencial de 2026. O objetivo nao foi criar mais uma pagina opinativa, mas sim uma infraestrutura editorial reproduzivel e auditavel, com separacao clara entre coleta de dados, processamento com IA e apresentacao para o publico. A proposta central e simples: qualquer pessoa deve conseguir ler uma materia no feed, entender em que etapa ela esta e auditar o caminho tecnico que levou aquele conteudo a aparecer."
+          - paragraph [ref=e133]: O projeto combina frontend estatico em React + Vite com um pipeline Python orientado a dados e automacao em GitHub Actions. Em vez de depender de um unico modelo de IA, a arquitetura usa cadeia de fallback multi-provider para preservar disponibilidade e controlar custo. Em vez de esconder as limitacoes, o portal explicita metodologia, disclaimer, fontes e estado de processamento. Em vez de acoplar deploy a infraestrutura complexa, a publicacao roda em GitHub Pages com Cloudflare. O resultado e um sistema enxuto, barato, rastreavel e adaptado para evoluir em fases incrementais.
+          - heading "Stack e arquitetura" [level=2] [ref=e134]
+          - paragraph [ref=e135]:
+            - text: Do ponto de vista tecnico, a stack foi escolhida para maximizar previsibilidade operacional. No frontend, React 18 com Vite e
+            - code [ref=e136]: vite-react-ssg
+            - text: pre-renderiza as paginas principais para servir conteudo estatico em GitHub Pages, com boa indexacao para busca tradicional e assistentes de IA. A camada de UI segue wireframes em HTML standalone definidos no ADR 000, com tokens de design padronizados (
+            - code [ref=e137]: "--navy"
+            - text: ","
+            - code [ref=e138]: "--gold"
+            - text: ","
+            - code [ref=e139]: "--bg"
+            - text: ","
+            - code [ref=e140]: "--surface"
+            - text: ","
+            - code [ref=e141]: "--muted"
+            - text: ","
+            - code [ref=e142]: "--text"
+            - text: ","
+            - code [ref=e143]: "--text2"
+            - text: ","
+            - code [ref=e144]: "--border"
+            - text: ) para manter consistencia visual entre feed, dashboards, quiz, metodologia e, agora, caso de uso.
+          - paragraph [ref=e145]:
+            - text: No backend de dados, Python 3.12 orquestra coleta e transformacoes. Os scripts de pipeline foram implementados com foco em idempotencia e rastreabilidade de estado. O identificador padrao
+            - code [ref=e146]: sha256(url.encode())[:16]
+            - text: evita duplicacao de artigos entre execucoes, e os artefatos JSON seguem os contratos em
+            - code [ref=e147]: docs/schemas/*.schema.json
+            - text: e
+            - code [ref=e148]: docs/schemas/types.ts
+            - text: . Isso permite que React e Python compartilhem o mesmo modelo mental de dados, reduzindo regressao por divergencia de formato.
+          - paragraph [ref=e149]:
+            - text: A arquitetura de publicacao usa tres estagios editoriais (
+            - code [ref=e150]: raw -> validated -> curated
+            - text: ") e privilegia disponibilidade: mesmo quando um provedor de IA falha, o pipeline nao para. O conteudo pode aparecer como"
+            - code [ref=e151]: raw
+            - text: com titulo e metadados enquanto etapas mais caras ou lentas continuam em background. Esse desenho evita gargalo binario do tipo "publica tudo ou publica nada" e reflete melhor a natureza de dados em tempo quase real.
+          - heading "Hierarquia de agentes" [level=2] [ref=e152]
+          - paragraph [ref=e153]: O processo de entrega foi estruturado com uma hierarquia de agentes explicita, documentada no PLAN e nos arquivos de handoff. O papel de Arquiteto ficou com Opus, responsavel por consolidar estrategia, wireframes, ADRs e contratos de schema. O papel Tatico ficou com Codex, transformando arquitetura em especificacoes de tarefa e criterios de verificacao. O papel Operacional ficou com MiniMax, executando implementacoes concretas em loop disciplinado. O papel de QA ficou com Gemini, concentrado em validacao, testes de interface e relatorios.
+          - paragraph [ref=e154]: "A governanca operacional adotou o protocolo RALPH: Read, Analyze, List, Plan, Handle. Esse fluxo reduz improviso em tarefas extensas porque obriga leitura de contexto antes de alterar codigo, transforma ambiguidade em checklist, e fecha cada ciclo com validacao. No projeto, RALPH nao foi apenas um slogan; ele orientou a sequencia de fases, a escrita de specs e a forma de tratar falhas repetidas com escalacao formal."
+          - paragraph [ref=e155]:
+            - text: O handoff entre camadas usa arquivos sentinela
+            - code [ref=e156]: plans/phase-NN-arch.DONE
+            - text: ". Esse mecanismo simples substitui integracoes complexas de orquestracao e deixa historico auditavel no proprio repositorio. Quando uma fase fecha, o sentinela comunica que arquitetura e implementacao daquela etapa estao sincronizadas e que a proxima camada pode avancar sem estado oculto. Para um projeto publico e iterativo, esse padrao se mostrou pragmatismo puro: pouco acoplamento, alta rastreabilidade."
+          - heading "Pipeline de ingestao" [level=2] [ref=e157]
+          - paragraph [ref=e158]: O pipeline editorial segue a metafora de redacao com tres papeis. O Foca (coletor) roda em alta frequencia, consumindo principalmente RSS, com expansao para sites partidarios e outras fontes estruturadas. O Editor (validador) processa artigos coletados, aciona sumarizacao bilingue e prepara dados para componentes analiticos. O Editor-chefe (curadoria) opera em cadencia mais lenta, com foco em destaque, consistencia e controles de qualidade.
+          - paragraph [ref=e159]:
+            - text: "As etapas de publicacao sao explicitas no dado:"
+            - code [ref=e160]: raw
+            - text: ","
+            - code [ref=e161]: validated
+            - text: e
+            - code [ref=e162]: curated
+            - text: . No estado
+            - code [ref=e163]: raw
+            - text: ", o portal privilegia velocidade e transparencia sobre acabamento: titulo, fonte e horario ja podem aparecer, com sinalizacao de que a analise ainda esta em andamento. No estado"
+            - code [ref=e164]: validated
+            - text: ", entram sumarios em dois idiomas e metadados enriquecidos. No estado"
+            - code [ref=e165]: curated
+            - text: ", o conteudo recebe camada adicional de priorizacao editorial automatizada. Esse funil evita bloqueios desnecessarios e entrega valor incremental para o usuario."
+          - paragraph [ref=e166]: "A cadeia de IA foi desenhada para resiliencia e custo controlado: NVIDIA NIM, OpenRouter, Ollama Cloud, Vertex AI e MiMo, nessa ordem de fallback. A regra principal e nao interromper pipeline por erro de IA. Se uma chamada falha, o sistema registra, tenta o proximo provedor e segue. Se todos falham, o artigo continua no fluxo com estado coerente, em vez de ser descartado silenciosamente. Essa postura privilegia continuidade operacional e reduz risco de indisponibilidade por dependencia unica."
+          - heading "Decisoes tecnicas registradas" [level=2] [ref=e167]
+          - paragraph [ref=e168]: As ADRs 000 a 006 formam a espinha dorsal de decisao deste produto. O ADR 000 formalizou wireframes como fonte de verdade visual, com mapeamento tela-componente e tokens de design consistentes. Isso reduziu retrabalho de UI porque cada fase implementa sobre referencia concreta, nao sobre memoria subjetiva de layout.
+          - paragraph [ref=e169]: "O ADR 001 definiu hospedagem em GitHub Pages com Cloudflare, combinando custo zero, CDN e CI/CD nativo em GitHub Actions. A consequencia direta foi optar por SSG em vez de SSR. Essa restricao virou vantagem: menos complexidade de runtime, mais previsibilidade de deploy, e conteudo sempre servivel como estatico."
+          - paragraph [ref=e170]:
+            - text: O ADR 002 registrou a estrategia de fallback multi-provider de IA. Em termos praticos, essa decisao tirou o projeto da dependencia de um unico fornecedor e permitiu operar com prioridade em opcoes gratuitas, preservando o budget pago para contingencia. Tambem instituiu rastreamento de uso em
+            - code [ref=e171]: data/ai_usage.json
+            - text: ", importante para auditoria de custo e capacidade."
+          - paragraph [ref=e172]:
+            - text: O ADR 003 consolidou a estrategia de internacionalizacao com
+            - code [ref=e173]: react-i18next
+            - text: ", pt-BR como default e fallback, namespaces por dominio e persistencia de idioma em"
+            - code [ref=e174]: localStorage
+            - text: . Esse padrao permitiu ampliar cobertura bilingue sem duplicar pagina por idioma, mantendo URL unica e troca de conteudo no cliente.
+          - paragraph [ref=e175]:
+            - text: O ADR 004 definiu SEO e GEO com pre-render de paginas de candidato e comparacao,
+            - code [ref=e176]: robots.txt
+            - text: permissivo para crawlers de IA e JSON-LD por tipo de pagina. O portal passa a ser legivel tanto por buscadores tradicionais quanto por motores generativos, sem depender de execucao de JavaScript para revelar conteudo principal.
+          - paragraph [ref=e177]:
+            - text: "O ADR 005 especificou neutralidade do quiz: nenhum"
+            - code [ref=e178]: candidate_slug
+            - text: ou
+            - code [ref=e179]: source_*
+            - text: na etapa de perguntas, revelacao de fontes apenas no resultado, e filtro de confianca para excluir extracoes fracas. O ADR 006 tornou obrigatoria a pagina de metodologia e o MethodologyBadge em componentes de dados, institucionalizando transparencia e canal de reporte de erro.
+          - heading "Licoes aprendidas" [level=2] [ref=e180]
+          - paragraph [ref=e181]: A principal licao foi que produtividade com IA cresce quando o processo e explicito. "Vibe coding" sem contrato gera velocidade inicial, mas acumula debito sem controle. Neste projeto, os ganhos vieram quando prompts, ADRs, schemas e specs foram tratados como artefatos de engenharia, nao como anexos. O resultado foi uma cadencia de entrega por fases com menor retrabalho e menos surpresa em integracao.
+          - paragraph [ref=e182]:
+            - text: Outra licao foi que coordenacao multi-agente tem custo cognitivo real. Handoff entre papeis exige protocolo, naming consistente e disciplina de verificacao. Sem isso, o time virtual se desalinharia rapidamente. O uso de sentinelas
+            - code [ref=e183]: .DONE
+            - text: ", plano central em"
+            - code [ref=e184]: PLAN.md
+            - text: e loops com limite de tentativas ajudou a transformar colaboracao de agentes em fluxo confiavel, em vez de cadeia opaca de mensagens.
+          - paragraph [ref=e185]: Tambem ficou claro que transparencia nao pode ser pos-processamento. Em produtos que usam IA sobre tema sensivel como eleicao, metodologia, disclaimer e origem de dados devem nascer junto com o codigo. Quando essa camada e adiada, recuperar confianca depois custa mais caro do que implementar certo desde o inicio.
+          - heading "Numeros do projeto" [level=2] [ref=e186]
+          - paragraph [ref=e187]: "No recorte de publicacao desta fase, os numeros consolidados sao:"
+          - list [ref=e188]:
+            - listitem [ref=e189]: Planejamento em 16 fases principais, com uma fase de extensao opcional (Phase 17).
+            - listitem [ref=e190]: Historico de 65 commits no repositorio antes do fechamento desta entrega.
+            - listitem [ref=e191]: 177 arquivos versionados no momento do levantamento tecnico para esta documentacao.
+            - listitem [ref=e192]:
+              - text: 21 fontes RSS ativas em
+              - code [ref=e193]: data/sources.json
+              - text: ", alem de 8 fontes partidarias e 6 fontes de pesquisas."
+            - listitem [ref=e194]:
+              - text: 9 candidatos modelados em
+              - code [ref=e195]: data/candidates.json
+              - text: .
+            - listitem [ref=e196]: Cadencia de pipeline com coletor em 10 minutos, validacao em 30 minutos e curadoria em janela aproximada de 90 minutos.
+            - listitem [ref=e197]: Build estatico de referencia com 25 paginas pre-renderizadas, incluindo rotas dinamicas de candidatos e comparacoes.
+            - listitem [ref=e198]:
+              - text: Suite Python com 61 testes passando (
+              - code [ref=e199]: python -m pytest scripts/ -v --tb=short
+              - text: ).
+            - listitem [ref=e200]:
+              - text: Suite Playwright com 24 testes passando contra o site buildado (
+              - code [ref=e201]: npx playwright test
+              - text: ).
+            - listitem [ref=e202]:
+              - text: Quatro relatorios formais de QA gerados em
+              - code [ref=e203]: qa/phase-16-*.md
+              - text: (security, SEO, code review, accessibility).
+          - paragraph [ref=e204]: Esses numeros importam menos como marketing e mais como prova de escala operacional sob restricao de custo. O projeto nao depende de infraestrutura premium para manter cobertura tecnica relevante.
+          - heading "Proximos passos" [level=2] [ref=e205]
+          - paragraph [ref=e206]:
+            - text: Com a Phase 16 concluida, o baseline de qualidade (testes automatizados + auditorias de seguranca/SEO/acessibilidade + revisao tecnica) esta fechado para release
+            - code [ref=e207]: 1.0.0
+            - text: .
+          - paragraph [ref=e208]: O proximo marco tecnico permanece a extensao opcional da Phase 17 (Vertex AI Search), a ser avaliada por custo, utilidade de busca semantica e impacto real para usuario final. Em paralelo, o projeto deve manter operacao continua dos workflows, monitoramento de qualidade de dados e atualizacao editorial dos artefatos bilingues.
+  - contentinfo [ref=e88]:
+    - generic [ref=e89]:
+      - generic [ref=e90]:
+        - heading "Portal Eleicoes BR 2026" [level=3] [ref=e91]
+        - paragraph [ref=e92]: Monitoramento independente em tempo quase real das eleições presidenciais brasileiras de 2026.
+      - generic [ref=e93]:
+        - heading "Navegação" [level=3] [ref=e94]
+        - list [ref=e95]:
+          - listitem [ref=e96]:
+            - link "Notícias" [ref=e97] [cursor=pointer]:
+              - /url: /eleicoes-2026-monitor/
+          - listitem [ref=e98]:
+            - link "Sentimento" [ref=e99] [cursor=pointer]:
+              - /url: /eleicoes-2026-monitor/sentimento
+          - listitem [ref=e100]:
+            - link "Pesquisas" [ref=e101] [cursor=pointer]:
+              - /url: /eleicoes-2026-monitor/pesquisas
+          - listitem [ref=e102]:
+            - link "Quiz" [ref=e103] [cursor=pointer]:
+              - /url: /eleicoes-2026-monitor/quiz
+      - generic [ref=e104]:
+        - heading "Transparência" [level=3] [ref=e105]
+        - list [ref=e106]:
+          - listitem [ref=e107]:
+            - link "Metodologia" [ref=e108] [cursor=pointer]:
+              - /url: /eleicoes-2026-monitor/metodologia
+          - listitem [ref=e109]:
+            - link "Código-fonte aberto" [ref=e110] [cursor=pointer]:
+              - /url: https://github.com/carlosduplar/eleicoes-2026-monitor
+          - listitem [ref=e111]:
+            - link "Projeto sem filiação partidária" [ref=e112] [cursor=pointer]:
+              - /url: /eleicoes-2026-monitor/sobre/caso-de-uso
+    - generic [ref=e113]: © 2026 Portal Eleicoes BR 2026 - Projeto open-source sem filiação partidária

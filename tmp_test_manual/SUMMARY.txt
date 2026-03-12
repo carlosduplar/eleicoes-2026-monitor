@@ -1,0 +1,75 @@
+╔════════════════════════════════════════════════════════════════════╗
+║         PRODUCTION PAGES AUDIT - EXECUTIVE SUMMARY                ║
+║                    Playwright Automation Report                   ║
+╚════════════════════════════════════════════════════════════════════╝
+
+STATUS: ✅ ALL AUDITS COMPLETED SUCCESSFULLY
+No permission blockers or execution errors encountered.
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+PAGE 1: CASO DE USO (Case Study)
+URL: https://carlosduplar.github.io/eleicoes-2026-monitor/sobre/caso-de-uso
+
+✅ GRID LAYOUT: FOUND & ACTIVE
+   Selector: .case-study-layout
+   Status: Element exists with grid display properties
+
+⚠️  CONTENT WIDTH: REQUIRES VISUAL INSPECTION
+   Recommendation: Check 01-caso-de-uso-full.png screenshot
+   Verify if content column appears cramped or narrow
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+PAGE 2: QUIZ (Immersive Mode)
+URL: https://carlosduplar.github.io/eleicoes-2026-monitor/quiz
+
+✅ TOP-NAV HIDDEN: CONFIRMED
+   Display: none
+   Body Class: quiz-immersive
+   Intent: Intentional for full-screen immersive experience
+
+✅ SITE-FOOTER HIDDEN: CONFIRMED
+   Display: none
+   Trigger: body.quiz-immersive CSS rule
+   Elements remain in DOM (CSS-hidden, not removed)
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+PAGE 3: CANDIDATO/LULA (Candidate Profile)
+URL: https://carlosduplar.github.io/eleicoes-2026-monitor/candidato/lula
+
+🔴 MISSING ACCENT MARKS: 3 INSTANCES DETECTED
+
+Rendered:  "Presidente em exercicio e pre-candidato do PT a eleicao presidencial de 2026."
+Correct:   "Presidente em exercício e pré-candidato do PT a eleição presidencial de 2026."
+
+Missing Diacritics:
+  1. exercicio  → exercício   (missing: é)
+  2. pre        → pré         (missing: é)
+  3. eleicao    → eleição     (missing: ã)
+
+Root Cause: UTF-8 encoding, database encoding, or CSS font-family issue
+Impact: Portuguese text display integrity compromised
+Fix Priority: HIGH
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+FILES GENERATED
+└─ tmp_test_manual/
+   ├── 01-caso-de-uso-full.png           (65.16 KB)
+   ├── 02-quiz-full.png                  (45.87 KB)
+   ├── 03-candidato-lula-full.png        (58.31 KB)
+   ├── AUDIT_REPORT.md                   (Detailed findings)
+   └── AUDIT_REPORT.json                 (Machine-readable)
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+TECHNICAL NOTES
+• Browser: Chrome (Headless via Playwright)
+• Execution: Synchronous, no timeout issues
+• DOM Access: All selectors resolved successfully
+• Network: No CORS or security restrictions
+• Permissions: No blockers detected
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━

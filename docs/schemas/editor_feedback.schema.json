@@ -1,0 +1,54 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://example.com/schemas/editor_feedback.json",
+  "title": "EditorFeedback",
+  "description": "Regras editoriais para remover artigos irrelevantes e evitar reincidencia no pipeline.",
+  "type": "object",
+  "required": [
+    "irrelevant_article_ids",
+    "blocked_title_keywords",
+    "blocked_url_substrings",
+    "blocked_sources"
+  ],
+  "properties": {
+    "$schema": {
+      "type": "string"
+    },
+    "updated_at": {
+      "type": [
+        "string",
+        "null"
+      ],
+      "format": "date-time"
+    },
+    "irrelevant_article_ids": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "pattern": "^[a-f0-9]{16}$"
+      }
+    },
+    "blocked_title_keywords": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "minLength": 1
+      }
+    },
+    "blocked_url_substrings": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "minLength": 1
+      }
+    },
+    "blocked_sources": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "minLength": 1
+      }
+    }
+  },
+  "additionalProperties": false
+}

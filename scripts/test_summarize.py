@@ -25,11 +25,29 @@ def tmp_data_paths(tmp_path: Path, monkeypatch: pytest.MonkeyPatch) -> dict[str,
     articles_file = tmp_path / "articles.json"
     pipeline_errors_file = tmp_path / "pipeline_errors.json"
     sentiment_file = tmp_path / "sentiment.json"
+    feedback_file = tmp_path / "editor_feedback.json"
 
     pipeline_errors_file.write_text(json.dumps({"errors": [], "last_checked": None}, indent=2) + "\n", encoding="utf-8")
+    feedback_file.write_text(
+        json.dumps(
+            {
+                "$schema": "../docs/schemas/editor_feedback.schema.json",
+                "updated_at": None,
+                "irrelevant_article_ids": [],
+                "blocked_title_keywords": [],
+                "blocked_url_substrings": [],
+                "blocked_sources": [],
+            },
+            indent=2,
+            ensure_ascii=False,
+        )
+        + "\n",
+        encoding="utf-8",
+    )
 
     monkeypatch.setattr(summarize, "ARTICLES_FILE", articles_file)
     monkeypatch.setattr(summarize, "PIPELINE_ERRORS_FILE", pipeline_errors_file)
+    monkeypatch.setattr(summarize, "EDITOR_FEEDBACK_FILE", feedback_file)
     monkeypatch.setattr(analyze_sentiment, "ARTICLES_FILE", articles_file)
     monkeypatch.setattr(analyze_sentiment, "PIPELINE_ERRORS_FILE", pipeline_errors_file)
     monkeypatch.setattr(analyze_sentiment, "SENTIMENT_FILE", sentiment_file)
@@ -39,6 +57,7 @@ def tmp_data_paths(tmp_path: Path, monkeypatch: pytest.MonkeyPatch) -> dict[str,
         "articles": articles_file,
         "pipeline_errors": pipeline_errors_file,
         "sentiment": sentiment_file,
+        "editor_feedback": feedback_file,
     }
 
 
@@ -120,6 +139,58 @@ def test_summarize_sets_validated_status(tmp_data_paths: dict[str, Path], monkey
     assert article["summaries"]["en-US"] == "Summary EN"
     assert article["confidence_score"] == 1.0
     assert article["edit_history"][-1]["action"] == "validated"
+
+
+def test_summarize_honors_editor_feedback_rules(
+    tmp_data_paths: dict[str, Path],
+    monkeypatch: pytest.MonkeyPatch,
+) -> None:
+    _write_articles(
+        tmp_data_paths["articles"],
+        [
+            {
+                "id": "abababababababab",
+                "url": "https://example.com/blocked-by-source",
+                "title": "Lula anuncia agenda de campanha para 2026",
+                "source": "Fonte Bloqueada",
+                "source_category": "mainstream",
+                "published_at": "2026-03-09T13:00:00Z",
+                "collected_at": "2026-03-09T13:10:00Z",
+                "status": "raw",
+                "content": "Lula anunciou agenda de campanha para as eleicoes presidenciais de 2026 em evento no Brasil.",
+                "summaries": {"pt-BR": "", "en-US": ""},
+            }
+        ],
+    )
+
+    tmp_data_paths["editor_feedback"].write_text(
+        json.dumps(
+            {
+                "$schema": "../docs/schemas/editor_feedback.schema.json",
+                "updated_at": None,
+                "irrelevant_article_ids": [],
+                "blocked_title_keywords": [],
+                "blocked_url_substrings": [],
+                "blocked_sources": ["fonte bloqueada"],
+            },
+            indent=2,
+            ensure_ascii=False,
+        )
+        + "\n",
+        encoding="utf-8",
+    )
+
+    def should_not_be_called(*_args: Any, **_kwargs: Any) -> dict[str, Any]:
+        raise AssertionError("ai_client.summarize_article should not be called for blocked source")
+
+    monkeypatch.setattr(summarize.ai_client, "summarize_article", should_not_be_called)
+    summarized, errors, skipped = summarize.summarize_articles()
+    article = _read_articles(tmp_data_paths["articles"])[0]
+
+    assert summarized == 0
+    assert errors == 0
+    assert skipped == 0
+    assert article["status"] == "irrelevant"
 
 
 def test_summarize_handles_ai_failure(tmp_data_paths: dict[str, Path], monkeypatch: pytest.MonkeyPatch) -> None:
