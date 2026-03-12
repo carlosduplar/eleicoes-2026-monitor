@@ -56,17 +56,31 @@ MARKDOWN_JSON_RE = re.compile(
 # in `reasoning_content` while leaving `content` empty. For JSON tasks we MUST disable
 # thinking so the final answer arrives in `content`.
 _THINKING_DISABLE_EXTRA_BODY: dict[str, dict[str, object]] = {
-    "qwen/qwen3-235b-a22b-thinking-2507": {"chat_template_kwargs": {"enable_thinking": False}},
+    "qwen/qwen3-235b-a22b-thinking-2507": {
+        "chat_template_kwargs": {"enable_thinking": False}
+    },
     "qwen/qwen3.5-397b-a17b": {"chat_template_kwargs": {"enable_thinking": False}},
     "moonshotai/kimi-k2.5": {"enable_thinking": False},
+    "minimaxai/minimax-m2.5": {"enable_thinking": False},
 }
 
 NVIDIA_MODELS: dict[str, str] = {
-    "summarization": "meta/llama3-70b",
-    "sentiment": "meta/llama3-70b",
-    "multilingual": "meta/llama3-70b",
-    "quiz_extract": "meta/llama3-70b",
+    "summarization": "moonshotai/kimi-k2.5",
+    "sentiment": "moonshotai/kimi-k2.5",
+    "multilingual": "moonshotai/kimi-k2.5",
+    "quiz_extract": "moonshotai/kimi-k2.5",
 }
+
+NVIDIA_FALLBACKS: list[str] = [
+    "minimaxai/minimax-m2.5",
+    "nvidia/nemotron-3-super-120b-a12b",
+]
+
+OLLAMA_MODELS: list[str] = [
+    "kimi-k2.5:cloud",
+    "minimax-m2.5:cloud",
+    "nemotron-3-super:cloud",
+]
 
 
 class ProviderConfig(TypedDict, total=False):
@@ -95,29 +109,36 @@ def _today_key() -> str:
 
 
 def _provider_chain_for_task(task: str) -> list[ProviderConfig]:
-    nvidia_model = NVIDIA_MODELS.get(task, NVIDIA_MODELS["summarization"])
+    nvidia_primary = NVIDIA_MODELS.get(task, NVIDIA_MODELS["summarization"])
+    nvidia_all = [nvidia_primary] + NVIDIA_FALLBACKS
     return [
-        {
-            "name": "nvidia",
-            "base_url": "https://integrate.api.nvidia.com/v1",
-            "key_env": "NVIDIA_API_KEY",
-            "model": nvidia_model,
-            "paid": False,
-        },
+        *[
+            {
+                "name": "nvidia",
+                "base_url": "https://integrate.api.nvidia.com/v1",
+                "key_env": "NVIDIA_API_KEY",
+                "model": model,
+                "paid": False,
+            }
+            for model in nvidia_all
+        ],
+        *[
+            {
+                "name": "ollama",
+                "base_url": "https://ollama.com/v1",
+                "key_env": "OLLAMA_API_KEY",
+                "model": model,
+                "paid": False,
+            }
+            for model in OLLAMA_MODELS
+        ],
         {
             "name": "openrouter",
             "base_url": "https://openrouter.ai/api/v1",
             "key_env": "OPENROUTER_API_KEY",
-            "model": "arcee-ai/trinity-large-preview:free",
+            "model": "nvidia/nemotron-3-super-120b-a12b:free",
             "paid": False,
             "daily_max": OPENROUTER_DAILY_MAX,
-        },
-        {
-            "name": "ollama",
-            "base_url": "https://ollama.com/v1",
-            "key_env": "OLLAMA_API_KEY",
-            "model": "minimax-m2.5:cloud",
-            "paid": False,
         },
         {
             "name": "vertex",
@@ -207,7 +228,9 @@ def _extract_content_from_response(response: object) -> str:
     if isinstance(reasoning, str) and reasoning.strip():
         json_block = _extract_last_json_block(reasoning.strip())
         if json_block:
-            logger.warning("[AI] Extracted JSON block from reasoning_content (content was empty)")
+            logger.warning(
+                "[AI] Extracted JSON block from reasoning_content (content was empty)"
+            )
             return json_block
         logger.warning(
             "[AI] reasoning_content has no parseable JSON block; skipping provider. "
