@@ -246,17 +246,6 @@ function CaseStudyPage() {
       </header>
 
       <div className="case-study-layout">
-        <aside className="case-study-toc" aria-label={t('toc_label')}>
-          <h2>{t('toc_label')}</h2>
-          <ul>
-            {tocItems.map((heading) => (
-              <li key={heading.id}>
-                <a href={`#${heading.id}`}>{heading.text}</a>
-              </li>
-            ))}
-          </ul>
-        </aside>
-
         <div className="case-study-content">
           {loading && (
             <div className="case-study-skeleton" aria-live="polite">
@@ -277,6 +266,17 @@ function CaseStudyPage() {
             <div dangerouslySetInnerHTML={{ __html: html }} />
           )}
         </div>
+
+        <aside className="case-study-toc" aria-label={t('toc_label')}>
+          <h2>{t('toc_label')}</h2>
+          <ul>
+            {tocItems.map((heading) => (
+              <li key={heading.id}>
+                <a href={`#${heading.id}`}>{heading.text}</a>
+              </li>
+            ))}
+          </ul>
+        </aside>
       </div>
     </article>
   );

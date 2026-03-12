@@ -1372,7 +1372,7 @@ p {
 /* --- Case Study Page --- */
 
 .case-study-page {
-  max-width: 1100px;
+  max-width: 1180px;
   margin: 0 auto;
   padding-bottom: 2rem;
 }
@@ -1416,13 +1416,14 @@ p {
   color: var(--text-secondary);
   font-size: 0.85rem;
   display: flex;
+  flex-wrap: wrap;
   gap: 1rem;
   margin-bottom: 1rem;
 }
 
 .case-study-layout {
   display: grid;
-  grid-template-columns: 1fr 240px;
+  grid-template-columns: minmax(0, 1fr) 280px;
   gap: 2rem;
   align-items: start;
 }
@@ -1581,7 +1582,7 @@ p {
 
   .case-study-toc {
     position: static;
-    margin-bottom: 1.5rem;
+    margin-top: 1rem;
   }
 }
 
