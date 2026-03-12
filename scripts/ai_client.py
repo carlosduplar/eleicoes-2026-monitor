@@ -62,10 +62,10 @@ _THINKING_DISABLE_EXTRA_BODY: dict[str, dict[str, object]] = {
 }
 
 NVIDIA_MODELS: dict[str, str] = {
-    "summarization": "qwen/qwen3.5-397b-a17b",
-    "sentiment": "minimaxai/minimax-m2.5",
-    "multilingual": "moonshotai/kimi-k2.5",
-    "quiz_extract": "qwen/qwen3-235b-a22b-thinking-2507",
+    "summarization": "meta/llama3-70b",
+    "sentiment": "meta/llama3-70b",
+    "multilingual": "meta/llama3-70b",
+    "quiz_extract": "meta/llama3-70b",
 }
 
 
@@ -312,7 +312,14 @@ def _call_with_fallback_for_task(
         except Exception as exc:
             _provider_failure_counts[name] = _provider_failure_counts.get(name, 0) + 1
             error_messages.append(f"{name}: {exc}")
-            logger.warning("[AI] %s failed: %s", name, exc)
+            if name == "nvidia" and _is_not_found_error(exc):
+                _provider_failure_counts[name] = _CIRCUIT_BREAKER_THRESHOLD
+                logger.info(
+                    "[AI] %s unavailable (404). Opening circuit breaker for this run.",
+                    name,
+                )
+            else:
+                logger.warning("[AI] %s failed: %s", name, exc)
 
     error_details = (
         "; ".join(error_messages) if error_messages else "no providers configured"
@@ -361,6 +368,11 @@ def _extract_last_json_block(text: str) -> str | None:
     return None
 
 
+def _is_not_found_error(exc: Exception) -> bool:
+    message = str(exc).lower()
+    return "404" in message and "not found" in message
+
+
 def _strip_markdown_code_fence(text: str) -> str:
     stripped = text.strip()
     match = MARKDOWN_JSON_RE.match(stripped)
@@ -371,7 +383,15 @@ def _strip_markdown_code_fence(text: str) -> str:
 
 def _parse_json_dict(text: str) -> dict[str, object]:
     maybe_json = _strip_markdown_code_fence(text)
-    parsed = json.loads(maybe_json)
+    try:
+        parsed = json.loads(maybe_json)
+    except json.JSONDecodeError:
+        recovered = _extract_last_json_block(maybe_json)
+        if recovered is None:
+            recovered = _extract_last_json_block(text)
+        if recovered is None:
+            raise
+        parsed = json.loads(recovered)
     if not isinstance(parsed, dict):
         raise ValueError("Expected JSON object response.")
     return parsed
@@ -584,10 +604,32 @@ Retorne JSON:
         task="quiz_extract",
     )
 
-    try:
-        parsed = _parse_json_dict(response["content"])
-    except (json.JSONDecodeError, ValueError, TypeError) as exc:
-        logger.warning("[AI] extract_candidate_position parse failure: %s", exc)
+    parsed: dict[str, object] | None = None
+    for attempt in range(2):
+        try:
+            parsed = _parse_json_dict(response["content"])
+            break
+        except (json.JSONDecodeError, ValueError, TypeError) as exc:
+            if attempt == 0:
+                logger.info(
+                    "[AI] extract_candidate_position parse failure on first attempt: %s. Retrying once.",
+                    exc,
+                )
+                retry_user = (
+                    f"{user}\n\n"
+                    "IMPORTANTE: responda somente com um objeto JSON valido, sem markdown "
+                    "e sem texto adicional."
+                )
+                response = _call_with_fallback_for_task(
+                    system=system,
+                    user=retry_user,
+                    max_tokens=350,
+                    task="quiz_extract",
+                )
+                continue
+            logger.warning("[AI] extract_candidate_position parse failure: %s", exc)
+
+    if parsed is None:
         return {
             "position_pt": None,
             "position_en": None,

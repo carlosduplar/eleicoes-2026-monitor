@@ -3,6 +3,9 @@ on:
   schedule:
     - cron: '0 3 * * *'
   workflow_dispatch:
+concurrency:
+  group: repo-write-${{ github.ref }}
+  cancel-in-progress: false
 jobs:
   quiz:
     runs-on: ubuntu-latest
@@ -11,15 +14,17 @@ jobs:
     env:
       FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: true
     steps:
-      - uses: actions/checkout@v4
-      - uses: actions/setup-python@v5
+      - uses: actions/checkout@v6
+        with:
+          fetch-depth: 0
+      - uses: actions/setup-python@v6
         with:
           python-version: '3.12'
           cache: 'pip'
       - run: pip install -r requirements.txt
       - name: Extract positions
         env:
-          NVIDIA_API_KEY: ${{ secrets.NVIDIA_API_KEY }}
+          NVIDIA_API_KEY: ""
           OPENROUTER_API_KEY: ${{ secrets.OPENROUTER_API_KEY }}
           OLLAMA_API_KEY: ${{ secrets.OLLAMA_API_KEY }}
           VERTEX_ACCESS_TOKEN: ${{ secrets.VERTEX_ACCESS_TOKEN }}
@@ -27,7 +32,27 @@ jobs:
         run: python scripts/extract_quiz_positions.py
       - name: Commit quiz data
         run: |
-          git config --local user.email "action@github.com"
-          git config --local user.name "GitHub Action"
+          git config user.name "github-actions[bot]"
+          git config user.email "action@github.com"
           git add data/quiz.json
-          git diff --staged --quiet || (git commit -m "chore: update quiz $(date -u +%Y-%m-%d)" && git push)
+          if git diff --staged --quiet; then
+            echo "No changes to commit."
+            exit 0
+          fi
+          git commit -m "chore: update quiz $(date -u +%Y-%m-%d)"
+          for attempt in 1 2 3; do
+            git fetch origin master
+            if ! git pull --rebase --autostash origin master; then
+              git rebase --abort || true
+              echo "Rebase failed while syncing with origin/master."
+              exit 1
+            fi
+            if git push origin HEAD:master; then
+              echo "Push succeeded on attempt ${attempt}."
+              exit 0
+            fi
+            echo "Push failed on attempt ${attempt}; retrying..."
+            sleep 5
+          done
+          echo "Push failed after 3 attempts."
+          exit 1
