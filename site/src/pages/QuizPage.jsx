@@ -1,5 +1,4 @@
 import * as ReactHelmetAsync from 'react-helmet-async';
-import { useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 
 import QuizEngine from '../components/QuizEngine';
@@ -24,17 +23,6 @@ function QuizPage() {
     handleAnswer,
     reset,
   } = useQuiz();
-
-  useEffect(() => {
-    if (isComplete) {
-      document.body.classList.remove('quiz-immersive');
-      return;
-    }
-    document.body.classList.add('quiz-immersive');
-    return () => {
-      document.body.classList.remove('quiz-immersive');
-    };
-  }, [isComplete]);
 
   const language = i18n.language === 'en-US' ? 'en-US' : 'pt-BR';
   const quizJsonLd = {
