@@ -3,7 +3,7 @@ import { expect, test } from '../../site/node_modules/@playwright/test/index.js'
 
 test.describe('Quiz full flow', () => {
   test('complete quiz and see result', async ({ page }) => {
-    await page.goto('/quiz');
+    await page.goto('quiz');
     await page.waitForLoadState('networkidle');
 
     const emptyState = page.getByText(/Quiz temporariamente indisponivel|Quiz temporarily unavailable/i);

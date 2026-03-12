@@ -3,7 +3,7 @@ import { expect, test } from '../../site/node_modules/@playwright/test/index.js'
 
 test.describe('Home page', () => {
   test('feed renders article cards', async ({ page }) => {
-    await page.goto('/');
+    await page.goto('');
     await page.waitForLoadState('networkidle');
 
     const cards = page.locator('.feed-card');
@@ -15,7 +15,7 @@ test.describe('Home page', () => {
   });
 
   test('language toggle switches to English', async ({ page }) => {
-    await page.goto('/');
+    await page.goto('');
     await page.getByRole('button', { name: 'EN' }).click();
 
     await expect(page.locator('html')).toHaveAttribute('lang', /en(-US)?/i);
@@ -23,14 +23,14 @@ test.describe('Home page', () => {
   });
 
   test('countdown timer is visible', async ({ page }) => {
-    await page.goto('/');
+    await page.goto('');
 
     await expect(page.locator('.countdown-bar')).toBeVisible();
     await expect(page.locator('.countdown-bar')).toContainText('2026');
   });
 
   test('source filter buttons are present', async ({ page }) => {
-    await page.goto('/');
+    await page.goto('');
 
     const filters = page.locator('.source-filter-button');
     await expect(filters.first()).toBeVisible();

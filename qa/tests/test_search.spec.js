@@ -3,7 +3,7 @@ import { expect, test } from '../../site/node_modules/@playwright/test/index.js'
 
 test.describe('Search feature', () => {
   test('search input is present on the homepage', async ({ page }) => {
-    await page.goto('/');
+    await page.goto('');
     await page.waitForLoadState('networkidle');
 
     const searchInput = page.locator('input[type="search"]');
@@ -12,7 +12,7 @@ test.describe('Search feature', () => {
   });
 
   test('typing a query filters articles (local fallback)', async ({ page }) => {
-    await page.goto('/');
+    await page.goto('');
     await page.waitForLoadState('networkidle');
 
     const searchInput = page.locator('input[type="search"]');
@@ -31,7 +31,7 @@ test.describe('Search feature', () => {
   });
 
   test('empty query restores full article list', async ({ page }) => {
-    await page.goto('/');
+    await page.goto('');
     await page.waitForLoadState('networkidle');
 
     const searchInput = page.locator('input[type="search"]');
@@ -55,7 +55,7 @@ test.describe('Search feature', () => {
   });
 
   test('isVertexSearch false shows local badge when Vertex URL not set', async ({ page }) => {
-    await page.goto('/');
+    await page.goto('');
     await page.waitForLoadState('networkidle');
 
     const searchInput = page.locator('input[type="search"]');
@@ -66,19 +66,18 @@ test.describe('Search feature', () => {
     await expect(page.getByText(/Busca semantica|Semantic search/)).toHaveCount(0);
   });
 
-  test('search input has correct placeholder text', async ({ page }) => {
-    await page.goto('/');
+  test('search input has correct placeholder text', async ({ page }) => {       
+    await page.goto('');
     await page.waitForLoadState('networkidle');
-
     const searchInput = page.locator('input[type="search"]');
-    await expect(searchInput).toHaveAttribute('placeholder', 'Buscar noticias...');
+    await expect(searchInput).toHaveAttribute('placeholder', 'Buscar notícias...');
 
     await page.getByRole('button', { name: 'EN' }).click();
     await expect(searchInput).toHaveAttribute('placeholder', 'Search news...');
   });
 
   test('no results shows appropriate message', async ({ page }) => {
-    await page.goto('/');
+    await page.goto('');
     await page.waitForLoadState('networkidle');
 
     const searchInput = page.locator('input[type="search"]');

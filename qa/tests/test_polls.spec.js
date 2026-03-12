@@ -3,7 +3,7 @@ import { expect, test } from '../../site/node_modules/@playwright/test/index.js'
 
 test.describe('Polls page', () => {
   test('chart renders', async ({ page }) => {
-    await page.goto('/pesquisas');
+    await page.goto('pesquisas');
     await page.waitForLoadState('networkidle');
 
     const chart = page.locator('.recharts-responsive-container');
@@ -15,7 +15,7 @@ test.describe('Polls page', () => {
   });
 
   test('institute filter is present', async ({ page }) => {
-    await page.goto('/pesquisas');
+    await page.goto('pesquisas');
     await page.waitForLoadState('networkidle');
 
     const filter = page.locator('#poll-institute-filter');
@@ -27,8 +27,8 @@ test.describe('Polls page', () => {
   });
 
   test('methodology badge is present', async ({ page }) => {
-    await page.goto('/pesquisas');
-    await expect(page.locator('.methodology-badge').first()).toBeVisible();
+    await page.goto('pesquisas');
+    await expect(page.locator('.methodology-badge').first()).toBeVisible();     
   });
 });
 

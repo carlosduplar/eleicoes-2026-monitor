@@ -43,8 +43,6 @@ jobs:
         run: pip install -r requirements.txt
 
       - name: Validate raw articles with AI
-        env:
-          NVIDIA_API_KEY: ""
         run: |
           python scripts/summarize.py
           python scripts/analyze_sentiment.py
@@ -63,9 +61,14 @@ jobs:
           for attempt in 1 2 3; do
             git fetch origin master
             if ! git pull --rebase --autostash origin master; then
-              git rebase --abort || true
-              echo "Rebase failed while syncing with origin/master."
-              exit 1
+              echo "Rebase conflict detected. Attempting auto-resolution for generated outputs."
+              git checkout --theirs data/articles.json data/sentiment.json 2>/dev/null || true
+              git add data/articles.json data/sentiment.json 2>/dev/null || true
+              if ! git rebase --continue; then
+                git rebase --abort || true
+                echo "Rebase failed after auto-resolution while syncing with origin/master."
+                exit 1
+              fi
             fi
             if git push origin HEAD:master; then
               echo "Push succeeded on attempt ${attempt}."

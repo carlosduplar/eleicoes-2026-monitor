@@ -3,7 +3,7 @@ import { expect, test } from '../../site/node_modules/@playwright/test/index.js'
 
 test.describe('Methodology page', () => {
   test('all 5 sections present', async ({ page }) => {
-    await page.goto('/metodologia');
+    await page.goto('metodologia');
     await page.waitForLoadState('networkidle');
 
     await expect(page.getByRole('heading', { name: /Coleta|Collection/i })).toBeVisible();
@@ -14,7 +14,7 @@ test.describe('Methodology page', () => {
   });
 
   test('language toggle works', async ({ page }) => {
-    await page.goto('/metodologia');
+    await page.goto('metodologia');
 
     await page.getByRole('button', { name: 'EN' }).click();
     await expect(page.locator('html')).toHaveAttribute('lang', /en(-US)?/i);

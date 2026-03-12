@@ -60,13 +60,9 @@ jobs:
         run: python scripts/scrape_articles.py --limit "${SCRAPE_LIMIT}" || echo "scrape failed, continuing"
 
       - name: AI summarization (chunked)
-        env:
-          NVIDIA_API_KEY: ""
         run: python scripts/summarize.py --limit "${SUMMARIZE_LIMIT}"
 
       - name: AI sentiment (chunked)
-        env:
-          NVIDIA_API_KEY: ""
         run: python scripts/analyze_sentiment.py --limit "${SENTIMENT_LIMIT}"
 
       - name: Build derived data

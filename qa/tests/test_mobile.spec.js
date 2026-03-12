@@ -5,17 +5,17 @@ test.describe('Mobile layout (390px)', () => {
   test.use({ viewport: { width: 390, height: 844 } });
 
   test('BottomNav is visible', async ({ page }) => {
-    await page.goto('/');
+    await page.goto('');
     await expect(page.locator('.bottom-nav')).toBeVisible();
   });
 
   test('desktop Nav is hidden', async ({ page }) => {
-    await page.goto('/');
+    await page.goto('');
     await expect(page.locator('.top-nav')).toBeHidden();
   });
 
   test('quiz is immersive (no nav)', async ({ page }) => {
-    await page.goto('/quiz');
+    await page.goto('quiz');
     await page.waitForLoadState('networkidle');
 
     const emptyState = page.getByText(/Quiz temporariamente indisponivel|Quiz temporarily unavailable/i);

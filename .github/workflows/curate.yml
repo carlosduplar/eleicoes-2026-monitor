@@ -41,8 +41,6 @@ jobs:
 
       - name: Curate content
         continue-on-error: true
-        env:
-          NVIDIA_API_KEY: ""
         run: python scripts/curate.py
 
       - name: Commit curated outputs

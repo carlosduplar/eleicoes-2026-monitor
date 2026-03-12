@@ -69,7 +69,7 @@
           "description": "Estagio no pipeline: raw (Foca), validated (Editor), curated (Editor-chefe), irrelevant (não relacionado a eleições)."
         },
         "relevance_score": {
-          "type": "number",
+          "type": ["number", "null"],
           "minimum": 0,
           "maximum": 1,
           "description": "Score de relevancia eleitoral (0.0-1.0), atribuido pelo Foca."
@@ -106,7 +106,7 @@
           "description": "Resumos bilingues gerados pelo Editor. Ausentes em artigos raw."
         },
         "sentiment_score": {
-          "type": "number",
+          "type": ["number", "null"],
           "minimum": -1,
           "maximum": 1,
           "description": "Score de sentimento geral (-1 negativo, +1 positivo)."
@@ -120,13 +120,13 @@
           "description": "Sentimento por candidato mencionado."
         },
         "confidence_score": {
-          "type": "number",
+          "type": ["number", "null"],
           "minimum": 0,
           "maximum": 1,
           "description": "Confianca do Editor na qualidade do processamento."
         },
         "prominence_score": {
-          "type": "number",
+          "type": ["number", "null"],
           "minimum": 0,
           "maximum": 1,
           "description": "Score de destaque atribuido pelo Editor-chefe."
