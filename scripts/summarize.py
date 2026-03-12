@@ -615,9 +615,13 @@ def summarize_articles(limit: int = 30) -> tuple[int, int, int]:
         has_real_summaries = (
             pt_summary and pt_summary != title and en_summary and en_summary != title
         )
-        confidence_score = (
-            1.0 if has_real_summaries and not result.get("_parse_error") else 0.8
-        )
+        had_parse_error = bool(result.get("_parse_error"))
+        if has_real_summaries and not had_parse_error:
+            confidence_score = 1.0
+        elif had_parse_error:
+            confidence_score = 0.6
+        else:
+            confidence_score = 0.8
 
         article["summaries"] = summaries
         article["candidates_mentioned"] = merged_candidates

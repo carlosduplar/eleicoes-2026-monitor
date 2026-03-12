@@ -3,10 +3,28 @@
   "$id": "https://example.com/schemas/articles.json",
   "title": "Articles",
   "description": "Feed principal de artigos coletados pelo pipeline (max 500 mais recentes).",
-  "type": "array",
-  "items": {
-    "$ref": "#/definitions/Article"
+  "type": "object",
+  "required": ["articles"],
+  "properties": {
+    "$schema": {
+      "type": "string"
+    },
+    "articles": {
+      "type": "array",
+      "items": {
+        "$ref": "#/definitions/Article"
+      }
+    },
+    "last_updated": {
+      "type": ["string", "null"],
+      "format": "date-time"
+    },
+    "total_count": {
+      "type": "integer",
+      "minimum": 0
+    }
   },
+  "additionalProperties": false,
   "definitions": {
     "Article": {
       "type": "object",

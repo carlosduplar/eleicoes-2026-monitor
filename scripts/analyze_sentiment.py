@@ -482,6 +482,56 @@ def _aggregate_average(
     return aggregated
 
 
+def _resolve_article_score_map(article: dict[str, Any]) -> dict[str, float]:
+    score_map = _normalize_score_map(article.get("_sentiment_scores"))
+    if score_map:
+        article["_sentiment_scores"] = score_map
+        return score_map
+
+    labels = _normalize_sentiment_labels(article.get("sentiment_per_candidate"))
+    if not labels:
+        return {}
+
+    derived = _label_map_to_scores(labels)
+    if not derived:
+        return {}
+
+    article["_sentiment_scores"] = derived
+    return derived
+
+
+def _accumulate_article_sentiment(
+    *,
+    article: dict[str, Any],
+    score_map: dict[str, float],
+    by_topic_acc: dict[str, dict[str, list[float]]],
+    by_source_acc: dict[str, dict[str, list[float]]],
+) -> None:
+    if not score_map:
+        return
+
+    topics = article.get("topics") if isinstance(article.get("topics"), list) else []
+    normalized_topics = [
+        topic for topic in topics if isinstance(topic, str) and topic in VALID_TOPICS
+    ]
+    if not normalized_topics:
+        normalized_topics = ["eleicoes"]
+
+    source_category = article.get("source_category")
+    normalized_source = (
+        source_category
+        if isinstance(source_category, str) and source_category in VALID_SOURCE_CATEGORIES
+        else "mainstream"
+    )
+
+    for candidate, score in score_map.items():
+        candidate_topic_scores = by_topic_acc.setdefault(candidate, {})
+        candidate_source_scores = by_source_acc.setdefault(candidate, {})
+        for topic in normalized_topics:
+            candidate_topic_scores.setdefault(topic, []).append(score)
+        candidate_source_scores.setdefault(normalized_source, []).append(score)
+
+
 def _compute_updated_at(articles: list[dict[str, Any]]) -> str:
     timestamps: list[datetime] = []
     for article in articles:
@@ -589,34 +639,23 @@ def analyze_sentiment(limit: int = 30) -> dict[str, Any]:
             if processed_articles >= limit:
                 break
 
-            if not score_map:
-                continue
+    analyzed_article_count = 0
+    for article in articles:
+        status = article.get("status")
+        if status not in {"validated", "curated"}:
+            continue
 
-            topics = (
-                article.get("topics") if isinstance(article.get("topics"), list) else []
-            )
-            normalized_topics = [
-                topic
-                for topic in topics
-                if isinstance(topic, str) and topic in VALID_TOPICS
-            ]
-            if not normalized_topics:
-                normalized_topics = ["eleicoes"]
+        score_map = _resolve_article_score_map(article)
+        if not score_map:
+            continue
 
-            source_category = article.get("source_category")
-            normalized_source = (
-                source_category
-                if isinstance(source_category, str)
-                and source_category in VALID_SOURCE_CATEGORIES
-                else "mainstream"
-            )
-
-            for candidate, score in score_map.items():
-                candidate_topic_scores = by_topic_acc.setdefault(candidate, {})
-                candidate_source_scores = by_source_acc.setdefault(candidate, {})
-                for topic in normalized_topics:
-                    candidate_topic_scores.setdefault(topic, []).append(score)
-                candidate_source_scores.setdefault(normalized_source, []).append(score)
+        analyzed_article_count += 1
+        _accumulate_article_sentiment(
+            article=article,
+            score_map=score_map,
+            by_topic_acc=by_topic_acc,
+            by_source_acc=by_source_acc,
+        )
 
     by_topic = _aggregate_average(by_topic_acc)
     by_source = _aggregate_average(by_source_acc)
@@ -626,7 +665,7 @@ def analyze_sentiment(limit: int = 30) -> dict[str, Any]:
 
     payload: dict[str, Any] = {
         "updated_at": _compute_updated_at(articles),
-        "article_count": len(articles_needing_sentiment),
+        "article_count": analyzed_article_count,
         "methodology_url": "/metodologia",
         "disclaimer_pt": DISCLAIMER_PT,
         "disclaimer_en": DISCLAIMER_EN,

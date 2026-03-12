@@ -3,10 +3,28 @@
   "$id": "https://example.com/schemas/polls.json",
   "title": "Polls",
   "description": "Historico de pesquisas eleitorais coletadas dos institutos.",
-  "type": "array",
-  "items": {
-    "$ref": "#/definitions/Poll"
+  "type": "object",
+  "required": ["polls"],
+  "properties": {
+    "$schema": {
+      "type": "string"
+    },
+    "polls": {
+      "type": "array",
+      "items": {
+        "$ref": "#/definitions/Poll"
+      }
+    },
+    "last_updated": {
+      "type": ["string", "null"],
+      "format": "date-time"
+    },
+    "total_count": {
+      "type": "integer",
+      "minimum": 0
+    }
   },
+  "additionalProperties": false,
   "definitions": {
     "Poll": {
       "type": "object",
