@@ -91,13 +91,34 @@ jobs:
             exit 0
           fi
           git commit -m "chore(ci): foca automated data refresh"
+
           for attempt in 1 2 3; do
             git fetch origin master
-            if ! git pull --rebase --autostash origin master; then
-              git rebase --abort || true
-              echo "Rebase failed while syncing with origin/master."
-              exit 1
+
+            if git merge origin/master --no-edit; then
+              echo "Merge succeeded."
+            else
+              echo "Merge conflict detected, merging JSON files..."
+              for f in data/*.json; do
+                if [[ -f "$f" ]] && grep -q "^<\|^===\|^>>>" "$f" 2>/dev/null; then
+                  echo "Resolving conflict in $f"
+                  git show ":1:$f" > "$f.base" 2>/dev/null || echo "[]" > "$f.base"
+                  git show ":3:$f" > "$f.remote" 2>/dev/null || echo "[]" > "$f.remote"
+                  python scripts/merge_json.py "$f" "$f.remote" "$f"
+                  rm -f "$f.base" "$f.remote"
+                  git add "$f"
+                fi
+              done
+
+              if git diff --name-only --diff-filter=U | grep -q .; then
+                echo "Unresolved conflicts remain, using theirs..."
+                git checkout --theirs data/*.json
+                git add data/*.json
+              fi
+
+              git commit -m "chore(ci): resolve merge conflicts" || echo "No conflicts to commit"
             fi
+
             if git push origin HEAD:master; then
               echo "Push succeeded on attempt ${attempt}."
               exit 0
