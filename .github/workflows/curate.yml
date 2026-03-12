@@ -8,6 +8,10 @@ on:
 permissions:
   contents: write
 
+concurrency:
+  group: repo-write-${{ github.ref }}
+  cancel-in-progress: false
+
 jobs:
   curate:
     runs-on: ubuntu-latest
@@ -22,12 +26,12 @@ jobs:
       XIAOMI_MIMO_API_KEY: ${{ secrets.XIAOMI_MIMO_API_KEY }}
     steps:
       - name: Checkout
-        uses: actions/checkout@v4
+        uses: actions/checkout@v6
         with:
-          fetch-depth: 1
+          fetch-depth: 0
 
       - name: Setup Python
-        uses: actions/setup-python@v5
+        uses: actions/setup-python@v6
         with:
           python-version: "3.12"
           cache: "pip"
@@ -37,6 +41,8 @@ jobs:
 
       - name: Curate content
         continue-on-error: true
+        env:
+          NVIDIA_API_KEY: ""
         run: python scripts/curate.py
 
       - name: Commit curated outputs
@@ -44,4 +50,24 @@ jobs:
           git config user.name "github-actions[bot]"
           git config user.email "action@github.com"
           git add data/articles.json data/curated_feed.json data/weekly_briefing.json data/quiz.json data/.curate_last_run 2>/dev/null || true
-          git diff --staged --quiet || (git commit -m "chore(ci): editor-chefe curation update" && git push)
+          if git diff --staged --quiet; then
+            echo "No changes to commit."
+            exit 0
+          fi
+          git commit -m "chore(ci): editor-chefe curation update"
+          for attempt in 1 2 3; do
+            git fetch origin master
+            if ! git pull --rebase --autostash origin master; then
+              git rebase --abort || true
+              echo "Rebase failed while syncing with origin/master."
+              exit 1
+            fi
+            if git push origin HEAD:master; then
+              echo "Push succeeded on attempt ${attempt}."
+              exit 0
+            fi
+            echo "Push failed on attempt ${attempt}; retrying..."
+            sleep 5
+          done
+          echo "Push failed after 3 attempts."
+          exit 1

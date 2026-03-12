@@ -119,6 +119,11 @@ def load_active_rss_sources() -> list[dict[str, str]]:
     return active_sources
 
 
+def _is_known_encoding_mismatch_warning(exception: object) -> bool:
+    message = str(exception).lower()
+    return "document declared as utf-8, but parsed as windows-1252" in message
+
+
 def fetch_feed_entries(feed_url: str) -> list[dict[str, Any]]:
     """Fetch and parse RSS feed entries with a per-feed timeout."""
     request = Request(feed_url, headers={"User-Agent": USER_AGENT})
@@ -129,7 +134,14 @@ def fetch_feed_entries(feed_url: str) -> list[dict[str, Any]]:
     if getattr(parsed, "bozo", False):
         bozo_exception = getattr(parsed, "bozo_exception", None)
         if bozo_exception is not None:
-            logger.warning("Feed parse warning for %s: %s", feed_url, bozo_exception)
+            if _is_known_encoding_mismatch_warning(bozo_exception):
+                logger.info(
+                    "Feed encoding mismatch for %s: %s",
+                    feed_url,
+                    bozo_exception,
+                )
+            else:
+                logger.warning("Feed parse warning for %s: %s", feed_url, bozo_exception)
 
     raw_entries = parsed.get("entries", [])
     if not isinstance(raw_entries, list):
