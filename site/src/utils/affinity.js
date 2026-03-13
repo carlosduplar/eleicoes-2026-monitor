@@ -14,6 +14,8 @@
  * @returns {AffinityResult[]} sorted descending by affinity
  */
 export function calculateAffinity(answers, quizData) {
+  const schemaVersion = typeof quizData?.schema_version === 'string' ? quizData.schema_version : '';
+  const weightNormalizer = schemaVersion.startsWith('2.') ? 6 : 4;
   const topics = quizData?.topics && typeof quizData.topics === 'object' ? quizData.topics : {};
   const candidateSet = new Set();
 
@@ -57,7 +59,7 @@ export function calculateAffinity(answers, quizData) {
         return;
       }
 
-      const similarity = 1 - Math.abs(answer.weight - candidateOption.weight) / 4;
+      const similarity = 1 - Math.abs(answer.weight - candidateOption.weight) / weightNormalizer;
       byTopic[topicId] = similarity;
       sum += similarity;
       count += 1;

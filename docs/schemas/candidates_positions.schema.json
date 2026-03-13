@@ -1,0 +1,178 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://example.com/schemas/candidates_positions.json",
+  "title": "CandidatePositions",
+  "description": "Ground-truth candidate positions by topic for quiz generation.",
+  "type": "object",
+  "required": ["schema_version", "updated_at", "topics"],
+  "properties": {
+    "schema_version": {
+      "type": "string",
+      "const": "2.0.0"
+    },
+    "updated_at": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "editors": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "default": []
+    },
+    "topics": {
+      "type": "object",
+      "description": "Key: topic_id. Value: TopicPositions.",
+      "additionalProperties": {
+        "$ref": "#/definitions/TopicPositions"
+      }
+    }
+  },
+  "additionalProperties": false,
+  "definitions": {
+    "TopicPositions": {
+      "type": "object",
+      "required": ["topic_id", "topic_label_pt", "topic_label_en", "candidates"],
+      "properties": {
+        "topic_id": {
+          "type": "string",
+          "enum": [
+            "aborto",
+            "corrupcao",
+            "economia",
+            "eleicoes",
+            "impostos",
+            "midia",
+            "politica_ext",
+            "previdencia",
+            "saude",
+            "armas",
+            "educacao",
+            "indigenas",
+            "lgbtq",
+            "meio_ambiente",
+            "seguranca"
+          ]
+        },
+        "topic_label_pt": {
+          "type": "string"
+        },
+        "topic_label_en": {
+          "type": "string"
+        },
+        "candidates": {
+          "type": "object",
+          "description": "Key: candidate_slug. Value: CandidatePosition.",
+          "additionalProperties": {
+            "$ref": "#/definitions/CandidatePosition"
+          }
+        }
+      },
+      "additionalProperties": false
+    },
+    "CandidatePosition": {
+      "type": "object",
+      "required": ["position_type", "stance", "key_actions", "sources", "last_updated"],
+      "properties": {
+        "position_type": {
+          "type": "string",
+          "enum": ["confirmed", "inferred", "unknown"]
+        },
+        "stance": {
+          "type": "string",
+          "enum": [
+            "strongly_favor",
+            "favor",
+            "neutral",
+            "against",
+            "strongly_against",
+            "unknown"
+          ]
+        },
+        "summary_pt": {
+          "type": ["string", "null"]
+        },
+        "summary_en": {
+          "type": ["string", "null"]
+        },
+        "key_actions": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "sources": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/PositionSource"
+          }
+        },
+        "last_updated": {
+          "type": "string",
+          "format": "date"
+        },
+        "editor_notes": {
+          "type": ["string", "null"]
+        }
+      },
+      "allOf": [
+        {
+          "if": {
+            "properties": {
+              "position_type": {
+                "const": "unknown"
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "stance": {
+                "const": "unknown"
+              }
+            }
+          }
+        }
+      ],
+      "additionalProperties": false
+    },
+    "PositionSource": {
+      "type": "object",
+      "required": ["type", "description_pt"],
+      "properties": {
+        "type": {
+          "type": "string",
+          "enum": [
+            "official_statement",
+            "legislation",
+            "voting_record",
+            "governance_action",
+            "party_platform",
+            "interview",
+            "social_media",
+            "news_report"
+          ]
+        },
+        "url": {
+          "type": ["string", "null"],
+          "format": "uri"
+        },
+        "description_pt": {
+          "type": "string"
+        },
+        "description_en": {
+          "type": ["string", "null"]
+        },
+        "date": {
+          "type": ["string", "null"],
+          "format": "date"
+        },
+        "article_id": {
+          "type": ["string", "null"],
+          "pattern": "^[a-f0-9]{16}$"
+        }
+      },
+      "additionalProperties": false
+    }
+  }
+}

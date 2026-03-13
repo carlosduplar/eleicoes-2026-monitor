@@ -12,9 +12,9 @@ from pathlib import Path
 from typing import Any
 
 try:
-    from scripts import extract_quiz_positions
+    from scripts import generate_quiz as extract_quiz_positions
 except ImportError:  # pragma: no cover - direct script execution path
-    import extract_quiz_positions  # type: ignore[no-redef]
+    import generate_quiz as extract_quiz_positions  # type: ignore[no-redef]
 
 try:
     from scripts.sanitize.constants import SOURCE_CATEGORY_WEIGHTS
