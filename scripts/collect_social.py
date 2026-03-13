@@ -7,7 +7,7 @@ import logging
 import os
 import re
 from dataclasses import dataclass
-from datetime import datetime, timezone
+from datetime import datetime, timezone, timedelta
 from hashlib import sha256
 from pathlib import Path
 from typing import Any
@@ -23,6 +23,7 @@ SOURCES_FILE = DATA_DIR / "sources.json"
 CANDIDATES_FILE = DATA_DIR / "candidates.json"
 ARTICLES_FILE = DATA_DIR / "articles.json"
 PIPELINE_ERRORS_FILE = DATA_DIR / "pipeline_errors.json"
+YOUTUBE_STATE_FILE = DATA_DIR / "youtube_state.json"
 DEFAULT_SCHEMA_PATH = "../docs/schemas/articles.schema.json"
 
 CANDIDATE_SEARCH_TERMS: dict[str, str] = {}
@@ -257,6 +258,35 @@ def _collect_twitter(
     return new_articles
 
 
+def _should_run_youtube(cooldown_minutes: int = 30) -> bool:
+    if not YOUTUBE_STATE_FILE.exists():
+        return True
+    try:
+        payload = _load_json(YOUTUBE_STATE_FILE)
+        if not isinstance(payload, dict):
+            raise ValueError("Expected object payload")
+        last_run = payload.get("last_run")
+        if not isinstance(last_run, str) or not last_run.strip():
+            raise ValueError("Missing or invalid 'last_run'")
+        last_run_dt = datetime.fromisoformat(last_run.replace("Z", "+00:00"))
+        if last_run_dt.tzinfo is None:
+            last_run_dt = last_run_dt.replace(tzinfo=timezone.utc)
+        elapsed = datetime.now(timezone.utc) - last_run_dt.astimezone(timezone.utc)
+        return elapsed >= timedelta(minutes=cooldown_minutes)
+    except (OSError, json.JSONDecodeError, ValueError, TypeError) as exc:
+        logger.warning("Invalid YouTube state file %s: %s", YOUTUBE_STATE_FILE, exc)
+        return True
+
+
+def _mark_youtube_run() -> None:
+    payload = {"last_run": utc_now_iso()}
+    YOUTUBE_STATE_FILE.parent.mkdir(parents=True, exist_ok=True)
+    YOUTUBE_STATE_FILE.write_text(
+        json.dumps(payload, indent=2, ensure_ascii=False) + "\n",
+        encoding="utf-8",
+    )
+
+
 def _collect_youtube(
     existing_ids: set[str],
     candidate_names: dict[str, str],
@@ -269,68 +299,82 @@ def _collect_youtube(
     from googleapiclient.discovery import build
 
     youtube = build("youtube", "v3", developerKey=api_key)
+    if not _should_run_youtube():
+        logger.info("Skipping YouTube collection (throttled to 30 mins).")
+        return []
+
     new_articles: list[dict[str, Any]] = []
+    names = [f'"{name}"' for name in candidate_names.values()]
+    names_or = " | ".join(names)
+    query = f'({names_or}) "eleições 2026"'
+    published_after = (
+        datetime.now(timezone.utc) - timedelta(days=7)
+    ).replace(microsecond=0).isoformat().replace("+00:00", "Z")
 
-    for slug, name in candidate_names.items():
-        query = f'"{name}" eleições 2026'
-        response = (
-            youtube.search()
-            .list(
-                part="snippet",
-                q=query,
-                type="video",
-                order="date",
-                maxResults=10,
-            )
-            .execute()
+    response = (
+        youtube.search()
+        .list(
+            part="snippet",
+            q=query,
+            type="video",
+            order="viewCount",
+            publishedAfter=published_after,
+            maxResults=50,
         )
+        .execute()
+    )
 
-        items = response.get("items", [])
-        if not isinstance(items, list):
+    items = response.get("items", [])
+    if not isinstance(items, list):
+        items = []
+
+    for item in items:
+        if not isinstance(item, dict):
+            continue
+        identifier = item.get("id", {})
+        snippet = item.get("snippet", {})
+        if not isinstance(identifier, dict) or not isinstance(snippet, dict):
             continue
 
-        for item in items:
-            if not isinstance(item, dict):
-                continue
-            identifier = item.get("id", {})
-            snippet = item.get("snippet", {})
-            if not isinstance(identifier, dict) or not isinstance(snippet, dict):
-                continue
+        video_id = identifier.get("videoId")
+        title = snippet.get("title")
+        published_at = snippet.get("publishedAt")
+        description = snippet.get("description", "")
+        if not isinstance(video_id, str) or not video_id.strip():
+            continue
+        if not isinstance(title, str) or not title.strip():
+            continue
+        if not isinstance(description, str):
+            description = ""
 
-            video_id = identifier.get("videoId")
-            title = snippet.get("title")
-            published_at = snippet.get("publishedAt")
-            if not isinstance(video_id, str) or not video_id.strip():
-                continue
-            if not isinstance(title, str) or not title.strip():
-                continue
+        video_url = f"https://youtu.be/{video_id}"
+        article_id = build_article_id(video_url)
+        if article_id in existing_ids:
+            continue
 
-            video_url = f"https://youtu.be/{video_id}"
-            article_id = build_article_id(video_url)
-            if article_id in existing_ids:
-                continue
+        text_to_analyze = f"{title} {description}"
+        candidates = _infer_candidates_from_text(text_to_analyze, candidate_names)
+        if not candidates:
+            continue
 
-            candidates = _infer_candidates_from_text(title, candidate_names)
-            if slug not in candidates:
-                candidates.append(slug)
+        article = {
+            "id": article_id,
+            "url": video_url,
+            "title": title.strip(),
+            "source": "YouTube",
+            "source_category": "social",
+            "published_at": _to_iso_utc(published_at),
+            "collected_at": utc_now_iso(),
+            "status": "raw",
+            "relevance_score": None,
+            "candidates_mentioned": candidates,
+            "topics": [],
+            "summaries": {"pt-BR": "", "en-US": ""},
+        }
+        new_articles.append(article)
+        existing_ids.add(article_id)
 
-            article = {
-                "id": article_id,
-                "url": video_url,
-                "title": title.strip(),
-                "source": "YouTube",
-                "source_category": "social",
-                "published_at": _to_iso_utc(published_at),
-                "collected_at": utc_now_iso(),
-                "status": "raw",
-                "relevance_score": None,
-                "candidates_mentioned": candidates,
-                "topics": [],
-                "summaries": {"pt-BR": "", "en-US": ""},
-            }
-            new_articles.append(article)
-            existing_ids.add(article_id)
-
+    _mark_youtube_run()
     return new_articles
 
 
