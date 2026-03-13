@@ -71,9 +71,14 @@ INSTITUTE_ENUM = {
     "Parana Pesquisas",
     "PoderData",
     "Real Time Big Data",
+    "Futura Inteligencia",
+    "Ipsos",
+    "MDA",
+    "Ideia",
 }
 INSTITUTE_ALIASES = {
     "data folha": "Datafolha",
+    "datafolha": "Datafolha",
     "genial/quaest": "Quaest",
     "genial quaest": "Quaest",
     "atlas intel": "AtlasIntel",
@@ -82,6 +87,18 @@ INSTITUTE_ALIASES = {
     "poder data": "PoderData",
     "real time bigdata": "Real Time Big Data",
     "real time": "Real Time Big Data",
+    "futura inteligência": "Futura Inteligencia",
+    "futura inteligencia": "Futura Inteligencia",
+    "apex/futura": "Futura Inteligencia",
+    "futura/apex": "Futura Inteligencia",
+    "futura/inteligência": "Futura Inteligencia",
+    "futura/inteligencia": "Futura Inteligencia",
+    "ipsos-ipec": "Ipsos",
+    "ipec": "Ipsos",
+    "cnt/mda": "MDA",
+    "mda pesquisa": "MDA",
+    "meio/ideia": "Ideia",
+    "ideia big data": "Ideia",
 }
 CANDIDATE_ALIASES = {
     "lula": ("lula", "Lula"),
