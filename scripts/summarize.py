@@ -4,6 +4,7 @@ from __future__ import annotations
 
 import json
 import logging
+import re
 import sys
 import unicodedata
 from datetime import datetime, timezone
@@ -27,6 +28,10 @@ except ImportError:  # pragma: no cover - direct script execution path
     import editor_feedback  # type: ignore[no-redef]
 
 logger = logging.getLogger(__name__)
+
+API_KEY_PATTERN = re.compile(
+    r"(key|api_key|apikey|devKey)=[A-Za-z0-9_-]{20,}", re.IGNORECASE
+)
 
 ROOT_DIR = Path(__file__).resolve().parents[1]
 DATA_DIR = ROOT_DIR / "data"
@@ -446,9 +451,13 @@ def _is_elections_relevant(
     if not isinstance(title, str) or not title.strip():
         return False
     normalized_title = _normalize_text(title)
-    normalized_content = _normalize_text(content)[:800] if isinstance(content, str) else ""
+    normalized_content = (
+        _normalize_text(content)[:800] if isinstance(content, str) else ""
+    )
     normalized_text = f"{normalized_title} {normalized_content}".strip()
-    source_category_normalized = source_category.strip().lower() if isinstance(source_category, str) else ""
+    source_category_normalized = (
+        source_category.strip().lower() if isinstance(source_category, str) else ""
+    )
 
     high_signal_hits = _keyword_hits(normalized_text, ELECTIONS_HIGH_SIGNAL_KEYWORDS)
     candidate_hits = _keyword_hits(normalized_text, CANDIDATE_SIGNAL_KEYWORDS)
@@ -467,7 +476,10 @@ def _is_elections_relevant(
     if candidate_hits >= 1 and off_topic_hits < 2:
         return True
 
-    if source_category_normalized in {"party", "institutional"} and high_signal_hits >= 1:
+    if (
+        source_category_normalized in {"party", "institutional"}
+        and high_signal_hits >= 1
+    ):
         return True
 
     return False
@@ -524,30 +536,25 @@ def _all_providers_unavailable() -> bool:
 def summarize_articles(limit: int = 30) -> tuple[int, int, int]:
     articles, wrapper = _load_articles_document()
     feedback = editor_feedback.load_editor_feedback(EDITOR_FEEDBACK_FILE)
-    feedback_changed = bool(editor_feedback.add_irrelevant_article_ids(feedback, articles))
+    feedback_changed = False
+    valid_articles: list[dict[str, Any]] = []
 
     summarized_count = 0
     error_count = 0
     skipped_done_count = 0
     processed_this_run = 0
     _circuit_breaker_logged = False
+    limit_reached_logged = False
+    llm_processing_enabled = not _all_providers_unavailable()
 
-    if _all_providers_unavailable():
-        if feedback_changed or not EDITOR_FEEDBACK_FILE.exists():
-            editor_feedback.save_editor_feedback(feedback, EDITOR_FEEDBACK_FILE)
+    if not llm_processing_enabled:
         logger.warning(
             "All AI providers unavailable (circuit breakers open); skipping LLM processing"
         )
         print("All AI providers unavailable; skipping LLM processing")
-        return 0, 0, 0
 
     for article in articles:
         _ensure_article_defaults(article)
-
-        if not _should_process(article):
-            if article.get("status") == "raw" and _summaries_are_complete(article):
-                skipped_done_count += 1
-            continue
 
         article_id = article.get("id") if isinstance(article.get("id"), str) else None
         title = (
@@ -557,9 +564,27 @@ def summarize_articles(limit: int = 30) -> tuple[int, int, int]:
             else "(sem título)"
         )
         source_category = article.get("source_category")
-        source_category_value = source_category if isinstance(source_category, str) else ""
+        source_category_value = (
+            source_category if isinstance(source_category, str) else ""
+        )
         raw_content = article.get("content")
         content_for_relevance = raw_content if isinstance(raw_content, str) else ""
+
+        if article.get("status") == "irrelevant":
+            if editor_feedback.add_article_id_to_feedback(feedback, article):
+                feedback_changed = True
+            logger.info(
+                "Skipping article %s already marked irrelevant: %r",
+                article_id or "<missing-id>",
+                title,
+            )
+            continue
+
+        if not _should_process(article):
+            if article.get("status") == "raw" and _summaries_are_complete(article):
+                skipped_done_count += 1
+            valid_articles.append(article)
+            continue
 
         feedback_reason = editor_feedback.feedback_reason_for_article(article, feedback)
         if feedback_reason is not None:
@@ -592,12 +617,19 @@ def summarize_articles(limit: int = 30) -> tuple[int, int, int]:
             )
             continue
 
+        valid_articles.append(article)
+
         if processed_this_run >= limit:
-            logger.info(
-                "Per-run limit of %d articles reached; deferring the rest to next run.",
-                limit,
-            )
-            break
+            if not limit_reached_logged:
+                logger.info(
+                    "Per-run limit of %d articles reached; deferring the rest to next run.",
+                    limit,
+                )
+                limit_reached_logged = True
+            continue
+
+        if not llm_processing_enabled:
+            continue
 
         content = raw_content.strip() if isinstance(raw_content, str) else ""
         if not content:
@@ -629,9 +661,12 @@ def summarize_articles(limit: int = 30) -> tuple[int, int, int]:
         # Single LLM call per article — the prompt already requests both pt-BR and en-US.
         if _all_providers_unavailable():
             if not _circuit_breaker_logged:
-                logger.warning("All AI providers unavailable mid-run; stopping early")
+                logger.warning(
+                    "All AI providers unavailable mid-run; disabling further LLM processing"
+                )
                 _circuit_breaker_logged = True
-            break
+            llm_processing_enabled = False
+            continue
 
         try:
             result = ai_client.summarize_article(
@@ -721,10 +756,7 @@ def summarize_articles(limit: int = 30) -> tuple[int, int, int]:
     if feedback_changed or not EDITOR_FEEDBACK_FILE.exists():
         editor_feedback.save_editor_feedback(feedback, EDITOR_FEEDBACK_FILE)
 
-    persisted_articles = [
-        article for article in articles if article.get("status") != "irrelevant"
-    ]
-    _save_articles_document(persisted_articles, wrapper)
+    _save_articles_document(valid_articles, wrapper)
     print(
         f"Summarized {summarized_count} articles ({error_count} errors, {skipped_done_count} skipped already-done)"
     )
