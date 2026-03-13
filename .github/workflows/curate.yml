@@ -39,6 +39,12 @@ jobs:
       - name: Install dependencies
         run: pip install -r requirements.txt
 
+      - name: Pull latest data
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "action@github.com"
+          git pull --rebase --autostash origin master || (git rebase --abort && echo "Pull failed, continuing with current state")
+
       - name: Curate content
         continue-on-error: true
         run: python scripts/curate.py
