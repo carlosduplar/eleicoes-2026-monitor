@@ -77,7 +77,7 @@ const routesWithProviders = routes.map((route, index) => {
 export const createRoot = ViteReactSSG(
   {
     routes: routesWithProviders,
-    basename: import.meta.env.BASE_URL,
+    basename: import.meta.env.BASE_URL.replace(/\/+$/, '') || '/',
   },
   ({ isClient }) => {
     if (!isClient) {

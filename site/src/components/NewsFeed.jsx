@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 
 import { useData } from '@/hooks/useData';
@@ -119,20 +119,33 @@ function NewsFeed({ selectedCategory }) {
   const [visibleCount, setVisibleCount] = useState(PAGE_SIZE);
   const language = i18n.language === 'en-US' ? 'en-US' : 'pt-BR';
 
-  const articles = normalizeArticles(data).filter(
-    (article) => article && typeof article === 'object' && article.status !== 'irrelevant',
-  );
-  const visibleArticles = articles.filter((article) => {
-    if (selectedCategory === 'all') {
-      return true;
-    }
-    return toSourceCategory(article) === selectedCategory;
-  });
+  const articles = useMemo(() => {
+    return normalizeArticles(data).filter(
+      (article) => article && typeof article === 'object' && article.status !== 'irrelevant',
+    );
+  }, [data]);
+
+  const visibleArticles = useMemo(() => {
+    return articles.filter((article) => {
+      if (selectedCategory === 'all') {
+        return true;
+      }
+      return toSourceCategory(article) === selectedCategory;
+    });
+  }, [articles, selectedCategory]);
+
   const { results: searchResults, loading: searchLoading, isVertexSearch } = useSearch(debouncedQuery, articles);
-  const displayedArticles = (debouncedQuery ? searchResults : visibleArticles).filter(
-    (article) => article && typeof article === 'object' && article.status !== 'irrelevant',
-  );
-  const paginatedArticles = displayedArticles.slice(0, visibleCount);
+
+  const displayedArticles = useMemo(() => {
+    return (debouncedQuery ? searchResults : visibleArticles).filter(
+      (article) => article && typeof article === 'object' && article.status !== 'irrelevant',
+    );
+  }, [debouncedQuery, searchResults, visibleArticles]);
+
+  const paginatedArticles = useMemo(() => {
+    return displayedArticles.slice(0, visibleCount);
+  }, [displayedArticles, visibleCount]);
+
   const hasMoreArticles = displayedArticles.length > paginatedArticles.length;
   const isSearchActive = debouncedQuery.length > 0;
 
