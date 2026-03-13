@@ -10,7 +10,7 @@
 
 Portal Eleicoes BR 2026 is a bilingual static portal (pt-BR and en-US) that monitors election news, sentiment, polling, and candidate positioning signals for Brazil's 2026 presidential cycle. It combines a Python ingestion pipeline, AI-assisted enrichment, and a React + Vite SSG frontend published to GitHub Pages. The product is designed as auditable editorial infrastructure: readers can inspect methodology, processing status, sources, and the technical path that produced each public artifact.
 
-O Portal Eleicoes BR 2026 e um portal estatico bilingue (pt-BR e en-US) para monitorar noticias, sentimento, pesquisas e sinais de posicionamento de candidatos na eleicao presidencial de 2026. O projeto combina pipeline Python de ingestao, enriquecimento com IA e frontend React + Vite SSG publicado no GitHub Pages. O produto foi concebido como infraestrutura editorial auditavel: o publico consegue inspecionar metodologia, status de processamento, fontes e o caminho tecnico que levou cada artefato ao ar.
+O Portal Eleições BR 2026 é um portal estático bilíngue (pt-BR e en-US) para monitorar notícias, sentimento, pesquisas e sinais de posicionamento de candidatos na eleição presidencial de 2026. O projeto combina pipeline Python de ingestão, enriquecimento com IA e frontend React + Vite SSG publicado no GitHub Pages. O produto foi concebido como infraestrutura editorial auditável: o público consegue inspecionar metodologia, status de processamento, fontes e o caminho técnico que levou cada artefato ao ar.
 
 ## Screenshot
 
