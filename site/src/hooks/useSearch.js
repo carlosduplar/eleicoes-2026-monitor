@@ -105,8 +105,10 @@ async function searchVertex(query, signal) {
  * @param {Article[]} articles - Local article corpus from useData.
  * @returns {{ results: Article[], loading: boolean, error: Error|null, isVertexSearch: boolean }}
  */
+const EMPTY_RESULTS = [];
+
 export function useSearch(query, articles) {
-  const [results, setResults] = useState([]);
+  const [results, setResults] = useState(EMPTY_RESULTS);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
   const [isVertexSearch, setIsVertexSearch] = useState(false);
@@ -114,7 +116,7 @@ export function useSearch(query, articles) {
   useEffect(() => {
     const normalizedQuery = typeof query === 'string' ? query.trim() : '';
     if (!normalizedQuery) {
-      setResults([]);
+      setResults((prev) => (prev.length === 0 ? prev : EMPTY_RESULTS));
       setLoading(false);
       setError(null);
       setIsVertexSearch(false);
