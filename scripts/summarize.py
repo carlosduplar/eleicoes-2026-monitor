@@ -291,6 +291,7 @@ def _append_pipeline_error(
     article_id: str | None = None,
     provider: str | None = None,
 ) -> None:
+    sanitized = API_KEY_PATTERN.sub(r"\1=[REDACTED]", message)
     payload = _load_pipeline_errors()
     payload["errors"].append(
         {
@@ -299,7 +300,7 @@ def _append_pipeline_error(
             "script": script,
             "article_id": article_id,
             "provider": provider,
-            "message": message,
+            "message": sanitized,
         }
     )
     payload["last_checked"] = utc_now_iso()

@@ -25,8 +25,14 @@ ARTICLES_FILE = DATA_DIR / "articles.json"
 PIPELINE_ERRORS_FILE = DATA_DIR / "pipeline_errors.json"
 
 REQUEST_TIMEOUT_SECONDS = 20
-USER_AGENT = "eleicoes-2026-monitor/1.0 (+https://github.com/carlosduplar/eleicoes-2026-monitor)"
+USER_AGENT = (
+    "eleicoes-2026-monitor/1.0 (+https://github.com/carlosduplar/eleicoes-2026-monitor)"
+)
 DEFAULT_SCHEMA_PATH = "../docs/schemas/articles.schema.json"
+
+API_KEY_PATTERN = re.compile(
+    r"(key|api_key|apikey|devKey)=[A-Za-z0-9_-]{20,}", re.IGNORECASE
+)
 
 
 @dataclass
@@ -38,7 +44,12 @@ class ArticlesDocument:
 
 def utc_now_iso() -> str:
     """Return UTC timestamp in ISO 8601 format with Z suffix."""
-    return datetime.now(timezone.utc).replace(microsecond=0).isoformat().replace("+00:00", "Z")
+    return (
+        datetime.now(timezone.utc)
+        .replace(microsecond=0)
+        .isoformat()
+        .replace("+00:00", "Z")
+    )
 
 
 def build_article_id(url: str) -> str:
@@ -52,7 +63,9 @@ def _load_json(path: Path) -> Any:
 
 def _load_articles_document() -> ArticlesDocument:
     if not ARTICLES_FILE.exists():
-        return ArticlesDocument(articles=[], wrapped=True, schema_path=DEFAULT_SCHEMA_PATH)
+        return ArticlesDocument(
+            articles=[], wrapped=True, schema_path=DEFAULT_SCHEMA_PATH
+        )
 
     payload = _load_json(ARTICLES_FILE)
     if isinstance(payload, list):
@@ -89,7 +102,9 @@ def _save_articles_document(document: ArticlesDocument) -> None:
     else:
         payload = document.articles
 
-    ARTICLES_FILE.write_text(json.dumps(payload, indent=2, ensure_ascii=False) + "\n", encoding="utf-8")
+    ARTICLES_FILE.write_text(
+        json.dumps(payload, indent=2, ensure_ascii=False) + "\n", encoding="utf-8"
+    )
 
 
 def _load_pipeline_errors() -> dict[str, Any]:
@@ -109,6 +124,7 @@ def _load_pipeline_errors() -> dict[str, Any]:
 
 def _append_pipeline_error(*, party_name: str, party_url: str, message: str) -> None:
     """Append error entry with tier='foca', script='collect_parties.py'."""
+    sanitized = API_KEY_PATTERN.sub(r"\1=[REDACTED]", message)
     payload = _load_pipeline_errors()
     payload["errors"].append(
         {
@@ -117,7 +133,7 @@ def _append_pipeline_error(*, party_name: str, party_url: str, message: str) -> 
             "script": "collect_parties.py",
             "party_name": party_name,
             "party_url": party_url,
-            "message": message,
+            "message": sanitized,
         }
     )
     payload["last_checked"] = utc_now_iso()
@@ -155,7 +171,11 @@ def load_active_party_sources() -> list[dict[str, Any]]:
         if not isinstance(candidate_slugs, list):
             continue
 
-        cleaned_slugs = [slug.strip() for slug in candidate_slugs if isinstance(slug, str) and slug.strip()]
+        cleaned_slugs = [
+            slug.strip()
+            for slug in candidate_slugs
+            if isinstance(slug, str) and slug.strip()
+        ]
         if not cleaned_slugs:
             continue
 
@@ -163,7 +183,9 @@ def load_active_party_sources() -> list[dict[str, Any]]:
             "name": name.strip(),
             "url": url.strip(),
             "candidate_slugs": cleaned_slugs,
-            "category": category.strip() if isinstance(category, str) and category.strip() else "party",
+            "category": category.strip()
+            if isinstance(category, str) and category.strip()
+            else "party",
         }
         robots_txt_url = source.get("robots_txt_url")
         if isinstance(robots_txt_url, str) and robots_txt_url.strip():
@@ -176,12 +198,16 @@ def _is_allowed_by_robots_url(site_url: str, robots_url: str) -> bool:
     parser = RobotFileParser()
     parser.set_url(robots_url)
     try:
-        response = requests.get(robots_url, timeout=5, headers={"User-Agent": USER_AGENT})
+        response = requests.get(
+            robots_url, timeout=5, headers={"User-Agent": USER_AGENT}
+        )
         response.raise_for_status()
         parser.parse(response.text.splitlines())
         return parser.can_fetch(USER_AGENT, site_url)
     except requests.RequestException as exc:
-        logger.warning("Could not fetch robots.txt (%s): %s. Continuing.", robots_url, exc)
+        logger.warning(
+            "Could not fetch robots.txt (%s): %s. Continuing.", robots_url, exc
+        )
         return True
 
 
@@ -217,7 +243,9 @@ def _append_unique_article(
     results.append({"url": resolved_url, "title": clean_title})
 
 
-def _extract_articles_jsonld(soup: BeautifulSoup, base_url: str) -> list[dict[str, str]]:
+def _extract_articles_jsonld(
+    soup: BeautifulSoup, base_url: str
+) -> list[dict[str, str]]:
     """Extract articles from JSON-LD NewsArticle blocks."""
     results: list[dict[str, str]] = []
     seen_urls: set[str] = set()
@@ -242,7 +270,10 @@ def _extract_articles_jsonld(soup: BeautifulSoup, base_url: str) -> list[dict[st
             lowered = value.lower()
             return lowered in {"newsarticle", "article"}
         if isinstance(value, list):
-            return any(isinstance(item, str) and item.lower() in {"newsarticle", "article"} for item in value)
+            return any(
+                isinstance(item, str) and item.lower() in {"newsarticle", "article"}
+                for item in value
+            )
         return False
 
     for script in soup.find_all("script", attrs={"type": "application/ld+json"}):
@@ -286,13 +317,21 @@ def _extract_articles_jsonld(soup: BeautifulSoup, base_url: str) -> list[dict[st
     return results
 
 
-def _extract_articles_opengraph(soup: BeautifulSoup, base_url: str) -> list[dict[str, str]]:
+def _extract_articles_opengraph(
+    soup: BeautifulSoup, base_url: str
+) -> list[dict[str, str]]:
     """Extract article URL+title from Open Graph meta tags."""
     title_meta = soup.find("meta", attrs={"property": "og:title"})
     url_meta = soup.find("meta", attrs={"property": "og:url"})
 
-    raw_title = title_meta.get("content") if title_meta and title_meta.has_attr("content") else None
-    raw_url = url_meta.get("content") if url_meta and url_meta.has_attr("content") else None
+    raw_title = (
+        title_meta.get("content")
+        if title_meta and title_meta.has_attr("content")
+        else None
+    )
+    raw_url = (
+        url_meta.get("content") if url_meta and url_meta.has_attr("content") else None
+    )
 
     if not isinstance(raw_title, str) or not isinstance(raw_url, str):
         return []
@@ -354,7 +393,9 @@ def _extract_articles_html(soup: BeautifulSoup, base_url: str) -> list[dict[str,
     return results
 
 
-def _extract_articles_heading_fallback(soup: BeautifulSoup, base_url: str) -> list[dict[str, str]]:
+def _extract_articles_heading_fallback(
+    soup: BeautifulSoup, base_url: str
+) -> list[dict[str, str]]:
     """Last resort: first <h1> or <h2> + canonical link or base_url."""
     heading = soup.find(["h1", "h2"])
     if heading is None:
@@ -362,7 +403,9 @@ def _extract_articles_heading_fallback(soup: BeautifulSoup, base_url: str) -> li
 
     title = heading.get_text(" ", strip=True)
     canonical = soup.find("link", attrs={"rel": "canonical"})
-    raw_url = canonical.get("href") if canonical and canonical.has_attr("href") else base_url
+    raw_url = (
+        canonical.get("href") if canonical and canonical.has_attr("href") else base_url
+    )
 
     if not isinstance(raw_url, str):
         return []
@@ -443,8 +486,12 @@ def collect_articles() -> tuple[int, int, int]:
             extracted = scrape_party_site(party)
         except Exception as exc:
             error_count += 1
-            _append_pipeline_error(party_name=party_name, party_url=party_url, message=str(exc))
-            logger.warning("Failed to collect from %s (%s): %s", party_name, party_url, exc)
+            _append_pipeline_error(
+                party_name=party_name, party_url=party_url, message=str(exc)
+            )
+            logger.warning(
+                "Failed to collect from %s (%s): %s", party_name, party_url, exc
+            )
             continue
 
         for entry in extracted:
@@ -481,7 +528,9 @@ def collect_articles() -> tuple[int, int, int]:
     elif not ARTICLES_FILE.exists():
         _save_articles_document(document)
 
-    print(f"Parties: {len(new_articles)} new articles from {len(sources)} sources ({error_count} errors)")
+    print(
+        f"Parties: {len(new_articles)} new articles from {len(sources)} sources ({error_count} errors)"
+    )
     return len(new_articles), len(sources), error_count
 
 
