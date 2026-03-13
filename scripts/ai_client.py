@@ -1,20 +1,9 @@
-"""AI client with multi-provider fallback and usage tracking for Phase 02.
+"""AI client with multi-provider fallback and usage tracking.
 
-Provider priority (based on benchmark_results.json — 45 runs, 3 tasks):
-
-  1. NVIDIA nemotron-3-super-120b-a12b  9/9 (100%)  avg 3.65s  — primary
-  2. Ollama nemotron-3-super:cloud       9/9 (100%)  avg 3.90s  — 1st fallback
-  3. Ollama minimax-m2.5:cloud           9/9 (100%)  avg 9.03s  — 2nd fallback
-     Note: MiniMax is 2.3x slower and returned empty content in 5/9 extraction /
-     curation runs, so it is kept as a last free-tier fallback only.
-  4. Vertex / Mimo (paid)                                       — emergency paid
-
-Task-specific routing: NOT used. Benchmark shows no quality difference between
-models across tasks; MiniMax performs worse on structured extraction/curation.
-Uniform chain keeps routing simple and predictable.
-
-OpenRouter removed: all 9/9 runs failed with HTTP 429 (rate-limited on the free
-tier every time), making it unreliable as any tier of fallback.
+Task routing follows quiz architecture requirements:
+- High-quality extraction/generation tasks prefer Gemini (Vertex) first.
+- Structured validation tasks prefer free NVIDIA providers first.
+- Legacy summarization tasks keep free-first routing.
 """
 
 from __future__ import annotations
@@ -62,6 +51,22 @@ VALID_SENTIMENT_LABELS = {"positivo", "neutro", "negativo"}
 VALID_STANCES = {"favor", "against", "neutral", "unclear"}
 VALID_CONFIDENCE = {"high", "medium", "low"}
 HIGH_OR_MEDIUM_CONFIDENCE = {"high", "medium"}
+VALID_POSITION_TYPES = {"confirmed", "inferred", "unknown"}
+VALID_POSITION_STANCES = {
+    "strongly_favor",
+    "favor",
+    "neutral",
+    "against",
+    "strongly_against",
+    "unknown",
+}
+POSITION_STANCE_TO_WEIGHT = {
+    "strongly_favor": 3,
+    "favor": 2,
+    "neutral": 0,
+    "against": -2,
+    "strongly_against": -3,
+}
 
 MARKDOWN_JSON_RE = re.compile(
     r"^\s*```(?:json)?\s*(.*?)\s*```\s*$", re.IGNORECASE | re.DOTALL
@@ -120,9 +125,83 @@ def _today_key() -> str:
 
 
 def _provider_chain_for_task(task: str) -> list[ProviderConfig]:
+    if task in {"positions_extract", "quiz_generate"}:
+        return [
+            {
+                "name": "vertex",
+                "base_url": "VERTEX_BASE_URL",
+                "key_env": "VERTEX_ACCESS_TOKEN",
+                "model": "gemini-3.1-pro",
+                "paid": True,
+            },
+            {
+                "name": "nvidia",
+                "base_url": "https://integrate.api.nvidia.com/v1",
+                "key_env": "NVIDIA_API_KEY",
+                "model": "moonshotai/kimi-k2.5",
+                "paid": False,
+            },
+            {
+                "name": "nvidia",
+                "base_url": "https://integrate.api.nvidia.com/v1",
+                "key_env": "NVIDIA_API_KEY",
+                "model": "minimaxai/minimax-m2.5",
+                "paid": False,
+            },
+            {
+                "name": "nvidia",
+                "base_url": "https://integrate.api.nvidia.com/v1",
+                "key_env": "NVIDIA_API_KEY",
+                "model": "nvidia/nemotron-3-super-120b-a12b",
+                "paid": False,
+            },
+        ]
+
+    if task == "quiz_validate":
+        return [
+            {
+                "name": "nvidia",
+                "base_url": "https://integrate.api.nvidia.com/v1",
+                "key_env": "NVIDIA_API_KEY",
+                "model": "moonshotai/kimi-k2.5",
+                "paid": False,
+            },
+            {
+                "name": "nvidia",
+                "base_url": "https://integrate.api.nvidia.com/v1",
+                "key_env": "NVIDIA_API_KEY",
+                "model": "minimaxai/minimax-m2.5",
+                "paid": False,
+            },
+            {
+                "name": "nvidia",
+                "base_url": "https://integrate.api.nvidia.com/v1",
+                "key_env": "NVIDIA_API_KEY",
+                "model": "nvidia/nemotron-3-super-120b-a12b",
+                "paid": False,
+            },
+            {
+                "name": "vertex",
+                "base_url": "VERTEX_BASE_URL",
+                "key_env": "VERTEX_ACCESS_TOKEN",
+                "model": "gemini-3.1-pro",
+                "paid": True,
+            },
+        ]
+
     nvidia_primary = NVIDIA_MODELS.get(task, NVIDIA_MODELS["summarization"])
     nvidia_all = list(dict.fromkeys([nvidia_primary, *NVIDIA_FALLBACKS]))
     return [
+        *[
+            {
+                "name": "nvidia",
+                "base_url": "https://integrate.api.nvidia.com/v1",
+                "key_env": "NVIDIA_API_KEY",
+                "model": model,
+                "paid": False,
+            }
+            for model in nvidia_all
+        ],
         *[
             {
                 "name": "ollama",
@@ -133,21 +212,11 @@ def _provider_chain_for_task(task: str) -> list[ProviderConfig]:
             }
             for model in OLLAMA_MODELS
         ],
-        *[
-            {
-                "name": "nvidia",
-                "base_url": "https://integrate.api.nvidia.com/v1",
-                "key_env": "NVIDIA_API_KEY",
-                "model": model,
-                "paid": False,
-            }
-            for model in nvidia_all
-        ],        
         {
             "name": "vertex",
             "base_url": "VERTEX_BASE_URL",
             "key_env": "VERTEX_ACCESS_TOKEN",
-            "model": "gemini-3-flash-preview",
+            "model": "gemini-1.5-flash",
             "paid": True,
         },
         {
@@ -522,6 +591,22 @@ def _parse_json_dict(text: str) -> dict[str, object]:
     return parsed
 
 
+def _parse_json_list(text: str) -> list[object]:
+    maybe_json = _strip_markdown_code_fence(text)
+    try:
+        parsed = json.loads(maybe_json)
+    except json.JSONDecodeError:
+        recovered = _extract_last_json_block(maybe_json)
+        if recovered is None:
+            recovered = _extract_last_json_block(text)
+        if recovered is None:
+            raise
+        parsed = json.loads(recovered)
+    if not isinstance(parsed, list):
+        raise ValueError("Expected JSON array response.")
+    return parsed
+
+
 def _to_clean_string_list(value: object) -> list[str]:
     if not isinstance(value, list):
         return []
@@ -798,6 +883,306 @@ Retorne JSON:
     }
 
 
+def extract_candidate_topic_position(
+    candidate: str,
+    topic_id: str,
+    topic_label_pt: str,
+    snippets: list[str],
+    existing_summary_pt: str | None = None,
+) -> dict[str, object]:
+    """Extract structured candidate position for candidates_positions.json."""
+    if not snippets:
+        return {
+            "position_type": "unknown",
+            "stance": "unknown",
+            "summary_pt": None,
+            "summary_en": None,
+            "key_actions": [],
+            "source_indices": [],
+            "confidence_reasoning": "No snippets available for this candidate/topic.",
+        }
+
+    rendered_snippets = "\n".join(
+        f"[{index}] {snippet}" for index, snippet in enumerate(snippets[:12], start=1)
+    )
+    existing_text = existing_summary_pt or "None"
+    system = (
+        "Você é um analista político brasileiro. "
+        "Extraia posição de política pública apenas quando houver evidência textual. "
+        "Responda APENAS com JSON válido."
+    )
+    user = f"""Candidate: {candidate}
+Topic: {topic_id} ({topic_label_pt})
+Existing summary_pt: {existing_text}
+
+Article snippets ({min(len(snippets), 12)}):
+{rendered_snippets}
+
+Rules:
+- Polling data is NOT a policy position.
+- Scandal/investigation reports are NOT policy positions.
+- If no clear position exists, return position_type=unknown and stance=unknown.
+
+Return JSON:
+{{
+  "position_type": "confirmed|inferred|unknown",
+  "stance": "strongly_favor|favor|neutral|against|strongly_against|unknown",
+  "summary_pt": "1-2 frases em pt-BR, ou null",
+  "summary_en": "1-2 sentences in en-US, or null",
+  "key_actions": ["acao verificavel 1", "acao verificavel 2"],
+  "source_indices": [1, 3],
+  "confidence_reasoning": "justificativa curta"
+}}"""
+    response = _call_with_fallback_for_task(
+        system=system,
+        user=user,
+        max_tokens=700,
+        task="positions_extract",
+    )
+
+    parsed: dict[str, object] | None = None
+    try:
+        parsed = _parse_json_dict(response["content"])
+    except (json.JSONDecodeError, ValueError, TypeError) as exc:
+        logger.warning("[AI] extract_candidate_topic_position parse failure: %s", exc)
+
+    if parsed is None:
+        return {
+            "position_type": "unknown",
+            "stance": "unknown",
+            "summary_pt": None,
+            "summary_en": None,
+            "key_actions": [],
+            "source_indices": [],
+            "confidence_reasoning": "Model output could not be parsed.",
+            "_ai_provider": response["provider"],
+            "_ai_model": response["model"],
+            "_parse_error": True,
+        }
+
+    raw_position_type = parsed.get("position_type")
+    position_type = (
+        raw_position_type.strip().lower()
+        if isinstance(raw_position_type, str)
+        else "unknown"
+    )
+    if position_type not in VALID_POSITION_TYPES:
+        position_type = "unknown"
+
+    raw_stance = parsed.get("stance")
+    stance = raw_stance.strip().lower() if isinstance(raw_stance, str) else "unknown"
+    if stance not in VALID_POSITION_STANCES:
+        stance = "unknown"
+
+    summary_pt = _normalize_optional_text(parsed.get("summary_pt"))
+    summary_en = _normalize_optional_text(parsed.get("summary_en"))
+    key_actions = _to_clean_string_list(parsed.get("key_actions"))
+    confidence_reasoning = _normalize_optional_text(parsed.get("confidence_reasoning"))
+
+    source_indices_raw = parsed.get("source_indices")
+    source_indices: list[int] = []
+    if isinstance(source_indices_raw, list):
+        for item in source_indices_raw:
+            if isinstance(item, int) and 1 <= item <= len(snippets):
+                source_indices.append(item)
+
+    if position_type == "unknown" or stance == "unknown":
+        summary_pt = None
+        summary_en = None
+        key_actions = []
+        source_indices = []
+
+    return {
+        "position_type": position_type,
+        "stance": stance,
+        "summary_pt": summary_pt,
+        "summary_en": summary_en,
+        "key_actions": key_actions,
+        "source_indices": source_indices,
+        "confidence_reasoning": confidence_reasoning,
+        "_ai_provider": response["provider"],
+        "_ai_model": response["model"],
+    }
+
+
+def generate_quiz_topic_options(
+    topic_id: str,
+    topic_label_pt: str,
+    topic_label_en: str,
+    question_pt: str,
+    question_en: str,
+    known_positions: list[dict[str, object]],
+) -> dict[str, object]:
+    """Generate first-person quiz options for a topic from known positions."""
+    if not known_positions:
+        return {"options": [], "_parse_error": False}
+
+    position_lines: list[str] = []
+    for index, position in enumerate(known_positions, start=1):
+        stance = str(position.get("stance", "unknown"))
+        summary = str(position.get("summary_pt", "")).strip()
+        actions = position.get("key_actions")
+        if isinstance(actions, list):
+            action_text = "; ".join(
+                str(item).strip() for item in actions if isinstance(item, str) and item.strip()
+            )
+        else:
+            action_text = ""
+        position_lines.append(
+            f"Position {index}: stance={stance}, summary=\"{summary}\", key_actions=\"{action_text}\""
+        )
+
+    system = (
+        "Você é designer de quiz político. "
+        "Crie opções em primeira pessoa, neutras e ideológicas, sem citar candidatos. "
+        "Responda APENAS com JSON válido."
+    )
+    user = f"""Topic: {topic_id} — {topic_label_pt} / {topic_label_en}
+Question pt-BR: {question_pt}
+Question en-US: {question_en}
+
+Known positions:
+{chr(10).join(position_lines)}
+
+Rules:
+1) Nunca mencionar candidato, partido ou biografia.
+2) Nunca descrever evento jornalístico, investigação ou pesquisa eleitoral.
+3) Opções em primeira pessoa (ex.: "O governo deveria...", "Acredito que...").
+4) PT-BR com diacríticos corretos.
+5) Cada opção deve ser distinta e corresponder a uma posição.
+6) Gere no máximo 6 opções.
+
+Return JSON array:
+[
+  {{
+    "text_pt": "O governo deveria...",
+    "text_en": "The government should...",
+    "mapped_position": 1,
+    "stance": "strongly_favor|favor|neutral|against|strongly_against",
+    "weight": 3|2|0|-2|-3
+  }}
+]"""
+    response = _call_with_fallback_for_task(
+        system=system,
+        user=user,
+        max_tokens=900,
+        task="quiz_generate",
+    )
+
+    parsed_options: list[object] | None = None
+    try:
+        parsed_options = _parse_json_list(response["content"])
+    except (json.JSONDecodeError, ValueError, TypeError) as exc:
+        logger.warning("[AI] generate_quiz_topic_options parse failure: %s", exc)
+
+    if parsed_options is None:
+        return {
+            "options": [],
+            "_ai_provider": response["provider"],
+            "_ai_model": response["model"],
+            "_parse_error": True,
+        }
+
+    options: list[dict[str, object]] = []
+    for item in parsed_options:
+        if not isinstance(item, dict):
+            continue
+        text_pt = _normalize_optional_text(item.get("text_pt"))
+        text_en = _normalize_optional_text(item.get("text_en"))
+        mapped_position = item.get("mapped_position")
+        raw_stance = item.get("stance")
+        stance = raw_stance.strip().lower() if isinstance(raw_stance, str) else "neutral"
+        if stance not in POSITION_STANCE_TO_WEIGHT:
+            stance = "neutral"
+        raw_weight = item.get("weight")
+        if isinstance(raw_weight, int):
+            weight = raw_weight
+        else:
+            weight = POSITION_STANCE_TO_WEIGHT[stance]
+        if weight not in {-3, -2, 0, 2, 3}:
+            weight = POSITION_STANCE_TO_WEIGHT[stance]
+        if not text_pt or not text_en:
+            continue
+        options.append(
+            {
+                "text_pt": text_pt,
+                "text_en": text_en,
+                "mapped_position": mapped_position,
+                "stance": stance,
+                "weight": weight,
+            }
+        )
+
+    return {
+        "options": options[:6],
+        "_ai_provider": response["provider"],
+        "_ai_model": response["model"],
+        "_parse_error": False,
+    }
+
+
+def validate_quiz_option_quality(
+    topic_id: str,
+    text_pt: str,
+    text_en: str,
+    weight: int,
+) -> dict[str, object]:
+    """Validate generated quiz option quality through structured AI checks."""
+    system = (
+        "Você valida opções de quiz político. "
+        "Responda apenas com JSON válido contendo passes_all, failures e details."
+    )
+    user = f"""Topic: {topic_id}
+Option pt-BR: "{text_pt}"
+Option en-US: "{text_en}"
+Weight: {weight}
+
+Checklist:
+1. Sem nomes de candidatos/partidos
+2. Sem detalhes biográficos de cargo
+3. Não é descrição de evento jornalístico
+4. É posição ideológica em primeira pessoa
+5. Português com diacríticos adequados
+6. Tamanho de 15 a 80 palavras em pt-BR
+7. Tradução en-US é consistente com pt-BR
+8. Direção do peso é coerente com o texto
+
+Return JSON:
+{{
+  "passes_all": true|false,
+  "failures": ["1", "4"],
+  "details": "explicacao curta"
+}}"""
+    response = _call_with_fallback_for_task(
+        system=system,
+        user=user,
+        max_tokens=250,
+        task="quiz_validate",
+    )
+    try:
+        parsed = _parse_json_dict(response["content"])
+        passes_all = bool(parsed.get("passes_all"))
+        failures = _to_clean_string_list(parsed.get("failures"))
+        details = _normalize_optional_text(parsed.get("details")) or ""
+        return {
+            "passes_all": passes_all,
+            "failures": failures,
+            "details": details,
+            "_ai_provider": response["provider"],
+            "_ai_model": response["model"],
+        }
+    except (json.JSONDecodeError, ValueError, TypeError) as exc:
+        logger.warning("[AI] validate_quiz_option_quality parse failure: %s", exc)
+        return {
+            "passes_all": False,
+            "failures": ["parse_error"],
+            "details": "Validator response could not be parsed.",
+            "_ai_provider": response["provider"],
+            "_ai_model": response["model"],
+            "_parse_error": True,
+        }
+
+
 __all__ = [
     "NVIDIA_MODELS",
     "USAGE_FILE",
@@ -805,4 +1190,7 @@ __all__ = [
     "call_with_fallback",
     "summarize_article",
     "extract_candidate_position",
+    "extract_candidate_topic_position",
+    "generate_quiz_topic_options",
+    "validate_quiz_option_quality",
 ]

@@ -6,9 +6,22 @@
   "type": "object",
   "required": ["generated_at", "ordered_topics", "topics"],
   "properties": {
+    "schema_version": {
+      "type": "string",
+      "description": "Versao do schema do quiz (ex: 2.0.0)."
+    },
     "generated_at": {
       "type": "string",
       "format": "date-time"
+    },
+    "knowledge_base_version": {
+      "type": "string",
+      "format": "date-time",
+      "description": "Timestamp de versao do candidates_positions usado para gerar o quiz."
+    },
+    "generator_model": {
+      "type": "string",
+      "description": "Modelo usado para gerar opcoes de quiz."
     },
     "ordered_topics": {
       "type": "array",
@@ -44,6 +57,24 @@
           "type": "string",
           "description": "Pergunta do quiz em ingles."
         },
+        "topic_label_pt": {
+          "type": "string",
+          "description": "Rotulo de topico em portugues."
+        },
+        "topic_label_en": {
+          "type": "string",
+          "description": "Rotulo de topico em ingles."
+        },
+        "generation_quality": {
+          "type": "object",
+          "description": "Metadados de validacao de qualidade da geracao.",
+          "properties": {
+            "validated": { "type": "boolean" },
+            "validator_model": { "type": "string" },
+            "validation_date": { "type": "string", "format": "date-time" }
+          },
+          "additionalProperties": false
+        },
         "options": {
           "type": "array",
           "items": {
@@ -74,13 +105,18 @@
         },
         "weight": {
           "type": "integer",
-          "minimum": -2,
-          "maximum": 2,
-          "description": "Peso da posicao no espectro: -2 contra, 0 neutro, +2 favor."
+          "minimum": -3,
+          "maximum": 3,
+          "description": "Peso da posicao no espectro: -3 contra forte, 0 neutro, +3 favor forte."
         },
         "candidate_slug": {
           "type": "string",
           "description": "Slug do candidato cuja posicao esta opcao representa. NUNCA exibido na UI durante perguntas."
+        },
+        "position_type": {
+          "type": "string",
+          "enum": ["confirmed", "inferred"],
+          "description": "Indica se a posicao foi explicitamente declarada (confirmed) ou inferida (inferred)."
         },
         "source_pt": {
           "type": "string",
@@ -90,10 +126,20 @@
           "type": "string",
           "description": "Fonte da declaracao em ingles."
         },
+        "source_url": {
+          "type": ["string", "null"],
+          "format": "uri",
+          "description": "URL primaria da fonte da posicao."
+        },
+        "source_date": {
+          "type": ["string", "null"],
+          "format": "date",
+          "description": "Data da fonte da posicao (YYYY-MM-DD)."
+        },
         "confidence": {
           "type": "string",
-          "enum": ["high", "medium"],
-          "description": "Apenas posicoes high/medium sao publicadas no quiz."
+          "enum": ["high", "medium", "low"],
+          "description": "Nivel de confianca atribuido a posicao."
         }
       }
     }
