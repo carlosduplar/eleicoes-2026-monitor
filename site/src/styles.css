@@ -214,6 +214,12 @@ p {
   gap: 0.5rem;
   margin-bottom: 1rem;
   overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+  scrollbar-width: none;
+}
+
+.source-filters::-webkit-scrollbar {
+  display: none;
 }
 
 .source-filter-button {
@@ -1838,14 +1844,29 @@ p {
   }
 }
 
-/* Hide desktop nav on mobile, show bottom nav */
+/* Show minimal mobile header (logo + lang switcher); hide nav links (they're in bottom nav) */
 @media (max-width: 768px) {
-  .top-nav {
+  .top-nav-links {
     display: none;
   }
 
+  .top-nav-inner {
+    grid-template-columns: auto auto;
+    justify-content: space-between;
+    padding: 0.75rem 0;
+    gap: 0;
+  }
+
   .main-content {
-    padding-bottom: 72px;
+    padding-bottom: calc(72px + env(safe-area-inset-bottom));
+  }
+
+  .home-sidebar {
+    display: none;
+  }
+
+  .site-footer {
+    padding-bottom: calc(1.25rem + 72px + env(safe-area-inset-bottom));
   }
 }
 
