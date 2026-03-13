@@ -125,16 +125,6 @@ def _provider_chain_for_task(task: str) -> list[ProviderConfig]:
     return [
         *[
             {
-                "name": "nvidia",
-                "base_url": "https://integrate.api.nvidia.com/v1",
-                "key_env": "NVIDIA_API_KEY",
-                "model": model,
-                "paid": False,
-            }
-            for model in nvidia_all
-        ],
-        *[
-            {
                 "name": "ollama",
                 "base_url": "https://ollama.com/v1",
                 "key_env": "OLLAMA_API_KEY",
@@ -143,6 +133,16 @@ def _provider_chain_for_task(task: str) -> list[ProviderConfig]:
             }
             for model in OLLAMA_MODELS
         ],
+        *[
+            {
+                "name": "nvidia",
+                "base_url": "https://integrate.api.nvidia.com/v1",
+                "key_env": "NVIDIA_API_KEY",
+                "model": model,
+                "paid": False,
+            }
+            for model in nvidia_all
+        ],        
         {
             "name": "vertex",
             "base_url": "VERTEX_BASE_URL",
