@@ -60,6 +60,10 @@ SOURCES_FILE = DATA_DIR / "sources.json"
 POLLS_FILE = DATA_DIR / "polls.json"
 PIPELINE_ERRORS_FILE = DATA_DIR / "pipeline_errors.json"
 DEFAULT_SCHEMA_PATH = "../docs/schemas/polls.schema.json"
+
+API_KEY_PATTERN = re.compile(
+    r"(key|api_key|apikey|devKey)=[A-Za-z0-9_-]{20,}", re.IGNORECASE
+)
 INSTITUTE_ENUM = {
     "Datafolha",
     "Quaest",
@@ -105,7 +109,12 @@ BR_DATE_PATTERN = re.compile(r"\b(\d{1,2})[-/](\d{1,2})[-/](20\d{2})\b")
 
 
 def utc_now_iso() -> str:
-    return datetime.now(timezone.utc).replace(microsecond=0).isoformat().replace("+00:00", "Z")
+    return (
+        datetime.now(timezone.utc)
+        .replace(microsecond=0)
+        .isoformat()
+        .replace("+00:00", "Z")
+    )
 
 
 def build_poll_id(institute: str, date_yyyy_mm_dd: str) -> str:
@@ -159,7 +168,9 @@ def load_polls_document() -> PollsDocument:
         polls = payload.get("polls", [])
         if isinstance(polls, list):
             safe_polls = [item for item in polls if isinstance(item, dict)]
-            return PollsDocument(payload=payload, polls=safe_polls, uses_wrapped_shape=True)
+            return PollsDocument(
+                payload=payload, polls=safe_polls, uses_wrapped_shape=True
+            )
 
     raise ValueError(f"Unsupported polls structure in {POLLS_FILE}")
 
@@ -178,7 +189,9 @@ def save_polls_document(document: PollsDocument) -> None:
         serializable: object = payload
     else:
         serializable = document.polls
-    POLLS_FILE.write_text(json.dumps(serializable, indent=2, ensure_ascii=False) + "\n", encoding="utf-8")
+    POLLS_FILE.write_text(
+        json.dumps(serializable, indent=2, ensure_ascii=False) + "\n", encoding="utf-8"
+    )
 
 
 def parse_poll_date(raw_text: str) -> str | None:
@@ -220,7 +233,11 @@ def parse_sample_size(raw_text: str) -> int | None:
 
 
 def parse_margin_of_error(raw_text: str) -> float | None:
-    match = re.search(r"(?:margem de erro|erro)[^0-9]{0,20}(\d{1,2}(?:[\,\.]\d+)?)\s*(?:p\.?p\.?|%)?", raw_text, re.IGNORECASE)
+    match = re.search(
+        r"(?:margem de erro|erro)[^0-9]{0,20}(\d{1,2}(?:[\,\.]\d+)?)\s*(?:p\.?p\.?|%)?",
+        raw_text,
+        re.IGNORECASE,
+    )
     if not match:
         return None
     try:
@@ -268,8 +285,15 @@ def _canonical_candidate_name(slug: str) -> str:
     return slug.replace("-", " ").title()
 
 
-def deduplicate_by_id(existing: list[PollItem], incoming: list[PollItem]) -> tuple[list[PollItem], int]:
-    seen = {item_id for item in existing for item_id in [item.get("id")] if isinstance(item_id, str)}
+def deduplicate_by_id(
+    existing: list[PollItem], incoming: list[PollItem]
+) -> tuple[list[PollItem], int]:
+    seen = {
+        item_id
+        for item in existing
+        for item_id in [item.get("id")]
+        if isinstance(item_id, str)
+    }
     merged = list(existing)
     added = 0
     for item in incoming:
@@ -299,6 +323,7 @@ def _load_pipeline_errors() -> dict[str, Any]:
 
 
 def append_pipeline_error(*, institute: str, source_url: str, message: str) -> None:
+    sanitized = API_KEY_PATTERN.sub(r"\1=[REDACTED]", message)
     payload = _load_pipeline_errors()
     payload["errors"].append(
         {
@@ -307,12 +332,14 @@ def append_pipeline_error(*, institute: str, source_url: str, message: str) -> N
             "script": "collect_polls.py",
             "institute": institute,
             "source_url": source_url,
-            "message": message,
+            "message": sanitized,
         }
     )
     payload["last_checked"] = utc_now_iso()
     PIPELINE_ERRORS_FILE.parent.mkdir(parents=True, exist_ok=True)
-    PIPELINE_ERRORS_FILE.write_text(json.dumps(payload, indent=2, ensure_ascii=False) + "\n", encoding="utf-8")
+    PIPELINE_ERRORS_FILE.write_text(
+        json.dumps(payload, indent=2, ensure_ascii=False) + "\n", encoding="utf-8"
+    )
 
 
 def _coerce_percentage(value: Any) -> float | None:
@@ -330,7 +357,9 @@ def _coerce_percentage(value: Any) -> float | None:
     return None
 
 
-def _extract_result_from_mapping(candidate_name: Any, percentage: Any) -> PollResultItem | None:
+def _extract_result_from_mapping(
+    candidate_name: Any, percentage: Any
+) -> PollResultItem | None:
     if not isinstance(candidate_name, str):
         return None
     slug = canonical_candidate_slug(candidate_name)
@@ -348,8 +377,15 @@ def _extract_result_from_mapping(candidate_name: Any, percentage: Any) -> PollRe
 
 def _collect_jsonld_results(node: Any, output: dict[str, PollResultItem]) -> None:
     if isinstance(node, dict):
-        candidate = node.get("candidate") or node.get("name") or node.get("candidate_name")
-        percentage = node.get("percentage") or node.get("percent") or node.get("value") or node.get("votos")
+        candidate = (
+            node.get("candidate") or node.get("name") or node.get("candidate_name")
+        )
+        percentage = (
+            node.get("percentage")
+            or node.get("percent")
+            or node.get("value")
+            or node.get("votos")
+        )
         result = _extract_result_from_mapping(candidate, percentage)
         if result:
             output[result["candidate_slug"]] = result
@@ -408,11 +444,15 @@ async def extract_poll_payload(page: Page, source: PollSource) -> PollItem | Non
         logger.warning("Skipping unsupported institute name: %s", institute)
         return None
 
-    page_text = await page.evaluate("() => document.body ? document.body.innerText : ''")
+    page_text = await page.evaluate(
+        "() => document.body ? document.body.innerText : ''"
+    )
     if not isinstance(page_text, str):
         page_text = ""
 
-    date_text = parse_poll_date(page_text) or datetime.now(timezone.utc).strftime("%Y-%m-%d")
+    date_text = parse_poll_date(page_text) or datetime.now(timezone.utc).strftime(
+        "%Y-%m-%d"
+    )
     published_at = f"{date_text}T00:00:00Z"
     poll_type = infer_poll_type(page_text)
     collected_at = utc_now_iso()
@@ -441,7 +481,9 @@ async def extract_poll_payload(page: Page, source: PollSource) -> PollItem | Non
     if margin_of_error is not None:
         poll["margin_of_error"] = margin_of_error
 
-    confidence_match = re.search(r"(?:confianca|confidence)[^0-9]{0,12}(\d{2,3})\s*%", page_text, re.IGNORECASE)
+    confidence_match = re.search(
+        r"(?:confianca|confidence)[^0-9]{0,12}(\d{2,3})\s*%", page_text, re.IGNORECASE
+    )
     if confidence_match:
         confidence_level = float(confidence_match.group(1))
         if 0 <= confidence_level <= 100:
@@ -459,11 +501,15 @@ async def extract_poll_payload(page: Page, source: PollSource) -> PollItem | Non
     return poll
 
 
-async def scrape_source(browser: Browser, source: PollSource, timeout_ms: int = 30000) -> PollItem | None:
+async def scrape_source(
+    browser: Browser, source: PollSource, timeout_ms: int = 30000
+) -> PollItem | None:
     page = await browser.new_page()
     try:
         page.set_default_timeout(timeout_ms)
-        await page.goto(source["url"], timeout=timeout_ms, wait_until="domcontentloaded")
+        await page.goto(
+            source["url"], timeout=timeout_ms, wait_until="domcontentloaded"
+        )
         return await extract_poll_payload(page, source)
     finally:
         await page.close()
@@ -483,7 +529,11 @@ async def collect_polls_async() -> tuple[int, int, int]:
                     poll = await scrape_source(browser, source, timeout_ms=30000)
                 except Exception as exc:
                     errors += 1
-                    append_pipeline_error(institute=source["name"], source_url=source["url"], message=str(exc))
+                    append_pipeline_error(
+                        institute=source["name"],
+                        source_url=source["url"],
+                        message=str(exc),
+                    )
                     continue
                 if poll is not None:
                     incoming.append(poll)
@@ -504,7 +554,9 @@ def collect_polls() -> tuple[int, int, int]:
 def main() -> None:
     logging.basicConfig(level=logging.INFO, format="%(levelname)s: %(message)s")
     new_count, source_count, error_count = collect_polls()
-    print(f"Collected {new_count} new polls from {source_count} institutes ({error_count} errors)")
+    print(
+        f"Collected {new_count} new polls from {source_count} institutes ({error_count} errors)"
+    )
 
 
 if __name__ == "__main__":

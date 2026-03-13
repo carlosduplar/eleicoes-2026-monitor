@@ -4,6 +4,7 @@ from __future__ import annotations
 
 import json
 import logging
+import re
 import time
 from collections import Counter, defaultdict
 from datetime import datetime, timedelta, timezone
@@ -24,6 +25,10 @@ CURATED_FEED_FILE = DATA_DIR / "curated_feed.json"
 WEEKLY_BRIEFING_FILE = DATA_DIR / "weekly_briefing.json"
 PIPELINE_ERRORS_FILE = DATA_DIR / "pipeline_errors.json"
 LAST_RUN_FILE = DATA_DIR / ".curate_last_run"
+
+API_KEY_PATTERN = re.compile(
+    r"(key|api_key|apikey|devKey)=[A-Za-z0-9_-]{20,}", re.IGNORECASE
+)
 
 MIN_INTERVAL_SECONDS = 90 * 60
 RECENT_WINDOW_HOURS = 24
@@ -100,7 +105,9 @@ def _load_articles_document() -> tuple[list[dict[str, Any]], dict[str, Any] | No
     raise ValueError(f"Unsupported articles structure in {ARTICLES_FILE}")
 
 
-def _save_articles_document(articles: list[dict[str, Any]], wrapper: dict[str, Any] | None) -> None:
+def _save_articles_document(
+    articles: list[dict[str, Any]], wrapper: dict[str, Any] | None
+) -> None:
     ARTICLES_FILE.parent.mkdir(parents=True, exist_ok=True)
     if wrapper is None:
         payload: object = articles
@@ -109,12 +116,16 @@ def _save_articles_document(articles: list[dict[str, Any]], wrapper: dict[str, A
         wrapper["last_updated"] = _utc_iso()
         wrapper["total_count"] = len(articles)
         payload = wrapper
-    ARTICLES_FILE.write_text(json.dumps(payload, indent=2, ensure_ascii=False) + "\n", encoding="utf-8")
+    ARTICLES_FILE.write_text(
+        json.dumps(payload, indent=2, ensure_ascii=False) + "\n", encoding="utf-8"
+    )
 
 
 def _write_json(path: Path, payload: dict[str, Any]) -> None:
     path.parent.mkdir(parents=True, exist_ok=True)
-    path.write_text(json.dumps(payload, indent=2, ensure_ascii=False) + "\n", encoding="utf-8")
+    path.write_text(
+        json.dumps(payload, indent=2, ensure_ascii=False) + "\n", encoding="utf-8"
+    )
 
 
 def _load_pipeline_errors() -> dict[str, Any]:
@@ -132,6 +143,7 @@ def _load_pipeline_errors() -> dict[str, Any]:
 
 
 def _append_pipeline_error(message: str) -> None:
+    sanitized = API_KEY_PATTERN.sub(r"\1=[REDACTED]", message)
     payload = _load_pipeline_errors()
     payload["errors"].append(
         {
@@ -140,12 +152,14 @@ def _append_pipeline_error(message: str) -> None:
             "script": "curate.py",
             "article_id": None,
             "provider": None,
-            "message": message,
+            "message": sanitized,
         }
     )
     payload["last_checked"] = _utc_iso()
     PIPELINE_ERRORS_FILE.parent.mkdir(parents=True, exist_ok=True)
-    PIPELINE_ERRORS_FILE.write_text(json.dumps(payload, indent=2, ensure_ascii=False) + "\n", encoding="utf-8")
+    PIPELINE_ERRORS_FILE.write_text(
+        json.dumps(payload, indent=2, ensure_ascii=False) + "\n", encoding="utf-8"
+    )
 
 
 def _clamp01(value: float) -> float:
@@ -181,7 +195,12 @@ def _summaries_complete(article: dict[str, Any]) -> bool:
         return False
     pt = summaries.get("pt-BR")
     en = summaries.get("en-US")
-    return isinstance(pt, str) and pt.strip() != "" and isinstance(en, str) and en.strip() != ""
+    return (
+        isinstance(pt, str)
+        and pt.strip() != ""
+        and isinstance(en, str)
+        and en.strip() != ""
+    )
 
 
 def _has_editor_validation_history(article: dict[str, Any]) -> bool:
@@ -206,10 +225,16 @@ def _compute_prominence(article: dict[str, Any], now: datetime) -> float:
 
     status = article.get("status")
     default_confidence = 0.65 if status in {"validated", "curated"} else 0.4
-    confidence = _clamp01(_safe_float(article.get("confidence_score"), default_confidence))
+    confidence = _clamp01(
+        _safe_float(article.get("confidence_score"), default_confidence)
+    )
 
     raw_relevance = _safe_float(article.get("relevance_score"), 0.0)
-    if raw_relevance <= 0.0 and status in {"validated", "curated"} and _summaries_complete(article):
+    if (
+        raw_relevance <= 0.0
+        and status in {"validated", "curated"}
+        and _summaries_complete(article)
+    ):
         relevance = 0.65
     else:
         relevance = _clamp01(raw_relevance)
@@ -235,14 +260,19 @@ def _compute_prominence(article: dict[str, Any], now: datetime) -> float:
         + topic_signal * 0.06
         + sentiment_signal * 0.06
     )
-    if isinstance(article.get("narrative_cluster_id"), str) and article["narrative_cluster_id"].strip():
+    if (
+        isinstance(article.get("narrative_cluster_id"), str)
+        and article["narrative_cluster_id"].strip()
+    ):
         score += 0.04
     if _has_editor_validation_history(article):
         score += 0.03
     return round(_clamp01(score), 4)
 
 
-def _append_curation_history(article: dict[str, Any], changed_fields: list[str]) -> None:
+def _append_curation_history(
+    article: dict[str, Any], changed_fields: list[str]
+) -> None:
     history = article.get("edit_history")
     if not isinstance(history, list):
         history = []
@@ -305,9 +335,15 @@ def _is_recent(article: dict[str, Any], now: datetime, *, hours: int) -> bool:
     return timestamp >= now - timedelta(hours=hours)
 
 
-def _build_curated_feed(articles: list[dict[str, Any]], now: datetime) -> dict[str, Any]:
+def _build_curated_feed(
+    articles: list[dict[str, Any]], now: datetime
+) -> dict[str, Any]:
     eligible = [a for a in articles if a.get("status") in {"validated", "curated"}]
-    recent = [article for article in eligible if _is_recent(article, now, hours=RECENT_WINDOW_HOURS)]
+    recent = [
+        article
+        for article in eligible
+        if _is_recent(article, now, hours=RECENT_WINDOW_HOURS)
+    ]
     source = recent if recent else eligible
     source.sort(key=_sort_key, reverse=True)
     selected = source[:MAX_FEED_ITEMS]
@@ -323,7 +359,9 @@ def _build_curated_feed(articles: list[dict[str, Any]], now: datetime) -> dict[s
     }
 
 
-def _build_editor_quality_audit(weekly_articles: list[dict[str, Any]]) -> dict[str, Any]:
+def _build_editor_quality_audit(
+    weekly_articles: list[dict[str, Any]],
+) -> dict[str, Any]:
     tier_counts: Counter[str] = Counter()
     action_counts: Counter[str] = Counter()
     editor_change_counts: Counter[str] = Counter()
@@ -363,19 +401,24 @@ def _build_editor_quality_audit(weekly_articles: list[dict[str, Any]]) -> dict[s
     return {
         "history_entries_by_tier": dict(sorted(tier_counts.items())),
         "history_entries_by_action": dict(sorted(action_counts.items())),
-        "editor_changed_fields": dict(sorted(editor_change_counts.items(), key=lambda item: (-item[1], item[0]))),
+        "editor_changed_fields": dict(
+            sorted(editor_change_counts.items(), key=lambda item: (-item[1], item[0]))
+        ),
         "low_confidence_articles": low_confidence,
         "possible_foca_misclassification": foca_misclassified,
     }
 
 
-def _build_weekly_briefing(articles: list[dict[str, Any]], now: datetime) -> dict[str, Any]:
+def _build_weekly_briefing(
+    articles: list[dict[str, Any]], now: datetime
+) -> dict[str, Any]:
     week_start = now - timedelta(days=WEEK_WINDOW_DAYS)
     weekly_articles = [
         article
         for article in articles
         if article.get("status") in {"validated", "curated"}
-        and (_article_timestamp(article) or datetime.min.replace(tzinfo=timezone.utc)) >= week_start
+        and (_article_timestamp(article) or datetime.min.replace(tzinfo=timezone.utc))
+        >= week_start
     ]
 
     topic_count: Counter[str] = Counter()
@@ -390,7 +433,9 @@ def _build_weekly_briefing(articles: list[dict[str, Any]], now: datetime) -> dic
     for article in weekly_articles:
         prominence = _safe_float(article.get("prominence_score"), 0.0)
         sentiment = _safe_float(article.get("sentiment_score"), 0.0)
-        timestamp = _article_timestamp(article) or datetime.min.replace(tzinfo=timezone.utc)
+        timestamp = _article_timestamp(article) or datetime.min.replace(
+            tzinfo=timezone.utc
+        )
 
         for topic in _string_list(article.get("topics")):
             topic_count[topic] += 1
@@ -436,7 +481,9 @@ def _build_weekly_briefing(articles: list[dict[str, Any]], now: datetime) -> dic
             }
         )
 
-    top_articles_source = sorted(weekly_articles, key=_sort_key, reverse=True)[:MAX_BRIEFING_TOP_ARTICLES]
+    top_articles_source = sorted(weekly_articles, key=_sort_key, reverse=True)[
+        :MAX_BRIEFING_TOP_ARTICLES
+    ]
     top_articles = [
         {
             "id": article.get("id"),
@@ -444,14 +491,20 @@ def _build_weekly_briefing(articles: list[dict[str, Any]], now: datetime) -> dic
             "url": article.get("url"),
             "source": article.get("source"),
             "published_at": article.get("published_at"),
-            "prominence_score": round(_safe_float(article.get("prominence_score"), 0.0), 4),
+            "prominence_score": round(
+                _safe_float(article.get("prominence_score"), 0.0), 4
+            ),
             "status": article.get("status"),
         }
         for article in top_articles_source
     ]
 
     top_topic = trending_topics[0]["topic"] if trending_topics else "sem_dados"
-    top_candidate = candidate_highlights[0]["candidate_slug"] if candidate_highlights else "sem_dados"
+    top_candidate = (
+        candidate_highlights[0]["candidate_slug"]
+        if candidate_highlights
+        else "sem_dados"
+    )
     summary_pt = (
         f"Resumo semanal: {len(weekly_articles)} artigos validados/curados. "
         f"Tema com maior cobertura: {top_topic}. Candidato mais citado: {top_candidate}."

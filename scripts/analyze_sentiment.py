@@ -4,6 +4,7 @@ from __future__ import annotations
 
 import json
 import logging
+import re
 import unicodedata
 from datetime import datetime, timezone
 from pathlib import Path
@@ -27,6 +28,10 @@ ARTICLES_FILE = DATA_DIR / "articles.json"
 SENTIMENT_FILE = DATA_DIR / "sentiment.json"
 PIPELINE_ERRORS_FILE = DATA_DIR / "pipeline_errors.json"
 SENTIMENT_SCHEMA_FILE = ROOT_DIR / "docs" / "schemas" / "sentiment.schema.json"
+
+API_KEY_PATTERN = re.compile(
+    r"(key|api_key|apikey|devKey)=[A-Za-z0-9_-]{20,}", re.IGNORECASE
+)
 
 DISCLAIMER_PT = "Análise algorítmica do tom das notícias coletadas. Não representa pesquisa de opinião."
 DISCLAIMER_EN = (
@@ -216,6 +221,7 @@ def _load_pipeline_errors() -> dict[str, Any]:
 def _append_pipeline_error(
     *, message: str, article_id: str | None, provider: str | None
 ) -> None:
+    sanitized = API_KEY_PATTERN.sub(r"\1=[REDACTED]", message)
     payload = _load_pipeline_errors()
     payload["errors"].append(
         {
@@ -224,7 +230,7 @@ def _append_pipeline_error(
             "script": "analyze_sentiment.py",
             "article_id": article_id,
             "provider": provider,
-            "message": message,
+            "message": sanitized,
         }
     )
     payload["last_checked"] = utc_now_iso()
@@ -520,7 +526,8 @@ def _accumulate_article_sentiment(
     source_category = article.get("source_category")
     normalized_source = (
         source_category
-        if isinstance(source_category, str) and source_category in VALID_SOURCE_CATEGORIES
+        if isinstance(source_category, str)
+        and source_category in VALID_SOURCE_CATEGORIES
         else "mainstream"
     )
 

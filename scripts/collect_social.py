@@ -5,6 +5,7 @@ from __future__ import annotations
 import json
 import logging
 import os
+import re
 from dataclasses import dataclass
 from datetime import datetime, timezone
 from hashlib import sha256
@@ -26,6 +27,10 @@ DEFAULT_SCHEMA_PATH = "../docs/schemas/articles.schema.json"
 
 CANDIDATE_SEARCH_TERMS: dict[str, str] = {}
 
+API_KEY_PATTERN = re.compile(
+    r"(key|api_key|apikey|devKey)=[A-Za-z0-9_-]{20,}", re.IGNORECASE
+)
+
 
 @dataclass
 class ArticlesDocument:
@@ -35,7 +40,12 @@ class ArticlesDocument:
 
 
 def utc_now_iso() -> str:
-    return datetime.now(timezone.utc).replace(microsecond=0).isoformat().replace("+00:00", "Z")
+    return (
+        datetime.now(timezone.utc)
+        .replace(microsecond=0)
+        .isoformat()
+        .replace("+00:00", "Z")
+    )
 
 
 def build_article_id(url: str) -> str:
@@ -48,7 +58,9 @@ def _load_json(path: Path) -> Any:
 
 def _load_articles_document() -> ArticlesDocument:
     if not ARTICLES_FILE.exists():
-        return ArticlesDocument(articles=[], wrapped=True, schema_path=DEFAULT_SCHEMA_PATH)
+        return ArticlesDocument(
+            articles=[], wrapped=True, schema_path=DEFAULT_SCHEMA_PATH
+        )
 
     payload = _load_json(ARTICLES_FILE)
     if isinstance(payload, list):
@@ -82,7 +94,9 @@ def _save_articles_document(document: ArticlesDocument) -> None:
         }
     else:
         payload = document.articles
-    ARTICLES_FILE.write_text(json.dumps(payload, indent=2, ensure_ascii=False) + "\n", encoding="utf-8")
+    ARTICLES_FILE.write_text(
+        json.dumps(payload, indent=2, ensure_ascii=False) + "\n", encoding="utf-8"
+    )
 
 
 def _load_pipeline_errors() -> dict[str, Any]:
@@ -101,6 +115,7 @@ def _load_pipeline_errors() -> dict[str, Any]:
 
 def _append_pipeline_error(*, source: str, message: str) -> None:
     """tier='foca', script='collect_social.py'."""
+    sanitized = API_KEY_PATTERN.sub(r"\1=[REDACTED]", message)
     payload = _load_pipeline_errors()
     payload["errors"].append(
         {
@@ -108,7 +123,7 @@ def _append_pipeline_error(*, source: str, message: str) -> None:
             "tier": "foca",
             "script": "collect_social.py",
             "source": source,
-            "message": message,
+            "message": sanitized,
         }
     )
     payload["last_checked"] = utc_now_iso()
@@ -140,12 +155,19 @@ def _load_candidate_names() -> dict[str, str]:
             continue
         slug = candidate.get("slug")
         name = candidate.get("name")
-        if isinstance(slug, str) and slug.strip() and isinstance(name, str) and name.strip():
+        if (
+            isinstance(slug, str)
+            and slug.strip()
+            and isinstance(name, str)
+            and name.strip()
+        ):
             names[slug.strip()] = name.strip()
     return names
 
 
-def _infer_candidates_from_text(text: str, candidate_names: dict[str, str]) -> list[str]:
+def _infer_candidates_from_text(
+    text: str, candidate_names: dict[str, str]
+) -> list[str]:
     """Match candidate names/slugs in text, return list of slugs."""
     if not text.strip():
         return []
@@ -161,7 +183,12 @@ def _infer_candidates_from_text(text: str, candidate_names: dict[str, str]) -> l
 
 def _to_iso_utc(value: Any) -> str:
     if isinstance(value, datetime):
-        return value.astimezone(timezone.utc).replace(microsecond=0).isoformat().replace("+00:00", "Z")
+        return (
+            value.astimezone(timezone.utc)
+            .replace(microsecond=0)
+            .isoformat()
+            .replace("+00:00", "Z")
+        )
     if isinstance(value, str) and value.strip():
         return value.strip()
     return utc_now_iso()
@@ -180,7 +207,7 @@ def _collect_twitter(
     new_articles: list[dict[str, Any]] = []
 
     for slug, name in candidate_names.items():
-        query = f"\"{name}\" 2026 eleições"
+        query = f'"{name}" 2026 eleições'
         response = client.search_recent_tweets(
             query=query,
             max_results=10,
@@ -192,7 +219,11 @@ def _collect_twitter(
         for tweet in response.data:
             tweet_id = getattr(tweet, "id", None)
             tweet_text = getattr(tweet, "text", "")
-            if tweet_id is None or not isinstance(tweet_text, str) or not tweet_text.strip():
+            if (
+                tweet_id is None
+                or not isinstance(tweet_text, str)
+                or not tweet_text.strip()
+            ):
                 continue
 
             tweet_url = f"https://twitter.com/i/web/status/{tweet_id}"
@@ -241,7 +272,7 @@ def _collect_youtube(
     new_articles: list[dict[str, Any]] = []
 
     for slug, name in candidate_names.items():
-        query = f"\"{name}\" eleições 2026"
+        query = f'"{name}" eleições 2026'
         response = (
             youtube.search()
             .list(
@@ -308,7 +339,9 @@ def collect_social() -> tuple[int, int]:
     has_twitter = bool(os.environ.get("TWITTER_BEARER_TOKEN", "").strip())
     has_youtube = bool(os.environ.get("YOUTUBE_API_KEY", "").strip())
     if not has_twitter and not has_youtube:
-        print("Social: 0 new articles (0 errors) - TWITTER_BEARER_TOKEN/YOUTUBE_API_KEY not set")
+        print(
+            "Social: 0 new articles (0 errors) - TWITTER_BEARER_TOKEN/YOUTUBE_API_KEY not set"
+        )
         return 0, 0
 
     document = _load_articles_document()
