@@ -211,6 +211,10 @@ p {
   gap: 1.5rem;
 }
 
+.home-grid > * {
+  min-width: 0;
+}
+
 .source-filters {
   display: flex;
   gap: 0.5rem;
@@ -348,6 +352,8 @@ p {
 .feed-title-link {
   color: var(--text-primary);
   text-decoration: none;
+  overflow-wrap: break-word;
+  word-break: break-word;
 }
 
 .feed-title-link:hover {
