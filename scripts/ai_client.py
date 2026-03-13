@@ -147,7 +147,7 @@ def _provider_chain_for_task(task: str) -> list[ProviderConfig]:
             "name": "vertex",
             "base_url": "VERTEX_BASE_URL",
             "key_env": "VERTEX_ACCESS_TOKEN",
-            "model": "gemini-1.5-flash",
+            "model": "gemini-3-flash-preview",
             "paid": True,
         },
         {
