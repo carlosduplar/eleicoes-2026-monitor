@@ -185,12 +185,16 @@ def test_summarize_honors_editor_feedback_rules(
 
     monkeypatch.setattr(summarize.ai_client, "summarize_article", should_not_be_called)
     summarized, errors, skipped = summarize.summarize_articles()
-    article = _read_articles(tmp_data_paths["articles"])[0]
+    articles = _read_articles(tmp_data_paths["articles"])
+    feedback_payload = json.loads(
+        tmp_data_paths["editor_feedback"].read_text(encoding="utf-8")
+    )
 
     assert summarized == 0
     assert errors == 0
     assert skipped == 0
-    assert article["status"] == "irrelevant"
+    assert articles == []
+    assert "abababababababab" in feedback_payload["irrelevant_article_ids"]
 
 
 def test_summarize_handles_ai_failure(tmp_data_paths: dict[str, Path], monkeypatch: pytest.MonkeyPatch) -> None:
