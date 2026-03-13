@@ -30,6 +30,101 @@ def isolate_usage_file(tmp_path, monkeypatch: pytest.MonkeyPatch) -> None:
     monkeypatch.setattr(ai_client, "USAGE_FILE", tmp_path / "ai_usage.json")
 
 
+def test_provider_chain_nvidia_primary_ollama_fallback() -> None:
+    chain = ai_client._provider_chain_for_task("multilingual")
+    provider_names = [str(item["name"]) for item in chain]
+    provider_models = [(str(item["name"]), str(item["model"])) for item in chain]
+
+    # NVIDIA must come first
+    assert provider_names[0] == "nvidia"
+    assert provider_models[0] == ("nvidia", "nvidia/nemotron-3-super-120b-a12b")
+
+    # Ollama Nemotron must be the first Ollama entry (1st fallback)
+    ollama_models = [model for name, model in provider_models if name == "ollama"]
+    assert ollama_models[0] == "nemotron-3-super:cloud"
+    # Ollama MiniMax must be the second Ollama entry (2nd fallback)
+    assert ollama_models[1] == "minimax-m2.5:cloud"
+
+    # OpenRouter must not appear in the chain
+    assert "openrouter" not in provider_names
+
+
+def test_request_completion_openrouter_uses_optional_headers(
+    monkeypatch: pytest.MonkeyPatch,
+) -> None:
+    provider = _provider(
+        "openrouter",
+        "OPENROUTER_API_KEY",
+        "https://openrouter.ai/api/v1",
+        "meta-llama/llama-3.3-70b-instruct:free",
+    )
+    monkeypatch.setenv("OPENROUTER_HTTP_REFERER", "https://example.org/app")
+    monkeypatch.setenv("OPENROUTER_APP_TITLE", "eleicoes-2026-monitor")
+
+    init_calls: list[dict[str, object]] = []
+    completion_calls: list[dict[str, object]] = []
+
+    class _Message:
+        content = '{"ok":true}'
+
+    class _Choice:
+        message = _Message()
+
+    class _Response:
+        choices = [_Choice()]
+
+    class _Completions:
+        def create(self, **kwargs: object) -> _Response:
+            completion_calls.append(dict(kwargs))
+            return _Response()
+
+    class _Chat:
+        completions = _Completions()
+
+    class _Client:
+        chat = _Chat()
+
+    def fake_openai_client(**kwargs: object) -> _Client:
+        init_calls.append(dict(kwargs))
+        return _Client()
+
+    monkeypatch.setattr(ai_client.openai, "OpenAI", fake_openai_client)
+
+    result = ai_client._request_completion(
+        provider=provider,
+        api_key="openrouter-key",
+        system="system",
+        user="user",
+        max_tokens=123,
+    )
+
+    assert result == '{"ok":true}'
+    assert init_calls[0]["default_headers"] == {
+        "HTTP-Referer": "https://example.org/app",
+        "X-Title": "eleicoes-2026-monitor",
+    }
+    assert completion_calls[0]["model"] == "meta-llama/llama-3.3-70b-instruct:free"
+    assert completion_calls[0]["max_tokens"] == 123
+
+
+def test_extract_content_from_object_content_parts() -> None:
+    class _ContentPart:
+        def __init__(self, part_type: str, text: str) -> None:
+            self.type = part_type
+            self.text = text
+
+    class _Message:
+        content = [_ContentPart("thinking", "ignore"), _ContentPart("text", "ok")]
+
+    class _Choice:
+        message = _Message()
+
+    class _Response:
+        choices = [_Choice()]
+
+    assert ai_client._extract_content_from_response(_Response()) == "ok"
+
+
 def test_fallback_first_provider_succeeds(monkeypatch: pytest.MonkeyPatch) -> None:
     chain = [
         _provider("first", "FIRST_KEY", "https://first.example/v1", "model-1"),
