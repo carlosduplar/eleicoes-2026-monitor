@@ -62,7 +62,7 @@ class BenchmarkSummary:
 def load_ai_client():
     """Import ai_client module."""
     sys.path.insert(0, str(Path(__file__).parent))
-    import ai_client
+    from . import ai_client
 
     return (
         ai_client._provider_chain_for_task,
@@ -153,7 +153,7 @@ def get_raw_response(
     }
 
     if provider.get("name") == "nvidia":
-        from ai_client import _THINKING_DISABLE_EXTRA_BODY
+        from .ai_client import _THINKING_DISABLE_EXTRA_BODY
 
         disable_body = _THINKING_DISABLE_EXTRA_BODY.get(provider.get("model", ""))
         if disable_body:

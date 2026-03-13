@@ -10,7 +10,7 @@ from pathlib import Path
 
 import jsonschema
 
-from ai_client import extract_candidate_position
+from .ai_client import extract_candidate_position
 
 logger = logging.getLogger(__name__)
 
@@ -69,67 +69,67 @@ CANDIDATE_NAME_VARIANTS = {
 
 QUESTION_TEMPLATES = {
     "economia": (
-        "Qual deve ser a prioridade na politica economica do governo federal?",
+        "Qual deve ser a prioridade na política econômica do governo federal?",
         "What should be the federal government's top economic policy priority?",
     ),
     "seguranca": (
-        "Qual estrategia deve guiar a politica nacional de seguranca publica?",
+        "Qual estratégia deve guiar a política nacional de segurança pública?",
         "Which strategy should guide national public security policy?",
     ),
     "saude": (
-        "Qual deve ser o papel do Estado no financiamento do sistema de saude publico?",
+        "Qual deve ser o papel do Estado no financiamento do sistema de saúde público?",
         "What should be the State's role in funding the public health system?",
     ),
     "educacao": (
-        "Qual caminho deve orientar os investimentos em educacao no pais?",
+        "Qual caminho deve orientar os investimentos em educação no país?",
         "Which path should guide education investments in the country?",
     ),
     "meio_ambiente": (
-        "Como o Brasil deve equilibrar desenvolvimento economico e protecao ambiental?",
+        "Como o Brasil deve equilibrar desenvolvimento econômico e proteção ambiental?",
         "How should Brazil balance economic development and environmental protection?",
     ),
     "corrupcao": (
-        "Qual medida e mais efetiva para reduzir corrupcao na administracao publica?",
+        "Qual medida é mais efetiva para reduzir corrupção na administração pública?",
         "Which measure is most effective to reduce corruption in public administration?",
     ),
     "armas": (
-        "Como deve ser a politica de acesso e controle de armas no Brasil?",
+        "Como deve ser a política de acesso e controle de armas no Brasil?",
         "How should Brazil regulate firearm access and control?",
     ),
     "privatizacao": (
-        "Qual deve ser o papel de privatizacoes na economia brasileira?",
+        "Qual deve ser o papel de privatizações na economia brasileira?",
         "What role should privatization play in Brazil's economy?",
     ),
     "previdencia": (
-        "Qual direcao deve orientar a politica de previdencia social?",
+        "Qual direção deve orientar a política de previdência social?",
         "What direction should guide social security policy?",
     ),
     "politica_ext": (
-        "Qual postura internacional o Brasil deve priorizar nos proximos anos?",
+        "Qual postura internacional o Brasil deve priorizar nos próximos anos?",
         "Which international posture should Brazil prioritize in the coming years?",
     ),
     "lgbtq": (
-        "Qual deve ser a prioridade das politicas publicas para direitos LGBTQIA+?",
+        "Qual deve ser a prioridade das políticas públicas para direitos LGBTQIA+?",
         "What should be the priority of public policy for LGBTQIA+ rights?",
     ),
     "aborto": (
-        "Como a legislacao sobre aborto deve ser tratada no Brasil?",
+        "Como a legislação sobre aborto deve ser tratada no Brasil?",
         "How should abortion legislation be handled in Brazil?",
     ),
     "indigenas": (
-        "Qual deve ser a prioridade das politicas para povos indigenas?",
+        "Qual deve ser a prioridade das políticas para povos indígenas?",
         "What should be the priority for Indigenous peoples policies?",
     ),
     "impostos": (
-        "Qual abordagem tributaria deve orientar a politica fiscal brasileira?",
+        "Qual abordagem tributária deve orientar a política fiscal brasileira?",
         "Which tax approach should guide Brazilian fiscal policy?",
     ),
     "midia": (
-        "Qual deve ser o papel do Estado na regulacao de midia e plataformas digitais?",
+        "Qual deve ser o papel do Estado na regulação de mídia e plataformas digitais?",
         "What should be the State's role in regulating media and digital platforms?",
     ),
     "eleicoes": (
-        "Qual mudanca deve ser prioridade no sistema eleitoral brasileiro?",
+        "Qual mudança deve ser prioridade no sistema eleitoral brasileiro?",
         "Which change should be prioritized in Brazil's electoral system?",
     ),
 }
@@ -376,7 +376,7 @@ def build_question_text(topic_id: str) -> tuple[str, str]:
 
     topic_label = topic_id.replace("_", " ")
     return (
-        f"Qual sua posicao sobre {topic_label}?",
+        f"Qual sua posição sobre {topic_label}?",
         f"What is your position on {topic_label}?",
     )
 

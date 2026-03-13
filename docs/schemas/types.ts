@@ -52,6 +52,14 @@ export type Stance = 'favor' | 'against' | 'neutral' | 'unclear';
 export type Confidence = 'high' | 'medium' | 'low';
 export type PollType = 'estimulada' | 'espontanea';
 export type PipelineTier = 'foca' | 'editor' | 'editor-chefe';
+export type PositionType = 'confirmed' | 'inferred' | 'unknown';
+export type PositionStance =
+  | 'strongly_favor'
+  | 'favor'
+  | 'neutral'
+  | 'against'
+  | 'strongly_against'
+  | 'unknown';
 
 // --- Articles (data/articles.json) ---
 
@@ -118,22 +126,35 @@ export interface QuizOption {
   id: string; // opt_a, opt_b, etc.
   text_pt: string;
   text_en: string;
-  weight: -2 | -1 | 0 | 1 | 2;
+  weight: -3 | -2 | -1 | 0 | 1 | 2 | 3;
   candidate_slug: CandidateSlug;
+  position_type?: 'confirmed' | 'inferred';
   source_pt?: string;
   source_en?: string;
-  confidence: 'high' | 'medium';
+  source_url?: string | null;
+  source_date?: string | null;
+  confidence: 'high' | 'medium' | 'low';
 }
 
 export interface QuizTopic {
   divergence_score: number; // 0.0-1.0
   question_pt: string;
   question_en: string;
+  topic_label_pt?: string;
+  topic_label_en?: string;
+  generation_quality?: {
+    validated: boolean;
+    validator_model?: string;
+    validation_date?: string;
+  };
   options: QuizOption[];
 }
 
 export interface Quiz {
+  schema_version?: string; // e.g., 2.0.0
   generated_at: string; // ISO 8601
+  knowledge_base_version?: string; // ISO 8601
+  generator_model?: string;
   ordered_topics: TopicId[];
   topics: Record<string, QuizTopic>;
 }
@@ -180,6 +201,50 @@ export interface Candidate {
 
 export interface CandidatesFile {
   candidates: Candidate[];
+}
+
+// --- Candidate Positions (data/candidates_positions.json) ---
+
+export interface PositionSource {
+  type:
+    | 'official_statement'
+    | 'legislation'
+    | 'voting_record'
+    | 'governance_action'
+    | 'party_platform'
+    | 'interview'
+    | 'social_media'
+    | 'news_report';
+  url?: string | null;
+  description_pt: string;
+  description_en?: string | null;
+  date?: string | null; // YYYY-MM-DD
+  article_id?: string | null;
+}
+
+export interface CandidatePosition {
+  position_type: PositionType;
+  stance: PositionStance;
+  summary_pt?: string | null;
+  summary_en?: string | null;
+  key_actions: string[];
+  sources: PositionSource[];
+  last_updated: string; // YYYY-MM-DD
+  editor_notes?: string | null;
+}
+
+export interface TopicPositions {
+  topic_id: TopicId;
+  topic_label_pt: string;
+  topic_label_en: string;
+  candidates: Partial<Record<CandidateSlug, CandidatePosition>>;
+}
+
+export interface CandidatePositionsFile {
+  schema_version: string;
+  updated_at: string; // ISO 8601
+  editors?: string[];
+  topics: Record<string, TopicPositions>;
 }
 
 // --- AI Usage (data/ai_usage.json) ---
