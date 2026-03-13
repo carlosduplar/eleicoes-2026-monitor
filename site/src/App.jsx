@@ -33,7 +33,17 @@ function toMetaLabelFromSlug(value) {
 function AppShell() {
   const { t } = useTranslation('common');
   const { pathname } = useLocation();
-  const normalizedPath = pathname !== '/' ? pathname.replace(/\/+$/, '') : '/';
+
+  // Strip basename if present in pathname (some environments/routers differ in this)
+  const basename = import.meta.env.BASE_URL.replace(/\/+$/, '');
+  const pathWithoutBasename = pathname.startsWith(basename)
+    ? pathname.slice(basename.length)
+    : pathname;
+
+  // Ensure leading slash and no trailing slash
+  const normalizedPath = pathWithoutBasename.startsWith('/')
+    ? pathWithoutBasename.replace(/\/+$/, '') || '/'
+    : `/${pathWithoutBasename}`.replace(/\/+$/, '') || '/';
 
   const pathLabels = {
     '/': t('home.feed_title'),
