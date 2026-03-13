@@ -8,9 +8,9 @@
 
 ## What is this? / O que e isto?
 
-Portal Eleicoes BR 2026 is a bilingual static portal (pt-BR and en-US) that monitors election news, sentiment, polling, and candidate positioning signals for Brazil's 2026 presidential cycle. It combines a Python ingestion pipeline, AI-assisted enrichment, and a React + Vite SSG frontend published to GitHub Pages.
+Portal Eleicoes BR 2026 is a bilingual static portal (pt-BR and en-US) that monitors election news, sentiment, polling, and candidate positioning signals for Brazil's 2026 presidential cycle. It combines a Python ingestion pipeline, AI-assisted enrichment, and a React + Vite SSG frontend published to GitHub Pages. The product is designed as auditable editorial infrastructure: readers can inspect methodology, processing status, sources, and the technical path that produced each public artifact.
 
-O Portal Eleicoes BR 2026 e um portal estatico bilingue (pt-BR e en-US) para monitorar noticias, sentimento, pesquisas e sinais de posicionamento de candidatos na eleicao presidencial de 2026. O projeto combina pipeline Python de ingestao, enriquecimento com IA e frontend React + Vite SSG publicado no GitHub Pages.
+O Portal Eleicoes BR 2026 e um portal estatico bilingue (pt-BR e en-US) para monitorar noticias, sentimento, pesquisas e sinais de posicionamento de candidatos na eleicao presidencial de 2026. O projeto combina pipeline Python de ingestao, enriquecimento com IA e frontend React + Vite SSG publicado no GitHub Pages. O produto foi concebido como infraestrutura editorial auditavel: o publico consegue inspecionar metodologia, status de processamento, fontes e o caminho tecnico que levou cada artefato ao ar.
 
 ## Screenshot
 
@@ -19,18 +19,27 @@ O Portal Eleicoes BR 2026 e um portal estatico bilingue (pt-BR e en-US) para mon
 ## Architecture
 
 ```text
-Sources (RSS, polls, parties, social)
+Sources (21 RSS, 8 party sites, 10 polling institutes, YouTube)
                 |
                 v
       scripts/collect_*.py  (Foca, ~10 min)
+                |
+                v
+       raw articles + editor feedback sync
                 |
                 v
    scripts/summarize.py + analyze_sentiment.py
            (Editor, ~30 min)
                 |
                 v
+  validated articles + bilingual summaries
+                |
+                v
     scripts/curate.py + quiz extraction
         (Editor-chefe, ~90 min)
+                |
+                v
+ curated articles / irrelevant purge
                 |
                 v
  data/*.json  -> schema validation -> git commit
@@ -41,6 +50,17 @@ Sources (RSS, polls, parties, social)
                 v
       GitHub Pages + Cloudflare CDN
 ```
+
+Publication states are explicit in the data: `raw -> validated -> curated`, plus `irrelevant` for items automatically filtered out of the public feed.
+
+## Methodology and use case highlights / Metodologia e caso de uso
+
+- Independent project with no party affiliation or electoral funding; methodology, limitations, and error reporting are part of the product surface.
+- Newsroom-style pipeline with three automated roles: `Foca` (collection), `Editor` (validation/summarization), and `Editor-chefe` (curation/prominence).
+- Current public methodology documents the AI fallback chain as: Ollama Cloud (Nemotron 3 Super) -> NVIDIA NIM (Nemotron 3 Super 120B) -> Ollama Cloud (MiniMax M2.5) -> Vertex AI (Gemini 3 Flash Preview) -> MiMo V2 Flash.
+- Circuit breaker and per-run AI call limits keep the pipeline running when providers degrade instead of failing closed.
+- Editorial feedback is self-healing: blocked keywords, URLs, sources, and `irrelevant` article IDs are accumulated in `data/editor_feedback.json`.
+- The public quiz only reveals sources in the result view, never during the questions.
 
 ## Running Locally
 
@@ -85,6 +105,8 @@ You can also add manual rules in `editor_feedback.json`:
 - `blocked_url_substrings`
 - `blocked_sources`
 
+This mechanism is part of the project's transparency model: irrelevant content is filtered automatically, but the filtering rules remain visible and auditable in the repository.
+
 ## Required GitHub Secrets
 
 | Secret | Used by | Description |
@@ -99,6 +121,8 @@ You can also add manual rules in `editor_feedback.json`:
 | `XIAOMI_MIMO_API_KEY` | `collect.yml`, `validate.yml`, `curate.yml` | MiMo fallback provider |
 | `TWITTER_BEARER_TOKEN` | `collect.yml` | Social collection token |
 | `YOUTUBE_API_KEY` | `collect.yml` | YouTube collection key |
+
+The methodology page and case study document the current preferred AI provider order for public transparency. The table above lists the secrets still referenced by workflows in this repository, including legacy compatibility variables while provider migrations are cleaned up.
 
 ## Pre-candidates (March 2026)
 
@@ -123,6 +147,13 @@ You can also add manual rules in `editor_feedback.json`:
 - [ADR-004: SEO and GEO Strategy](docs/adr/004-seo-geo-strategy.md)
 - [ADR-005: Quiz Affinity System](docs/adr/005-quiz-affinity-system.md)
 - [ADR-006: Transparency and Methodology](docs/adr/006-transparency-methodology.md)
+
+## Learn more / Saiba mais
+
+- [Methodology ADR](docs/adr/006-transparency-methodology.md)
+- [Case study (pt-BR)](docs/case-study/pt-BR.md)
+- [Case study (en-US)](docs/case-study/en-US.md)
+- Live pages: [`/metodologia`](https://carlosduplar.github.io/eleicoes-2026-monitor/metodologia/) and [`/sobre/caso-de-uso`](https://carlosduplar.github.io/eleicoes-2026-monitor/sobre/caso-de-uso/)
 
 ## Contributing
 
