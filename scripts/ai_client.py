@@ -1,4 +1,21 @@
-"""AI client with multi-provider fallback and usage tracking for Phase 02."""
+"""AI client with multi-provider fallback and usage tracking for Phase 02.
+
+Provider priority (based on benchmark_results.json — 45 runs, 3 tasks):
+
+  1. NVIDIA nemotron-3-super-120b-a12b  9/9 (100%)  avg 3.65s  — primary
+  2. Ollama nemotron-3-super:cloud       9/9 (100%)  avg 3.90s  — 1st fallback
+  3. Ollama minimax-m2.5:cloud           9/9 (100%)  avg 9.03s  — 2nd fallback
+     Note: MiniMax is 2.3x slower and returned empty content in 5/9 extraction /
+     curation runs, so it is kept as a last free-tier fallback only.
+  4. Vertex / Mimo (paid)                                       — emergency paid
+
+Task-specific routing: NOT used. Benchmark shows no quality difference between
+models across tasks; MiniMax performs worse on structured extraction/curation.
+Uniform chain keeps routing simple and predictable.
+
+OpenRouter removed: all 9/9 runs failed with HTTP 429 (rate-limited on the free
+tier every time), making it unreliable as any tier of fallback.
+"""
 
 from __future__ import annotations
 
@@ -17,8 +34,6 @@ logger = logging.getLogger(__name__)
 
 ROOT_DIR = Path(__file__).resolve().parents[1]
 USAGE_FILE = ROOT_DIR / "data" / "ai_usage.json"
-
-OPENROUTER_DAILY_MAX = 200
 
 # In-process circuit breaker: skip providers after this many consecutive failures per run.
 _CIRCUIT_BREAKER_THRESHOLD = 3
@@ -60,32 +75,24 @@ _THINKING_DISABLE_EXTRA_BODY: dict[str, dict[str, object]] = {
         "chat_template_kwargs": {"enable_thinking": False}
     },
     "qwen/qwen3.5-397b-a17b": {"chat_template_kwargs": {"enable_thinking": False}},
-    # Kimi K2.5 and MiniMax M2.5 are served via the NVIDIA official API, which uses
-    # {"thinking": {"type": "disabled"}} — NOT chat_template_kwargs.enable_thinking.
-    # See: https://docs.api.nvidia.com/nim/reference/moonshotai-kimi-k2-5
-    "moonshotai/kimi-k2.5": {"thinking": {"type": "disabled"}},
-    "minimaxai/minimax-m2.5": {"thinking": {"type": "disabled"}},
     "nvidia/nemotron-3-super-120b-a12b": {
         "chat_template_kwargs": {"enable_thinking": False}
     },
 }
 
 NVIDIA_MODELS: dict[str, str] = {
-    "summarization": "moonshotai/kimi-k2.5",
-    "sentiment": "moonshotai/kimi-k2.5",
-    "multilingual": "moonshotai/kimi-k2.5",
-    "quiz_extract": "moonshotai/kimi-k2.5",
+    "summarization": "nvidia/nemotron-3-super-120b-a12b",
+    "sentiment": "nvidia/nemotron-3-super-120b-a12b",
+    "multilingual": "nvidia/nemotron-3-super-120b-a12b",
+    "quiz_extract": "nvidia/nemotron-3-super-120b-a12b",
 }
 
 NVIDIA_FALLBACKS: list[str] = [
-    "minimaxai/minimax-m2.5",
-    "nvidia/nemotron-3-super-120b-a12b",
 ]
 
 OLLAMA_MODELS: list[str] = [
-    "kimi-k2.5:cloud",
-    "minimax-m2.5:cloud",
     "nemotron-3-super:cloud",
+    "minimax-m2.5:cloud",
 ]
 
 
@@ -116,7 +123,7 @@ def _today_key() -> str:
 
 def _provider_chain_for_task(task: str) -> list[ProviderConfig]:
     nvidia_primary = NVIDIA_MODELS.get(task, NVIDIA_MODELS["summarization"])
-    nvidia_all = [nvidia_primary] + NVIDIA_FALLBACKS
+    nvidia_all = list(dict.fromkeys([nvidia_primary, *NVIDIA_FALLBACKS]))
     return [
         *[
             {
@@ -138,14 +145,6 @@ def _provider_chain_for_task(task: str) -> list[ProviderConfig]:
             }
             for model in OLLAMA_MODELS
         ],
-        {
-            "name": "openrouter",
-            "base_url": "https://openrouter.ai/api/v1",
-            "key_env": "OPENROUTER_API_KEY",
-            "model": "nvidia/nemotron-3-super-120b-a12b:free",
-            "paid": False,
-            "daily_max": OPENROUTER_DAILY_MAX,
-        },
         {
             "name": "vertex",
             "base_url": os.environ.get("VERTEX_BASE_URL", "").strip(),
@@ -211,7 +210,9 @@ def _extract_content_from_response(response: object) -> str:
                 # Strip inline <think>...</think> blocks emitted by models that embed
                 # chain-of-thought in the content field (e.g. MiniMax M2.5 via SGLang
                 # without a dedicated reasoning parser).
-                stripped = re.sub(r"<think>.*?</think>\s*", "", cleaned, flags=re.DOTALL).strip()
+                stripped = re.sub(
+                    r"<think>.*?</think>\s*", "", cleaned, flags=re.DOTALL
+                ).strip()
                 if stripped:
                     return stripped
                 logger.warning(
@@ -230,15 +231,29 @@ def _extract_content_from_response(response: object) -> str:
         # Prefer items with type "text" or "output_text"; ignore "thinking" blocks.
         chunks: list[str] = []
         for item in content:
-            if not isinstance(item, dict):
-                continue
-            item_type = item.get("type", "text")
-            if item_type in ("text", "output_text"):
+            item_type = "text"
+            maybe_text: object | None = None
+            if isinstance(item, dict):
+                raw_item_type = item.get("type", "text")
+                if isinstance(raw_item_type, str):
+                    item_type = raw_item_type
                 maybe_text = item.get("text")
+            else:
+                raw_item_type = getattr(item, "type", "text")
+                if isinstance(raw_item_type, str):
+                    item_type = raw_item_type
+                maybe_text = getattr(item, "text", None)
+            if item_type in ("text", "output_text"):
                 if isinstance(maybe_text, str) and maybe_text.strip():
                     chunks.append(maybe_text.strip())
         if chunks:
             return " ".join(chunks).strip()
+
+    content_text = getattr(content, "text", None)
+    if isinstance(content_text, str):
+        cleaned_content_text = content_text.strip()
+        if cleaned_content_text:
+            return cleaned_content_text
 
     # Some NVIDIA thinking models surface the final answer in reasoning_content when
     # the content field is empty. Try to extract a JSON block first; if that fails
@@ -272,7 +287,22 @@ def _request_completion(
     user: str,
     max_tokens: int,
 ) -> str:
-    client = openai.OpenAI(api_key=api_key, base_url=provider["base_url"])
+    client_kwargs: dict[str, object] = {
+        "api_key": api_key,
+        "base_url": provider["base_url"],
+    }
+    if provider.get("name") == "openrouter":
+        default_headers: dict[str, str] = {}
+        http_referer = os.environ.get("OPENROUTER_HTTP_REFERER", "").strip()
+        app_title = os.environ.get("OPENROUTER_APP_TITLE", "").strip()
+        if http_referer:
+            default_headers["HTTP-Referer"] = http_referer
+        if app_title:
+            default_headers["X-Title"] = app_title
+        if default_headers:
+            client_kwargs["default_headers"] = default_headers
+
+    client = openai.OpenAI(**client_kwargs)
     kwargs: dict[str, object] = {
         "model": provider["model"],
         "max_tokens": max_tokens,
@@ -323,12 +353,13 @@ def _call_with_fallback_for_task(
             )
             continue
 
-        if name == "openrouter":
-            daily_max = int(provider.get("daily_max", OPENROUTER_DAILY_MAX))
-            usage_key = f"openrouter_{today}"
+        daily_max_raw = provider.get("daily_max")
+        if daily_max_raw is not None:
+            daily_max = int(daily_max_raw)
+            usage_key = f"{name}_{today}"
             if usage.get(usage_key, 0) >= daily_max:
                 logger.warning(
-                    "[AI] openrouter skipped: daily limit reached (%s).", daily_max
+                    "[AI] %s skipped: daily limit reached (%s).", name, daily_max
                 )
                 continue
 
