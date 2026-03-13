@@ -19,6 +19,11 @@ try:
 except ImportError:  # pragma: no cover - direct script execution path
     import editor_feedback  # type: ignore[no-redef]
 
+try:
+    from scripts.sanitize.dedup import is_near_duplicate_fast
+except ImportError:  # pragma: no cover - direct script execution path
+    from sanitize.dedup import is_near_duplicate_fast  # type: ignore[no-redef]
+
 logger = logging.getLogger(__name__)
 
 ROOT_DIR = Path(__file__).resolve().parents[1]
@@ -263,6 +268,7 @@ def collect_articles() -> tuple[int, int, int]:
     prefilled = 0
     errors = 0
     skipped_by_feedback = 0
+    near_duplicate_count = 0
 
     for source in sources:
         source_name = source["name"]
@@ -310,8 +316,11 @@ def collect_articles() -> tuple[int, int, int]:
                 "collected_at": collected_at,
                 "status": "raw",
                 "relevance_score": None,
+                "relevance_signals": None,
                 "candidates_mentioned": [],
                 "topics": [],
+                "narrative_cluster_id": None,
+                "duplicate_of": None,
                 "summaries": {"pt-BR": "", "en-US": ""},
             }
             if rss_body:
@@ -319,6 +328,13 @@ def collect_articles() -> tuple[int, int, int]:
                 prefilled += 1
             if source_category:
                 article["source_category"] = source_category
+
+            cluster_match = is_near_duplicate_fast(article, document.articles + new_articles)
+            if cluster_match is not None:
+                article["status"] = "irrelevant"
+                article["narrative_cluster_id"] = cluster_match
+                article["editor_note"] = "near-duplicate detected at ingestion"
+                near_duplicate_count += 1
 
             new_articles.append(article)
             existing_ids.add(article_id)
@@ -331,7 +347,8 @@ def collect_articles() -> tuple[int, int, int]:
 
     print(
         f"Collected {len(new_articles)} new articles from {len(sources)} sources "
-        f"({prefilled} with RSS body pre-filled, {errors} errors, {skipped_by_feedback} skipped by editorial feedback)"
+        f"({prefilled} with RSS body pre-filled, {near_duplicate_count} near-duplicates, "
+        f"{errors} errors, {skipped_by_feedback} skipped by editorial feedback)"
     )
     return len(new_articles), len(sources), errors
 

@@ -1,0 +1,233 @@
+- generic [ref=e3]:
+  - link "Skip to main content" [ref=e240] [cursor=pointer]:
+    - /url: "#main-content"
+  - banner [ref=e5]:
+    - generic [ref=e6]:
+      - link "Portal Eleicoes BR 2026" [ref=e241] [cursor=pointer]:
+        - /url: /eleicoes-2026-monitor
+      - navigation "Primary navigation" [ref=e242]:
+        - link "News" [ref=e243] [cursor=pointer]:
+          - /url: /eleicoes-2026-monitor
+        - link "Sentiment" [ref=e244] [cursor=pointer]:
+          - /url: /eleicoes-2026-monitor/sentimento
+        - link "Polls" [ref=e245] [cursor=pointer]:
+          - /url: /eleicoes-2026-monitor/pesquisas
+        - link "Candidates" [ref=e246] [cursor=pointer]:
+          - /url: /eleicoes-2026-monitor/candidatos
+        - link "Quiz" [ref=e13] [cursor=pointer]:
+          - /url: /eleicoes-2026-monitor/quiz
+        - link "Methodology" [ref=e247] [cursor=pointer]:
+          - /url: /eleicoes-2026-monitor/metodologia
+        - link "Case Study" [ref=e248] [cursor=pointer]:
+          - /url: /eleicoes-2026-monitor/sobre/caso-de-uso
+      - generic "Switch language" [ref=e249]:
+        - button "PT" [ref=e17] [cursor=pointer]
+        - generic [ref=e18]: "|"
+        - button "EN" [active] [ref=e19] [cursor=pointer]
+  - generic [ref=e21]: 📅 205 days to the 1st round · October 4, 2026
+  - main [ref=e22]:
+    - article [ref=e129]:
+      - navigation "Case Study" [ref=e250]:
+        - link "Portal Eleicoes BR 2026" [ref=e251] [cursor=pointer]:
+          - /url: /eleicoes-2026-monitor
+        - text: ">About>Case Study"
+      - generic [ref=e132]:
+        - 'heading "Case Study: AI-Assisted Development" [level=1] [ref=e252]'
+        - paragraph [ref=e134]: How we built a real-time election portal using multiple AI agents
+        - generic [ref=e135]:
+          - generic [ref=e253]: 8 min read
+          - generic [ref=e137]: Updated on 3/13/2026
+          - generic [ref=e138]: Share this case study
+        - link "Back to portal" [ref=e254] [cursor=pointer]:
+          - /url: /eleicoes-2026-monitor
+      - generic [ref=e140]:
+        - generic [ref=e255]:
+          - heading "Executive summary" [level=2] [ref=e256]
+          - paragraph [ref=e257]: "Portal Eleicoes BR 2026 was designed as a public transparency product: a bilingual portal (pt-BR and en-US) to monitor election news, sentiment trends, polling data, and candidate position signals for Brazil's 2026 presidential cycle. The goal was not to publish another opinion website, but to ship an auditable editorial infrastructure where users can see how data is collected, how AI is applied, and how each article moves through publication stages. The core promise is straightforward: people should be able to read a story, understand its processing status, and inspect the technical path that produced what they see on screen."
+          - paragraph [ref=e258]: The implementation combines a static React + Vite frontend with a Python data pipeline and GitHub Actions automation. Instead of relying on one AI vendor, the architecture uses a multi-provider fallback chain to improve availability while keeping costs under control. Instead of hiding limitations, the product exposes methodology, disclaimers, sources, and processing state. Instead of introducing complex hosting infrastructure, deployment runs on GitHub Pages with Cloudflare in front. The result is a lightweight, low-cost, traceable system that can evolve phase by phase without losing architectural clarity.
+          - heading "Stack and architecture" [level=2] [ref=e259]
+          - paragraph [ref=e260]:
+            - text: From a technical perspective, the stack was selected for operational predictability. On the frontend, React 18 with Vite and
+            - code [ref=e261]: vite-react-ssg
+            - text: pre-renders key routes so the site can run as static content on GitHub Pages while still serving SEO and GEO goals. UI implementation follows standalone HTML wireframes defined in ADR 000, and the design token system (
+            - code [ref=e262]: "--navy"
+            - text: ","
+            - code [ref=e263]: "--gold"
+            - text: ","
+            - code [ref=e264]: "--bg"
+            - text: ","
+            - code [ref=e265]: "--surface"
+            - text: ","
+            - code [ref=e266]: "--muted"
+            - text: ","
+            - code [ref=e267]: "--text"
+            - text: ","
+            - code [ref=e268]: "--text2"
+            - text: ","
+            - code [ref=e269]: "--border"
+            - text: ) keeps visual consistency across feed, dashboards, quiz, methodology, and now the case study page.
+          - paragraph [ref=e270]:
+            - text: On the data side, Python 3.12 handles ingestion and transformations. Pipeline scripts were built with idempotency and traceability as first-class constraints. The default identifier
+            - code [ref=e271]: sha256(url.encode())[:16]
+            - text: prevents article duplication across runs, and output JSON follows contracts in
+            - code [ref=e272]: docs/schemas/*.schema.json
+            - text: and
+            - code [ref=e273]: docs/schemas/types.ts
+            - text: . This alignment keeps frontend and backend synchronized around one shared data model, which lowers regression risk caused by shape drift.
+          - paragraph [ref=e274]:
+            - text: Publication architecture uses three editorial states (
+            - code [ref=e275]: raw -> validated -> curated
+            - text: ) and optimizes for continuity. Even when an AI provider is unavailable, the pipeline keeps moving. Content can be shown as
+            - code [ref=e276]: raw
+            - text: with title and metadata while slower or more expensive processing continues asynchronously. This avoids binary all-or-nothing publishing behavior and better reflects how near-real-time election monitoring should work in practice.
+          - heading "Agent hierarchy" [level=2] [ref=e277]
+          - paragraph [ref=e278]: Delivery execution was intentionally organized around an explicit agent hierarchy documented in PLAN and handoff files. Opus acted as Architect, consolidating strategy, wireframes, ADRs, and schema contracts. Codex acted as Tactical lead, transforming architecture into concrete task specs and verification criteria. MiniMax acted as Operations implementor, executing changes through disciplined loops. Gemini acted as QA, focusing on validation, interface testing, and reporting.
+          - paragraph [ref=e279]: "Governance followed the RALPH protocol: Read, Analyze, List, Plan, Handle. For long tasks, this structure reduced improvisation by forcing context review before code edits, converting ambiguity into explicit checklists, and closing each loop with verification. In this project, RALPH was not just process vocabulary; it shaped phase sequencing, spec writing, and failure handling with bounded retries and escalation rules."
+          - paragraph [ref=e280]:
+            - text: Inter-agent handoff relies on sentinel files such as
+            - code [ref=e281]: plans/phase-NN-arch.DONE
+            - text: ". This simple mechanism replaces heavy orchestration with repository-native traceability. When a phase closes, the sentinel signals that architecture and implementation are aligned and the next layer can proceed without hidden state. For a public iterative project, the pattern proved highly practical: low coupling, clear checkpoints, and auditable history."
+          - heading "Ingestion pipeline" [level=2] [ref=e282]
+          - paragraph [ref=e283]: The ingestion model follows a newsroom metaphor with three roles. Foca (collector) runs at high frequency and primarily consumes RSS, with expansion into party websites and other structured sources. Editor (validator) processes collected items, runs bilingual summarization, and prepares data for analytical components. Editor-chefe (curator) runs at a slower cadence with emphasis on prominence, consistency, and quality gates.
+          - paragraph [ref=e284]:
+            - text: "Publication stages are explicit in the data itself:"
+            - code [ref=e285]: raw
+            - text: ","
+            - code [ref=e286]: validated
+            - text: ", and"
+            - code [ref=e287]: curated
+            - text: . In
+            - code [ref=e288]: raw
+            - text: ", the portal prioritizes speed and transparency over polish: title, source, and timestamp can already be visible while analysis is still in progress. In"
+            - code [ref=e289]: validated
+            - text: ", bilingual summaries and richer metadata are attached. In"
+            - code [ref=e290]: curated
+            - text: ", the story gets an additional automated prominence layer. This staged funnel avoids unnecessary blocking and delivers incremental value instead of waiting for perfect completeness."
+          - paragraph [ref=e291]: "The AI chain is built for resilience and cost control: NVIDIA NIM (Kimi K2.5 → MiniMax M2.5 → Nemotron 3 Super), Ollama Cloud, OpenRouter (Nemotron 3 Super), Vertex AI, and MiMo in fallback order. The non-negotiable rule is that AI errors must not stop the pipeline. If a call fails, the system logs the error, tries the next provider, and continues. If all providers fail, the article still remains in a coherent state rather than being silently dropped. This approach prioritizes operational continuity and reduces single-vendor risk."
+          - heading "Technical decisions recorded" [level=2] [ref=e292]
+          - paragraph [ref=e293]: ADRs 000 through 006 are the decision backbone of the portal. ADR 000 established wireframes as the visual source of truth, including component mapping and shared design tokens. That decision reduced UI rework because each phase could implement against concrete references, not subjective memory.
+          - paragraph [ref=e294]: "ADR 001 selected GitHub Pages with Cloudflare for hosting, balancing zero infrastructure cost, CDN coverage, and native CI/CD through GitHub Actions. A direct consequence was choosing SSG over SSR. This constraint became an advantage: less runtime complexity, more deterministic deployment, and static-first reliability."
+          - paragraph [ref=e295]:
+            - text: ADR 002 documented multi-provider AI fallback. In practical terms, it removed dependence on a single vendor and allowed the project to prioritize free tiers while reserving paid capacity for contingency. It also formalized usage tracking in
+            - code [ref=e296]: data/ai_usage.json
+            - text: ", which is important for cost visibility and capacity planning."
+          - paragraph [ref=e297]:
+            - text: ADR 003 standardized internationalization with
+            - code [ref=e298]: react-i18next
+            - text: ", pt-BR as default and fallback, domain namespaces, and language persistence in"
+            - code [ref=e299]: localStorage
+            - text: . This pattern enabled bilingual UX growth without duplicating routes per language, keeping a single URL while swapping content client-side.
+          - paragraph [ref=e300]:
+            - text: ADR 004 defined SEO and GEO strategy through candidate/comparison pre-rendering, AI-crawler-friendly
+            - code [ref=e301]: robots.txt
+            - text: ", and page-type JSON-LD. The portal becomes indexable by both traditional search engines and generative engines without requiring JavaScript execution for core content."
+          - paragraph [ref=e302]:
+            - text: "ADR 005 specified quiz neutrality constraints: no"
+            - code [ref=e303]: candidate_slug
+            - text: or
+            - code [ref=e304]: source_*
+            - text: in question flow, source reveal only on result, and confidence filtering to hide weak extractions. ADR 006 made
+            - code [ref=e305]: /metodologia
+            - text: mandatory and required MethodologyBadge in data-driven views, institutionalizing transparency and error reporting as product behavior instead of optional documentation.
+          - heading "Lessons learned" [level=2] [ref=e306]
+          - paragraph [ref=e307]: The strongest lesson is that AI-assisted productivity scales when process is explicit. Vibe coding without contracts can feel fast at the start, but it accumulates hidden debt quickly. In this project, the biggest gains came when prompts, ADRs, schemas, and task specs were treated as engineering artifacts rather than optional notes. That shift enabled phase-based delivery with less rework and fewer integration surprises.
+          - paragraph [ref=e308]:
+            - text: Another lesson is that multi-agent coordination has real cognitive overhead. Handoffs require protocol, naming discipline, and verification rigor. Without those controls, agent outputs drift apart. Sentinel files, centralized planning in
+            - code [ref=e309]: PLAN.md
+            - text: ", and bounded retry loops converted that complexity into a manageable operating model."
+          - paragraph [ref=e310]: A third lesson is that transparency cannot be bolted on later, especially in election-adjacent AI products. Methodology, disclaimers, and source traceability need to be part of implementation from day one. Retrofitting trust signals after launch is significantly more expensive than designing them as core requirements.
+          - heading "Project numbers" [level=2] [ref=e311]
+          - paragraph [ref=e312]: "At the publication snapshot of this phase, the measurable baseline is:"
+          - list [ref=e313]:
+            - listitem [ref=e314]: 16 planned main phases, plus one optional extension phase (Phase 17).
+            - listitem [ref=e315]: 65 commits in repository history before this phase closure.
+            - listitem [ref=e316]: 177 tracked files at the time of the technical inventory for this document.
+            - listitem [ref=e317]:
+              - text: 21 active RSS sources in
+              - code [ref=e318]: data/sources.json
+              - text: ", plus 8 party sources and 6 polling sources."
+            - listitem [ref=e319]:
+              - text: 9 candidates modeled in
+              - code [ref=e320]: data/candidates.json
+              - text: .
+            - listitem [ref=e321]: Pipeline cadence with collector every 10 minutes, validator every 30 minutes, and curator on an approximately 90-minute window.
+            - listitem [ref=e322]: A reference static build producing 25 pre-rendered pages, including dynamic candidate and comparison routes.
+            - listitem [ref=e323]:
+              - text: Python suite with 61 passing tests (
+              - code [ref=e324]: python -m pytest scripts/ -v --tb=short
+              - text: ).
+            - listitem [ref=e325]:
+              - text: Playwright suite with 24 passing tests against the built site (
+              - code [ref=e326]: npx playwright test
+              - text: ).
+            - listitem [ref=e327]:
+              - text: Four formal QA artifacts in
+              - code [ref=e328]: qa/phase-16-*.md
+              - text: (security, SEO, code review, accessibility).
+          - paragraph [ref=e329]: These numbers are not marketing decoration; they demonstrate operational scope under strict cost constraints and static hosting limitations.
+          - heading "Next steps" [level=2] [ref=e330]
+          - paragraph [ref=e331]:
+            - text: With Phase 16 complete, the
+            - code [ref=e332]: 1.0.0
+            - text: quality baseline is now established through automated tests and formal security/SEO/accessibility/code-review audits.
+          - paragraph [ref=e333]: The next technical milestone remains the optional Phase 17 extension (Vertex AI Search), to be evaluated by cost, semantic retrieval usefulness, and measurable user value. In parallel, the project should maintain continuous workflow operation, data-quality monitoring, and bilingual documentation updates.
+        - complementary "In this article" [ref=e334]:
+          - heading "In this article" [level=2] [ref=e335]
+          - list [ref=e223]:
+            - listitem [ref=e336]:
+              - link "Executive summary" [ref=e337] [cursor=pointer]:
+                - /url: "#executive-summary"
+            - listitem [ref=e338]:
+              - link "Stack and architecture" [ref=e339] [cursor=pointer]:
+                - /url: "#stack-and-architecture"
+            - listitem [ref=e340]:
+              - link "Agent hierarchy" [ref=e341] [cursor=pointer]:
+                - /url: "#agent-hierarchy"
+            - listitem [ref=e342]:
+              - link "Ingestion pipeline" [ref=e343] [cursor=pointer]:
+                - /url: "#ingestion-pipeline"
+            - listitem [ref=e344]:
+              - link "Technical decisions recorded" [ref=e345] [cursor=pointer]:
+                - /url: "#technical-decisions-recorded"
+            - listitem [ref=e346]:
+              - link "Lessons learned" [ref=e347] [cursor=pointer]:
+                - /url: "#lessons-learned"
+            - listitem [ref=e348]:
+              - link "Project numbers" [ref=e349] [cursor=pointer]:
+                - /url: "#project-numbers"
+            - listitem [ref=e350]:
+              - link "Next steps" [ref=e351] [cursor=pointer]:
+                - /url: "#next-steps"
+  - contentinfo [ref=e51]:
+    - generic [ref=e52]:
+      - generic [ref=e53]:
+        - heading "Portal Eleicoes BR 2026" [level=3] [ref=e352]
+        - paragraph [ref=e55]: Independent near-real-time monitoring of Brazil's 2026 presidential election.
+      - generic [ref=e56]:
+        - heading "Navigation" [level=3] [ref=e353]
+        - list [ref=e58]:
+          - listitem [ref=e59]:
+            - link "News" [ref=e354] [cursor=pointer]:
+              - /url: /eleicoes-2026-monitor
+          - listitem [ref=e61]:
+            - link "Sentiment" [ref=e355] [cursor=pointer]:
+              - /url: /eleicoes-2026-monitor/sentimento
+          - listitem [ref=e63]:
+            - link "Polls" [ref=e356] [cursor=pointer]:
+              - /url: /eleicoes-2026-monitor/pesquisas
+          - listitem [ref=e65]:
+            - link "Quiz" [ref=e66] [cursor=pointer]:
+              - /url: /eleicoes-2026-monitor/quiz
+      - generic [ref=e67]:
+        - heading "Transparency" [level=3] [ref=e357]
+        - list [ref=e69]:
+          - listitem [ref=e70]:
+            - link "Methodology" [ref=e358] [cursor=pointer]:
+              - /url: /eleicoes-2026-monitor/metodologia
+          - listitem [ref=e72]:
+            - link "Open-source codebase" [ref=e359] [cursor=pointer]:
+              - /url: https://github.com/carlosduplar/eleicoes-2026-monitor
+          - listitem [ref=e74]:
+            - link "Project with no party affiliation" [ref=e360] [cursor=pointer]:
+              - /url: /eleicoes-2026-monitor/sobre/caso-de-uso
+    - generic [ref=e76]: © 2026 Portal Eleicoes BR 2026 - Open-source project with no party affiliation

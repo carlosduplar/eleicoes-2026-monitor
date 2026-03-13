@@ -138,6 +138,8 @@ def test_summarize_sets_validated_status(tmp_data_paths: dict[str, Path], monkey
     assert article["summaries"]["pt-BR"] == "Resumo PT"
     assert article["summaries"]["en-US"] == "Summary EN"
     assert article["confidence_score"] == 1.0
+    assert article["relevance_score"] > 0.0
+    assert isinstance(article["relevance_signals"], dict)
     assert article["edit_history"][-1]["action"] == "validated"
 
 
@@ -231,6 +233,60 @@ def test_summarize_handles_ai_failure(tmp_data_paths: dict[str, Path], monkeypat
     assert article["status"] == "raw"
     assert len(log_payload["errors"]) == 1
     assert "provider timeout" in log_payload["errors"][0]["message"]
+
+
+def test_summarize_marks_post_llm_irrelevant_when_no_election_signals(
+    tmp_data_paths: dict[str, Path],
+    monkeypatch: pytest.MonkeyPatch,
+) -> None:
+    _write_articles(
+        tmp_data_paths["articles"],
+        [
+            {
+                "id": "abcdabcdabcdabcd",
+                "url": "https://example.com/x",
+                "title": "Eleicoes 2026: analise do mercado financeiro",
+                "source": "Fonte",
+                "source_category": "mainstream",
+                "published_at": "2026-03-09T14:00:00Z",
+                "collected_at": "2026-03-09T14:10:00Z",
+                "status": "raw",
+                "content": "Cobertura de eleicao 2026 com comparacoes economicas, texto longo o bastante para passar validacao. "
+                "Sem referencias claras a candidatos na saida estruturada.",
+                "summaries": {"pt-BR": "", "en-US": ""},
+            }
+        ],
+    )
+
+    monkeypatch.setattr(
+        summarize.ai_client,
+        "summarize_article",
+        lambda **_kwargs: {
+            "summaries": {
+                "pt-BR": "Mercado acompanha juros e inflacao sem foco em campanha.",
+                "en-US": "Markets track inflation and rates with no campaign focus.",
+            },
+            "candidates_mentioned": [],
+            "topics": ["economia"],
+            "sentiment_per_candidate": {},
+            "_ai_provider": "nvidia",
+            "_ai_model": "qwen-test",
+        },
+    )
+
+    summarized, errors, skipped = summarize.summarize_articles()
+    article = _read_articles(tmp_data_paths["articles"])[0]
+    feedback_payload = json.loads(
+        tmp_data_paths["editor_feedback"].read_text(encoding="utf-8")
+    )
+
+    assert summarized == 1
+    assert errors == 0
+    assert skipped == 0
+    assert article["status"] == "irrelevant"
+    assert article["relevance_score"] < 0.30
+    assert article["editor_note"].startswith("auto-filtered: relevance_score=")
+    assert "abcdabcdabcdabcd" in feedback_payload["irrelevant_article_ids"]
 
 
 def test_sentiment_has_disclaimers(tmp_data_paths: dict[str, Path], monkeypatch: pytest.MonkeyPatch) -> None:

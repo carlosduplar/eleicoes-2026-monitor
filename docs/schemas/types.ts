@@ -73,9 +73,16 @@ export interface Article {
   collected_at: string; // ISO 8601
   status: ArticleStatus;
   relevance_score?: number; // 0.0-1.0
+  relevance_signals?: {
+    candidate_signal?: number;
+    topic_signal?: number;
+    keyword_signal?: number;
+    source_signal?: number;
+  } | null;
   candidates_mentioned?: CandidateSlug[];
   topics?: TopicId[];
   narrative_cluster_id?: string | null;
+  duplicate_of?: string | null;
   summaries?: {
     'pt-BR'?: string;
     'en-US'?: string;

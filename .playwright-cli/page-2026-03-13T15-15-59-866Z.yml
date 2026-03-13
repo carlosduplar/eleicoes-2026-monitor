@@ -1,0 +1,119 @@
+- generic [ref=e3]:
+  - link "Ir para o conteúdo principal" [ref=e4] [cursor=pointer]:
+    - /url: "#main-content"
+  - banner [ref=e5]:
+    - generic [ref=e6]:
+      - link "Portal Eleições BR 2026" [ref=e7] [cursor=pointer]:
+        - /url: /eleicoes-2026-monitor
+      - navigation "Navegação principal" [ref=e8]:
+        - link "Notícias" [ref=e9] [cursor=pointer]:
+          - /url: /eleicoes-2026-monitor
+        - link "Sentimento" [ref=e10] [cursor=pointer]:
+          - /url: /eleicoes-2026-monitor/sentimento
+        - link "Pesquisas" [ref=e11] [cursor=pointer]:
+          - /url: /eleicoes-2026-monitor/pesquisas
+        - link "Candidatos" [ref=e12] [cursor=pointer]:
+          - /url: /eleicoes-2026-monitor/candidatos
+        - link "Quiz" [ref=e13] [cursor=pointer]:
+          - /url: /eleicoes-2026-monitor/quiz
+        - link "Metodologia" [active] [ref=e14] [cursor=pointer]:
+          - /url: /eleicoes-2026-monitor/metodologia
+        - link "Caso de Uso" [ref=e15] [cursor=pointer]:
+          - /url: /eleicoes-2026-monitor/sobre/caso-de-uso
+      - generic "Trocar idioma" [ref=e16]:
+        - button "PT" [ref=e17] [cursor=pointer]
+        - generic [ref=e18]: "|"
+        - button "EN" [ref=e19] [cursor=pointer]
+  - generic [ref=e21]: 📅 205 dias para o 1.º turno · 4 de outubro de 2026
+  - main [ref=e22]:
+    - article [ref=e77]:
+      - generic [ref=e78]:
+        - heading "Metodologia" [level=1] [ref=e79]
+        - paragraph [ref=e80]: Como funciona o Portal Eleições BR 2026
+      - generic [ref=e81]:
+        - heading "Declaração de Independência" [level=2] [ref=e82]
+        - paragraph [ref=e83]: "Este portal é um projeto independente, sem filiação partidária ou financiamento eleitoral. Não há intervenção editorial de nenhuma forma: os artigos são coletados automaticamente de fontes públicas, os resumos são gerados por inteligência artificial, e as análises de sentimento são derivadas algoritmicamente. O código-fonte completo está disponível para consulta e auditoria pública em github.com/carlosduplar/eleicoes-2026-monitor."
+      - generic [ref=e84]:
+        - heading "Como funciona o pipeline" [level=2] [ref=e85]
+        - generic [ref=e86]:
+          - generic [ref=e87]:
+            - generic [ref=e88]: "1"
+            - generic [ref=e89]:
+              - heading "Coleta" [level=3] [ref=e90]
+              - paragraph [ref=e91]: RSS de 20 veículos + scraping de sites partidários e institutos de pesquisa, a cada 10 minutos via GitHub Actions.
+          - generic [ref=e92]:
+            - generic [ref=e93]: "2"
+            - generic [ref=e94]:
+              - heading "Sumarização" [level=3] [ref=e95]
+              - paragraph [ref=e96]: "Modelos de linguagem open-source com fallback hierárquico: NVIDIA NIM (gratuito) → OpenRouter (gratuito, 200 req/dia) → Ollama Cloud (gratuito) → Vertex AI Gemini 2.5 Flash Lite (pago prioritário) → MiMo V2 Flash."
+          - generic [ref=e97]:
+            - generic [ref=e98]: "3"
+            - generic [ref=e99]:
+              - heading "Sentimento" [level=3] [ref=e100]
+              - paragraph [ref=e101]: Análise algorítmica do tom das notícias coletadas. Os scores refletem o tom das manchetes e resumos — não uma avaliação editorial ou pesquisa de opinião.
+          - generic [ref=e102]:
+            - generic [ref=e103]: "4"
+            - generic [ref=e104]:
+              - heading "Pesquisas Eleitorais" [level=3] [ref=e105]
+              - paragraph [ref=e106]: Dados coletados automaticamente dos sites dos institutos. Reproduzidos sem modificação editorial.
+          - generic [ref=e107]:
+            - generic [ref=e108]: "5"
+            - generic [ref=e109]:
+              - heading "Quiz de Afinidade" [level=3] [ref=e110]
+              - paragraph [ref=e111]: Posições extraídas de declarações verificadas nas notícias coletadas. Fontes exibidas no resultado — nunca durante as perguntas.
+      - generic [ref=e112]:
+        - heading "Limitações conhecidas" [level=2] [ref=e113]
+        - list [ref=e114]:
+          - listitem [ref=e115]:
+            - text: ⚠️
+            - generic [ref=e116]: Modelos de IA podem cometer erros de interpretação.
+          - listitem [ref=e117]:
+            - text: ⚠️
+            - generic [ref=e118]: A cobertura de fontes pode ter viés de disponibilidade — veículos sem RSS não são incluídos.
+          - listitem [ref=e119]:
+            - text: ⚠️
+            - generic [ref=e120]: Posições de candidatos evoluem ao longo da campanha; o pipeline atualiza diariamente.
+          - listitem [ref=e121]:
+            - text: ⚠️
+            - generic [ref=e122]: Análise de sentimento não equivale a pesquisa de opinião.
+      - generic [ref=e123]:
+        - heading "Reportar erros" [level=2] [ref=e124]
+        - paragraph [ref=e125]: Encontrou um erro? Abra uma issue no repositório público.
+        - link "Abrir issue no GitHub" [ref=e126] [cursor=pointer]:
+          - /url: https://github.com/carlosduplar/eleicoes-2026-monitor/issues
+      - paragraph [ref=e127]:
+        - link "https://github.com/carlosduplar/eleicoes-2026-monitor" [ref=e128] [cursor=pointer]:
+          - /url: https://github.com/carlosduplar/eleicoes-2026-monitor
+  - contentinfo [ref=e51]:
+    - generic [ref=e52]:
+      - generic [ref=e53]:
+        - heading "Portal Eleições BR 2026" [level=3] [ref=e54]
+        - paragraph [ref=e55]: Monitoramento independente em tempo quase real das eleições presidenciais brasileiras de 2026.
+      - generic [ref=e56]:
+        - heading "Navegação" [level=3] [ref=e57]
+        - list [ref=e58]:
+          - listitem [ref=e59]:
+            - link "Notícias" [ref=e60] [cursor=pointer]:
+              - /url: /eleicoes-2026-monitor
+          - listitem [ref=e61]:
+            - link "Sentimento" [ref=e62] [cursor=pointer]:
+              - /url: /eleicoes-2026-monitor/sentimento
+          - listitem [ref=e63]:
+            - link "Pesquisas" [ref=e64] [cursor=pointer]:
+              - /url: /eleicoes-2026-monitor/pesquisas
+          - listitem [ref=e65]:
+            - link "Quiz" [ref=e66] [cursor=pointer]:
+              - /url: /eleicoes-2026-monitor/quiz
+      - generic [ref=e67]:
+        - heading "Transparência" [level=3] [ref=e68]
+        - list [ref=e69]:
+          - listitem [ref=e70]:
+            - link "Metodologia" [ref=e71] [cursor=pointer]:
+              - /url: /eleicoes-2026-monitor/metodologia
+          - listitem [ref=e72]:
+            - link "Código-fonte aberto" [ref=e73] [cursor=pointer]:
+              - /url: https://github.com/carlosduplar/eleicoes-2026-monitor
+          - listitem [ref=e74]:
+            - link "Projeto sem filiação partidária" [ref=e75] [cursor=pointer]:
+              - /url: /eleicoes-2026-monitor/sobre/caso-de-uso
+    - generic [ref=e76]: © 2026 Portal Eleições BR 2026 - Projeto open-source sem filiação partidária
