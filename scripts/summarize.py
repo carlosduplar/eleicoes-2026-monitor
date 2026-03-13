@@ -721,7 +721,10 @@ def summarize_articles(limit: int = 30) -> tuple[int, int, int]:
     if feedback_changed or not EDITOR_FEEDBACK_FILE.exists():
         editor_feedback.save_editor_feedback(feedback, EDITOR_FEEDBACK_FILE)
 
-    _save_articles_document(articles, wrapper)
+    persisted_articles = [
+        article for article in articles if article.get("status") != "irrelevant"
+    ]
+    _save_articles_document(persisted_articles, wrapper)
     print(
         f"Summarized {summarized_count} articles ({error_count} errors, {skipped_done_count} skipped already-done)"
     )
