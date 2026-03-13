@@ -291,3 +291,50 @@ def test_collect_skips_urls_flagged_in_editor_feedback(
     assert error_count == 0
     assert len(articles) == 1
     assert articles[0]["url"] == "https://news.example/allowed-item"
+
+
+def test_collect_marks_near_duplicate_at_ingestion(
+    isolated_files: tuple[Path, Path, Path],
+    monkeypatch: pytest.MonkeyPatch,
+) -> None:
+    sources_path, articles_path, feedback_path = isolated_files
+    _seed_sources(
+        sources_path,
+        [{"name": "Source A", "url": "https://feed.example/a.xml", "category": "mainstream", "active": True}],
+    )
+    _seed_editor_feedback(feedback_path)
+
+    existing_url = "https://news.example/existing-item"
+    _seed_articles(
+        articles_path,
+        [
+            _article(
+                existing_url,
+                "2026-03-15T10:00:00Z",
+                title="Caiado critica impostos em debate",
+            )
+        ],
+    )
+
+    monkeypatch.setattr(
+        collect_rss,
+        "fetch_feed_entries",
+        lambda _url: [
+            {
+                "link": "https://news.example/new-item",
+                "title": "Caiado critica impostos em debate televisivo",
+                "published": "Sat, 15 Mar 2026 10:30:00 GMT",
+            }
+        ],
+    )
+
+    new_count, source_count, error_count = collect_rss.collect_articles()
+    articles = _read_articles(articles_path)
+    added = next(a for a in articles if a["url"] == "https://news.example/new-item")
+
+    assert new_count == 1
+    assert source_count == 1
+    assert error_count == 0
+    assert added["status"] == "irrelevant"
+    assert isinstance(added.get("narrative_cluster_id"), str)
+    assert added.get("editor_note") == "near-duplicate detected at ingestion"

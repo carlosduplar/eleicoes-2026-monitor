@@ -74,6 +74,17 @@
           "maximum": 1,
           "description": "Score de relevancia eleitoral (0.0-1.0), atribuido pelo Foca."
         },
+        "relevance_signals": {
+          "type": ["object", "null"],
+          "description": "Breakdown de sinais usados para computar relevance_score.",
+          "properties": {
+            "candidate_signal": { "type": "number" },
+            "topic_signal": { "type": "number" },
+            "keyword_signal": { "type": "number" },
+            "source_signal": { "type": "number" }
+          },
+          "additionalProperties": false
+        },
         "candidates_mentioned": {
           "type": "array",
           "items": {
@@ -96,6 +107,10 @@
         "narrative_cluster_id": {
           "type": ["string", "null"],
           "description": "ID do cluster narrativo (duplicatas de mesmo fato)."
+        },
+        "duplicate_of": {
+          "type": ["string", "null"],
+          "description": "ID do artigo canônico quando este item for duplicata."
         },
         "summaries": {
           "type": "object",

@@ -27,6 +27,21 @@ try:
 except ImportError:  # pragma: no cover - direct script execution path
     import editor_feedback  # type: ignore[no-redef]
 
+try:
+    from scripts.sanitize.constants import CANDIDATE_ALIASES, CANONICAL_CANDIDATE_SLUGS
+    from scripts.sanitize.relevance import (
+        compute_relevance_signals,
+        is_elections_relevant_pre_llm,
+        is_relevant_post_llm,
+    )
+except ImportError:  # pragma: no cover - direct script execution path
+    from sanitize.constants import CANDIDATE_ALIASES, CANONICAL_CANDIDATE_SLUGS  # type: ignore[no-redef]
+    from sanitize.relevance import (  # type: ignore[no-redef]
+        compute_relevance_signals,
+        is_elections_relevant_pre_llm,
+        is_relevant_post_llm,
+    )
+
 logger = logging.getLogger(__name__)
 
 API_KEY_PATTERN = re.compile(
@@ -61,95 +76,6 @@ VALID_TOPICS = {
     "eleicoes",
 }
 
-# High-precision election signals: if these are absent, the article is likely generic politics.
-ELECTIONS_HIGH_SIGNAL_KEYWORDS: frozenset[str] = frozenset(
-    {
-        "eleicao",
-        "eleicoes",
-        "eleitoral",
-        "eleitor",
-        "eleitores",
-        "candidato",
-        "candidatos",
-        "candidatura",
-        "campanha eleitoral",
-        "intencao de voto",
-        "pesquisa eleitoral",
-        "pesquisa de voto",
-        "debate presidencial",
-        "plano de governo",
-        "segundo turno",
-        "primeiro turno",
-        "turno",
-        "terceira via",
-        "presidencia",
-        "presidencial",
-        "pre candidato",
-        "pre-candidato",
-        "urna",
-        "urnas",
-        "votacao",
-        "voto",
-        "votos",
-        "tse",
-        "reeleicao",
-        "reeleito",
-        "2026",
-    }
-)
-
-CANDIDATE_SIGNAL_KEYWORDS: frozenset[str] = frozenset(
-    {
-        "lula",
-        "bolsonaro",
-        "flavio bolsonaro",
-        "tarcisio",
-        "caiado",
-        "zema",
-        "ratinho jr",
-        "eduardo leite",
-        "aldo rebelo",
-        "renan santos",
-    }
-)
-
-BRAZIL_CONTEXT_KEYWORDS: frozenset[str] = frozenset(
-    {
-        "brasil",
-        "brasileiro",
-        "brasileira",
-        "brasilia",
-        "palacio do planalto",
-        "planalto",
-        "governo federal",
-        "camara dos deputados",
-        "senado federal",
-        "tse",
-        "stf",
-        "supremo",
-    }
-)
-
-OFF_TOPIC_KEYWORDS: frozenset[str] = frozenset(
-    {
-        "futebol",
-        "esporte",
-        "campeonato",
-        "novela",
-        "entretenimento",
-        "celebridade",
-        "filme",
-        "serie",
-        "horoscopo",
-        "receita",
-        "culinaria",
-        "bem estar",
-        "saude",
-        "dieta",
-        "musica",
-    }
-)
-
 VALID_SENTIMENT_LABELS = {"positivo", "neutro", "negativo"}
 SENTIMENT_TO_SCORE = {"positivo": 1.0, "neutro": 0.0, "negativo": -1.0}
 
@@ -175,42 +101,6 @@ _BLOCKED_CONTENT_PATTERNS: frozenset[str] = frozenset(
         "please wait while we check",
     }
 )
-
-CANONICAL_CANDIDATE_SLUGS = {
-    "lula",
-    "flavio-bolsonaro",
-    "caiado",
-    "zema",
-    "eduardo-leite",
-    "aldo-rebelo",
-    "renan-santos",
-    "ratinho-jr",
-    "tarcisio",
-}
-
-CANDIDATE_ALIASES = {
-    "lula": "lula",
-    "luiz inacio lula da silva": "lula",
-    "flavio bolsonaro": "flavio-bolsonaro",
-    "flavio-bolsonaro": "flavio-bolsonaro",
-    "caiado": "caiado",
-    "ronaldo caiado": "caiado",
-    "zema": "zema",
-    "romeu zema": "zema",
-    "eduardo leite": "eduardo-leite",
-    "eduardo-leite": "eduardo-leite",
-    "aldo rebelo": "aldo-rebelo",
-    "aldo-rebelo": "aldo-rebelo",
-    "renan santos": "renan-santos",
-    "renan-santos": "renan-santos",
-    "ratinho jr": "ratinho-jr",
-    "ratinho-jr": "ratinho-jr",
-    "carlos massa ratinho jr": "ratinho-jr",
-    "carlos massa ratinho junior": "ratinho-jr",
-    "tarcisio": "tarcisio",
-    "tarcisio de freitas": "tarcisio",
-}
-
 
 def utc_now_iso() -> str:
     return (
@@ -390,8 +280,20 @@ def _ensure_article_defaults(article: dict[str, Any]) -> None:
         article["sentiment_score"] = 0.0
     if not isinstance(article.get("confidence_score"), (int, float)):
         article["confidence_score"] = 0.0
-    if not isinstance(article.get("relevance_score"), (int, float)):
-        article["relevance_score"] = 0.0
+    if isinstance(article.get("relevance_score"), (int, float)):
+        article["relevance_score"] = round(
+            max(0.0, min(1.0, float(article["relevance_score"]))), 4
+        )
+    else:
+        article["relevance_score"] = None
+    article["duplicate_of"] = (
+        article.get("duplicate_of") if isinstance(article.get("duplicate_of"), str) else None
+    )
+    article["relevance_signals"] = (
+        article.get("relevance_signals")
+        if isinstance(article.get("relevance_signals"), dict)
+        else None
+    )
 
 
 def _summaries_are_both_empty(article: dict[str, Any]) -> bool:
@@ -439,51 +341,17 @@ def _validate_content_integrity(content: str, title: str) -> tuple[bool, str]:
     return True, ""
 
 
-def _keyword_hits(text: str, keywords: frozenset[str]) -> int:
-    return sum(1 for keyword in keywords if keyword in text)
-
-
 def _is_elections_relevant(
     title: str,
     content: str = "",
     source_category: str = "",
 ) -> bool:
-    """Return True when election-specific signals are strong enough."""
-    if not isinstance(title, str) or not title.strip():
-        return False
-    normalized_title = _normalize_text(title)
-    normalized_content = (
-        _normalize_text(content)[:800] if isinstance(content, str) else ""
+    """Backward-compatible wrapper for pre-LLM relevance gate."""
+    return is_elections_relevant_pre_llm(
+        title=title,
+        content=content,
+        source_category=source_category,
     )
-    normalized_text = f"{normalized_title} {normalized_content}".strip()
-    source_category_normalized = (
-        source_category.strip().lower() if isinstance(source_category, str) else ""
-    )
-
-    high_signal_hits = _keyword_hits(normalized_text, ELECTIONS_HIGH_SIGNAL_KEYWORDS)
-    candidate_hits = _keyword_hits(normalized_text, CANDIDATE_SIGNAL_KEYWORDS)
-    context_hits = _keyword_hits(normalized_text, BRAZIL_CONTEXT_KEYWORDS)
-    off_topic_hits = _keyword_hits(normalized_text, OFF_TOPIC_KEYWORDS)
-
-    if off_topic_hits >= 2 and high_signal_hits == 0 and candidate_hits == 0:
-        return False
-
-    if high_signal_hits >= 2:
-        return True
-
-    if high_signal_hits >= 1 and (candidate_hits >= 1 or context_hits >= 1):
-        return True
-
-    if candidate_hits >= 1 and off_topic_hits < 2:
-        return True
-
-    if (
-        source_category_normalized in {"party", "institutional"}
-        and high_signal_hits >= 1
-    ):
-        return True
-
-    return False
 
 
 def _should_process(article: dict[str, Any]) -> bool:
@@ -643,18 +511,22 @@ def summarize_articles(limit: int = 30) -> tuple[int, int, int]:
         # Validate content integrity before calling LLMs.
         is_valid, reason = _validate_content_integrity(str(content), str(title))
         if not is_valid:
-            error_count += 1
             logger.warning(
-                "Skipping LLM summarization for article %s: %s",
+                "Marking article %s irrelevant due to content integrity: %s",
                 article_id or "<missing-id>",
                 reason,
             )
-            _append_pipeline_error(
-                script="summarize.py",
-                article_id=article_id,
-                provider=None,
-                message=f"content validation failed: {reason}",
-            )
+            article["status"] = "irrelevant"
+            article["editor_note"] = f"auto-filtered: {reason}"
+            article["relevance_score"] = 0.0
+            article["relevance_signals"] = {
+                "candidate_signal": 0.0,
+                "topic_signal": 0.0,
+                "keyword_signal": 0.0,
+                "source_signal": 0.0,
+            }
+            if editor_feedback.add_article_id_to_feedback(feedback, article):
+                feedback_changed = True
             continue
 
         processed_this_run += 1
@@ -743,6 +615,19 @@ def summarize_articles(limit: int = 30) -> tuple[int, int, int]:
         article["_ai_provider"] = provider
         article["_ai_model"] = model
         article["ai_provider_editor"] = model
+        article["relevance_signals"] = compute_relevance_signals(article)
+
+        post_llm_relevant, relevance_score = is_relevant_post_llm(article)
+        article["relevance_score"] = relevance_score
+        if not post_llm_relevant:
+            article["status"] = "irrelevant"
+            article["editor_note"] = (
+                f"auto-filtered: relevance_score={relevance_score:.2f}"
+            )
+            if editor_feedback.add_article_id_to_feedback(feedback, article):
+                feedback_changed = True
+            summarized_count += 1
+            continue
 
         if confidence_score < 0.6:
             article["status"] = "raw"

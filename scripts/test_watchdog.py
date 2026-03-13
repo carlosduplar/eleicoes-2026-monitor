@@ -75,3 +75,37 @@ def test_idempotent_double_run(watchdog_dir: Path) -> None:
     assert isinstance(second_payload, dict)
     assert "workflows" in second_payload
 
+
+def test_watchdog_warns_on_zero_relevance_scores(
+    watchdog_dir: Path,
+    monkeypatch: pytest.MonkeyPatch,
+) -> None:
+    health_file = watchdog_dir / "pipeline_health.json"
+    articles_file = watchdog_dir / "articles.json"
+    articles_file.parent.mkdir(parents=True, exist_ok=True)
+    articles_file.write_text(
+        json.dumps(
+            {
+                "articles": [
+                    {
+                        "id": "aaaaaaaaaaaaaaaa",
+                        "status": "validated",
+                        "relevance_score": 0.0,
+                        "collected_at": "2026-03-15T10:00:00Z",
+                    }
+                ]
+            }
+        ),
+        encoding="utf-8",
+    )
+    monkeypatch.setattr(watchdog, "ARTICLES_FILE", articles_file)
+    monkeypatch.setattr(watchdog, "WORKFLOW_TARGETS", {})
+
+    watchdog.main()
+    payload = _read_health(health_file)
+
+    assert payload["status"] == "warning"
+    relevance = payload.get("relevance_health")
+    assert isinstance(relevance, dict)
+    assert relevance.get("zero_relevance_count") == 1
+

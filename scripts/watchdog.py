@@ -197,25 +197,75 @@ def _summarize_pipeline_errors(now: datetime) -> dict[str, Any]:
     }
 
 
-def _overall_status(workflows: dict[str, dict[str, Any]], error_summary: dict[str, Any]) -> str:
+def _summarize_relevance_health() -> dict[str, Any]:
+    payload = _load_json(ARTICLES_FILE)
+    if isinstance(payload, dict):
+        raw_articles = payload.get("articles")
+    elif isinstance(payload, list):
+        raw_articles = payload
+    else:
+        raw_articles = None
+
+    if not isinstance(raw_articles, list):
+        return {
+            "checked_articles": 0,
+            "zero_relevance_count": 0,
+            "sample_article_ids": [],
+        }
+
+    checked = 0
+    zero_relevance_ids: list[str] = []
+    for item in raw_articles:
+        if not isinstance(item, dict):
+            continue
+        if item.get("status") not in {"validated", "curated"}:
+            continue
+        checked += 1
+        article_id = item.get("id") if isinstance(item.get("id"), str) else "<missing-id>"
+        relevance_score = item.get("relevance_score")
+        if not isinstance(relevance_score, (int, float)) or float(relevance_score) <= 0.0:
+            zero_relevance_ids.append(article_id)
+
+    return {
+        "checked_articles": checked,
+        "zero_relevance_count": len(zero_relevance_ids),
+        "sample_article_ids": zero_relevance_ids[:20],
+    }
+
+
+def _overall_status(
+    workflows: dict[str, dict[str, Any]],
+    error_summary: dict[str, Any],
+    relevance_summary: dict[str, Any],
+) -> str:
     statuses = {details.get("status") for details in workflows.values()}
     if "missing" in statuses or "error" in statuses:
         return "error"
     if "stale" in statuses:
+        return "warning"
+    if int(relevance_summary.get("zero_relevance_count", 0)) > 0:
         return "warning"
     if int(error_summary.get("last_24h_errors", 0)) >= 25:
         return "warning"
     return "ok"
 
 
-def _status_note(overall_status: str, workflows: dict[str, dict[str, Any]], error_summary: dict[str, Any]) -> str:
+def _status_note(
+    overall_status: str,
+    workflows: dict[str, dict[str, Any]],
+    error_summary: dict[str, Any],
+    relevance_summary: dict[str, Any],
+) -> str:
     stale_workflows = [name for name, details in workflows.items() if details.get("status") == "stale"]
     missing_workflows = [name for name, details in workflows.items() if details.get("status") == "missing"]
     recent_errors = int(error_summary.get("last_24h_errors", 0))
+    zero_relevance = int(relevance_summary.get("zero_relevance_count", 0))
 
     if overall_status == "ok":
         return "Pipeline health is stable and all monitored outputs are fresh."
     if overall_status == "warning":
+        if zero_relevance > 0:
+            return f"Found {zero_relevance} validated/curated articles with zero relevance_score."
         if stale_workflows:
             return f"Stale outputs detected: {', '.join(stale_workflows)}."
         return f"Elevated error volume in the last 24h ({recent_errors})."
@@ -237,14 +287,16 @@ def main() -> None:
         for name, details in WORKFLOW_TARGETS.items()
     }
     error_summary = _summarize_pipeline_errors(now)
-    status = _overall_status(workflows, error_summary)
+    relevance_summary = _summarize_relevance_health()
+    status = _overall_status(workflows, error_summary, relevance_summary)
 
     health = {
         "checked_at": _utc_iso(now),
         "status": status,
         "workflows": workflows,
         "error_summary": error_summary,
-        "notes": _status_note(status, workflows, error_summary),
+        "relevance_health": relevance_summary,
+        "notes": _status_note(status, workflows, error_summary, relevance_summary),
     }
     PIPELINE_HEALTH_FILE.parent.mkdir(parents=True, exist_ok=True)
     PIPELINE_HEALTH_FILE.write_text(json.dumps(health, indent=2, ensure_ascii=False) + "\n", encoding="utf-8")

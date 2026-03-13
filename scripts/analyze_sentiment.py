@@ -20,6 +20,11 @@ try:
 except ImportError:  # pragma: no cover - direct script execution path
     import ai_client  # type: ignore[no-redef]
 
+try:
+    from scripts.sanitize.constants import CANDIDATE_ALIASES, CANONICAL_CANDIDATE_SLUGS
+except ImportError:  # pragma: no cover - direct script execution path
+    from sanitize.constants import CANDIDATE_ALIASES, CANONICAL_CANDIDATE_SLUGS  # type: ignore[no-redef]
+
 logger = logging.getLogger(__name__)
 
 ROOT_DIR = Path(__file__).resolve().parents[1]
@@ -68,41 +73,6 @@ VALID_SOURCE_CATEGORIES = {
 }
 VALID_SENTIMENT_LABELS = {"positivo", "neutro", "negativo"}
 LABEL_TO_SCORE = {"positivo": 1.0, "neutro": 0.0, "negativo": -1.0}
-
-CANONICAL_CANDIDATE_SLUGS = {
-    "lula",
-    "flavio-bolsonaro",
-    "caiado",
-    "zema",
-    "eduardo-leite",
-    "aldo-rebelo",
-    "renan-santos",
-    "ratinho-jr",
-    "tarcisio",
-}
-CANDIDATE_ALIASES = {
-    "lula": "lula",
-    "luiz inacio lula da silva": "lula",
-    "flavio bolsonaro": "flavio-bolsonaro",
-    "flavio-bolsonaro": "flavio-bolsonaro",
-    "caiado": "caiado",
-    "ronaldo caiado": "caiado",
-    "zema": "zema",
-    "romeu zema": "zema",
-    "eduardo leite": "eduardo-leite",
-    "eduardo-leite": "eduardo-leite",
-    "aldo rebelo": "aldo-rebelo",
-    "aldo-rebelo": "aldo-rebelo",
-    "renan santos": "renan-santos",
-    "renan-santos": "renan-santos",
-    "ratinho jr": "ratinho-jr",
-    "ratinho-jr": "ratinho-jr",
-    "carlos massa ratinho jr": "ratinho-jr",
-    "carlos massa ratinho junior": "ratinho-jr",
-    "tarcisio": "tarcisio",
-    "tarcisio de freitas": "tarcisio",
-}
-
 
 def utc_now_iso() -> str:
     return (

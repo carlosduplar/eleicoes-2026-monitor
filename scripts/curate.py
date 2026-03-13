@@ -16,6 +16,11 @@ try:
 except ImportError:  # pragma: no cover - direct script execution path
     import extract_quiz_positions  # type: ignore[no-redef]
 
+try:
+    from scripts.sanitize.constants import SOURCE_CATEGORY_WEIGHTS
+except ImportError:  # pragma: no cover - direct script execution path
+    from sanitize.constants import SOURCE_CATEGORY_WEIGHTS  # type: ignore[no-redef]
+
 logger = logging.getLogger(__name__)
 
 ROOT_DIR = Path(__file__).resolve().parents[1]
@@ -36,17 +41,6 @@ WEEK_WINDOW_DAYS = 7
 PROMOTION_THRESHOLD = 0.8
 MAX_FEED_ITEMS = 80
 MAX_BRIEFING_TOP_ARTICLES = 10
-
-SOURCE_CATEGORY_WEIGHTS = {
-    "politics": 0.95,
-    "mainstream": 0.8,
-    "magazine": 0.7,
-    "international": 0.65,
-    "institutional": 0.6,
-    "party": 0.55,
-    "social": 0.5,
-}
-
 
 def _utc_iso(dt: datetime | None = None) -> str:
     current = dt or datetime.now(timezone.utc)
