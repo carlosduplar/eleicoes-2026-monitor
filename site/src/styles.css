@@ -221,6 +221,8 @@ p {
   margin-bottom: 1rem;
   overflow-x: auto;
   scrollbar-width: none;
+  -webkit-overflow-scrolling: touch;
+  padding: 0.25rem 0;
 }
 
 .source-filters::-webkit-scrollbar {
@@ -238,6 +240,9 @@ p {
   cursor: pointer;
   white-space: nowrap;
   flex-shrink: 0;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .source-filter-button.active {
@@ -1381,7 +1386,7 @@ p {
 
   .source-filter-button {
     font-size: 11px;
-    padding: 10px 12px;
+    padding: 0 0.75rem;
     min-height: 44px;
   }
 
@@ -2009,8 +2014,7 @@ body.quiz-immersive .main-content {
 @media (max-width: 768px) {
   .source-filter-button {
     min-height: 44px;
-    min-width: 44px;
-    padding: 10px 16px;
+    padding: 0 1rem;
   }
 
   .lang-button {
