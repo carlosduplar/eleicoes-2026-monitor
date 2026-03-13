@@ -1,4 +1,4 @@
-name: Collect (Foca)
+name: Collect (Reporter)
 
 on:
   workflow_dispatch:
@@ -96,7 +96,7 @@ jobs:
             echo "No changes to commit."
             exit 0
           fi
-          git commit -m "chore(ci): foca automated data refresh"
+          git commit -m "chore(ci): reporter automated data refresh"
 
           for attempt in 1 2 3; do
             git fetch origin master
