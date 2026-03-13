@@ -214,6 +214,11 @@ p {
   gap: 0.5rem;
   margin-bottom: 1rem;
   overflow-x: auto;
+  scrollbar-width: none;
+}
+
+.source-filters::-webkit-scrollbar {
+  display: none;
 }
 
 .source-filter-button {
@@ -221,10 +226,12 @@ p {
   border-radius: 999px;
   padding: 0.25rem 0.75rem;
   font-size: 0.75rem;
+  font-weight: 500;
   background: transparent;
   color: var(--text-secondary);
   cursor: pointer;
   white-space: nowrap;
+  flex-shrink: 0;
 }
 
 .source-filter-button.active {
@@ -1838,14 +1845,33 @@ p {
   }
 }
 
-/* Hide desktop nav on mobile, show bottom nav */
+/* Slim mobile header: hide nav links, keep logo + language switcher */
 @media (max-width: 768px) {
-  .top-nav {
+  .top-nav-links {
+    display: none;
+  }
+
+  .top-nav-inner {
+    grid-template-columns: 1fr auto;
+    min-height: 48px;
+    gap: 0.5rem;
+    padding: 0.4rem 0;
+  }
+
+  .language-switcher {
+    justify-self: auto;
+  }
+
+  .home-sidebar {
+    display: none;
+  }
+
+  .site-footer {
     display: none;
   }
 
   .main-content {
-    padding-bottom: 72px;
+    padding-bottom: calc(72px + env(safe-area-inset-bottom));
   }
 }
 
