@@ -3,38 +3,44 @@
   "subtitle": "Como funciona o Portal Eleições BR 2026",
   "disclaimer": {
     "heading": "Declaração de Independência",
-    "body": "Este portal é um projeto independente, sem filiação partidária ou financiamento eleitoral. Não há intervenção editorial de nenhuma forma: os artigos são coletados automaticamente de fontes públicas, os resumos são gerados por inteligência artificial, e as análises de sentimento são derivadas algoritmicamente. O código-fonte completo está disponível para consulta e auditoria pública em github.com/carlosduplar/eleicoes-2026-monitor."
+    "body": "Este portal é um projeto independente, sem filiação partidária ou financiamento eleitoral. Não há intervenção editorial humana: os artigos são coletados automaticamente de fontes públicas, os resumos são gerados por inteligência artificial, e as análises de sentimento são derivadas algoritmicamente. Um mecanismo de feedback editorial automatizado filtra conteúdo irrelevante sem interferência manual. O código-fonte completo está disponível para consulta e auditoria pública em github.com/carlosduplar/eleicoes-2026-monitor."
   },
   "pipeline": {
     "heading": "Como funciona o pipeline",
     "collection": {
       "label": "Coleta",
-      "body": "RSS de 20 veículos + scraping de sites partidários e institutos de pesquisa, a cada 10 minutos via GitHub Actions."
+      "body": "RSS de 21 veículos, scraping de 8 sites partidários, 10 institutos de pesquisa e monitoramento de YouTube, a cada 10 minutos via GitHub Actions. Artigos irrelevantes são filtrados automaticamente por um mecanismo de feedback editorial que rastreia palavras-chave, URLs e fontes bloqueadas."
     },
     "summarization": {
       "label": "Sumarização",
-      "body": "Modelos de linguagem open-source com fallback hierárquico: NVIDIA NIM (gratuito) → OpenRouter (gratuito, 200 req/dia) → Ollama Cloud (gratuito) → Vertex AI Gemini 2.5 Flash Lite (pago prioritário) → MiMo V2 Flash."
+      "body": "Modelos de linguagem open-source com fallback hierárquico: Ollama Cloud (Nemotron 3 Super, primário gratuito) → NVIDIA NIM (Nemotron 3 Super 120B, gratuito) → Ollama Cloud (MiniMax M2.5, reserva) → Vertex AI (Gemini 3 Flash Preview, pago emergencial) → MiMo V2 Flash (pago emergencial). Um circuit breaker e limite por execução evitam desperdício de chamadas quando provedores estão indisponíveis."
     },
     "sentiment": {
       "label": "Sentimento",
-      "body": "Análise algorítmica do tom das notícias coletadas. Os scores refletem o tom das manchetes e resumos — não uma avaliação editorial ou pesquisa de opinião."
+      "body": "Análise algorítmica do tom das notícias coletadas, processada em lotes com limites por execução. Os scores refletem o tom das manchetes e resumos — não uma avaliação editorial ou pesquisa de opinião."
     },
     "polls": {
       "label": "Pesquisas Eleitorais",
-      "body": "Dados coletados automaticamente dos sites dos institutos. Reproduzidos sem modificação editorial."
+      "body": "Dados coletados automaticamente de 10 institutos (Datafolha, Quaest, AtlasIntel, Paraná Pesquisas, PoderData, Real Time Big Data, Futura Inteligência, Ipsos, MDA e Ideia). Reproduzidos sem modificação editorial."
     },
     "quiz": {
       "label": "Quiz de Afinidade",
-      "body": "Posições extraídas de declarações verificadas nas notícias coletadas. Fontes exibidas no resultado — nunca durante as perguntas."
+      "body": "Posições extraídas de declarações verificadas nas notícias coletadas, com filtragem de confiança. Fontes exibidas no resultado — nunca durante as perguntas."
+    },
+    "editorial_feedback": {
+      "label": "Feedback Editorial",
+      "body": "Mecanismo automatizado que rastreia artigos irrelevantes, palavras-chave bloqueadas, padrões de URL e fontes excluídas. Artigos marcados como irrelevantes são removidos durante a sumarização e não aparecem no feed público."
     }
   },
   "limitations": {
     "heading": "Limitações conhecidas",
     "items": [
-      "Modelos de IA podem cometer erros de interpretação.",
-      "A cobertura de fontes pode ter viés de disponibilidade — veículos sem RSS não são incluídos.",
-      "Posições de candidatos evoluem ao longo da campanha; o pipeline atualiza diariamente.",
-      "Análise de sentimento não equivale a pesquisa de opinião."
+      "Modelos de IA podem cometer erros de interpretação — o pipeline usa múltiplos provedores em fallback para mitigar falhas.",
+      "A cobertura de fontes pode ter viés de disponibilidade — veículos sem RSS ou com paywall não são incluídos.",
+      "Posições de candidatos evoluem ao longo da campanha; o pipeline atualiza diariamente via quiz automatizado.",
+      "Análise de sentimento não equivale a pesquisa de opinião.",
+      "Provedores de IA gratuitos podem ficar indisponíveis temporariamente — o circuit breaker garante continuidade sem desperdício.",
+      "O monitoramento de YouTube usa throttling de 30 minutos para respeitar cotas de API."
     ]
   },
   "error_reporting": {
