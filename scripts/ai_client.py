@@ -296,7 +296,7 @@ def _request_completion(
         url = f"{base_env}/publishers/google/models/{provider['model']}:generateContent"
         data = {
             "contents": [{"role": "user", "parts": [{"text": f"{system}\n\n{user}"}]}],
-            "generationConfig": {"maxOutputTokens": max_tokens},
+            "generationConfig": {"maxOutputTokens": 8192},
         }
         req = urllib.request.Request(
             url,
