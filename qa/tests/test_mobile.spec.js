@@ -9,9 +9,12 @@ test.describe('Mobile layout (390px)', () => {
     await expect(page.locator('.bottom-nav')).toBeVisible();
   });
 
-  test('desktop Nav is hidden', async ({ page }) => {
+  test('slim mobile header is visible (logo + lang switcher, no nav links)', async ({ page }) => {
     await page.goto('');
-    await expect(page.locator('.top-nav')).toBeHidden();
+    await expect(page.locator('.top-nav')).toBeVisible();
+    await expect(page.locator('.top-nav-links')).toBeHidden();
+    await expect(page.locator('.top-nav-logo')).toBeVisible();
+    await expect(page.locator('.language-switcher')).toBeVisible();
   });
 
   test('quiz is immersive (no nav)', async ({ page }) => {
