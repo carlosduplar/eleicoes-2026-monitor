@@ -42,11 +42,17 @@ def test_provider_chain_nvidia_primary_ollama_fallback() -> None:
     # Ollama Nemotron must be the first Ollama entry (1st fallback)
     ollama_models = [model for name, model in provider_models if name == "ollama"]
     assert ollama_models[0] == "nemotron-3-super:cloud"
-    # Ollama MiniMax must be the second Ollama entry (2nd fallback)
-    assert ollama_models[1] == "minimax-m2.5:cloud"
 
     # OpenRouter must not appear in the chain
     assert "openrouter" not in provider_names
+
+    # Vertex should be in the chain
+    vertex_models = [model for name, model in provider_models if name == "vertex"]
+    assert vertex_models[0] == "gemini-1.5-flash"
+    
+    # Mimo should be in the chain
+    mimo_models = [model for name, model in provider_models if name == "mimo"]
+    assert mimo_models[0] == "mimo-v2-flash"
 
 
 def test_request_completion_openrouter_uses_optional_headers(

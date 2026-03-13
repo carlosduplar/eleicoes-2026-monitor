@@ -87,12 +87,10 @@ NVIDIA_MODELS: dict[str, str] = {
     "quiz_extract": "nvidia/nemotron-3-super-120b-a12b",
 }
 
-NVIDIA_FALLBACKS: list[str] = [
-]
+NVIDIA_FALLBACKS: list[str] = []
 
 OLLAMA_MODELS: list[str] = [
     "nemotron-3-super:cloud",
-    "minimax-m2.5:cloud",
 ]
 
 
@@ -147,9 +145,9 @@ def _provider_chain_for_task(task: str) -> list[ProviderConfig]:
         ],
         {
             "name": "vertex",
-            "base_url": os.environ.get("VERTEX_BASE_URL", "").strip(),
+            "base_url": "VERTEX_BASE_URL",
             "key_env": "VERTEX_ACCESS_TOKEN",
-            "model": "google/gemini-2.5-flash-lite-001",
+            "model": "gemini-1.5-flash",
             "paid": True,
         },
         {
@@ -287,20 +285,53 @@ def _request_completion(
     user: str,
     max_tokens: int,
 ) -> str:
+    if provider.get("name") == "vertex":
+        import json
+        import urllib.request
+
+        base_env = os.environ.get("VERTEX_BASE_URL", "").rstrip("/")
+        if not base_env:
+            raise ValueError("VERTEX_BASE_URL environment variable is missing.")
+
+        url = f"{base_env}/publishers/google/models/{provider['model']}:generateContent"
+        data = {
+            "contents": [{"role": "user", "parts": [{"text": f"{system}\n\n{user}"}]}],
+            "generationConfig": {"maxOutputTokens": max_tokens},
+        }
+        req = urllib.request.Request(
+            url,
+            data=json.dumps(data).encode("utf-8"),
+            headers={
+                "Content-Type": "application/json",
+                "Authorization": f"Bearer {api_key}",
+            },
+            method="POST",
+        )
+        with urllib.request.urlopen(req) as response:
+            resp_data = json.loads(response.read().decode("utf-8"))
+            try:
+                return resp_data["candidates"][0]["content"]["parts"][0]["text"]
+            except (KeyError, IndexError) as e:
+                raise ValueError(
+                    f"Unexpected Vertex response format: {resp_data}"
+                ) from e
+
     client_kwargs: dict[str, object] = {
         "api_key": api_key,
         "base_url": provider["base_url"],
     }
+
+    default_headers: dict[str, str] = {}
     if provider.get("name") == "openrouter":
-        default_headers: dict[str, str] = {}
         http_referer = os.environ.get("OPENROUTER_HTTP_REFERER", "").strip()
         app_title = os.environ.get("OPENROUTER_APP_TITLE", "").strip()
         if http_referer:
             default_headers["HTTP-Referer"] = http_referer
         if app_title:
             default_headers["X-Title"] = app_title
-        if default_headers:
-            client_kwargs["default_headers"] = default_headers
+
+    if default_headers:
+        client_kwargs["default_headers"] = default_headers
 
     client = openai.OpenAI(**client_kwargs)
     kwargs: dict[str, object] = {
@@ -317,7 +348,19 @@ def _request_completion(
         disable_body = _THINKING_DISABLE_EXTRA_BODY.get(provider.get("model", ""))
         if disable_body:
             kwargs["extra_body"] = disable_body
-    response = client.chat.completions.create(**kwargs)  # type: ignore[arg-type]
+    elif provider.get("name") == "mimo":
+        kwargs["extra_body"] = {"thinking": {"type": "disabled"}}
+
+    try:
+        response = client.chat.completions.create(**kwargs)  # type: ignore[arg-type]
+    except Exception as e:
+        if provider.get("name") == "mimo":
+            logger.warning(
+                "[AI] MiMo request failed. API key length: %d, base_url: %s",
+                len(api_key),
+                provider.get("base_url", "missing"),
+            )
+        raise
     return _extract_content_from_response(response)
 
 
@@ -340,7 +383,12 @@ def _call_with_fallback_for_task(
         if not api_key:
             logger.info("[AI] %s skipped: missing %s.", name, key_env)
             continue
-        if not base_url:
+        
+        if base_url == "VERTEX_BASE_URL":
+            if not os.environ.get("VERTEX_BASE_URL", "").strip():
+                logger.info("[AI] %s skipped: missing VERTEX_BASE_URL in env.", name)
+                continue
+        elif not base_url:
             logger.info("[AI] %s skipped: missing base URL.", name)
             continue
 
@@ -393,6 +441,10 @@ def _call_with_fallback_for_task(
                 )
             else:
                 logger.warning("[AI] %s failed: %s", name, exc)
+                if name == "mimo":
+                    logger.warning(
+                        "[AI] MiMo API key status: %s", "set" if api_key else "missing"
+                    )
 
     error_details = (
         "; ".join(error_messages) if error_messages else "no providers configured"
