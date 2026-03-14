@@ -1,31 +1,31 @@
 {
-  "checked_at": "2026-03-13T07:08:56Z",
+  "checked_at": "2026-03-14T06:43:26Z",
   "status": "warning",
   "workflows": {
     "foca_collect": {
-      "status": "stale",
+      "status": "ok",
       "path": "data/articles.json",
       "exists": true,
-      "last_update": "2026-03-13T05:07:04Z",
-      "age_minutes": 121,
+      "last_update": "2026-03-14T06:05:01Z",
+      "age_minutes": 38,
       "stale_after_minutes": 120,
-      "details": "foca_collect data is older than expected freshness window"
+      "details": "foca_collect data freshness is within expected window"
     },
     "editor_validate": {
-      "status": "stale",
+      "status": "ok",
       "path": "data/sentiment.json",
       "exists": true,
-      "last_update": "2026-03-13T02:52:08Z",
-      "age_minutes": 256,
+      "last_update": "2026-03-14T05:55:09Z",
+      "age_minutes": 48,
       "stale_after_minutes": 180,
-      "details": "editor_validate data is older than expected freshness window"
+      "details": "editor_validate data freshness is within expected window"
     },
     "editor_chefe_curate": {
       "status": "stale",
       "path": "data/curated_feed.json",
       "exists": true,
-      "last_update": "2026-03-12T13:54:21Z",
-      "age_minutes": 1034,
+      "last_update": "2026-03-13T16:25:02Z",
+      "age_minutes": 858,
       "stale_after_minutes": 240,
       "details": "editor_chefe_curate data is older than expected freshness window"
     },
@@ -33,8 +33,8 @@
       "status": "ok",
       "path": "data/weekly_briefing.json",
       "exists": true,
-      "last_update": "2026-03-12T13:54:21Z",
-      "age_minutes": 1034,
+      "last_update": "2026-03-13T16:25:02Z",
+      "age_minutes": 858,
       "stale_after_minutes": 1440,
       "details": "weekly_briefing data freshness is within expected window"
     },
@@ -42,8 +42,8 @@
       "status": "ok",
       "path": "data/quiz.json",
       "exists": true,
-      "last_update": "2026-03-13T02:45:42Z",
-      "age_minutes": 263,
+      "last_update": "2026-03-13T16:01:32Z",
+      "age_minutes": 881,
       "stale_after_minutes": 2160,
       "details": "quiz_refresh data freshness is within expected window"
     },
@@ -52,20 +52,46 @@
       "path": "data/polls.json",
       "exists": true,
       "last_update": "2026-03-10T13:41:37Z",
-      "age_minutes": 3927,
+      "age_minutes": 5341,
       "stale_after_minutes": 1440,
       "details": "polls_collect data is older than expected freshness window"
     }
   },
   "error_summary": {
     "exists": true,
-    "total_errors": 1184,
-    "last_24h_errors": 70,
+    "total_errors": 1343,
+    "last_24h_errors": 159,
     "by_tier": {
-      "editor": 1151,
-      "foca": 33
+      "editor": 1249,
+      "foca": 94
     },
-    "last_error_at": "2026-03-13T04:53:18Z"
+    "last_error_at": "2026-03-14T05:55:42Z"
   },
-  "notes": "Stale outputs detected: foca_collect, editor_validate, editor_chefe_curate, polls_collect."
+  "relevance_health": {
+    "checked_articles": 500,
+    "zero_relevance_count": 371,
+    "sample_article_ids": [
+      "1502f3a5a87958b1",
+      "c5c65026562f5395",
+      "4fc4e75ca4321896",
+      "5789c892d239390c",
+      "189a6c6ee0867622",
+      "ffd3ebd179a3c453",
+      "6d72e2f343dcc0c1",
+      "1f8fa8ebc9573730",
+      "2a02cb996c97caa3",
+      "e90153f715fd609c",
+      "c362b634207acb9c",
+      "52a09eb82ad0f6d6",
+      "eba8404a2f02deff",
+      "1ca790bb03b8c8d0",
+      "acf3d71fb1529f27",
+      "43cc9d4f19ad11e9",
+      "9c2c8e374ead70b0",
+      "7fb4f99bb4ce8cdc",
+      "fbcde4dca17aefe4",
+      "428bb5cb7a60647f"
+    ]
+  },
+  "notes": "Found 371 validated/curated articles with zero relevance_score."
 }
