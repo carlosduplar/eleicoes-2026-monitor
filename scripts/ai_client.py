@@ -153,23 +153,9 @@ def _provider_chain_for_task(task: str) -> list[ProviderConfig]:
             {
                 "name": "vertex",
                 "base_url": "VERTEX_BASE_URL",
-                "key_env": "VERTEX_ACCESS_TOKEN",
+                "key_env": "VERTEX_API_KEY",
                 "model": _get_vertex_model(task),
                 "paid": True,
-            },
-            {
-                "name": "nvidia",
-                "base_url": "https://integrate.api.nvidia.com/v1",
-                "key_env": "NVIDIA_API_KEY",
-                "model": "moonshotai/kimi-k2.5",
-                "paid": False,
-            },
-            {
-                "name": "nvidia",
-                "base_url": "https://integrate.api.nvidia.com/v1",
-                "key_env": "NVIDIA_API_KEY",
-                "model": "minimaxai/minimax-m2.5",
-                "paid": False,
             },
             {
                 "name": "nvidia",
@@ -192,23 +178,9 @@ def _provider_chain_for_task(task: str) -> list[ProviderConfig]:
             {
                 "name": "vertex",
                 "base_url": "VERTEX_BASE_URL",
-                "key_env": "VERTEX_ACCESS_TOKEN",
+                "key_env": "VERTEX_API_KEY",
                 "model": _get_vertex_model(task),
                 "paid": True,
-            },
-            {
-                "name": "nvidia",
-                "base_url": "https://integrate.api.nvidia.com/v1",
-                "key_env": "NVIDIA_API_KEY",
-                "model": "moonshotai/kimi-k2.5",
-                "paid": False,
-            },
-            {
-                "name": "nvidia",
-                "base_url": "https://integrate.api.nvidia.com/v1",
-                "key_env": "NVIDIA_API_KEY",
-                "model": "minimaxai/minimax-m2.5",
-                "paid": False,
             },
             {
                 "name": "nvidia",
@@ -397,26 +369,25 @@ def _request_completion(
         import json
         import urllib.request
 
-        base_env = os.environ.get("VERTEX_BASE_URL", "").rstrip("/")
-        if not base_env:
-            raise ValueError("VERTEX_BASE_URL environment variable is missing.")
+        api_key = os.environ.get("VERTEX_API_KEY", "").strip()
+        if not api_key:
+            raise ValueError("VERTEX_API_KEY environment variable is missing.")
 
-        url = f"{base_env}/publishers/google/models/{provider['model']}:generateContent"
+        url = f"https://aiplatform.googleapis.com/v1/publishers/google/models/{provider['model']}:streamGenerateContent"
         data = {
             "contents": [{"role": "user", "parts": [{"text": f"{system}\n\n{user}"}]}],
             "generationConfig": {"maxOutputTokens": 8192},
         }
         req = urllib.request.Request(
-            url,
+            f"{url}?key={api_key}",
             data=json.dumps(data).encode("utf-8"),
-            headers={
-                "Content-Type": "application/json",
-                "Authorization": f"Bearer {api_key}",
-            },
+            headers={"Content-Type": "application/json"},
             method="POST",
         )
         with urllib.request.urlopen(req) as response:
             resp_data = json.loads(response.read().decode("utf-8"))
+            if isinstance(resp_data, list):
+                resp_data = resp_data[0]
             try:
                 return resp_data["candidates"][0]["content"]["parts"][0]["text"]
             except (KeyError, IndexError) as e:
