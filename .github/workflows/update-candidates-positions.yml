@@ -51,7 +51,7 @@ jobs:
           fi
 
       - name: Extract draft positions
-        run: python scripts/extract_positions_from_articles.py --output data/candidates_positions_draft.json
+        run: python -m scripts.extract_positions_from_articles --output data/candidates_positions_draft.json
 
       - name: Commit draft file
         run: |
