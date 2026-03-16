@@ -198,8 +198,8 @@ def test_quiz_output_conforms_to_schema(tmp_path: Path, monkeypatch: pytest.Monk
         stance_cycle = ["favor", "neutral", "against"]
         stance = stance_cycle[candidate_index % len(stance_cycle)]
         return {
-            "position_pt": f"{candidate} defende proposta para {topic_id}",
-            "position_en": f"{candidate} supports proposal for {topic_id}",
+            "position_pt": f"O governo deve ampliar as políticas de {topic_id} com metas claras e financiamento adequado.",
+            "position_en": f"The government should expand {topic_id} policies with clear goals and adequate funding.",
             "stance": stance,
             "confidence": "high",
             "best_source_snippet_index": 1,
@@ -228,4 +228,54 @@ def test_quiz_output_conforms_to_schema(tmp_path: Path, monkeypatch: pytest.Monk
             for slug in quiz_positions.CANDIDATES:
                 assert slug not in option["text_pt"].lower()
                 assert slug not in option["text_en"].lower()
+
+
+def test_local_quality_check_valid_position() -> None:
+    """A well-formed policy stance passes the quality check."""
+    text_pt = "O governo deve ampliar investimentos em infraestrutura e priorizar empregos formais para todos os brasileiros."
+    text_en = "The government should expand infrastructure investment and prioritize formal jobs for all Brazilians."
+    assert quiz_positions._local_quality_check(text_pt, text_en) is True
+
+
+def test_local_quality_check_rejects_polling_data() -> None:
+    """Text containing approval/polling data is rejected."""
+    text_pt = "O candidato tem aprovação de 43% e desaprovação de 51% segundo pesquisa Ipsos."
+    text_en = "The candidate has an approval rating of 43% according to a survey."
+    assert quiz_positions._local_quality_check(text_pt, text_en) is False
+
+
+def test_local_quality_check_rejects_investigation_text() -> None:
+    """Text describing an investigation or scandal is rejected."""
+    text_pt = "O candidato está sob investigação por desvio de verbas públicas."
+    text_en = "The candidate is under investigation for misuse of public funds."
+    assert quiz_positions._local_quality_check(text_pt, text_en) is False
+
+
+def test_local_quality_check_rejects_null_string() -> None:
+    """The literal string 'null' is rejected."""
+    assert quiz_positions._local_quality_check("null", "null") is False
+
+
+def test_local_quality_check_rejects_empty_string() -> None:
+    """Empty strings are rejected."""
+    assert quiz_positions._local_quality_check("", "") is False
+
+
+def test_local_quality_check_rejects_too_short() -> None:
+    """Texts with fewer than 8 words are rejected."""
+    assert quiz_positions._local_quality_check("Contra impostos.", "Against taxes.") is False
+
+
+def test_local_quality_check_rejects_template_placeholder() -> None:
+    """Template text from the AI prompt leaking into the output is rejected."""
+    text_pt = "posicao em portugues, ou null"
+    text_en = "position in English, or null"
+    assert quiz_positions._local_quality_check(text_pt, text_en) is False
+
+
+def test_local_quality_check_rejects_article_meta_commentary() -> None:
+    """Text that describes the article rather than a policy stance is rejected."""
+    text_pt = "O texto apresenta diversas críticas ao candidato e menciona baixa aprovação."
+    text_en = "The text presents various criticisms of the candidate and mentions low approval."
+    assert quiz_positions._local_quality_check(text_pt, text_en) is False
 
