@@ -33,7 +33,7 @@ jobs:
           OLLAMA_API_KEY: ${{ secrets.OLLAMA_API_KEY }}
           VERTEX_ACCESS_TOKEN: ${{ secrets.VERTEX_ACCESS_TOKEN }}
           VERTEX_BASE_URL: ${{ secrets.VERTEX_BASE_URL }}
-        run: python scripts/generate_quiz.py
+        run: python -m scripts.generate_quiz
       - name: Commit quiz data
         run: |
           git config user.name "github-actions[bot]"
