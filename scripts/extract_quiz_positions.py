@@ -55,9 +55,47 @@ OPTION_LETTERS = ["opt_a", "opt_b", "opt_c", "opt_d", "opt_e", "opt_f"]
 WEIGHT_TO_STANCE = {2: "favor", 0: "neutral", -2: "against"}
 CONFIDENCE_ALLOWED = {"high", "medium"}
 
+# Substrings whose presence in a position text indicates AI slop (news events,
+# polling data, or template placeholder leakage) rather than a policy stance.
+_QUALITY_REJECTION_SUBSTRINGS = (
+    "pesquisa",
+    "investigação",
+    "investigacao",
+    "aprovação",
+    "desaprovação",
+    "aprovacao",
+    "desaprovacao",
+    "percentual",
+    "sondagem",
+    "denúncia",
+    "denuncia",
+    "inquérito",
+    "inquerito",
+    "posicao em portugues",
+    "position in english",
+    "ou null",
+)
+# Prefixes that indicate the model described the article rather than the stance.
+_QUALITY_REJECTION_PREFIXES = (
+    "o texto apresenta",
+    "o texto descreve",
+    "the text presents",
+    "the text describes",
+)
+
 CANDIDATE_NAME_VARIANTS = {
-    "lula": ["lula", "presidente lula", "luiz inacio lula da silva", "luiz inácio lula da silva"],
-    "flavio-bolsonaro": ["flavio bolsonaro", "flávio bolsonaro", "bolsonaro", "eduardo bolsonaro"],
+    "lula": [
+        "lula",
+        "presidente lula",
+        "luiz inacio lula da silva",
+        "luiz inácio lula da silva",
+    ],
+    "flavio-bolsonaro": [
+        "flavio bolsonaro",
+        "flávio bolsonaro",
+        "bolsonaro",
+        "eduardo bolsonaro",
+    ],
     "tarcisio": ["tarcisio", "tarcísio", "tarcisio de freitas", "tarcísio de freitas"],
     "caiado": ["caiado", "ronaldo caiado"],
     "zema": ["zema", "romeu zema"],
@@ -169,34 +207,45 @@ def _is_valid_position(position: dict[str, object]) -> bool:
     return confidence in CONFIDENCE_ALLOWED and weight is not None
 
 
-def _fallback_position(candidate: str, topic_id: str, snippets: list[str]) -> dict[str, object] | None:
-    if not snippets:
-        return None
+def _fallback_position(
+    candidate: str, topic_id: str, snippets: list[str]
+) -> dict[str, object] | None:
+    # Do not fabricate positions: a made-up generic stance is worse than no data.
+    # Callers should skip the candidate/topic pair when this returns None.
+    del candidate, topic_id, snippets
+    return None
 
-    topic_label = topic_id.replace("_", " ")
-    topic_index = QUIZ_TOPICS.index(topic_id) if topic_id in QUIZ_TOPICS else 0
-    candidate_index = CANDIDATES.index(candidate) if candidate in CANDIDATES else 0
-    stance = ["favor", "neutral", "against"][(topic_index + candidate_index) % 3]
 
-    if stance == "favor":
-        text_pt = f"Ampliar politicas para {topic_label} com coordenacao nacional e metas publicas."
-        text_en = f"Expand {topic_label} policies with national coordination and clear public goals."
-    elif stance == "against":
-        text_pt = f"Reduzir intervencao federal em {topic_label}, priorizando autonomia local."
-        text_en = f"Reduce federal intervention on {topic_label}, prioritizing local autonomy."
-    else:
-        text_pt = f"Adotar abordagem equilibrada para {topic_label}, com ajustes graduais."
-        text_en = f"Adopt a balanced approach for {topic_label}, with gradual policy adjustments."
+def _local_quality_check(text_pt: str, text_en: str) -> bool:
+    """Return True if the position text looks like a genuine policy stance.
 
-    return {
-        "position_pt": text_pt,
-        "position_en": text_en,
-        "stance": stance,
-        "confidence": "medium",
-        "best_source_snippet_index": 1,
-        "source_pt": f"Trecho 1: {snippets[0][:220]}",
-        "source_en": f"Snippet 1: {snippets[0][:220]}",
-    }
+    Rejects: empty/null strings, template placeholders, polling/investigation
+    data, meta-commentary about the source article, and texts too short or
+    too long to be a policy position.
+    """
+    normalized_pt = text_pt.strip().lower()
+    normalized_en = text_en.strip().lower()
+
+    if not normalized_pt or normalized_pt in ("null", "none"):
+        return False
+
+    for exact in ("null", "none"):
+        if normalized_pt == exact or normalized_en == exact:
+            return False
+
+    words = [w for w in re.split(r"\s+", normalized_pt) if w]
+    if len(words) < 8 or len(words) > 80:
+        return False
+
+    for substring in _QUALITY_REJECTION_SUBSTRINGS:
+        if substring in normalized_pt or substring in normalized_en:
+            return False
+
+    for prefix in _QUALITY_REJECTION_PREFIXES:
+        if normalized_pt.startswith(prefix) or normalized_en.startswith(prefix):
+            return False
+
+    return True
 
 
 def _sanitize_option_text(text: str, language: str) -> str:
@@ -206,9 +255,13 @@ def _sanitize_option_text(text: str, language: str) -> str:
     for slug in CANDIDATES:
         slug_with_space = slug.replace("-", " ")
         cleaned = re.sub(re.escape(slug), replacement, cleaned, flags=re.IGNORECASE)
-        cleaned = re.sub(re.escape(slug_with_space), replacement, cleaned, flags=re.IGNORECASE)
+        cleaned = re.sub(
+            re.escape(slug_with_space), replacement, cleaned, flags=re.IGNORECASE
+        )
         for variant in CANDIDATE_NAME_VARIANTS.get(slug, []):
-            cleaned = re.sub(rf"\b{re.escape(variant)}\b", replacement, cleaned, flags=re.IGNORECASE)
+            cleaned = re.sub(
+                rf"\b{re.escape(variant)}\b", replacement, cleaned, flags=re.IGNORECASE
+            )
 
     cleaned = re.sub(
         rf"({re.escape(replacement)})(\s+{re.escape(replacement)})+",
@@ -252,12 +305,16 @@ def _load_existing_positions() -> dict[str, dict[str, dict[str, object]]]:
             weight = option.get("weight")
             if not isinstance(candidate, str):
                 continue
-            stance = WEIGHT_TO_STANCE.get(weight) if isinstance(weight, int) else "unclear"
+            stance = (
+                WEIGHT_TO_STANCE.get(weight) if isinstance(weight, int) else "unclear"
+            )
             topic_map[candidate] = {
                 "position_pt": _normalize_text(option.get("text_pt")),
                 "position_en": _normalize_text(option.get("text_en")),
                 "stance": stance,
-                "confidence": option.get("confidence") if option.get("confidence") in CONFIDENCE_ALLOWED else "medium",
+                "confidence": option.get("confidence")
+                if option.get("confidence") in CONFIDENCE_ALLOWED
+                else "medium",
                 "best_source_snippet_index": None,
                 "source_pt": _normalize_text(option.get("source_pt")),
                 "source_en": _normalize_text(option.get("source_en")),
@@ -317,7 +374,9 @@ def filter_snippets(articles: list[dict], candidate: str, topic: str) -> list[st
         else:
             continue
 
-        snippets_with_date.append((_parse_iso8601(article.get("published_at")), snippet))
+        snippets_with_date.append(
+            (_parse_iso8601(article.get("published_at")), snippet)
+        )
 
     snippets_with_date.sort(key=lambda item: item[0], reverse=True)
     return [snippet for _, snippet in snippets_with_date[:12]]
@@ -359,7 +418,13 @@ def select_quiz_topics(
         if len(valid_positions) < 2:
             continue
 
-        score = divergence_score([position for position in topic_positions.values() if isinstance(position, dict)])
+        score = divergence_score(
+            [
+                position
+                for position in topic_positions.values()
+                if isinstance(position, dict)
+            ]
+        )
         scored_topics.append((topic_id, score))
 
     scored_topics.sort(key=lambda item: (-item[1], item[0]))
@@ -381,7 +446,9 @@ def build_question_text(topic_id: str) -> tuple[str, str]:
     )
 
 
-def _build_source_text(topic_id: str, candidate: str, position: dict[str, object]) -> tuple[str | None, str | None]:
+def _build_source_text(
+    topic_id: str, candidate: str, position: dict[str, object]
+) -> tuple[str | None, str | None]:
     source_pt = _normalize_text(position.get("source_pt"))
     source_en = _normalize_text(position.get("source_en"))
 
@@ -519,10 +586,6 @@ def main() -> None:
                 )
                 if isinstance(fallback_position, dict):
                     all_positions[topic_id][candidate] = fallback_position
-                else:
-                    local_fallback = _fallback_position(candidate, topic_id, snippets)
-                    if isinstance(local_fallback, dict):
-                        all_positions[topic_id][candidate] = local_fallback
                 continue
 
             if isinstance(position, dict):
@@ -530,22 +593,38 @@ def main() -> None:
                 if parse_error and isinstance(fallback_position, dict):
                     all_positions[topic_id][candidate] = fallback_position
                 elif parse_error:
-                    local_fallback = _fallback_position(candidate, topic_id, snippets)
-                    if isinstance(local_fallback, dict):
-                        all_positions[topic_id][candidate] = local_fallback
-                    else:
-                        all_positions[topic_id][candidate] = position
+                    # _fallback_position now returns None; skip the pair.
+                    pass
                 elif not _is_valid_position(position):
-                    if isinstance(fallback_position, dict) and _is_valid_position(fallback_position):
+                    if isinstance(fallback_position, dict) and _is_valid_position(
+                        fallback_position
+                    ):
                         all_positions[topic_id][candidate] = fallback_position
-                    else:
-                        local_fallback = _fallback_position(candidate, topic_id, snippets)
-                        if isinstance(local_fallback, dict):
-                            all_positions[topic_id][candidate] = local_fallback
-                        else:
-                            all_positions[topic_id][candidate] = position
                 else:
-                    all_positions[topic_id][candidate] = position
+                    pos_pt = str(position.get("position_pt") or "")
+                    pos_en = str(position.get("position_en") or "")
+                    if _local_quality_check(pos_pt, pos_en):
+                        all_positions[topic_id][candidate] = position
+                    elif isinstance(fallback_position, dict) and _is_valid_position(
+                        fallback_position
+                    ):
+                        # Prefer a previously validated position over AI slop.
+                        prev_pt = str(fallback_position.get("position_pt") or "")
+                        prev_en = str(fallback_position.get("position_en") or "")
+                        if _local_quality_check(prev_pt, prev_en):
+                            all_positions[topic_id][candidate] = fallback_position
+                        else:
+                            logger.warning(
+                                "Quality check failed for topic=%s candidate=%s; skipping.",
+                                topic_id,
+                                candidate,
+                            )
+                    else:
+                        logger.warning(
+                            "Quality check failed for topic=%s candidate=%s; skipping.",
+                            topic_id,
+                            candidate,
+                        )
                 continue
 
             if isinstance(fallback_position, dict):
@@ -560,7 +639,11 @@ def main() -> None:
             continue
         question_pt, question_en = build_question_text(topic_id)
         score = divergence_score(
-            [position for position in topic_positions.values() if isinstance(position, dict)]
+            [
+                position
+                for position in topic_positions.values()
+                if isinstance(position, dict)
+            ]
         )
         quiz_topics[topic_id] = {
             "divergence_score": score,
@@ -569,7 +652,9 @@ def main() -> None:
             "options": options,
         }
 
-    ordered_topics = [topic_id for topic_id in selected_topics if topic_id in quiz_topics]
+    ordered_topics = [
+        topic_id for topic_id in selected_topics if topic_id in quiz_topics
+    ]
     quiz_payload: dict[str, object] = {
         "generated_at": _deterministic_generated_at(articles),
         "ordered_topics": ordered_topics,
@@ -591,7 +676,8 @@ def main() -> None:
     extracted_positions = sum(
         len(topic_payload["options"])
         for topic_payload in quiz_topics.values()
-        if isinstance(topic_payload, dict) and isinstance(topic_payload.get("options"), list)
+        if isinstance(topic_payload, dict)
+        and isinstance(topic_payload.get("options"), list)
     )
     print(
         f"Quiz: {len(ordered_topics)} topics selected, "

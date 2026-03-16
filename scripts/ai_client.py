@@ -124,14 +124,39 @@ def _today_key() -> str:
     return datetime.now(timezone.utc).date().isoformat()
 
 
+def _get_gemini_model(task: str) -> str:
+    override = os.environ.get("GEMINI_MODEL_OVERRIDE")
+    if override:
+        return override
+    if task in {"positions_extract", "quiz_generate", "quiz_extract", "quiz_validate"}:
+        return "gemini-3.1-pro-preview"
+    return "gemini-3-flash-preview"
+
+
+def _get_vertex_model(task: str) -> str:
+    override = os.environ.get("VERTEX_MODEL_OVERRIDE")
+    if override:
+        return override
+    if task in {"positions_extract", "quiz_generate", "quiz_extract", "quiz_validate"}:
+        return "gemini-3.1-pro-preview"
+    return "gemini-3-flash-preview"
+
+
 def _provider_chain_for_task(task: str) -> list[ProviderConfig]:
-    if task in {"positions_extract", "quiz_generate"}:
+    if task in {"positions_extract", "quiz_generate", "quiz_extract"}:
         return [
+            {
+                "name": "gemini",
+                "base_url": "https://generativelanguage.googleapis.com/v1beta/openai/",
+                "key_env": "GEMINI_API_KEY",
+                "model": _get_gemini_model(task),
+                "paid": False,
+            },
             {
                 "name": "vertex",
                 "base_url": "VERTEX_BASE_URL",
                 "key_env": "VERTEX_ACCESS_TOKEN",
-                "model": "gemini-3.1-pro",
+                "model": _get_vertex_model(task),
                 "paid": True,
             },
             {
@@ -160,6 +185,20 @@ def _provider_chain_for_task(task: str) -> list[ProviderConfig]:
     if task == "quiz_validate":
         return [
             {
+                "name": "gemini",
+                "base_url": "https://generativelanguage.googleapis.com/v1beta/openai/",
+                "key_env": "GEMINI_API_KEY",
+                "model": _get_gemini_model(task),
+                "paid": False,
+            },
+            {
+                "name": "vertex",
+                "base_url": "VERTEX_BASE_URL",
+                "key_env": "VERTEX_ACCESS_TOKEN",
+                "model": _get_vertex_model(task),
+                "paid": True,
+            },
+            {
                 "name": "nvidia",
                 "base_url": "https://integrate.api.nvidia.com/v1",
                 "key_env": "NVIDIA_API_KEY",
@@ -179,13 +218,6 @@ def _provider_chain_for_task(task: str) -> list[ProviderConfig]:
                 "key_env": "NVIDIA_API_KEY",
                 "model": "nvidia/nemotron-3-super-120b-a12b",
                 "paid": False,
-            },
-            {
-                "name": "vertex",
-                "base_url": "VERTEX_BASE_URL",
-                "key_env": "VERTEX_ACCESS_TOKEN",
-                "model": "gemini-3.1-pro",
-                "paid": True,
             },
         ]
 
@@ -212,11 +244,20 @@ def _provider_chain_for_task(task: str) -> list[ProviderConfig]:
             }
             for model in OLLAMA_MODELS
         ],
+        *[
+            {
+                "name": "gemini",
+                "base_url": "https://generativelanguage.googleapis.com/v1beta/openai/",
+                "key_env": "GEMINI_API_KEY",
+                "model": _get_gemini_model(task),
+                "paid": False,
+            }
+        ],
         {
             "name": "vertex",
             "base_url": "VERTEX_BASE_URL",
             "key_env": "VERTEX_ACCESS_TOKEN",
-            "model": "gemini-1.5-flash",
+            "model": _get_vertex_model(task),
             "paid": True,
         },
         {
@@ -452,7 +493,7 @@ def _call_with_fallback_for_task(
         if not api_key:
             logger.info("[AI] %s skipped: missing %s.", name, key_env)
             continue
-        
+
         if base_url == "VERTEX_BASE_URL":
             if not os.environ.get("VERTEX_BASE_URL", "").strip():
                 logger.info("[AI] %s skipped: missing VERTEX_BASE_URL in env.", name)
@@ -506,6 +547,12 @@ def _call_with_fallback_for_task(
                 _provider_failure_counts[name] = _CIRCUIT_BREAKER_THRESHOLD
                 logger.info(
                     "[AI] %s unavailable (404). Opening circuit breaker for this run.",
+                    name,
+                )
+            elif _is_rate_limit_error(exc):
+                _provider_failure_counts[name] = _CIRCUIT_BREAKER_THRESHOLD
+                logger.info(
+                    "[AI] %s rate limited (429/quota). Opening circuit breaker for this run.",
                     name,
                 )
             else:
@@ -565,6 +612,11 @@ def _extract_last_json_block(text: str) -> str | None:
 def _is_not_found_error(exc: Exception) -> bool:
     message = str(exc).lower()
     return "404" in message and "not found" in message
+
+
+def _is_rate_limit_error(exc: Exception) -> bool:
+    message = str(exc).lower()
+    return "429" in message or "rate limit" in message or "quota" in message
 
 
 def _strip_markdown_code_fence(text: str) -> str:
@@ -1024,12 +1076,14 @@ def generate_quiz_topic_options(
         actions = position.get("key_actions")
         if isinstance(actions, list):
             action_text = "; ".join(
-                str(item).strip() for item in actions if isinstance(item, str) and item.strip()
+                str(item).strip()
+                for item in actions
+                if isinstance(item, str) and item.strip()
             )
         else:
             action_text = ""
         position_lines.append(
-            f"Position {index}: stance={stance}, summary=\"{summary}\", key_actions=\"{action_text}\""
+            f'Position {index}: stance={stance}, summary="{summary}", key_actions="{action_text}"'
         )
 
     system = (
@@ -1091,7 +1145,9 @@ Return JSON array:
         text_en = _normalize_optional_text(item.get("text_en"))
         mapped_position = item.get("mapped_position")
         raw_stance = item.get("stance")
-        stance = raw_stance.strip().lower() if isinstance(raw_stance, str) else "neutral"
+        stance = (
+            raw_stance.strip().lower() if isinstance(raw_stance, str) else "neutral"
+        )
         if stance not in POSITION_STANCE_TO_WEIGHT:
             stance = "neutral"
         raw_weight = item.get("weight")
