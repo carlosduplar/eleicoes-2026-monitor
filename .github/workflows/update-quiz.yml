@@ -34,6 +34,7 @@ jobs:
           VERTEX_ACCESS_TOKEN: ${{ secrets.VERTEX_ACCESS_TOKEN }}
           VERTEX_BASE_URL: ${{ secrets.VERTEX_BASE_URL }}
           GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
+          GEMINI_GROUNDING_ENABLED: "true"
           VERTEX_MODEL_OVERRIDE: "gemini-3.1-pro-preview"
         run: python -m scripts.generate_quiz
       - name: Commit quiz data

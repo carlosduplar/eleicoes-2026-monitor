@@ -83,6 +83,8 @@ _THINKING_DISABLE_EXTRA_BODY: dict[str, dict[str, object]] = {
     "nvidia/nemotron-3-super-120b-a12b": {
         "chat_template_kwargs": {"enable_thinking": False}
     },
+    "moonshotai/kimi-k2.5": {"thinking": {"type": "disabled"}},
+    "minimaxai/minimax-m2.5": {"thinking": {"type": "disabled"}},
 }
 
 NVIDIA_MODELS: dict[str, str] = {
@@ -128,8 +130,6 @@ def _get_gemini_model(task: str) -> str:
     override = os.environ.get("GEMINI_MODEL_OVERRIDE")
     if override:
         return override
-    if task in {"positions_extract", "quiz_generate", "quiz_extract", "quiz_validate"}:
-        return "gemini-3.1-pro-preview"
     return "gemini-3-flash-preview"
 
 
@@ -137,8 +137,6 @@ def _get_vertex_model(task: str) -> str:
     override = os.environ.get("VERTEX_MODEL_OVERRIDE")
     if override:
         return override
-    if task in {"positions_extract", "quiz_generate", "quiz_extract", "quiz_validate"}:
-        return "gemini-3.1-pro-preview"
     return "gemini-3-flash-preview"
 
 
@@ -452,6 +450,20 @@ def _request_completion(
             {"role": "user", "content": user},
         ],
     }
+    # Enable Google Search Grounding for Gemini models (opt-in via env var)
+    if (
+        provider.get("name") == "gemini"
+        and os.environ.get("GEMINI_GROUNDING_ENABLED", "").strip()
+    ):
+        kwargs["tools"] = [
+            {
+                "type": "function",
+                "function": {
+                    "name": "google_search",
+                    "description": "Google Search Grounding",
+                },
+            }
+        ]
     # Disable thinking mode for NVIDIA thinking models so the answer lands in
     # `content` as clean JSON rather than being buried in `reasoning_content`.
     if provider.get("name") == "nvidia":
