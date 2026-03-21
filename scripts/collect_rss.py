@@ -20,6 +20,11 @@ except ImportError:  # pragma: no cover - direct script execution path
     import editor_feedback  # type: ignore[no-redef]
 
 try:
+    from scripts.sanitize.constants import is_paywall_content
+except ImportError:  # pragma: no cover - direct script execution path
+    from sanitize.constants import is_paywall_content  # type: ignore[no-redef]
+
+try:
     from scripts.sanitize.dedup import is_near_duplicate_fast
 except ImportError:  # pragma: no cover - direct script execution path
     from sanitize.dedup import is_near_duplicate_fast  # type: ignore[no-redef]
@@ -33,7 +38,9 @@ ARTICLES_FILE = DATA_DIR / "articles.json"
 EDITOR_FEEDBACK_FILE = DATA_DIR / "editor_feedback.json"
 
 REQUEST_TIMEOUT_SECONDS = 15
-USER_AGENT = "eleicoes-2026-monitor/1.0 (+https://github.com/carlosduplar/eleicoes-2026-monitor)"
+USER_AGENT = (
+    "eleicoes-2026-monitor/1.0 (+https://github.com/carlosduplar/eleicoes-2026-monitor)"
+)
 DEFAULT_SCHEMA_PATH = "../docs/schemas/articles.schema.json"
 RSS_BODY_MIN_CHARS = 200
 
@@ -47,7 +54,12 @@ class ArticlesDocument:
 
 def utc_now_iso() -> str:
     """Return UTC timestamp in ISO 8601 format with Z suffix."""
-    return datetime.now(timezone.utc).replace(microsecond=0).isoformat().replace("+00:00", "Z")
+    return (
+        datetime.now(timezone.utc)
+        .replace(microsecond=0)
+        .isoformat()
+        .replace("+00:00", "Z")
+    )
 
 
 def build_article_id(url: str) -> str:
@@ -61,12 +73,16 @@ def _load_json(path: Path) -> Any:
 
 def _load_articles_document() -> ArticlesDocument:
     if not ARTICLES_FILE.exists():
-        return ArticlesDocument(articles=[], wrapped=True, schema_path=DEFAULT_SCHEMA_PATH)
+        return ArticlesDocument(
+            articles=[], wrapped=True, schema_path=DEFAULT_SCHEMA_PATH
+        )
 
     payload = _load_json(ARTICLES_FILE)
     if isinstance(payload, list):
         articles = [item for item in payload if isinstance(item, dict)]
-        return ArticlesDocument(articles=articles, wrapped=False, schema_path=DEFAULT_SCHEMA_PATH)
+        return ArticlesDocument(
+            articles=articles, wrapped=False, schema_path=DEFAULT_SCHEMA_PATH
+        )
 
     if isinstance(payload, dict):
         raw_articles = payload.get("articles", [])
@@ -75,7 +91,9 @@ def _load_articles_document() -> ArticlesDocument:
             if not isinstance(schema_path, str) or not schema_path.strip():
                 schema_path = DEFAULT_SCHEMA_PATH
             articles = [item for item in raw_articles if isinstance(item, dict)]
-            return ArticlesDocument(articles=articles, wrapped=True, schema_path=schema_path)
+            return ArticlesDocument(
+                articles=articles, wrapped=True, schema_path=schema_path
+            )
 
     raise ValueError(f"Unsupported articles structure in {ARTICLES_FILE}")
 
@@ -152,7 +170,9 @@ def fetch_feed_entries(feed_url: str) -> list[dict[str, Any]]:
                     bozo_exception,
                 )
             else:
-                logger.warning("Feed parse warning for %s: %s", feed_url, bozo_exception)
+                logger.warning(
+                    "Feed parse warning for %s: %s", feed_url, bozo_exception
+                )
 
     raw_entries = parsed.get("entries", [])
     if not isinstance(raw_entries, list):
@@ -185,7 +205,12 @@ def _extract_entry_title(entry: dict[str, Any], fallback: str) -> str:
 
 
 def _to_iso8601_utc(value: datetime) -> str:
-    return value.astimezone(timezone.utc).replace(microsecond=0).isoformat().replace("+00:00", "Z")
+    return (
+        value.astimezone(timezone.utc)
+        .replace(microsecond=0)
+        .isoformat()
+        .replace("+00:00", "Z")
+    )
 
 
 def _extract_published_at(entry: dict[str, Any], fallback_iso: str) -> str:
@@ -220,6 +245,7 @@ def _extract_published_at(entry: dict[str, Any], fallback_iso: str) -> str:
 def _strip_html(html_text: str) -> str:
     """Strip HTML tags and normalize whitespace using BeautifulSoup."""
     from bs4 import BeautifulSoup
+
     return " ".join(BeautifulSoup(html_text, "lxml").get_text(" ", strip=True).split())
 
 
@@ -278,7 +304,9 @@ def collect_articles() -> tuple[int, int, int]:
             entries = fetch_feed_entries(source_url)
         except Exception as exc:
             errors += 1
-            logger.warning("Failed to fetch feed %s (%s): %s", source_name, source_url, exc)
+            logger.warning(
+                "Failed to fetch feed %s (%s): %s", source_name, source_url, exc
+            )
             continue
 
         for entry in entries:
@@ -307,6 +335,11 @@ def collect_articles() -> tuple[int, int, int]:
             collected_at = utc_now_iso()
             rss_body = _extract_rss_body(entry)
 
+            if rss_body and is_paywall_content(rss_body):
+                rss_body = (
+                    ""  # suppress paywall prompt — scraper will attempt full fetch
+                )
+
             article: dict[str, Any] = {
                 "id": article_id,
                 "url": article_url,
@@ -329,7 +362,9 @@ def collect_articles() -> tuple[int, int, int]:
             if source_category:
                 article["source_category"] = source_category
 
-            cluster_match = is_near_duplicate_fast(article, document.articles + new_articles)
+            cluster_match = is_near_duplicate_fast(
+                article, document.articles + new_articles
+            )
             if cluster_match is not None:
                 article["status"] = "irrelevant"
                 article["narrative_cluster_id"] = cluster_match
