@@ -10,13 +10,22 @@ on:
       - "docs/case-study/**"
       - ".github/workflows/deploy.yml"
   workflow_dispatch:
+  workflow_run:
+    workflows: ["Collect (Reporter)", "Validate (Editor)", "Curate (Editor-chefe)"]
+    types:
+      - completed
 
 permissions:
   pages: write
   id-token: write
 
+concurrency:
+  group: deploy-pages
+  cancel-in-progress: false
+
 jobs:
   deploy:
+    if: github.event_name != 'workflow_run' || github.event.workflow_run.conclusion == 'success'
     runs-on: ubuntu-latest
     environment:
       name: github-pages
