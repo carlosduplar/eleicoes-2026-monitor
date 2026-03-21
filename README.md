@@ -108,6 +108,31 @@ You can also add manual rules in `editor_feedback.json`:
 
 This mechanism is part of the project's transparency model: irrelevant content is filtered automatically, but the filtering rules remain visible and auditable in the repository.
 
+## Article Archiving
+
+`data/articles.json` uses a tiered retention strategy to keep the file manageable as articles accumulate:
+
+| Tier | Default Age | Behavior |
+|------|-------------|----------|
+| **Hot** | 0–7 days | Full article retained (all fields including `content`) |
+| **Warm** | 7–30 days | `content` field stripped, metadata + summaries preserved |
+| **Cold** | 30+ days | Moved to `data/archives/YYYY-MM.json`, removed from main file |
+
+Curated articles (`status: "curated"`) get an extra 7 days of hot retention (14 total) since they have been manually reviewed.
+
+```powershell
+# Preview what would change (dry-run, default)
+python scripts/archive_articles.py
+
+# Apply changes
+python scripts/archive_articles.py --execute
+
+# Custom thresholds
+python scripts/archive_articles.py --execute --hot-days 14 --warm-days 60
+```
+
+Archive files in `data/archives/` follow the same schema as `articles.json` and are committed alongside the main data files. The archiving step runs automatically in the `collect.yml` workflow after `build_data.py`.
+
 ## Required GitHub Secrets
 
 | Secret | Used by | Description |
