@@ -24,7 +24,7 @@ O pipeline editorial segue a metáfora de redação com três papéis. O Foca (c
 
 As etapas de publicação são explícitas no dado: `raw`, `validated` e `curated`. No estado `raw`, o portal privilegia velocidade e transparência sobre acabamento: título, fonte e horário já podem aparecer, com sinalização de que a análise ainda está em andamento. No estado `validated`, entram sumários em dois idiomas e metadados enriquecidos. No estado `curated`, o conteúdo recebe camada adicional de priorização editorial automatizada. Esse funil evita bloqueios desnecessários e entrega valor incremental para o usuário.
 
-A cadeia de IA foi desenhada para resiliência e custo controlado: NVIDIA NIM (Kimi K2.5 → MiniMax M2.5 → Nemotron 3 Super), Ollama Cloud, OpenRouter (Nemotron 3 Super), Vertex AI e MiMo, nessa ordem de fallback. A regra principal é não interromper pipeline por erro de IA. Se uma chamada falha, o sistema registra, tenta o próximo provedor e segue. Se todos falham, o artigo continua no fluxo com estado coerente, em vez de ser descartado silenciosamente. Essa postura privilegia continuidade operacional e reduz risco de indisponibilidade por dependência única.
+A cadeia de IA foi desenhada para resiliência e custo controlado. Para tarefas padrao: NVIDIA NIM (Nemotron 3 Super) -> Ollama Cloud (Nemotron 3 Super) -> Gemini 3.1 Flash Lite (gratuito) -> Vertex AI (Gemini 3 Flash Preview, pago) -> MiMo V2 Flash. Para tarefas de alta qualidade (quiz, posicoes): Ollama Cloud (Kimi K2.5) -> NVIDIA NIM (MiniMax M2.5) -> Vertex AI. A regra principal é não interromper pipeline por erro de IA. Se uma chamada falha, o sistema registra, tenta o próximo provedor e segue. Se todos falham, o artigo continua no fluxo com estado coerente, em vez de ser descartado silenciosamente. Essa postura privilegia continuidade operacional e reduz risco de indisponibilidade por dependência única.
 
 ## Decisões técnicas registradas
 As ADRs 000 a 006 formam a espinha dorsal de decisão deste produto. O ADR 000 formalizou wireframes como fonte de verdade visual, com mapeamento tela-componente e tokens de design consistentes. Isso reduziu retrabalho de UI porque cada fase implementa sobre referência concreta, não sobre memória subjetiva de layout.
@@ -50,15 +50,13 @@ Também ficou claro que transparência não pode ser pós-processamento. Em prod
 No recorte de publicação desta fase, os números consolidados são:
 
 - Planejamento em 16 fases principais, com uma fase de extensão opcional (Phase 17).
-- Histórico de 65 commits no repositório antes do fechamento desta entrega.
-- 177 arquivos versionados no momento do levantamento técnico para esta documentação.
-- 21 fontes RSS ativas em `data/sources.json`, além de 8 fontes partidárias e 6 fontes de pesquisas.
+- 622 commits no histórico do repositório.
+- 21 fontes RSS ativas em `data/sources.json`, além de 8 fontes partidárias e 10 institutos de pesquisa.
 - 9 candidatos modelados em `data/candidates.json`.
 - Cadência de pipeline com coletor em 10 minutos, validação em 30 minutos e curadoria em janela aproximada de 90 minutos.
-- Build estático de referência com 25 páginas pré-renderizadas, incluindo rotas dinâmicas de candidatos e comparações.
-- Suíte Python com 61 testes passando (`python -m pytest scripts/ -v --tb=short`).
-- Suíte Playwright com 24 testes passando contra o site buildado (`npx playwright test`).
-- Quatro relatórios formais de QA gerados em `qa/phase-16-*.md` (security, SEO, code review, accessibility).
+- 4 status de artigo: `raw`, `validated`, `curated`, `irrelevant`.
+- Script de seed para populacao baseline de posicoes de candidatos a partir de fontes institucionais.
+- Cadeia de IA separada por nivel de qualidade para melhor aderencia de tarefa.
 
 Esses números importam menos como marketing e mais como prova de escala operacional sob restrição de custo. O projeto não depende de infraestrutura premium para manter cobertura técnica relevante.
 
