@@ -48,8 +48,8 @@ def test_provider_chain_nvidia_primary_ollama_fallback() -> None:
 
     # Vertex should be in the chain
     vertex_models = [model for name, model in provider_models if name == "vertex"]
-    assert vertex_models[0] == "gemini-1.5-flash"
-    
+    assert vertex_models[0] == "gemini-3-flash-preview"
+
     # Mimo should be in the chain
     mimo_models = [model for name, model in provider_models if name == "mimo"]
     assert mimo_models[0] == "mimo-v2-flash"
@@ -142,7 +142,13 @@ def test_fallback_first_provider_succeeds(monkeypatch: pytest.MonkeyPatch) -> No
 
     called: list[str] = []
 
-    def fake_request(provider: dict[str, object], api_key: str, system: str, user: str, max_tokens: int) -> str:
+    def fake_request(
+        provider: dict[str, object],
+        api_key: str,
+        system: str,
+        user: str,
+        max_tokens: int,
+    ) -> str:
         assert api_key
         assert system == "system"
         assert user == "user"
@@ -258,10 +264,19 @@ def test_openrouter_daily_limit_skipped(monkeypatch: pytest.MonkeyPatch) -> None
 
 
 def test_usage_tracking_increments(monkeypatch: pytest.MonkeyPatch) -> None:
-    chain = [_provider("nvidia", "NVIDIA_API_KEY", "https://integrate.api.nvidia.com/v1", "nvidia-model")]
+    chain = [
+        _provider(
+            "nvidia",
+            "NVIDIA_API_KEY",
+            "https://integrate.api.nvidia.com/v1",
+            "nvidia-model",
+        )
+    ]
     monkeypatch.setattr(ai_client, "_provider_chain_for_task", lambda _task: chain)
     monkeypatch.setenv("NVIDIA_API_KEY", "nvidia-key")
-    monkeypatch.setattr(ai_client, "_request_completion", lambda *_args, **_kwargs: "ok")
+    monkeypatch.setattr(
+        ai_client, "_request_completion", lambda *_args, **_kwargs: "ok"
+    )
 
     ai_client.call_with_fallback("system", "user")
     ai_client.call_with_fallback("system", "user")
@@ -302,7 +317,9 @@ def test_summarize_article_parses_json(monkeypatch: pytest.MonkeyPatch) -> None:
     assert result["_language"] == "pt-BR"
 
 
-def test_summarize_article_parse_error_fallback(monkeypatch: pytest.MonkeyPatch) -> None:
+def test_summarize_article_parse_error_fallback(
+    monkeypatch: pytest.MonkeyPatch,
+) -> None:
     monkeypatch.setattr(
         ai_client,
         "_call_with_fallback_for_task",
@@ -322,7 +339,9 @@ def test_summarize_article_parse_error_fallback(monkeypatch: pytest.MonkeyPatch)
     assert result["_language"] == "en-US"
 
 
-def test_extract_position_low_confidence_filtered(monkeypatch: pytest.MonkeyPatch) -> None:
+def test_extract_position_low_confidence_filtered(
+    monkeypatch: pytest.MonkeyPatch,
+) -> None:
     payload = json.dumps(
         {
             "position_pt": "Defende a medida.",

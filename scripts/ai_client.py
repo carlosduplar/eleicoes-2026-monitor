@@ -91,7 +91,7 @@ NVIDIA_MODELS: dict[str, str] = {
     "summarization": "nvidia/nemotron-3-super-120b-a12b",
     "sentiment": "nvidia/nemotron-3-super-120b-a12b",
     "multilingual": "nvidia/nemotron-3-super-120b-a12b",
-    "quiz_extract": "nvidia/nemotron-3-super-120b-a12b",
+    "quiz_extract": "minimaxai/minimax-m2.5",
 }
 
 NVIDIA_FALLBACKS: list[str] = []
@@ -144,6 +144,20 @@ def _provider_chain_for_task(task: str) -> list[ProviderConfig]:
     if task in {"positions_extract", "quiz_generate", "quiz_extract"}:
         return [
             {
+                "name": "ollama",
+                "base_url": "https://ollama.com/v1",
+                "key_env": "OLLAMA_API_KEY",
+                "model": "kimi-k2.5:cloud",
+                "paid": False,
+            },
+            {
+                "name": "nvidia",
+                "base_url": "https://integrate.api.nvidia.com/v1",
+                "key_env": "NVIDIA_API_KEY",
+                "model": "minimaxai/minimax-m2.5",
+                "paid": False,
+            },
+            {
                 "name": "gemini",
                 "base_url": "https://generativelanguage.googleapis.com/v1beta/openai/",
                 "key_env": "GEMINI_API_KEY",
@@ -156,19 +170,26 @@ def _provider_chain_for_task(task: str) -> list[ProviderConfig]:
                 "key_env": "VERTEX_API_KEY",
                 "model": _get_vertex_model(task),
                 "paid": True,
-            },
-            {
-                "name": "nvidia",
-                "base_url": "https://integrate.api.nvidia.com/v1",
-                "key_env": "NVIDIA_API_KEY",
-                "model": "nvidia/nemotron-3-super-120b-a12b",
-                "paid": False,
             },
         ]
 
     if task == "quiz_validate":
         return [
             {
+                "name": "ollama",
+                "base_url": "https://ollama.com/v1",
+                "key_env": "OLLAMA_API_KEY",
+                "model": "kimi-k2.5:cloud",
+                "paid": False,
+            },
+            {
+                "name": "nvidia",
+                "base_url": "https://integrate.api.nvidia.com/v1",
+                "key_env": "NVIDIA_API_KEY",
+                "model": "minimaxai/minimax-m2.5",
+                "paid": False,
+            },
+            {
                 "name": "gemini",
                 "base_url": "https://generativelanguage.googleapis.com/v1beta/openai/",
                 "key_env": "GEMINI_API_KEY",
@@ -181,13 +202,6 @@ def _provider_chain_for_task(task: str) -> list[ProviderConfig]:
                 "key_env": "VERTEX_API_KEY",
                 "model": _get_vertex_model(task),
                 "paid": True,
-            },
-            {
-                "name": "nvidia",
-                "base_url": "https://integrate.api.nvidia.com/v1",
-                "key_env": "NVIDIA_API_KEY",
-                "model": "nvidia/nemotron-3-super-120b-a12b",
-                "paid": False,
             },
         ]
 
