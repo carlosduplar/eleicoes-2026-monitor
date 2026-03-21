@@ -48,7 +48,7 @@ jobs:
 
       - name: Curate content
         continue-on-error: true
-        run: python scripts/curate.py
+        run: python -m scripts.curate
 
       - name: Commit curated outputs
         run: |
