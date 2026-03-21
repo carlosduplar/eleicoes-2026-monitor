@@ -130,7 +130,7 @@ def _get_gemini_model(task: str) -> str:
     override = os.environ.get("GEMINI_MODEL_OVERRIDE")
     if override:
         return override
-    return "gemini-3-flash-preview"
+    return "gemini-3.1-flash-lite-preview"
 
 
 def _get_vertex_model(task: str) -> str:
@@ -158,13 +158,6 @@ def _provider_chain_for_task(task: str) -> list[ProviderConfig]:
                 "paid": False,
             },
             {
-                "name": "gemini",
-                "base_url": "https://generativelanguage.googleapis.com/v1beta/openai/",
-                "key_env": "GEMINI_API_KEY",
-                "model": _get_gemini_model(task),
-                "paid": False,
-            },
-            {
                 "name": "vertex",
                 "base_url": "VERTEX_BASE_URL",
                 "key_env": "VERTEX_API_KEY",
@@ -187,13 +180,6 @@ def _provider_chain_for_task(task: str) -> list[ProviderConfig]:
                 "base_url": "https://integrate.api.nvidia.com/v1",
                 "key_env": "NVIDIA_API_KEY",
                 "model": "minimaxai/minimax-m2.5",
-                "paid": False,
-            },
-            {
-                "name": "gemini",
-                "base_url": "https://generativelanguage.googleapis.com/v1beta/openai/",
-                "key_env": "GEMINI_API_KEY",
-                "model": _get_gemini_model(task),
                 "paid": False,
             },
             {
