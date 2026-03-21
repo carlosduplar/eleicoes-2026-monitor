@@ -52,6 +52,23 @@ jobs:
             python scripts/create_candidates_positions.py
           fi
 
+      - name: Seed knowledge base if sparse
+        run: |
+          python -c "
+          import json, sys
+          p = json.load(open('data/candidates_positions.json'))
+          topics = p.get('topics', {})
+          total = sum(len(t.get('candidates', {})) for t in topics.values())
+          unknown = sum(
+              1 for t in topics.values()
+              for c in t.get('candidates', {}).values()
+              if c.get('stance') == 'unknown'
+          )
+          ratio = unknown / max(total, 1)
+          print(f'Unknown ratio: {ratio:.0%} ({unknown}/{total})')
+          sys.exit(0 if ratio > 0.5 else 1)
+          " && python -m scripts.seed_candidates_positions || echo 'Seed not needed (ratio <= 50%).'
+
       - name: Extract draft positions
         run: python -m scripts.extract_positions_from_articles --output data/candidates_positions_draft.json
 
