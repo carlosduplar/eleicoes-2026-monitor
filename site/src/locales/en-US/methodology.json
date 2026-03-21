@@ -13,7 +13,7 @@
     },
     "summarization": {
       "label": "Summarization",
-      "body": "Open-source language models with hierarchical fallback: Ollama Cloud (Nemotron 3 Super, primary free) -> NVIDIA NIM (Nemotron 3 Super 120B, free) -> Ollama Cloud (MiniMax M2.5, backup) -> Vertex AI (Gemini 3 Flash Preview, paid emergency) -> MiMo V2 Flash (paid emergency). A circuit breaker and per-run limit prevent wasted calls when providers are unavailable."
+      "body": "Open-source language models with hierarchical fallback by task type. Summarization and sentiment: NVIDIA NIM (Nemotron 3 Super, free) -> Ollama Cloud (Nemotron 3 Super, free) -> Gemini 3.1 Flash Lite (Google AI, free) -> Vertex AI (Gemini 3 Flash Preview, paid) -> MiMo V2 Flash (paid). Quiz and candidate positions: Ollama Cloud (Kimi K2.5, free) -> NVIDIA NIM (MiniMax M2.5, free) -> Vertex AI (Gemini 3 Flash Preview, paid). A circuit breaker and per-run limit prevent wasted calls when providers are unavailable."
     },
     "sentiment": {
       "label": "Sentiment",

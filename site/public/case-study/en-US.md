@@ -24,7 +24,7 @@ The ingestion model follows a newsroom metaphor with three roles. Foca (collecto
 
 Publication stages are explicit in the data itself: `raw`, `validated`, and `curated`. In `raw`, the portal prioritizes speed and transparency over polish: title, source, and timestamp can already be visible while analysis is still in progress. In `validated`, bilingual summaries and richer metadata are attached. In `curated`, the story gets an additional automated prominence layer. This staged funnel avoids unnecessary blocking and delivers incremental value instead of waiting for perfect completeness.
 
-The AI chain is built for resilience and cost control: NVIDIA NIM (Kimi K2.5 → MiniMax M2.5 → Nemotron 3 Super), Ollama Cloud, OpenRouter (Nemotron 3 Super), Vertex AI, and MiMo in fallback order. The non-negotiable rule is that AI errors must not stop the pipeline. If a call fails, the system logs the error, tries the next provider, and continues. If all providers fail, the article still remains in a coherent state rather than being silently dropped. This approach prioritizes operational continuity and reduces single-vendor risk.
+The AI chain is built for resilience and cost control. For standard tasks: NVIDIA NIM (Nemotron 3 Super) -> Ollama Cloud (Nemotron 3 Super) -> Gemini 3.1 Flash Lite (free tier) -> Vertex AI (Gemini 3 Flash Preview, paid) -> MiMo V2 Flash. For high-quality tasks (quiz, positions): Ollama Cloud (Kimi K2.5) -> NVIDIA NIM (MiniMax M2.5) -> Vertex AI. The non-negotiable rule is that AI errors must not stop the pipeline. If a call fails, the system logs the error, tries the next provider, and continues. If all providers fail, the article still remains in a coherent state rather than being silently dropped. This approach prioritizes operational continuity and reduces single-vendor risk.
 
 ## Technical decisions recorded
 ADRs 000 through 006 are the decision backbone of the portal. ADR 000 established wireframes as the visual source of truth, including component mapping and shared design tokens. That decision reduced UI rework because each phase could implement against concrete references, not subjective memory.
@@ -50,15 +50,13 @@ A third lesson is that transparency cannot be bolted on later, especially in ele
 At the publication snapshot of this phase, the measurable baseline is:
 
 - 16 planned main phases, plus one optional extension phase (Phase 17).
-- 65 commits in repository history before this phase closure.
-- 177 tracked files at the time of the technical inventory for this document.
-- 21 active RSS sources in `data/sources.json`, plus 8 party sources and 6 polling sources.
+- 622 commits in repository history.
+- 21 active RSS sources in `data/sources.json`, plus 8 party sources and 10 polling institute sources.
 - 9 candidates modeled in `data/candidates.json`.
 - Pipeline cadence with collector every 10 minutes, validator every 30 minutes, and curator on an approximately 90-minute window.
-- A reference static build producing 25 pre-rendered pages, including dynamic candidate and comparison routes.
-- Python suite with 61 passing tests (`python -m pytest scripts/ -v --tb=short`).
-- Playwright suite with 24 passing tests against the built site (`npx playwright test`).
-- Four formal QA artifacts in `qa/phase-16-*.md` (security, SEO, code review, accessibility).
+- 4 article statuses: `raw`, `validated`, `curated`, `irrelevant`.
+- Seed script for baseline candidate position population from institutional sources.
+- AI chain split by quality tier for better task adherence.
 
 These numbers are not marketing decoration; they demonstrate operational scope under strict cost constraints and static hosting limitations.
 

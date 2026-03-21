@@ -8,16 +8,23 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 ### Added
 
 - Planning artifact for optional extension: `plans/phase-17-arch.md` (Vertex AI Search).
+- `scripts/seed_candidates_positions.py`: one-shot seeder script that populates `data/candidates_positions.json` from Wikipedia PT, Câmara/Senado APIs, and AI synthesis. Idempotent — only fills entries currently marked `unknown`. CI step triggers seeding when unknown ratio exceeds 50%.
+- `docs/SEED_SOURCES.md`: documents seed data sources, licensing, and editorial transparency protocol.
 
 ### Changed
 
 - `scripts/curate.py` now implements full Editor-chefe curation flow: prominence scoring, `validated` -> `curated` promotion, `curated_feed.json` + `weekly_briefing.json` generation, quiz refresh trigger, and 90-minute cadence gate.
 - `.github/workflows/curate.yml` now stages `data/articles.json` so curation promotions persist across runs.
 - `.github/workflows/collect.yml` now executes `summarize.py` and `analyze_sentiment.py` directly (without legacy stub fallbacks), matching Phase 06 behavior.
+- AI provider chain restructured: high-quality tasks (positions_extract, quiz_generate, quiz_extract, quiz_validate) now use Ollama Cloud (Kimi K2.5) -> NVIDIA NIM (MiniMax M2.5) -> Vertex AI. Default tasks use NVIDIA NIM (Nemotron 3 Super) -> Ollama Cloud -> Gemini 3.1 Flash Lite (free tier) -> Vertex AI -> MiMo. Gemini removed from high-quality chains; Vertex remains as paid fallback across all tasks.
+- `scripts/ai_client.py`: default Gemini model updated to `gemini-3.1-flash-lite-preview` for higher free-tier limits.
+- `site/package.json`: updated `vite-ssg` and `@unhead/dom` to resolve dependabot XSS vulnerability alerts.
 
 ### Fixed
 
 - `scripts/watchdog.py` no longer writes a stub payload; it now emits structured freshness/error diagnostics per pipeline output in `data/pipeline_health.json`.
+- `.github/workflows/deploy.yml`: added `workflow_run` trigger so deploy runs after Collect, Validate, or Curate workflows complete (GitHub Actions does not fire workflow triggers for commits pushed by `github-actions[bot]`). Added concurrency group to prevent deploy pile-ups.
+- `.github/workflows/curate.yml`: changed from `python scripts/curate.py` to `python -m scripts.curate` to resolve relative import errors in `generate_quiz.py`.
 
 ## [1.0.0] - 2026-03-11
 

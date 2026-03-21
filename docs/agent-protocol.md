@@ -63,9 +63,9 @@ Script PowerShell 7 que sequencia invocacoes via flags `--no-interactive` dos CL
 
 | Papel | Metafora | Frequencia | Modelo Primario | Fallback |
 |-------|----------|-----------|----------------|---------|
-| **Foca** | Reporter | 10 min | Qwen3-235B-A22B (NVIDIA NIM) | Ministral-3B (OpenRouter) |
-| **Editor** | Editor de secao | 30 min | Qwen3-235B-Thinking (OpenRouter) | Gemini 2.5 Flash Lite (Vertex) |
-| **Editor-chefe** | Editor executivo | ~90 min | Gemini 2.5 Flash Lite (Vertex) | Kimi-K2.5 (NIM) |
+| **Foca** | Reporter | 10 min | Nemotron 3 Super (NVIDIA NIM) | Nemotron 3 Super (Ollama Cloud) |
+| **Editor** | Editor de secao | 30 min | Nemotron 3 Super (NVIDIA NIM) | Gemini 3.1 Flash Lite (Google AI) |
+| **Editor-chefe** | Editor executivo | ~90 min | Kimi K2.5 (Ollama Cloud) | MiniMax M2.5 (NVIDIA NIM) |
 
 ### Fluxo de status dos artigos
 

@@ -24,7 +24,7 @@ The ingestion model follows a newsroom metaphor with three roles. Foca (collecto
 
 Publication stages are explicit in the data itself: `raw`, `validated`, `curated`, and `irrelevant`. In `raw`, the portal prioritizes speed and transparency over polish: title, source, and timestamp can already be visible while analysis is still in progress. In `validated`, bilingual summaries and richer metadata are attached. In `curated`, the story gets an additional automated prominence layer. Articles flagged as `irrelevant` are removed from the public feed via an automated editorial feedback mechanism. This staged funnel avoids unnecessary blocking and delivers incremental value instead of waiting for perfect completeness.
 
-The AI chain is built for resilience and cost control: Ollama Cloud (Nemotron 3 Super), NVIDIA NIM (Nemotron 3 Super 120B), Ollama Cloud (MiniMax M2.5), Vertex AI (Gemini 3 Flash Preview), and MiMo V2 Flash, in fallback order. A circuit breaker detects provider failures early and a per-run limit caps total AI calls to avoid runaway costs. The non-negotiable rule is that AI errors must not stop the pipeline. If a call fails, the system logs the error, tries the next provider, and continues. If all providers fail, the article still remains in a coherent state rather than being silently dropped. This approach prioritizes operational continuity and reduces single-vendor risk.
+The AI chain is built for resilience and cost control. For standard tasks (summarization, sentiment), the chain is: NVIDIA NIM (Nemotron 3 Super) -> Ollama Cloud (Nemotron 3 Super) -> Gemini 3.1 Flash Lite (Google AI, free tier) -> Vertex AI (Gemini 3 Flash Preview, paid) -> MiMo V2 Flash. For high-quality tasks (position extraction, quiz generation/validation), the chain prioritizes stronger models: Ollama Cloud (Kimi K2.5) -> NVIDIA NIM (MiniMax M2.5) -> Vertex AI (Gemini 3 Flash Preview). A circuit breaker detects provider failures early and a per-run limit caps total AI calls to avoid runaway costs. The non-negotiable rule is that AI errors must not stop the pipeline. If a call fails, the system logs the error, tries the next provider, and continues. If all providers fail, the article still remains in a coherent state rather than being silently dropped. This approach prioritizes operational continuity and reduces single-vendor risk.
 
 ## Technical decisions recorded
 ADRs 000 through 006 are the decision backbone of the portal. ADR 000 established wireframes as the visual source of truth, including component mapping and shared design tokens. That decision reduced UI rework because each phase could implement against concrete references, not subjective memory.
@@ -164,21 +164,53 @@ This section documents what did not work as expected after the initial 1.0 deliv
 
 **Lesson:** Source coverage must be treated as a living configuration, not a one-time setup. Regular audits against the current political landscape are necessary.
 
+### 2026-03-21 -- AI chain: Gemini removed from high-quality tasks
+
+**What happened:** Gemini (via Google AI) was being used as the first provider for high-quality tasks (position extraction, quiz generation and validation). Testing showed Gemini 3.1 Flash Lite did not deliver sufficient quality for these complex tasks; the JSON parse error rate was higher than Kimi K2.5 and MiniMax M2.5.
+
+**What we did:** Reorganized the high-quality chain to Ollama Cloud (Kimi K2.5) -> NVIDIA NIM (MiniMax M2.5) -> Vertex AI (Gemini 3 Flash Preview). Gemini was kept only in the standard chain as a free-tier fallback between Ollama and Vertex. Updated the default Gemini model to `gemini-3.1-flash-lite-preview` to leverage higher free-tier limits.
+
+**Lesson:** Structured extraction tasks (JSON) require models with better format adherence. A free model that works well for summarization may consistently fail at valid JSON generation. Model selection must be task-specific, not global.
+
+### 2026-03-21 -- Dependabot: XSS vulnerabilities in vite-ssg and @unhead/dom
+
+**What happened:** Dependabot opened security alerts (XSS) against `vite-ssg` and `@unhead/dom` in the frontend. Both dependencies had versions with HTML metadata injection vulnerabilities.
+
+**What we did:** Updated `vite-ssg` and `@unhead/dom` to patched versions via `npm update`. Verified the static build remained functional and metadata injection (OG tags, JSON-LD) was still correct.
+
+**Lesson:** Dependabot in public projects is essential. XSS alerts in SSR/SSG dependencies are particularly critical because they affect the HTML delivered to end users.
+
+### 2026-03-21 -- CI/CD: deploy not triggering after automated workflows
+
+**What happened:** The deploy workflow was not triggered when commits were pushed by the GitHub Actions bot (collect, validate, curate workflows). GitHub Actions intentionally does not fire workflow triggers for commits made by `github-actions[bot]` to prevent infinite loops.
+
+**What we did:** Added a `workflow_run` trigger to `deploy.yml` that monitors successful completion of Collect, Validate, and Curate workflows. Added a concurrency group to prevent deploy pile-ups.
+
+**Lesson:** GitHub Actions has intentional restrictions on chained triggers. For multi-workflow pipelines that write to the same repository, `workflow_run` is the correct strategy to trigger downstream workflows.
+
+### 2026-03-21 -- Candidate position seeding
+
+**What happened:** The candidate position knowledge base (`candidates_positions.json`) depended exclusively on the news pipeline to fill positions. For less media-covered candidates, many topics remained `unknown` indefinitely.
+
+**What we did:** Created `scripts/seed_candidates_positions.py`, a one-shot script that populates baseline positions from structured sources: Wikipedia PT (political profile), Câmara dos Deputados (nominal votes), Senado Federal (bill votes), and AI synthesis (Gemini with grounding). The script is idempotent: it only fills entries marked `unknown` and never overwrites data already reviewed by human editors. Added a CI step that triggers seeding when the unknown ratio exceeds 50%.
+
+**Lesson:** Candidate positions for presidential elections are largely public data already documented in institutional sources. Relying exclusively on news for this data underutilizes available information. Seeding as a baseline accelerates the portal's coverage timeline.
+
 ---
 
 ## Project numbers
-At the current snapshot (2026-03-13), the measurable baseline is:
+At the current snapshot (2026-03-21), the measurable baseline is:
 
 - 17 phases completed (16 main + Phase 17 Vertex AI Search extension).
-- 189 commits in repository history.
-- 351 tracked files.
+- 622 commits in repository history.
 - 21 active RSS sources in `data/sources.json`, plus 8 party sources and 10 polling institute sources.
 - 9 candidates modeled in `data/candidates.json`.
 - 6 GitHub Actions workflows: collect (10min), validate (30min), curate (hourly), deploy, update-quiz, watchdog.
 - 4 article statuses: `raw`, `validated`, `curated`, `irrelevant`.
 - An automated editorial feedback mechanism filtering irrelevant content.
 - Circuit breaker and per-run AI call limits for pipeline resilience.
-- 109 commits of post-1.0 operational hardening since the Phase 16 QA closure.
+- Seed script (`seed_candidates_positions.py`) for baseline candidate position population from Wikipedia, Câmara/Senado APIs, and AI synthesis.
+- AI chain split by quality tier: standard (Nemotron 3 Super -> Gemini Flash Lite -> Vertex) and high-quality (Kimi K2.5 -> MiniMax M2.5 -> Vertex).
 
 These numbers are not marketing decoration; they demonstrate that the system was shipped, operated under real conditions, and iteratively corrected based on production feedback.
 

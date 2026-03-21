@@ -3,7 +3,7 @@
 **Status:** Aceito  
 **Data:** 2026-03-06  
 **Decisor:** Opus 4.6 (Arquiteto)  
-**Atualizado:** 2026-03-12 - Model atualizados para Kimi K2.5 / MiniMax M2.5 / Nemotron 3 Super
+**Atualizado:** 2026-03-21 - Gemini removido de tarefas de alta qualidade; Gemini 3.1 Flash Lite como fallback gratuito na cadeia padrao; seed de candidatos adicionado
 
 ## Contexto
 
@@ -24,40 +24,47 @@ Cadeia de fallback hierarquica: gratuitos primeiro, pagos como ultimo recurso.
 | 2b | Ollama Cloud (fallback 1) | `https://ollama.com/v1` | `minimax-m2.5:cloud` | Gratuito | Limites horarios |
 | 2c | Ollama Cloud (fallback 2) | `https://ollama.com/v1` | `nemotron-3-super:cloud` | Gratuito | Limites horarios |
 | 3 | OpenRouter | `https://openrouter.ai/api/v1` | `nvidia/nemotron-3-super-120b-a12b:free` | Gratuito | 200 req/dia |
-| 4 | Vertex AI | env `VERTEX_BASE_URL` | `google/gemini-2.5-flash-lite-001` | $10/mes (AI Pro) | Budget cap |
+| 4 | Vertex AI | env `VERTEX_BASE_URL` | `gemini-3-flash-preview` (override via `VERTEX_MODEL_OVERRIDE`) | $10/mes (AI Pro) | Budget cap |
 | 5 | MiMo | `https://api.xiaomimimo.com/v1` | `mimo-v2-flash` | Pago | Sem limite fixo |
 
 ## Selecao de Modelo por Tarefa (NVIDIA NIM)
 
-| Tarefa | Modelo | Justificativa |
-|--------|--------|--------------|
-| Sumarizacao | `moonshotai/kimi-k2.5` | Melhor qualidade geral (QI 46.73), multiligue |
-| Sentimento | `moonshotai/kimi-k2.5` | Melhor analise contextual |
-| Multilingue | `moonshotai/kimi-k2.5` | Melhor pt-BR/EN |
-| Extracao quiz | `moonshotai/kimi-k2.5` | Raciocinio para extrair posicoes |
+| Tarefa | Modelo (NIM) | Modelo (Ollama) | Justificativa |
+|--------|-------------|----------------|--------------|
+| Sumarizacao | `nvidia/nemotron-3-super-120b-a12b` | `nemotron-3-super:cloud` | Qualidade geral, multilingue |
+| Sentimento | `nvidia/nemotron-3-super-120b-a12b` | `nemotron-3-super:cloud` | Analise contextual |
+| Extracao posicoes | `minimaxai/minimax-m2.5` | `kimi-k2.5:cloud` | Raciocinio para posicoes |
+| Geracao quiz | `minimaxai/minimax-m2.5` | `kimi-k2.5:cloud` | Geracao de JSON estruturado |
+| Validacao quiz | `minimaxai/minimax-m2.5` | `kimi-k2.5:cloud` | Validacao estruturada |
 
-## Modelos por Provider (2026-03)
+## Modelos por Provider (2026-03-21)
 
 ### NVIDIA NIM
-- **Primario**: `moonshotai/kimi-k2.5` (1T MoE, 256K ctx, QI 46.73)
-- **Fallback 1**: `minimaxai/minimax-m2.5` (230B, 200K ctx, QI 41.97)
-- **Fallback 2**: `nvidia/nemotron-3-super-120b-a12b` (120B/12B MoE, 256K ctx)
+- **Sumarizacao/Sentimento**: `nvidia/nemotron-3-super-120b-a12b`
+- **Quiz/Posicoes**: `minimaxai/minimax-m2.5`
 
 ### Ollama Cloud
-- **Primario**: `kimi-k2.5:cloud`
-- **Fallback 1**: `minimax-m2.5:cloud`
-- **Fallback 2**: `nemotron-3-super:cloud`
+- **Sumarizacao/Sentimento**: `nemotron-3-super:cloud`
+- **Quiz/Posicoes (primario)**: `kimi-k2.5:cloud`
+
+### Gemini (Google AI — gratuito)
+- **Fallback padrao**: `gemini-3.1-flash-lite-preview` (via `https://generativelanguage.googleapis.com/v1beta/openai/`)
+- Nao usado em tarefas de alta qualidade
+
+### Vertex AI (pago)
+- **Modelo**: `gemini-3-flash-preview` (override via `VERTEX_MODEL_OVERRIDE`)
+- Fallback final para todas as tarefas
 
 ### OpenRouter
-- **Gratuito**: `nvidia/nemotron-3-super-120b-a12b:free` (262K ctx)
+- Removido da cadeia (rate-limiting 200 req/dia insuficiente para pipeline automatizado)
 
 ## Hierarquia da Redacao (Newsroom)
 
 | Papel | Frequencia | Modelo Primario | Fallback |
 |-------|-----------|----------------|---------|
-| Foca (coletor) | 10 min | Qwen3-235B-A22B (NIM) | Ministral-3B (OpenRouter) |
-| Editor (validador) | 30 min | Qwen3-235B-Thinking (OpenRouter) | Gemini 2.5 Flash Lite (Vertex) |
-| Editor-chefe (curador) | ~90 min | Gemini 2.5 Flash Lite (Vertex) | Kimi-K2.5 (NIM) |
+| Foca (coletor) | 10 min | Nemotron 3 Super (NVIDIA NIM) | Nemotron 3 Super (Ollama Cloud) |
+| Editor (validador) | 30 min | Nemotron 3 Super (NVIDIA NIM) | Gemini 3.1 Flash Lite (Google AI) |
+| Editor-chefe (curador) | ~90 min | Kimi K2.5 (Ollama Cloud) | MiniMax M2.5 (NVIDIA NIM) |
 
 ## Rastreador de Uso
 
