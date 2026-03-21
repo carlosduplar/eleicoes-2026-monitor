@@ -1,5 +1,6 @@
 """Shared sanitization helpers for relevance and deduplication."""
 
+from .constants import is_paywall_content
 from .dedup import (
     apply_cluster_decisions,
     cluster_articles_tfidf,
@@ -20,6 +21,7 @@ __all__ = [
     "compute_relevance_signals",
     "is_elections_relevant_pre_llm",
     "is_near_duplicate_fast",
+    "is_paywall_content",
     "is_relevant_post_llm",
     "select_canonical",
 ]

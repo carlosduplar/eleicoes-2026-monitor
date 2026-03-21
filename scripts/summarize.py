@@ -28,14 +28,22 @@ except ImportError:  # pragma: no cover - direct script execution path
     import editor_feedback  # type: ignore[no-redef]
 
 try:
-    from scripts.sanitize.constants import CANDIDATE_ALIASES, CANONICAL_CANDIDATE_SLUGS
+    from scripts.sanitize.constants import (
+        CANDIDATE_ALIASES,
+        CANONICAL_CANDIDATE_SLUGS,
+        is_paywall_content,
+    )
     from scripts.sanitize.relevance import (
         compute_relevance_signals,
         is_elections_relevant_pre_llm,
         is_relevant_post_llm,
     )
 except ImportError:  # pragma: no cover - direct script execution path
-    from sanitize.constants import CANDIDATE_ALIASES, CANONICAL_CANDIDATE_SLUGS  # type: ignore[no-redef]
+    from sanitize.constants import (
+        CANDIDATE_ALIASES,
+        CANONICAL_CANDIDATE_SLUGS,
+        is_paywall_content,
+    )  # type: ignore[no-redef]
     from sanitize.relevance import (  # type: ignore[no-redef]
         compute_relevance_signals,
         is_elections_relevant_pre_llm,
@@ -101,6 +109,7 @@ _BLOCKED_CONTENT_PATTERNS: frozenset[str] = frozenset(
         "please wait while we check",
     }
 )
+
 
 def utc_now_iso() -> str:
     return (
@@ -287,7 +296,9 @@ def _ensure_article_defaults(article: dict[str, Any]) -> None:
     else:
         article["relevance_score"] = None
     article["duplicate_of"] = (
-        article.get("duplicate_of") if isinstance(article.get("duplicate_of"), str) else None
+        article.get("duplicate_of")
+        if isinstance(article.get("duplicate_of"), str)
+        else None
     )
     article["relevance_signals"] = (
         article.get("relevance_signals")
@@ -338,6 +349,9 @@ def _validate_content_integrity(content: str, title: str) -> tuple[bool, str]:
     for pattern in _BLOCKED_CONTENT_PATTERNS:
         if pattern in snippet:
             return False, f"blocked/error page detected: '{pattern}'"
+    # Detect paywall / subscriber-gate prompts
+    if is_paywall_content(s):
+        return False, "paywall content detected (subscriber gate)"
     return True, ""
 
 

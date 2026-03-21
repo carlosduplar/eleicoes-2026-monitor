@@ -12,6 +12,11 @@ from typing import Any
 import requests
 from bs4 import BeautifulSoup
 
+try:
+    from scripts.sanitize.constants import is_paywall_content
+except ImportError:  # pragma: no cover - direct script execution path
+    from sanitize.constants import is_paywall_content  # type: ignore[no-redef]
+
 logger = logging.getLogger(__name__)
 
 ROOT_DIR = Path(__file__).resolve().parents[1]
@@ -227,11 +232,17 @@ def scrape_articles(limit: int = 100) -> tuple[int, int]:
                     logger.warning("Plain request failed for %s: %s", article_id, exc)
 
             if content and len(content) > 50:
-                article["content"] = content
-                scraped += 1
-                print(
-                    f"[{i + 1}/{len(articles_need_content)}] Scraped {article_id}: {len(content)} chars"
-                )
+                if is_paywall_content(content):
+                    logger.info(
+                        "Scraped paywall page for %s — discarding content", article_id
+                    )
+                    errors += 1
+                else:
+                    article["content"] = content
+                    scraped += 1
+                    print(
+                        f"[{i + 1}/{len(articles_need_content)}] Scraped {article_id}: {len(content)} chars"
+                    )
             else:
                 errors += 1
                 logger.warning("No content extracted for %s", article_id)

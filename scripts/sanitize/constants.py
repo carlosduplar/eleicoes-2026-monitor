@@ -177,3 +177,31 @@ SOURCE_CATEGORY_WEIGHTS = {
     "party": 0.55,
     "social": 0.5,
 }
+
+# Paywall / subscriber-gate patterns from Folha/UOL.
+# When these phrases appear in the first ~800 chars of content, the scraper
+# only captured the paywall prompt instead of the actual article text.
+_FOLHA_PAYWALL_PHRASES: frozenset[str] = frozenset(
+    {
+        "benefício do assinante",
+        "recurso exclusivo para assinantes",
+        "assine ou faça login",
+        "assine a folha",
+        "já é assinante?",
+        "faça seu login",
+        "só para assinantes",
+        "assine uol",
+    }
+)
+
+# Minimum number of distinct paywall phrases that must appear to flag content.
+_PAYWALL_PHRASE_THRESHOLD: Final[int] = 2
+
+
+def is_paywall_content(content: str) -> bool:
+    """Return True when *content* is predominantly a paywall / subscriber-gate prompt."""
+    if not content:
+        return False
+    snippet = content[:800].lower()
+    hits = sum(1 for phrase in _FOLHA_PAYWALL_PHRASES if phrase in snippet)
+    return hits >= _PAYWALL_PHRASE_THRESHOLD
