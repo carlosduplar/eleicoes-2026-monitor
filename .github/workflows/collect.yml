@@ -102,6 +102,9 @@ jobs:
           python scripts/build_data.py
           python scripts/generate_rss_feed.py
 
+      - name: Archive old articles
+        run: python scripts/archive_articles.py --execute --hot-days 7 --warm-days 30
+
       - name: Index to Vertex AI Search
         env:
           GOOGLE_APPLICATION_CREDENTIALS_JSON: ${{ secrets.GOOGLE_APPLICATION_CREDENTIALS_JSON }}
