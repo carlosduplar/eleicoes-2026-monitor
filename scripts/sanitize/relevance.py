@@ -139,6 +139,17 @@ def compute_relevance_score(article: dict[str, Any]) -> float:
     return max(0.0, min(1.0, round(score, 4)))
 
 
+def _has_brazil_context(article: dict[str, Any]) -> bool:
+    """Check if article has Brazil-specific context via summary text."""
+    summaries = article.get("summaries")
+    if not isinstance(summaries, dict):
+        return False
+    summary_pt = summaries.get("pt-BR", "") or ""
+    summary_en = summaries.get("en-US", "") or ""
+    summary_text = _normalize_text(f"{summary_pt} {summary_en}")
+    return _keyword_hits(summary_text, BRAZIL_CONTEXT_KEYWORDS) > 0
+
+
 def is_relevant_post_llm(article: dict[str, Any]) -> tuple[bool, float]:
     """Post-LLM relevance decision using structured fields."""
     topics = _clean_string_list(article.get("topics"))
@@ -148,6 +159,8 @@ def is_relevant_post_llm(article: dict[str, Any]) -> tuple[bool, float]:
     if candidates:
         return True, score
     if "eleicoes" in topics:
-        return True, score
+        if _has_brazil_context(article):
+            return True, score
+        return False, score
 
     return score >= RELEVANCE_THRESHOLD, score
