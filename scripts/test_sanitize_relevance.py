@@ -25,11 +25,33 @@ def test_candidate_mention_gives_high_score() -> None:
     assert 0.5 <= score <= 1.0
 
 
-def test_eleicoes_topic_is_relevant_post_llm() -> None:
-    article = _article(topics=["eleicoes"])
+def test_eleicoes_topic_with_brazil_context_is_relevant_post_llm() -> None:
+    article = _article(
+        topics=["eleicoes"],
+        summaries={"pt-BR": "Eleicoes no Brasil", "en-US": "Elections in Brazil"},
+    )
     is_relevant, score = is_relevant_post_llm(article)
     assert is_relevant is True
     assert score >= 0.25
+
+
+def test_eleicoes_topic_without_brazil_context_is_irrelevant_post_llm() -> None:
+    article = _article(topics=["eleicoes"])
+    is_relevant, score = is_relevant_post_llm(article)
+    assert is_relevant is False
+    assert score >= 0.25
+
+
+def test_international_election_without_brazil_context_is_filtered() -> None:
+    article = _article(
+        topics=["eleicoes", "politica_ext"],
+        summaries={
+            "pt-BR": "Eleicoes na Francia, extrema-direita sofre derrotas",
+            "en-US": "France elections, far-right suffers defeats",
+        },
+    )
+    is_relevant, score = is_relevant_post_llm(article)
+    assert is_relevant is False
 
 
 def test_pure_economics_gives_low_score() -> None:
@@ -50,7 +72,9 @@ def test_international_only_is_filtered_pre_llm() -> None:
 
 def test_obvious_election_article_passes_pre_llm() -> None:
     title = "Lula lidera pesquisa eleitoral para 2026"
-    content = "Pesquisa eleitoral aponta disputa presidencial acirrada com varios candidatos."
+    content = (
+        "Pesquisa eleitoral aponta disputa presidencial acirrada com varios candidatos."
+    )
     assert is_elections_relevant_pre_llm(title=title, content=content) is True
 
 
