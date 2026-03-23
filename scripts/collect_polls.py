@@ -5,6 +5,7 @@ from __future__ import annotations
 import asyncio
 import json
 import logging
+import os
 import re
 from dataclasses import dataclass
 from datetime import datetime, timezone
@@ -13,6 +14,9 @@ from pathlib import Path
 from typing import Any, Literal, NotRequired, TypedDict
 
 from playwright.async_api import Browser, Page, async_playwright
+
+BRIGHTDATA_ZONE = os.environ.get("BRIGHTDATA_ZONE", "web_unlocker1")
+REQUEST_TIMEOUT_SECONDS = 30
 
 PollType = Literal["estimulada", "espontanea"]
 
@@ -518,6 +522,44 @@ async def extract_poll_payload(page: Page, source: PollSource) -> PollItem | Non
     return poll
 
 
+def _fetch_url_brightdata(url: str, api_key: str = "") -> str:
+    """Fetch URL via Bright Data CLI. Returns raw HTML."""
+    import subprocess
+    import tempfile
+    import os
+
+    brightdata_cmd = os.path.expandvars(r"%APPDATA%\npm\brightdata.cmd")
+
+    try:
+        with tempfile.NamedTemporaryFile(
+            mode="w+", suffix=".html", delete=False
+        ) as tmp:
+            tmp_path = tmp.name
+
+        result = subprocess.run(
+            [brightdata_cmd, "scrape", url, "--format", "raw", "-o", tmp_path],
+            capture_output=True,
+            text=True,
+            timeout=60,
+            shell=True,
+        )
+
+        if result.returncode != 0:
+            os.unlink(tmp_path)
+            raise Exception(f"BrightData CLI error: {result.stderr}")
+
+        with open(tmp_path, "r", encoding="utf-8") as f:
+            html = f.read()
+
+        os.unlink(tmp_path)
+        return html
+
+    except FileNotFoundError:
+        raise Exception(
+            "Bright Data CLI not installed. Run: npm install -g @brightdata/cli"
+        )
+
+
 async def scrape_source(
     browser: Browser, source: PollSource, timeout_ms: int = 30000
 ) -> PollItem | None:
@@ -528,8 +570,123 @@ async def scrape_source(
             source["url"], timeout=timeout_ms, wait_until="domcontentloaded"
         )
         return await extract_poll_payload(page, source)
+    except Exception as exc:
+        brightdata_key = os.environ.get("BRIGHTDATA_API_KEY", "").strip()
+        if brightdata_key:
+            logger.info("Playwright failed for %s, trying Bright Data", source["name"])
+            try:
+                html = _fetch_url_brightdata(source["url"], brightdata_key)
+                logger.info(
+                    "Bright Data returned %d chars for %s", len(html), source["name"]
+                )
+                return await extract_poll_payload_from_html(html, source)
+            except Exception as bd_exc:
+                logger.warning("Bright Data also failed: %s", bd_exc)
+                raise exc
+        raise
     finally:
         await page.close()
+
+
+async def extract_poll_payload_from_html(
+    html: str, source: PollSource
+) -> PollItem | None:
+    """Extract poll data from raw HTML (e.g., from Bright Data)."""
+    from bs4 import BeautifulSoup
+
+    institute = normalize_institute_name(source["name"])
+    if institute not in INSTITUTE_ENUM:
+        logger.warning("Skipping unsupported institute name: %s", institute)
+        return None
+
+    soup = BeautifulSoup(html, "lxml")
+    page_text = soup.get_text()
+    if not page_text:
+        page_text = ""
+
+    date_text = parse_poll_date(page_text) or datetime.now(timezone.utc).strftime(
+        "%Y-%m-%d"
+    )
+    published_at = f"{date_text}T00:00:00Z"
+    poll_type = infer_poll_type(page_text)
+    collected_at = utc_now_iso()
+
+    results = await extract_candidates_from_jsonld_html(soup)
+    if not results:
+        results = await extract_candidates_from_tables_html(soup)
+    if not results:
+        return None
+
+    poll: PollItem = {
+        "id": build_poll_id(institute, date_text),
+        "institute": institute,
+        "published_at": published_at,
+        "collected_at": collected_at,
+        "type": poll_type,
+        "results": results,
+        "source_url": source["url"],
+    }
+
+    sample_size = parse_sample_size(page_text)
+    if sample_size is not None:
+        poll["sample_size"] = sample_size
+
+    margin_of_error = parse_margin_of_error(page_text)
+    if margin_of_error is not None:
+        poll["margin_of_error"] = margin_of_error
+
+    confidence_match = re.search(
+        r"(?:confianca|confidence)[^0-9]{0,12}(\d{2,3})\s*%", page_text, re.IGNORECASE
+    )
+    if confidence_match:
+        confidence_level = float(confidence_match.group(1))
+        if 0 <= confidence_level <= 100:
+            poll["confidence_level"] = confidence_level
+
+    tse_match = re.search(r"(BR-\d{4}/\d{4}|[A-Z]{2,4}-\d{1,5}/\d{4})", page_text)
+    if tse_match:
+        poll["tse_registration"] = tse_match.group(1)
+
+    snippet = " ".join(re.sub(r"\s+", " ", html).split())
+    if snippet:
+        poll["raw_html_snippet"] = snippet[:500]
+
+    return poll
+
+
+async def extract_candidates_from_jsonld_html(soup) -> list[PollResultItem]:
+    """Extract candidates from JSON-LD in HTML."""
+    scripts = soup.find_all("script", type="application/ld+json")
+    found: dict[str, PollResultItem] = {}
+    for script in scripts:
+        try:
+            payload = json.loads(script.string or "")
+            _collect_jsonld_results(payload, found)
+        except (json.JSONDecodeError, TypeError):
+            continue
+    return list(found.values())
+
+
+async def extract_candidates_from_tables_html(soup) -> list[PollResultItem]:
+    """Extract candidates from HTML tables."""
+    found: dict[str, PollResultItem] = {}
+    for row in soup.select("table tr"):
+        text = row.get_text()
+        if not text:
+            continue
+        compact = " ".join(text.split())
+        slug = canonical_candidate_slug(compact)
+        if not slug:
+            continue
+        percentage = _coerce_percentage(compact)
+        if percentage is None:
+            continue
+        found[slug] = {
+            "candidate_slug": slug,
+            "candidate_name": _canonical_candidate_name(slug),
+            "percentage": percentage,
+        }
+    return list(found.values())
 
 
 async def collect_polls_async() -> tuple[int, int, int]:
@@ -565,6 +722,150 @@ async def collect_polls_async() -> tuple[int, int, int]:
 
 
 def collect_polls() -> tuple[int, int, int]:
+    return asyncio.run(collect_polls_async())
+
+
+ARTICLES_FILE = ROOT_DIR / "data" / "articles.json"
+
+
+def extract_polls_from_articles() -> list[PollItem]:
+    """Extract poll data from collected articles."""
+    if not ARTICLES_FILE.exists():
+        return []
+
+    try:
+        payload = _load_json(ARTICLES_FILE)
+    except Exception:
+        return []
+
+    articles = []
+    if isinstance(payload, dict):
+        articles = payload.get("articles", [])
+    elif isinstance(payload, list):
+        articles = payload
+
+    INSTITUTE_PATTERNS = {
+        "Datafolha": re.compile(r"\bdatafolha\b", re.IGNORECASE),
+        "Quaest": re.compile(r"\bquaest\b", re.IGNORECASE),
+        "AtlasIntel": re.compile(r"\batlas\s*intel\b", re.IGNORECASE),
+        "Parana Pesquisas": re.compile(r"\bparana\s*pesquisas?\b", re.IGNORECASE),
+        "PoderData": re.compile(r"\bpoder\s*data\b", re.IGNORECASE),
+        "Real Time Big Data": re.compile(
+            r"\breal\s*time\s*(big\s*)?data\b", re.IGNORECASE
+        ),
+        "Futura Inteligencia": re.compile(
+            r"\bfutura\s*(inteligencia|inteligência)\b", re.IGNORECASE
+        ),
+        "Ipsos": re.compile(r"\bipsos\b", re.IGNORECASE),
+        "MDA": re.compile(r"\b(cnt/?mda|mda)\b", re.IGNORECASE),
+        "Ideia": re.compile(r"\b(meio/?ideia|ideia)\b", re.IGNORECASE),
+    }
+
+    PERCENTAGE_PATTERN = re.compile(
+        r"(\d{1,2}(?:[\.,]\d+)?)\s*%\s+(lula|flavio|bolsonaro|tarcisio|tarcísio|caiado|zema|ratinho|eduardo|aldo|rebelos|renan|haddad|ciro)",
+        re.IGNORECASE,
+    )
+
+    polls: list[PollItem] = []
+    seen_polls: set[str] = set()
+
+    for article in articles:
+        if not isinstance(article, dict):
+            continue
+
+        content = (article.get("title", "") + " " + article.get("content", "")).lower()
+        url = article.get("url", "")
+        published = article.get("published_at", "")[:10]
+
+        institute_name = None
+        for inst, pattern in INSTITUTE_PATTERNS.items():
+            if pattern.search(content):
+                institute_name = inst
+                break
+
+        if not institute_name:
+            continue
+
+        matches = PERCENTAGE_PATTERN.findall(content)
+        if not matches:
+            continue
+
+        results: list[PollResultItem] = []
+        seen_candidates: set[str] = set()
+
+        for pct_str, candidate in matches:
+            pct = float(pct_str.replace(",", "."))
+            if pct > 100 or pct == 0:
+                continue
+            slug = canonical_candidate_slug(candidate)
+            if not slug or slug in seen_candidates:
+                continue
+            seen_candidates.add(slug)
+            results.append(
+                {
+                    "candidate_slug": slug,
+                    "candidate_name": _canonical_candidate_name(slug),
+                    "percentage": round(pct, 1),
+                }
+            )
+
+        if len(results) < 2:
+            continue
+
+        poll_id = build_poll_id(institute_name, published)
+        if poll_id in seen_polls:
+            continue
+        seen_polls.add(poll_id)
+
+        poll: PollItem = {
+            "id": poll_id,
+            "institute": institute_name,
+            "published_at": f"{published}T00:00:00Z",
+            "collected_at": utc_now_iso(),
+            "type": "estimulada",
+            "results": results,
+            "source_url": url,
+        }
+        polls.append(poll)
+        logger.info(f"Extracted poll from article: {institute_name} ({published})")
+
+    return polls
+
+
+async def collect_polls_async() -> tuple[int, int, int]:
+    sources = load_active_poll_sources()
+    document = load_polls_document()
+    incoming: list[PollItem] = []
+    errors = 0
+
+    async with async_playwright() as playwright:
+        browser = await playwright.chromium.launch(headless=True)
+        try:
+            for source in sources:
+                try:
+                    poll = await scrape_source(browser, source, timeout_ms=30000)
+                except Exception as exc:
+                    errors += 1
+                    append_pipeline_error(
+                        institute=source["name"],
+                        source_url=source["url"],
+                        message=str(exc),
+                    )
+                    continue
+                if poll is not None:
+                    incoming.append(poll)
+        finally:
+            await browser.close()
+
+    merged, new_count = deduplicate_by_id(document.polls, incoming)
+    document.polls = merged
+    if new_count > 0 or not POLLS_FILE.exists():
+        save_polls_document(document)
+    return new_count, len(sources), errors
+
+
+def collect_polls() -> tuple[int, int, int]:
+    logger.info("Starting poll collection via institute scraping...")
     return asyncio.run(collect_polls_async())
 
 
