@@ -10,6 +10,7 @@ from __future__ import annotations
 import argparse
 import json
 import logging
+import os
 import re
 import time
 import urllib.error
@@ -509,44 +510,61 @@ def fetch_party_snippets(candidate_slug: str, topic_id: str) -> list[str]:
 
 # ── Source F: Web Search Snippets ────────────────────────────────────────
 
-DUCKDUCKGO_API_URL = "https://api.duckduckgo.com/"
+BRAVE_SEARCH_API_URL = "https://api.search.brave.com/res/v1/web/search"
+BRAVE_API_KEY: str | None = os.environ.get("BRAVE_SEARCH_API_KEY")
 
 
-def _web_search_snippets(query: str, max_results: int = 5) -> list[str]:
-    """Fetch snippets from DuckDuckGo Instant Answer API.
+def _brave_search(query: str, max_results: int = 5) -> list[str]:
+    """Call Brave Web Search API. Returns description strings, or [] on failure."""
+    if BRAVE_API_KEY is None:
+        logger.warning("BRAVE_SEARCH_API_KEY not set; skipping Brave web search.")
+        return []
 
-    Returns up to *max_results* text snippets. Falls back to an empty list on
-    any network or parse error — never raises.
-    """
     try:
-        params = urllib.parse.urlencode(
-            {"q": query, "format": "json", "no_redirect": "1", "no_html": "1"}
+        response = requests.get(
+            BRAVE_SEARCH_API_URL,
+            params={
+                "q": query,
+                "count": max_results,
+                "search_lang": "pt",
+                "country": "BR",
+            },
+            headers={
+                "Accept": "application/json",
+                "Accept-Encoding": "gzip",
+                "X-Subscription-Token": BRAVE_API_KEY,
+            },
+            timeout=30,
         )
-        url = f"{DUCKDUCKGO_API_URL}?{params}"
-        data = _http_get_json(url)
-        if not data:
+    except requests.RequestException as exc:
+        logger.warning("Brave search failed for query '%s': %s", query, exc)
+        return []
+
+    if response.status_code != 200:
+        return []
+
+    try:
+        data = response.json()
+        results = data["web"]["results"]
+        if not isinstance(results, list):
             return []
         snippets: list[str] = []
-        related = data.get("RelatedTopics", [])
-        if not isinstance(related, list):
-            return []
-        for item in related:
+        for item in results:
             if not isinstance(item, dict):
                 continue
-            text = item.get("Text", "")
-            if isinstance(text, str) and text.strip():
-                snippets.append(text.strip())
+            description = item.get("description")
+            if isinstance(description, str) and description.strip():
+                snippets.append(description.strip())
             if len(snippets) >= max_results:
                 break
         time.sleep(0.5)
         return snippets
-    except Exception as exc:  # noqa: BLE001
-        logger.warning("Web search failed for query '%s': %s", query, exc)
+    except (KeyError, TypeError, ValueError):
         return []
 
 
 def fetch_web_snippets(candidate_slug: str, topic_id: str) -> list[str]:
-    """Return web search snippets for a candidate/topic pair via DuckDuckGo.
+    """Return web search snippets for a candidate/topic pair via Brave Search.
 
     Returns a list of plain-text snippets (may be empty if the candidate is
     not in *CANDIDATE_FULL_NAMES* or the network is unavailable).
@@ -558,8 +576,8 @@ def fetch_web_snippets(candidate_slug: str, topic_id: str) -> list[str]:
 
     topic_keywords = TOPIC_KEYWORDS.get(topic_id, [topic_id])
     topic_label_pt = topic_keywords[0] if topic_keywords else topic_id
-    query = f'"{full_name}" "{topic_label_pt}" posição'
-    return _web_search_snippets(query)
+    query = f'"{full_name}" "{topic_label_pt}" posição site:.br'
+    return _brave_search(query, max_results=5)
 
 
 # ── Topic label lookup ──────────────────────────────────────────────────
@@ -588,6 +606,11 @@ def seed_positions(
 ) -> None:
     """Main entry point: seed unknown positions from public sources."""
     logging.basicConfig(level=logging.INFO, format="%(levelname)s: %(message)s")
+    if not skip_web_search and BRAVE_API_KEY is None:
+        logger.warning(
+            "BRAVE_SEARCH_API_KEY not set — Source F will produce no snippets. "
+            "Pass --skip-web-search to suppress this warning."
+        )
 
     payload: dict[str, Any] = json.loads(POSITIONS_FILE.read_text(encoding="utf-8"))
     topics = payload.get("topics")
