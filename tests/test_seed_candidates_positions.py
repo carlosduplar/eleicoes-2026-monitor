@@ -13,6 +13,17 @@ import requests
 from scripts import seed_candidates_positions as seed
 
 
+def _fake_response(status_code: int = 200, payload: object | None = None) -> object:
+    class _Response:
+        def __init__(self) -> None:
+            self.status_code = status_code
+
+        def json(self) -> object:
+            return payload
+
+    return _Response()
+
+
 # ── Source E: fetch_party_snippets ──────────────────────────────────────
 
 
@@ -295,17 +306,6 @@ def test_seed_positions_warns_when_brave_key_missing(
         seed.seed_positions(dry_run=True, skip_web_search=False)
 
     assert "BRAVE_SEARCH_API_KEY not set — Source F will produce no snippets" in caplog.text
-
-
-def _fake_response(status_code: int = 200, payload: object | None = None) -> object:
-    class _Response:
-        def __init__(self) -> None:
-            self.status_code = status_code
-
-        def json(self) -> object:
-            return payload
-
-    return _Response()
 
 
 def test_seed_positions_sources_include_party_profile(
