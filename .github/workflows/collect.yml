@@ -116,7 +116,7 @@ jobs:
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "action@github.com"
-          git add site/public/data/
+          git add -f site/public/data/
           git add site/public/feed*.xml 2>/dev/null || true
           if git diff --staged --quiet; then
             echo "No changes to commit."
@@ -138,14 +138,14 @@ jobs:
                   git show ":3:$f" > "$f.remote" 2>/dev/null || echo "[]" > "$f.remote"
                   python scripts/merge_json.py "$f" "$f.remote" "$f"
                   rm -f "$f.base" "$f.remote"
-                  git add "$f"
+                  git add -f "$f"
                 fi
               done
 
               if git diff --name-only --diff-filter=U | grep -q .; then
                 echo "Unresolved conflicts remain, using theirs..."
                 git checkout --theirs site/public/data/*.json
-                git add site/public/data/*.json
+                git add -f site/public/data/*.json
               fi
 
               git commit -m "chore(ci): resolve merge conflicts" || echo "No conflicts to commit"
