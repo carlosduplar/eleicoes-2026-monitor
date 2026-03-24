@@ -512,6 +512,7 @@ def fetch_party_snippets(candidate_slug: str, topic_id: str) -> list[str]:
 
 BRAVE_SEARCH_API_URL = "https://api.search.brave.com/res/v1/web/search"
 BRAVE_API_KEY: str | None = os.environ.get("BRAVE_SEARCH_API_KEY")
+BRAVE_SEARCH_SITE_RESTRICTION = "site:.br"
 
 
 def _brave_search(query: str, max_results: int = 5) -> list[str]:
@@ -567,7 +568,8 @@ def fetch_web_snippets(candidate_slug: str, topic_id: str) -> list[str]:
     """Return web search snippets for a candidate/topic pair via Brave Search.
 
     Returns a list of plain-text snippets (may be empty if the candidate is
-    not in *CANDIDATE_FULL_NAMES* or the network is unavailable).
+    not in *CANDIDATE_FULL_NAMES* or the network is unavailable). Queries are
+    restricted to Brazilian domains via ``site:.br``.
     """
     full_name = CANDIDATE_FULL_NAMES.get(candidate_slug)
     if not full_name:
@@ -576,7 +578,9 @@ def fetch_web_snippets(candidate_slug: str, topic_id: str) -> list[str]:
 
     topic_keywords = TOPIC_KEYWORDS.get(topic_id, [topic_id])
     topic_label_pt = topic_keywords[0] if topic_keywords else topic_id
-    query = f'"{full_name}" "{topic_label_pt}" posição site:.br'
+    query = (
+        f'"{full_name}" "{topic_label_pt}" posição {BRAVE_SEARCH_SITE_RESTRICTION}'
+    )
     return _brave_search(query, max_results=5)
 
 
