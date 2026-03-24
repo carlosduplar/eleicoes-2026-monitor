@@ -59,7 +59,7 @@ jobs:
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "action@github.com"
-          git add data/articles.json data/sentiment.json data/editor_feedback.json 2>/dev/null || true
+          git add -f site/public/data/articles.json site/public/data/sentiment.json site/public/data/editor_feedback.json 2>/dev/null || true
           if git diff --staged --quiet; then
             echo "No changes to commit."
             exit 0
@@ -70,7 +70,7 @@ jobs:
             if ! git pull --rebase --autostash origin master; then
               echo "Rebase conflict detected. Attempting auto-resolution for generated outputs."
               git checkout --theirs site/public/data/articles.json site/public/data/sentiment.json site/public/data/editor_feedback.json 2>/dev/null || true
-              git add site/public/data/articles.json site/public/data/sentiment.json site/public/data/editor_feedback.json 2>/dev/null || true
+              git add -f site/public/data/articles.json site/public/data/sentiment.json site/public/data/editor_feedback.json 2>/dev/null || true
               if ! GIT_EDITOR=true git rebase --continue; then
                 git rebase --abort || true
                 echo "Rebase failed after auto-resolution while syncing with origin/master."
