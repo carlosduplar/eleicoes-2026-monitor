@@ -373,17 +373,11 @@ def _request_completion(
         if not api_key:
             raise ValueError("VERTEX_API_KEY environment variable is missing.")
 
-        grounding_enabled = os.environ.get(
-            "VERTEX_GROUNDING_ENABLED", ""
-        ).strip().lower() in ("1", "true", "yes")
-
         url = f"https://aiplatform.googleapis.com/v1/publishers/google/models/{provider['model']}:generateContent"
         data = {
             "contents": [{"role": "user", "parts": [{"text": f"{system}\n\n{user}"}]}],
             "generationConfig": {"maxOutputTokens": 8192},
         }
-        if grounding_enabled:
-            data["tools"] = [{"googleSearch": {}}]
         req = urllib.request.Request(
             f"{url}?key={api_key}",
             data=json.dumps(data).encode("utf-8"),
@@ -427,20 +421,8 @@ def _request_completion(
             {"role": "user", "content": user},
         ],
     }
-    # Enable Google Search Grounding for Gemini models (opt-in via env var)
-    if (
-        provider.get("name") == "gemini"
-        and os.environ.get("GEMINI_GROUNDING_ENABLED", "").strip()
-    ):
-        kwargs["tools"] = [
-            {
-                "type": "function",
-                "function": {
-                    "name": "google_search",
-                    "description": "Google Search Grounding",
-                },
-            }
-        ]
+    # Web evidence is supplied upstream via Source F (Brave Search) in
+    # seed_candidates_positions.py.
     # Disable thinking mode for NVIDIA thinking models so the answer lands in
     # `content` as clean JSON rather than being buried in `reasoning_content`.
     if provider.get("name") == "nvidia":

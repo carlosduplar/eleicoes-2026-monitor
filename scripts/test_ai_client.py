@@ -1,4 +1,5 @@
 import json
+import urllib.request
 
 import pytest
 
@@ -111,6 +112,98 @@ def test_request_completion_openrouter_uses_optional_headers(
     }
     assert completion_calls[0]["model"] == "meta-llama/llama-3.3-70b-instruct:free"
     assert completion_calls[0]["max_tokens"] == 123
+
+
+def test_request_completion_gemini_does_not_add_grounding_tools(
+    monkeypatch: pytest.MonkeyPatch,
+) -> None:
+    provider = _provider(
+        "gemini",
+        "GEMINI_API_KEY",
+        "https://generativelanguage.googleapis.com/v1beta/openai/",
+        "gemini-2.5-pro",
+    )
+    monkeypatch.setenv("".join(["GEMINI", "_GROUNDING_ENABLED"]), "true")
+
+    completion_calls: list[dict[str, object]] = []
+
+    class _Message:
+        content = '{"ok":true}'
+
+    class _Choice:
+        message = _Message()
+
+    class _Response:
+        choices = [_Choice()]
+
+    class _Completions:
+        def create(self, **kwargs: object) -> _Response:
+            completion_calls.append(dict(kwargs))
+            return _Response()
+
+    class _Chat:
+        completions = _Completions()
+
+    class _Client:
+        chat = _Chat()
+
+    monkeypatch.setattr(ai_client.openai, "OpenAI", lambda **kwargs: _Client())
+
+    result = ai_client._request_completion(
+        provider=provider,
+        api_key="gemini-key",
+        system="system",
+        user="user",
+        max_tokens=200,
+    )
+
+    assert result == '{"ok":true}'
+    assert "tools" not in completion_calls[0]
+
+
+def test_request_completion_vertex_does_not_add_grounding_tools(
+    monkeypatch: pytest.MonkeyPatch,
+) -> None:
+    provider = _provider(
+        "vertex",
+        "VERTEX_API_KEY",
+        "https://aiplatform.googleapis.com",
+        "gemini-3-flash-preview",
+    )
+    monkeypatch.setenv("VERTEX_API_KEY", "vertex-key")
+    monkeypatch.setenv("".join(["VERTEX", "_GROUNDING_ENABLED"]), "true")
+
+    request_payloads: list[dict[str, object]] = []
+
+    class _Response:
+        def __enter__(self) -> "_Response":
+            return self
+
+        def __exit__(self, exc_type, exc, tb) -> None:
+            return None
+
+        def read(self) -> bytes:
+            return json.dumps(
+                {"candidates": [{"content": {"parts": [{"text": '{"ok":true}'}]}}]}
+            ).encode("utf-8")
+
+    def fake_request(url: str, data: bytes, headers: dict[str, str], method: str) -> object:
+        request_payloads.append(json.loads(data.decode("utf-8")))
+        return object()
+
+    monkeypatch.setattr(urllib.request, "Request", fake_request)
+    monkeypatch.setattr(urllib.request, "urlopen", lambda req: _Response())
+
+    result = ai_client._request_completion(
+        provider=provider,
+        api_key="ignored",
+        system="system",
+        user="user",
+        max_tokens=200,
+    )
+
+    assert result == '{"ok":true}'
+    assert "tools" not in request_payloads[0]
 
 
 def test_extract_content_from_object_content_parts() -> None:
