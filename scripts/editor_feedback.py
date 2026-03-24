@@ -10,13 +10,18 @@ from pathlib import Path
 from typing import Any
 
 ROOT_DIR = Path(__file__).resolve().parents[1]
-DATA_DIR = ROOT_DIR / "data"
+DATA_DIR = ROOT_DIR / "site" / "public" / "data"
 EDITOR_FEEDBACK_FILE = DATA_DIR / "editor_feedback.json"
 DEFAULT_SCHEMA_PATH = "../docs/schemas/editor_feedback.schema.json"
 
 
 def utc_now_iso() -> str:
-    return datetime.now(timezone.utc).replace(microsecond=0).isoformat().replace("+00:00", "Z")
+    return (
+        datetime.now(timezone.utc)
+        .replace(microsecond=0)
+        .isoformat()
+        .replace("+00:00", "Z")
+    )
 
 
 def build_article_id(url: str) -> str:
@@ -81,16 +86,24 @@ def normalize_feedback(payload: object) -> dict[str, Any]:
         normalized["updated_at"] = updated_at.strip()
 
     normalized["irrelevant_article_ids"] = sorted(
-        _normalize_string_list(source.get("irrelevant_article_ids"), lowercase_values=True)
+        _normalize_string_list(
+            source.get("irrelevant_article_ids"), lowercase_values=True
+        )
     )
     normalized["blocked_title_keywords"] = sorted(
-        _normalize_string_list(source.get("blocked_title_keywords"), normalize_text_values=True)
+        _normalize_string_list(
+            source.get("blocked_title_keywords"), normalize_text_values=True
+        )
     )
     normalized["blocked_url_substrings"] = sorted(
-        _normalize_string_list(source.get("blocked_url_substrings"), lowercase_values=True)
+        _normalize_string_list(
+            source.get("blocked_url_substrings"), lowercase_values=True
+        )
     )
     normalized["blocked_sources"] = sorted(
-        _normalize_string_list(source.get("blocked_sources"), normalize_text_values=True)
+        _normalize_string_list(
+            source.get("blocked_sources"), normalize_text_values=True
+        )
     )
 
     return normalized
@@ -103,11 +116,15 @@ def load_editor_feedback(path: Path = EDITOR_FEEDBACK_FILE) -> dict[str, Any]:
     return normalize_feedback(payload)
 
 
-def save_editor_feedback(payload: dict[str, Any], path: Path = EDITOR_FEEDBACK_FILE) -> None:
+def save_editor_feedback(
+    payload: dict[str, Any], path: Path = EDITOR_FEEDBACK_FILE
+) -> None:
     normalized = normalize_feedback(payload)
     normalized["updated_at"] = utc_now_iso()
     path.parent.mkdir(parents=True, exist_ok=True)
-    path.write_text(json.dumps(normalized, indent=2, ensure_ascii=False) + "\n", encoding="utf-8")
+    path.write_text(
+        json.dumps(normalized, indent=2, ensure_ascii=False) + "\n", encoding="utf-8"
+    )
 
 
 def article_id_from_payload(article: dict[str, Any]) -> str | None:
@@ -122,12 +139,18 @@ def article_id_from_payload(article: dict[str, Any]) -> str | None:
     return None
 
 
-def add_article_id_to_feedback(feedback: dict[str, Any], article: dict[str, Any]) -> bool:
+def add_article_id_to_feedback(
+    feedback: dict[str, Any], article: dict[str, Any]
+) -> bool:
     article_id = article_id_from_payload(article)
     if article_id is None:
         return False
 
-    current_ids = set(_normalize_string_list(feedback.get("irrelevant_article_ids"), lowercase_values=True))
+    current_ids = set(
+        _normalize_string_list(
+            feedback.get("irrelevant_article_ids"), lowercase_values=True
+        )
+    )
     if article_id in current_ids:
         return False
 
@@ -136,7 +159,9 @@ def add_article_id_to_feedback(feedback: dict[str, Any], article: dict[str, Any]
     return True
 
 
-def add_irrelevant_article_ids(feedback: dict[str, Any], articles: list[dict[str, Any]]) -> int:
+def add_irrelevant_article_ids(
+    feedback: dict[str, Any], articles: list[dict[str, Any]]
+) -> int:
     added = 0
     for article in articles:
         if article.get("status") != "irrelevant":
@@ -146,29 +171,42 @@ def add_irrelevant_article_ids(feedback: dict[str, Any], articles: list[dict[str
     return added
 
 
-def feedback_reason_for_article(article: dict[str, Any], feedback: dict[str, Any]) -> str | None:
+def feedback_reason_for_article(
+    article: dict[str, Any], feedback: dict[str, Any]
+) -> str | None:
     article_id = article_id_from_payload(article)
-    blocked_ids = set(_normalize_string_list(feedback.get("irrelevant_article_ids"), lowercase_values=True))
+    blocked_ids = set(
+        _normalize_string_list(
+            feedback.get("irrelevant_article_ids"), lowercase_values=True
+        )
+    )
     if article_id and article_id in blocked_ids:
         return "irrelevant_article_ids"
 
     source = article.get("source")
     source_normalized = _normalize_text(source) if isinstance(source, str) else ""
-    blocked_sources = set(_normalize_string_list(feedback.get("blocked_sources"), normalize_text_values=True))
+    blocked_sources = set(
+        _normalize_string_list(
+            feedback.get("blocked_sources"), normalize_text_values=True
+        )
+    )
     if source_normalized and source_normalized in blocked_sources:
         return "blocked_sources"
 
     raw_url = article.get("url")
     url_text = raw_url.strip().lower() if isinstance(raw_url, str) else ""
-    for blocked_substring in _normalize_string_list(feedback.get("blocked_url_substrings"), lowercase_values=True):
+    for blocked_substring in _normalize_string_list(
+        feedback.get("blocked_url_substrings"), lowercase_values=True
+    ):
         if blocked_substring and blocked_substring in url_text:
             return "blocked_url_substrings"
 
     title = article.get("title")
     title_normalized = _normalize_text(title) if isinstance(title, str) else ""
-    for keyword in _normalize_string_list(feedback.get("blocked_title_keywords"), normalize_text_values=True):
+    for keyword in _normalize_string_list(
+        feedback.get("blocked_title_keywords"), normalize_text_values=True
+    ):
         if keyword and keyword in title_normalized:
             return "blocked_title_keywords"
 
     return None
-

@@ -11,8 +11,8 @@ from typing import Any
 import jsonschema
 
 ROOT_DIR = Path(__file__).resolve().parents[1]
-BASE_FILE = ROOT_DIR / "data" / "candidates_positions.json"
-DRAFT_FILE = ROOT_DIR / "data" / "candidates_positions_draft.json"
+BASE_FILE = ROOT_DIR / "site" / "public" / "data" / "candidates_positions.json"
+DRAFT_FILE = ROOT_DIR / "site" / "public" / "data" / "candidates_positions_draft.json"
 SCHEMA_FILE = ROOT_DIR / "docs" / "schemas" / "candidates_positions.schema.json"
 
 COMPARE_FIELDS = [
@@ -33,18 +33,27 @@ def _load_json(path: Path) -> Any:
 def _write_json(path: Path, payload: dict[str, object]) -> None:
     path.parent.mkdir(parents=True, exist_ok=True)
     tmp = path.with_suffix(".json.tmp")
-    tmp.write_text(json.dumps(payload, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
+    tmp.write_text(
+        json.dumps(payload, ensure_ascii=False, indent=2) + "\n", encoding="utf-8"
+    )
     tmp.replace(path)
 
 
-def _entry_changed(base_entry: dict[str, object], draft_entry: dict[str, object]) -> bool:
+def _entry_changed(
+    base_entry: dict[str, object], draft_entry: dict[str, object]
+) -> bool:
     for field in COMPARE_FIELDS:
         if base_entry.get(field) != draft_entry.get(field):
             return True
     return False
 
 
-def _render_diff(topic_id: str, candidate_slug: str, base_entry: dict[str, object], draft_entry: dict[str, object]) -> str:
+def _render_diff(
+    topic_id: str,
+    candidate_slug: str,
+    base_entry: dict[str, object],
+    draft_entry: dict[str, object],
+) -> str:
     lines = [f"\n=== {topic_id} :: {candidate_slug} ==="]
     for field in COMPARE_FIELDS:
         old_value = base_entry.get(field)
@@ -58,9 +67,24 @@ def _render_diff(topic_id: str, candidate_slug: str, base_entry: dict[str, objec
 
 def main() -> None:
     parser = argparse.ArgumentParser(description=__doc__)
-    parser.add_argument("--base", type=Path, default=BASE_FILE, help="Path to base candidates_positions.json.")
-    parser.add_argument("--draft", type=Path, default=DRAFT_FILE, help="Path to draft candidates_positions_draft.json.")
-    parser.add_argument("--output", type=Path, default=BASE_FILE, help="Output path for approved knowledge base.")
+    parser.add_argument(
+        "--base",
+        type=Path,
+        default=BASE_FILE,
+        help="Path to base candidates_positions.json.",
+    )
+    parser.add_argument(
+        "--draft",
+        type=Path,
+        default=DRAFT_FILE,
+        help="Path to draft candidates_positions_draft.json.",
+    )
+    parser.add_argument(
+        "--output",
+        type=Path,
+        default=BASE_FILE,
+        help="Output path for approved knowledge base.",
+    )
     parser.add_argument(
         "--yes",
         action="store_true",
@@ -77,7 +101,11 @@ def main() -> None:
     base_topics = base_payload.get("topics")
     draft_topics = draft_payload.get("topics")
     merged_topics = merged_payload.get("topics")
-    if not isinstance(base_topics, dict) or not isinstance(draft_topics, dict) or not isinstance(merged_topics, dict):
+    if (
+        not isinstance(base_topics, dict)
+        or not isinstance(draft_topics, dict)
+        or not isinstance(merged_topics, dict)
+    ):
         raise SystemExit("Invalid topics structure in base or draft file.")
 
     total_diffs = 0
@@ -94,13 +122,21 @@ def main() -> None:
         draft_candidates = draft_topic.get("candidates")
         base_candidates = base_topic.get("candidates")
         merged_candidates = merged_topic.get("candidates")
-        if not isinstance(draft_candidates, dict) or not isinstance(base_candidates, dict) or not isinstance(merged_candidates, dict):
+        if (
+            not isinstance(draft_candidates, dict)
+            or not isinstance(base_candidates, dict)
+            or not isinstance(merged_candidates, dict)
+        ):
             continue
 
         for candidate_slug, draft_entry in draft_candidates.items():
             base_entry = base_candidates.get(candidate_slug)
             merged_entry = merged_candidates.get(candidate_slug)
-            if not isinstance(draft_entry, dict) or not isinstance(base_entry, dict) or not isinstance(merged_entry, dict):
+            if (
+                not isinstance(draft_entry, dict)
+                or not isinstance(base_entry, dict)
+                or not isinstance(merged_entry, dict)
+            ):
                 continue
 
             if not _entry_changed(base_entry, draft_entry):

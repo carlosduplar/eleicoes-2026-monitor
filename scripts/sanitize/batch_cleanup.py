@@ -12,10 +12,12 @@ from .dedup import apply_cluster_decisions, cluster_articles_tfidf
 from .relevance import compute_relevance_signals, is_relevant_post_llm
 
 ROOT_DIR = Path(__file__).resolve().parents[2]
-ARTICLES_FILE = ROOT_DIR / "data" / "articles.json"
+ARTICLES_FILE = ROOT_DIR / "site" / "public" / "data" / "articles.json"
 
 
-def _load_articles_document(path: Path) -> tuple[list[dict[str, Any]], dict[str, Any] | None]:
+def _load_articles_document(
+    path: Path,
+) -> tuple[list[dict[str, Any]], dict[str, Any] | None]:
     payload = json.loads(path.read_text(encoding="utf-8"))
     if isinstance(payload, list):
         return [item for item in payload if isinstance(item, dict)], None
@@ -39,7 +41,9 @@ def _save_articles_document(
         wrapper["total_count"] = len(articles)
         payload = wrapper
     path.parent.mkdir(parents=True, exist_ok=True)
-    path.write_text(json.dumps(payload, indent=2, ensure_ascii=False) + "\n", encoding="utf-8")
+    path.write_text(
+        json.dumps(payload, indent=2, ensure_ascii=False) + "\n", encoding="utf-8"
+    )
 
 
 def _score_bucket(score: float) -> str:
@@ -99,7 +103,9 @@ def batch_cleanup(
             )
 
     candidate_indices = [
-        idx for idx, article in enumerate(articles) if article.get("status") != "irrelevant"
+        idx
+        for idx, article in enumerate(articles)
+        if article.get("status") != "irrelevant"
     ]
     candidate_articles = [articles[idx] for idx in candidate_indices]
     local_clusters = cluster_articles_tfidf(candidate_articles)
@@ -128,14 +134,18 @@ def batch_cleanup(
     }
 
     if not dry_run:
-        _save_articles_document(path=destination_path, articles=articles, wrapper=wrapper)
+        _save_articles_document(
+            path=destination_path, articles=articles, wrapper=wrapper
+        )
 
     return summary
 
 
 def main() -> None:
     parser = argparse.ArgumentParser(description="Retroactive articles sanitization")
-    parser.add_argument("--dry-run", action="store_true", help="Compute summary without writing output")
+    parser.add_argument(
+        "--dry-run", action="store_true", help="Compute summary without writing output"
+    )
     parser.add_argument(
         "--borderline-llm",
         action="store_true",

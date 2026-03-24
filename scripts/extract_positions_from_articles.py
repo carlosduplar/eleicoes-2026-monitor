@@ -16,9 +16,11 @@ from .ai_client import extract_candidate_topic_position
 logger = logging.getLogger(__name__)
 
 ROOT_DIR = Path(__file__).resolve().parents[1]
-ARTICLES_FILE = ROOT_DIR / "data" / "articles.json"
-POSITIONS_FILE = ROOT_DIR / "data" / "candidates_positions.json"
-DEFAULT_DRAFT_FILE = ROOT_DIR / "data" / "candidates_positions_draft.json"
+ARTICLES_FILE = ROOT_DIR / "site" / "public" / "data" / "articles.json"
+POSITIONS_FILE = ROOT_DIR / "site" / "public" / "data" / "candidates_positions.json"
+DEFAULT_DRAFT_FILE = (
+    ROOT_DIR / "site" / "public" / "data" / "candidates_positions_draft.json"
+)
 SCHEMA_FILE = ROOT_DIR / "docs" / "schemas" / "candidates_positions.schema.json"
 
 
@@ -51,7 +53,9 @@ def _load_json(path: Path) -> Any:
 def _write_atomic(path: Path, payload: dict[str, object]) -> None:
     path.parent.mkdir(parents=True, exist_ok=True)
     tmp = path.with_suffix(".json.tmp")
-    tmp.write_text(json.dumps(payload, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
+    tmp.write_text(
+        json.dumps(payload, ensure_ascii=False, indent=2) + "\n", encoding="utf-8"
+    )
     tmp.replace(path)
 
 
@@ -130,7 +134,9 @@ def _build_sources_from_indices(
         return []
 
     normalized_indices = [
-        index for index in source_indices if isinstance(index, int) and 1 <= index <= len(evidence)
+        index
+        for index in source_indices
+        if isinstance(index, int) and 1 <= index <= len(evidence)
     ]
     if not normalized_indices:
         normalized_indices = [1]
@@ -185,7 +191,9 @@ def main() -> None:
     for topic_id, topic_payload in topics.items():
         if not isinstance(topic_payload, dict):
             continue
-        topic_label_pt = _normalize_text(topic_payload.get("topic_label_pt")) or topic_id
+        topic_label_pt = (
+            _normalize_text(topic_payload.get("topic_label_pt")) or topic_id
+        )
         candidates = topic_payload.get("candidates")
         if not isinstance(candidates, dict):
             continue
@@ -245,14 +253,21 @@ def main() -> None:
             candidate_payload["summary_pt"] = summary_pt
             candidate_payload["summary_en"] = summary_en
             candidate_payload["key_actions"] = key_actions
-            candidate_payload["sources"] = _build_sources_from_indices(evidence, source_indices)
+            candidate_payload["sources"] = _build_sources_from_indices(
+                evidence, source_indices
+            )
             candidate_payload["last_updated"] = today
             candidate_payload["editor_notes"] = (
                 "AUTO-EXTRACTED: requires human review before publishing."
             )
             updated += 1
 
-    positions_payload["updated_at"] = datetime.now(timezone.utc).replace(microsecond=0).isoformat().replace("+00:00", "Z")
+    positions_payload["updated_at"] = (
+        datetime.now(timezone.utc)
+        .replace(microsecond=0)
+        .isoformat()
+        .replace("+00:00", "Z")
+    )
     editors = positions_payload.get("editors")
     if isinstance(editors, list):
         if "auto-extractor" not in editors:

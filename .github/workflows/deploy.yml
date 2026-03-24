@@ -54,10 +54,8 @@ jobs:
           cache: "npm"
           cache-dependency-path: "site/package-lock.json"
 
-      - name: Copy data into public assets
-        run: |
-          mkdir -p site/public/data
-          cp -r data/. site/public/data/
+      - name: Ensure data directory exists
+        run: mkdir -p site/public/data
 
       - name: Copy case-study into public assets
         run: |

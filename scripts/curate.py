@@ -24,7 +24,7 @@ except ImportError:  # pragma: no cover - direct script execution path
 logger = logging.getLogger(__name__)
 
 ROOT_DIR = Path(__file__).resolve().parents[1]
-DATA_DIR = ROOT_DIR / "data"
+DATA_DIR = ROOT_DIR / "site" / "public" / "data"
 ARTICLES_FILE = DATA_DIR / "articles.json"
 CURATED_FEED_FILE = DATA_DIR / "curated_feed.json"
 WEEKLY_BRIEFING_FILE = DATA_DIR / "weekly_briefing.json"
@@ -41,6 +41,7 @@ WEEK_WINDOW_DAYS = 7
 PROMOTION_THRESHOLD = 0.8
 MAX_FEED_ITEMS = 80
 MAX_BRIEFING_TOP_ARTICLES = 10
+
 
 def _utc_iso(dt: datetime | None = None) -> str:
     current = dt or datetime.now(timezone.utc)

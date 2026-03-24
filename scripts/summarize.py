@@ -57,7 +57,7 @@ API_KEY_PATTERN = re.compile(
 )
 
 ROOT_DIR = Path(__file__).resolve().parents[1]
-DATA_DIR = ROOT_DIR / "data"
+DATA_DIR = ROOT_DIR / "site" / "public" / "data"
 ARTICLES_FILE = DATA_DIR / "articles.json"
 PIPELINE_ERRORS_FILE = DATA_DIR / "pipeline_errors.json"
 EDITOR_FEEDBACK_FILE = DATA_DIR / "editor_feedback.json"

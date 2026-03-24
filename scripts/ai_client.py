@@ -22,7 +22,7 @@ import openai
 logger = logging.getLogger(__name__)
 
 ROOT_DIR = Path(__file__).resolve().parents[1]
-USAGE_FILE = ROOT_DIR / "data" / "ai_usage.json"
+USAGE_FILE = ROOT_DIR / "site" / "public" / "data" / "ai_usage.json"
 
 # In-process circuit breaker: skip providers after this many consecutive failures per run.
 _CIRCUIT_BREAKER_THRESHOLD = 3
@@ -144,6 +144,13 @@ def _provider_chain_for_task(task: str) -> list[ProviderConfig]:
     if task in {"positions_extract", "quiz_generate", "quiz_extract"}:
         return [
             {
+                "name": "vertex",
+                "base_url": "VERTEX_BASE_URL",
+                "key_env": "VERTEX_API_KEY",
+                "model": _get_vertex_model(task),
+                "paid": True,
+            },
+            {
                 "name": "ollama",
                 "base_url": "https://ollama.com/v1",
                 "key_env": "OLLAMA_API_KEY",
@@ -156,13 +163,6 @@ def _provider_chain_for_task(task: str) -> list[ProviderConfig]:
                 "key_env": "NVIDIA_API_KEY",
                 "model": "minimaxai/minimax-m2.5",
                 "paid": False,
-            },
-            {
-                "name": "vertex",
-                "base_url": "VERTEX_BASE_URL",
-                "key_env": "VERTEX_API_KEY",
-                "model": _get_vertex_model(task),
-                "paid": True,
             },
         ]
 
@@ -373,11 +373,17 @@ def _request_completion(
         if not api_key:
             raise ValueError("VERTEX_API_KEY environment variable is missing.")
 
-        url = f"https://aiplatform.googleapis.com/v1/publishers/google/models/{provider['model']}:streamGenerateContent"
+        grounding_enabled = os.environ.get(
+            "VERTEX_GROUNDING_ENABLED", ""
+        ).strip().lower() in ("1", "true", "yes")
+
+        url = f"https://aiplatform.googleapis.com/v1/publishers/google/models/{provider['model']}:generateContent"
         data = {
             "contents": [{"role": "user", "parts": [{"text": f"{system}\n\n{user}"}]}],
             "generationConfig": {"maxOutputTokens": 8192},
         }
+        if grounding_enabled:
+            data["tools"] = [{"googleSearch": {}}]
         req = urllib.request.Request(
             f"{url}?key={api_key}",
             data=json.dumps(data).encode("utf-8"),

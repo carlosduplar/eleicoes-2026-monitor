@@ -15,8 +15,8 @@ from .ai_client import generate_quiz_topic_options, validate_quiz_option_quality
 logger = logging.getLogger(__name__)
 
 ROOT_DIR = Path(__file__).resolve().parents[1]
-POSITIONS_FILE = ROOT_DIR / "data" / "candidates_positions.json"
-QUIZ_FILE = ROOT_DIR / "data" / "quiz.json"
+POSITIONS_FILE = ROOT_DIR / "site" / "public" / "data" / "candidates_positions.json"
+QUIZ_FILE = ROOT_DIR / "site" / "public" / "data" / "quiz.json"
 SCHEMA_FILE = ROOT_DIR / "docs" / "schemas" / "quiz.schema.json"
 
 OPTION_IDS = ["opt_a", "opt_b", "opt_c", "opt_d", "opt_e", "opt_f"]
@@ -285,7 +285,9 @@ def _fallback_option_text(summary_pt: str, summary_en: str) -> tuple[str, str]:
     )
 
 
-def _best_source(position: dict[str, object]) -> tuple[str | None, str | None, str | None, str | None]:
+def _best_source(
+    position: dict[str, object],
+) -> tuple[str | None, str | None, str | None, str | None]:
     sources = position.get("sources")
     if not isinstance(sources, list) or not sources:
         return None, None, None, None
@@ -321,7 +323,9 @@ def build_topic_options(
     if not isinstance(generated_options, list):
         generated_options = []
 
-    mapped_positions = {index + 1: position for index, position in enumerate(known_positions)}
+    mapped_positions = {
+        index + 1: position for index, position in enumerate(known_positions)
+    }
     options: list[dict[str, object]] = []
     used_candidates: set[str] = set()
 
@@ -329,7 +333,10 @@ def build_topic_options(
         if not isinstance(generated, dict):
             continue
         mapped_position_raw = generated.get("mapped_position")
-        if isinstance(mapped_position_raw, int) and mapped_position_raw in mapped_positions:
+        if (
+            isinstance(mapped_position_raw, int)
+            and mapped_position_raw in mapped_positions
+        ):
             mapped_position = mapped_positions[mapped_position_raw]
         else:
             mapped_position = None
@@ -367,8 +374,14 @@ def build_topic_options(
             )
             ai_pass = bool(validation.get("passes_all"))
         if not local_pass or not ai_pass:
-            summary_pt = _normalize_text(mapped_position.get("summary_pt")) or "a política pública deve ser clara e previsível"
-            summary_en = _normalize_text(mapped_position.get("summary_en")) or "public policy should be clear and predictable"
+            summary_pt = (
+                _normalize_text(mapped_position.get("summary_pt"))
+                or "a política pública deve ser clara e previsível"
+            )
+            summary_en = (
+                _normalize_text(mapped_position.get("summary_en"))
+                or "public policy should be clear and predictable"
+            )
             text_pt, text_en = _fallback_option_text(summary_pt, summary_en)
             local_pass, local_failures = _local_quality_check(text_pt, text_en)
             if not local_pass:
@@ -405,7 +418,11 @@ def build_topic_options(
     for index, option in enumerate(options):
         option["id"] = OPTION_IDS[index]
 
-    return options, _normalize_text(generator_provider), _normalize_text(generator_model)
+    return (
+        options,
+        _normalize_text(generator_provider),
+        _normalize_text(generator_model),
+    )
 
 
 def main() -> None:
@@ -424,8 +441,12 @@ def main() -> None:
         topic_payload = topics_payload.get(topic_id)
         if not isinstance(topic_payload, dict):
             continue
-        topic_label_pt = _normalize_text(topic_payload.get("topic_label_pt")) or topic_id
-        topic_label_en = _normalize_text(topic_payload.get("topic_label_en")) or topic_id
+        topic_label_pt = (
+            _normalize_text(topic_payload.get("topic_label_pt")) or topic_id
+        )
+        topic_label_en = (
+            _normalize_text(topic_payload.get("topic_label_en")) or topic_id
+        )
         known_positions = _topic_positions(topic_payload)
         if len(known_positions) < 2:
             continue
@@ -465,21 +486,31 @@ def main() -> None:
             "options": options,
         }
 
-    ordered_topics = [topic_id for topic_id in selected_topics if topic_id in quiz_topics]
+    ordered_topics = [
+        topic_id for topic_id in selected_topics if topic_id in quiz_topics
+    ]
     if not ordered_topics:
         existing = _load_existing_quiz_if_valid(schema)
         if existing is not None:
-            print("No eligible topics found. Keeping existing data/quiz.json unchanged.")
+            print(
+                "No eligible topics found. Keeping existing data/quiz.json unchanged."
+            )
             return
         raise SystemExit(
             "No eligible topics with known positions. Curate candidates_positions.json first."
         )
 
-    generated_at = datetime.now(timezone.utc).replace(microsecond=0).isoformat().replace("+00:00", "Z")
+    generated_at = (
+        datetime.now(timezone.utc)
+        .replace(microsecond=0)
+        .isoformat()
+        .replace("+00:00", "Z")
+    )
     quiz_payload: dict[str, object] = {
         "schema_version": "2.0.0",
         "generated_at": generated_at,
-        "knowledge_base_version": _normalize_text(positions_payload.get("updated_at")) or generated_at,
+        "knowledge_base_version": _normalize_text(positions_payload.get("updated_at"))
+        or generated_at,
         "generator_model": generator_model_used or "fallback-local",
         "ordered_topics": ordered_topics,
         "topics": quiz_topics,
@@ -487,7 +518,9 @@ def main() -> None:
 
     jsonschema.validate(quiz_payload, schema)
     _write_atomic(QUIZ_FILE, quiz_payload)
-    print(f"Quiz generated: {len(ordered_topics)} topics, {sum(len(topic['options']) for topic in quiz_topics.values())} options.")
+    print(
+        f"Quiz generated: {len(ordered_topics)} topics, {sum(len(topic['options']) for topic in quiz_topics.values())} options."
+    )
 
 
 if __name__ == "__main__":

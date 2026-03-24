@@ -9,8 +9,8 @@ from pathlib import Path
 import jsonschema
 
 ROOT_DIR = Path(__file__).resolve().parents[1]
-CANDIDATES_FILE = ROOT_DIR / "data" / "candidates.json"
-OUTPUT_FILE = ROOT_DIR / "data" / "candidates_positions.json"
+CANDIDATES_FILE = ROOT_DIR / "site" / "public" / "data" / "candidates.json"
+OUTPUT_FILE = ROOT_DIR / "site" / "public" / "data" / "candidates_positions.json"
 SCHEMA_FILE = ROOT_DIR / "docs" / "schemas" / "candidates_positions.schema.json"
 
 TOPICS: list[tuple[str, str, str]] = [
@@ -49,7 +49,12 @@ def _load_candidate_slugs() -> list[str]:
 
 def _build_payload(candidate_slugs: list[str]) -> dict[str, object]:
     today = datetime.now(timezone.utc).date().isoformat()
-    generated_at = datetime.now(timezone.utc).replace(microsecond=0).isoformat().replace("+00:00", "Z")
+    generated_at = (
+        datetime.now(timezone.utc)
+        .replace(microsecond=0)
+        .isoformat()
+        .replace("+00:00", "Z")
+    )
 
     topics: dict[str, object] = {}
     for topic_id, topic_label_pt, topic_label_en in TOPICS:

@@ -48,7 +48,7 @@ jobs:
 
       - name: Ensure knowledge base exists
         run: |
-          if [ ! -f data/candidates_positions.json ]; then
+          if [ ! -f site/public/data/candidates_positions.json ]; then
             python scripts/create_candidates_positions.py
           fi
 
@@ -56,7 +56,7 @@ jobs:
         run: |
           python -c "
           import json, sys
-          p = json.load(open('data/candidates_positions.json'))
+          p = json.load(open('site/public/data/candidates_positions.json'))
           topics = p.get('topics', {})
           total = sum(len(t.get('candidates', {})) for t in topics.values())
           unknown = sum(
@@ -70,13 +70,13 @@ jobs:
           " && python -m scripts.seed_candidates_positions || echo 'Seed not needed (ratio <= 50%).'
 
       - name: Extract draft positions
-        run: python -m scripts.extract_positions_from_articles --output data/candidates_positions_draft.json
+        run: python -m scripts.extract_positions_from_articles --output site/public/data/candidates_positions_draft.json
 
       - name: Commit draft file
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "action@github.com"
-          git add data/candidates_positions_draft.json
+          git add site/public/data/candidates_positions_draft.json
           if git diff --staged --quiet; then
             echo "No changes to commit."
             exit 0

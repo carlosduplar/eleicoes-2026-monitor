@@ -18,7 +18,7 @@ import tweepy
 logger = logging.getLogger(__name__)
 
 ROOT_DIR = Path(__file__).resolve().parents[1]
-DATA_DIR = ROOT_DIR / "data"
+DATA_DIR = ROOT_DIR / "site" / "public" / "data"
 SOURCES_FILE = DATA_DIR / "sources.json"
 CANDIDATES_FILE = DATA_DIR / "candidates.json"
 ARTICLES_FILE = DATA_DIR / "articles.json"
@@ -308,8 +308,11 @@ def _collect_youtube(
     names_or = " | ".join(names)
     query = f'({names_or}) "eleições 2026"'
     published_after = (
-        datetime.now(timezone.utc) - timedelta(days=7)
-    ).replace(microsecond=0).isoformat().replace("+00:00", "Z")
+        (datetime.now(timezone.utc) - timedelta(days=7))
+        .replace(microsecond=0)
+        .isoformat()
+        .replace("+00:00", "Z")
+    )
 
     response = (
         youtube.search()
