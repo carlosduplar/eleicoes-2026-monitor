@@ -46,7 +46,7 @@ knowledge base for candidate policy positions.
 | **Provider** | Google (Gemini), with NVIDIA and MiMo fallbacks |
 | **Auth required** | API key via environment variable |
 | **Data provided** | Synthesized position summaries from provided snippets or training knowledge |
-| **Grounding** | Enabled via `GEMINI_GROUNDING_ENABLED=true` for Google Search grounding |
+| **Evidence flow** | Web evidence is supplied upstream via Source F (Brave Search) and remains auditable in `sources_used` / `editor_notes` |
 
 ## Editorial Transparency
 

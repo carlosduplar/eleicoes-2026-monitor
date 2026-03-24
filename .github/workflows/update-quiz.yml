@@ -33,7 +33,6 @@ jobs:
           OLLAMA_API_KEY: ${{ secrets.OLLAMA_API_KEY }}
           VERTEX_API_KEY: ${{ secrets.VERTEX_API_KEY }}
           GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
-          GEMINI_GROUNDING_ENABLED: "true"
           VERTEX_MODEL_OVERRIDE: "gemini-3.1-pro-preview"
         run: python -m scripts.generate_quiz
       - name: Commit quiz data
