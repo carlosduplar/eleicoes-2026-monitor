@@ -16,7 +16,7 @@ except ImportError:  # pragma: no cover - direct script execution path
     )
 
 ROOT_DIR = Path(__file__).resolve().parents[1]
-ARTICLES_FILE = ROOT_DIR / "data" / "articles.json"
+ARTICLES_FILE = ROOT_DIR / "site" / "public" / "data" / "articles.json"
 
 
 def _load_articles_document() -> tuple[list[dict[str, Any]], dict[str, Any] | None]:
@@ -77,7 +77,9 @@ def deduplicate_narratives() -> tuple[int, int]:
                 articles[idx]["duplicate_of"] = None
 
     grouped_articles = sum(len(members) for members in global_clusters.values())
-    duplicates_marked, cluster_count = apply_cluster_decisions(articles, global_clusters)
+    duplicates_marked, cluster_count = apply_cluster_decisions(
+        articles, global_clusters
+    )
 
     _save_articles_document(articles, wrapper)
     print(

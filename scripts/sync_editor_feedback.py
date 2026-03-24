@@ -12,7 +12,7 @@ except ImportError:  # pragma: no cover - direct script execution path
     import editor_feedback  # type: ignore[no-redef]
 
 ROOT_DIR = Path(__file__).resolve().parents[1]
-DATA_DIR = ROOT_DIR / "data"
+DATA_DIR = ROOT_DIR / "site" / "public" / "data"
 ARTICLES_FILE = DATA_DIR / "articles.json"
 EDITOR_FEEDBACK_FILE = DATA_DIR / "editor_feedback.json"
 
@@ -54,4 +54,3 @@ def main() -> None:
 
 if __name__ == "__main__":
     main()
-

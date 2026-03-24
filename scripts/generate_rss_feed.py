@@ -12,7 +12,7 @@ from xml.etree.ElementTree import Element, ElementTree, SubElement, register_nam
 # --- Constants ---
 
 SITE_URL: str = "https://eleicoes2026.com.br"
-ARTICLES_PATH: Path = Path("data/articles.json")
+ARTICLES_PATH: Path = Path("site/public/data/articles.json")
 OUTPUT_DIR: Path = Path("site/public")
 FEED_PT_FILENAME: str = "feed.xml"
 FEED_EN_FILENAME: str = "feed-en.xml"
@@ -96,10 +96,16 @@ def load_articles(path: Path) -> list[dict[str, Any]]:
     raise ValueError(f"Unsupported articles structure in {path}")
 
 
-def filter_and_sort(articles: list[dict[str, Any]], max_items: int) -> list[dict[str, Any]]:
+def filter_and_sort(
+    articles: list[dict[str, Any]], max_items: int
+) -> list[dict[str, Any]]:
     """Keep validated/curated, sort by published_at desc, and cap length."""
-    eligible = [article for article in articles if article.get("status") in VALID_STATUSES]
-    eligible.sort(key=lambda article: _parse_iso8601(article.get("published_at")), reverse=True)
+    eligible = [
+        article for article in articles if article.get("status") in VALID_STATUSES
+    ]
+    eligible.sort(
+        key=lambda article: _parse_iso8601(article.get("published_at")), reverse=True
+    )
     return eligible[:max_items]
 
 
@@ -149,8 +155,12 @@ def build_feed_xml(articles: list[dict[str, Any]], channel: ChannelMeta) -> Elem
         SubElement(item, "title").text = article.get("title", "")
         SubElement(item, "link").text = article.get("url", "")
         SubElement(item, "description").text = get_summary(article, lang_key)
-        SubElement(item, "pubDate").text = format_pub_date(str(article.get("published_at", "")))
-        SubElement(item, "guid", {"isPermaLink": "false"}).text = str(article.get("id", ""))
+        SubElement(item, "pubDate").text = format_pub_date(
+            str(article.get("published_at", ""))
+        )
+        SubElement(item, "guid", {"isPermaLink": "false"}).text = str(
+            article.get("id", "")
+        )
 
         candidates = article.get("candidates_mentioned")
         if isinstance(candidates, list):
@@ -179,7 +189,9 @@ def main() -> None:
     write_feed(pt_tree, OUTPUT_DIR / FEED_PT_FILENAME)
     write_feed(en_tree, OUTPUT_DIR / FEED_EN_FILENAME)
 
-    print(f"Generated {FEED_PT_FILENAME} ({len(selected)} items) and {FEED_EN_FILENAME} ({len(selected)} items)")
+    print(
+        f"Generated {FEED_PT_FILENAME} ({len(selected)} items) and {FEED_EN_FILENAME} ({len(selected)} items)"
+    )
 
 
 if __name__ == "__main__":

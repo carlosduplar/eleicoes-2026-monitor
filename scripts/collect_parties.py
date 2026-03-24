@@ -19,7 +19,7 @@ from bs4 import BeautifulSoup
 logger = logging.getLogger(__name__)
 
 ROOT_DIR = Path(__file__).resolve().parents[1]
-DATA_DIR = ROOT_DIR / "data"
+DATA_DIR = ROOT_DIR / "site" / "public" / "data"
 SOURCES_FILE = DATA_DIR / "sources.json"
 ARTICLES_FILE = DATA_DIR / "articles.json"
 PIPELINE_ERRORS_FILE = DATA_DIR / "pipeline_errors.json"

@@ -59,7 +59,7 @@ class PollsDocument:
 logger = logging.getLogger(__name__)
 
 ROOT_DIR = Path(__file__).resolve().parents[1]
-DATA_DIR = ROOT_DIR / "data"
+DATA_DIR = ROOT_DIR / "site" / "public" / "data"
 SOURCES_FILE = DATA_DIR / "sources.json"
 POLLS_FILE = DATA_DIR / "polls.json"
 PIPELINE_ERRORS_FILE = DATA_DIR / "pipeline_errors.json"
@@ -725,7 +725,7 @@ def collect_polls() -> tuple[int, int, int]:
     return asyncio.run(collect_polls_async())
 
 
-ARTICLES_FILE = ROOT_DIR / "data" / "articles.json"
+ARTICLES_FILE = ROOT_DIR / "site" / "public" / "data" / "articles.json"
 
 
 def extract_polls_from_articles() -> list[PollItem]:

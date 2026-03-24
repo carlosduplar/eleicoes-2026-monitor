@@ -27,7 +27,7 @@ from .ai_client import extract_candidate_topic_position
 logger = logging.getLogger(__name__)
 
 ROOT_DIR = Path(__file__).resolve().parents[1]
-POSITIONS_FILE = ROOT_DIR / "data" / "candidates_positions.json"
+POSITIONS_FILE = ROOT_DIR / "site" / "public" / "data" / "candidates_positions.json"
 SCHEMA_FILE = ROOT_DIR / "docs" / "schemas" / "candidates_positions.schema.json"
 
 WIKIPEDIA_API_BASE = "https://pt.wikipedia.org/w/api.php"

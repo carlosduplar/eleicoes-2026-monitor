@@ -9,7 +9,7 @@ from pathlib import Path
 from typing import Any
 
 ROOT_DIR = Path(__file__).resolve().parents[1]
-DATA_DIR = ROOT_DIR / "data"
+DATA_DIR = ROOT_DIR / "site" / "public" / "data"
 
 PIPELINE_HEALTH_FILE = DATA_DIR / "pipeline_health.json"
 PIPELINE_ERRORS_FILE = DATA_DIR / "pipeline_errors.json"
@@ -21,12 +21,36 @@ QUIZ_FILE = DATA_DIR / "quiz.json"
 POLLS_FILE = DATA_DIR / "polls.json"
 
 WORKFLOW_TARGETS: dict[str, dict[str, Any]] = {
-    "foca_collect": {"path": ARTICLES_FILE, "stale_after_minutes": 120, "required": True},
-    "editor_validate": {"path": SENTIMENT_FILE, "stale_after_minutes": 180, "required": True},
-    "editor_chefe_curate": {"path": CURATED_FEED_FILE, "stale_after_minutes": 240, "required": True},
-    "weekly_briefing": {"path": WEEKLY_BRIEFING_FILE, "stale_after_minutes": 24 * 60, "required": True},
-    "quiz_refresh": {"path": QUIZ_FILE, "stale_after_minutes": 36 * 60, "required": True},
-    "polls_collect": {"path": POLLS_FILE, "stale_after_minutes": 24 * 60, "required": False},
+    "foca_collect": {
+        "path": ARTICLES_FILE,
+        "stale_after_minutes": 120,
+        "required": True,
+    },
+    "editor_validate": {
+        "path": SENTIMENT_FILE,
+        "stale_after_minutes": 180,
+        "required": True,
+    },
+    "editor_chefe_curate": {
+        "path": CURATED_FEED_FILE,
+        "stale_after_minutes": 240,
+        "required": True,
+    },
+    "weekly_briefing": {
+        "path": WEEKLY_BRIEFING_FILE,
+        "stale_after_minutes": 24 * 60,
+        "required": True,
+    },
+    "quiz_refresh": {
+        "path": QUIZ_FILE,
+        "stale_after_minutes": 36 * 60,
+        "required": True,
+    },
+    "polls_collect": {
+        "path": POLLS_FILE,
+        "stale_after_minutes": 24 * 60,
+        "required": False,
+    },
 }
 
 
@@ -74,7 +98,9 @@ def _timestamp_from_articles(payload: object) -> datetime | None:
     for item in raw_articles:
         if not isinstance(item, dict):
             continue
-        parsed = _parse_iso8601(item.get("collected_at")) or _parse_iso8601(item.get("published_at"))
+        parsed = _parse_iso8601(item.get("collected_at")) or _parse_iso8601(
+            item.get("published_at")
+        )
         if parsed is None:
             continue
         if newest is None or parsed > newest:
@@ -221,9 +247,14 @@ def _summarize_relevance_health() -> dict[str, Any]:
         if item.get("status") not in {"validated", "curated"}:
             continue
         checked += 1
-        article_id = item.get("id") if isinstance(item.get("id"), str) else "<missing-id>"
+        article_id = (
+            item.get("id") if isinstance(item.get("id"), str) else "<missing-id>"
+        )
         relevance_score = item.get("relevance_score")
-        if not isinstance(relevance_score, (int, float)) or float(relevance_score) <= 0.0:
+        if (
+            not isinstance(relevance_score, (int, float))
+            or float(relevance_score) <= 0.0
+        ):
             zero_relevance_ids.append(article_id)
 
     return {
@@ -256,8 +287,14 @@ def _status_note(
     error_summary: dict[str, Any],
     relevance_summary: dict[str, Any],
 ) -> str:
-    stale_workflows = [name for name, details in workflows.items() if details.get("status") == "stale"]
-    missing_workflows = [name for name, details in workflows.items() if details.get("status") == "missing"]
+    stale_workflows = [
+        name for name, details in workflows.items() if details.get("status") == "stale"
+    ]
+    missing_workflows = [
+        name
+        for name, details in workflows.items()
+        if details.get("status") == "missing"
+    ]
     recent_errors = int(error_summary.get("last_24h_errors", 0))
     zero_relevance = int(relevance_summary.get("zero_relevance_count", 0))
 
@@ -299,7 +336,9 @@ def main() -> None:
         "notes": _status_note(status, workflows, error_summary, relevance_summary),
     }
     PIPELINE_HEALTH_FILE.parent.mkdir(parents=True, exist_ok=True)
-    PIPELINE_HEALTH_FILE.write_text(json.dumps(health, indent=2, ensure_ascii=False) + "\n", encoding="utf-8")
+    PIPELINE_HEALTH_FILE.write_text(
+        json.dumps(health, indent=2, ensure_ascii=False) + "\n", encoding="utf-8"
+    )
     print(f"Watchdog: pipeline_health.json written ({status}).")
 
 

@@ -19,7 +19,7 @@ except ImportError:  # pragma: no cover - direct script execution path
 logger = logging.getLogger(__name__)
 
 ROOT_DIR = Path(__file__).resolve().parents[1]
-DATA_DIR = ROOT_DIR / "data"
+DATA_DIR = ROOT_DIR / "site" / "public" / "data"
 SCHEMA_FILE = ROOT_DIR / "docs" / "schemas" / "articles.schema.json"
 ARTICLES_FILE = DATA_DIR / "articles.json"
 EDITOR_FEEDBACK_FILE = DATA_DIR / "editor_feedback.json"
@@ -189,7 +189,9 @@ def consolidate_articles() -> tuple[int, int, int]:
     document = _load_articles_document()
     deduplicated, duplicates_removed = _deduplicate_by_id(document.articles)
     feedback = editor_feedback.load_editor_feedback(EDITOR_FEEDBACK_FILE)
-    feedback_sync_count = editor_feedback.add_irrelevant_article_ids(feedback, deduplicated)
+    feedback_sync_count = editor_feedback.add_irrelevant_article_ids(
+        feedback, deduplicated
+    )
 
     published_articles: list[dict[str, Any]] = []
     filtered_out_count = 0

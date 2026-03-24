@@ -116,7 +116,7 @@ jobs:
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "action@github.com"
-          git add data/
+          git add site/public/data/
           git add site/public/feed*.xml 2>/dev/null || true
           if git diff --staged --quiet; then
             echo "No changes to commit."
@@ -131,7 +131,7 @@ jobs:
               echo "Merge succeeded."
             else
               echo "Merge conflict detected, merging JSON files..."
-              for f in data/*.json; do
+                for f in site/public/data/*.json; do
                 if [[ -f "$f" ]] && grep -q "^<\|^===\|^>>>" "$f" 2>/dev/null; then
                   echo "Resolving conflict in $f"
                   git show ":1:$f" > "$f.base" 2>/dev/null || echo "[]" > "$f.base"
@@ -144,8 +144,8 @@ jobs:
 
               if git diff --name-only --diff-filter=U | grep -q .; then
                 echo "Unresolved conflicts remain, using theirs..."
-                git checkout --theirs data/*.json
-                git add data/*.json
+                git checkout --theirs site/public/data/*.json
+                git add site/public/data/*.json
               fi
 
               git commit -m "chore(ci): resolve merge conflicts" || echo "No conflicts to commit"
