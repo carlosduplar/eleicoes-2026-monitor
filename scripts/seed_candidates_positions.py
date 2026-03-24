@@ -51,6 +51,140 @@ CAMARA_DEPUTADOS_NAMES: dict[str, str] = {
     "aldo-rebelo": "Aldo Rebelo",
 }
 
+CANDIDATE_FULL_NAMES: dict[str, str] = {
+    "lula": "Luiz Inácio Lula da Silva",
+    "flavio-bolsonaro": "Flávio Bolsonaro",
+    "tarcisio": "Tarcísio de Freitas",
+    "caiado": "Ronaldo Caiado",
+    "zema": "Romeu Zema",
+    "ratinho-jr": "Ratinho Junior",
+    "eduardo-leite": "Eduardo Leite",
+    "aldo-rebelo": "Aldo Rebelo",
+    "renan-santos": "Renan Santos",
+}
+
+# ── Source E: Party Ideological Profiles ────────────────────────────────
+
+PARTY_IDEOLOGICAL_PROFILES: dict[str, dict[str, str]] = {
+    "lula": {
+        "armas": "PT: contrário ao porte de armas pela população civil. Histórico de restrição ao acesso a armas de fogo.",
+        "meio_ambiente": "PT: defesa do meio ambiente, reativação do IBAMA, Fundo Amazônia, redução do desmatamento na Amazônia.",
+        "lgbtq": "PT: favorável aos direitos LGBTQ+, criminalização da homofobia, reconhecimento da identidade de gênero.",
+        "aborto": "PT: debate interno; posição oficial evita liberalização ampla, mas defende descriminalização em casos específicos.",
+        "previdencia": "PT: contrário à reforma da previdência aprovada em 2019. Defende correção de distorções.",
+        "impostos": "PT: defende progressividade fiscal, tributação de grandes fortunas, revisão de isenções para mais ricos.",
+        "midia": "PT: favorável à regulação de plataformas digitais, combate à desinformação.",
+        "indigenas": "PT: favorável à demarcação de terras indígenas, contrário ao marco temporal.",
+        "educacao": "PT: defesa da educação pública, universidades federais, Prouni e Fies.",
+        "seguranca": "PT: prioriza políticas sociais e prevenção; crítico de abordagens puramente repressivas.",
+        "corrupcao": "PT: defende independência das instituições de controle, Lava Jato controverso no contexto do partido.",
+    },
+    "flavio-bolsonaro": {
+        "armas": "PL/alinhamento bolsonarista: favorável à flexibilização do acesso a armas de fogo e munições.",
+        "meio_ambiente": "PL: crítico de restrições ambientais; defende flexibilização do licenciamento ambiental.",
+        "lgbtq": "PL: postura conservadora; contrário a políticas de identidade de gênero nas escolas.",
+        "aborto": "PL: contrário ao aborto em qualquer circunstância; defende vida desde a concepção.",
+        "previdencia": "PL: apoiou reforma da previdência de 2019.",
+        "impostos": "PL: defende redução de impostos, simplificação tributária.",
+        "midia": "PL: crítico à regulação de redes sociais; defende liberdade de expressão ampla.",
+        "indigenas": "PL: favorável ao marco temporal para demarcação de terras indígenas.",
+        "educacao": "PL: defende escola sem partido, contrário a conteúdo ideológico nas escolas.",
+        "seguranca": "PL: favorável ao endurecimento de penas, excludente de ilicitude para policiais.",
+        "corrupcao": "PL: defende Lava Jato, punição de crimes de corrupção, transparência.",
+    },
+    "tarcisio": {
+        "armas": "Republicanos/alinhamento bolsonarista: favorável à flexibilização do acesso a armas de fogo.",
+        "meio_ambiente": "Republicanos: crítico do licenciamento ambiental. Defende revisão das restrições ao desmatamento.",
+        "lgbtq": "Republicanos: postura conservadora em pautas identitárias.",
+        "aborto": "Republicanos: contrário ao aborto; posição alinhada ao conservadorismo religioso.",
+        "previdencia": "Republicanos: apoiou reforma da previdência; defende sustentabilidade fiscal.",
+        "impostos": "Republicanos: defende desonerações, redução de burocracia fiscal.",
+        "midia": "Republicanos: crítico à censura digital; defende liberdade de expressão.",
+        "indigenas": "Republicanos: favorável ao marco temporal, defende segurança jurídica para propriedade rural.",
+        "educacao": "Republicanos: defende escola sem partido, incentivo ao ensino técnico.",
+        "seguranca": "Republicanos: linha dura em segurança pública, fortalecimento policial.",
+        "corrupcao": "Republicanos: discurso anticorrupção, apoio ao Lava Jato.",
+    },
+    "caiado": {
+        "armas": "União Brasil: favorável ao porte de armas; discurso alinhado ao agronegócio e à segurança rural.",
+        "meio_ambiente": "União Brasil: defende o agronegócio; posição crítica a restrições ambientais excessivas.",
+        "lgbtq": "União Brasil: postura conservadora; contrário a políticas de identidade de gênero.",
+        "aborto": "União Brasil: contrário ao aborto; defende vida desde a concepção.",
+        "previdencia": "União Brasil: apoiou reforma da previdência de 2019.",
+        "impostos": "União Brasil: defende reforma tributária com simplificação e redução de carga.",
+        "midia": "União Brasil: contrário à censura de redes sociais.",
+        "indigenas": "União Brasil: favorável ao marco temporal; defende segurança jurídica da propriedade rural.",
+        "educacao": "União Brasil: defende educação de qualidade, ensino técnico e profissional.",
+        "seguranca": "União Brasil: linha dura, endurecimento de penas e fortalecimento policial.",
+        "corrupcao": "União Brasil: discurso anticorrupção, transparência pública.",
+    },
+    "zema": {
+        "armas": "Novo: defende direito individual ao porte de armas.",
+        "meio_ambiente": "Novo: crítico de regulações excessivas; defende equilíbrio entre preservação e desenvolvimento econômico.",
+        "lgbtq": "Novo: posição liberal em costumes; menos ativista que partidos de esquerda.",
+        "aborto": "Novo: posição conservadora predominante no partido.",
+        "previdencia": "Novo: apoiou reforma da previdência; defende sustentabilidade do sistema.",
+        "impostos": "Novo: defende redução drástica da carga tributária e do Estado.",
+        "midia": "Novo: contrário à regulação estatal de mídias; defende livre mercado.",
+        "indigenas": "Novo: favorável ao marco temporal; defende propriedade privada.",
+        "educacao": "Novo: defende vouchers educacionais, concorrência entre escolas, menos intervenção estatal.",
+        "seguranca": "Novo: defende endurecimento de penas e menos burocracia para forças de segurança.",
+        "corrupcao": "Novo: forte discurso anticorrupção, transparência e accountability.",
+    },
+    "ratinho-jr": {
+        "armas": "PSD: posição moderada; não é ponta de lança na pauta de armas.",
+        "meio_ambiente": "PSD: defende equilíbrio entre desenvolvimento e preservação ambiental.",
+        "lgbtq": "PSD: posição pragmática; sem posicionamento ideológico forte.",
+        "aborto": "PSD: conservador no tema; segue o mainstream evangélico/católico.",
+        "previdencia": "PSD: apoiou reforma da previdência; foco em equilíbrio fiscal.",
+        "impostos": "PSD: defende reforma tributária e redução de burocracia.",
+        "midia": "PSD: posição moderada sobre regulação de plataformas.",
+        "indigenas": "PSD: pragmático; sem posição extrema no tema.",
+        "educacao": "PSD: defende educação de qualidade, investimentos em infraestrutura escolar.",
+        "seguranca": "PSD: defende segurança pública robusta, valorização policial.",
+        "corrupcao": "PSD: discurso anticorrupção; defende transparência na gestão pública.",
+    },
+    "eduardo-leite": {
+        "armas": "PSDB: moderado; defende controle de armas, não liberalização ampla.",
+        "meio_ambiente": "PSDB: defende políticas ambientais responsáveis e agenda climática.",
+        "lgbtq": "PSDB: favorável aos direitos LGBTQ+; primeiro governador assumidamente gay do Brasil.",
+        "aborto": "PSDB: posição moderada; reconhece direitos das mulheres em casos extremos.",
+        "previdencia": "PSDB: apoiou reforma da previdência; foco em sustentabilidade.",
+        "impostos": "PSDB: defende reforma tributária, simplificação e racionalidade fiscal.",
+        "midia": "PSDB: favorável a regulação responsável de plataformas digitais.",
+        "indigenas": "PSDB: posição equilibrada; defende diálogo e segurança jurídica.",
+        "educacao": "PSDB: forte defensor da educação pública de qualidade; histórico reformista.",
+        "seguranca": "PSDB: defende políticas integradas de segurança e prevenção.",
+        "corrupcao": "PSDB: forte discurso anticorrupção; defende independência do Ministério Público.",
+    },
+    "aldo-rebelo": {
+        "armas": "PDT/posição própria: moderado; não é defensor ativo da liberalização de armas.",
+        "meio_ambiente": "PDT: posição crítica ao ambientalismo excessivo; defende soberania nacional sobre Amazônia.",
+        "lgbtq": "PDT: posição moderada; defende direitos civis sem ativismo de gênero.",
+        "aborto": "PDT: posição conservadora; contrário à liberalização ampla do aborto.",
+        "previdencia": "PDT: contrário à reforma da previdência de 2019 na forma aprovada.",
+        "impostos": "PDT: defende tributação progressiva, combate às desigualdades fiscais.",
+        "midia": "PDT: favorável à regulação de plataformas para combater desinformação.",
+        "indigenas": "PDT: defende soberania nacional; visão desenvolvimentista com proteção indígena.",
+        "educacao": "PDT: forte defensor da educação pública, universidades e pesquisa.",
+        "seguranca": "PDT: defende políticas sociais combinadas com segurança pública.",
+        "corrupcao": "PDT: discurso anticorrupção; defende transparência institucional.",
+    },
+    "renan-santos": {
+        "armas": "MBL/Novo: favorável à liberalização do porte de armas.",
+        "meio_ambiente": "MBL: crítico do ambientalismo político; defende desenvolvimento econômico.",
+        "lgbtq": "MBL: contrário a políticas identitárias; defende liberdade individual sem ativismo estatal.",
+        "aborto": "MBL: posição conservadora; contrário ao aborto.",
+        "previdencia": "MBL: favorável à reforma e privatização parcial da previdência.",
+        "impostos": "MBL: defende redução radical de impostos e do Estado.",
+        "midia": "MBL: fortemente contrário à regulação de plataformas; defende liberdade de expressão irrestrita.",
+        "indigenas": "MBL: favorável ao marco temporal; defende propriedade privada e produção agropecuária.",
+        "educacao": "MBL: defende escola sem partido, vouchers educacionais, competição.",
+        "seguranca": "MBL: linha dura; defende endurecimento de penas e armamento civil.",
+        "corrupcao": "MBL: forte discurso anticorrupção; origem no movimento contra o PT.",
+    },
+}
+
 TOPIC_KEYWORDS: dict[str, list[str]] = {
     "armas": ["arma", "fogo", "munição", "porte"],
     "meio_ambiente": [
@@ -355,6 +489,79 @@ def fetch_senado_snippets(candidate_slug: str) -> dict[str, list[str]]:
     return topic_snippets
 
 
+# ── Source E: Party Ideological Profiles ────────────────────────────────
+
+
+def fetch_party_snippets(candidate_slug: str, topic_id: str) -> list[str]:
+    """Return party ideological profile snippet for a candidate/topic pair.
+
+    Returns a one-element list with the profile text, or an empty list if no
+    profile is available for the given candidate or topic.
+    """
+    candidate_profile = PARTY_IDEOLOGICAL_PROFILES.get(candidate_slug)
+    if not candidate_profile:
+        return []
+    snippet = candidate_profile.get(topic_id)
+    if not snippet:
+        return []
+    return [snippet]
+
+
+# ── Source F: Web Search Snippets ────────────────────────────────────────
+
+DUCKDUCKGO_API_URL = "https://api.duckduckgo.com/"
+
+
+def _web_search_snippets(query: str, max_results: int = 5) -> list[str]:
+    """Fetch snippets from DuckDuckGo Instant Answer API.
+
+    Returns up to *max_results* text snippets. Falls back to an empty list on
+    any network or parse error — never raises.
+    """
+    try:
+        params = urllib.parse.urlencode(
+            {"q": query, "format": "json", "no_redirect": "1", "no_html": "1"}
+        )
+        url = f"{DUCKDUCKGO_API_URL}?{params}"
+        data = _http_get_json(url)
+        if not data:
+            return []
+        snippets: list[str] = []
+        related = data.get("RelatedTopics", [])
+        if not isinstance(related, list):
+            return []
+        for item in related:
+            if not isinstance(item, dict):
+                continue
+            text = item.get("Text", "")
+            if isinstance(text, str) and text.strip():
+                snippets.append(text.strip())
+            if len(snippets) >= max_results:
+                break
+        time.sleep(0.5)
+        return snippets
+    except Exception as exc:  # noqa: BLE001
+        logger.warning("Web search failed for query '%s': %s", query, exc)
+        return []
+
+
+def fetch_web_snippets(candidate_slug: str, topic_id: str) -> list[str]:
+    """Return web search snippets for a candidate/topic pair via DuckDuckGo.
+
+    Returns a list of plain-text snippets (may be empty if the candidate is
+    not in *CANDIDATE_FULL_NAMES* or the network is unavailable).
+    """
+    full_name = CANDIDATE_FULL_NAMES.get(candidate_slug)
+    if not full_name:
+        logger.info("No full name mapping for %s; skipping web search", candidate_slug)
+        return []
+
+    topic_keywords = TOPIC_KEYWORDS.get(topic_id, [topic_id])
+    topic_label_pt = topic_keywords[0] if topic_keywords else topic_id
+    query = f'"{full_name}" "{topic_label_pt}" posição'
+    return _web_search_snippets(query)
+
+
 # ── Topic label lookup ──────────────────────────────────────────────────
 
 
@@ -377,6 +584,7 @@ def seed_positions(
     dry_run: bool = False,
     candidate_filter: str | None = None,
     topic_filter: str | None = None,
+    skip_web_search: bool = False,
 ) -> None:
     """Main entry point: seed unknown positions from public sources."""
     logging.basicConfig(level=logging.INFO, format="%(levelname)s: %(message)s")
@@ -472,7 +680,20 @@ def seed_positions(
                 snippets.extend(senado_snippets)
                 sources_used.append("senado_api")
 
-            # If no snippets from sources A-C, we still call AI with a grounding prompt
+            # Source E: Party ideological profile
+            party_snippets = fetch_party_snippets(candidate_slug, topic_id)
+            if party_snippets:
+                snippets.extend(party_snippets)
+                sources_used.append("party_profile")
+
+            # Source F: Web search snippets
+            if not skip_web_search:
+                web_snippets = fetch_web_snippets(candidate_slug, topic_id)
+                if web_snippets:
+                    snippets.extend(web_snippets[:5])
+                    sources_used.append("web_search")
+
+            # If no snippets from sources A-F, we still call AI with a grounding prompt
             if not snippets:
                 sources_used.append("ai_synthesis")
                 snippets = []  # Pass empty to let the AI use its training knowledge
@@ -567,6 +788,7 @@ def seed_positions(
                     f"  summary_pt={summary_pt}\n"
                     f"  summary_en={summary_en}\n"
                     f"  key_actions={key_actions}\n"
+                    f"  sources={','.join(dict.fromkeys(sources_used))}\n"
                     f"  editor_notes={editor_notes}\n"
                 )
             else:
@@ -641,11 +863,18 @@ def main() -> None:
         default=None,
         help="Limit seed to a specific topic_id.",
     )
+    parser.add_argument(
+        "--skip-web-search",
+        action="store_true",
+        default=False,
+        help="Skip web search step (Source F). Useful in CI without outbound HTTP.",
+    )
     args = parser.parse_args()
     seed_positions(
         dry_run=args.dry_run,
         candidate_filter=args.candidate,
         topic_filter=args.topic,
+        skip_web_search=args.skip_web_search,
     )
 
 
