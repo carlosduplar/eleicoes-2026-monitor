@@ -52,7 +52,7 @@ def test_create_candidates_positions_writes_valid_skeleton(
     jsonschema.validate(payload, schema)
 
     assert payload["schema_version"] == "2.0.0"
-    assert len(payload["topics"]) == 15
+    assert len(payload["topics"]) == 14
     for topic in payload["topics"].values():
         assert set(topic["candidates"].keys()) == {"lula", "flavio-bolsonaro", "zema"}
         for candidate in topic["candidates"].values():

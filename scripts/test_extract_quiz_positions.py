@@ -21,7 +21,11 @@ def _make_position(
 ) -> dict[str, Any]:
     """Create a minimal position dict."""
     stance_lookup = {2: "favor", 0: "neutral", -2: "against"}
-    resolved_stance = stance if stance in {"favor", "neutral", "against", "unclear"} else stance_lookup.get(weight, "neutral")
+    resolved_stance = (
+        stance
+        if stance in {"favor", "neutral", "against", "unclear"}
+        else stance_lookup.get(weight, "neutral")
+    )
     return {
         "position_pt": text_pt,
         "position_en": text_en,
@@ -83,20 +87,30 @@ def test_select_quiz_topics_orders_by_divergence() -> None:
 def test_select_quiz_topics_covers_multiple_clusters() -> None:
     """Selected topics should span at least 3 broad categories."""
     all_positions = {
-        "economia": _topic_positions(_make_position(stance="favor"), _make_position(stance="against")),
-        "seguranca": _topic_positions(_make_position(stance="favor"), _make_position(stance="against")),
-        "saude": _topic_positions(_make_position(stance="neutral"), _make_position(stance="against")),
-        "politica_ext": _topic_positions(_make_position(stance="favor"), _make_position(stance="against")),
+        "economia": _topic_positions(
+            _make_position(stance="favor"), _make_position(stance="against")
+        ),
+        "seguranca": _topic_positions(
+            _make_position(stance="favor"), _make_position(stance="against")
+        ),
+        "saude": _topic_positions(
+            _make_position(stance="neutral"), _make_position(stance="against")
+        ),
+        "politica_externa": _topic_positions(
+            _make_position(stance="favor"), _make_position(stance="against")
+        ),
     }
     cluster_by_topic = {
         "economia": "economy",
         "seguranca": "security",
         "saude": "social",
-        "politica_ext": "foreign",
+        "politica_externa": "foreign",
     }
 
     selected = quiz_positions.select_quiz_topics(all_positions)
-    covered_clusters = {cluster_by_topic[topic] for topic in selected if topic in cluster_by_topic}
+    covered_clusters = {
+        cluster_by_topic[topic] for topic in selected if topic in cluster_by_topic
+    }
     assert len(covered_clusters) >= 3
 
 
@@ -156,7 +170,9 @@ def test_build_options_filters_low_confidence() -> None:
     assert options[0]["confidence"] == "high"
 
 
-def test_quiz_output_conforms_to_schema(tmp_path: Path, monkeypatch: pytest.MonkeyPatch) -> None:
+def test_quiz_output_conforms_to_schema(
+    tmp_path: Path, monkeypatch: pytest.MonkeyPatch
+) -> None:
     """Full main() output validates against docs/schemas/quiz.schema.json."""
     data_dir = tmp_path / "data"
     docs_dir = tmp_path / "docs" / "schemas"
@@ -164,7 +180,10 @@ def test_quiz_output_conforms_to_schema(tmp_path: Path, monkeypatch: pytest.Monk
     quiz_file = data_dir / "quiz.json"
     schema_file = docs_dir / "quiz.schema.json"
     docs_dir.mkdir(parents=True, exist_ok=True)
-    schema_file.write_text(Path("docs/schemas/quiz.schema.json").read_text(encoding="utf-8"), encoding="utf-8")
+    schema_file.write_text(
+        Path("docs/schemas/quiz.schema.json").read_text(encoding="utf-8"),
+        encoding="utf-8",
+    )
 
     articles_payload = {
         "$schema": "../docs/schemas/articles.schema.json",
@@ -184,15 +203,23 @@ def test_quiz_output_conforms_to_schema(tmp_path: Path, monkeypatch: pytest.Monk
         ],
     }
     data_dir.mkdir(parents=True, exist_ok=True)
-    articles_file.write_text(json.dumps(articles_payload, indent=2) + "\n", encoding="utf-8")
+    articles_file.write_text(
+        json.dumps(articles_payload, indent=2) + "\n", encoding="utf-8"
+    )
 
     monkeypatch.setattr(quiz_positions, "ARTICLES_FILE", articles_file)
     monkeypatch.setattr(quiz_positions, "QUIZ_FILE", quiz_file)
     monkeypatch.setattr(quiz_positions, "SCHEMA_FILE", schema_file)
     monkeypatch.setattr(quiz_positions, "_SNIPPETS_CACHE", {})
-    monkeypatch.setattr(quiz_positions, "filter_snippets", lambda _articles, candidate, topic: [f"{candidate}:{topic}:snippet"])
+    monkeypatch.setattr(
+        quiz_positions,
+        "filter_snippets",
+        lambda _articles, candidate, topic: [f"{candidate}:{topic}:snippet"],
+    )
 
-    def fake_extract_candidate_position(candidate: str, topic_id: str, snippets: list[str]) -> dict[str, Any]:
+    def fake_extract_candidate_position(
+        candidate: str, topic_id: str, snippets: list[str]
+    ) -> dict[str, Any]:
         del snippets
         candidate_index = quiz_positions.CANDIDATES.index(candidate)
         stance_cycle = ["favor", "neutral", "against"]
@@ -205,7 +232,9 @@ def test_quiz_output_conforms_to_schema(tmp_path: Path, monkeypatch: pytest.Monk
             "best_source_snippet_index": 1,
         }
 
-    monkeypatch.setattr(quiz_positions, "extract_candidate_position", fake_extract_candidate_position)
+    monkeypatch.setattr(
+        quiz_positions, "extract_candidate_position", fake_extract_candidate_position
+    )
 
     quiz_positions.main()
 
@@ -239,7 +268,9 @@ def test_local_quality_check_valid_position() -> None:
 
 def test_local_quality_check_rejects_polling_data() -> None:
     """Text containing approval/polling data is rejected."""
-    text_pt = "O candidato tem aprovação de 43% e desaprovação de 51% segundo pesquisa Ipsos."
+    text_pt = (
+        "O candidato tem aprovação de 43% e desaprovação de 51% segundo pesquisa Ipsos."
+    )
     text_en = "The candidate has an approval rating of 43% according to a survey."
     assert quiz_positions._local_quality_check(text_pt, text_en) is False
 
@@ -263,7 +294,10 @@ def test_local_quality_check_rejects_empty_string() -> None:
 
 def test_local_quality_check_rejects_too_short() -> None:
     """Texts with fewer than 8 words are rejected."""
-    assert quiz_positions._local_quality_check("Contra impostos.", "Against taxes.") is False
+    assert (
+        quiz_positions._local_quality_check("Contra impostos.", "Against taxes.")
+        is False
+    )
 
 
 def test_local_quality_check_rejects_template_placeholder() -> None:
@@ -275,7 +309,8 @@ def test_local_quality_check_rejects_template_placeholder() -> None:
 
 def test_local_quality_check_rejects_article_meta_commentary() -> None:
     """Text that describes the article rather than a policy stance is rejected."""
-    text_pt = "O texto apresenta diversas críticas ao candidato e menciona baixa aprovação."
+    text_pt = (
+        "O texto apresenta diversas críticas ao candidato e menciona baixa aprovação."
+    )
     text_en = "The text presents various criticisms of the candidate and mentions low approval."
     assert quiz_positions._local_quality_check(text_pt, text_en) is False
-

@@ -31,7 +31,10 @@ def isolate_usage_file(tmp_path, monkeypatch: pytest.MonkeyPatch) -> None:
     monkeypatch.setattr(ai_client, "USAGE_FILE", tmp_path / "ai_usage.json")
 
 
-def test_provider_chain_nvidia_primary_ollama_fallback() -> None:
+def test_provider_chain_nvidia_primary_ollama_fallback(
+    monkeypatch: pytest.MonkeyPatch,
+) -> None:
+    monkeypatch.delenv("VERTEX_MODEL_OVERRIDE", raising=False)
     chain = ai_client._provider_chain_for_task("multilingual")
     provider_names = [str(item["name"]) for item in chain]
     provider_models = [(str(item["name"]), str(item["model"])) for item in chain]
@@ -187,7 +190,9 @@ def test_request_completion_vertex_does_not_add_grounding_tools(
                 {"candidates": [{"content": {"parts": [{"text": '{"ok":true}'}]}}]}
             ).encode("utf-8")
 
-    def fake_request(url: str, data: bytes, headers: dict[str, str], method: str) -> object:
+    def fake_request(
+        url: str, data: bytes, headers: dict[str, str], method: str
+    ) -> object:
         request_payloads.append(json.loads(data.decode("utf-8")))
         return object()
 
@@ -204,6 +209,9 @@ def test_request_completion_vertex_does_not_add_grounding_tools(
 
     assert result == '{"ok":true}'
     assert "tools" not in request_payloads[0]
+    generation_config = request_payloads[0]["generationConfig"]
+    assert generation_config["thinkingConfig"] == {"thinkingBudget": 0}
+    assert generation_config["responseMimeType"] == "application/json"
 
 
 def test_extract_content_from_object_content_parts() -> None:
@@ -465,3 +473,85 @@ def test_extract_position_low_confidence_filtered(
     assert result["position_pt"] is None
     assert result["position_en"] is None
     assert result["best_source_snippet_index"] == 1
+
+
+def test_extract_candidate_topic_position_retries_on_parse_failure(
+    monkeypatch: pytest.MonkeyPatch,
+) -> None:
+    responses = [
+        {
+            "content": "not-json",
+            "provider": "vertex",
+            "model": "gemini-3.1-pro-preview",
+            "paid": True,
+        },
+        {
+            "content": json.dumps(
+                {
+                    "position_type": "confirmed",
+                    "stance": "favor",
+                    "summary_pt": "Defende a proposta em público.",
+                    "summary_en": "Supports the proposal in public.",
+                    "key_actions": ["Declarou apoio em entrevista."],
+                    "source_indices": [1],
+                    "confidence_reasoning": "Há evidência textual direta.",
+                }
+            ),
+            "provider": "vertex",
+            "model": "gemini-3.1-pro-preview",
+            "paid": True,
+        },
+    ]
+    calls: list[str] = []
+
+    def fake_call(**kwargs: object) -> dict[str, object]:
+        user = kwargs.get("user")
+        calls.append(str(user))
+        return responses[len(calls) - 1]
+
+    monkeypatch.setattr(ai_client, "_call_with_fallback_for_task", fake_call)
+
+    result = ai_client.extract_candidate_topic_position(
+        candidate="Lula",
+        topic_id="economia",
+        topic_label_pt="Economia",
+        snippets=["Trecho relevante"],
+    )
+
+    assert len(calls) == 2
+    assert "IMPORTANTE: responda somente" in calls[1]
+    assert result["position_type"] == "confirmed"
+    assert result["stance"] == "favor"
+    assert result["summary_pt"] == "Defende a proposta em público."
+    assert result["source_indices"] == [1]
+
+
+def test_extract_candidate_topic_position_recovers_partial_json(
+    monkeypatch: pytest.MonkeyPatch,
+) -> None:
+    truncated = '{"position_type":"inferred","stance":"against","summary_pt":"Texto'
+    calls = 0
+
+    def fake_call(**_kwargs: object) -> dict[str, object]:
+        nonlocal calls
+        calls += 1
+        return {
+            "content": truncated,
+            "provider": "vertex",
+            "model": "gemini-3.1-pro-preview",
+            "paid": True,
+        }
+
+    monkeypatch.setattr(ai_client, "_call_with_fallback_for_task", fake_call)
+
+    result = ai_client.extract_candidate_topic_position(
+        candidate="Lula",
+        topic_id="economia",
+        topic_label_pt="Economia",
+        snippets=["Trecho relevante"],
+    )
+
+    assert calls == 2
+    assert result["position_type"] == "inferred"
+    assert result["stance"] == "against"
+    assert result["_partial_parse"] is True

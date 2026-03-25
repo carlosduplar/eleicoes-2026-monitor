@@ -14,9 +14,7 @@ import logging
 import os
 import re
 import time
-import urllib.error
 import urllib.parse
-import urllib.request
 from datetime import datetime, timezone
 from pathlib import Path
 from typing import Any
@@ -489,31 +487,36 @@ def _senado_fetch_votacoes(senador_codigo: str) -> list[dict[str, Any]]:
     if not data:
         return []
 
-    # Handle nested structure: VotacaoParlamentar -> Votacoes -> Votacao
-    if "VotacaoParlamentar" in data:
-        vp = data["VotacaoParlamentar"]
-        if isinstance(vp, dict):
-            votacoes_obj = vp.get("Votacoes", {})
-            if isinstance(votacoes_obj, dict):
-                items = votacoes_obj.get("Votacao", [])
-            elif isinstance(votacoes_obj, list):
-                items = votacoes_obj
-            else:
-                items = []
+    def _extract_items(votacoes_obj: object) -> list[dict[str, Any]]:
+        if isinstance(votacoes_obj, dict):
+            maybe_items = votacoes_obj.get("Votacao", [])
+        elif isinstance(votacoes_obj, list):
+            maybe_items = votacoes_obj
         else:
-            items = []
-    elif "Votacoes" in data:
-        votacoes = data["Votacoes"]
-        if isinstance(votacoes, dict):
-            items = votacoes.get("Votacao", [])
-        elif isinstance(votacoes, list):
-            items = votacoes
-        else:
-            items = []
-    else:
-        items = []
+            maybe_items = []
+        return [item for item in maybe_items if isinstance(item, dict)]
 
-    return [item for item in items if isinstance(item, dict)]
+    # New structure: VotacaoParlamentar -> Parlamentar -> Votacoes -> Votacao
+    # Legacy fallback: VotacaoParlamentar -> Votacoes -> Votacao
+    vp = data.get("VotacaoParlamentar") if isinstance(data, dict) else None
+    if isinstance(vp, dict):
+        parlamentar = vp.get("Parlamentar")
+        if isinstance(parlamentar, dict):
+            items = _extract_items(parlamentar.get("Votacoes"))
+            if items:
+                return items
+
+        items = _extract_items(vp.get("Votacoes"))
+        if items:
+            return items
+
+    # Additional legacy fallback
+    if isinstance(data, dict):
+        items = _extract_items(data.get("Votacoes"))
+        if items:
+            return items
+
+    return []
 
 
 def _senado_classify_vote(descricao: str) -> list[str]:
@@ -529,7 +532,7 @@ def _senado_classify_vote(descricao: str) -> list[str]:
 def fetch_senado_snippets(candidate_slug: str) -> dict[str, list[str]]:
     """Fetch voting record snippets from Senado, organized by topic_id."""
     senador_codes: dict[str, str] = {
-        "flavio-bolsonaro": "5322",  # Flávio Bolsonaro senator code
+        "flavio-bolsonaro": "5894",  # Flávio Nantes Bolsonaro
     }
     code = senador_codes.get(candidate_slug)
     if not code:
@@ -539,24 +542,46 @@ def fetch_senado_snippets(candidate_slug: str) -> dict[str, list[str]]:
     votacoes = _senado_fetch_votacoes(code)
     topic_snippets: dict[str, list[str]] = {}
 
-    for voto in votacoes[:50]:
-        descricao = ""
-        if isinstance(voto, dict):
-            descricao = (
-                voto.get("Descricao", "")
-                or voto.get("Materia", {}).get("ementa", "")
+    for voto in votacoes[:300]:
+        materia = voto.get("Materia", {}) if isinstance(voto, dict) else {}
+        materia_ementa = ""
+        if isinstance(materia, dict):
+            materia_ementa = (
+                _normalize_optional_text(materia.get("Ementa"))
+                or _normalize_optional_text(materia.get("ementa"))
                 or ""
             )
+
+        descricao = (
+            _normalize_optional_text(voto.get("DescricaoVotacao"))
+            or _normalize_optional_text(voto.get("Descricao"))
+            or materia_ementa
+            or ""
+        )
+
         sessao = voto.get("SessaoPlenaria", {}) or {}
-        data_sessao = sessao.get("Data", "") if isinstance(sessao, dict) else ""
-        voto_voto = voto.get("Voto", "") or ""
+        data_sessao = ""
+        if isinstance(sessao, dict):
+            data_sessao = (
+                _normalize_optional_text(sessao.get("DataSessao"))
+                or _normalize_optional_text(sessao.get("Data"))
+                or ""
+            )
+
+        voto_voto = (
+            _normalize_optional_text(voto.get("SiglaDescricaoVoto"))
+            or _normalize_optional_text(voto.get("Voto"))
+            or ""
+        )
 
         matched = _senado_classify_vote(descricao)
         for topic_id in matched:
             snippet = (
                 f"Senado: votou '{voto_voto}' em {descricao[:200]} ({data_sessao})"
             )
-            topic_snippets.setdefault(topic_id, []).append(snippet)
+            bucket = topic_snippets.setdefault(topic_id, [])
+            if len(bucket) < 8:
+                bucket.append(snippet)
 
     time.sleep(0.3)
     return topic_snippets
@@ -585,6 +610,20 @@ def fetch_party_snippets(candidate_slug: str, topic_id: str) -> list[str]:
 BRAVE_SEARCH_API_URL = "https://api.search.brave.com/res/v1/web/search"
 BRAVE_API_KEY: str | None = os.environ.get("BRAVE_SEARCH_API_KEY")
 BRAVE_SEARCH_SITE_RESTRICTION = "site:.br"
+
+try:
+    DEFAULT_AI_WORKERS = max(1, int(os.environ.get("SEED_AI_WORKERS", "1")))
+except ValueError:
+    DEFAULT_AI_WORKERS = 1
+
+MAX_AI_SNIPPETS = 12
+SNIPPET_LIMITS_BY_SOURCE: dict[str, int] = {
+    "camara_api": 4,
+    "senado_api": 4,
+    "party_profile": 2,
+    "wikipedia": 4,
+    "web_search": 2,
+}
 
 
 def _brave_search(query: str, max_results: int = 5) -> list[str]:
@@ -668,6 +707,26 @@ def _build_topic_label_map(topics: dict[str, Any]) -> dict[str, tuple[str, str]]
     return mapping
 
 
+def _extend_unique_snippets(
+    selected: list[str],
+    seen: set[str],
+    candidates: list[str],
+    max_items: int,
+) -> int:
+    """Append up to *max_items* unique snippets and return added count."""
+    added = 0
+    for snippet in candidates:
+        cleaned = snippet.strip()
+        if not cleaned or cleaned in seen:
+            continue
+        selected.append(cleaned)
+        seen.add(cleaned)
+        added += 1
+        if added >= max_items or len(selected) >= MAX_AI_SNIPPETS:
+            break
+    return added
+
+
 # ── Per-pair AI worker ─────────────────────────────────────────────────
 
 
@@ -686,38 +745,50 @@ def _seed_single(
     Returns a dict with the extracted fields, or None if the AI returned unknown.
     Designed to run inside a ThreadPoolExecutor worker.
     """
-    snippets: list[str] = []
     sources_used: list[str] = []
+    source_snippets: dict[str, list[str]] = {}
 
-    # Source A: Wikipedia — extract paragraphs relevant to this topic
     if wiki_text:
         wiki_snippets = _extract_topic_paragraphs(wiki_text, topic_id)
         if wiki_snippets:
-            snippets.extend(wiki_snippets)
-            sources_used.append("wikipedia")
+            source_snippets["wikipedia"] = wiki_snippets
 
-    # Source B: Câmara voting records
     if camara_snippets_for_topic:
-        snippets.extend(camara_snippets_for_topic)
-        sources_used.append("camara_api")
+        source_snippets["camara_api"] = camara_snippets_for_topic
 
-    # Source C: Senado voting records
     if senado_snippets_for_topic:
-        snippets.extend(senado_snippets_for_topic)
-        sources_used.append("senado_api")
+        source_snippets["senado_api"] = senado_snippets_for_topic
 
-    # Source E: Party ideological profile
     party_snippets = fetch_party_snippets(candidate_slug, topic_id)
     if party_snippets:
-        snippets.extend(party_snippets)
-        sources_used.append("party_profile")
+        source_snippets["party_profile"] = party_snippets
 
-    # Source F: Web search snippets
     if not skip_web_search:
         web_snippets = fetch_web_snippets(candidate_slug, topic_id)
         if web_snippets:
-            snippets.extend(web_snippets[:5])
-            sources_used.append("web_search")
+            source_snippets["web_search"] = web_snippets
+
+    # Prioritize high-signal sources and cap each source to avoid one source
+    # crowding out all others in the first MAX_AI_SNIPPETS entries.
+    snippets: list[str] = []
+    seen_snippets: set[str] = set()
+    source_order = (
+        "camara_api",
+        "senado_api",
+        "party_profile",
+        "wikipedia",
+        "web_search",
+    )
+    for source_name in source_order:
+        candidates = source_snippets.get(source_name, [])
+        if not candidates:
+            continue
+        limit = SNIPPET_LIMITS_BY_SOURCE.get(source_name, MAX_AI_SNIPPETS)
+        added = _extend_unique_snippets(snippets, seen_snippets, candidates, limit)
+        if added > 0:
+            sources_used.append(source_name)
+        if len(snippets) >= MAX_AI_SNIPPETS:
+            break
 
     # Grounding fallback: when no data-source evidence, inject a prompt that
     # instructs the AI to reason from its training knowledge about the candidate.
@@ -734,7 +805,7 @@ def _seed_single(
             candidate=candidate_slug,
             topic_id=topic_id,
             topic_label_pt=topic_label_pt,
-            snippets=snippets[:12],
+            snippets=snippets,
             existing_summary_pt=None,
         )
     except Exception as exc:
@@ -783,13 +854,24 @@ def seed_positions(
     candidate_filter: str | None = None,
     topic_filter: str | None = None,
     skip_web_search: bool = False,
+    enable_camara: bool = False,
+    ai_workers: int = DEFAULT_AI_WORKERS,
 ) -> None:
     """Main entry point: seed unknown positions from public sources."""
     logging.basicConfig(level=logging.INFO, format="%(levelname)s: %(message)s")
+    ai_workers = max(1, ai_workers)
     if not skip_web_search and BRAVE_API_KEY is None:
         logger.warning(
             "BRAVE_SEARCH_API_KEY not set — Source F will produce no snippets. "
             "Pass --skip-web-search to suppress this warning."
+        )
+    if not enable_camara:
+        logger.info(
+            "Skipping Câmara source by default (use --enable-camara to opt in)."
+        )
+    else:
+        logger.warning(
+            "Câmara source is experimental and may return sparse data while endpoint coverage is updated."
         )
 
     payload: dict[str, Any] = json.loads(POSITIONS_FILE.read_text(encoding="utf-8"))
@@ -830,7 +912,7 @@ def seed_positions(
     camara_cache: dict[str, dict[str, list[str]]] = {}
     senado_cache: dict[str, dict[str, list[str]]] = {}
     for slug in candidate_slugs:
-        if slug in CAMARA_DEPUTADOS_NAMES:
+        if enable_camara and slug in CAMARA_DEPUTADOS_NAMES:
             camara_cache[slug] = fetch_camara_snippets(slug)
         senado_cache[slug] = fetch_senado_snippets(slug)
 
@@ -849,11 +931,12 @@ def seed_positions(
         if not isinstance(candidates, dict):
             continue
 
-        slugs_to_process = (
-            [candidate_filter]
-            if candidate_filter and candidate_filter in candidates
-            else list(candidates.keys())
-        )
+        if candidate_filter:
+            if candidate_filter not in candidates:
+                continue
+            slugs_to_process = [candidate_filter]
+        else:
+            slugs_to_process = list(candidates.keys())
 
         for candidate_slug in slugs_to_process:
             candidate_payload = candidates.get(candidate_slug)
@@ -896,7 +979,7 @@ def seed_positions(
         )
 
     results: list[dict[str, Any]] = []
-    with concurrent.futures.ThreadPoolExecutor(max_workers=3) as pool:
+    with concurrent.futures.ThreadPoolExecutor(max_workers=ai_workers) as pool:
         for result in pool.map(_run_seed, work_items):
             if result is not None:
                 results.append(result)
@@ -907,7 +990,7 @@ def seed_positions(
         topic_id = result["topic_id"]
         sources_used = result["sources_used"]
         source_list = ",".join(sources_used)
-        editor_notes = f"SEEDED:{source_list} — requires human review"
+        editor_notes = f"SEEDED:{source_list} - requires human review"
 
         # Build sources list for the schema
         position_sources: list[dict[str, Any]] = []
@@ -926,16 +1009,59 @@ def seed_positions(
                     "article_id": None,
                 }
             )
-        if "camara_api" in sources_used or "senado_api" in sources_used:
+
+        if "camara_api" in sources_used:
             position_sources.append(
                 {
                     "type": "voting_record",
-                    "url": "https://dadosabertos.camara.leg.br"
-                    if "camara_api" in sources_used
-                    else "https://legis.senado.leg.br/dadosabertos",
+                    "url": "https://dadosabertos.camara.leg.br",
                     "description_pt": (
                         result["summary_pt"]
                         or f"Registro de votações legislativas para {candidate_slug}"
+                    ),
+                    "description_en": None,
+                    "date": today,
+                    "article_id": None,
+                }
+            )
+
+        if "senado_api" in sources_used:
+            position_sources.append(
+                {
+                    "type": "voting_record",
+                    "url": "https://legis.senado.leg.br/dadosabertos",
+                    "description_pt": (
+                        result["summary_pt"]
+                        or f"Registro de votações legislativas para {candidate_slug}"
+                    ),
+                    "description_en": None,
+                    "date": today,
+                    "article_id": None,
+                }
+            )
+
+        if "party_profile" in sources_used:
+            position_sources.append(
+                {
+                    "type": "party_platform",
+                    "url": None,
+                    "description_pt": (
+                        result["summary_pt"]
+                        or f"Perfil partidário para {candidate_slug}"
+                    ),
+                    "description_en": None,
+                    "date": today,
+                    "article_id": None,
+                }
+            )
+
+        if "web_search" in sources_used:
+            position_sources.append(
+                {
+                    "type": "news_report",
+                    "url": None,
+                    "description_pt": (
+                        result["summary_pt"] or f"Pesquisa web para {candidate_slug}"
                     ),
                     "description_en": None,
                     "date": today,
@@ -951,12 +1077,15 @@ def seed_positions(
                 f"  summary_pt={result['summary_pt']}\n"
                 f"  summary_en={result['summary_en']}\n"
                 f"  key_actions={result['key_actions']}\n"
+                f"  sources={position_sources}\n"
                 f"  editor_notes={editor_notes}\n"
             )
         else:
             candidate_payload = (
                 topics[topic_id].get("candidates", {}).get(candidate_slug, {})
             )
+            if not isinstance(candidate_payload, dict):
+                continue
             candidate_payload["position_type"] = result["position_type"]
             candidate_payload["stance"] = result["stance"]
             candidate_payload["summary_pt"] = result["summary_pt"]
@@ -966,40 +1095,8 @@ def seed_positions(
             candidate_payload["last_updated"] = today
             candidate_payload["editor_notes"] = editor_notes
 
-        # Source entries for party profile and web search
-        if "party_profile" in sources_used:
-            position_sources.append(
-                {
-                    "type": "news_report",
-                    "url": None,
-                    "description_pt": (
-                        result["summary_pt"]
-                        or f"Perfil partidário para {candidate_slug}"
-                    ),
-                    "description_en": None,
-                    "date": today,
-                    "article_id": None,
-                }
-            )
-        if "web_search" in sources_used:
-            position_sources.append(
-                {
-                    "type": "news_report",
-                    "url": None,
-                    "description_pt": (
-                        result["summary_pt"] or f"Pesquisa web para {candidate_slug}"
-                    ),
-                    "description_en": None,
-                    "date": today,
-                    "article_id": None,
-                }
-            )
-        # Update sources if new ones were added
-        if "party_profile" in sources_used or "web_search" in sources_used:
-            candidate_payload["sources"] = position_sources
-
         seeded_count += 1
-        source_log.append(f"{candidate_slug}/{topic_id} ← {source_list}")
+        source_log.append(f"{candidate_slug}/{topic_id} <- {source_list}")
 
     if not dry_run and seeded_count > 0:
         # Update top-level metadata
@@ -1066,12 +1163,26 @@ def main() -> None:
         default=False,
         help="Skip web search step (Source F). Useful in CI without outbound HTTP.",
     )
+    parser.add_argument(
+        "--enable-camara",
+        action="store_true",
+        default=False,
+        help="Enable Câmara source (disabled by default while API integration is stabilized).",
+    )
+    parser.add_argument(
+        "--ai-workers",
+        type=int,
+        default=DEFAULT_AI_WORKERS,
+        help="Number of parallel AI workers (default from SEED_AI_WORKERS or 1).",
+    )
     args = parser.parse_args()
     seed_positions(
         dry_run=args.dry_run,
         candidate_filter=args.candidate,
         topic_filter=args.topic,
         skip_web_search=args.skip_web_search,
+        enable_camara=args.enable_camara,
+        ai_workers=args.ai_workers,
     )
 
 
