@@ -188,7 +188,15 @@ PARTY_IDEOLOGICAL_PROFILES: dict[str, dict[str, str]] = {
 }
 
 TOPIC_KEYWORDS: dict[str, list[str]] = {
-    "armas": ["arma", "fogo", "munição", "porte", "desarmamento", "estatuto do desarmamento", "armamento"],
+    "armas": [
+        "arma",
+        "fogo",
+        "munição",
+        "porte",
+        "desarmamento",
+        "estatuto do desarmamento",
+        "armamento",
+    ],
     "meio_ambiente": [
         "meio ambiente",
         "floresta",
@@ -364,9 +372,7 @@ def _extract_topic_paragraphs(text: str, topic_id: str) -> list[str]:
         return []
 
     kw_lower = [kw.lower() for kw in keywords]
-    matched = [
-        p for p in paragraphs if any(kw in p.lower() for kw in kw_lower)
-    ]
+    matched = [p for p in paragraphs if any(kw in p.lower() for kw in kw_lower)]
     # Cap each paragraph to avoid sending huge context to the AI
     cap = 500
     return [p[:cap] for p in (matched or paragraphs[:10])[:8]]
@@ -644,9 +650,7 @@ def fetch_web_snippets(candidate_slug: str, topic_id: str) -> list[str]:
 
     topic_keywords = TOPIC_KEYWORDS.get(topic_id, [topic_id])
     topic_label_pt = topic_keywords[0] if topic_keywords else topic_id
-    query = (
-        f'"{full_name}" "{topic_label_pt}" posição {BRAVE_SEARCH_SITE_RESTRICTION}'
-    )
+    query = f'"{full_name}" "{topic_label_pt}" posição {BRAVE_SEARCH_SITE_RESTRICTION}'
     return _brave_search(query, max_results=5)
 
 
@@ -861,14 +865,16 @@ def seed_positions(
                 skipped_count += 1
                 continue
 
-            work_items.append((
-                candidate_slug,
-                topic_id,
-                topic_label_pt,
-                wiki_text_cache.get(candidate_slug, ""),
-                camara_cache.get(candidate_slug, {}).get(topic_id, []),
-                senado_cache.get(candidate_slug, {}).get(topic_id, []),
-            ))
+            work_items.append(
+                (
+                    candidate_slug,
+                    topic_id,
+                    topic_label_pt,
+                    wiki_text_cache.get(candidate_slug, ""),
+                    camara_cache.get(candidate_slug, {}).get(topic_id, []),
+                    senado_cache.get(candidate_slug, {}).get(topic_id, []),
+                )
+            )
 
     logger.info(
         "Seeding %d candidate/topic pairs (%d skipped as already reviewed).",
@@ -960,61 +966,37 @@ def seed_positions(
             candidate_payload["last_updated"] = today
             candidate_payload["editor_notes"] = editor_notes
 
-<<<<<<< Updated upstream
-            # Build sources list for the schema
-            position_sources: list[dict[str, Any]] = []
-            if "wikipedia" in sources_used:
-                wiki_title = CANDIDATE_WIKI_TITLES.get(candidate_slug, "")
-                position_sources.append(
-                    {
-                        "type": "news_report",
-                        "url": f"https://pt.wikipedia.org/wiki/{wiki_title}"
-                        if wiki_title
-                        else None,
-                        "description_pt": summary_pt
-                        or f"Dados da Wikipedia para {candidate_slug}",
-                        "description_en": None,
-                        "date": today,
-                        "article_id": None,
-                    }
-                )
-            if "camara_api" in sources_used or "senado_api" in sources_used:
-                position_sources.append(
-                    {
-                        "type": "voting_record",
-                        "url": "https://dadosabertos.camara.leg.br"
-                        if "camara_api" in sources_used
-                        else "https://legis.senado.leg.br/dadosabertos",
-                        "description_pt": (
-                            summary_pt
-                            or f"Registro de votações legislativas para {candidate_slug}"
-                        ),
-                        "description_en": None,
-                        "date": today,
-                        "article_id": None,
-                    }
-                )
-
-            if dry_run:
-                print(
-                    f"[DRY RUN] Would update {candidate_slug}/{topic_id}:\n"
-                    f"  position_type={position_type}\n"
-                    f"  stance={stance}\n"
-                    f"  summary_pt={summary_pt}\n"
-                    f"  summary_en={summary_en}\n"
-                    f"  key_actions={key_actions}\n"
-                    f"  sources={','.join(dict.fromkeys(sources_used))}\n"
-                    f"  editor_notes={editor_notes}\n"
-                )
-            else:
-                candidate_payload["position_type"] = position_type
-                candidate_payload["stance"] = stance
-                candidate_payload["summary_pt"] = summary_pt
-                candidate_payload["summary_en"] = summary_en
-                candidate_payload["key_actions"] = key_actions
-                candidate_payload["sources"] = position_sources
-                candidate_payload["last_updated"] = today
-                candidate_payload["editor_notes"] = editor_notes
+        # Source entries for party profile and web search
+        if "party_profile" in sources_used:
+            position_sources.append(
+                {
+                    "type": "news_report",
+                    "url": None,
+                    "description_pt": (
+                        result["summary_pt"]
+                        or f"Perfil partidário para {candidate_slug}"
+                    ),
+                    "description_en": None,
+                    "date": today,
+                    "article_id": None,
+                }
+            )
+        if "web_search" in sources_used:
+            position_sources.append(
+                {
+                    "type": "news_report",
+                    "url": None,
+                    "description_pt": (
+                        result["summary_pt"] or f"Pesquisa web para {candidate_slug}"
+                    ),
+                    "description_en": None,
+                    "date": today,
+                    "article_id": None,
+                }
+            )
+        # Update sources if new ones were added
+        if "party_profile" in sources_used or "web_search" in sources_used:
+            candidate_payload["sources"] = position_sources
 
         seeded_count += 1
         source_log.append(f"{candidate_slug}/{topic_id} ← {source_list}")
