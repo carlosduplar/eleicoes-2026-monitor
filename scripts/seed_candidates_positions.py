@@ -8,6 +8,7 @@ Idempotent: never overwrites entries already reviewed by a human editor.
 from __future__ import annotations
 
 import argparse
+import concurrent.futures
 import json
 import logging
 import os
@@ -187,22 +188,120 @@ PARTY_IDEOLOGICAL_PROFILES: dict[str, dict[str, str]] = {
 }
 
 TOPIC_KEYWORDS: dict[str, list[str]] = {
-    "armas": ["arma", "fogo", "munição", "porte"],
+    "armas": ["arma", "fogo", "munição", "porte", "desarmamento", "estatuto do desarmamento", "armamento"],
     "meio_ambiente": [
         "meio ambiente",
         "floresta",
         "desmatamento",
         "licenciamento ambiental",
+        "amazônia",
+        "carbono",
+        "clima",
+        "ibama",
+        "unidade de conservação",
     ],
-    "lgbtq": ["lgbtq", "homofobia", "identidade de gênero"],
-    "aborto": ["aborto", "gestação", "interrupção"],
-    "previdencia": ["previdência", "aposentadoria", "pensão"],
-    "impostos": ["imposto", "tributário", "reforma fiscal", "ir "],
-    "midia": ["plataforma", "fake news", "desinformação", "regulação de mídia"],
-    "indigenas": ["indígena", "marco temporal", "demarcação"],
-    "educacao": ["educação", "ensino", "escola"],
-    "seguranca": ["segurança pública", "polícia", "crime", "drogas"],
-    "corrupcao": ["corrupção", "improbidade", "lava jato", "anticorrupção"],
+    "lgbtq": [
+        "lgbtq",
+        "homofobia",
+        "identidade de gênero",
+        "gay",
+        "transexual",
+        "homoafetivo",
+        "discriminação",
+        "PL 5901",
+        "diversidade sexual",
+        "casamento igualitário",
+    ],
+    "aborto": [
+        "aborto",
+        "gestação",
+        "interrupção",
+        "PL 1904",
+        "art. 128",
+        "artigo 128",
+        "gestante",
+        "feto",
+        "vida humana",
+        "estupro",
+        "anencéfalo",
+    ],
+    "previdencia": [
+        "previdência",
+        "aposentadoria",
+        "pensão",
+        "INSS",
+        "reforma previdenciária",
+        "benefício",
+        "contribuição",
+    ],
+    "impostos": [
+        "imposto",
+        "tributário",
+        "reforma fiscal",
+        "ir ",
+        "reforma tributária",
+        "IVA",
+        "carga tributária",
+        "simplificação tributária",
+    ],
+    "midia": [
+        "plataforma",
+        "fake news",
+        "desinformação",
+        "regulação de mídia",
+        "redes sociais",
+        "censura",
+        "marco civil",
+        "liberdade de imprensa",
+        "X",
+        "Meta",
+        "imprensa",
+    ],
+    "indigenas": [
+        "indígena",
+        "marco temporal",
+        "demarcação",
+        "FUNAI",
+        "reserva",
+        "território",
+        "aldeia",
+        "povos originários",
+    ],
+    "educacao": [
+        "educação",
+        "ensino",
+        "escola",
+        "universidade",
+        "MEC",
+        "homeschooling",
+        "ensino médio",
+        "ensino fundamental",
+        "vestibular",
+        "ENEM",
+    ],
+    "seguranca": [
+        "segurança pública",
+        "polícia",
+        "crime",
+        "drogas",
+        "violência",
+        "milícia",
+        "presídio",
+        "sistema prisional",
+        "tráfico",
+    ],
+    "corrupcao": [
+        "corrupção",
+        "improbidade",
+        "lava jato",
+        "anticorrupção",
+        "Lava Jato",
+        "peculato",
+        "lavagem de dinheiro",
+        "ficha limpa",
+        "transparência",
+        "desvio",
+    ],
 }
 
 
@@ -229,95 +328,62 @@ def _normalize_optional_text(value: object) -> str | None:
 # ── Source A: Wikipedia PT ──────────────────────────────────────────────
 
 
-def _fetch_wikipedia_sections(wiki_title: str) -> list[dict[str, str]]:
-    """Fetch relevant sections from a Wikipedia article.
+def _fetch_wikipedia_text(wiki_title: str) -> str:
+    """Fetch a Wikipedia article as plain text using the TextExtracts API.
 
-    Returns a list of dicts with keys 'section_title' and 'text'.
+    Returns the full article text, or an empty string on failure.
+    A single HTTP request replaces the old per-section approach.
     """
-    parse_url = (
-        f"{WIKIPEDIA_API_BASE}?action=parse&page={urllib.parse.quote(wiki_title)}"
-        f"&prop=sections&format=json"
+    url = (
+        f"{WIKIPEDIA_API_BASE}?action=query"
+        f"&prop=extracts&explaintext=true&redirects=1"
+        f"&titles={urllib.parse.quote(wiki_title)}"
+        f"&format=json"
     )
-    data = _http_get_json(parse_url)
+    data = _http_get_json(url)
     if not data:
+        return ""
+    pages = data.get("query", {}).get("pages", {})
+    if not isinstance(pages, dict):
+        return ""
+    page = next(iter(pages.values()), {})
+    if not isinstance(page, dict):
+        return ""
+    return page.get("extract", "") or ""
+
+
+def _extract_topic_paragraphs(text: str, topic_id: str) -> list[str]:
+    """Return paragraphs from *text* that mention any keyword for *topic_id*.
+
+    Falls back to the first 10 paragraphs if the topic has no keyword match,
+    so there is always some context for the AI even for niche topics.
+    """
+    keywords = TOPIC_KEYWORDS.get(topic_id, [])
+    paragraphs = [p.strip() for p in re.split(r"\n{2,}", text) if len(p.strip()) > 50]
+    if not paragraphs:
         return []
 
-    sections = data.get("parse", {}).get("sections", [])
-    if not isinstance(sections, list):
-        return []
-
-    relevant_keywords = [
-        "político",
-        "posição",
-        "governo",
-        "mandato",
-        "carreira",
-        "política",
-        "posicionamento",
-        "ideologia",
-        "posições",
-        "biografia",
-        "trajetória",
-        "vida pública",
+    kw_lower = [kw.lower() for kw in keywords]
+    matched = [
+        p for p in paragraphs if any(kw in p.lower() for kw in kw_lower)
     ]
-
-    relevant_indices: list[int] = []
-    for sec in sections:
-        toclevel = sec.get("toclevel", 0)
-        line = sec.get("line", "").lower()
-        index = sec.get("index")
-        if toclevel <= 2 and any(kw in line for kw in relevant_keywords):
-            if index is not None:
-                relevant_indices.append(int(index))
-
-    snippets: list[dict[str, str]] = []
-    for idx in relevant_indices[:5]:  # Limit to 5 sections to avoid rate limiting
-        wikitext_url = (
-            f"{WIKIPEDIA_API_BASE}?action=parse&page={urllib.parse.quote(wiki_title)}"
-            f"&prop=wikitext&section={idx}&format=json"
-        )
-        sec_data = _http_get_json(wikitext_url)
-        if not sec_data:
-            continue
-        wikitext_obj = sec_data.get("parse", {}).get("wikitext", {})
-        wikitext = wikitext_obj.get("*", "") if isinstance(wikitext_obj, dict) else ""
-        if not wikitext:
-            continue
-        # Strip basic wikitext markup
-        clean = re.sub(r"\{\{[^}]*\}\}", "", wikitext)
-        clean = re.sub(r"\[\[([^|\]]*\|)?([^\]]+)\]\]", r"\2", clean)
-        clean = re.sub(r"<ref[^>]*>.*?</ref>", "", clean, flags=re.DOTALL)
-        clean = re.sub(r"<ref[^>]*/?>", "", clean)
-        clean = re.sub(r"'''?|__NOTOC__", "", clean)
-        clean = re.sub(r"\s+", " ", clean).strip()
-        if len(clean) > 20:
-            sec_title = sec_data.get("parse", {}).get("title", "")
-            actual_sec_title = ""
-            for s in sections:
-                if str(s.get("index")) == str(idx):
-                    actual_sec_title = s.get("line", "")
-                    break
-            snippets.append(
-                {
-                    "section_title": actual_sec_title or sec_title,
-                    "text": clean[:2000],
-                }
-            )
-        time.sleep(0.3)  # Rate limiting between section fetches
-
-    return snippets
+    # Cap each paragraph to avoid sending huge context to the AI
+    cap = 500
+    return [p[:cap] for p in (matched or paragraphs[:10])[:8]]
 
 
-def fetch_wikipedia_snippets(candidate_slug: str) -> list[str]:
-    """Return plain-text snippets from Wikipedia for a candidate."""
+def fetch_wikipedia_snippets(candidate_slug: str) -> str:
+    """Return the full plain-text Wikipedia article for a candidate.
+
+    Returns an empty string when no mapping exists or the fetch fails.
+    """
     wiki_title = CANDIDATE_WIKI_TITLES.get(candidate_slug)
     if not wiki_title:
         logger.info("No Wikipedia title mapping for %s", candidate_slug)
-        return []
+        return ""
 
-    logger.info("Fetching Wikipedia sections for %s (%s)", candidate_slug, wiki_title)
-    sections = _fetch_wikipedia_sections(wiki_title)
-    return [f"{s['section_title']}: {s['text']}" for s in sections]
+    logger.info("Fetching Wikipedia text for %s (%s)", candidate_slug, wiki_title)
+    return _fetch_wikipedia_text(wiki_title)
 
 
 # ── Source B: Câmara dos Deputados ──────────────────────────────────────
@@ -598,6 +664,112 @@ def _build_topic_label_map(topics: dict[str, Any]) -> dict[str, tuple[str, str]]
     return mapping
 
 
+# ── Per-pair AI worker ─────────────────────────────────────────────────
+
+
+def _seed_single(
+    *,
+    candidate_slug: str,
+    topic_id: str,
+    topic_label_pt: str,
+    wiki_text: str,
+    camara_snippets_for_topic: list[str],
+    senado_snippets_for_topic: list[str],
+    skip_web_search: bool = False,
+) -> dict[str, Any] | None:
+    """Run AI synthesis for one (candidate, topic) pair.
+
+    Returns a dict with the extracted fields, or None if the AI returned unknown.
+    Designed to run inside a ThreadPoolExecutor worker.
+    """
+    snippets: list[str] = []
+    sources_used: list[str] = []
+
+    # Source A: Wikipedia — extract paragraphs relevant to this topic
+    if wiki_text:
+        wiki_snippets = _extract_topic_paragraphs(wiki_text, topic_id)
+        if wiki_snippets:
+            snippets.extend(wiki_snippets)
+            sources_used.append("wikipedia")
+
+    # Source B: Câmara voting records
+    if camara_snippets_for_topic:
+        snippets.extend(camara_snippets_for_topic)
+        sources_used.append("camara_api")
+
+    # Source C: Senado voting records
+    if senado_snippets_for_topic:
+        snippets.extend(senado_snippets_for_topic)
+        sources_used.append("senado_api")
+
+    # Source E: Party ideological profile
+    party_snippets = fetch_party_snippets(candidate_slug, topic_id)
+    if party_snippets:
+        snippets.extend(party_snippets)
+        sources_used.append("party_profile")
+
+    # Source F: Web search snippets
+    if not skip_web_search:
+        web_snippets = fetch_web_snippets(candidate_slug, topic_id)
+        if web_snippets:
+            snippets.extend(web_snippets[:5])
+            sources_used.append("web_search")
+
+    # Grounding fallback: when no data-source evidence, inject a prompt that
+    # instructs the AI to reason from its training knowledge about the candidate.
+    if not snippets:
+        snippets = [
+            f"[Base de conhecimento] Descreva o posicionamento público documentado de "
+            f"{candidate_slug} sobre '{topic_label_pt}', com base em declarações, "
+            f"projetos de lei, votações ou ações de governo conhecidas."
+        ]
+        sources_used.append("ai_synthesis")
+
+    try:
+        extracted = extract_candidate_topic_position(
+            candidate=candidate_slug,
+            topic_id=topic_id,
+            topic_label_pt=topic_label_pt,
+            snippets=snippets[:12],
+            existing_summary_pt=None,
+        )
+    except Exception as exc:
+        logger.warning(
+            "AI extraction failed for topic=%s candidate=%s: %s",
+            topic_id,
+            candidate_slug,
+            exc,
+        )
+        return None
+
+    position_type = extracted.get("position_type")
+    stance = extracted.get("stance")
+    if not isinstance(position_type, str) or not isinstance(stance, str):
+        return None
+    if position_type == "unknown" or stance == "unknown":
+        logger.info(
+            "No clear position for %s/%s (AI returned unknown).",
+            candidate_slug,
+            topic_id,
+        )
+        return None
+
+    return {
+        "candidate_slug": candidate_slug,
+        "topic_id": topic_id,
+        "position_type": position_type,
+        "stance": stance,
+        "summary_pt": _normalize_optional_text(extracted.get("summary_pt")),
+        "summary_en": _normalize_optional_text(extracted.get("summary_en")),
+        "key_actions": [
+            item.strip()
+            for item in (extracted.get("key_actions") or [])
+            if isinstance(item, str) and item.strip()
+        ],
+        "sources_used": list(dict.fromkeys(sources_used)),
+    }
+
+
 # ── Main seed logic ────────────────────────────────────────────────────
 
 
@@ -628,6 +800,7 @@ def seed_positions(
     skipped_count = 0
     source_log: list[str] = []
 
+    # Collect candidate slugs that need processing
     candidate_slugs: set[str] = set()
     if candidate_filter:
         candidate_slugs.add(candidate_filter)
@@ -638,21 +811,28 @@ def seed_positions(
                 if isinstance(candidates, dict):
                     candidate_slugs.update(candidates.keys())
 
-    # Pre-fetch Wikipedia snippets per candidate (shared across topics)
-    wiki_snippets_cache: dict[str, list[str]] = {}
-    for slug in candidate_slugs:
-        if slug in CANDIDATE_WIKI_TITLES:
-            wiki_snippets_cache[slug] = fetch_wikipedia_snippets(slug)
-        time.sleep(0.3)
+    # ── Phase 1: Parallel Wikipedia pre-fetch (1 request per candidate) ──
+    wiki_text_cache: dict[str, str] = {}
+    slugs_with_wiki = [s for s in candidate_slugs if s in CANDIDATE_WIKI_TITLES]
 
-    # Pre-fetch Câmara/Senado voting snippets per candidate
+    def _fetch_wiki(slug: str) -> tuple[str, str]:
+        return slug, fetch_wikipedia_snippets(slug)
+
+    with concurrent.futures.ThreadPoolExecutor(max_workers=5) as pool:
+        for slug, text in pool.map(_fetch_wiki, slugs_with_wiki):
+            wiki_text_cache[slug] = text
+
+    # ── Phase 2: Sequential Câmara/Senado fetch (few candidates) ──────────
     camara_cache: dict[str, dict[str, list[str]]] = {}
     senado_cache: dict[str, dict[str, list[str]]] = {}
     for slug in candidate_slugs:
         if slug in CAMARA_DEPUTADOS_NAMES:
             camara_cache[slug] = fetch_camara_snippets(slug)
         senado_cache[slug] = fetch_senado_snippets(slug)
-        time.sleep(0.3)
+
+    # ── Phase 3: Build work items (skip already-reviewed entries) ─────────
+    WorkItem = tuple[str, str, str, str, list[str], list[str]]  # type alias for clarity
+    work_items: list[WorkItem] = []
 
     for topic_id, topic_data in topics.items():
         if not isinstance(topic_data, dict):
@@ -660,9 +840,7 @@ def seed_positions(
         if topic_filter and topic_id != topic_filter:
             continue
 
-        topic_label_pt, topic_label_en = topic_label_map.get(
-            topic_id, (topic_id, topic_id)
-        )
+        topic_label_pt, _ = topic_label_map.get(topic_id, (topic_id, topic_id))
         candidates = topic_data.get("candidates")
         if not isinstance(candidates, dict):
             continue
@@ -677,102 +855,112 @@ def seed_positions(
             candidate_payload = candidates.get(candidate_slug)
             if not isinstance(candidate_payload, dict):
                 continue
-
-            # Idempotent: skip entries already reviewed
             current_stance = candidate_payload.get("stance", "unknown")
             current_position_type = candidate_payload.get("position_type", "unknown")
             if current_stance != "unknown" or current_position_type != "unknown":
                 skipped_count += 1
                 continue
 
-            # Collect snippets from all sources
-            snippets: list[str] = []
-            sources_used: list[str] = []
+            work_items.append((
+                candidate_slug,
+                topic_id,
+                topic_label_pt,
+                wiki_text_cache.get(candidate_slug, ""),
+                camara_cache.get(candidate_slug, {}).get(topic_id, []),
+                senado_cache.get(candidate_slug, {}).get(topic_id, []),
+            ))
 
-            # Source A: Wikipedia
-            wiki_snippets = wiki_snippets_cache.get(candidate_slug, [])
-            if wiki_snippets:
-                snippets.extend(wiki_snippets)
-                sources_used.append("wikipedia")
+    logger.info(
+        "Seeding %d candidate/topic pairs (%d skipped as already reviewed).",
+        len(work_items),
+        skipped_count,
+    )
 
-            # Source B: Câmara
-            camara_snippets = camara_cache.get(candidate_slug, {}).get(topic_id, [])
-            if camara_snippets:
-                snippets.extend(camara_snippets)
-                sources_used.append("camara_api")
+    # ── Phase 4: Parallel AI synthesis ────────────────────────────────────
+    def _run_seed(item: WorkItem) -> dict[str, Any] | None:
+        slug, tid, label_pt, wiki_text, camara_snips, senado_snips = item
+        return _seed_single(
+            candidate_slug=slug,
+            topic_id=tid,
+            topic_label_pt=label_pt,
+            wiki_text=wiki_text,
+            camara_snippets_for_topic=camara_snips,
+            senado_snippets_for_topic=senado_snips,
+            skip_web_search=skip_web_search,
+        )
 
-            # Source C: Senado
-            senado_snippets = senado_cache.get(candidate_slug, {}).get(topic_id, [])
-            if senado_snippets:
-                snippets.extend(senado_snippets)
-                sources_used.append("senado_api")
+    results: list[dict[str, Any]] = []
+    with concurrent.futures.ThreadPoolExecutor(max_workers=3) as pool:
+        for result in pool.map(_run_seed, work_items):
+            if result is not None:
+                results.append(result)
 
-            # Source E: Party ideological profile
-            party_snippets = fetch_party_snippets(candidate_slug, topic_id)
-            if party_snippets:
-                snippets.extend(party_snippets)
-                sources_used.append("party_profile")
+    # ── Phase 5: Apply results ─────────────────────────────────────────────
+    for result in results:
+        candidate_slug = result["candidate_slug"]
+        topic_id = result["topic_id"]
+        sources_used = result["sources_used"]
+        source_list = ",".join(sources_used)
+        editor_notes = f"SEEDED:{source_list} — requires human review"
 
-            # Source F: Web search snippets
-            if not skip_web_search:
-                web_snippets = fetch_web_snippets(candidate_slug, topic_id)
-                if web_snippets:
-                    snippets.extend(web_snippets[:5])
-                    sources_used.append("web_search")
-
-            # If no snippets from sources A-F, we still call AI with a grounding prompt
-            if not snippets:
-                sources_used.append("ai_synthesis")
-                snippets = []  # Pass empty to let the AI use its training knowledge
-
-            # Source D: AI synthesis
-            try:
-                extracted = extract_candidate_topic_position(
-                    candidate=candidate_slug,
-                    topic_id=topic_id,
-                    topic_label_pt=topic_label_pt,
-                    snippets=snippets[:12],
-                    existing_summary_pt=None,
-                )
-            except Exception as exc:
-                logger.warning(
-                    "AI extraction failed for topic=%s candidate=%s: %s",
-                    topic_id,
-                    candidate_slug,
-                    exc,
-                )
-                continue
-
-            position_type = extracted.get("position_type")
-            stance = extracted.get("stance")
-            if not isinstance(position_type, str) or not isinstance(stance, str):
-                continue
-            if position_type == "unknown" or stance == "unknown":
-                logger.info(
-                    "No clear position for %s/%s (AI returned unknown).",
-                    candidate_slug,
-                    topic_id,
-                )
-                continue
-
-            summary_pt = _normalize_optional_text(extracted.get("summary_pt"))
-            summary_en = _normalize_optional_text(extracted.get("summary_en"))
-            key_actions_raw = extracted.get("key_actions")
-            key_actions = (
-                [
-                    item.strip()
-                    for item in key_actions_raw
-                    if isinstance(item, str) and item.strip()
-                ]
-                if isinstance(key_actions_raw, list)
-                else []
+        # Build sources list for the schema
+        position_sources: list[dict[str, Any]] = []
+        if "wikipedia" in sources_used:
+            wiki_title = CANDIDATE_WIKI_TITLES.get(candidate_slug, "")
+            position_sources.append(
+                {
+                    "type": "news_report",
+                    "url": f"https://pt.wikipedia.org/wiki/{wiki_title}"
+                    if wiki_title
+                    else None,
+                    "description_pt": result["summary_pt"]
+                    or f"Dados da Wikipedia para {candidate_slug}",
+                    "description_en": None,
+                    "date": today,
+                    "article_id": None,
+                }
+            )
+        if "camara_api" in sources_used or "senado_api" in sources_used:
+            position_sources.append(
+                {
+                    "type": "voting_record",
+                    "url": "https://dadosabertos.camara.leg.br"
+                    if "camara_api" in sources_used
+                    else "https://legis.senado.leg.br/dadosabertos",
+                    "description_pt": (
+                        result["summary_pt"]
+                        or f"Registro de votações legislativas para {candidate_slug}"
+                    ),
+                    "description_en": None,
+                    "date": today,
+                    "article_id": None,
+                }
             )
 
-            source_list = ",".join(
-                dict.fromkeys(sources_used)
-            )  # deduplicate, preserve order
-            editor_notes = f"SEEDED:{source_list} — requires human review"
+        if dry_run:
+            print(
+                f"[DRY RUN] Would update {candidate_slug}/{topic_id}:\n"
+                f"  position_type={result['position_type']}\n"
+                f"  stance={result['stance']}\n"
+                f"  summary_pt={result['summary_pt']}\n"
+                f"  summary_en={result['summary_en']}\n"
+                f"  key_actions={result['key_actions']}\n"
+                f"  editor_notes={editor_notes}\n"
+            )
+        else:
+            candidate_payload = (
+                topics[topic_id].get("candidates", {}).get(candidate_slug, {})
+            )
+            candidate_payload["position_type"] = result["position_type"]
+            candidate_payload["stance"] = result["stance"]
+            candidate_payload["summary_pt"] = result["summary_pt"]
+            candidate_payload["summary_en"] = result["summary_en"]
+            candidate_payload["key_actions"] = result["key_actions"]
+            candidate_payload["sources"] = position_sources
+            candidate_payload["last_updated"] = today
+            candidate_payload["editor_notes"] = editor_notes
 
+<<<<<<< Updated upstream
             # Build sources list for the schema
             position_sources: list[dict[str, Any]] = []
             if "wikipedia" in sources_used:
@@ -828,8 +1016,8 @@ def seed_positions(
                 candidate_payload["last_updated"] = today
                 candidate_payload["editor_notes"] = editor_notes
 
-            seeded_count += 1
-            source_log.append(f"{candidate_slug}/{topic_id} ← {source_list}")
+        seeded_count += 1
+        source_log.append(f"{candidate_slug}/{topic_id} ← {source_list}")
 
     if not dry_run and seeded_count > 0:
         # Update top-level metadata
