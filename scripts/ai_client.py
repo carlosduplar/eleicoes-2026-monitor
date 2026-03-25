@@ -12,6 +12,8 @@ import json
 import logging
 import os
 import re
+import threading
+import time
 from datetime import datetime, timezone
 from hashlib import sha256
 from pathlib import Path
@@ -25,8 +27,13 @@ ROOT_DIR = Path(__file__).resolve().parents[1]
 USAGE_FILE = ROOT_DIR / "site" / "public" / "data" / "ai_usage.json"
 
 # In-process circuit breaker: skip providers after this many consecutive failures per run.
+# 429/rate-limit errors are handled with backoff+retry and do NOT immediately trip the breaker.
 _CIRCUIT_BREAKER_THRESHOLD = 3
 _provider_failure_counts: dict[str, int] = {}
+_circuit_breaker_lock = threading.Lock()
+
+# Seconds to sleep before retrying a 429 response from any provider.
+_RATE_LIMIT_RETRY_SLEEP = 12
 
 VALID_TOPICS = {
     "economia",
@@ -376,7 +383,7 @@ def _request_completion(
         url = f"https://aiplatform.googleapis.com/v1/publishers/google/models/{provider['model']}:generateContent"
         data = {
             "contents": [{"role": "user", "parts": [{"text": f"{system}\n\n{user}"}]}],
-            "generationConfig": {"maxOutputTokens": 8192},
+            "generationConfig": {"maxOutputTokens": max_tokens},
         }
         req = urllib.request.Request(
             f"{url}?key={api_key}",
@@ -445,6 +452,46 @@ def _request_completion(
     return _extract_content_from_response(response)
 
 
+def _request_completion_with_retry(
+    provider: ProviderConfig,
+    api_key: str,
+    system: str,
+    user: str,
+    max_tokens: int,
+    *,
+    max_retries: int = 2,
+) -> str:
+    """Call _request_completion with exponential backoff on 429 errors.
+
+    429/rate-limit responses are retried up to *max_retries* times with
+    increasing sleep intervals before re-raising.  All other errors are
+    propagated immediately.
+    """
+    delay = _RATE_LIMIT_RETRY_SLEEP
+    for attempt in range(max_retries + 1):
+        try:
+            return _request_completion(
+                provider=provider,
+                api_key=api_key,
+                system=system,
+                user=user,
+                max_tokens=max_tokens,
+            )
+        except Exception as exc:
+            if _is_rate_limit_error(exc) and attempt < max_retries:
+                logger.info(
+                    "[AI] %s rate limited (429). Retrying in %ds (attempt %d/%d).",
+                    provider.get("name"),
+                    delay,
+                    attempt + 1,
+                    max_retries,
+                )
+                time.sleep(delay)
+                delay *= 2
+            else:
+                raise
+
+
 def _call_with_fallback_for_task(
     system: str,
     user: str,
@@ -474,11 +521,13 @@ def _call_with_fallback_for_task(
             continue
 
         # Circuit breaker: skip providers that have failed too many times this run.
-        if _provider_failure_counts.get(name, 0) >= _CIRCUIT_BREAKER_THRESHOLD:
+        with _circuit_breaker_lock:
+            failure_count = _provider_failure_counts.get(name, 0)
+        if failure_count >= _CIRCUIT_BREAKER_THRESHOLD:
             logger.info(
                 "[AI] %s skipped: circuit breaker open (%d consecutive failures).",
                 name,
-                _provider_failure_counts[name],
+                failure_count,
             )
             continue
 
@@ -493,7 +542,7 @@ def _call_with_fallback_for_task(
                 continue
 
         try:
-            content = _request_completion(
+            content = _request_completion_with_retry(
                 provider=provider,
                 api_key=api_key,
                 system=system,
@@ -501,7 +550,8 @@ def _call_with_fallback_for_task(
                 max_tokens=max_tokens,
             )
             # Success — reset failure counter for this provider.
-            _provider_failure_counts[name] = 0
+            with _circuit_breaker_lock:
+                _provider_failure_counts[name] = 0
             usage_key = f"{name}_{today}"
             usage[usage_key] = usage.get(usage_key, 0) + 1
             _save_usage(usage)
@@ -512,21 +562,21 @@ def _call_with_fallback_for_task(
                 "paid": bool(provider["paid"]),
             }
         except Exception as exc:
-            _provider_failure_counts[name] = _provider_failure_counts.get(name, 0) + 1
             error_messages.append(f"{name}: {exc}")
             if name == "nvidia" and _is_not_found_error(exc):
-                _provider_failure_counts[name] = _CIRCUIT_BREAKER_THRESHOLD
+                with _circuit_breaker_lock:
+                    _provider_failure_counts[name] = _CIRCUIT_BREAKER_THRESHOLD
                 logger.info(
                     "[AI] %s unavailable (404). Opening circuit breaker for this run.",
                     name,
                 )
-            elif _is_rate_limit_error(exc):
-                _provider_failure_counts[name] = _CIRCUIT_BREAKER_THRESHOLD
-                logger.info(
-                    "[AI] %s rate limited (429/quota). Opening circuit breaker for this run.",
-                    name,
-                )
             else:
+                # For all other errors (including persisted 429s after retry), increment
+                # the failure counter normally — do not hard-trip the circuit breaker.
+                with _circuit_breaker_lock:
+                    _provider_failure_counts[name] = (
+                        _provider_failure_counts.get(name, 0) + 1
+                    )
                 logger.warning("[AI] %s failed: %s", name, exc)
                 if name == "mimo":
                     logger.warning(
@@ -914,17 +964,6 @@ def extract_candidate_topic_position(
     existing_summary_pt: str | None = None,
 ) -> dict[str, object]:
     """Extract structured candidate position for candidates_positions.json."""
-    if not snippets:
-        return {
-            "position_type": "unknown",
-            "stance": "unknown",
-            "summary_pt": None,
-            "summary_en": None,
-            "key_actions": [],
-            "source_indices": [],
-            "confidence_reasoning": "No snippets available for this candidate/topic.",
-        }
-
     rendered_snippets = "\n".join(
         f"[{index}] {snippet}" for index, snippet in enumerate(snippets[:12], start=1)
     )
