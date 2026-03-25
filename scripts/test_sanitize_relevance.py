@@ -44,7 +44,7 @@ def test_eleicoes_topic_without_brazil_context_is_irrelevant_post_llm() -> None:
 
 def test_international_election_without_brazil_context_is_filtered() -> None:
     article = _article(
-        topics=["eleicoes", "politica_ext"],
+        topics=["eleicoes", "politica_externa"],
         summaries={
             "pt-BR": "Eleicoes na Francia, extrema-direita sofre derrotas",
             "en-US": "France elections, far-right suffers defeats",

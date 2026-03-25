@@ -379,7 +379,7 @@ QUIZ_TOPICS = [
     {"id":"armas",         "label_pt":"Porte de armas",            "label_en":"Gun rights"},
     {"id":"privatizacao",  "label_pt":"Privatizações",             "label_en":"Privatization"},
     {"id":"previdencia",   "label_pt":"Previdência social",        "label_en":"Social security"},
-    {"id":"politica_ext",  "label_pt":"Política externa",          "label_en":"Foreign policy"},
+    {"id":"politica_externa",  "label_pt":"Política externa",          "label_en":"Foreign policy"},
     {"id":"lgbtq",         "label_pt":"Direitos LGBTQIA+",         "label_en":"LGBTQIA+ rights"},
     {"id":"aborto",        "label_pt":"Aborto e pauta moral",      "label_en":"Abortion & moral issues"},
     {"id":"indigenas",     "label_pt":"Terras indígenas",          "label_en":"Indigenous lands"},
@@ -466,7 +466,7 @@ def select_quiz_topics(all_topics: dict, min_topics=10, max_topics=15) -> list:
     CLUSTERS = {
         "valores": ["armas","aborto","lgbtq","indigenas"],
         "economia": ["economia","privatizacao","impostos","previdencia"],
-        "governanca": ["corrupcao","midia","politica_ext"],
+        "governanca": ["corrupcao","midia","politica_externa"],
         "social": ["saude","educacao","seguranca","meio_ambiente"],
     }
     selected = []

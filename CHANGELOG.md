@@ -19,6 +19,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 - AI provider chain restructured: high-quality tasks (positions_extract, quiz_generate, quiz_extract, quiz_validate) now use Ollama Cloud (Kimi K2.5) -> NVIDIA NIM (MiniMax M2.5) -> Vertex AI. Default tasks use NVIDIA NIM (Nemotron 3 Super) -> Ollama Cloud -> Gemini 3.1 Flash Lite (free tier) -> Vertex AI -> MiMo. Gemini removed from high-quality chains; Vertex remains as paid fallback across all tasks.
 - `scripts/ai_client.py`: default Gemini model updated to `gemini-3.1-flash-lite-preview` for higher free-tier limits.
 - `site/package.json`: updated `vite-ssg` and `@unhead/dom` to resolve dependabot XSS vulnerability alerts.
+- Candidate-position topic taxonomy now removes `eleicoes` and renames foreign policy from `politica_ext` to `politica_externa` across scripts, schemas, and public data.
 
 ### Fixed
 

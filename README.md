@@ -62,6 +62,7 @@ Publication states are explicit in the data: `raw -> validated -> curated`, plus
 - Circuit breaker and per-run AI call limits keep the pipeline running when providers degrade instead of failing closed.
 - Editorial feedback is self-healing: blocked keywords, URLs, sources, and `irrelevant` article IDs are accumulated in `data/editor_feedback.json`.
 - The public quiz only reveals sources in the result view, never during the questions.
+- Public topic IDs use `politica_externa` for foreign policy. `eleicoes` remains an article-level relevance tag, not a candidate-position or quiz topic.
 
 ## Running Locally
 

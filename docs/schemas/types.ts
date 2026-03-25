@@ -29,7 +29,7 @@ export type TopicId =
   | 'armas'
   | 'privatizacao'
   | 'previdencia'
-  | 'politica_ext'
+  | 'politica_externa'
   | 'lgbtq'
   | 'aborto'
   | 'indigenas'

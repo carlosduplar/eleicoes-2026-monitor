@@ -45,7 +45,7 @@ VALID_TOPICS = {
     "armas",
     "privatizacao",
     "previdencia",
-    "politica_ext",
+    "politica_externa",
     "lgbtq",
     "aborto",
     "indigenas",
@@ -383,7 +383,11 @@ def _request_completion(
         url = f"https://aiplatform.googleapis.com/v1/publishers/google/models/{provider['model']}:generateContent"
         data = {
             "contents": [{"role": "user", "parts": [{"text": f"{system}\n\n{user}"}]}],
-            "generationConfig": {"maxOutputTokens": max_tokens},
+            "generationConfig": {
+                "maxOutputTokens": max_tokens,
+                "thinkingConfig": {"thinkingBudget": 0},
+                "responseMimeType": "application/json",
+            },
         }
         req = urllib.request.Request(
             f"{url}?key={api_key}",
@@ -396,7 +400,19 @@ def _request_completion(
             if isinstance(resp_data, list):
                 resp_data = resp_data[0]
             try:
-                return resp_data["candidates"][0]["content"]["parts"][0]["text"]
+                parts = resp_data["candidates"][0]["content"]["parts"]
+                if not isinstance(parts, list):
+                    raise ValueError(f"Unexpected Vertex response format: {resp_data}")
+                chunks: list[str] = []
+                for part in parts:
+                    if not isinstance(part, dict):
+                        continue
+                    text = part.get("text")
+                    if isinstance(text, str) and text:
+                        chunks.append(text)
+                if chunks:
+                    return "".join(chunks).strip()
+                raise ValueError(f"Unexpected Vertex response format: {resp_data}")
             except (KeyError, IndexError) as e:
                 raise ValueError(
                     f"Unexpected Vertex response format: {resp_data}"
@@ -680,6 +696,77 @@ def _parse_json_list(text: str) -> list[object]:
     return parsed
 
 
+def _extract_json_string_field(text: str, field: str) -> str | None:
+    pattern = re.compile(
+        rf'"{re.escape(field)}"\s*:\s*"((?:\\.|[^"\\])*)"',
+        re.IGNORECASE,
+    )
+    match = pattern.search(text)
+    if not match:
+        return None
+    raw_value = match.group(1)
+    try:
+        decoded = json.loads(f'"{raw_value}"')
+    except (json.JSONDecodeError, ValueError):
+        decoded = raw_value
+    cleaned = decoded.strip() if isinstance(decoded, str) else ""
+    return cleaned or None
+
+
+def _recover_partial_candidate_topic_position(text: str) -> dict[str, object] | None:
+    """Recover key fields from truncated/invalid JSON output.
+
+    This parser is intentionally conservative: it only returns a value when both
+    ``position_type`` and ``stance`` are present and valid enums.
+    """
+    if not isinstance(text, str) or not text.strip():
+        return None
+
+    raw_position_type = _extract_json_string_field(text, "position_type") or ""
+    raw_stance = _extract_json_string_field(text, "stance") or ""
+    position_type = raw_position_type.strip().lower()
+    stance = raw_stance.strip().lower()
+    if position_type not in VALID_POSITION_TYPES:
+        return None
+    if stance not in VALID_POSITION_STANCES:
+        return None
+    if position_type == "unknown" or stance == "unknown":
+        return None
+
+    return {
+        "position_type": position_type,
+        "stance": stance,
+        "summary_pt": _extract_json_string_field(text, "summary_pt"),
+        "summary_en": _extract_json_string_field(text, "summary_en"),
+        "key_actions": [],
+        "source_indices": [],
+        "confidence_reasoning": "Recovered from partial model output.",
+    }
+
+
+def _log_json_parse_failure(
+    *,
+    task_name: str,
+    response: ProviderResult,
+    exc: Exception,
+) -> None:
+    provider = response.get("provider", "unknown")
+    model = response.get("model", "unknown")
+    raw_content = response.get("content", "")
+    if isinstance(raw_content, str):
+        preview = raw_content[:500]
+    else:
+        preview = repr(raw_content)[:500]
+    logger.warning(
+        "[AI] %s parse failure (%s/%s): %s",
+        task_name,
+        provider,
+        model,
+        exc,
+    )
+    logger.warning("[AI] %s raw content preview: %r", task_name, preview)
+
+
 def _to_clean_string_list(value: object) -> list[str]:
     if not isinstance(value, list):
         return []
@@ -772,7 +859,7 @@ Retorne JSON:
     "en-US": "summary in 2-3 sentences"
   }},
   "candidates_mentioned": ["nomes exatos"],
-  "topics": ["economia", "seguranca", "saude", "educacao", "meio_ambiente", "corrupcao", "armas", "privatizacao", "previdencia", "politica_ext", "lgbtq", "aborto", "indigenas", "impostos", "midia", "eleicoes"],
+  "topics": ["economia", "seguranca", "saude", "educacao", "meio_ambiente", "corrupcao", "armas", "privatizacao", "previdencia", "politica_externa", "lgbtq", "aborto", "indigenas", "impostos", "midia", "eleicoes"],
   "sentiment_per_candidate": {{"Nome": "positivo|neutro|negativo"}}
 }}"""
 
@@ -806,10 +893,10 @@ Retorne JSON:
             "_language": preferred_language,
         }
     except (json.JSONDecodeError, ValueError, TypeError) as exc:
-        logger.warning("[AI] summarize_article parse failure: %s", exc)
-        logger.warning(
-            "[AI] Raw response content: %r",
-            response["content"][:500] if response.get("content") else None,
+        _log_json_parse_failure(
+            task_name="summarize_article",
+            response=response,
+            exc=exc,
         )
         fallback_summaries = {"pt-BR": title, "en-US": title}
         return {
@@ -998,7 +1085,7 @@ Return JSON:
     response = _call_with_fallback_for_task(
         system=system,
         user=user,
-        max_tokens=700,
+        max_tokens=900,
         task="positions_extract",
     )
 
@@ -1006,9 +1093,43 @@ Return JSON:
     try:
         parsed = _parse_json_dict(response["content"])
     except (json.JSONDecodeError, ValueError, TypeError) as exc:
-        logger.warning("[AI] extract_candidate_topic_position parse failure: %s", exc)
+        logger.info(
+            "[AI] extract_candidate_topic_position parse failure on first attempt: %s. Retrying once.",
+            exc,
+        )
+        retry_user = (
+            f"{user}\n\n"
+            "IMPORTANTE: responda somente com um objeto JSON valido, sem markdown "
+            "e sem texto adicional."
+        )
+        response = _call_with_fallback_for_task(
+            system=system,
+            user=retry_user,
+            max_tokens=900,
+            task="positions_extract",
+        )
+        try:
+            parsed = _parse_json_dict(response["content"])
+        except (json.JSONDecodeError, ValueError, TypeError) as retry_exc:
+            _log_json_parse_failure(
+                task_name="extract_candidate_topic_position",
+                response=response,
+                exc=retry_exc,
+            )
 
     if parsed is None:
+        recovered = _recover_partial_candidate_topic_position(response["content"])
+        if recovered is not None:
+            logger.info(
+                "[AI] extract_candidate_topic_position recovered partial response for %s/%s.",
+                candidate,
+                topic_id,
+            )
+            recovered["_ai_provider"] = response["provider"]
+            recovered["_ai_model"] = response["model"]
+            recovered["_partial_parse"] = True
+            return recovered
+
         return {
             "position_type": "unknown",
             "stance": "unknown",
@@ -1137,7 +1258,11 @@ Return JSON array:
     try:
         parsed_options = _parse_json_list(response["content"])
     except (json.JSONDecodeError, ValueError, TypeError) as exc:
-        logger.warning("[AI] generate_quiz_topic_options parse failure: %s", exc)
+        _log_json_parse_failure(
+            task_name="generate_quiz_topic_options",
+            response=response,
+            exc=exc,
+        )
 
     if parsed_options is None:
         return {
@@ -1238,7 +1363,11 @@ Return JSON:
             "_ai_model": response["model"],
         }
     except (json.JSONDecodeError, ValueError, TypeError) as exc:
-        logger.warning("[AI] validate_quiz_option_quality parse failure: %s", exc)
+        _log_json_parse_failure(
+            task_name="validate_quiz_option_quality",
+            response=response,
+            exc=exc,
+        )
         return {
             "passes_all": False,
             "failures": ["parse_error"],

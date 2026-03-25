@@ -55,7 +55,7 @@ VALID_TOPICS = {
     "armas",
     "privatizacao",
     "previdencia",
-    "politica_ext",
+    "politica_externa",
     "lgbtq",
     "aborto",
     "indigenas",

@@ -41,13 +41,12 @@ QUIZ_TOPICS = [
     "armas",
     "privatizacao",
     "previdencia",
-    "politica_ext",
+    "politica_externa",
     "lgbtq",
     "aborto",
     "indigenas",
     "impostos",
     "midia",
-    "eleicoes",
 ]
 
 STANCE_MAP = {"favor": 2, "neutral": 0, "against": -2, "unclear": None}
@@ -142,7 +141,7 @@ QUESTION_TEMPLATES = {
         "Qual direção deve orientar a política de previdência social?",
         "What direction should guide social security policy?",
     ),
-    "politica_ext": (
+    "politica_externa": (
         "Qual postura internacional o Brasil deve priorizar nos próximos anos?",
         "Which international posture should Brazil prioritize in the coming years?",
     ),
@@ -165,10 +164,6 @@ QUESTION_TEMPLATES = {
     "midia": (
         "Qual deve ser o papel do Estado na regulação de mídia e plataformas digitais?",
         "What should be the State's role in regulating media and digital platforms?",
-    ),
-    "eleicoes": (
-        "Qual mudança deve ser prioridade no sistema eleitoral brasileiro?",
-        "Which change should be prioritized in Brazil's electoral system?",
     ),
 }
 
