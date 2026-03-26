@@ -5,6 +5,7 @@ from __future__ import annotations
 import json
 import logging
 import re
+from hashlib import sha256
 from datetime import datetime, timezone
 from pathlib import Path
 
@@ -51,6 +52,12 @@ BANNED_NAME_TERMS = (
     "eduardo leite",
     "aldo rebelo",
     "renan santos",
+)
+BANNED_OPTION_OPENINGS_PT = (
+    "o governo deveria adotar uma política pública clara e estável em que",
+)
+BANNED_OPTION_OPENINGS_EN = (
+    "the government should adopt a clear and stable public policy in which",
 )
 
 QUESTION_TEMPLATES = {
@@ -228,13 +235,27 @@ def _normalize_word_count(text: str) -> int:
 def _looks_like_first_person_position(text_pt: str) -> bool:
     starters = (
         "o governo",
+        "o estado",
         "acredito que",
+        "eu acredito que",
         "a prioridade",
         "é fundamental",
         "e fundamental",
         "defendo que",
+        "eu defendo",
+        "sou favorável",
+        "sou favoravel",
+        "sou contra",
+        "considero que",
+        "entendo que",
+        "prefiro que",
+        "quero que",
+        "na minha visão",
+        "na minha visao",
+        "não apoio que",
+        "na pauta de",
     )
-    normalized = text_pt.strip().lower()
+    normalized = re.sub(r"\s+", " ", text_pt.strip().lower())
     return any(normalized.startswith(prefix) for prefix in starters)
 
 
@@ -250,9 +271,16 @@ def _contains_banned_terms(text: str, banned_terms: tuple[str, ...]) -> bool:
     return False
 
 
+def _normalize_option_fingerprint(text: str) -> str:
+    normalized = re.sub(r"\s+", " ", text.strip().lower())
+    return re.sub(r"[^\w\s]", "", normalized, flags=re.UNICODE)
+
+
 def _local_quality_check(text_pt: str, text_en: str) -> tuple[bool, list[str]]:
     failures: list[str] = []
     word_count = _normalize_word_count(text_pt)
+    normalized_pt = re.sub(r"\s+", " ", text_pt.strip().lower())
+    normalized_en = re.sub(r"\s+", " ", text_en.strip().lower())
     if word_count < 15 or word_count > 80:
         failures.append("length")
     if not _looks_like_first_person_position(text_pt):
@@ -263,6 +291,10 @@ def _local_quality_check(text_pt: str, text_en: str) -> tuple[bool, list[str]]:
         failures.append("candidate_reference")
     if _contains_banned_terms(text_pt, BANNED_EVENT_TERMS):
         failures.append("news_event")
+    if any(normalized_pt.startswith(prefix) for prefix in BANNED_OPTION_OPENINGS_PT):
+        failures.append("boilerplate")
+    if any(normalized_en.startswith(prefix) for prefix in BANNED_OPTION_OPENINGS_EN):
+        failures.append("boilerplate")
     return (len(failures) == 0, failures)
 
 
@@ -282,15 +314,176 @@ _STANCE_FALLBACK_EN = {
 }
 
 
+def _sanitize_fallback_fragment(
+    value: str, *, min_words: int = 4, max_words: int = 22
+) -> str | None:
+    cleaned = value.strip()
+    if not cleaned:
+        return None
+    cleaned = re.sub(r"\s+", " ", cleaned)
+    for term in BANNED_NAME_TERMS:
+        cleaned = re.sub(rf"\b{re.escape(term)}\b", "", cleaned, flags=re.IGNORECASE)
+    for term in BANNED_EVENT_TERMS:
+        cleaned = re.sub(rf"\b{re.escape(term)}\b", "", cleaned, flags=re.IGNORECASE)
+    cleaned = re.sub(r"\s{2,}", " ", cleaned).strip(" ,.;:-")
+    word_count = _normalize_word_count(cleaned)
+    if word_count < min_words or word_count > max_words:
+        return None
+    return cleaned
+
+
+def _extract_summary_hint(summary: str) -> str | None:
+    sentence = re.split(r"[.!?;:]", summary.strip(), maxsplit=1)[0]
+    return _sanitize_fallback_fragment(sentence, min_words=5, max_words=20)
+
+
+def _extract_action_hint(key_actions: list[object]) -> str | None:
+    for action in key_actions:
+        if not isinstance(action, str):
+            continue
+        cleaned = _sanitize_fallback_fragment(action, min_words=4, max_words=16)
+        if cleaned:
+            return cleaned
+    return None
+
+
+def _truncate_words(text: str, max_words: int = 80) -> str:
+    chunks = [chunk for chunk in re.split(r"\s+", text.strip()) if chunk]
+    if len(chunks) <= max_words:
+        return text.strip()
+    clipped = " ".join(chunks[:max_words]).rstrip(",;")
+    if clipped and clipped[-1] not in ".!?":
+        clipped += "."
+    return clipped
+
+
 def _fallback_option_text(
-    summary_pt: str, summary_en: str, stance: str = "neutral"
+    *,
+    topic_id: str,
+    topic_label_pt: str,
+    topic_label_en: str,
+    candidate_slug: str,
+    summary_pt: str,
+    summary_en: str,
+    key_actions: list[object],
+    stance: str = "neutral",
+    variant_offset: int = 0,
 ) -> tuple[str, str]:
+    pt_intros = {
+        "strongly_favor": [
+            "Defendo fortemente que",
+            "Acredito que é prioridade que",
+            "Quero que",
+            "Sou favorável a que",
+        ],
+        "favor": [
+            "Defendo que",
+            "Acredito que",
+            "Considero melhor que",
+            "Sou favorável a que",
+        ],
+        "neutral": [
+            "Entendo que",
+            "Considero adequado que",
+            "Acredito que",
+            "Na minha visão, é melhor que",
+        ],
+        "against": [
+            "Sou contra que",
+            "Não apoio que",
+            "Prefiro evitar que",
+            "Entendo que é melhor evitar que",
+        ],
+        "strongly_against": [
+            "Sou totalmente contra que",
+            "Rejeito que",
+            "Não aceito que",
+            "Sou firmemente contra que",
+        ],
+    }
+    en_intros = {
+        "strongly_favor": [
+            "I strongly believe that",
+            "I see it as a priority that",
+            "I want the government to",
+            "I clearly support the idea that",
+        ],
+        "favor": [
+            "I believe that",
+            "I support the idea that",
+            "I consider it better that",
+            "I am in favor of the government",
+        ],
+        "neutral": [
+            "I see it as better that",
+            "I believe that",
+            "I consider it appropriate that",
+            "In my view, it is better that",
+        ],
+        "against": [
+            "I oppose the idea that",
+            "I do not support the idea that",
+            "I prefer to avoid a policy where",
+            "I consider it better to avoid a policy where",
+        ],
+        "strongly_against": [
+            "I strongly oppose the idea that",
+            "I reject a policy where",
+            "I firmly oppose any approach where",
+            "I do not accept a policy where",
+        ],
+    }
+    pt_core = {
+        "strongly_favor": "o governo avance com mudanças ambiciosas e instrumentos claros de implementação",
+        "favor": "o governo avance com reformas graduais e metas públicas verificáveis",
+        "neutral": "o governo mantenha equilíbrio entre custos, resultados e impacto social antes de ampliar mudanças",
+        "against": "o governo evite mudanças bruscas e preserve regras estáveis com monitoramento de resultados",
+        "strongly_against": "o governo barre expansões de intervenção e mantenha limites rígidos na política pública",
+    }
+    en_core = {
+        "strongly_favor": "the government should move forward with ambitious reforms and clear implementation tools",
+        "favor": "the government should move forward with gradual reforms and publicly verifiable targets",
+        "neutral": "the government should balance costs, outcomes, and social impact before expanding reforms",
+        "against": "the government should avoid abrupt changes and preserve stable rules with outcome tracking",
+        "strongly_against": "the government should block further intervention expansion and keep strict policy limits",
+    }
+
+    stance_key = stance if stance in STANCE_TO_WEIGHT else "neutral"
+    seed_raw = f"{topic_id}:{candidate_slug}:{stance_key}:{variant_offset}"
+    seed = int(sha256(seed_raw.encode("utf-8")).hexdigest()[:8], 16)
+    intro_index = seed % len(pt_intros[stance_key])
+
+    topic_pt = topic_label_pt.strip().lower() or topic_id.replace("_", " ")
+    topic_en = topic_label_en.strip().lower() or topic_id.replace("_", " ")
+    summary_hint_pt = _extract_summary_hint(summary_pt)
+    summary_hint_en = _extract_summary_hint(summary_en)
+    action_hint_pt = _extract_action_hint(key_actions)
+
+    text_pt = (
+        f"{pt_intros[stance_key][intro_index]} na pauta de {topic_pt}, "
+        f"{pt_core[stance_key]}, com metas transparentes e revisão periódica."
+    )
+    if summary_hint_pt:
+        text_pt += f" Isso inclui {summary_hint_pt.lower()}."
+    if action_hint_pt:
+        text_pt += f" Também é essencial {action_hint_pt.lower()}."
+    text_pt = _truncate_words(text_pt, max_words=80)
+
+    text_en = (
+        f"{en_intros[stance_key][intro_index]} on {topic_en}, "
+        f"{en_core[stance_key]}, with transparent targets and periodic review."
+    )
+    if summary_hint_en:
+        text_en += f" This includes {summary_hint_en.lower()}."
+    text_en = _truncate_words(text_en, max_words=80)
+
     pt_desc = _STANCE_FALLBACK_PT.get(stance, _STANCE_FALLBACK_PT["neutral"])
     en_desc = _STANCE_FALLBACK_EN.get(stance, _STANCE_FALLBACK_EN["neutral"])
-    return (
-        f"O governo deveria adotar uma política pública clara e estável em que {pt_desc}, com metas transparentes e revisão periódica.",
-        f"The government should adopt a clear and stable public policy in which {en_desc}, with transparent goals and periodic review.",
-    )
+    if _normalize_word_count(text_pt) < 15:
+        text_pt = f"Acredito que {pt_desc} na pauta de {topic_pt}, com metas transparentes e revisão periódica."
+    if _normalize_word_count(text_en) < 15:
+        text_en = f"I believe the policy for {topic_en} should {en_desc}, with transparent goals and periodic review."
+    return text_pt, text_en
 
 
 def _best_source(
@@ -336,6 +529,8 @@ def build_topic_options(
     }
     options: list[dict[str, object]] = []
     used_candidates: set[str] = set()
+    used_text_pt: set[str] = set()
+    used_text_en: set[str] = set()
 
     for generated in generated_options:
         if not isinstance(generated, dict):
@@ -370,6 +565,17 @@ def build_topic_options(
         weight = generated.get("weight")
         if not isinstance(weight, int) or weight not in {-3, -2, 0, 2, 3}:
             weight = STANCE_TO_WEIGHT[str(stance)]
+        summary_pt = (
+            _normalize_text(mapped_position.get("summary_pt"))
+            or "a política pública deve ser clara e previsível"
+        )
+        summary_en = (
+            _normalize_text(mapped_position.get("summary_en"))
+            or "public policy should be clear and predictable"
+        )
+        key_actions = mapped_position.get("key_actions")
+        if not isinstance(key_actions, list):
+            key_actions = []
 
         local_pass, local_failures = _local_quality_check(text_pt, text_en)
         ai_pass = False
@@ -382,24 +588,76 @@ def build_topic_options(
             )
             ai_pass = bool(validation.get("passes_all"))
         if not local_pass or not ai_pass:
-            summary_pt = (
-                _normalize_text(mapped_position.get("summary_pt"))
-                or "a política pública deve ser clara e previsível"
-            )
-            summary_en = (
-                _normalize_text(mapped_position.get("summary_en"))
-                or "public policy should be clear and predictable"
-            )
-            text_pt, text_en = _fallback_option_text(
-                summary_pt, summary_en, str(stance)
-            )
-            local_pass, local_failures = _local_quality_check(text_pt, text_en)
-            if not local_pass:
+            fallback_selected = False
+            for variant_offset in range(8):
+                fallback_pt, fallback_en = _fallback_option_text(
+                    topic_id=topic_id,
+                    topic_label_pt=topic_label_pt,
+                    topic_label_en=topic_label_en,
+                    candidate_slug=candidate_slug,
+                    summary_pt=summary_pt,
+                    summary_en=summary_en,
+                    key_actions=key_actions,
+                    stance=str(stance),
+                    variant_offset=variant_offset,
+                )
+                local_pass, local_failures = _local_quality_check(
+                    fallback_pt, fallback_en
+                )
+                if not local_pass:
+                    continue
+                fp_pt = _normalize_option_fingerprint(fallback_pt)
+                fp_en = _normalize_option_fingerprint(fallback_en)
+                if fp_pt in used_text_pt or fp_en in used_text_en:
+                    continue
+                text_pt, text_en = fallback_pt, fallback_en
+                fallback_selected = True
+                break
+            if not fallback_selected:
                 logger.warning(
-                    "Fallback option failed local quality checks for topic=%s candidate=%s failures=%s",
+                    "Fallback option failed quality or uniqueness checks for topic=%s candidate=%s failures=%s",
                     topic_id,
                     candidate_slug,
                     ",".join(local_failures),
+                )
+                continue
+
+        fingerprint_pt = _normalize_option_fingerprint(text_pt)
+        fingerprint_en = _normalize_option_fingerprint(text_en)
+        if fingerprint_pt in used_text_pt or fingerprint_en in used_text_en:
+            diversified = False
+            for variant_offset in range(8, 16):
+                diversified_pt, diversified_en = _fallback_option_text(
+                    topic_id=topic_id,
+                    topic_label_pt=topic_label_pt,
+                    topic_label_en=topic_label_en,
+                    candidate_slug=candidate_slug,
+                    summary_pt=summary_pt,
+                    summary_en=summary_en,
+                    key_actions=key_actions,
+                    stance=str(stance),
+                    variant_offset=variant_offset,
+                )
+                diversified_local_pass, _ = _local_quality_check(
+                    diversified_pt, diversified_en
+                )
+                diversified_fp_pt = _normalize_option_fingerprint(diversified_pt)
+                diversified_fp_en = _normalize_option_fingerprint(diversified_en)
+                if (
+                    diversified_local_pass
+                    and diversified_fp_pt not in used_text_pt
+                    and diversified_fp_en not in used_text_en
+                ):
+                    text_pt, text_en = diversified_pt, diversified_en
+                    fingerprint_pt = diversified_fp_pt
+                    fingerprint_en = diversified_fp_en
+                    diversified = True
+                    break
+            if not diversified:
+                logger.info(
+                    "Skipping duplicated quiz option for topic=%s candidate=%s",
+                    topic_id,
+                    candidate_slug,
                 )
                 continue
 
@@ -422,6 +680,8 @@ def build_topic_options(
             }
         )
         used_candidates.add(candidate_slug)
+        used_text_pt.add(fingerprint_pt)
+        used_text_en.add(fingerprint_en)
         if len(options) == len(OPTION_IDS):
             break
 

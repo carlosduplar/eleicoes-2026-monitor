@@ -1211,6 +1211,7 @@ def generate_quiz_topic_options(
     """Generate first-person quiz options for a topic from known positions."""
     if not known_positions:
         return {"options": [], "_parse_error": False}
+    expected_options = min(6, len(known_positions))
 
     position_lines: list[str] = []
     for index, position in enumerate(known_positions, start=1):
@@ -1247,7 +1248,11 @@ Rules:
 3) Opções em primeira pessoa (ex.: "O governo deveria...", "Acredito que...").
 4) PT-BR com diacríticos corretos.
 5) Cada opção deve ser distinta e corresponder a uma posição.
-6) Gere no máximo 6 opções.
+6) Cada opção deve conter pelo menos uma medida concreta de política pública (ação, regra, investimento, fiscalização, incentivo ou restrição).
+7) Proibido usar a abertura literal: "O governo deveria adotar uma política pública clara e estável em que".
+8) Não repetir estrutura de frase entre opções; varie a formulação inicial e o verbo principal.
+9) mapped_position não pode se repetir.
+10) Gere exatamente {expected_options} opções.
 
 Return JSON array:
 [
