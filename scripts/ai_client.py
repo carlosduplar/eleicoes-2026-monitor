@@ -158,6 +158,13 @@ def _provider_chain_for_task(task: str) -> list[ProviderConfig]:
                 "paid": True,
             },
             {
+                "name": "ollama",
+                "base_url": "https://ollama.com/v1",
+                "key_env": "OLLAMA_API_KEY",
+                "model": "minimax-m2.7:cloud",
+                "paid": False,
+            },
+            {
                 "name": "nvidia",
                 "base_url": "https://integrate.api.nvidia.com/v1",
                 "key_env": "NVIDIA_API_KEY",
@@ -174,6 +181,13 @@ def _provider_chain_for_task(task: str) -> list[ProviderConfig]:
                 "key_env": "VERTEX_API_KEY",
                 "model": _get_vertex_model(task),
                 "paid": True,
+            },
+            {
+                "name": "ollama",
+                "base_url": "https://ollama.com/v1",
+                "key_env": "OLLAMA_API_KEY",
+                "model": "minimax-m2.7:cloud",
+                "paid": False,
             },
             {
                 "name": "nvidia",
