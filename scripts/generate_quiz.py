@@ -266,18 +266,30 @@ def _local_quality_check(text_pt: str, text_en: str) -> tuple[bool, list[str]]:
     return (len(failures) == 0, failures)
 
 
-def _fallback_option_text(summary_pt: str, summary_en: str) -> tuple[str, str]:
-    pt_summary = summary_pt.rstrip(".")
-    en_summary = summary_en.rstrip(".")
+_STANCE_FALLBACK_PT = {
+    "strongly_favor": "defende uma mudança progressista e ampla, priorizando direitos e expansão de políticas públicas",
+    "favor": "apoia reformas moderadas com foco em modernização e melhoria gradual do cenário atual",
+    "neutral": "busca um equilíbrio pragmático, avaliando prós e contras antes de avançar com reformas",
+    "against": "prefere manter a estabilidade institucional, evitando mudanças radicais no cenário atual",
+    "strongly_against": "defende firmemente a preservação do status quo, resistindo a propostas de liberalização",
+}
+_STANCE_FALLBACK_EN = {
+    "strongly_favor": "advocates for broad progressive change, prioritizing rights and expansion of public policies",
+    "favor": "supports moderate reforms focused on modernization and gradual improvement of the current landscape",
+    "neutral": "seeks a pragmatic balance, weighing pros and cons before advancing reforms",
+    "against": "prefers to maintain institutional stability, avoiding radical changes to the current landscape",
+    "strongly_against": "firmly defends preserving the status quo, resisting liberalization proposals",
+}
+
+
+def _fallback_option_text(
+    summary_pt: str, summary_en: str, stance: str = "neutral"
+) -> tuple[str, str]:
+    pt_desc = _STANCE_FALLBACK_PT.get(stance, _STANCE_FALLBACK_PT["neutral"])
+    en_desc = _STANCE_FALLBACK_EN.get(stance, _STANCE_FALLBACK_EN["neutral"])
     return (
-        (
-            "O governo deveria adotar uma política pública clara e estável em que "
-            f"{pt_summary.lower()}, com metas transparentes e revisão periódica."
-        ),
-        (
-            "The government should adopt a clear and stable public policy in which "
-            f"{en_summary.lower()}, with transparent goals and periodic review."
-        ),
+        f"O governo deveria adotar uma política pública clara e estável em que {pt_desc}, com metas transparentes e revisão periódica.",
+        f"The government should adopt a clear and stable public policy in which {en_desc}, with transparent goals and periodic review.",
     )
 
 
@@ -378,7 +390,9 @@ def build_topic_options(
                 _normalize_text(mapped_position.get("summary_en"))
                 or "public policy should be clear and predictable"
             )
-            text_pt, text_en = _fallback_option_text(summary_pt, summary_en)
+            text_pt, text_en = _fallback_option_text(
+                summary_pt, summary_en, str(stance)
+            )
             local_pass, local_failures = _local_quality_check(text_pt, text_en)
             if not local_pass:
                 logger.warning(
@@ -401,8 +415,8 @@ def build_topic_options(
                 "candidate_slug": candidate_slug,
                 "position_type": position_type,
                 "confidence": confidence,
-                "source_pt": source_pt,
-                "source_en": source_en,
+                "source_pt": source_pt or "",
+                "source_en": source_en or "",
                 "source_url": source_url,
                 "source_date": source_date,
             }
