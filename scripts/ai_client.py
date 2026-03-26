@@ -158,13 +158,6 @@ def _provider_chain_for_task(task: str) -> list[ProviderConfig]:
                 "paid": True,
             },
             {
-                "name": "ollama",
-                "base_url": "https://ollama.com/v1",
-                "key_env": "OLLAMA_API_KEY",
-                "model": "kimi-k2.5:cloud",
-                "paid": False,
-            },
-            {
                 "name": "nvidia",
                 "base_url": "https://integrate.api.nvidia.com/v1",
                 "key_env": "NVIDIA_API_KEY",
@@ -176,11 +169,11 @@ def _provider_chain_for_task(task: str) -> list[ProviderConfig]:
     if task == "quiz_validate":
         return [
             {
-                "name": "ollama",
-                "base_url": "https://ollama.com/v1",
-                "key_env": "OLLAMA_API_KEY",
-                "model": "kimi-k2.5:cloud",
-                "paid": False,
+                "name": "vertex",
+                "base_url": "VERTEX_BASE_URL",
+                "key_env": "VERTEX_API_KEY",
+                "model": _get_vertex_model(task),
+                "paid": True,
             },
             {
                 "name": "nvidia",
@@ -188,13 +181,6 @@ def _provider_chain_for_task(task: str) -> list[ProviderConfig]:
                 "key_env": "NVIDIA_API_KEY",
                 "model": "minimaxai/minimax-m2.5",
                 "paid": False,
-            },
-            {
-                "name": "vertex",
-                "base_url": "VERTEX_BASE_URL",
-                "key_env": "VERTEX_API_KEY",
-                "model": _get_vertex_model(task),
-                "paid": True,
             },
         ]
 
@@ -300,16 +286,18 @@ def _extract_content_from_response(response: object) -> str:
                 ).strip()
                 if stripped:
                     return stripped
+                json_block = _extract_last_json_block(cleaned)
+                if json_block:
+                    logger.warning(
+                        "[AI] Extracted JSON block from <think> content (no final answer)"
+                    )
+                    return json_block
                 logger.warning(
                     "[AI] Provider returned only <think> content with no final answer; "
                     "checking reasoning_content"
                 )
             else:
                 return cleaned
-        else:
-            logger.warning(
-                "[AI] Provider returned empty string content, checking reasoning_content"
-            )
 
     if isinstance(content, list):
         # Handle content blocks from thinking/multimodal models.
@@ -395,28 +383,36 @@ def _request_completion(
             headers={"Content-Type": "application/json"},
             method="POST",
         )
-        with urllib.request.urlopen(req) as response:
-            resp_data = json.loads(response.read().decode("utf-8"))
-            if isinstance(resp_data, list):
-                resp_data = resp_data[0]
-            try:
-                parts = resp_data["candidates"][0]["content"]["parts"]
-                if not isinstance(parts, list):
-                    raise ValueError(f"Unexpected Vertex response format: {resp_data}")
-                chunks: list[str] = []
-                for part in parts:
-                    if not isinstance(part, dict):
-                        continue
-                    text = part.get("text")
-                    if isinstance(text, str) and text:
-                        chunks.append(text)
-                if chunks:
-                    return "".join(chunks).strip()
+        logger.info(
+            "[AI] vertex request: model=%s, prompt_len=%d, max_tokens=%d",
+            provider["model"],
+            len(f"{system}\n\n{user}"),
+            max_tokens,
+        )
+        try:
+            with urllib.request.urlopen(req, timeout=60) as response:
+                resp_data = json.loads(response.read().decode("utf-8"))
+        except Exception as exc:
+            logger.warning("[AI] vertex HTTP error: %s", exc)
+            raise
+        if isinstance(resp_data, list):
+            resp_data = resp_data[0]
+        try:
+            parts = resp_data["candidates"][0]["content"]["parts"]
+            if not isinstance(parts, list):
                 raise ValueError(f"Unexpected Vertex response format: {resp_data}")
-            except (KeyError, IndexError) as e:
-                raise ValueError(
-                    f"Unexpected Vertex response format: {resp_data}"
-                ) from e
+            chunks: list[str] = []
+            for part in parts:
+                if not isinstance(part, dict):
+                    continue
+                text = part.get("text")
+                if isinstance(text, str) and text:
+                    chunks.append(text)
+            if chunks:
+                return "".join(chunks).strip()
+            raise ValueError(f"Unexpected Vertex response format: {resp_data}")
+        except (KeyError, IndexError) as e:
+            raise ValueError(f"Unexpected Vertex response format: {resp_data}") from e
 
     client_kwargs: dict[str, object] = {
         "api_key": api_key,
@@ -452,6 +448,8 @@ def _request_completion(
         disable_body = _THINKING_DISABLE_EXTRA_BODY.get(provider.get("model", ""))
         if disable_body:
             kwargs["extra_body"] = disable_body
+    elif provider.get("name") == "ollama":
+        kwargs["extra_body"] = {"think": False}
     elif provider.get("name") == "mimo":
         kwargs["extra_body"] = {"thinking": {"type": "disabled"}}
 

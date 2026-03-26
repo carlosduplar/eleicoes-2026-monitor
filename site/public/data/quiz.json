@@ -1,5 +1,955 @@
 {
-  "generated_at": null,
-  "ordered_topics": [],
-  "topics": {}
+  "schema_version": "2.0.0",
+  "generated_at": "2026-03-26T08:40:54Z",
+  "knowledge_base_version": "2026-03-25T11:26:56Z",
+  "generator_model": "vertex:gemini-3.1-pro-preview",
+  "ordered_topics": [
+    "meio_ambiente",
+    "impostos",
+    "midia",
+    "lgbtq",
+    "armas",
+    "indigenas",
+    "previdencia",
+    "educacao",
+    "seguranca",
+    "aborto",
+    "corrupcao"
+  ],
+  "topics": {
+    "meio_ambiente": {
+      "topic_label_pt": "Meio Ambiente",
+      "topic_label_en": "Environment",
+      "divergence_score": 0.8333333333333334,
+      "question_pt": "Como o Brasil deve equilibrar desenvolvimento econômico e proteção ambiental?",
+      "question_en": "How should Brazil balance economic development and environmental protection?",
+      "generation_quality": {
+        "validated": true,
+        "validator_model": "nvidia:moonshotai/kimi-k2.5",
+        "validation_date": "2026-03-26T08:38:21Z"
+      },
+      "options": [
+        {
+          "id": "opt_a",
+          "text_pt": "Acredito que o Brasil precisa fortalecer os órgãos fiscalizadores e retomar fundos de proteção ambiental, combatendo ativamente o desmatamento.",
+          "text_en": "I believe Brazil needs to strengthen its oversight agencies and reinstate environmental protection funds, actively combating deforestation.",
+          "weight": 3,
+          "candidate_slug": "lula",
+          "position_type": "confirmed",
+          "confidence": "high",
+          "source_pt": "Lula defende o meio ambiente através do fortalecimento de órgãos fiscalizadores, da reativação do Fundo Amazônia e do combate ativo ao desmatamento. Durante seu governo, houve uma redução de mais de 50% no desmatamento na Amazônia e o país sediou a COP30.",
+          "source_en": "",
+          "source_url": "https://pt.wikipedia.org/wiki/Luiz_Inácio_Lula_da_Silva",
+          "source_date": "2026-03-25"
+        },
+        {
+          "id": "opt_b",
+          "text_pt": "O governo deveria adotar uma política pública clara e estável em que apoia reformas moderadas com foco em modernização e melhoria gradual do cenário atual, com metas transparentes e revisão periódica.",
+          "text_en": "The government should adopt a clear and stable public policy in which supports moderate reforms focused on modernization and gradual improvement of the current landscape, with transparent goals and periodic review.",
+          "weight": 2,
+          "candidate_slug": "eduardo-leite",
+          "position_type": "inferred",
+          "confidence": "medium",
+          "source_pt": "O partido de Eduardo Leite, o PSDB, defende a adoção de políticas ambientais responsáveis e de uma agenda climática.",
+          "source_en": "",
+          "source_url": null,
+          "source_date": "2026-03-25"
+        },
+        {
+          "id": "opt_c",
+          "text_pt": "O governo deveria adotar uma política pública clara e estável em que busca um equilíbrio pragmático, avaliando prós e contras antes de avançar com reformas, com metas transparentes e revisão periódica.",
+          "text_en": "The government should adopt a clear and stable public policy in which seeks a pragmatic balance, weighing pros and cons before advancing reforms, with transparent goals and periodic review.",
+          "weight": 0,
+          "candidate_slug": "zema",
+          "position_type": "inferred",
+          "confidence": "medium",
+          "source_pt": "Defende um equilíbrio entre a preservação ambiental e o desenvolvimento econômico, criticando o excesso de regulações na área.",
+          "source_en": "",
+          "source_url": "https://pt.wikipedia.org/wiki/Romeu_Zema",
+          "source_date": "2026-03-25"
+        },
+        {
+          "id": "opt_d",
+          "text_pt": "O governo deveria adotar uma política pública clara e estável em que busca um equilíbrio pragmático, avaliando prós e contras antes de avançar com reformas, com metas transparentes e revisão periódica.",
+          "text_en": "The government should adopt a clear and stable public policy in which seeks a pragmatic balance, weighing pros and cons before advancing reforms, with transparent goals and periodic review.",
+          "weight": 0,
+          "candidate_slug": "renan-santos",
+          "position_type": "inferred",
+          "confidence": "medium",
+          "source_pt": "Renan Santos e o MBL frequentemente criticam o ativismo ambiental politizado, enfatizando a importância do desenvolvimento econômico. Eles argumentam que políticas ambientais excessivamente rígidas podem impedir o progresso econômico.",
+          "source_en": "",
+          "source_url": null,
+          "source_date": "2026-03-25"
+        },
+        {
+          "id": "opt_e",
+          "text_pt": "O governo deveria adotar uma política pública clara e estável em que prefere manter a estabilidade institucional, evitando mudanças radicais no cenário atual, com metas transparentes e revisão periódica.",
+          "text_en": "The government should adopt a clear and stable public policy in which prefers to maintain institutional stability, avoiding radical changes to the current landscape, with transparent goals and periodic review.",
+          "weight": -2,
+          "candidate_slug": "tarcisio",
+          "position_type": "confirmed",
+          "confidence": "high",
+          "source_pt": "Tarcísio é crítico do licenciamento ambiental e defende a revisão das restrições ao desmatamento. Além disso, propôs corte de verba para o combate às queimadas em São Paulo para o ano de 2025.",
+          "source_en": "",
+          "source_url": "https://pt.wikipedia.org/wiki/Tarcísio_de_Freitas",
+          "source_date": "2026-03-25"
+        },
+        {
+          "id": "opt_f",
+          "text_pt": "O governo deveria adotar uma política pública clara e estável em que defende firmemente a preservação do status quo, resistindo a propostas de liberalização, com metas transparentes e revisão periódica.",
+          "text_en": "The government should adopt a clear and stable public policy in which firmly defends preserving the status quo, resisting liberalization proposals, with transparent goals and periodic review.",
+          "weight": -3,
+          "candidate_slug": "caiado",
+          "position_type": "inferred",
+          "confidence": "medium",
+          "source_pt": "Como governador, Ronaldo Caiado promulgou uma lei que autoriza a extração e o beneficiamento de amianto para exportação, uma prática alvo de questionamentos judiciais devido aos impactos ambientais e de saúde. Além disso, seu partido mantém uma postura crítica a restrições ambientais que considera excessivas.",
+          "source_en": "",
+          "source_url": "https://pt.wikipedia.org/wiki/Ronaldo_Caiado",
+          "source_date": "2026-03-25"
+        }
+      ]
+    },
+    "impostos": {
+      "topic_label_pt": "Impostos",
+      "topic_label_en": "Taxes",
+      "divergence_score": 0.8333333333333334,
+      "question_pt": "Qual abordagem tributária deve orientar a política fiscal brasileira?",
+      "question_en": "Which tax approach should guide Brazilian fiscal policy?",
+      "generation_quality": {
+        "validated": true,
+        "validator_model": "nvidia:moonshotai/kimi-k2.5",
+        "validation_date": "2026-03-26T08:38:39Z"
+      },
+      "options": [
+        {
+          "id": "opt_a",
+          "text_pt": "Acredito que o Brasil precisa de uma tributação progressiva mais agressiva e impostos sobre grandes fortunas para combater a desigualdade social.",
+          "text_en": "I believe Brazil needs a more aggressive progressive taxation and taxes on large fortunes to combat social inequality.",
+          "weight": 2,
+          "candidate_slug": "lula",
+          "position_type": "inferred",
+          "confidence": "medium",
+          "source_pt": "O candidato, filiado ao PT, está associado à defesa da progressividade fiscal e da tributação de grandes fortunas.",
+          "source_en": "",
+          "source_url": "https://pt.wikipedia.org/wiki/Luiz_Inácio_Lula_da_Silva",
+          "source_date": "2026-03-25"
+        },
+        {
+          "id": "opt_b",
+          "text_pt": "Defendo que o foco principal deve ser a desoneração tributária e a redução drástica da burocracia para estimular o crescimento econômico.",
+          "text_en": "I argue that the main focus should be tax relief and a drastic reduction in bureaucracy to stimulate economic growth.",
+          "weight": 2,
+          "candidate_slug": "tarcisio",
+          "position_type": "inferred",
+          "confidence": "medium",
+          "source_pt": "Tarcísio é afiliado ao partido Republicanos, cujo programa defende desonerações tributárias e a redução da burocracia fiscal, sugerindo uma postura favorável a essas pautas.",
+          "source_en": "",
+          "source_url": "https://pt.wikipedia.org/wiki/Tarcísio_de_Freitas",
+          "source_date": "2026-03-25"
+        },
+        {
+          "id": "opt_c",
+          "text_pt": "O governo deveria adotar uma política pública clara e estável em que defende firmemente a preservação do status quo, resistindo a propostas de liberalização, com metas transparentes e revisão periódica.",
+          "text_en": "The government should adopt a clear and stable public policy in which firmly defends preserving the status quo, resisting liberalization proposals, with transparent goals and periodic review.",
+          "weight": -3,
+          "candidate_slug": "zema",
+          "position_type": "inferred",
+          "confidence": "medium",
+          "source_pt": "Alinhado à plataforma do Partido Novo, Zema defende uma redução drástica da carga tributária e do tamanho do Estado.",
+          "source_en": "",
+          "source_url": "https://pt.wikipedia.org/wiki/Romeu_Zema",
+          "source_date": "2026-03-25"
+        },
+        {
+          "id": "opt_d",
+          "text_pt": "Acredito que a prioridade deve ser uma reforma tributária abrangente focada na racionalidade, na simplificação e na facilitação dos negócios.",
+          "text_en": "I believe the priority must be a comprehensive tax reform focused on rationality, simplification, and facilitating business.",
+          "weight": 2,
+          "candidate_slug": "eduardo-leite",
+          "position_type": "inferred",
+          "confidence": "medium",
+          "source_pt": "Como membro do PSDB, Eduardo Leite provavelmente apoia a reforma tributária, com foco na simplificação e na racionalidade fiscal.",
+          "source_en": "",
+          "source_url": null,
+          "source_date": "2026-03-25"
+        }
+      ]
+    },
+    "midia": {
+      "topic_label_pt": "Regulação de Mídia",
+      "topic_label_en": "Media Regulation",
+      "divergence_score": 0.8333333333333334,
+      "question_pt": "Qual deve ser o papel do Estado na regulação de mídia e plataformas digitais?",
+      "question_en": "What should be the State's role in regulating media and digital platforms?",
+      "generation_quality": {
+        "validated": true,
+        "validator_model": "nvidia:moonshotai/kimi-k2.5",
+        "validation_date": "2026-03-26T08:38:53Z"
+      },
+      "options": [
+        {
+          "id": "opt_a",
+          "text_pt": "Acredito que o Estado deve atuar de forma contundente na regulação, criando mecanismos fortes para combater a desinformação.",
+          "text_en": "I believe the State must act decisively in regulation, creating strong mechanisms to combat misinformation.",
+          "weight": 2,
+          "candidate_slug": "lula",
+          "position_type": "inferred",
+          "confidence": "medium",
+          "source_pt": "O Partido dos Trabalhadores (PT), do qual Lula faz parte, é favorável à regulação de plataformas digitais e ao combate à desinformação.",
+          "source_en": "",
+          "source_url": "https://pt.wikipedia.org/wiki/Luiz_Inácio_Lula_da_Silva",
+          "source_date": "2026-03-25"
+        },
+        {
+          "id": "opt_b",
+          "text_pt": "O governo tem um papel em estabelecer regras claras para garantir uma regulação responsável, sem sufocar as plataformas.",
+          "text_en": "The government has a role in establishing clear rules to ensure responsible regulation, without suffocating the platforms.",
+          "weight": 2,
+          "candidate_slug": "eduardo-leite",
+          "position_type": "inferred",
+          "confidence": "medium",
+          "source_pt": "Como membro do PSDB, há indicações de que o candidato seja favorável a uma regulação responsável das plataformas digitais.",
+          "source_en": "",
+          "source_url": null,
+          "source_date": "2026-03-25"
+        },
+        {
+          "id": "opt_c",
+          "text_pt": "O governo deveria adotar uma política pública clara e estável em que prefere manter a estabilidade institucional, evitando mudanças radicais no cenário atual, com metas transparentes e revisão periódica.",
+          "text_en": "The government should adopt a clear and stable public policy in which prefers to maintain institutional stability, avoiding radical changes to the current landscape, with transparent goals and periodic review.",
+          "weight": -2,
+          "candidate_slug": "flavio-bolsonaro",
+          "position_type": "inferred",
+          "confidence": "medium",
+          "source_pt": "Como filiado ao PL, Flávio Bolsonaro se alinha ao partido que é crítico à regulação de redes sociais e defende a ampla liberdade de expressão.",
+          "source_en": "",
+          "source_url": "https://pt.wikipedia.org/wiki/Flávio_Bolsonaro",
+          "source_date": "2026-03-25"
+        },
+        {
+          "id": "opt_d",
+          "text_pt": "O governo deveria adotar uma política pública clara e estável em que prefere manter a estabilidade institucional, evitando mudanças radicais no cenário atual, com metas transparentes e revisão periódica.",
+          "text_en": "The government should adopt a clear and stable public policy in which prefers to maintain institutional stability, avoiding radical changes to the current landscape, with transparent goals and periodic review.",
+          "weight": -2,
+          "candidate_slug": "zema",
+          "position_type": "inferred",
+          "confidence": "medium",
+          "source_pt": "O candidato, sendo do Partido Novo, provavelmente acompanha a posição contrária à regulação de mídias e a favor do livre mercado defendida por sua legenda.",
+          "source_en": "",
+          "source_url": "https://pt.wikipedia.org/wiki/Romeu_Zema",
+          "source_date": "2026-03-25"
+        },
+        {
+          "id": "opt_e",
+          "text_pt": "O governo deveria adotar uma política pública clara e estável em que defende firmemente a preservação do status quo, resistindo a propostas de liberalização, com metas transparentes e revisão periódica.",
+          "text_en": "The government should adopt a clear and stable public policy in which firmly defends preserving the status quo, resisting liberalization proposals, with transparent goals and periodic review.",
+          "weight": -3,
+          "candidate_slug": "renan-santos",
+          "position_type": "inferred",
+          "confidence": "medium",
+          "source_pt": "Como integrante do MBL, Renan Santos defende a liberdade de expressão irrestrita e se posiciona fortemente contra a regulação das plataformas de mídia.",
+          "source_en": "",
+          "source_url": null,
+          "source_date": "2026-03-25"
+        }
+      ]
+    },
+    "lgbtq": {
+      "topic_label_pt": "Direitos LGBTQIA+",
+      "topic_label_en": "LGBTQIA+ Rights",
+      "divergence_score": 0.8333333333333334,
+      "question_pt": "Qual deve ser a prioridade das políticas públicas para direitos LGBTQIA+?",
+      "question_en": "What should be the priority of public policy for LGBTQIA+ rights?",
+      "generation_quality": {
+        "validated": true,
+        "validator_model": "nvidia:moonshotai/kimi-k2.5",
+        "validation_date": "2026-03-26T08:39:05Z"
+      },
+      "options": [
+        {
+          "id": "opt_a",
+          "text_pt": "Acredito que o Estado deve proteger a população LGBTQIA+ com leis mais rígidas contra a discriminação e garantir o reconhecimento legal da identidade de gênero.",
+          "text_en": "I believe the State should protect the LGBTQIA+ population with stricter anti-discrimination laws and guarantee legal recognition of gender identity.",
+          "weight": 2,
+          "candidate_slug": "lula",
+          "position_type": "inferred",
+          "confidence": "medium",
+          "source_pt": "O candidato é filiado ao Partido dos Trabalhadores, que possui um histórico de apoio aos direitos da comunidade LGBTQ+, como o reconhecimento da identidade de gênero e a criminalização da homofobia.",
+          "source_en": "",
+          "source_url": "https://pt.wikipedia.org/wiki/Luiz_Inácio_Lula_da_Silva",
+          "source_date": "2026-03-25"
+        },
+        {
+          "id": "opt_b",
+          "text_pt": "O governo deveria adotar uma política pública clara e estável em que defende firmemente a preservação do status quo, resistindo a propostas de liberalização, com metas transparentes e revisão periódica.",
+          "text_en": "The government should adopt a clear and stable public policy in which firmly defends preserving the status quo, resisting liberalization proposals, with transparent goals and periodic review.",
+          "weight": -3,
+          "candidate_slug": "flavio-bolsonaro",
+          "position_type": "confirmed",
+          "confidence": "high",
+          "source_pt": "Flávio Bolsonaro tem um histórico de oposição aos direitos LGBTQIA+ e a políticas de identidade de gênero. Ele já fez declarações consideradas homofóbicas, afirmando que 'o normal é ser heterossexual'.",
+          "source_en": "",
+          "source_url": "https://pt.wikipedia.org/wiki/Flávio_Bolsonaro",
+          "source_date": "2026-03-25"
+        },
+        {
+          "id": "opt_c",
+          "text_pt": "O governo deveria adotar uma política pública clara e estável em que prefere manter a estabilidade institucional, evitando mudanças radicais no cenário atual, com metas transparentes e revisão periódica.",
+          "text_en": "The government should adopt a clear and stable public policy in which prefers to maintain institutional stability, avoiding radical changes to the current landscape, with transparent goals and periodic review.",
+          "weight": -2,
+          "candidate_slug": "caiado",
+          "position_type": "inferred",
+          "confidence": "medium",
+          "source_pt": "O partido de Ronaldo Caiado tem postura conservadora e é contrário a políticas de identidade de gênero. Como ele é integrante do União Brasil, infere-se que ele seja contra o aumento dos direitos da população LGBTQIA+.",
+          "source_en": "",
+          "source_url": "https://pt.wikipedia.org/wiki/Ronaldo_Caiado",
+          "source_date": "2026-03-25"
+        },
+        {
+          "id": "opt_d",
+          "text_pt": "O governo deveria adotar uma política pública clara e estável em que apoia reformas moderadas com foco em modernização e melhoria gradual do cenário atual, com metas transparentes e revisão periódica.",
+          "text_en": "The government should adopt a clear and stable public policy in which supports moderate reforms focused on modernization and gradual improvement of the current landscape, with transparent goals and periodic review.",
+          "weight": 2,
+          "candidate_slug": "eduardo-leite",
+          "position_type": "inferred",
+          "confidence": "medium",
+          "source_pt": "Eduardo Leite é associado a posições favoráveis aos direitos LGBTQIA+, de acordo com o posicionamento de seu partido. Ele é o primeiro governador assumidamente gay do Brasil.",
+          "source_en": "",
+          "source_url": null,
+          "source_date": "2026-03-25"
+        },
+        {
+          "id": "opt_e",
+          "text_pt": "O governo deveria adotar uma política pública clara e estável em que prefere manter a estabilidade institucional, evitando mudanças radicais no cenário atual, com metas transparentes e revisão periódica.",
+          "text_en": "The government should adopt a clear and stable public policy in which prefers to maintain institutional stability, avoiding radical changes to the current landscape, with transparent goals and periodic review.",
+          "weight": -2,
+          "candidate_slug": "renan-santos",
+          "position_type": "inferred",
+          "confidence": "medium",
+          "source_pt": "Renan Santos e o MBL opõem-se a políticas identitárias promovidas pelo Estado. A defesa da liberdade individual guia essa oposição.",
+          "source_en": "",
+          "source_url": null,
+          "source_date": "2026-03-25"
+        }
+      ]
+    },
+    "armas": {
+      "topic_label_pt": "Armas",
+      "topic_label_en": "Firearms",
+      "divergence_score": 0.6666666666666666,
+      "question_pt": "Como deve ser a política de acesso e controle de armas no Brasil?",
+      "question_en": "How should Brazil regulate firearm access and control?",
+      "generation_quality": {
+        "validated": true,
+        "validator_model": "nvidia:moonshotai/kimi-k2.5",
+        "validation_date": "2026-03-26T08:39:17Z"
+      },
+      "options": [
+        {
+          "id": "opt_a",
+          "text_pt": "Acredito que o porte de armas pela população civil deve ser proibido, com o Estado mantendo um controle rigoroso sobre o acesso.",
+          "text_en": "I believe that civilians carrying firearms should be prohibited, with the State maintaining strict control over access.",
+          "weight": -3,
+          "candidate_slug": "lula",
+          "position_type": "confirmed",
+          "confidence": "high",
+          "source_pt": "O PT, partido de Lula, é contrário ao porte de armas pela população civil e possui um histórico de restrição ao acesso a armas de fogo.",
+          "source_en": "",
+          "source_url": "https://pt.wikipedia.org/wiki/Luiz_Inácio_Lula_da_Silva",
+          "source_date": "2026-03-25"
+        },
+        {
+          "id": "opt_b",
+          "text_pt": "O governo deveria adotar uma política pública clara e estável em que defende uma mudança progressista e ampla, priorizando direitos e expansão de políticas públicas, com metas transparentes e revisão periódica.",
+          "text_en": "The government should adopt a clear and stable public policy in which advocates for broad progressive change, prioritizing rights and expansion of public policies, with transparent goals and periodic review.",
+          "weight": 3,
+          "candidate_slug": "flavio-bolsonaro",
+          "position_type": "confirmed",
+          "confidence": "high",
+          "source_pt": "O político é favorável à flexibilização do acesso a armas de fogo e munições.",
+          "source_en": "",
+          "source_url": "https://pt.wikipedia.org/wiki/Flávio_Bolsonaro",
+          "source_date": "2026-03-25"
+        },
+        {
+          "id": "opt_c",
+          "text_pt": "O governo deveria adotar uma política pública clara e estável em que apoia reformas moderadas com foco em modernização e melhoria gradual do cenário atual, com metas transparentes e revisão periódica.",
+          "text_en": "The government should adopt a clear and stable public policy in which supports moderate reforms focused on modernization and gradual improvement of the current landscape, with transparent goals and periodic review.",
+          "weight": 2,
+          "candidate_slug": "caiado",
+          "position_type": "confirmed",
+          "confidence": "high",
+          "source_pt": "O candidato é favorável ao porte de armas, com discurso alinhado ao agronegócio e à segurança rural.",
+          "source_en": "",
+          "source_url": "https://pt.wikipedia.org/wiki/Ronaldo_Caiado",
+          "source_date": "2026-03-25"
+        },
+        {
+          "id": "opt_d",
+          "text_pt": "O governo deveria adotar uma política pública clara e estável em que apoia reformas moderadas com foco em modernização e melhoria gradual do cenário atual, com metas transparentes e revisão periódica.",
+          "text_en": "The government should adopt a clear and stable public policy in which supports moderate reforms focused on modernization and gradual improvement of the current landscape, with transparent goals and periodic review.",
+          "weight": 2,
+          "candidate_slug": "zema",
+          "position_type": "confirmed",
+          "confidence": "high",
+          "source_pt": "Romeu Zema declarou ser favorável ao porte de armas, argumentando que a decisão deve respeitar a vontade individual e as liberdades individuais de cada cidadão.",
+          "source_en": "",
+          "source_url": "https://pt.wikipedia.org/wiki/Romeu_Zema",
+          "source_date": "2026-03-25"
+        },
+        {
+          "id": "opt_e",
+          "text_pt": "O governo deveria adotar uma política pública clara e estável em que busca um equilíbrio pragmático, avaliando prós e contras antes de avançar com reformas, com metas transparentes e revisão periódica.",
+          "text_en": "The government should adopt a clear and stable public policy in which seeks a pragmatic balance, weighing pros and cons before advancing reforms, with transparent goals and periodic review.",
+          "weight": 0,
+          "candidate_slug": "aldo-rebelo",
+          "position_type": "inferred",
+          "confidence": "medium",
+          "source_pt": "É considerado moderado em relação ao tema, não sendo um defensor ativo da liberalização do porte e posse de armas.",
+          "source_en": "",
+          "source_url": "https://pt.wikipedia.org/wiki/Aldo_Rebelo",
+          "source_date": "2026-03-25"
+        },
+        {
+          "id": "opt_f",
+          "text_pt": "O governo deveria adotar uma política pública clara e estável em que prefere manter a estabilidade institucional, evitando mudanças radicais no cenário atual, com metas transparentes e revisão periódica.",
+          "text_en": "The government should adopt a clear and stable public policy in which prefers to maintain institutional stability, avoiding radical changes to the current landscape, with transparent goals and periodic review.",
+          "weight": -2,
+          "candidate_slug": "eduardo-leite",
+          "position_type": "inferred",
+          "confidence": "medium",
+          "source_pt": "Perfil partidário para eduardo-leite",
+          "source_en": "",
+          "source_url": null,
+          "source_date": "2026-03-25"
+        }
+      ]
+    },
+    "indigenas": {
+      "topic_label_pt": "Povos Indígenas",
+      "topic_label_en": "Indigenous Peoples",
+      "divergence_score": 0.6666666666666666,
+      "question_pt": "Qual deve ser a prioridade das políticas para povos indígenas?",
+      "question_en": "What should be the priority for Indigenous peoples policies?",
+      "generation_quality": {
+        "validated": true,
+        "validator_model": "nvidia:moonshotai/kimi-k2.5",
+        "validation_date": "2026-03-26T08:39:36Z"
+      },
+      "options": [
+        {
+          "id": "opt_a",
+          "text_pt": "Acredito que o governo deve priorizar a demarcação de todas as terras tradicionais, garantindo proteção total contra atividades exploratórias.",
+          "text_en": "I believe the government should prioritize the demarcation of all traditional lands, ensuring full protection against exploratory activities.",
+          "weight": 2,
+          "candidate_slug": "lula",
+          "position_type": "inferred",
+          "confidence": "medium",
+          "source_pt": "O candidato, de acordo com o posicionamento de seu partido (PT), apoia a demarcação de terras indígenas e é contrário à tese do marco temporal.",
+          "source_en": "",
+          "source_url": "https://pt.wikipedia.org/wiki/Luiz_Inácio_Lula_da_Silva",
+          "source_date": "2026-03-25"
+        },
+        {
+          "id": "opt_b",
+          "text_pt": "O governo deveria adotar uma política pública clara e estável em que prefere manter a estabilidade institucional, evitando mudanças radicais no cenário atual, com metas transparentes e revisão periódica.",
+          "text_en": "The government should adopt a clear and stable public policy in which prefers to maintain institutional stability, avoiding radical changes to the current landscape, with transparent goals and periodic review.",
+          "weight": -2,
+          "candidate_slug": "flavio-bolsonaro",
+          "position_type": "confirmed",
+          "confidence": "high",
+          "source_pt": "O candidato é favorável ao marco temporal, uma medida que restringe a demarcação de terras indígenas.",
+          "source_en": "",
+          "source_url": "https://pt.wikipedia.org/wiki/Flávio_Bolsonaro",
+          "source_date": "2026-03-25"
+        },
+        {
+          "id": "opt_c",
+          "text_pt": "Defendo que as demarcações devem seguir critérios rígidos, limitando novas expansões que possam afetar o setor produtivo nacional.",
+          "text_en": "I advocate that demarcations must follow strict criteria, limiting new expansions that could affect the national productive sector.",
+          "weight": -2,
+          "candidate_slug": "caiado",
+          "position_type": "inferred",
+          "confidence": "medium",
+          "source_pt": "Embora não haja uma declaração direta no texto, Caiado é membro do União Brasil, que se posiciona a favor do marco temporal, uma medida vista como desfavorável aos direitos territoriais dos povos indígenas.",
+          "source_en": "",
+          "source_url": "https://pt.wikipedia.org/wiki/Ronaldo_Caiado",
+          "source_date": "2026-03-25"
+        },
+        {
+          "id": "opt_d",
+          "text_pt": "O governo deveria adotar uma política pública clara e estável em que prefere manter a estabilidade institucional, evitando mudanças radicais no cenário atual, com metas transparentes e revisão periódica.",
+          "text_en": "The government should adopt a clear and stable public policy in which prefers to maintain institutional stability, avoiding radical changes to the current landscape, with transparent goals and periodic review.",
+          "weight": -2,
+          "candidate_slug": "zema",
+          "position_type": "inferred",
+          "confidence": "medium",
+          "source_pt": "Embora não haja declaração direta de Romeu Zema, o partido ao qual é filiado, o Novo, posiciona-se a favor do marco temporal para a demarcação de terras indígenas e em defesa da propriedade privada.",
+          "source_en": "",
+          "source_url": "https://pt.wikipedia.org/wiki/Romeu_Zema",
+          "source_date": "2026-03-25"
+        },
+        {
+          "id": "opt_e",
+          "text_pt": "O governo deveria adotar uma política pública clara e estável em que busca um equilíbrio pragmático, avaliando prós e contras antes de avançar com reformas, com metas transparentes e revisão periódica.",
+          "text_en": "The government should adopt a clear and stable public policy in which seeks a pragmatic balance, weighing pros and cons before advancing reforms, with transparent goals and periodic review.",
+          "weight": 0,
+          "candidate_slug": "eduardo-leite",
+          "position_type": "inferred",
+          "confidence": "medium",
+          "source_pt": "O partido de Eduardo Leite, PSDB, defende uma posição equilibrada em relação aos povos indígenas, buscando o diálogo e a segurança jurídica. A posição específica do candidato não é detalhada.",
+          "source_en": "",
+          "source_url": null,
+          "source_date": "2026-03-25"
+        },
+        {
+          "id": "opt_f",
+          "text_pt": "Acredito que o foco deve ser a segurança jurídica e os interesses do agronegócio, restringindo demarcações com base no critério temporal.",
+          "text_en": "I believe the focus must be on legal certainty and agribusiness interests, restricting demarcations based on the temporal criterion.",
+          "weight": -3,
+          "candidate_slug": "renan-santos",
+          "position_type": "inferred",
+          "confidence": "medium",
+          "source_pt": "Renan Santos, como um dos líderes e fundadores do Movimento Brasil Livre (MBL), compartilha da posição do grupo favorável à tese do marco temporal, o que tende a restringir as demarcações de terras indígenas. Essa postura também prioriza a defesa da propriedade privada e os interesses da produção agropecuária.",
+          "source_en": "",
+          "source_url": null,
+          "source_date": "2026-03-25"
+        }
+      ]
+    },
+    "previdencia": {
+      "topic_label_pt": "Previdência",
+      "topic_label_en": "Social Security",
+      "divergence_score": 0.6666666666666666,
+      "question_pt": "Qual direção deve orientar a política de previdência social?",
+      "question_en": "What direction should guide social security policy?",
+      "generation_quality": {
+        "validated": true,
+        "validator_model": "nvidia:moonshotai/kimi-k2.5",
+        "validation_date": "2026-03-26T08:39:47Z"
+      },
+      "options": [
+        {
+          "id": "opt_a",
+          "text_pt": "Acredito que precisamos reverter as mudanças recentes na previdência, pois elas geraram distorções prejudiciais aos trabalhadores.",
+          "text_en": "I believe we need to reverse recent changes to social security, as they created harmful distortions for workers.",
+          "weight": -2,
+          "candidate_slug": "lula",
+          "position_type": "confirmed",
+          "confidence": "high",
+          "source_pt": "Lula e o Partido dos Trabalhadores são contrários à reforma da Previdência aprovada em 2019, defendendo a correção do que consideram ser distorções no sistema.",
+          "source_en": "",
+          "source_url": "https://pt.wikipedia.org/wiki/Luiz_Inácio_Lula_da_Silva",
+          "source_date": "2026-03-25"
+        },
+        {
+          "id": "opt_b",
+          "text_pt": "O governo deveria adotar uma política pública clara e estável em que apoia reformas moderadas com foco em modernização e melhoria gradual do cenário atual, com metas transparentes e revisão periódica.",
+          "text_en": "The government should adopt a clear and stable public policy in which supports moderate reforms focused on modernization and gradual improvement of the current landscape, with transparent goals and periodic review.",
+          "weight": 2,
+          "candidate_slug": "flavio-bolsonaro",
+          "position_type": "confirmed",
+          "confidence": "high",
+          "source_pt": "O candidato apoiou a Reforma da Previdência de 2019 e votou alinhado à proposta em discussões relacionadas ao tema no Senado.",
+          "source_en": "",
+          "source_url": "https://pt.wikipedia.org/wiki/Flávio_Bolsonaro",
+          "source_date": "2026-03-25"
+        },
+        {
+          "id": "opt_c",
+          "text_pt": "O governo deveria adotar uma política pública clara e estável em que apoia reformas moderadas com foco em modernização e melhoria gradual do cenário atual, com metas transparentes e revisão periódica.",
+          "text_en": "The government should adopt a clear and stable public policy in which supports moderate reforms focused on modernization and gradual improvement of the current landscape, with transparent goals and periodic review.",
+          "weight": 2,
+          "candidate_slug": "ratinho-jr",
+          "position_type": "inferred",
+          "confidence": "medium",
+          "source_pt": "Como membro do PSD, Ratinho Júnior está alinhado com a posição do partido de apoiar a reforma da previdência e focar no equilíbrio fiscal.",
+          "source_en": "",
+          "source_url": "https://pt.wikipedia.org/wiki/Ratinho_Junior",
+          "source_date": "2026-03-25"
+        },
+        {
+          "id": "opt_d",
+          "text_pt": "O governo deveria adotar uma política pública clara e estável em que apoia reformas moderadas com foco em modernização e melhoria gradual do cenário atual, com metas transparentes e revisão periódica.",
+          "text_en": "The government should adopt a clear and stable public policy in which supports moderate reforms focused on modernization and gradual improvement of the current landscape, with transparent goals and periodic review.",
+          "weight": 2,
+          "candidate_slug": "eduardo-leite",
+          "position_type": "inferred",
+          "confidence": "medium",
+          "source_pt": "O candidato apoiou a reforma da Previdência, defendendo um foco na sustentabilidade do sistema.",
+          "source_en": "",
+          "source_url": null,
+          "source_date": "2026-03-25"
+        },
+        {
+          "id": "opt_e",
+          "text_pt": "O governo deveria adotar uma política pública clara e estável em que defende uma mudança progressista e ampla, priorizando direitos e expansão de políticas públicas, com metas transparentes e revisão periódica.",
+          "text_en": "The government should adopt a clear and stable public policy in which advocates for broad progressive change, prioritizing rights and expansion of public policies, with transparent goals and periodic review.",
+          "weight": 3,
+          "candidate_slug": "renan-santos",
+          "position_type": "inferred",
+          "confidence": "medium",
+          "source_pt": "Como integrante do MBL, apoia a reforma do sistema previdenciário e sua privatização parcial.",
+          "source_en": "",
+          "source_url": null,
+          "source_date": "2026-03-25"
+        }
+      ]
+    },
+    "educacao": {
+      "topic_label_pt": "Educação",
+      "topic_label_en": "Education",
+      "divergence_score": 0.5,
+      "question_pt": "Qual caminho deve orientar os investimentos em educação no país?",
+      "question_en": "Which path should guide education investments in the country?",
+      "generation_quality": {
+        "validated": true,
+        "validator_model": "nvidia:moonshotai/kimi-k2.5",
+        "validation_date": "2026-03-26T08:40:01Z"
+      },
+      "options": [
+        {
+          "id": "opt_a",
+          "text_pt": "O governo deveria adotar uma política pública clara e estável em que defende uma mudança progressista e ampla, priorizando direitos e expansão de políticas públicas, com metas transparentes e revisão periódica.",
+          "text_en": "The government should adopt a clear and stable public policy in which advocates for broad progressive change, prioritizing rights and expansion of public policies, with transparent goals and periodic review.",
+          "weight": 3,
+          "candidate_slug": "lula",
+          "position_type": "confirmed",
+          "confidence": "high",
+          "source_pt": "Lula e seu partido defendem ativamente a educação pública, o fortalecimento das universidades federais e a manutenção de programas de inclusão no ensino superior, como o Prouni e o Fies.",
+          "source_en": "",
+          "source_url": "https://pt.wikipedia.org/wiki/Luiz_Inácio_Lula_da_Silva",
+          "source_date": "2026-03-25"
+        },
+        {
+          "id": "opt_b",
+          "text_pt": "Defendo que a administração escolar e a infraestrutura possam ser concedidas à iniciativa privada para aumentar a eficiência, focando no desempenho educacional e avaliações rigorosas.",
+          "text_en": "I argue that school administration and infrastructure can be granted to private enterprises to increase efficiency, focusing on educational performance and rigorous assessments.",
+          "weight": 3,
+          "candidate_slug": "tarcisio",
+          "position_type": "confirmed",
+          "confidence": "high",
+          "source_pt": "O governador tem implementado a entrega da construção e administração de escolas públicas estaduais para a iniciativa privada por meio de leilões.",
+          "source_en": "",
+          "source_url": "https://pt.wikipedia.org/wiki/Tarcísio_de_Freitas",
+          "source_date": "2026-03-25"
+        },
+        {
+          "id": "opt_c",
+          "text_pt": "Acredito que o foco deve ser garantir o ensino básico de qualidade e priorizar a formação técnica e profissionalizante, conectando diretamente os jovens ao mercado de trabalho.",
+          "text_en": "I believe the focus must be on ensuring quality basic education and prioritizing technical and vocational training, directly connecting young people to the job market.",
+          "weight": 2,
+          "candidate_slug": "caiado",
+          "position_type": "inferred",
+          "confidence": "medium",
+          "source_pt": "O partido de Ronaldo Caiado, União Brasil, defende a educação de qualidade e o ensino técnico e profissionalizante.",
+          "source_en": "",
+          "source_url": "https://pt.wikipedia.org/wiki/Ronaldo_Caiado",
+          "source_date": "2026-03-25"
+        },
+        {
+          "id": "opt_d",
+          "text_pt": "O governo deveria adotar uma política pública clara e estável em que apoia reformas moderadas com foco em modernização e melhoria gradual do cenário atual, com metas transparentes e revisão periódica.",
+          "text_en": "The government should adopt a clear and stable public policy in which supports moderate reforms focused on modernization and gradual improvement of the current landscape, with transparent goals and periodic review.",
+          "weight": 2,
+          "candidate_slug": "zema",
+          "position_type": "inferred",
+          "confidence": "medium",
+          "source_pt": "Como filiado ao partido Novo, Zema defende o uso de vouchers educacionais, incentiva a concorrência entre escolas e apoia a diminuição da intervenção do Estado na educação.",
+          "source_en": "",
+          "source_url": "https://pt.wikipedia.org/wiki/Romeu_Zema",
+          "source_date": "2026-03-25"
+        },
+        {
+          "id": "opt_e",
+          "text_pt": "O governo deveria adotar uma política pública clara e estável em que busca um equilíbrio pragmático, avaliando prós e contras antes de avançar com reformas, com metas transparentes e revisão periódica.",
+          "text_en": "The government should adopt a clear and stable public policy in which seeks a pragmatic balance, weighing pros and cons before advancing reforms, with transparent goals and periodic review.",
+          "weight": 0,
+          "candidate_slug": "flavio-bolsonaro",
+          "position_type": "inferred",
+          "confidence": "medium",
+          "source_pt": "Embora o texto cite a posição do partido de Flávio Bolsonaro (PL), que defende o movimento Escola Sem Partido e é contrário a conteúdo ideológico nas escolas, os trechos fornecidos não contêm informações claras e diretas sobre as posições de Flávio Bolsonaro em relação a políticas públicas de educação.",
+          "source_en": "",
+          "source_url": "https://pt.wikipedia.org/wiki/Flávio_Bolsonaro",
+          "source_date": "2026-03-25"
+        }
+      ]
+    },
+    "seguranca": {
+      "topic_label_pt": "Segurança Pública",
+      "topic_label_en": "Public Security",
+      "divergence_score": 0.5,
+      "question_pt": "Qual estratégia deve guiar a política nacional de segurança pública?",
+      "question_en": "Which strategy should guide national public security policy?",
+      "generation_quality": {
+        "validated": true,
+        "validator_model": "nvidia:moonshotai/kimi-k2.5",
+        "validation_date": "2026-03-26T08:40:13Z"
+      },
+      "options": [
+        {
+          "id": "opt_a",
+          "text_pt": "Acredito que o foco deve ser no endurecimento rigoroso das leis penais e na flexibilização das regras para a atuação policial, reduzindo a burocracia e aumentando as punições.",
+          "text_en": "I believe the focus must be on strictly hardening penal laws and loosening rules for police action, reducing bureaucracy and increasing punishments.",
+          "weight": 3,
+          "candidate_slug": "flavio-bolsonaro",
+          "position_type": "confirmed",
+          "confidence": "high",
+          "source_pt": "Flávio Bolsonaro tem um histórico legislativo favorável a políticas punitivistas e ao endurecimento de leis penais. Ele defendeu a excludente de ilicitude para policiais, a redução da maioridade penal e a adoção da pena de morte.",
+          "source_en": "",
+          "source_url": "https://pt.wikipedia.org/wiki/Flávio_Bolsonaro",
+          "source_date": "2026-03-25"
+        },
+        {
+          "id": "opt_b",
+          "text_pt": "O governo deveria adotar uma política pública clara e estável em que apoia reformas moderadas com foco em modernização e melhoria gradual do cenário atual, com metas transparentes e revisão periódica.",
+          "text_en": "The government should adopt a clear and stable public policy in which supports moderate reforms focused on modernization and gradual improvement of the current landscape, with transparent goals and periodic review.",
+          "weight": 2,
+          "candidate_slug": "ratinho-jr",
+          "position_type": "inferred",
+          "confidence": "medium",
+          "source_pt": "No seu segundo mandato como governador, Ratinho Júnior tem a segurança pública como um dos focos de sua gestão. Seu partido, o PSD, também defende uma segurança pública robusta e a valorização policial.",
+          "source_en": "",
+          "source_url": "https://pt.wikipedia.org/wiki/Ratinho_Junior",
+          "source_date": "2026-03-25"
+        },
+        {
+          "id": "opt_c",
+          "text_pt": "O governo deveria adotar uma política pública clara e estável em que busca um equilíbrio pragmático, avaliando prós e contras antes de avançar com reformas, com metas transparentes e revisão periódica.",
+          "text_en": "The government should adopt a clear and stable public policy in which seeks a pragmatic balance, weighing pros and cons before advancing reforms, with transparent goals and periodic review.",
+          "weight": 0,
+          "candidate_slug": "lula",
+          "position_type": "inferred",
+          "confidence": "medium",
+          "source_pt": "O candidato Lula prioriza políticas sociais e prevenção em detrimento de abordagens puramente repressivas na área da segurança pública.",
+          "source_en": "",
+          "source_url": "https://pt.wikipedia.org/wiki/Luiz_Inácio_Lula_da_Silva",
+          "source_date": "2026-03-25"
+        },
+        {
+          "id": "opt_d",
+          "text_pt": "O governo deveria adotar uma política pública clara e estável em que defende uma mudança progressista e ampla, priorizando direitos e expansão de políticas públicas, com metas transparentes e revisão periódica.",
+          "text_en": "The government should adopt a clear and stable public policy in which advocates for broad progressive change, prioritizing rights and expansion of public policies, with transparent goals and periodic review.",
+          "weight": 3,
+          "candidate_slug": "renan-santos",
+          "position_type": "inferred",
+          "confidence": "medium",
+          "source_pt": "O candidato, associado ao MBL, defende o endurecimento de penas criminais e o armamento da população civil.",
+          "source_en": "",
+          "source_url": null,
+          "source_date": "2026-03-25"
+        },
+        {
+          "id": "opt_e",
+          "text_pt": "O governo deveria adotar uma política pública clara e estável em que defende uma mudança progressista e ampla, priorizando direitos e expansão de políticas públicas, com metas transparentes e revisão periódica.",
+          "text_en": "The government should adopt a clear and stable public policy in which advocates for broad progressive change, prioritizing rights and expansion of public policies, with transparent goals and periodic review.",
+          "weight": 3,
+          "candidate_slug": "zema",
+          "position_type": "confirmed",
+          "confidence": "high",
+          "source_pt": "O candidato defende medidas rígidas de punição e menos entraves burocráticos para as forças policiais, demonstrando apoio por meio de propostas de aumento salarial e flexibilização de regras.",
+          "source_en": "",
+          "source_url": "https://pt.wikipedia.org/wiki/Romeu_Zema",
+          "source_date": "2026-03-25"
+        },
+        {
+          "id": "opt_f",
+          "text_pt": "O governo deveria adotar uma política pública clara e estável em que defende uma mudança progressista e ampla, priorizando direitos e expansão de políticas públicas, com metas transparentes e revisão periódica.",
+          "text_en": "The government should adopt a clear and stable public policy in which advocates for broad progressive change, prioritizing rights and expansion of public policies, with transparent goals and periodic review.",
+          "weight": 3,
+          "candidate_slug": "tarcisio",
+          "position_type": "confirmed",
+          "confidence": "high",
+          "source_pt": "Durante sua campanha eleitoral, Tarcísio de Freitas enfatizou o fortalecimento da segurança pública. Essa postura está alinhada com a plataforma de seu partido, o Republicanos, que defende uma linha dura na área e o fortalecimento das forças policiais.",
+          "source_en": "",
+          "source_url": "https://pt.wikipedia.org/wiki/Tarcísio_de_Freitas",
+          "source_date": "2026-03-25"
+        }
+      ]
+    },
+    "aborto": {
+      "topic_label_pt": "Aborto",
+      "topic_label_en": "Abortion",
+      "divergence_score": 0.5,
+      "question_pt": "Como a legislação sobre aborto deve ser tratada no Brasil?",
+      "question_en": "How should abortion legislation be handled in Brazil?",
+      "generation_quality": {
+        "validated": true,
+        "validator_model": "nvidia:moonshotai/kimi-k2.5",
+        "validation_date": "2026-03-26T08:40:47Z"
+      },
+      "options": [
+        {
+          "id": "opt_a",
+          "text_pt": "Acredito que o aborto deva ser restrito a casos específicos, sem abrir espaço para uma legalização ampla, equilibrando as posições no debate.",
+          "text_en": "I believe abortion should be restricted to specific cases, without making room for broad legalization, balancing positions in the debate.",
+          "weight": 0,
+          "candidate_slug": "lula",
+          "position_type": "inferred",
+          "confidence": "medium",
+          "source_pt": "Embora o debate interno exista, a posição oficial evita a liberalização ampla do aborto, defendendo a descriminalização apenas em casos específicos.",
+          "source_en": "",
+          "source_url": "https://pt.wikipedia.org/wiki/Luiz_Inácio_Lula_da_Silva",
+          "source_date": "2026-03-25"
+        },
+        {
+          "id": "opt_b",
+          "text_pt": "O governo deve proibir o aborto em qualquer circunstância e defender a vida incondicionalmente desde a concepção.",
+          "text_en": "The government must prohibit abortion under any circumstances and defend life unconditionally from conception.",
+          "weight": -3,
+          "candidate_slug": "flavio-bolsonaro",
+          "position_type": "inferred",
+          "confidence": "medium",
+          "source_pt": "Flávio Bolsonaro é filiado ao Partido Liberal (PL), que se posiciona publicamente de forma contrária ao aborto em qualquer circunstância e defende a vida desde a concepção.",
+          "source_en": "",
+          "source_url": "https://pt.wikipedia.org/wiki/Flávio_Bolsonaro",
+          "source_date": "2026-03-25"
+        },
+        {
+          "id": "opt_c",
+          "text_pt": "O governo deveria adotar uma política pública clara e estável em que prefere manter a estabilidade institucional, evitando mudanças radicais no cenário atual, com metas transparentes e revisão periódica.",
+          "text_en": "The government should adopt a clear and stable public policy in which prefers to maintain institutional stability, avoiding radical changes to the current landscape, with transparent goals and periodic review.",
+          "weight": -2,
+          "candidate_slug": "tarcisio",
+          "position_type": "inferred",
+          "confidence": "medium",
+          "source_pt": "Tarcísio é afiliado ao Republicanos, um partido que se declara contrário ao aborto e tem alinhamento com o conservadorismo religioso. Embora não haja uma declaração direta do próprio Tarcísio no texto, sua filiação sugere oposição ao aborto.",
+          "source_en": "",
+          "source_url": "https://pt.wikipedia.org/wiki/Tarcísio_de_Freitas",
+          "source_date": "2026-03-25"
+        },
+        {
+          "id": "opt_d",
+          "text_pt": "O governo deveria adotar uma política pública clara e estável em que prefere manter a estabilidade institucional, evitando mudanças radicais no cenário atual, com metas transparentes e revisão periódica.",
+          "text_en": "The government should adopt a clear and stable public policy in which prefers to maintain institutional stability, avoiding radical changes to the current landscape, with transparent goals and periodic review.",
+          "weight": -2,
+          "candidate_slug": "caiado",
+          "position_type": "inferred",
+          "confidence": "medium",
+          "source_pt": "O partido de Caiado, o União Brasil, é contrário ao aborto e defende a vida desde a concepção.",
+          "source_en": "",
+          "source_url": "https://pt.wikipedia.org/wiki/Ronaldo_Caiado",
+          "source_date": "2026-03-25"
+        },
+        {
+          "id": "opt_e",
+          "text_pt": "O governo deveria adotar uma política pública clara e estável em que prefere manter a estabilidade institucional, evitando mudanças radicais no cenário atual, com metas transparentes e revisão periódica.",
+          "text_en": "The government should adopt a clear and stable public policy in which prefers to maintain institutional stability, avoiding radical changes to the current landscape, with transparent goals and periodic review.",
+          "weight": -2,
+          "candidate_slug": "ratinho-jr",
+          "position_type": "inferred",
+          "confidence": "medium",
+          "source_pt": "Embora Ratinho Júnior não tenha um posicionamento público explícito sobre o aborto nos trechos fornecidos, seu partido, o PSD, é descrito como conservador no tema, seguindo a vertente evangélica e católica, o que sugere uma postura contrária à legalização.",
+          "source_en": "",
+          "source_url": "https://pt.wikipedia.org/wiki/Ratinho_Junior",
+          "source_date": "2026-03-25"
+        },
+        {
+          "id": "opt_f",
+          "text_pt": "O governo deveria adotar uma política pública clara e estável em que busca um equilíbrio pragmático, avaliando prós e contras antes de avançar com reformas, com metas transparentes e revisão periódica.",
+          "text_en": "The government should adopt a clear and stable public policy in which seeks a pragmatic balance, weighing pros and cons before advancing reforms, with transparent goals and periodic review.",
+          "weight": 0,
+          "candidate_slug": "eduardo-leite",
+          "position_type": "inferred",
+          "confidence": "medium",
+          "source_pt": "A posição inferida a partir de seu partido (PSDB) é moderada, reconhecendo os direitos das mulheres apenas em casos extremos.",
+          "source_en": "",
+          "source_url": null,
+          "source_date": "2026-03-25"
+        }
+      ]
+    },
+    "corrupcao": {
+      "topic_label_pt": "Combate à Corrupção",
+      "topic_label_en": "Anti-Corruption",
+      "divergence_score": 0.16666666666666666,
+      "question_pt": "Qual medida é mais efetiva para reduzir corrupção na administração pública?",
+      "question_en": "Which measure is most effective to reduce corruption in public administration?",
+      "generation_quality": {
+        "validated": true,
+        "validator_model": "nvidia:moonshotai/kimi-k2.5",
+        "validation_date": "2026-03-26T08:40:54Z"
+      },
+      "options": [
+        {
+          "id": "opt_a",
+          "text_pt": "O governo deveria adotar uma política pública clara e estável em que apoia reformas moderadas com foco em modernização e melhoria gradual do cenário atual, com metas transparentes e revisão periódica.",
+          "text_en": "The government should adopt a clear and stable public policy in which supports moderate reforms focused on modernization and gradual improvement of the current landscape, with transparent goals and periodic review.",
+          "weight": 2,
+          "candidate_slug": "flavio-bolsonaro",
+          "position_type": "confirmed",
+          "confidence": "high",
+          "source_pt": "Flávio Bolsonaro apoiou o estabelecimento do Programa de Acompanhamento e Transparência Fiscal e o Plano de Promoção do Equilíbrio Fiscal no Senado.",
+          "source_en": "",
+          "source_url": "https://pt.wikipedia.org/wiki/Flávio_Bolsonaro",
+          "source_date": "2026-03-25"
+        },
+        {
+          "id": "opt_b",
+          "text_pt": "O governo deveria adotar uma política pública clara e estável em que apoia reformas moderadas com foco em modernização e melhoria gradual do cenário atual, com metas transparentes e revisão periódica.",
+          "text_en": "The government should adopt a clear and stable public policy in which supports moderate reforms focused on modernization and gradual improvement of the current landscape, with transparent goals and periodic review.",
+          "weight": 2,
+          "candidate_slug": "tarcisio",
+          "position_type": "inferred",
+          "confidence": "medium",
+          "source_pt": "Tarcísio é afiliado ao partido Republicanos, cujo discurso enfatiza o combate à corrupção e apoio à Operação Lava Jato.",
+          "source_en": "",
+          "source_url": "https://pt.wikipedia.org/wiki/Tarcísio_de_Freitas",
+          "source_date": "2026-03-25"
+        },
+        {
+          "id": "opt_c",
+          "text_pt": "O governo deveria adotar uma política pública clara e estável em que apoia reformas moderadas com foco em modernização e melhoria gradual do cenário atual, com metas transparentes e revisão periódica.",
+          "text_en": "The government should adopt a clear and stable public policy in which supports moderate reforms focused on modernization and gradual improvement of the current landscape, with transparent goals and periodic review.",
+          "weight": 2,
+          "candidate_slug": "caiado",
+          "position_type": "inferred",
+          "confidence": "medium",
+          "source_pt": "O partido de Caiado, o União Brasil, defende um discurso anticorrupção e de transparência pública. Caiado também foi um dos principais articuladores do processo de impeachment de Dilma Rousseff.",
+          "source_en": "",
+          "source_url": "https://pt.wikipedia.org/wiki/Ronaldo_Caiado",
+          "source_date": "2026-03-25"
+        },
+        {
+          "id": "opt_d",
+          "text_pt": "O governo deveria adotar uma política pública clara e estável em que defende uma mudança progressista e ampla, priorizando direitos e expansão de políticas públicas, com metas transparentes e revisão periódica.",
+          "text_en": "The government should adopt a clear and stable public policy in which advocates for broad progressive change, prioritizing rights and expansion of public policies, with transparent goals and periodic review.",
+          "weight": 3,
+          "candidate_slug": "zema",
+          "position_type": "inferred",
+          "confidence": "medium",
+          "source_pt": "Embora os trechos não tragam ações ou falas explícitas de Romeu Zema sobre o tema, a posição forte de seu partido (Novo) em prol do combate à corrupção e transparência sugere alinhamento a essas diretrizes.",
+          "source_en": "",
+          "source_url": "https://pt.wikipedia.org/wiki/Romeu_Zema",
+          "source_date": "2026-03-25"
+        },
+        {
+          "id": "opt_e",
+          "text_pt": "O governo deveria adotar uma política pública clara e estável em que apoia reformas moderadas com foco em modernização e melhoria gradual do cenário atual, com metas transparentes e revisão periódica.",
+          "text_en": "The government should adopt a clear and stable public policy in which supports moderate reforms focused on modernization and gradual improvement of the current landscape, with transparent goals and periodic review.",
+          "weight": 2,
+          "candidate_slug": "ratinho-jr",
+          "position_type": "inferred",
+          "confidence": "medium",
+          "source_pt": "O PSD, partido de Ratinho Júnior, tem discurso anticorrupção e defende transparência. Durante seu mandato, a gestão focou em transparência pública.",
+          "source_en": "",
+          "source_url": "https://pt.wikipedia.org/wiki/Ratinho_Junior",
+          "source_date": "2026-03-25"
+        },
+        {
+          "id": "opt_f",
+          "text_pt": "O governo deveria adotar uma política pública clara e estável em que defende uma mudança progressista e ampla, priorizando direitos e expansão de políticas públicas, com metas transparentes e revisão periódica.",
+          "text_en": "The government should adopt a clear and stable public policy in which advocates for broad progressive change, prioritizing rights and expansion of public policies, with transparent goals and periodic review.",
+          "weight": 3,
+          "candidate_slug": "eduardo-leite",
+          "position_type": "inferred",
+          "confidence": "medium",
+          "source_pt": "O candidato, alinhado com o seu partido (PSDB), adota um forte discurso contra a corrupção. Ele também defende a independência do Ministério Público.",
+          "source_en": "",
+          "source_url": null,
+          "source_date": "2026-03-25"
+        }
+      ]
+    }
+  }
 }
