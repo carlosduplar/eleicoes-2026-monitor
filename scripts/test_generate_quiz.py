@@ -149,3 +149,115 @@ def test_generate_quiz_from_positions_payload(
     first_topic = payload["topics"][payload["ordered_topics"][0]]
     assert first_topic["options"][0]["weight"] in {-3, -2, 0, 2, 3}
     assert first_topic["options"][0]["position_type"] in {"confirmed", "inferred"}
+
+
+def test_local_quality_rejects_boilerplate() -> None:
+    text_pt = (
+        "O governo deveria adotar uma política pública clara e estável em que "
+        "apoia reformas moderadas com metas transparentes."
+    )
+    text_en = (
+        "The government should adopt a clear and stable public policy in which "
+        "supports moderate reforms with transparent targets."
+    )
+    passes, failures = generate_quiz._local_quality_check(text_pt, text_en)
+    assert not passes
+    assert "boilerplate" in failures
+
+
+def test_fallback_option_uses_topic_summary_and_actions() -> None:
+    text_pt, text_en = generate_quiz._fallback_option_text(
+        topic_id="educacao",
+        topic_label_pt="Educação",
+        topic_label_en="Education",
+        candidate_slug="candidate-a",
+        summary_pt="Prioriza expansão do ensino técnico e melhora da infraestrutura escolar.",
+        summary_en="Prioritizes expanding technical education and improving school infrastructure.",
+        key_actions=["Ampliar escolas de tempo integral."],
+        stance="favor",
+        variant_offset=0,
+    )
+    assert "educação" in text_pt.lower()
+    assert "education" in text_en.lower()
+    assert "ensino técnico" in text_pt.lower() or "tempo integral" in text_pt.lower()
+    assert not text_pt.lower().startswith(
+        "o governo deveria adotar uma política pública clara e estável em que"
+    )
+
+
+def test_build_topic_options_replaces_duplicate_generated_texts(
+    monkeypatch: pytest.MonkeyPatch,
+) -> None:
+    known_positions = [
+        {
+            "candidate_slug": "lula",
+            "position_type": "confirmed",
+            "stance": "favor",
+            "summary_pt": "Defende expansão do investimento em escolas.",
+            "summary_en": "Supports expanding investment in schools.",
+            "key_actions": ["Ampliar escolas de tempo integral."],
+            "sources": [],
+        },
+        {
+            "candidate_slug": "zema",
+            "position_type": "inferred",
+            "stance": "favor",
+            "summary_pt": "Defende gestão com metas e avaliação de desempenho.",
+            "summary_en": "Supports management with targets and performance evaluation.",
+            "key_actions": ["Criar indicadores públicos de aprendizagem."],
+            "sources": [],
+        },
+    ]
+
+    duplicate_text_pt = (
+        "Defendo que o governo avance com reformas graduais na educação "
+        "com metas transparentes e avaliação periódica."
+    )
+    duplicate_text_en = (
+        "I support the government moving forward with gradual education reforms "
+        "with transparent goals and periodic review."
+    )
+
+    monkeypatch.setattr(
+        generate_quiz,
+        "generate_quiz_topic_options",
+        lambda **kwargs: {
+            "options": [
+                {
+                    "text_pt": duplicate_text_pt,
+                    "text_en": duplicate_text_en,
+                    "mapped_position": 1,
+                    "stance": "favor",
+                    "weight": 2,
+                },
+                {
+                    "text_pt": duplicate_text_pt,
+                    "text_en": duplicate_text_en,
+                    "mapped_position": 2,
+                    "stance": "favor",
+                    "weight": 2,
+                },
+            ],
+            "_ai_provider": "vertex",
+            "_ai_model": "gemini-3.1-pro",
+            "_parse_error": False,
+        },
+    )
+    monkeypatch.setattr(
+        generate_quiz,
+        "validate_quiz_option_quality",
+        lambda **kwargs: {"passes_all": True, "failures": [], "details": ""},
+    )
+
+    options, _, _ = generate_quiz.build_topic_options(
+        topic_id="educacao",
+        topic_label_pt="Educação",
+        topic_label_en="Education",
+        question_pt="Qual caminho deve orientar os investimentos em educação no país?",
+        question_en="Which path should guide education investments in the country?",
+        known_positions=known_positions,
+    )
+
+    assert len(options) == 2
+    assert options[0]["text_pt"] != options[1]["text_pt"]
+    assert options[0]["candidate_slug"] != options[1]["candidate_slug"]
