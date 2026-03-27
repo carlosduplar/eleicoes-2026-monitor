@@ -53,6 +53,88 @@ BANNED_NAME_TERMS = (
     "aldo rebelo",
     "renan santos",
 )
+BANNED_PARTY_TERMS = (
+    "pt",
+    "partido dos trabalhadores",
+    "pl",
+    "partido liberal",
+    "psol",
+    "partido socialismo e liberdade",
+    "pcb",
+    "partido comunista brasileiro",
+    "pcdob",
+    "pc do b",
+    "partido comunista do brasil",
+    "pdt",
+    "partido democrático trabalhista",
+    "partido democratico trabalhista",
+    "psb",
+    "partido socialista brasileiro",
+    "psdb",
+    "partido da social democracia brasileira",
+    "mdb",
+    "movimento democrático brasileiro",
+    "movimento democratico brasileiro",
+    "pmdb",
+    "psd",
+    "partido social democrático",
+    "partido social democratico",
+    "pp",
+    "progressistas",
+    "partido progressista",
+    "republicanos",
+    "união brasil",
+    "uniao brasil",
+    "novo",
+    "podemos",
+    "solidariedade",
+    "avante",
+    "cidadania",
+    "pv",
+    "partido verde",
+    "rede",
+    "rede sustentabilidade",
+    "agir",
+    "dc",
+    "democracia cristã",
+    "democracia crista",
+    "dem",
+    "democratas",
+    "patriota",
+    "prd",
+    "prtb",
+    "pmb",
+    "partido da mulher brasileira",
+    "mobiliza",
+    "pmn",
+    "psc",
+    "pros",
+    "ptb",
+    "pco",
+    "partido da causa operária",
+    "partido da causa operaria",
+    "up",
+    "unidade popular",
+    "pstu",
+    "mbl",
+    "movimento brasil livre",
+)
+_AMBIGUOUS_PARTY_TERMS = {
+    "novo",
+    "podemos",
+    "solidariedade",
+    "avante",
+    "cidadania",
+    "rede",
+    "agir",
+    "patriota",
+    "mobiliza",
+}
+_PARTY_CONTEXT_PATTERN = re.compile(
+    r"\b(?:partido|legenda|sigla|filiad[oa]|membro|integrante|aliado|alian[aç]a|"
+    r"movimento)\b",
+    flags=re.IGNORECASE,
+)
 BANNED_OPTION_OPENINGS_PT = (
     "o governo deveria adotar uma política pública clara e estável em que",
 )
@@ -271,6 +353,32 @@ def _contains_banned_terms(text: str, banned_terms: tuple[str, ...]) -> bool:
     return False
 
 
+def _contains_party_reference(text: str) -> bool:
+    normalized = re.sub(r"\s+", " ", text.strip().lower())
+    if not normalized:
+        return False
+    affiliation_patterns = (
+        r"\bpartido\b.*\b(partido|psdb|pt|pl|psol|mbl|republicanos|un[iã]o\s*brasil|novo|mdb|pdt|psb|pp|psd|pv|dc|dem)\b",
+        r"\bcomo\s+membro\b",
+        r"\bfiliad[oa]\b.*\b(partido|movimento)\b",
+        r"\bintegrante\b.*\b(partido|movimento)\b",
+        r"\bo\s+partido\b",
+    )
+    for pat in affiliation_patterns:
+        if re.search(pat, normalized):
+            return True
+    has_context_marker = bool(_PARTY_CONTEXT_PATTERN.search(normalized))
+    for term in BANNED_PARTY_TERMS:
+        escaped = re.escape(term)
+        if term in _AMBIGUOUS_PARTY_TERMS:
+            if has_context_marker and re.search(rf"\b{escaped}\b", normalized):
+                return True
+            continue
+        if re.search(rf"\b{escaped}\b", normalized):
+            return True
+    return False
+
+
 def _normalize_option_fingerprint(text: str) -> str:
     normalized = re.sub(r"\s+", " ", text.strip().lower())
     return re.sub(r"[^\w\s]", "", normalized, flags=re.UNICODE)
@@ -289,12 +397,26 @@ def _local_quality_check(text_pt: str, text_en: str) -> tuple[bool, list[str]]:
         text_en, BANNED_NAME_TERMS
     ):
         failures.append("candidate_reference")
+    if _contains_party_reference(text_pt) or _contains_party_reference(text_en):
+        failures.append("party_reference")
     if _contains_banned_terms(text_pt, BANNED_EVENT_TERMS):
         failures.append("news_event")
     if any(normalized_pt.startswith(prefix) for prefix in BANNED_OPTION_OPENINGS_PT):
         failures.append("boilerplate")
     if any(normalized_en.startswith(prefix) for prefix in BANNED_OPTION_OPENINGS_EN):
         failures.append("boilerplate")
+    broken_continuation_patterns = (
+        r"\b(isso\s+inclui\s+[a-zéêãõ]{1,4}\s)",  # "Isso inclui é", "Isso inclui o"
+        r"\b(tamb[eé]m\s+[eé]\s+essencial\s+[a-zéêãõ]{1,4}\s)",  # "Também é essencial apoiou"
+        r"\b(\b[a-zéêãõ]{1,3}\b\s){3,}",  # 3+ single-char words in a row (glue fragments)
+        r",\s*,",  # double comma
+        r"apoiou\s+a\s+reforma|defendeu\s+a\s+reforma|apoia\s+a\s+reforma|votou\s+a\s+favor\s+do\s+processo",
+        r"dados\s+da\s+wikipedia",
+    )
+    for pat in broken_continuation_patterns:
+        if re.search(pat, normalized_pt) or re.search(pat, normalized_en):
+            failures.append("broken_continuation")
+            break
     return (len(failures) == 0, failures)
 
 
@@ -321,6 +443,8 @@ def _sanitize_fallback_fragment(
     if not cleaned:
         return None
     cleaned = re.sub(r"\s+", " ", cleaned)
+    if _contains_party_reference(cleaned):
+        return None
     for term in BANNED_NAME_TERMS:
         cleaned = re.sub(rf"\b{re.escape(term)}\b", "", cleaned, flags=re.IGNORECASE)
     for term in BANNED_EVENT_TERMS:
@@ -371,7 +495,7 @@ def _fallback_option_text(
 ) -> tuple[str, str]:
     pt_intros = {
         "strongly_favor": [
-            "Defendo fortemente que",
+            "Defendo firmemente que",
             "Acredito que é prioridade que",
             "Quero que",
             "Sou favorável a que",
@@ -389,16 +513,16 @@ def _fallback_option_text(
             "Na minha visão, é melhor que",
         ],
         "against": [
-            "Sou contra que",
-            "Não apoio que",
-            "Prefiro evitar que",
-            "Entendo que é melhor evitar que",
+            "Defendo que o governo mantenha cautela e avalie com rigor antes de mudar regras existentes.",
+            "Sou a favor de preservar o que funciona e avançar apenas quando houver consenso amplo.",
+            "Prefiro que o governo priorize estabilidade e segurança jurídica antes de promover alterações.",
+            "Acredito que mudanças significativas exigem evidência sólida e debate aprofundado.",
         ],
         "strongly_against": [
-            "Sou totalmente contra que",
-            "Rejeito que",
-            "Não aceito que",
-            "Sou firmemente contra que",
+            "Sou absolutamente a favor de que o governo mantenha o rumo atual e rejeite pressões por mudanças.",
+            "Defendo com firmeza que o governo não modifique políticas estabelecidas sem necessidade absoluta.",
+            "Acredito que qualquer alteração deve ser rejeitada se representar ruptura sem justificativa clara.",
+            "Sou favorável a que o governo resista a reformas que possam desestabilizar o que já está consolidado.",
         ],
     }
     en_intros = {
@@ -421,33 +545,18 @@ def _fallback_option_text(
             "In my view, it is better that",
         ],
         "against": [
-            "I oppose the idea that",
-            "I do not support the idea that",
-            "I prefer to avoid a policy where",
-            "I consider it better to avoid a policy where",
+            "I believe the government should proceed with caution and evaluate carefully before changing existing rules.",
+            "I am in favor of preserving what works and only advancing when there is broad consensus.",
+            "I prefer that the government prioritize stability and legal certainty before promoting changes.",
+            "I believe significant changes require solid evidence and thorough debate.",
         ],
         "strongly_against": [
-            "I strongly oppose the idea that",
-            "I reject a policy where",
-            "I firmly oppose any approach where",
-            "I do not accept a policy where",
+            "I am absolutely in favor of the government maintaining its current course and rejecting pressures for change.",
+            "I firmly believe the government should not modify established policies without absolute necessity.",
+            "I believe any alteration should be rejected if it represents a rupture without clear justification.",
+            "I am in favor of the government resisting reforms that could destabilize what is already consolidated.",
         ],
     }
-    pt_core = {
-        "strongly_favor": "o governo avance com mudanças ambiciosas e instrumentos claros de implementação",
-        "favor": "o governo avance com reformas graduais e metas públicas verificáveis",
-        "neutral": "o governo mantenha equilíbrio entre custos, resultados e impacto social antes de ampliar mudanças",
-        "against": "o governo evite mudanças bruscas e preserve regras estáveis com monitoramento de resultados",
-        "strongly_against": "o governo barre expansões de intervenção e mantenha limites rígidos na política pública",
-    }
-    en_core = {
-        "strongly_favor": "the government should move forward with ambitious reforms and clear implementation tools",
-        "favor": "the government should move forward with gradual reforms and publicly verifiable targets",
-        "neutral": "the government should balance costs, outcomes, and social impact before expanding reforms",
-        "against": "the government should avoid abrupt changes and preserve stable rules with outcome tracking",
-        "strongly_against": "the government should block further intervention expansion and keep strict policy limits",
-    }
-
     stance_key = stance if stance in STANCE_TO_WEIGHT else "neutral"
     seed_raw = f"{topic_id}:{candidate_slug}:{stance_key}:{variant_offset}"
     seed = int(sha256(seed_raw.encode("utf-8")).hexdigest()[:8], 16)
@@ -455,27 +564,30 @@ def _fallback_option_text(
 
     topic_pt = topic_label_pt.strip().lower() or topic_id.replace("_", " ")
     topic_en = topic_label_en.strip().lower() or topic_id.replace("_", " ")
-    summary_hint_pt = _extract_summary_hint(summary_pt)
-    summary_hint_en = _extract_summary_hint(summary_en)
+    summary_hint_pt = _extract_summary_hint(summary_pt) if summary_pt else None
+    summary_hint_en = _extract_summary_hint(summary_en) if summary_en else None
     action_hint_pt = _extract_action_hint(key_actions)
 
-    text_pt = (
-        f"{pt_intros[stance_key][intro_index]} na pauta de {topic_pt}, "
-        f"{pt_core[stance_key]}, com metas transparentes e revisão periódica."
-    )
-    if summary_hint_pt:
-        text_pt += f" Isso inclui {summary_hint_pt.lower()}."
-    if action_hint_pt:
-        text_pt += f" Também é essencial {action_hint_pt.lower()}."
-    text_pt = _truncate_words(text_pt, max_words=80)
+    def _build_pt(intro: str, topic: str) -> str:
+        sentence = f"{intro} na pauta de {topic}."
+        if summary_hint_pt:
+            sentence = (
+                f"{intro} {topic}. {summary_hint_pt[0].upper()}{summary_hint_pt[1:]}"
+            )
+        if action_hint_pt and summary_hint_pt != action_hint_pt:
+            sentence += f" {action_hint_pt[0].upper()}{action_hint_pt[1:]}"
+        return _truncate_words(sentence, max_words=80)
 
-    text_en = (
-        f"{en_intros[stance_key][intro_index]} on {topic_en}, "
-        f"{en_core[stance_key]}, with transparent targets and periodic review."
-    )
-    if summary_hint_en:
-        text_en += f" This includes {summary_hint_en.lower()}."
-    text_en = _truncate_words(text_en, max_words=80)
+    def _build_en(intro: str, topic: str) -> str:
+        sentence = f"{intro} {topic}."
+        if summary_hint_en:
+            sentence = (
+                f"{intro} {topic}. {summary_hint_en[0].upper()}{summary_hint_en[1:]}"
+            )
+        return _truncate_words(sentence, max_words=80)
+
+    text_pt = _build_pt(pt_intros[stance_key][intro_index], topic_pt)
+    text_en = _build_en(en_intros[stance_key][intro_index], topic_en)
 
     pt_desc = _STANCE_FALLBACK_PT.get(stance, _STANCE_FALLBACK_PT["neutral"])
     en_desc = _STANCE_FALLBACK_EN.get(stance, _STANCE_FALLBACK_EN["neutral"])
@@ -509,7 +621,7 @@ def build_topic_options(
     question_pt: str,
     question_en: str,
     known_positions: list[dict[str, object]],
-) -> tuple[list[dict[str, object]], str | None, str | None]:
+) -> tuple[list[dict[str, object]], str | None, str | None, bool]:
     generation = generate_quiz_topic_options(
         topic_id=topic_id,
         topic_label_pt=topic_label_pt,
@@ -531,6 +643,50 @@ def build_topic_options(
     used_candidates: set[str] = set()
     used_text_pt: set[str] = set()
     used_text_en: set[str] = set()
+    validation_degraded = False
+
+    def _validate_option_with_retry(
+        *,
+        text_pt: str,
+        text_en: str,
+        weight: int,
+    ) -> bool:
+        nonlocal validation_degraded
+        if validation_degraded:
+            return True
+        for attempt in range(2):
+            try:
+                validation = validate_quiz_option_quality(
+                    topic_id=topic_id,
+                    text_pt=text_pt,
+                    text_en=text_en,
+                    weight=weight,
+                )
+            except Exception as exc:
+                logger.warning(
+                    "Quiz validator unavailable for topic=%s; using local fallback: %s",
+                    topic_id,
+                    exc,
+                )
+                validation_degraded = True
+                return True
+            if validation.get("passes_all"):
+                return True
+            if validation.get("_parse_error"):
+                if attempt == 0:
+                    logger.info(
+                        "Validator parse failure for topic=%s. Retrying once.",
+                        topic_id,
+                    )
+                    continue
+                logger.warning(
+                    "Validator parse failures persisted for topic=%s; using local fallback.",
+                    topic_id,
+                )
+                validation_degraded = True
+                return True
+            return False
+        return False
 
     for generated in generated_options:
         if not isinstance(generated, dict):
@@ -565,14 +721,8 @@ def build_topic_options(
         weight = generated.get("weight")
         if not isinstance(weight, int) or weight not in {-3, -2, 0, 2, 3}:
             weight = STANCE_TO_WEIGHT[str(stance)]
-        summary_pt = (
-            _normalize_text(mapped_position.get("summary_pt"))
-            or "a política pública deve ser clara e previsível"
-        )
-        summary_en = (
-            _normalize_text(mapped_position.get("summary_en"))
-            or "public policy should be clear and predictable"
-        )
+        summary_pt = _normalize_text(mapped_position.get("summary_pt"))
+        summary_en = _normalize_text(mapped_position.get("summary_en"))
         key_actions = mapped_position.get("key_actions")
         if not isinstance(key_actions, list):
             key_actions = []
@@ -580,13 +730,11 @@ def build_topic_options(
         local_pass, local_failures = _local_quality_check(text_pt, text_en)
         ai_pass = False
         if local_pass:
-            validation = validate_quiz_option_quality(
-                topic_id=topic_id,
+            ai_pass = _validate_option_with_retry(
                 text_pt=text_pt,
                 text_en=text_en,
                 weight=weight,
             )
-            ai_pass = bool(validation.get("passes_all"))
         if not local_pass or not ai_pass:
             fallback_selected = False
             for variant_offset in range(8):
@@ -609,6 +757,12 @@ def build_topic_options(
                 fp_pt = _normalize_option_fingerprint(fallback_pt)
                 fp_en = _normalize_option_fingerprint(fallback_en)
                 if fp_pt in used_text_pt or fp_en in used_text_en:
+                    continue
+                if not _validate_option_with_retry(
+                    text_pt=fallback_pt,
+                    text_en=fallback_en,
+                    weight=weight,
+                ):
                     continue
                 text_pt, text_en = fallback_pt, fallback_en
                 fallback_selected = True
@@ -648,6 +802,12 @@ def build_topic_options(
                     and diversified_fp_pt not in used_text_pt
                     and diversified_fp_en not in used_text_en
                 ):
+                    if not _validate_option_with_retry(
+                        text_pt=diversified_pt,
+                        text_en=diversified_en,
+                        weight=weight,
+                    ):
+                        continue
                     text_pt, text_en = diversified_pt, diversified_en
                     fingerprint_pt = diversified_fp_pt
                     fingerprint_en = diversified_fp_en
@@ -692,6 +852,7 @@ def build_topic_options(
         options,
         _normalize_text(generator_provider),
         _normalize_text(generator_model),
+        validation_degraded,
     )
 
 
@@ -722,7 +883,12 @@ def main() -> None:
             continue
 
         question_pt, question_en = build_question_text(topic_id)
-        options, generator_provider, generator_model = build_topic_options(
+        (
+            options,
+            generator_provider,
+            generator_model,
+            validation_degraded,
+        ) = build_topic_options(
             topic_id=topic_id,
             topic_label_pt=topic_label_pt,
             topic_label_en=topic_label_en,
@@ -746,8 +912,12 @@ def main() -> None:
             "question_pt": question_pt,
             "question_en": question_en,
             "generation_quality": {
-                "validated": True,
-                "validator_model": "nvidia:moonshotai/kimi-k2.5",
+                "validated": not validation_degraded,
+                "validator_model": (
+                    "local:heuristic-fallback"
+                    if validation_degraded
+                    else "nvidia:moonshotai/kimi-k2.5"
+                ),
                 "validation_date": datetime.now(timezone.utc)
                 .replace(microsecond=0)
                 .isoformat()

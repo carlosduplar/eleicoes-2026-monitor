@@ -78,6 +78,9 @@ POSITION_STANCE_TO_WEIGHT = {
 MARKDOWN_JSON_RE = re.compile(
     r"^\s*```(?:json)?\s*(.*?)\s*```\s*$", re.IGNORECASE | re.DOTALL
 )
+MARKDOWN_JSON_SEARCH_RE = re.compile(
+    r"```(?:json)?\s*(.*?)\s*```", re.IGNORECASE | re.DOTALL
+)
 
 # These NVIDIA models run in "thinking" mode by default and surface the chain-of-thought
 # in `reasoning_content` while leaving `content` empty. For JSON tasks we MUST disable
@@ -411,22 +414,35 @@ def _request_completion(
             raise
         if isinstance(resp_data, list):
             resp_data = resp_data[0]
-        try:
-            parts = resp_data["candidates"][0]["content"]["parts"]
-            if not isinstance(parts, list):
-                raise ValueError(f"Unexpected Vertex response format: {resp_data}")
-            chunks: list[str] = []
-            for part in parts:
-                if not isinstance(part, dict):
-                    continue
-                text = part.get("text")
-                if isinstance(text, str) and text:
-                    chunks.append(text)
-            if chunks:
-                return "".join(chunks).strip()
+        candidates = resp_data.get("candidates")
+        if not isinstance(candidates, list) or not candidates:
             raise ValueError(f"Unexpected Vertex response format: {resp_data}")
-        except (KeyError, IndexError) as e:
-            raise ValueError(f"Unexpected Vertex response format: {resp_data}") from e
+        first_candidate = candidates[0]
+        if not isinstance(first_candidate, dict):
+            raise ValueError(f"Unexpected Vertex response format: {resp_data}")
+        content = first_candidate.get("content")
+        chunks: list[str] = []
+        if isinstance(content, dict):
+            parts = content.get("parts")
+            if isinstance(parts, list):
+                for part in parts:
+                    if not isinstance(part, dict):
+                        continue
+                    text = part.get("text")
+                    if isinstance(text, str) and text:
+                        chunks.append(text)
+            content_text = content.get("text")
+            if isinstance(content_text, str) and content_text.strip():
+                chunks.append(content_text.strip())
+        if chunks:
+            return "".join(chunks).strip()
+        finish_reason = first_candidate.get("finishReason")
+        if isinstance(finish_reason, str) and finish_reason:
+            raise ValueError(
+                "Vertex returned no text content "
+                f"(finishReason={finish_reason}, model={provider['model']})."
+            )
+        raise ValueError(f"Unexpected Vertex response format: {resp_data}")
 
     client_kwargs: dict[str, object] = {
         "api_key": api_key,
@@ -627,35 +643,25 @@ def call_with_fallback(system: str, user: str, max_tokens: int = 500) -> Provide
     )
 
 
-def _extract_last_json_block(text: str) -> str | None:
-    """Return the last parseable JSON object found in *text*, or None.
-
-    Used as a last-resort fallback when a thinking model surfaces its chain-of-
-    thought in ``reasoning_content`` (which may contain an embedded JSON answer)
-    instead of returning clean JSON in ``content``.
-    """
-    for match in reversed(list(re.finditer(r"\{", text))):
-        pos = match.start()
-        depth = 0
-        end = -1
-        for i, ch in enumerate(text[pos:]):
-            if ch == "{":
-                depth += 1
-            elif ch == "}":
-                depth -= 1
-                if depth == 0:
-                    end = pos + i + 1
-                    break
-        if end == -1:
-            continue
-        candidate = text[pos:end]
+def _extract_last_json_value(
+    text: str,
+    expected_type: type[dict[str, object]] | type[list[object]],
+) -> str | None:
+    decoder = json.JSONDecoder()
+    starts = [match.start() for match in re.finditer(r"[\{\[]", text)]
+    for pos in reversed(starts):
         try:
-            parsed = json.loads(candidate)
-            if isinstance(parsed, dict):
-                return candidate
-        except (json.JSONDecodeError, ValueError):
+            parsed, end = decoder.raw_decode(text[pos:])
+        except ValueError:
             continue
+        if isinstance(parsed, expected_type):
+            return text[pos : pos + end]
     return None
+
+
+def _extract_last_json_block(text: str) -> str | None:
+    """Return the last parseable JSON object found in *text*, or None."""
+    return _extract_last_json_value(text, dict)
 
 
 def _is_not_found_error(exc: Exception) -> bool:
@@ -673,6 +679,9 @@ def _strip_markdown_code_fence(text: str) -> str:
     match = MARKDOWN_JSON_RE.match(stripped)
     if match:
         return match.group(1).strip()
+    fence_match = MARKDOWN_JSON_SEARCH_RE.search(stripped)
+    if fence_match:
+        return fence_match.group(1).strip()
     return stripped
 
 
@@ -681,9 +690,9 @@ def _parse_json_dict(text: str) -> dict[str, object]:
     try:
         parsed = json.loads(maybe_json)
     except json.JSONDecodeError:
-        recovered = _extract_last_json_block(maybe_json)
+        recovered = _extract_last_json_value(maybe_json, dict)
         if recovered is None:
-            recovered = _extract_last_json_block(text)
+            recovered = _extract_last_json_value(text, dict)
         if recovered is None:
             raise
         parsed = json.loads(recovered)
@@ -697,9 +706,9 @@ def _parse_json_list(text: str) -> list[object]:
     try:
         parsed = json.loads(maybe_json)
     except json.JSONDecodeError:
-        recovered = _extract_last_json_block(maybe_json)
+        recovered = _extract_last_json_value(maybe_json, list)
         if recovered is None:
-            recovered = _extract_last_json_block(text)
+            recovered = _extract_last_json_value(text, list)
         if recovered is None:
             raise
         parsed = json.loads(recovered)
