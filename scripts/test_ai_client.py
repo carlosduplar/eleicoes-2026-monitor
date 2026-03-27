@@ -197,7 +197,9 @@ def test_request_completion_vertex_does_not_add_grounding_tools(
         return object()
 
     monkeypatch.setattr(urllib.request, "Request", fake_request)
-    monkeypatch.setattr(urllib.request, "urlopen", lambda req: _Response())
+    monkeypatch.setattr(
+        urllib.request, "urlopen", lambda req, timeout=None: _Response()
+    )
 
     result = ai_client._request_completion(
         provider=provider,
@@ -212,6 +214,48 @@ def test_request_completion_vertex_does_not_add_grounding_tools(
     generation_config = request_payloads[0]["generationConfig"]
     assert generation_config["thinkingConfig"] == {"thinkingBudget": 0}
     assert generation_config["responseMimeType"] == "application/json"
+
+
+def test_request_completion_vertex_raises_with_finish_reason_when_no_text(
+    monkeypatch: pytest.MonkeyPatch,
+) -> None:
+    provider = _provider(
+        "vertex",
+        "VERTEX_API_KEY",
+        "https://aiplatform.googleapis.com",
+        "gemini-3-flash-preview",
+    )
+    monkeypatch.setenv("VERTEX_API_KEY", "vertex-key")
+
+    class _Response:
+        def __enter__(self) -> "_Response":
+            return self
+
+        def __exit__(self, exc_type, exc, tb) -> None:
+            return None
+
+        def read(self) -> bytes:
+            return json.dumps(
+                {
+                    "candidates": [
+                        {"content": {"role": "model"}, "finishReason": "MAX_TOKENS"}
+                    ]
+                }
+            ).encode("utf-8")
+
+    monkeypatch.setattr(urllib.request, "Request", lambda *args, **kwargs: object())
+    monkeypatch.setattr(
+        urllib.request, "urlopen", lambda req, timeout=None: _Response()
+    )
+
+    with pytest.raises(ValueError, match="finishReason=MAX_TOKENS"):
+        ai_client._request_completion(
+            provider=provider,
+            api_key="ignored",
+            system="system",
+            user="user",
+            max_tokens=200,
+        )
 
 
 def test_extract_content_from_object_content_parts() -> None:
@@ -230,6 +274,18 @@ def test_extract_content_from_object_content_parts() -> None:
         choices = [_Choice()]
 
     assert ai_client._extract_content_from_response(_Response()) == "ok"
+
+
+def test_parse_json_list_from_prose_with_fenced_json() -> None:
+    text = (
+        "Here is the JSON requested:\n"
+        "```json\n"
+        '[{"text_pt":"abc","text_en":"def"}]\n'
+        "```"
+    )
+    parsed = ai_client._parse_json_list(text)
+    assert isinstance(parsed, list)
+    assert parsed[0]["text_pt"] == "abc"
 
 
 def test_fallback_first_provider_succeeds(monkeypatch: pytest.MonkeyPatch) -> None:
