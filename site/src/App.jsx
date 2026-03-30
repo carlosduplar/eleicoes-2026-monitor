@@ -9,8 +9,6 @@ import CandidatePage from './pages/CandidatePage';
 import CandidatesPage from './pages/CandidatesPage';
 import ComparisonPage from './pages/ComparisonPage';
 import CaseStudyPage from './pages/CaseStudyPage';
-import DoadoresPage from './pages/DoadoresPage';
-import FinanciamentoPage from './pages/FinanciamentoPage';
 import Home from './pages/Home';
 import MethodologyPage from './pages/MethodologyPage';
 import PollsPage from './pages/PollsPage';
@@ -56,8 +54,6 @@ function AppShell() {
     '/metodologia': t('nav.metodologia'),
     '/candidatos': t('nav.candidatos'),
     '/sobre/caso-de-uso': t('nav.caso_de_uso'),
-    '/financiamento': t('financiamento.title'),
-    '/doadores': t('doadores.title'),
   };
 
   let routeLabel = pathLabels[normalizedPath] || '';
@@ -115,9 +111,6 @@ function AppShell() {
               <li>
                 <Link to="/quiz">{t('nav.quiz')}</Link>
               </li>
-              <li>
-                <Link to="/financiamento">{t('nav.financiamento')}</Link>
-              </li>
             </ul>
           </div>
           <div>
@@ -159,8 +152,6 @@ export const routes = [
       { path: 'quiz', element: <QuizPage /> },
       { path: 'metodologia', element: <MethodologyPage /> },
       { path: 'sobre/caso-de-uso', element: <CaseStudyPage /> },
-      { path: 'financiamento', element: <FinanciamentoPage /> },
-      { path: 'doadores', element: <DoadoresPage /> },
     ],
   },
 ];
