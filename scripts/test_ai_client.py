@@ -288,6 +288,43 @@ def test_parse_json_list_from_prose_with_fenced_json() -> None:
     assert parsed[0]["text_pt"] == "abc"
 
 
+def test_generate_quiz_topic_options_recovers_truncated_array(
+    monkeypatch: pytest.MonkeyPatch,
+) -> None:
+    truncated = (
+        '[{"text_pt":"Defendo que o governo fortaleça a fiscalização ambiental com metas anuais.",'
+        '"text_en":"I believe the government should strengthen environmental enforcement with annual targets.",'
+        '"mapped_position":1,"stance":"favor","weight":2},'
+        '{"text_pt":"Acredito que'
+    )
+    monkeypatch.setattr(
+        ai_client,
+        "_call_with_fallback_for_task",
+        lambda **_kwargs: {
+            "content": truncated,
+            "provider": "vertex",
+            "model": "gemini-3.1-pro-preview",
+            "paid": True,
+        },
+    )
+    known_positions = [
+        {"candidate_slug": "lula", "stance": "favor", "summary_pt": "", "key_actions": []}
+    ]
+
+    result = ai_client.generate_quiz_topic_options(
+        topic_id="meio_ambiente",
+        topic_label_pt="Meio Ambiente",
+        topic_label_en="Environment",
+        question_pt="Pergunta",
+        question_en="Question",
+        known_positions=known_positions,
+    )
+
+    assert result["_parse_error"] is False
+    assert len(result["options"]) == 1
+    assert result["options"][0]["mapped_position"] == 1
+
+
 def test_fallback_first_provider_succeeds(monkeypatch: pytest.MonkeyPatch) -> None:
     chain = [
         _provider("first", "FIRST_KEY", "https://first.example/v1", "model-1"),

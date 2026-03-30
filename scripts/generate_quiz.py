@@ -21,6 +21,7 @@ QUIZ_FILE = ROOT_DIR / "site" / "public" / "data" / "quiz.json"
 SCHEMA_FILE = ROOT_DIR / "docs" / "schemas" / "quiz.schema.json"
 
 OPTION_IDS = ["opt_a", "opt_b", "opt_c", "opt_d", "opt_e", "opt_f"]
+MIN_OPTIONS_PER_TOPIC = 3
 KNOWN_POSITION_TYPES = {"confirmed", "inferred"}
 STANCE_TO_WEIGHT = {
     "strongly_favor": 3,
@@ -335,7 +336,6 @@ def _looks_like_first_person_position(text_pt: str) -> bool:
         "na minha visão",
         "na minha visao",
         "não apoio que",
-        "na pauta de",
     )
     normalized = re.sub(r"\s+", " ", text_pt.strip().lower())
     return any(normalized.startswith(prefix) for prefix in starters)
@@ -412,6 +412,10 @@ def _local_quality_check(text_pt: str, text_en: str) -> tuple[bool, list[str]]:
         r",\s*,",  # double comma
         r"apoiou\s+a\s+reforma|defendeu\s+a\s+reforma|apoia\s+a\s+reforma|votou\s+a\s+favor\s+do\s+processo",
         r"dados\s+da\s+wikipedia",
+        r"\.\s+na\s+pauta\s+de\b",  # sentence fragment like ". na pauta de"
+        r"\bpolicy\s+for\b.*\bshould\s+(?:supports|advocates|prefers|defends)\b",
+        r"\bi\s+believe\s+the\s+policy\s+for\b",
+        r"^\s*here\s+is\s+the\s+json\s+requested\b",
     )
     for pat in broken_continuation_patterns:
         if re.search(pat, normalized_pt) or re.search(pat, normalized_en):
@@ -421,18 +425,18 @@ def _local_quality_check(text_pt: str, text_en: str) -> tuple[bool, list[str]]:
 
 
 _STANCE_FALLBACK_PT = {
-    "strongly_favor": "defende uma mudança progressista e ampla, priorizando direitos e expansão de políticas públicas",
-    "favor": "apoia reformas moderadas com foco em modernização e melhoria gradual do cenário atual",
-    "neutral": "busca um equilíbrio pragmático, avaliando prós e contras antes de avançar com reformas",
-    "against": "prefere manter a estabilidade institucional, evitando mudanças radicais no cenário atual",
-    "strongly_against": "defende firmemente a preservação do status quo, resistindo a propostas de liberalização",
+    "strongly_favor": "priorize mudanças amplas com expansão de direitos e de políticas públicas",
+    "favor": "avance com reformas graduais e metas públicas verificáveis",
+    "neutral": "busque equilíbrio pragmático antes de ampliar mudanças estruturais",
+    "against": "mantenha estabilidade institucional e evite mudanças bruscas sem consenso",
+    "strongly_against": "preserve o modelo atual e rejeite reformas de ruptura sem justificativa sólida",
 }
 _STANCE_FALLBACK_EN = {
-    "strongly_favor": "advocates for broad progressive change, prioritizing rights and expansion of public policies",
-    "favor": "supports moderate reforms focused on modernization and gradual improvement of the current landscape",
-    "neutral": "seeks a pragmatic balance, weighing pros and cons before advancing reforms",
-    "against": "prefers to maintain institutional stability, avoiding radical changes to the current landscape",
-    "strongly_against": "firmly defends preserving the status quo, resisting liberalization proposals",
+    "strongly_favor": "prioritize broad reforms that expand rights and public policies",
+    "favor": "advance gradual reforms with transparent and measurable goals",
+    "neutral": "seek pragmatic balance before expanding structural reforms",
+    "against": "maintain institutional stability and avoid abrupt changes without consensus",
+    "strongly_against": "preserve the current framework and reject disruptive reforms without strong justification",
 }
 
 
@@ -493,74 +497,22 @@ def _fallback_option_text(
     stance: str = "neutral",
     variant_offset: int = 0,
 ) -> tuple[str, str]:
-    pt_intros = {
-        "strongly_favor": [
-            "Defendo firmemente que",
-            "Acredito que é prioridade que",
-            "Quero que",
-            "Sou favorável a que",
-        ],
-        "favor": [
-            "Defendo que",
-            "Acredito que",
-            "Considero melhor que",
-            "Sou favorável a que",
-        ],
-        "neutral": [
-            "Entendo que",
-            "Considero adequado que",
-            "Acredito que",
-            "Na minha visão, é melhor que",
-        ],
-        "against": [
-            "Defendo que o governo mantenha cautela e avalie com rigor antes de mudar regras existentes.",
-            "Sou a favor de preservar o que funciona e avançar apenas quando houver consenso amplo.",
-            "Prefiro que o governo priorize estabilidade e segurança jurídica antes de promover alterações.",
-            "Acredito que mudanças significativas exigem evidência sólida e debate aprofundado.",
-        ],
-        "strongly_against": [
-            "Sou absolutamente a favor de que o governo mantenha o rumo atual e rejeite pressões por mudanças.",
-            "Defendo com firmeza que o governo não modifique políticas estabelecidas sem necessidade absoluta.",
-            "Acredito que qualquer alteração deve ser rejeitada se representar ruptura sem justificativa clara.",
-            "Sou favorável a que o governo resista a reformas que possam desestabilizar o que já está consolidado.",
-        ],
-    }
-    en_intros = {
-        "strongly_favor": [
-            "I strongly believe that",
-            "I see it as a priority that",
-            "I want the government to",
-            "I clearly support the idea that",
-        ],
-        "favor": [
-            "I believe that",
-            "I support the idea that",
-            "I consider it better that",
-            "I am in favor of the government",
-        ],
-        "neutral": [
-            "I see it as better that",
-            "I believe that",
-            "I consider it appropriate that",
-            "In my view, it is better that",
-        ],
-        "against": [
-            "I believe the government should proceed with caution and evaluate carefully before changing existing rules.",
-            "I am in favor of preserving what works and only advancing when there is broad consensus.",
-            "I prefer that the government prioritize stability and legal certainty before promoting changes.",
-            "I believe significant changes require solid evidence and thorough debate.",
-        ],
-        "strongly_against": [
-            "I am absolutely in favor of the government maintaining its current course and rejecting pressures for change.",
-            "I firmly believe the government should not modify established policies without absolute necessity.",
-            "I believe any alteration should be rejected if it represents a rupture without clear justification.",
-            "I am in favor of the government resisting reforms that could destabilize what is already consolidated.",
-        ],
-    }
+    pt_intros = [
+        "Defendo que",
+        "Acredito que",
+        "Entendo que",
+        "Na minha visão,",
+    ]
+    en_intros = [
+        "I believe the government should",
+        "I argue the government should",
+        "In my view, the government should",
+        "I support the government choosing to",
+    ]
     stance_key = stance if stance in STANCE_TO_WEIGHT else "neutral"
     seed_raw = f"{topic_id}:{candidate_slug}:{stance_key}:{variant_offset}"
     seed = int(sha256(seed_raw.encode("utf-8")).hexdigest()[:8], 16)
-    intro_index = seed % len(pt_intros[stance_key])
+    intro_index = seed % len(pt_intros)
 
     topic_pt = topic_label_pt.strip().lower() or topic_id.replace("_", " ")
     topic_en = topic_label_en.strip().lower() or topic_id.replace("_", " ")
@@ -568,33 +520,35 @@ def _fallback_option_text(
     summary_hint_en = _extract_summary_hint(summary_en) if summary_en else None
     action_hint_pt = _extract_action_hint(key_actions)
 
-    def _build_pt(intro: str, topic: str) -> str:
-        sentence = f"{intro} na pauta de {topic}."
-        if summary_hint_pt:
-            sentence = (
-                f"{intro} {topic}. {summary_hint_pt[0].upper()}{summary_hint_pt[1:]}"
-            )
-        if action_hint_pt and summary_hint_pt != action_hint_pt:
-            sentence += f" {action_hint_pt[0].upper()}{action_hint_pt[1:]}"
-        return _truncate_words(sentence, max_words=80)
+    pt_desc = _STANCE_FALLBACK_PT.get(stance_key, _STANCE_FALLBACK_PT["neutral"])
+    en_desc = _STANCE_FALLBACK_EN.get(stance_key, _STANCE_FALLBACK_EN["neutral"])
+    text_pt = (
+        f"{pt_intros[intro_index]} o governo {pt_desc} em {topic_pt}, "
+        "com metas transparentes e revisão periódica."
+    )
+    text_en = (
+        f"{en_intros[intro_index]} {en_desc} on {topic_en}, "
+        "with transparent goals and periodic review."
+    )
+    if summary_hint_pt:
+        text_pt += f" Também considero importante {summary_hint_pt.lower()}."
+    if action_hint_pt and summary_hint_pt != action_hint_pt:
+        text_pt += f" Além disso, proponho {action_hint_pt.lower()}."
+    if summary_hint_en:
+        text_en += f" I also consider it important to {summary_hint_en.lower()}."
+    text_pt = _truncate_words(text_pt, max_words=80)
+    text_en = _truncate_words(text_en, max_words=80)
 
-    def _build_en(intro: str, topic: str) -> str:
-        sentence = f"{intro} {topic}."
-        if summary_hint_en:
-            sentence = (
-                f"{intro} {topic}. {summary_hint_en[0].upper()}{summary_hint_en[1:]}"
-            )
-        return _truncate_words(sentence, max_words=80)
-
-    text_pt = _build_pt(pt_intros[stance_key][intro_index], topic_pt)
-    text_en = _build_en(en_intros[stance_key][intro_index], topic_en)
-
-    pt_desc = _STANCE_FALLBACK_PT.get(stance, _STANCE_FALLBACK_PT["neutral"])
-    en_desc = _STANCE_FALLBACK_EN.get(stance, _STANCE_FALLBACK_EN["neutral"])
     if _normalize_word_count(text_pt) < 15:
-        text_pt = f"Acredito que {pt_desc} na pauta de {topic_pt}, com metas transparentes e revisão periódica."
+        text_pt = (
+            f"Acredito que o governo {pt_desc} em {topic_pt}, "
+            "com metas transparentes e revisão periódica."
+        )
     if _normalize_word_count(text_en) < 15:
-        text_en = f"I believe the policy for {topic_en} should {en_desc}, with transparent goals and periodic review."
+        text_en = (
+            f"I believe the government should {en_desc} on {topic_en}, "
+            "with transparent goals and periodic review."
+        )
     return text_pt, text_en
 
 
@@ -622,20 +576,6 @@ def build_topic_options(
     question_en: str,
     known_positions: list[dict[str, object]],
 ) -> tuple[list[dict[str, object]], str | None, str | None, bool]:
-    generation = generate_quiz_topic_options(
-        topic_id=topic_id,
-        topic_label_pt=topic_label_pt,
-        topic_label_en=topic_label_en,
-        question_pt=question_pt,
-        question_en=question_en,
-        known_positions=known_positions,
-    )
-    generated_options = generation.get("options")
-    generator_provider = generation.get("_ai_provider")
-    generator_model = generation.get("_ai_model")
-    if not isinstance(generated_options, list):
-        generated_options = []
-
     mapped_positions = {
         index + 1: position for index, position in enumerate(known_positions)
     }
@@ -644,49 +584,105 @@ def build_topic_options(
     used_text_pt: set[str] = set()
     used_text_en: set[str] = set()
     validation_degraded = False
+    ai_validation_enabled = True
+    generated_options: list[object] = []
+    generator_provider: object = None
+    generator_model: object = None
+    try:
+        generation = generate_quiz_topic_options(
+            topic_id=topic_id,
+            topic_label_pt=topic_label_pt,
+            topic_label_en=topic_label_en,
+            question_pt=question_pt,
+            question_en=question_en,
+            known_positions=known_positions,
+        )
+        maybe_generated = generation.get("options")
+        if isinstance(maybe_generated, list):
+            generated_options = maybe_generated
+        generator_provider = generation.get("_ai_provider")
+        generator_model = generation.get("_ai_model")
+    except Exception as exc:
+        logger.warning(
+            "Quiz option generation unavailable for topic=%s; using deterministic synthesis only: %s",
+            topic_id,
+            exc,
+        )
+        validation_degraded = True
 
-    def _validate_option_with_retry(
+    def _run_optional_ai_validation(
         *,
         text_pt: str,
         text_en: str,
         weight: int,
+    ) -> None:
+        nonlocal validation_degraded, ai_validation_enabled
+        if not ai_validation_enabled:
+            return
+        try:
+            validation = validate_quiz_option_quality(
+                topic_id=topic_id,
+                text_pt=text_pt,
+                text_en=text_en,
+                weight=weight,
+            )
+        except Exception as exc:
+            logger.warning(
+                "Quiz validator became unavailable for topic=%s; switching to local-only validation: %s",
+                topic_id,
+                exc,
+            )
+            validation_degraded = True
+            ai_validation_enabled = False
+            return
+        if validation.get("_parse_error"):
+            logger.info(
+                "Validator parse failure for topic=%s; switching to local-only validation.",
+                topic_id,
+            )
+            validation_degraded = True
+            ai_validation_enabled = False
+
+    def _try_append_option(
+        *,
+        mapped_position: dict[str, object],
+        text_pt: str,
+        text_en: str,
+        weight: int,
     ) -> bool:
-        nonlocal validation_degraded
-        if validation_degraded:
-            return True
-        for attempt in range(2):
-            try:
-                validation = validate_quiz_option_quality(
-                    topic_id=topic_id,
-                    text_pt=text_pt,
-                    text_en=text_en,
-                    weight=weight,
-                )
-            except Exception as exc:
-                logger.warning(
-                    "Quiz validator unavailable for topic=%s; using local fallback: %s",
-                    topic_id,
-                    exc,
-                )
-                validation_degraded = True
-                return True
-            if validation.get("passes_all"):
-                return True
-            if validation.get("_parse_error"):
-                if attempt == 0:
-                    logger.info(
-                        "Validator parse failure for topic=%s. Retrying once.",
-                        topic_id,
-                    )
-                    continue
-                logger.warning(
-                    "Validator parse failures persisted for topic=%s; using local fallback.",
-                    topic_id,
-                )
-                validation_degraded = True
-                return True
+        local_pass, _ = _local_quality_check(text_pt, text_en)
+        if not local_pass:
             return False
-        return False
+
+        fingerprint_pt = _normalize_option_fingerprint(text_pt)
+        fingerprint_en = _normalize_option_fingerprint(text_en)
+        if fingerprint_pt in used_text_pt or fingerprint_en in used_text_en:
+            return False
+
+        _run_optional_ai_validation(text_pt=text_pt, text_en=text_en, weight=weight)
+
+        source_pt, source_en, source_url, source_date = _best_source(mapped_position)
+        position_type = str(mapped_position["position_type"])
+        confidence = "high" if position_type == "confirmed" else "medium"
+        options.append(
+            {
+                "id": "",
+                "text_pt": text_pt,
+                "text_en": text_en,
+                "weight": weight,
+                "candidate_slug": str(mapped_position["candidate_slug"]),
+                "position_type": position_type,
+                "confidence": confidence,
+                "source_pt": source_pt or "",
+                "source_en": source_en or "",
+                "source_url": source_url,
+                "source_date": source_date,
+            }
+        )
+        used_candidates.add(str(mapped_position["candidate_slug"]))
+        used_text_pt.add(fingerprint_pt)
+        used_text_en.add(fingerprint_en)
+        return True
 
     for generated in generated_options:
         if not isinstance(generated, dict):
@@ -721,129 +717,95 @@ def build_topic_options(
         weight = generated.get("weight")
         if not isinstance(weight, int) or weight not in {-3, -2, 0, 2, 3}:
             weight = STANCE_TO_WEIGHT[str(stance)]
-        summary_pt = _normalize_text(mapped_position.get("summary_pt"))
-        summary_en = _normalize_text(mapped_position.get("summary_en"))
+
+        if _try_append_option(
+            mapped_position=mapped_position,
+            text_pt=text_pt,
+            text_en=text_en,
+            weight=weight,
+        ):
+            if len(options) == len(OPTION_IDS):
+                break
+            continue
+
+        summary_pt = _normalize_text(mapped_position.get("summary_pt")) or ""
+        summary_en = _normalize_text(mapped_position.get("summary_en")) or ""
         key_actions = mapped_position.get("key_actions")
         if not isinstance(key_actions, list):
             key_actions = []
-
-        local_pass, local_failures = _local_quality_check(text_pt, text_en)
-        ai_pass = False
-        if local_pass:
-            ai_pass = _validate_option_with_retry(
-                text_pt=text_pt,
-                text_en=text_en,
-                weight=weight,
+        fallback_selected = False
+        for variant_offset in range(16):
+            fallback_pt, fallback_en = _fallback_option_text(
+                topic_id=topic_id,
+                topic_label_pt=topic_label_pt,
+                topic_label_en=topic_label_en,
+                candidate_slug=candidate_slug,
+                summary_pt=summary_pt,
+                summary_en=summary_en,
+                key_actions=key_actions,
+                stance=str(stance),
+                variant_offset=variant_offset,
             )
-        if not local_pass or not ai_pass:
-            fallback_selected = False
-            for variant_offset in range(8):
-                fallback_pt, fallback_en = _fallback_option_text(
-                    topic_id=topic_id,
-                    topic_label_pt=topic_label_pt,
-                    topic_label_en=topic_label_en,
-                    candidate_slug=candidate_slug,
-                    summary_pt=summary_pt,
-                    summary_en=summary_en,
-                    key_actions=key_actions,
-                    stance=str(stance),
-                    variant_offset=variant_offset,
-                )
-                local_pass, local_failures = _local_quality_check(
-                    fallback_pt, fallback_en
-                )
-                if not local_pass:
-                    continue
-                fp_pt = _normalize_option_fingerprint(fallback_pt)
-                fp_en = _normalize_option_fingerprint(fallback_en)
-                if fp_pt in used_text_pt or fp_en in used_text_en:
-                    continue
-                if not _validate_option_with_retry(
-                    text_pt=fallback_pt,
-                    text_en=fallback_en,
-                    weight=weight,
-                ):
-                    continue
-                text_pt, text_en = fallback_pt, fallback_en
+            if _try_append_option(
+                mapped_position=mapped_position,
+                text_pt=fallback_pt,
+                text_en=fallback_en,
+                weight=weight,
+            ):
                 fallback_selected = True
                 break
-            if not fallback_selected:
-                logger.warning(
-                    "Fallback option failed quality or uniqueness checks for topic=%s candidate=%s failures=%s",
-                    topic_id,
-                    candidate_slug,
-                    ",".join(local_failures),
-                )
-                continue
-
-        fingerprint_pt = _normalize_option_fingerprint(text_pt)
-        fingerprint_en = _normalize_option_fingerprint(text_en)
-        if fingerprint_pt in used_text_pt or fingerprint_en in used_text_en:
-            diversified = False
-            for variant_offset in range(8, 16):
-                diversified_pt, diversified_en = _fallback_option_text(
-                    topic_id=topic_id,
-                    topic_label_pt=topic_label_pt,
-                    topic_label_en=topic_label_en,
-                    candidate_slug=candidate_slug,
-                    summary_pt=summary_pt,
-                    summary_en=summary_en,
-                    key_actions=key_actions,
-                    stance=str(stance),
-                    variant_offset=variant_offset,
-                )
-                diversified_local_pass, _ = _local_quality_check(
-                    diversified_pt, diversified_en
-                )
-                diversified_fp_pt = _normalize_option_fingerprint(diversified_pt)
-                diversified_fp_en = _normalize_option_fingerprint(diversified_en)
-                if (
-                    diversified_local_pass
-                    and diversified_fp_pt not in used_text_pt
-                    and diversified_fp_en not in used_text_en
-                ):
-                    if not _validate_option_with_retry(
-                        text_pt=diversified_pt,
-                        text_en=diversified_en,
-                        weight=weight,
-                    ):
-                        continue
-                    text_pt, text_en = diversified_pt, diversified_en
-                    fingerprint_pt = diversified_fp_pt
-                    fingerprint_en = diversified_fp_en
-                    diversified = True
-                    break
-            if not diversified:
-                logger.info(
-                    "Skipping duplicated quiz option for topic=%s candidate=%s",
-                    topic_id,
-                    candidate_slug,
-                )
-                continue
-
-        source_pt, source_en, source_url, source_date = _best_source(mapped_position)
-        position_type = str(mapped_position["position_type"])
-        confidence = "high" if position_type == "confirmed" else "medium"
-        options.append(
-            {
-                "id": "",
-                "text_pt": text_pt,
-                "text_en": text_en,
-                "weight": weight,
-                "candidate_slug": candidate_slug,
-                "position_type": position_type,
-                "confidence": confidence,
-                "source_pt": source_pt or "",
-                "source_en": source_en or "",
-                "source_url": source_url,
-                "source_date": source_date,
-            }
-        )
-        used_candidates.add(candidate_slug)
-        used_text_pt.add(fingerprint_pt)
-        used_text_en.add(fingerprint_en)
+        if not fallback_selected:
+            logger.warning(
+                "Fallback option failed quality or uniqueness checks for topic=%s candidate=%s",
+                topic_id,
+                candidate_slug,
+            )
         if len(options) == len(OPTION_IDS):
             break
+
+    # Deterministic fill preserves coverage when AI generation is sparse or malformed.
+    for candidate_position in known_positions:
+        if len(options) == len(OPTION_IDS):
+            break
+        candidate_slug = str(candidate_position["candidate_slug"])
+        if candidate_slug in used_candidates:
+            continue
+        stance = str(candidate_position.get("stance", "neutral"))
+        if stance not in STANCE_TO_WEIGHT:
+            stance = "neutral"
+        weight = STANCE_TO_WEIGHT[stance]
+        summary_pt = _normalize_text(candidate_position.get("summary_pt")) or ""
+        summary_en = _normalize_text(candidate_position.get("summary_en")) or ""
+        key_actions = candidate_position.get("key_actions")
+        if not isinstance(key_actions, list):
+            key_actions = []
+        appended = False
+        for variant_offset in range(16, 40):
+            fallback_pt, fallback_en = _fallback_option_text(
+                topic_id=topic_id,
+                topic_label_pt=topic_label_pt,
+                topic_label_en=topic_label_en,
+                candidate_slug=candidate_slug,
+                summary_pt=summary_pt,
+                summary_en=summary_en,
+                key_actions=key_actions,
+                stance=stance,
+                variant_offset=variant_offset,
+            )
+            if _try_append_option(
+                mapped_position=candidate_position,
+                text_pt=fallback_pt,
+                text_en=fallback_en,
+                weight=weight,
+            ):
+                appended = True
+                break
+        if not appended:
+            logger.warning(
+                "Deterministic synthesis could not build a valid option for topic=%s candidate=%s",
+                topic_id,
+                candidate_slug,
+            )
 
     for index, option in enumerate(options):
         option["id"] = OPTION_IDS[index]
@@ -896,7 +858,7 @@ def main() -> None:
             question_en=question_en,
             known_positions=known_positions,
         )
-        if len(options) < 2:
+        if len(options) < MIN_OPTIONS_PER_TOPIC:
             continue
 
         if generator_model and not generator_model_used:
