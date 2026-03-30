@@ -10,8 +10,6 @@ const navItems = [
   { to: '/pesquisas', key: 'pesquisas' },
   { to: '/candidatos', key: 'candidatos' },
   { to: '/quiz', key: 'quiz' },
-  { to: '/financiamento', key: 'financiamento' },
-  { to: '/doadores', key: 'doadores' },
   { to: '/metodologia', key: 'metodologia' },
   { to: '/sobre/caso-de-uso', key: 'caso_de_uso' },
 ];
