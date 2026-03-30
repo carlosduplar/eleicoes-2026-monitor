@@ -4,6 +4,7 @@ import { useTranslation } from 'react-i18next';
 import { Link, useParams } from 'react-router-dom';
 import { Bar, BarChart, CartesianGrid, ResponsiveContainer, Tooltip, XAxis, YAxis } from 'recharts';
 
+import CandidateGovData from '@/components/CandidateGovData';
 import MethodologyBadge from '@/components/MethodologyBadge';
 import { useData } from '@/hooks/useData';
 import { CANDIDATE_COLORS } from '@/utils/candidateColors';
@@ -350,6 +351,7 @@ export default function CandidatePage() {
           <CandidateBio candidate={candidate} lang={language} t={t} />
           <CandidateSentiment slug={candidate.slug} sentimentData={sentimentData} t={t} />
           <CandidateArticles slug={candidate.slug} articles={articles} lang={language} t={t} />
+          <CandidateGovData slug={candidate.slug} />
         </div>
         <aside className="candidate-sidebar">
           <CandidatePollSnapshot slug={candidate.slug} polls={polls} lang={language} t={t} />

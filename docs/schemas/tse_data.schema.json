@@ -1,0 +1,79 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "TSE Data",
+  "description": "TSE historical election data and candidate registrations for tracked 2026 pre-candidates.",
+  "type": "object",
+  "required": ["schema_version", "updated_at", "source", "national_results_2022", "candidates"],
+  "properties": {
+    "schema_version": { "type": "string" },
+    "updated_at": { "type": "string", "format": "date-time" },
+    "source": { "type": "string" },
+    "source_url": { "type": "string", "format": "uri" },
+    "disclaimer_pt": { "type": "string" },
+    "disclaimer_en": { "type": "string" },
+    "national_results_2022": {
+      "type": "object",
+      "required": ["election", "candidates"],
+      "properties": {
+        "election": { "type": "string" },
+        "election_id": { "type": "integer" },
+        "total_candidates": { "type": "integer" },
+        "candidates": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "nome": { "type": "string" },
+              "numero": { "type": ["integer", "null"] },
+              "votos": { "type": ["integer", "null"] },
+              "percentual": { "type": ["string", "null"] },
+              "eleito": { "type": "boolean" },
+              "situacao": { "type": ["string", "null"] }
+            }
+          }
+        }
+      }
+    },
+    "candidates": {
+      "type": "object",
+      "additionalProperties": {
+        "type": "object",
+        "required": ["slug", "full_name", "collected_at"],
+        "properties": {
+          "slug": { "type": "string" },
+          "full_name": { "type": "string" },
+          "presidential_2022": {
+            "oneOf": [
+              { "type": "null" },
+              {
+                "type": "object",
+                "properties": {
+                  "nome_urna": { "type": "string" },
+                  "numero": { "type": "integer" },
+                  "partido": { "type": "string" },
+                  "first_round_pct": { "type": "string" },
+                  "second_round_pct": { "type": ["string", "null"] },
+                  "eleito": { "type": "boolean" }
+                }
+              }
+            ]
+          },
+          "state_results_2022": {
+            "type": "object",
+            "additionalProperties": {
+              "type": "object",
+              "properties": {
+                "votos": { "type": ["integer", "null"] },
+                "percentual": { "type": ["string", "null"] },
+                "eleito": { "type": "boolean" }
+              }
+            }
+          },
+          "collected_at": { "type": "string", "format": "date-time" },
+          "source": { "type": "string" },
+          "source_url": { "type": "string" }
+        }
+      }
+    }
+  }
+}

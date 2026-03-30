@@ -1,0 +1,78 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "Transparência Data",
+  "description": "Portal da Transparência data (PEP, emendas, sanções) for tracked 2026 pre-candidates.",
+  "type": "object",
+  "required": ["schema_version", "updated_at", "source", "candidates"],
+  "properties": {
+    "schema_version": { "type": "string" },
+    "updated_at": { "type": "string", "format": "date-time" },
+    "source": { "type": "string" },
+    "source_url": { "type": "string" },
+    "disclaimer_pt": { "type": "string" },
+    "disclaimer_en": { "type": "string" },
+    "candidates": {
+      "type": "object",
+      "additionalProperties": {
+        "type": "object",
+        "required": ["slug", "full_name", "pep", "emendas", "sancoes", "collected_at"],
+        "properties": {
+          "slug": { "type": "string" },
+          "full_name": { "type": "string" },
+          "pep": {
+            "type": "object",
+            "required": ["found", "records"],
+            "properties": {
+              "found": { "type": "boolean" },
+              "records": {
+                "type": "array",
+                "items": {
+                  "type": "object",
+                  "properties": {
+                    "cpf": { "type": ["string", "null"] },
+                    "nome": { "type": ["string", "null"] },
+                    "orgao": { "type": ["string", "null"] },
+                    "funcao": { "type": ["string", "null"] },
+                    "data_inicio": { "type": ["string", "null"] },
+                    "data_fim": { "type": ["string", "null"] },
+                    "nivel": { "type": ["string", "null"] }
+                  }
+                }
+              }
+            }
+          },
+          "emendas": {
+            "type": "object",
+            "required": ["total_count", "total_empenhado_brl", "total_pago_brl", "records"],
+            "properties": {
+              "total_count": { "type": "integer" },
+              "total_empenhado_brl": { "type": "number" },
+              "total_pago_brl": { "type": "number" },
+              "records": {
+                "type": "array",
+                "items": {
+                  "type": "object",
+                  "properties": {
+                    "numero": { "type": ["string", "null"] },
+                    "ano": { "type": ["integer", "null"] },
+                    "autor": { "type": ["string", "null"] },
+                    "tipo": { "type": ["string", "null"] },
+                    "localidade": { "type": ["string", "null"] },
+                    "funcao": { "type": ["string", "null"] },
+                    "subfuncao": { "type": ["string", "null"] },
+                    "valor_empenhado": { "type": ["number", "null"] },
+                    "valor_pago": { "type": ["number", "null"] }
+                  }
+                }
+              }
+            }
+          },
+          "sancoes": { "type": "array" },
+          "collected_at": { "type": "string", "format": "date-time" },
+          "source": { "type": "string" },
+          "source_url": { "type": "string" }
+        }
+      }
+    }
+  }
+}
