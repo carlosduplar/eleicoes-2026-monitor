@@ -2,7 +2,6 @@ import * as ReactHelmetAsync from 'react-helmet-async';
 import { useMemo } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Link, useParams } from 'react-router-dom';
-import { useTranslation } from 'react-i18next';
 import { Bar, BarChart, CartesianGrid, ResponsiveContainer, Tooltip, XAxis, YAxis } from 'recharts';
 
 import MethodologyBadge from '@/components/MethodologyBadge';
