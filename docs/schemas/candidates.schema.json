@@ -49,8 +49,14 @@
           },
           "bio_pt": { "type": "string" },
           "bio_en": { "type": "string" },
-          "photo_url": { "type": ["string", "null"] },
-          "tse_registration_url": { "type": ["string", "null"] }
+          "photo_url": { 
+            "type": ["string", "null"],
+            "description": "Auto-populated from TSE CDN. Manual override allowed."
+          },
+          "tse_registration_url": { 
+            "type": ["string", "null"],
+            "description": "Auto-populated from TSE API. Link to official registration page."
+          }
         },
         "additionalProperties": false
       },

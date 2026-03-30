@@ -43,15 +43,18 @@ jobs:
       - name: Collect TSE data
         run: python scripts/collect_tse.py
 
+      - name: Collect donor data
+        run: python scripts/collect_donors.py || echo "[warn] collect_donors failed, keeping existing data"
+
       - name: Collect Transparencia data
         run: python scripts/collect_transparencia.py || echo "[warn] collect_transparencia failed, keeping existing data"
 
       - name: Commit updated government data
         run: |
-          git add site/public/data/tse_data.json site/public/data/transparencia_data.json
+          git add site/public/data/tse_data.json site/public/data/transparencia_data.json site/public/data/donors.json site/public/data/candidates.json
           if git diff --cached --quiet; then
             echo "No changes to commit."
           else
-            git commit -m "data(gov): update TSE + Transparencia data [skip ci]"
+            git commit -m "data(gov): update TSE + Transparencia + Donors data [skip ci]"
             git push origin HEAD:master
           fi
