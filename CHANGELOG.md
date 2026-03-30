@@ -7,6 +7,17 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 
 ### Added
 
+- Phase 18: Government data integration (TSE + Portal da Transparência).
+  - `scripts/collect_tse.py`: collects 2022 presidential results from TSE CDN and DivulgaCandContas REST API for all 9 tracked candidates.
+  - `scripts/collect_transparencia.py`: collects PEP status and emendas parlamentares from Portal da Transparência API for all 9 candidates.
+  - `site/public/data/tse_data.json`: seed file with Lula's 2022 presidential result pre-filled.
+  - `site/public/data/transparencia_data.json`: seed file with empty PEP/emendas for all 9 candidates.
+  - `docs/schemas/tse_data.schema.json`: JSON Schema (Draft-07) for `tse_data.json`.
+  - `docs/schemas/transparencia_data.schema.json`: JSON Schema (Draft-07) for `transparencia_data.json`.
+  - `site/src/components/CandidateGovData.jsx`: tabbed component (TSE | Transparência) shown on each candidate profile page.
+  - `site/src/pages/FinanciamentoPage.jsx`: `/financiamento` route — sortable transparency dashboard comparing all 9 candidates' PEP status and emendas parlamentares.
+  - `.github/workflows/collect_gov_data.yml`: weekly cron (Sundays 04:00 UTC) to refresh government data files.
+  - `plans/phase-18-arch.md`: architecture document for this extension.
 - Planning artifact for optional extension: `plans/phase-17-arch.md` (Vertex AI Search).
 - `scripts/seed_candidates_positions.py`: one-shot seeder script that populates `data/candidates_positions.json` from Wikipedia PT, Câmara/Senado APIs, and AI synthesis. Idempotent — only fills entries currently marked `unknown`. CI step triggers seeding when unknown ratio exceeds 50%.
 - `docs/SEED_SOURCES.md`: documents seed data sources, licensing, and editorial transparency protocol.

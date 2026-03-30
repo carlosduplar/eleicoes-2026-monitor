@@ -957,6 +957,213 @@ p {
   }
 }
 
+/* ── Government data (TSE + Transparencia) ─────────────────────────── */
+
+.gov-data-card {
+  padding: 0;
+  overflow: hidden;
+}
+
+.gov-data-tabs {
+  display: flex;
+  border-bottom: 1px solid var(--border);
+  gap: 0;
+}
+
+.gov-data-tab-btn {
+  background: none;
+  border: none;
+  border-bottom: 3px solid transparent;
+  padding: 0.6rem 1.1rem;
+  font-size: 0.875rem;
+  font-weight: 600;
+  color: var(--text-secondary);
+  cursor: pointer;
+  transition: color 0.15s, border-color 0.15s;
+}
+
+.gov-data-tab-btn:hover {
+  color: var(--text-primary);
+}
+
+.gov-data-tab-btn.active {
+  color: var(--brand-navy);
+  border-bottom-color: var(--brand-navy);
+}
+
+.gov-data-tab-panel {
+  padding: 1rem 1.1rem;
+}
+
+.gov-data-result-block {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+  margin-bottom: 0.75rem;
+}
+
+.gov-data-result-block h3 {
+  font-size: 0.875rem;
+  margin: 0 0 0.35rem;
+  color: var(--text-secondary);
+  text-transform: uppercase;
+  letter-spacing: 0.03em;
+}
+
+.gov-data-elected-badge {
+  display: inline-flex;
+  align-items: center;
+  margin-top: 0.35rem;
+  padding: 0.2rem 0.6rem;
+  border-radius: 999px;
+  font-size: 0.72rem;
+  font-weight: 600;
+  background: #c6f6d5;
+  color: #22543d;
+}
+
+.gov-data-pep-row {
+  margin-bottom: 0.5rem;
+}
+
+.gov-data-pep-badge {
+  display: inline-flex;
+  align-items: center;
+  padding: 0.2rem 0.6rem;
+  border-radius: 999px;
+  font-size: 0.75rem;
+  font-weight: 600;
+  background: #e2e8f0;
+  color: var(--text-secondary);
+}
+
+.gov-data-pep-badge--found {
+  background: #fefcbf;
+  color: #744210;
+}
+
+.gov-data-disclaimer {
+  font-size: 0.78rem;
+  line-height: 1.5;
+  margin-top: 0.25rem;
+}
+
+.gov-data-source-row {
+  margin-top: 0.75rem;
+}
+
+.gov-data-source-link {
+  font-size: 0.8rem;
+  color: var(--brand-navy);
+}
+
+.gov-data-emendas-summary {
+  display: flex;
+  flex-direction: column;
+  gap: 0.2rem;
+  margin-bottom: 0.75rem;
+}
+
+.gov-data-emendas-table {
+  width: 100%;
+  font-size: 0.78rem;
+  border-collapse: collapse;
+  margin-top: 0.5rem;
+}
+
+.gov-data-emendas-table th,
+.gov-data-emendas-table td {
+  padding: 0.3rem 0.4rem;
+  text-align: left;
+  border-bottom: 1px solid var(--border);
+}
+
+.gov-data-emendas-table th {
+  font-weight: 600;
+  color: var(--text-secondary);
+  background: var(--brand-muted);
+}
+
+/* ── Financiamento page ────────────────────────────────────────────── */
+
+.financiamento-page {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.financiamento-page h1 {
+  font-size: clamp(1.45rem, 1.2rem + 0.7vw, 1.9rem);
+}
+
+.financiamento-disclaimer {
+  max-width: 68ch;
+  line-height: 1.6;
+}
+
+.financiamento-table-wrapper {
+  overflow-x: auto;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+}
+
+.financiamento-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.88rem;
+}
+
+.financiamento-table thead tr {
+  background: var(--brand-muted);
+}
+
+.financiamento-table th,
+.financiamento-table td {
+  padding: 0.55rem 0.75rem;
+  text-align: left;
+  border-bottom: 1px solid var(--border);
+}
+
+.financiamento-table tbody tr:last-child td {
+  border-bottom: none;
+}
+
+.financiamento-table tbody tr:hover {
+  background: var(--brand-muted);
+}
+
+.financiamento-sort-btn {
+  background: none;
+  border: none;
+  font-size: 0.88rem;
+  font-weight: 600;
+  color: var(--text-primary);
+  cursor: pointer;
+  padding: 0;
+  white-space: nowrap;
+}
+
+.financiamento-sort-btn:hover {
+  color: var(--brand-navy);
+}
+
+.financiamento-candidate-link {
+  color: var(--brand-navy);
+  text-decoration: none;
+  font-weight: 500;
+}
+
+.financiamento-candidate-link:hover {
+  text-decoration: underline;
+}
+
+.financiamento-sources {
+  display: flex;
+  flex-direction: column;
+  gap: 0.15rem;
+}
+
+
 .candidates-title {
   font-size: clamp(1.5rem, 1.2rem + 0.75vw, 1.85rem);
 }
