@@ -9,6 +9,7 @@ import CandidatePage from './pages/CandidatePage';
 import CandidatesPage from './pages/CandidatesPage';
 import ComparisonPage from './pages/ComparisonPage';
 import CaseStudyPage from './pages/CaseStudyPage';
+import DoadoresPage from './pages/DoadoresPage';
 import FinanciamentoPage from './pages/FinanciamentoPage';
 import Home from './pages/Home';
 import MethodologyPage from './pages/MethodologyPage';
@@ -56,6 +57,7 @@ function AppShell() {
     '/candidatos': t('nav.candidatos'),
     '/sobre/caso-de-uso': t('nav.caso_de_uso'),
     '/financiamento': t('financiamento.title'),
+    '/doadores': t('doadores.title'),
   };
 
   let routeLabel = pathLabels[normalizedPath] || '';
@@ -158,6 +160,7 @@ export const routes = [
       { path: 'metodologia', element: <MethodologyPage /> },
       { path: 'sobre/caso-de-uso', element: <CaseStudyPage /> },
       { path: 'financiamento', element: <FinanciamentoPage /> },
+      { path: 'doadores', element: <DoadoresPage /> },
     ],
   },
 ];

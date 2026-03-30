@@ -1,0 +1,125 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "Donors",
+  "description": "Campaign donor data for tracked 2026 pre-candidates from 2022 elections. Includes individual (PF) and corporate (PJ) donors with BrasilAPI enrichment for companies. Schema v1.0.0.",
+  "type": "object",
+  "required": ["schema_version", "updated_at", "source", "candidates"],
+  "properties": {
+    "schema_version": { 
+      "type": "string",
+      "enum": ["1.0.0"]
+    },
+    "updated_at": { "type": "string", "format": "date-time" },
+    "source": { "type": "string" },
+    "source_url": { "type": "string", "format": "uri" },
+    "disclaimer_pt": { "type": "string" },
+    "disclaimer_en": { "type": "string" },
+    "election_year": { "type": "integer" },
+    "total_candidates": { "type": "integer" },
+    "total_donations": { "type": "integer" },
+    "total_amount": { "type": "number" },
+    "candidates": {
+      "type": "object",
+      "additionalProperties": {
+        "type": "object",
+        "required": ["slug", "donations", "summary", "collected_at"],
+        "properties": {
+          "slug": { "type": "string" },
+          "sq_candidato": { "type": ["integer", "null"] },
+          "sq_prestador": { "type": ["integer", "null"] },
+          "no_2022_race": { "type": "boolean" },
+          "error": { "type": ["string", "null"] },
+          "donations": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "required": ["donor_type", "donor_name", "amount"],
+              "properties": {
+                "donor_type": {
+                  "type": "string",
+                  "enum": ["PF", "PJ"],
+                  "description": "PF = Individual (Pessoa Física), PJ = Corporate (Pessoa Jurídica)"
+                },
+                "donor_name": { "type": "string" },
+                "donor_document": {
+                  "type": ["string", "null"],
+                  "description": "Masked CPF for PF, full CNPJ for PJ"
+                },
+                "amount": { "type": "number" },
+                "date": { "type": ["string", "null"] },
+                "description": { "type": "string" },
+                "company_data": {
+                  "type": ["object", "null"],
+                  "description": "BrasilAPI enrichment for PJ donors",
+                  "properties": {
+                    "cnpj": { "type": "string" },
+                    "razao_social": { "type": ["string", "null"] },
+                    "nome_fantasia": { "type": ["string", "null"] },
+                    "cnae_fiscal": { "type": ["string", "null"] },
+                    "cnae_fiscal_descricao": { "type": ["string", "null"] },
+                    "porte": { "type": ["string", "null"] },
+                    "capital_social": { "type": ["number", "null"] },
+                    "municipio": { "type": ["string", "null"] },
+                    "uf": { "type": ["string", "null"] },
+                    "situacao_cadastral": { "type": ["string", "null"] },
+                    "natureza_juridica": { "type": ["string", "null"] },
+                    "data_inicio_atividade": { "type": ["string", "null"] }
+                  }
+                },
+                "raw_data": { "type": "object" }
+              }
+            }
+          },
+          "summary": {
+            "type": "object",
+            "required": ["total_donations", "total_amount"],
+            "properties": {
+              "total_donations": { "type": "integer" },
+              "total_amount": { "type": "number" },
+              "pf_count": { "type": "integer" },
+              "pf_amount": { "type": "number" },
+              "pj_count": { "type": "integer" },
+              "pj_amount": { "type": "number" }
+            }
+          },
+          "sector_breakdown": {
+            "oneOf": [
+              { "type": "null" },
+              {
+                "type": "object",
+                "properties": {
+                  "sectors": {
+                    "type": "array",
+                    "items": {
+                      "type": "object",
+                      "properties": {
+                        "sector_code": { "type": "string" },
+                        "sector_name": { "type": "string" },
+                        "total_amount": { "type": "number" },
+                        "donor_count": { "type": "integer" },
+                        "donors": {
+                          "type": "array",
+                          "items": {
+                            "type": "object",
+                            "properties": {
+                              "name": { "type": "string" },
+                              "cnpj": { "type": "string" },
+                              "amount": { "type": "number" }
+                            }
+                          }
+                        }
+                      }
+                    }
+                  },
+                  "total_sectors": { "type": "integer" },
+                  "total_pj_amount": { "type": "number" }
+                }
+              }
+            ]
+          },
+          "collected_at": { "type": "string", "format": "date-time" }
+        }
+      }
+    }
+  }
+}

@@ -1,11 +1,14 @@
 {
   "$schema": "http://json-schema.org/draft-07/schema#",
   "title": "TSE Data",
-  "description": "TSE historical election data and candidate registrations for tracked 2026 pre-candidates.",
+  "description": "TSE historical election data and candidate registrations for tracked 2026 pre-candidates. Schema v2.0.0 adds photo_url, declared_assets, ficha_limpa_status, tse_registration_url, and sq_candidato fields.",
   "type": "object",
   "required": ["schema_version", "updated_at", "source", "national_results_2022", "candidates"],
   "properties": {
-    "schema_version": { "type": "string" },
+    "schema_version": { 
+      "type": "string",
+      "enum": ["2.0.0"]
+    },
     "updated_at": { "type": "string", "format": "date-time" },
     "source": { "type": "string" },
     "source_url": { "type": "string", "format": "uri" },
@@ -68,6 +71,63 @@
                 "eleito": { "type": "boolean" }
               }
             }
+          },
+          "photo_url": {
+            "type": ["string", "null"],
+            "description": "TSE CDN photo URL for the candidate",
+            "format": "uri"
+          },
+          "declared_assets": {
+            "oneOf": [
+              { "type": "null" },
+              {
+                "type": "object",
+                "description": "Candidate's declared assets from 2022 registration",
+                "properties": {
+                  "total_value": { "type": "number" },
+                  "currency": { "type": "string", "enum": ["BRL"] },
+                  "count": { "type": "integer" },
+                  "assets": {
+                    "type": "array",
+                    "items": {
+                      "type": "object",
+                      "properties": {
+                        "description": { "type": "string" },
+                        "value": { "type": "number" },
+                        "type": { "type": "string" }
+                      }
+                    }
+                  }
+                }
+              }
+            ]
+          },
+          "ficha_limpa_status": {
+            "oneOf": [
+              { "type": "null" },
+              {
+                "type": "object",
+                "description": "Clean record (ficha limpa) status from TSE",
+                "properties": {
+                  "is_clean": { "type": "boolean" },
+                  "status_code": { "type": ["integer", "null"] },
+                  "status_description": { "type": ["string", "null"] }
+                }
+              }
+            ]
+          },
+          "tse_registration_url": {
+            "type": ["string", "null"],
+            "description": "Direct link to candidate's TSE registration page",
+            "format": "uri"
+          },
+          "sq_candidato": {
+            "type": ["integer", "null"],
+            "description": "TSE sequential candidate ID for linking to donor data"
+          },
+          "no_2022_race": {
+            "type": "boolean",
+            "description": "True if candidate did not run in 2022 elections"
           },
           "collected_at": { "type": "string", "format": "date-time" },
           "source": { "type": "string" },

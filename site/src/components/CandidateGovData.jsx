@@ -10,6 +10,78 @@ function formatBRL(value) {
   return new Intl.NumberFormat('pt-BR', { style: 'currency', currency: 'BRL', maximumFractionDigits: 0 }).format(value);
 }
 
+function CandidatePhoto({ photoUrl, fullName }) {
+  if (!photoUrl) {
+    return (
+      <div className="candidate-photo-placeholder">
+        <span>{fullName?.charAt(0) || '?'}</span>
+      </div>
+    );
+  }
+
+  return (
+    <img
+      src={photoUrl}
+      alt={`Foto de ${fullName}`}
+      className="candidate-photo"
+      onError={(e) => {
+        e.target.style.display = 'none';
+        e.target.nextSibling.style.display = 'flex';
+      }}
+    />
+  );
+}
+
+function DeclaredAssets({ assets, t }) {
+  if (!assets || !assets.total_value) {
+    return null;
+  }
+
+  return (
+    <div className="gov-data-assets-block">
+      <h4>{t('tse_declared_assets')}</h4>
+      <p className="gov-data-assets-total">
+        <strong>{formatBRL(assets.total_value)}</strong>
+        <span className="candidate-muted"> ({assets.count} bens declarados)</span>
+      </p>
+      {assets.assets && assets.assets.length > 0 && (
+        <ul className="gov-data-assets-list">
+          {assets.assets.slice(0, 5).map((asset, idx) => (
+            // eslint-disable-next-line react/no-array-index-key
+            <li key={idx}>
+              <span className="asset-description">{asset.description}</span>
+              <span className="asset-value">{formatBRL(asset.value)}</span>
+            </li>
+          ))}
+          {assets.assets.length > 5 && (
+            <li className="asset-more">{t('tse_assets_more', { count: assets.assets.length - 5 })}</li>
+          )}
+        </ul>
+      )}
+    </div>
+  );
+}
+
+function FichaLimpaBadge({ status, t }) {
+  if (!status) {
+    return null;
+  }
+
+  const isClean = status.is_clean;
+  const badgeClass = isClean ? 'ficha-limpa-clean' : 'ficha-limpa-not-clean';
+  const label = isClean ? t('tse_ficha_limpa_clean') : t('tse_ficha_limpa_not_clean');
+
+  return (
+    <div className={`gov-data-ficha-limpa-badge ${badgeClass}`}>
+      <span className="ficha-limpa-icon">{isClean ? '✓' : '!'}</span>
+      <span className="ficha-limpa-label">{label}</span>
+      {status.status_description && (
+        <span className="ficha-limpa-desc candidate-muted">({status.status_description})</span>
+      )}
+    </div>
+  );
+}
+
 function TSEPanel({ slug, tseData, t }) {
   const record = tseData?.candidates?.[slug];
   const p2022 = record?.presidential_2022;
@@ -21,6 +93,16 @@ function TSEPanel({ slug, tseData, t }) {
 
   return (
     <div className="gov-data-tse-panel">
+      {record.photo_url && (
+        <div className="gov-data-photo-container">
+          <CandidatePhoto photoUrl={record.photo_url} fullName={record.full_name} />
+        </div>
+      )}
+
+      <FichaLimpaBadge status={record.ficha_limpa_status} t={t} />
+
+      <DeclaredAssets assets={record.declared_assets} t={t} />
+
       {p2022 ? (
         <div className="gov-data-result-block">
           <h3>{t('tse_2022_result')}</h3>
@@ -38,6 +120,20 @@ function TSEPanel({ slug, tseData, t }) {
       ) : (
         <p className="candidate-muted">{t('tse_not_ran')}</p>
       )}
+
+      {record.tse_registration_url && (
+        <p className="gov-data-registration-link">
+          <a
+            href={record.tse_registration_url}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="gov-data-source-link"
+          >
+            {t('tse_link_text')}
+          </a>
+        </p>
+      )}
+
       {disclaimer && (
         <p className="gov-data-disclaimer candidate-muted">{disclaimer}</p>
       )}
