@@ -51,7 +51,7 @@ jobs:
 
       - name: Commit updated government data
         run: |
-          git add site/public/data/tse_data.json site/public/data/transparencia_data.json site/public/data/donors.json site/public/data/candidates.json
+          git add -f site/public/data/tse_data.json site/public/data/transparencia_data.json site/public/data/donors.json site/public/data/candidates.json
           if git diff --cached --quiet; then
             echo "No changes to commit."
           else

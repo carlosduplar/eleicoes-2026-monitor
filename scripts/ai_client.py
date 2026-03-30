@@ -34,6 +34,7 @@ _circuit_breaker_lock = threading.Lock()
 
 # Seconds to sleep before retrying a 429 response from any provider.
 _RATE_LIMIT_RETRY_SLEEP = 12
+_usage_file_invalid_warned = False
 
 VALID_TOPICS = {
     "economia",
@@ -251,6 +252,7 @@ def _provider_chain_for_task(task: str) -> list[ProviderConfig]:
 
 
 def _load_usage() -> dict[str, int]:
+    global _usage_file_invalid_warned
     try:
         raw = USAGE_FILE.read_text(encoding="utf-8")
     except FileNotFoundError:
@@ -262,13 +264,18 @@ def _load_usage() -> dict[str, int]:
     try:
         parsed = json.loads(raw)
     except json.JSONDecodeError as exc:
-        logger.warning("[AI] Usage file is invalid JSON (%s): %s", USAGE_FILE, exc)
+        if not _usage_file_invalid_warned:
+            logger.warning("[AI] Usage file is invalid JSON (%s): %s", USAGE_FILE, exc)
+            _usage_file_invalid_warned = True
         return {}
 
     if not isinstance(parsed, dict):
-        logger.warning(
-            "[AI] Usage file has invalid structure (expected object): %s", USAGE_FILE
-        )
+        if not _usage_file_invalid_warned:
+            logger.warning(
+                "[AI] Usage file has invalid structure (expected object): %s",
+                USAGE_FILE,
+            )
+            _usage_file_invalid_warned = True
         return {}
 
     usage: dict[str, int] = {}
@@ -715,6 +722,32 @@ def _parse_json_list(text: str) -> list[object]:
     if not isinstance(parsed, list):
         raise ValueError("Expected JSON array response.")
     return parsed
+
+
+def _recover_partial_json_list(text: str) -> list[object] | None:
+    """Recover already-complete items from a truncated JSON array string."""
+    payload = _strip_markdown_code_fence(text)
+    start = payload.find("[")
+    if start == -1:
+        return None
+    decoder = json.JSONDecoder()
+    index = start + 1
+    items: list[object] = []
+    length = len(payload)
+    while index < length:
+        while index < length and payload[index] in " \t\r\n,":
+            index += 1
+        if index >= length:
+            break
+        if payload[index] == "]":
+            return items
+        try:
+            item, end = decoder.raw_decode(payload, index)
+        except ValueError:
+            break
+        items.append(item)
+        index = end
+    return items if items else None
 
 
 def _extract_json_string_field(text: str, field: str) -> str | None:
@@ -1289,6 +1322,12 @@ Return JSON array:
             response=response,
             exc=exc,
         )
+        parsed_options = _recover_partial_json_list(response["content"])
+        if parsed_options is not None:
+            logger.info(
+                "[AI] generate_quiz_topic_options recovered %d options from truncated response.",
+                len(parsed_options),
+            )
 
     if parsed_options is None:
         return {
