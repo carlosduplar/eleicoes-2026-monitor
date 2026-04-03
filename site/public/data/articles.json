@@ -2,61 +2,64 @@
   "$schema": "../docs/schemas/articles.schema.json",
   "articles": [
     {
-      "id": "dde464298f8a397a",
-      "url": "https://www1.folha.uol.com.br/colunas/painel/2026/04/em-propaganda-de-tv-lula-e-haddad-citam-recursos-federais-nas-obras-de-sp.shtml",
-      "title": "Em propaganda de TV, Lula e Haddad citam recursos federais nas obras de SP",
-      "source": "UOL Noticias",
-      "published_at": "2026-04-03T19:03:55Z",
-      "collected_at": "2026-04-03T19:03:55Z",
-      "status": "raw",
-      "relevance_score": 0.0,
-      "relevance_signals": null,
-      "candidates_mentioned": [],
-      "topics": [],
-      "narrative_cluster_id": null,
-      "duplicate_of": null,
-      "summaries": {
-        "pt-BR": "",
-        "en-US": ""
-      },
-      "source_category": "mainstream",
-      "sentiment_per_candidate": {},
-      "edit_history": [],
-      "disclaimer_pt": "Análise algorítmica. Não representa pesquisa de opinião.",
-      "disclaimer_en": "Algorithmic analysis. Does not represent polling data.",
-      "sentiment_score": 0.0,
-      "confidence_score": 0.0,
-      "_sentiment_scores": {},
-      "prominence_score": 0.0
-    },
-    {
       "id": "99a3b765dddb7554",
       "url": "https://www.redetv.uol.com.br/jornalismo/politica/planalto-oficializa-exoneracoes-de-geraldo-alckmin-e-gleisi-hoffmann",
       "title": "Planalto oficializa exonerações de Geraldo Alckmin e Gleisi Hoffmann",
       "source": "UOL Noticias",
       "published_at": "2026-04-03T19:03:55Z",
       "collected_at": "2026-04-03T19:03:55Z",
-      "status": "raw",
-      "relevance_score": 0.0,
-      "relevance_signals": null,
-      "candidates_mentioned": [],
-      "topics": [],
+      "status": "validated",
+      "relevance_score": 0.95,
+      "relevance_signals": {
+        "candidate_signal": 0.5,
+        "topic_signal": 0.3,
+        "keyword_signal": 0.15,
+        "source_signal": 0.0
+      },
+      "candidates_mentioned": [
+        "lula"
+      ],
+      "topics": [
+        "eleicoes",
+        "politica_externa",
+        "previdencia",
+        "midia"
+      ],
       "narrative_cluster_id": null,
       "duplicate_of": null,
       "summaries": {
-        "pt-BR": "",
-        "en-US": ""
+        "pt-BR": "O Planalto oficializou as exonerações dos ministros Geraldo Alckmin e Gleisi Hoffmann para que possam disputar as eleições de outubro, cumprindo o prazo legal de desincompatibilização. Alckmin permanece como vice-presidente e busca reeleição na chapa de Lula, enquanto Gleisi Hoffmann pretende concorrer ao Senado pelo Paraná. Outros 15 ministros também deixaram o governo nesta semana, com vagas ainda não preenchidas no MDIC, Secretaria de Relações Institucionais e Ministério do Empreendedorismo.",
+        "en-US": "The Planalto officially announced the resignations of Ministers Geraldo Alckmin and Gleisi Hoffmann so they can run in the October elections, complying with the legal disassociation deadline. Alckmin remains vice-president and is seeking re-election on Lula's ticket, while Hoffmann aims to run for the Senate from Paraná. Fifteen other ministers also left the government this week, with vacancies still unfilled in the MDIC, Institutional Relations Secretariat, and Entrepreneurship Ministry."
       },
       "source_category": "mainstream",
       "content": "Planalto oficializa exonerações de Geraldo Alckmin e Gleisi Hoffmann Redação Rede TV! Ministros são obrigados por lei a deixar cargos seis meses antes do pleito Foto: Agência Brasil O Palácio do Planalto oficializou nesta sexta-feira (3) a exoneração dos ministros Geraldo Alckmin (PSB) , do Desenvolvimento, Indústria, Comércio e Serviços, e Gleisi Hoffmann (PT) , da Secretaria de Relações Institucionais. O desligamento ocorre para que ambos disputem as eleições de outubro , conforme o prazo legal de desincompatibilização que se encerra neste sábado (4). Geraldo Alckmin permanece no cargo de vice-presidente da República e deve buscar a reeleição na chapa do presidente Luiz Inácio Lula da Silva (PT). Já Gleisi Hoffmann pretende concorrer a uma vaga no Senado Federal pelo estado do Paraná. Ao todo, 17 ministros deixaram o governo nesta semana após as movimentações anunciadas por Lula em reunião ministerial na última terça-feira (31). Entre os exonerados está Márcio França (PSB), ex-chefe do Ministério do Empreendedorismo, que disputará o Senado por São Paulo. Embora 14 pastas já possuam novos comandos, o governo ainda não confirmou os substitutos para o MDIC, a Secretaria de Relações Institucionais e o Ministério do Empreendedorismo. Em contrapartida, o ministro Wolney Queiroz desistiu da candidatura e seguirá na chefia da Previdência Social. Fique informado com a RedeTV! - Clique aqui para entrar no nosso canal de notícias no WhatsApp - Clique aqui para acessar o Notícias RedeTV! no Youtube - Assista AO VIVO à programação da RedeTV! TAGS Política Eleições",
-      "sentiment_per_candidate": {},
-      "edit_history": [],
+      "sentiment_per_candidate": {
+        "lula": "positivo"
+      },
+      "edit_history": [
+        {
+          "tier": "editor",
+          "at": "2026-04-03T19:11:59Z",
+          "provider": "nvidia",
+          "action": "validated",
+          "changes": [
+            "summary_pt",
+            "summary_en"
+          ]
+        }
+      ],
       "disclaimer_pt": "Análise algorítmica. Não representa pesquisa de opinião.",
       "disclaimer_en": "Algorithmic analysis. Does not represent polling data.",
-      "sentiment_score": 0.0,
-      "confidence_score": 0.0,
-      "_sentiment_scores": {},
-      "prominence_score": 0.0
+      "sentiment_score": 0.2,
+      "confidence_score": 1.0,
+      "_sentiment_scores": {
+        "lula": 0.2
+      },
+      "prominence_score": 0.0,
+      "_ai_provider": "nvidia",
+      "_ai_model": "nvidia/nemotron-3-super-120b-a12b",
+      "ai_provider_editor": "nvidia/nemotron-3-super-120b-a12b",
+      "editor_note": null
     },
     {
       "id": "2446b5477d7c5d4d",
@@ -65,27 +68,61 @@
       "source": "Veja",
       "published_at": "2026-04-03T19:00:33Z",
       "collected_at": "2026-04-03T19:04:07Z",
-      "status": "raw",
-      "relevance_score": 0.0,
-      "relevance_signals": null,
-      "candidates_mentioned": [],
-      "topics": [],
+      "status": "validated",
+      "relevance_score": 1.0,
+      "relevance_signals": {
+        "candidate_signal": 0.6,
+        "topic_signal": 0.35,
+        "keyword_signal": 0.15,
+        "source_signal": 0.0
+      },
+      "candidates_mentioned": [
+        "lula",
+        "flavio-bolsonaro"
+      ],
+      "topics": [
+        "eleicoes",
+        "politica_externa",
+        "impostos",
+        "corrupcao"
+      ],
       "narrative_cluster_id": null,
       "duplicate_of": null,
       "summaries": {
-        "pt-BR": "",
-        "en-US": ""
+        "pt-BR": "O PT aposta na pré-candidatura de Rodrigo Pacheco ao governo de Minas Gerais para reduzir sua rejeição no estado e sustentar o palanque de Lula em 2026, já que Minas é decisivo para definir o vencedor da eleição presidencial. Pacheco, como figura moderada e não identificada com o petismo tradicional, busca ampliar o diálogo com setores mais amplos do eleitorado, especialmente por sua atuação na área fiscal, enquanto especialistas alertam que o cenário mineiro permanece aberto e influenciado por pautas locais além da polarização nacional.",
+        "en-US": "The PT is betting on Rodrigo Pacheco's pre-candidacy for governor of Minas Gerais to reduce its rejection in the state and sustain Lula's electoral base in 2026, as Minas Gerais is decisive in determining the presidential election winner. Pacheco, seen as a moderate figure unassociated with traditional PT identity, aims to broaden appeal across wider elector segments, particularly through his fiscal record, while analysts note the mineiro landscape remains open and shaped by local agendas beyond national polarization."
       },
       "content": "Minas Gerais voltou ao centro da estratégia eleitoral do PT para 2026. Diante de um cenário de polarização acirrada e dificuldades históricas no estado, o partido aposta na pré-candidatura de Rodrigo Pacheco ao governo mineiro como peça-chave para sustentar o palanque do presidente Luiz Inácio Lula da Silva na região (este texto é um resumo do vídeo acima) . No programa Ponto de Vista , a apresentadora Marcela Rahal discutiu o tema com o colunista Robson Bonin, de Radar, e o cientista político Marco Antonio Teixeira, que analisaram o peso de Minas no tabuleiro eleitoral e os desafios do petismo no estado. Por que Minas é decisivo na eleição? Para Bonin, a centralidade de Minas no cenário político não é novidade — mas se torna ainda mais relevante em uma disputa polarizada. “As pesquisas todas mostram que Minas é o que define quem vence a disputa presidencial. Quem vence tem que vencer em Minas”, afirmou. O estado, segundo ele, tende a reproduzir a lógica nacional, o que transforma a disputa local em uma extensão direta do embate entre lulismo e bolsonarismo. “Minas a gente já sabe que o negócio lá vai ser de fato Lula versus Flávio”, disse. Por que o PT aposta em Rodrigo Pacheco? Diante de um histórico desfavorável no estado, o PT buscou um nome fora do perfil tradicional da legenda para encabeçar o projeto local. Segundo Bonin, a escolha por Pacheco atende a uma estratégia clara: reduzir a rejeição ao partido. Continua após a publicidade “O PT tem uma história de terra arrasada em Minas. Então o que eles fizeram foi adotar uma figura que não tem cara de petista, não tem discurso de petista e tem uma representatividade”, afirmou. O senador é visto como um aliado capaz de dialogar com setores mais amplos do eleitorado e apresentar resultados concretos, especialmente na área fiscal. “Ele é alguém que vai defender, vai ser um palanque para o Lula no estado, com discurso moderado”, completou. Pacheco consegue ser um bom cabo eleitoral? Para Teixeira, a largada do senador é positiva, mas o cenário mineiro segue aberto e complexo. “Em termos de largada, melhor do que eu imaginava”, disse. Continua após a publicidade O cientista político ressalta, no entanto, que Minas não deve se resumir à polarização nacional. Há espaço para pautas locais e para candidaturas que tentam se posicionar como alternativas. A estratégia pode ajudar Lula? A avaliação é que a candidatura de Pacheco pode suavizar a rejeição ao PT e ajudar Lula a manter competitividade no estado. Segundo Teixeira, o fato de o senador não carregar a identidade petista de forma explícita pode ser uma vantagem. Ele também destaca que outras disputas, como a do Senado, podem influenciar o cenário geral, ampliando a importância estratégica do estado. Continua após a publicidade Minas será mais nacional ou regional? Apesar da tendência de nacionalização do debate, há sinais de que a eleição mineira pode manter características próprias. Teixeira aponta a presença de diferentes forças políticas no estado, incluindo nomes ligados ao governador Romeu Zema, como um fator de complexidade. Ainda assim, o consenso entre os analistas é de que Minas seguirá como fiel da balança — e palco central da disputa entre governo e oposição. VEJA+IA: Este texto resume um trecho do programa audiovisual Ponto de Vista (confira o vídeo acima). Conteúdo produzido com auxílio de inteligência artificial e supervisão humana. Publicidade",
       "source_category": "magazine",
-      "sentiment_per_candidate": {},
-      "edit_history": [],
+      "sentiment_per_candidate": {
+        "lula": "positivo",
+        "flavio-bolsonaro": "neutro"
+      },
+      "edit_history": [
+        {
+          "tier": "editor",
+          "at": "2026-04-03T19:12:03Z",
+          "provider": "nvidia",
+          "action": "validated",
+          "changes": [
+            "summary_pt",
+            "summary_en"
+          ]
+        }
+      ],
       "disclaimer_pt": "Análise algorítmica. Não representa pesquisa de opinião.",
       "disclaimer_en": "Algorithmic analysis. Does not represent polling data.",
-      "sentiment_score": 0.0,
-      "confidence_score": 0.0,
-      "_sentiment_scores": {},
-      "prominence_score": 0.0
+      "sentiment_score": 0.2,
+      "confidence_score": 1.0,
+      "_sentiment_scores": {
+        "lula": 0.3,
+        "flavio-bolsonaro": 0.1
+      },
+      "prominence_score": 0.0,
+      "_ai_provider": "nvidia",
+      "_ai_model": "nvidia/nemotron-3-super-120b-a12b",
+      "ai_provider_editor": "nvidia/nemotron-3-super-120b-a12b",
+      "editor_note": null
     },
     {
       "id": "0be085707728e141",
@@ -94,56 +131,58 @@
       "source": "O Globo",
       "published_at": "2026-04-03T18:56:05Z",
       "collected_at": "2026-04-03T19:03:59Z",
-      "status": "raw",
-      "relevance_score": 0.0,
-      "relevance_signals": null,
-      "candidates_mentioned": [],
-      "topics": [],
+      "status": "validated",
+      "relevance_score": 0.6,
+      "relevance_signals": {
+        "candidate_signal": 0.5,
+        "topic_signal": 0.05,
+        "keyword_signal": 0.05,
+        "source_signal": 0.0
+      },
+      "candidates_mentioned": [
+        "lula"
+      ],
+      "topics": [
+        "economia",
+        "politica_externa",
+        "impostos",
+        "midia"
+      ],
       "narrative_cluster_id": null,
       "duplicate_of": null,
       "summaries": {
-        "pt-BR": "",
-        "en-US": ""
+        "pt-BR": "A Petrobras reafirmou sua política de preços de combustíveis em comunicado à CVM, destacando que mantém a estratégia de não repassar imediatamente a volatilidade internacional dos preços do petróleo para o mercado interno, mesmo diante da eleição das cotações globais devido a tensões no Oriente Médio. A estatal ressaltou que os reajustes são feitos com base em análises técnicas e governança interna, e que o comunicado foi uma resposta a questionamentos da CVM sobre possível defasagem entre preços internos e internacionais, que pode gerar perdas para a empresa.",
+        "en-US": "Petrobras reaffirmed its fuel pricing policy in a communication to the CVM, emphasizing that it continues to avoid immediately passing on international oil price volatility to domestic markets, despite recent global price increases driven by Middle Eastern geopolitical tensions. The company stated that price adjustments are based on technical analysis and internal governance, and that the communication was a response to CVM inquiries regarding potential domestic-international price gaps that could result in financial losses for the firm."
       },
       "content": "A Petrobras reafirmou sua política de preços de combustíveis, em comunicado entregue à CVM, o órgão regulador do mercado, na noite de quinta-feira. Segundo o comunicado, a petroleira vem seguindo essa estratégia comercial “mesmo em um cenário de forte elevação das cotações internacionais dos derivados de petróleo, intensificado por tensões geopolíticas recentes no Oriente Médio”. Pacote em xeque: Governo enfrenta resistências em várias frentes a pacote para conter preços de gás, diesel e frete Efeitos da guerra: EUA dobram para US$ 40 bilhões garantias para navios atravessarem o Estreito de Ormuz, com novos parceiros de seguros A atual política de preços de combustíveis da Petrobras, apresentada formalmente em maio de 2023, chegou a ser bandeira de campanha do presidente Luiz Inácio Lula da Silva nas eleições de 2022. Nos discursos, o então candidato falava em “abrasileirar” os preços da Petrobras. “Os reajustes de preços continuam sendo feitos sem periodicidade definida, evitando o repasse para os preços internos da volatilidade conjuntural das cotações internacionais e da taxa de câmbio, conforme prática usual da Petrobras que considera as suas melhores condições de refino e logística. Quando necessários, os reajustes são realizados com base em análises técnicas e em linha com a governança da Companhia”, diz o comunicado. Efeito colateral: Conflito no Oriente Médio pressiona preços globais de alimentos, diz a FAO Dias após o início dos ataques dos EUA e de Israel contra o Irã, a Petrobras já havia anunciado que manteria a política de preços, conforme declarações da presidente da estatal, Magda Chambriard. Resposta a questionamento O comunicado da noite de quinta-feira foi uma reposta à CVM. O órgão regulador questionou a companhia sobre a publicação de uma reportagem, no site Brazil Journal, sobre a defasagem entre os preços dos combustíveis cobrados pela Petrobras nas refinarias e os praticados no mercado internacional. Diante da política de segurar o “repasse para os preços internos da volatilidade conjuntural das cotações internacionais”, sempre que o barril de petróleo dispara, essa defasagem aumenta, ou seja, a tabela das refinarias da estatal fica mais barata do que o cobrado lá fora. Em tese, a empresa perde com a defasagem, daí porque a CVM questionou se a diretoria não deveria ter informado acionistas e investidores em geral sobre o cenário. Além de reafirmar a política de preços, o comunicado da Petrobras diz não “reconhecer” as estimativas de defasagem de preços, corriqueiramente calculadas e divulgadas por empresas do setor e analistas de mercado.",
       "source_category": "mainstream",
-      "sentiment_per_candidate": {},
-      "edit_history": [],
-      "disclaimer_pt": "Análise algorítmica. Não representa pesquisa de opinião.",
-      "disclaimer_en": "Algorithmic analysis. Does not represent polling data.",
-      "sentiment_score": 0.0,
-      "confidence_score": 0.0,
-      "_sentiment_scores": {},
-      "prominence_score": 0.0
-    },
-    {
-      "id": "0fb1b5dae9ea1f13",
-      "url": "https://oglobo.globo.com/cultura/streaming/noticia/2026/04/03/a-voz-de-hind-rajab-chega-ao-streaming-filme-indicado-ao-oscar-remonta-assassinato-de-menina-palestina-por-israel.ghtml",
-      "title": "'A Voz de Hind Rajab’ chega ao streaming; filme indicado ao Oscar remonta assassinato de menina palestina por Israel",
-      "source": "O Globo",
-      "published_at": "2026-04-03T18:50:44Z",
-      "collected_at": "2026-04-03T19:03:59Z",
-      "status": "raw",
-      "relevance_score": 0.0,
-      "relevance_signals": null,
-      "candidates_mentioned": [],
-      "topics": [],
-      "narrative_cluster_id": null,
-      "duplicate_of": null,
-      "summaries": {
-        "pt-BR": "",
-        "en-US": ""
+      "sentiment_per_candidate": {
+        "lula": "neutro"
       },
-      "content": "\"A Voz de Hind Rajab\", um dos filmes mais emocionantes do ano, chega aos serviços de streaming. O longa-metragem representou a Tunísia na disputa do Oscar 2026 na categoria de Melhor Filme Internacional, em que tinha entre os concorrentes o brasileiro \"O agente secreto\". A obra da diretora Kaouther Ben Hania venceu o Grande Prêmio do Júri no Festival de Veneza. ‘É a história de nosso fracasso como humanos’, diz diretora de ‘A voz de Hind Rajab’, que recria assassinato de menina de 5 anos em Gaza Raletório: Mundo deu a Israel 'licença para torturar' palestinos, diz relatora especial da ONU O filme é uma dramatização de eventos reais, com uso de recursos do que foi documentado do crime. Em janeiro de 2024, Hind Rajab, de apenas 5 anos, e a família — um casal de tios e quatro primos — tentavam deixar a cidade de Gaza, na Palestina, após ordens das forças de ocupação de Israel para evacuação do local. Desde o início do genocídio no país, o exército e a polícia israelenses ampliam os ataques à Gaza, incluindo locais que servem como abrigo para civis, como escolas, hospitais e tempos religiosos. Sob ataques por horas realizados por uma tropa de Israel, foram disparados 335 tiros de um tanque em direção ao carro de passeio da família, um Kia preto, segundo investigação da Forensic Architecture. Todos os sete ocupantes foram assassinados. O filme está disponível no catálogo do Filmelier+, sem custos adicionais aos assinantes, e é possível assistí-lo durante o período gratuito de teste de 7 dias. Também pode ser encontrado no Prime Video, para alugar o título e para acessar o serviço de streaming. 'Não à guerra e Palestina livre': Javier Bardem explica manifestação no Oscar Sobre \"A Voz de Hind Rajab\" Diretora tunisiana Kaouther Ben Hania segura um retrato da menina palestina Hind Rajab, durante o tapete vermelho do filme 'A voz de Hind Rajab', apresentado em competição no 82º Festival Internacional de Cinema de Veneza Tiziana Fabi / AFP O carro da família foi alvejado por soldados de Israel que estavam em um tanque de guerra. Primeiro foram assassinados os tios e três primos da menina. Hind e Layan Hamadeh, prima de 15 anos, sobreviveram. Elas conseguiram ligar para um tio que vive na Alemanha para pedir socorro. FOi ele quem colocou as duas meninas em contato com o braço palestino do Crescente Vermelho, organização humanitária e de resgate que atua nos países muçulmanos. Os registros telefônicos ouvidos no filme são as gravações reais do dia dos assassinatos. O filme mostra a mobilização das equipes do Crescente Vermelho para resgatar as duas meninas. Uma vez que o veículo segue sendo alvo de disparos por militares de Israel, Layan também é assassinada, e Hind fica sozinha por mais de três horas ao telefone, pedindo que o grupo de resgate a encontre e a resgate. O longa apresenta toda a burocracia para se ter acesso às áreas que são controladas e devastadas por Israel em Gaza, inclusive com serviços médico e de resgate como alvos dos agentes de ocupação, o que também é mostrado. Especialistas independentes nomeados em julho de 2024 pelo Conselho de Direitos Humanos das Nações Unidas declararam que o assassinato de Hind Rajab poderia ser considerado um crime de guerra. Resistênica: Rumo a Gaza, nova flotilha internacional partirá de porto francês no próximo sábado O filme também utiliza imagens reais do crime. Até o momento, ninguém foi oficialmente punido ou responsabilizado criminalmente pelos assassinatos. Barrado de entrar no EUA 'A voz de Hind Rajab': longa retrata caso real de criança em carro crivado de balas em Gaza que, cercada pelos corpos dos outros membros da família, aguardava socorro de equipe humanitária Divulgação O ator Motaz Malhees, que interpreta o voluntário do Crescente Vermelho Omar A. Alqam, o primeiro a atender as ligações de Hind Rajab, não pôde comparecer à cerimônia do Oscar, nos Estados Unidos, em 15 de março. O artista usou seu perfil no Instagram para explicar que tentou estar presente, mas foi impedido de entrar no país devido à sua nacionalidade: ele nasceu na Palestina. “Faltam três dias para o Oscar. Nosso filme A Voz de Hind Rajab está indicado ao Oscar. Tive a honra de interpretar um dos papéis principais em uma história que o mundo precisava ouvir. Mas eu não estarei lá”, escreveu Malhees. “Não tenho permissão para entrar nos Estados Unidos por causa da minha cidadania palestina. Dói. Mas aqui está a verdade: Você pode bloquear um passaporte. Não pode bloquear uma voz. Sou palestino e permaneço com orgulho e dignidade. Meu espírito estará com A Voz de Hind Rajab naquela noite. Boa sorte a todos vocês. Nossa história é maior do que qualquer barreira, e será ouvida”, escreveu Motaz Malhees.",
-      "source_category": "mainstream",
-      "sentiment_per_candidate": {},
-      "edit_history": [],
+      "edit_history": [
+        {
+          "tier": "editor",
+          "at": "2026-04-03T19:12:07Z",
+          "provider": "nvidia",
+          "action": "validated",
+          "changes": [
+            "summary_pt",
+            "summary_en"
+          ]
+        }
+      ],
       "disclaimer_pt": "Análise algorítmica. Não representa pesquisa de opinião.",
       "disclaimer_en": "Algorithmic analysis. Does not represent polling data.",
       "sentiment_score": 0.0,
-      "confidence_score": 0.0,
-      "_sentiment_scores": {},
-      "prominence_score": 0.0
+      "confidence_score": 1.0,
+      "_sentiment_scores": {
+        "lula": 0.0
+      },
+      "prominence_score": 0.0,
+      "_ai_provider": "nvidia",
+      "_ai_model": "nvidia/nemotron-3-super-120b-a12b",
+      "ai_provider_editor": "nvidia/nemotron-3-super-120b-a12b",
+      "editor_note": null
     },
     {
       "id": "8e24ee78a5ae40b5",
@@ -152,27 +191,57 @@
       "source": "O Antagonista",
       "published_at": "2026-04-03T18:36:32Z",
       "collected_at": "2026-04-03T19:04:04Z",
-      "status": "raw",
-      "relevance_score": 0.0,
-      "relevance_signals": null,
-      "candidates_mentioned": [],
-      "topics": [],
+      "status": "validated",
+      "relevance_score": 1.0,
+      "relevance_signals": {
+        "candidate_signal": 0.5,
+        "topic_signal": 0.3,
+        "keyword_signal": 0.15,
+        "source_signal": 0.05
+      },
+      "candidates_mentioned": [
+        "flavio-bolsonaro"
+      ],
+      "topics": [
+        "eleicoes",
+        "midia",
+        "corrupcao"
+      ],
       "narrative_cluster_id": null,
       "duplicate_of": null,
       "summaries": {
-        "pt-BR": "",
-        "en-US": ""
+        "pt-BR": "A jornalista Cristina Graeml oficializou sua filiação ao PSD do Paraná, atendendo ao convite do governador Ratinho Júnior. Ela reforçou que seu apoio ao pré-candidato à Presidência, Flávio Bolsonaro, permanece inalterado, o que gerou pedidos de membros do PL para que ela deixasse o partido. A movimentação destaca tensões entre alianças partidárias e apoio a figuras da direita radical nas eleições de 2026.",
+        "en-US": "Journalist Cristina Graeml officially joined the PSD in Paraná, responding to an invitation from Governor Ratinho Júnior. She reiterated her support for Flávio Bolsonaro as her presidential pre-candidate, prompting requests from PL members for her to leave the party. The move highlights tensions between party alliances and support for radical right-wing figures ahead of the 2026 elections."
       },
       "content": "A jornalista Cristina Graeml oficializou nesta semana sua filiação ao PSD do Paraná, atendendo a convite do governador Ratinho Júnior. “Nada mudou, Flávio Bolsonaro é o meu pré-candidato à Presidência da República”, escreveu a jornalista em legenda de foto publicada com o senador. A publicação motivou pedidos de integrantes do PL para que ela trocasse... The post Graeml ingressa no PSD de Ratinho Jr. e mantém apoio a Flávio appeared first on O Antagonista .",
       "source_category": "politics",
-      "sentiment_per_candidate": {},
-      "edit_history": [],
+      "sentiment_per_candidate": {
+        "flavio-bolsonaro": "positivo"
+      },
+      "edit_history": [
+        {
+          "tier": "editor",
+          "at": "2026-04-03T19:12:36Z",
+          "provider": "nvidia",
+          "action": "validated",
+          "changes": [
+            "summary_pt",
+            "summary_en"
+          ]
+        }
+      ],
       "disclaimer_pt": "Análise algorítmica. Não representa pesquisa de opinião.",
       "disclaimer_en": "Algorithmic analysis. Does not represent polling data.",
-      "sentiment_score": 0.0,
-      "confidence_score": 0.0,
-      "_sentiment_scores": {},
-      "prominence_score": 0.0
+      "sentiment_score": 0.3,
+      "confidence_score": 1.0,
+      "_sentiment_scores": {
+        "flavio-bolsonaro": 0.3
+      },
+      "prominence_score": 0.0,
+      "_ai_provider": "nvidia",
+      "_ai_model": "nvidia/nemotron-3-super-120b-a12b",
+      "ai_provider_editor": "nvidia/nemotron-3-super-120b-a12b",
+      "editor_note": null
     },
     {
       "id": "43a5848ffe255e8f",
@@ -181,27 +250,52 @@
       "source": "Poder360",
       "published_at": "2026-04-03T18:28:09Z",
       "collected_at": "2026-04-03T19:04:01Z",
-      "status": "raw",
-      "relevance_score": 0.0,
-      "relevance_signals": null,
+      "status": "validated",
+      "relevance_score": 0.45,
+      "relevance_signals": {
+        "candidate_signal": 0.0,
+        "topic_signal": 0.3,
+        "keyword_signal": 0.1,
+        "source_signal": 0.05
+      },
       "candidates_mentioned": [],
-      "topics": [],
+      "topics": [
+        "eleicoes",
+        "midia",
+        "corrupcao",
+        "seguranca"
+      ],
       "narrative_cluster_id": null,
       "duplicate_of": null,
       "summaries": {
-        "pt-BR": "",
-        "en-US": ""
+        "pt-BR": "O advogado Matheus Milanez, integrante da equipe de defesa do general Augusto Heleno, foi anunciado como pré-candidato a deputado federal pelo Distrito Federal pelo partido Republicanos. Sua filiação foi divulgada pelo presidente do partido, Joaquim Mauro, nas redes sociais. Milanez ganhou notoriedade em junho de 2025 durante o julgamento da trama golpista, quando pediu ao ministro Alexandre de Moraes, do STF, que adiasse o interrogatório para poder jantar, gerando uma troca irreverente e risos no plenário.",
+        "en-US": "Lawyer Matheus Milanez, part of the defense team for General Augusto Heleno, has been announced as a pre-candidate for federal deputy from the Federal District by the Republicans party. His affiliation was shared by party president Joaquim Mauro on social media. Milanez went viral in June 2025 during the coup plot trial after requesting a delay in testimony to have dinner, prompting an ironic response from Supreme Court Justice Alexandre de Moraes, which drew laughter in the courtroom."
       },
       "content": "O advogado Matheus Milanez , que integra a equipe de defesa do general Augusto Heleno, é pré-candidato a deputado federal pelo Distrito Federal. O presidente do Republicanos, Joaquim Mauro , anunciou nas redes sociais a filiação do criminalista ao partido para disputar nas eleições de outubro. “E o nosso time do Republicanos não para de crescer. Hoje, recebemos a filiação do advogado criminalista Matheus Milanez, pré-candidato a deputado federal, que chega para somar com preparo, compromisso e seriedade na construção de um projeto político sólido para o DF! Seja bem-vindo, Matheus!” , escreveu Joaquim Mauro. Milanez viralizou nas redes sociais durante o julgamento da trama golpista em junho de 2025, após um diálogo com o ministro Alexandre de Moraes, do Supremo Tribunal Federal . O episódio ganhou repercussão porque o magistrado respondeu de forma irônica ao pedido da defesa para flexibilizar os horários do interrogatório para conseguir “minimamente jantar”. Em 9 de junho de 2025, Milanez pediu para Moraes iniciar a sessão do dia seguinte às 10h, e não às 9h, como já estava previsto. Declarou que gostaria de jantar com calma e que só havia tomado café da manhã naquele dia. O magistrado respondeu então que a sessão teria início às 9h02. Houve risos no plenário. Depois, Moraes negou o pedido e afirmou que se o interrogatório do general terminasse já naquele mesmo dia, Milanez teria o dia seguinte livre para “tomar um belo brunch” . Assista ao momento (1min34s):",
       "source_category": "politics",
       "sentiment_per_candidate": {},
-      "edit_history": [],
+      "edit_history": [
+        {
+          "tier": "editor",
+          "at": "2026-04-03T19:12:40Z",
+          "provider": "nvidia",
+          "action": "validated",
+          "changes": [
+            "summary_pt",
+            "summary_en"
+          ]
+        }
+      ],
       "disclaimer_pt": "Análise algorítmica. Não representa pesquisa de opinião.",
       "disclaimer_en": "Algorithmic analysis. Does not represent polling data.",
       "sentiment_score": 0.0,
-      "confidence_score": 0.0,
+      "confidence_score": 1.0,
       "_sentiment_scores": {},
-      "prominence_score": 0.0
+      "prominence_score": 0.0,
+      "_ai_provider": "nvidia",
+      "_ai_model": "nvidia/nemotron-3-super-120b-a12b",
+      "ai_provider_editor": "nvidia/nemotron-3-super-120b-a12b",
+      "editor_note": null
     },
     {
       "id": "5be3446c35d2fbd3",
@@ -210,143 +304,56 @@
       "source": "O Antagonista",
       "published_at": "2026-04-03T18:25:38Z",
       "collected_at": "2026-04-03T19:04:04Z",
-      "status": "raw",
-      "relevance_score": 0.0,
-      "relevance_signals": null,
-      "candidates_mentioned": [],
-      "topics": [],
+      "status": "validated",
+      "relevance_score": 0.65,
+      "relevance_signals": {
+        "candidate_signal": 0.5,
+        "topic_signal": 0.05,
+        "keyword_signal": 0.05,
+        "source_signal": 0.05
+      },
+      "candidates_mentioned": [
+        "tarcisio"
+      ],
+      "topics": [
+        "seguranca",
+        "impostos"
+      ],
       "narrative_cluster_id": null,
       "duplicate_of": null,
       "summaries": {
-        "pt-BR": "",
-        "en-US": ""
+        "pt-BR": "O governador de São Paulo, Tarcísio de Freitas (Republicanos), sancionou uma lei que concede aumento linear de 10% nos salários das polícias Civil, Militar e Técnico-Científica do estado. O reajuste entra em vigor a partir da publicação no Diário Oficial do Estado e visa valorizar os servidores da segurança pública.",
+        "en-US": "Governor Tarcísio de Freitas (Republicanos) of São Paulo signed a law granting a 10% linear salary increase for the Civil, Military, and Technical-Scientific police forces. The adjustment takes effect upon publication in the State Official Gazette and aims to valorize public security personnel."
       },
       "content": "O governador de São Paulo, Tarcísio de Freitas (Republicanos), sancionou na quinta-feira, 2, um projeto de lei que concede aumento linear de 10% nos salários das polícias Civil, Militar e Técnico-Científica paulistas. A nova base salarial passará a vigorar a partir da publicação da lei no Diário Oficial do Estado. Pelo texto, o reajuste incidirá... The post Tarcísio sanciona aumento salarial de 10% para polícias de SP appeared first on O Antagonista .",
       "source_category": "politics",
-      "sentiment_per_candidate": {},
-      "edit_history": [],
-      "disclaimer_pt": "Análise algorítmica. Não representa pesquisa de opinião.",
-      "disclaimer_en": "Algorithmic analysis. Does not represent polling data.",
-      "sentiment_score": 0.0,
-      "confidence_score": 0.0,
-      "_sentiment_scores": {},
-      "prominence_score": 0.0
-    },
-    {
-      "id": "bac398cb55ebb5fc",
-      "url": "https://oantagonista.com.br/brasil/para-aliados-franca-sera-um-nome-combativo-no-senado/",
-      "title": "Para aliados, França será um nome “combativo” no Senado",
-      "source": "O Antagonista",
-      "published_at": "2026-04-03T18:14:49Z",
-      "collected_at": "2026-04-03T19:04:04Z",
-      "status": "raw",
-      "relevance_score": 0.0,
-      "relevance_signals": null,
-      "candidates_mentioned": [],
-      "topics": [],
-      "narrative_cluster_id": null,
-      "duplicate_of": null,
-      "summaries": {
-        "pt-BR": "",
-        "en-US": ""
+      "sentiment_per_candidate": {
+        "tarcisio": "positivo"
       },
-      "content": "Márcio França (PSB) anunciou sua saída do governo Lula para concorrer a uma das vagas ao Senado por São Paulo. A decisão gera um conflito com Marina Silva (Rede), que as mesmas ambições eleitorais. A outra vaga da chapa já está encaminhada para Simone Tebet (PSB). França, mais combativo, fará frente ao campo da direita,... The post Para aliados, França será um nome “combativo” no Senado appeared first on O Antagonista .",
-      "source_category": "politics",
-      "sentiment_per_candidate": {},
-      "edit_history": [],
+      "edit_history": [
+        {
+          "tier": "editor",
+          "at": "2026-04-03T19:12:44Z",
+          "provider": "nvidia",
+          "action": "validated",
+          "changes": [
+            "summary_pt",
+            "summary_en"
+          ]
+        }
+      ],
       "disclaimer_pt": "Análise algorítmica. Não representa pesquisa de opinião.",
       "disclaimer_en": "Algorithmic analysis. Does not represent polling data.",
-      "sentiment_score": 0.0,
-      "confidence_score": 0.0,
-      "_sentiment_scores": {},
-      "prominence_score": 0.0
-    },
-    {
-      "id": "04bac0a62f6d321e",
-      "url": "https://oglobo.globo.com/esportes/futebol/noticia/2026/04/03/cbf-tem-negociacoes-avancadas-com-novos-patrocinadores-para-competicoes-femininas.ghtml",
-      "title": "CBF tem negociações avançadas com novos patrocinadores para competições femininas",
-      "source": "O Globo",
-      "published_at": "2026-04-03T18:14:09Z",
-      "collected_at": "2026-04-03T19:03:59Z",
-      "status": "raw",
-      "relevance_score": 0.0,
-      "relevance_signals": null,
-      "candidates_mentioned": [],
-      "topics": [],
-      "narrative_cluster_id": null,
-      "duplicate_of": null,
-      "summaries": {
-        "pt-BR": "",
-        "en-US": ""
+      "sentiment_score": 0.3,
+      "confidence_score": 1.0,
+      "_sentiment_scores": {
+        "tarcisio": 0.3
       },
-      "content": "As competições femininas brasileiras estão perto de ganhar novos patrocinadores. A Confederação Brasileira de Futebol (CBF) tem quatro marcas em estágio avançado e outras duas com conversas em andamento. Neste ano, Hyundai, Amazon, Itambé e Uber já foram anunciadas como patrocinadoras do Brasileirão, Copa do Brasil e Supercopa, principais campeonatos do cenário nacional. A chegada iminente das novas empresas faz parte de um planejamento elaborado pela entidade que visa vender o produto, não apenas uma competição, ampliando o apoio das marcas e fortalecendo o ecossistema da modalidade. A ideia é que sejam anunciadas antes da Copa do Mundo masculina, que acontecerá entre junho e julho de 2026, nos Estados Unidos, México e Canadá. Além do quesito financeiro, as negociações englobam também ações e ativações que dialoguem com a realidade das mulheres e do futebol feminino, buscando uma presença fora de campo e dos dias de jogo. Esse movimento vai ao encontro aos dados da pesquisa feita neste ano pela Globo, que aponta que as mulheres estão entre as principais consumidoras da modalidade, sendo 54% no Brasil. Ainda, que fãs de esportes femininos se envolvem mais com as patrocinadoras do que os de esportes masculinos: 50% concorda \"fortemente\" que as marcas tem um dever social com suas ativações, sentimento que cai para 20% quando o assunto é o esporte masculino; e 25% tem maior propensão a consumir os produtos da marca relacionadas. O cenário conflui com o discurso de valorização adotado pela CBF antes da Copa do Mundo de 2027, que será sediada no Brasil e pela primeira vez na América do Sul. Alguns avanços já vistos nesta temporada são a transmissão integral das competições, inclusive as de base, e a obrigatoriedade da profissionalização dos times da primeira divisão.",
-      "source_category": "mainstream",
-      "sentiment_per_candidate": {},
-      "edit_history": [],
-      "disclaimer_pt": "Análise algorítmica. Não representa pesquisa de opinião.",
-      "disclaimer_en": "Algorithmic analysis. Does not represent polling data.",
-      "sentiment_score": 0.0,
-      "confidence_score": 0.0,
-      "_sentiment_scores": {},
-      "prominence_score": 0.0
-    },
-    {
-      "id": "c330254228704c17",
-      "url": "https://oantagonista.com.br/brasil/pais-voltou-a-crescer-diz-gleisi-ao-deixar-governo-para-concorrer-ao-senado/",
-      "title": "“País voltou a crescer”, diz Gleisi ao deixar governo para concorrer ao Senado",
-      "source": "O Antagonista",
-      "published_at": "2026-04-03T18:09:23Z",
-      "collected_at": "2026-04-03T19:04:04Z",
-      "status": "raw",
-      "relevance_score": 0.0,
-      "relevance_signals": null,
-      "candidates_mentioned": [],
-      "topics": [],
-      "narrative_cluster_id": null,
-      "duplicate_of": null,
-      "summaries": {
-        "pt-BR": "",
-        "en-US": ""
-      },
-      "content": "A deputada federal Gleisi Hoffmann (PT-PR) deixa oficialmente o cargo de ministra-chefe da Secretaria de Relações Institucionais (SRI) do governo Lula (PT), para concorrer ao Senado pelo Paraná nas eleições deste ano. Pelas regras eleitorais, um ministro de Estado só pode disputar a eleição se deixar o cargo pelo menos seis meses antes do pleito.... The post “País voltou a crescer”, diz Gleisi ao deixar governo para concorrer ao Senado appeared first on O Antagonista .",
-      "source_category": "politics",
-      "sentiment_per_candidate": {},
-      "edit_history": [],
-      "disclaimer_pt": "Análise algorítmica. Não representa pesquisa de opinião.",
-      "disclaimer_en": "Algorithmic analysis. Does not represent polling data.",
-      "sentiment_score": 0.0,
-      "confidence_score": 0.0,
-      "_sentiment_scores": {},
-      "prominence_score": 0.0
-    },
-    {
-      "id": "eb3edc7a90ad996e",
-      "url": "https://www.poder360.com.br/poder-internacional/empresaria-acusada-de-falsificar-documentos-de-ronaldinho-e-presa/",
-      "title": "Empresária acusada de falsificar documentos de Ronaldinho é presa",
-      "source": "Poder360",
-      "published_at": "2026-04-03T18:01:53Z",
-      "collected_at": "2026-04-03T19:04:01Z",
-      "status": "raw",
-      "relevance_score": 0.0,
-      "relevance_signals": null,
-      "candidates_mentioned": [],
-      "topics": [],
-      "narrative_cluster_id": null,
-      "duplicate_of": null,
-      "summaries": {
-        "pt-BR": "",
-        "en-US": ""
-      },
-      "content": "Acusada de falsificar documentos do ex-jogador Ronaldinho Gaúcho e de seu irmão Assis, em episódio que manteve o astro brasileiro preso por 6 meses no Paraguai, a empresária Dalia López, de 55 anos, foi presa na tarde de 5ª feira (2.abr.2026), em Assunção. Estava foragida desde março de 2020. A prisão se deu depois de uma operação de inteligência conduzida por forças de segurança paraguaias, que monitoravam a suspeita há anos. Ela foi localizada em uma residência particular na capital. A empresária responde por produção de documentos públicos falsos e associação criminosa. Durante buscas no local, a polícia apreendeu mais de 200 mil dólares em dinheiro. Dalia ficou conhecida por organizar a viagem de Ronaldinho ao Paraguai para um evento beneficente. Ao chegar ao país, o ex-jogador foi detido por portar passaporte e identidade falsificados e passou quase 1 mês preso na Agrupação Especializada da Polícia de Assunção. Ronaldinho deixou a prisão depois de pagar fiança de 1,6 milhão de dólares e cumpriu prisão domiciliar em um hotel de luxo. Ele só conseguiu liberdade total ao pagar uma multa de 200 mil dólares.",
-      "source_category": "politics",
-      "sentiment_per_candidate": {},
-      "edit_history": [],
-      "disclaimer_pt": "Análise algorítmica. Não representa pesquisa de opinião.",
-      "disclaimer_en": "Algorithmic analysis. Does not represent polling data.",
-      "sentiment_score": 0.0,
-      "confidence_score": 0.0,
-      "_sentiment_scores": {},
-      "prominence_score": 0.0
+      "prominence_score": 0.0,
+      "_ai_provider": "nvidia",
+      "_ai_model": "nvidia/nemotron-3-super-120b-a12b",
+      "ai_provider_editor": "nvidia/nemotron-3-super-120b-a12b",
+      "editor_note": null
     },
     {
       "id": "9361323496765575",
@@ -1011,35 +1018,6 @@
       "_ai_model": "nvidia/nemotron-3-super-120b-a12b",
       "ai_provider_editor": "nvidia/nemotron-3-super-120b-a12b",
       "editor_note": null
-    },
-    {
-      "id": "710c61d2616cad98",
-      "url": "https://istoe.com.br/gleisi-hoffmann-deixa-governo-disputar-senado-parana",
-      "title": "Gleisi deixa governo e anuncia pré-candidatura ao Senado pelo Paraná",
-      "source": "IstoE",
-      "published_at": "2026-04-03T16:42:00Z",
-      "collected_at": "2026-04-03T19:04:08Z",
-      "status": "raw",
-      "relevance_score": 0.0,
-      "relevance_signals": null,
-      "candidates_mentioned": [],
-      "topics": [],
-      "narrative_cluster_id": null,
-      "duplicate_of": null,
-      "summaries": {
-        "pt-BR": "",
-        "en-US": ""
-      },
-      "content": "A ex-ministra da Secretaria de Relações Institucionais (SRI), Gleisi Hoffmann (PT), anunciou nesta sexta-feira (3) sua descompatibilização do governo Luiz Inácio Lula da Silva (PT) para disputar uma das duas vagas ao Senado pelo Paraná em outubro. A decisão, confirmada pela petista nas redes sociais, visa fortalecer a representatividade do partido no Congresso e defender os interesses do estado. O que aconteceu Gleisi Hoffmann anuncia sua saída do governo para concorrer a uma vaga no Senado pelo Paraná. A pré-candidatura atende a um pedido do presidente Luiz Inácio Lula da Silva para ampliar a base petista no Senado. A ex-ministra destacou avanços da gestão, como a isenção do Imposto de Renda (IR) para certas faixas salariais. “Sou pré-candidata ao Senado para defender nosso querido Paraná e para avançar nosso projeto de país, com prioridade total para o desenvolvimento do Brasil e condições de vida cada vez melhores para o povo brasileiro”, escreveu Hoffmann pelas redes sociais. Hoffmann relembrou sua atuação de um ano na Secretaria de Relações Institucionais (SRI) e citou medidas como a isenção do Imposto de Renda (IR) para quem recebe até R$ 5 mil, além do programa Gás do Povo e do Pé-de-Meia. “O salário mínimo e a renda das famílias tiveram aumento real, o desemprego é o menor da história e o país voltou a crescer”, complementou. Confira: Ver essa foto no Instagram Um post compartilhado por Gleisi Hoffmann (@gleisihoffmann) Por que Gleisi Hoffmann concorre ao Senado? Inicialmente, Gleisi Hoffmann não planejava disputar nenhum cargo nas eleições de outubro. Contudo, ela atendeu a um pedido do presidente Luiz Inácio Lula da Silva para tentar assegurar uma base de apoio mais robusta para o PT no Senado, onde o atual governo tem enfrentado dificuldades. A ex-ministra e mais de dez outros nomes que compunham a Esplanada precisaram se desincompatibilizar de seus cargos nesta semana para participar do pleito de outubro. O prazo final para a desincompatibilização encerrou-se neste sábado, dia 4. * Com informações do Estadão Conteúdo",
-      "source_category": "magazine",
-      "sentiment_per_candidate": {},
-      "edit_history": [],
-      "disclaimer_pt": "Análise algorítmica. Não representa pesquisa de opinião.",
-      "disclaimer_en": "Algorithmic analysis. Does not represent polling data.",
-      "sentiment_score": 0.0,
-      "confidence_score": 0.0,
-      "_sentiment_scores": {},
-      "prominence_score": 0.0
     },
     {
       "id": "72246d4d4b6e0c03",
@@ -32409,6 +32387,6 @@
       "editor_note": null
     }
   ],
-  "last_updated": "2026-04-03T19:10:53Z",
-  "total_count": 500
+  "last_updated": "2026-04-03T19:14:02Z",
+  "total_count": 493
 }
