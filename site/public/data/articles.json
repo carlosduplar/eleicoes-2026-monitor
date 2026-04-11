@@ -2,61 +2,67 @@
   "$schema": "../docs/schemas/articles.schema.json",
   "articles": [
     {
-      "id": "30acaa6c0be99bd0",
-      "url": "https://www1.folha.uol.com.br/poder/2026/04/datafolha-lula-tem-40-de-avaliacao-negativa-e-29-de-positiva.shtml",
-      "title": "Datafolha: Lula tem 40% de avaliação negativa e 29% de positiva",
-      "source": "UOL Noticias",
-      "published_at": "2026-04-11T23:39:48Z",
-      "collected_at": "2026-04-11T23:39:48Z",
-      "status": "raw",
-      "relevance_score": 0.0,
-      "relevance_signals": null,
-      "candidates_mentioned": [],
-      "topics": [],
-      "narrative_cluster_id": null,
-      "duplicate_of": null,
-      "summaries": {
-        "pt-BR": "",
-        "en-US": ""
-      },
-      "source_category": "mainstream",
-      "sentiment_per_candidate": {},
-      "edit_history": [],
-      "disclaimer_pt": "Análise algorítmica. Não representa pesquisa de opinião.",
-      "disclaimer_en": "Algorithmic analysis. Does not represent polling data.",
-      "sentiment_score": 0.0,
-      "confidence_score": 0.0,
-      "_sentiment_scores": {},
-      "prominence_score": 0.0
-    },
-    {
       "id": "c4360d076e99bc75",
       "url": "https://www1.folha.uol.com.br/colunas/viniciustorres/2020/04/mesmo-que-bolsonaro-filho-evapore-lula-esta-perto-de-perder-para-um-anti-lula-qualquer.shtml",
       "title": "Mesmo que Bolsonaro filho evapore, Lula está perto de perder para um anti-Lula qualquer",
       "source": "UOL Noticias",
       "published_at": "2026-04-11T23:39:48Z",
       "collected_at": "2026-04-11T23:39:48Z",
-      "status": "raw",
-      "relevance_score": 0.0,
-      "relevance_signals": null,
-      "candidates_mentioned": [],
-      "topics": [],
+      "status": "validated",
+      "relevance_score": 1.0,
+      "relevance_signals": {
+        "candidate_signal": 0.6,
+        "topic_signal": 0.25,
+        "keyword_signal": 0.15,
+        "source_signal": 0.0
+      },
+      "candidates_mentioned": [
+        "lula",
+        "caiado",
+        "zema"
+      ],
+      "topics": [
+        "eleicoes"
+      ],
       "narrative_cluster_id": null,
       "duplicate_of": null,
       "summaries": {
-        "pt-BR": "",
-        "en-US": ""
+        "pt-BR": "Lula está perto de perder as eleições de 2026 para um candidato anti-Lula, segundo dados do Datafolha. Se Ronaldo Caiado ou Romeu Zema forem os adversários no segundo turno, Lula teria 45% dos votos contra 42% do oponente, indicando uma disputa extremamente acirrada. Mesmo que a figura de Bolsonaro perca relevância, o sentimento anti-Lula permanece forte o suficiente para derrotar o presidente.",
+        "en-US": "Lula is at risk of losing the 2026 elections to an anti-Lula candidate, according to Datafolha data. If Ronaldo Caiado or Romeu Zema face him in a runoff, Lula would secure 45% of the vote against 42% for the opponent, showing an extremely tight race. Even if Bolsonaro’s influence fades, anti-Lula sentiment remains strong enough to defeat the incumbent president."
       },
       "content": "O anti-Lula deve ter 42% dos votos, sugerem dados do Datafolha. Ronaldo Caiado (PSD-GO), com 5% dos votos no primeiro turno, e Romeu Zema (Novo-MG), com 4%, iriam a 42% das preferências do eleitorado caso disputassem o segundo turno com Luiz Inácio Lula da Silva. Nessas hipóteses, o presidente ficaria com 45%.",
       "source_category": "mainstream",
-      "sentiment_per_candidate": {},
-      "edit_history": [],
+      "sentiment_per_candidate": {
+        "lula": "negativo",
+        "caiado": "neutro",
+        "zema": "neutro"
+      },
+      "edit_history": [
+        {
+          "tier": "editor",
+          "at": "2026-04-11T23:46:13Z",
+          "provider": "nvidia",
+          "action": "validated",
+          "changes": [
+            "summary_pt",
+            "summary_en"
+          ]
+        }
+      ],
       "disclaimer_pt": "Análise algorítmica. Não representa pesquisa de opinião.",
       "disclaimer_en": "Algorithmic analysis. Does not represent polling data.",
       "sentiment_score": 0.0,
-      "confidence_score": 0.0,
-      "_sentiment_scores": {},
-      "prominence_score": 0.0
+      "confidence_score": 1.0,
+      "_sentiment_scores": {
+        "lula": -0.2,
+        "caiado": 0.1,
+        "zema": 0.1
+      },
+      "prominence_score": 0.0,
+      "_ai_provider": "nvidia",
+      "_ai_model": "nvidia/nemotron-3-super-120b-a12b",
+      "ai_provider_editor": "nvidia/nemotron-3-super-120b-a12b",
+      "editor_note": null
     },
     {
       "id": "da044380840eead3",
@@ -65,27 +71,56 @@
       "source": "O Antagonista",
       "published_at": "2026-04-11T23:04:36Z",
       "collected_at": "2026-04-11T23:39:59Z",
-      "status": "raw",
-      "relevance_score": 0.0,
-      "relevance_signals": null,
-      "candidates_mentioned": [],
-      "topics": [],
+      "status": "validated",
+      "relevance_score": 0.95,
+      "relevance_signals": {
+        "candidate_signal": 0.5,
+        "topic_signal": 0.25,
+        "keyword_signal": 0.15,
+        "source_signal": 0.05
+      },
+      "candidates_mentioned": [
+        "flavio-bolsonaro"
+      ],
+      "topics": [
+        "eleicoes",
+        "politica_externa"
+      ],
       "narrative_cluster_id": null,
       "duplicate_of": null,
       "summaries": {
-        "pt-BR": "",
-        "en-US": ""
+        "pt-BR": "Eduardo Bolsonaro afirmou que pretende retornar ao Brasil caso seu irmão, Flávio Bolsonaro, seja eleito presidente da República. A declaração foi feita em vídeo exibido durante um evento do PL em Porto Alegre, onde ele condicionou seu retorno ao resultado eleitoral de Flávio.",
+        "en-US": "Eduardo Bolsonaro stated he intends to return to Brazil if his brother, Flávio Bolsonaro, is elected president of the Republic. The remark was made in a video shown at a PL event in Porto Alegre, where he conditioned his return on Flávio's electoral outcome."
       },
       "content": "O ex-deputado Eduardo Bolsonaro, que vive nos Estados Unidos desde o início de 2025, afirmou que pretende retornar ao Brasil caso seu irmão, Flávio Bolsonaro, seja eleito presidente da República. A declaração foi transmitida em vídeo exibido neste sábado, 11, durante um evento do PL em Porto Alegre. No trecho da gravação, Eduardo condiciona o... The post Eduardo Bolsonaro fala em voltar ao Brasil caso Flávio seja eleito appeared first on O Antagonista .",
       "source_category": "politics",
-      "sentiment_per_candidate": {},
-      "edit_history": [],
+      "sentiment_per_candidate": {
+        "flavio-bolsonaro": "neutro"
+      },
+      "edit_history": [
+        {
+          "tier": "editor",
+          "at": "2026-04-11T23:46:17Z",
+          "provider": "nvidia",
+          "action": "validated",
+          "changes": [
+            "summary_pt",
+            "summary_en"
+          ]
+        }
+      ],
       "disclaimer_pt": "Análise algorítmica. Não representa pesquisa de opinião.",
       "disclaimer_en": "Algorithmic analysis. Does not represent polling data.",
       "sentiment_score": 0.0,
-      "confidence_score": 0.0,
-      "_sentiment_scores": {},
-      "prominence_score": 0.0
+      "confidence_score": 1.0,
+      "_sentiment_scores": {
+        "flavio-bolsonaro": 0.0
+      },
+      "prominence_score": 0.0,
+      "_ai_provider": "nvidia",
+      "_ai_model": "nvidia/nemotron-3-super-120b-a12b",
+      "ai_provider_editor": "nvidia/nemotron-3-super-120b-a12b",
+      "editor_note": null
     },
     {
       "id": "816a69074e61944e",
@@ -32328,6 +32363,6 @@
       "prominence_score": 0.0
     }
   ],
-  "last_updated": "2026-04-11T23:45:17Z",
-  "total_count": 500
+  "last_updated": "2026-04-11T23:46:42Z",
+  "total_count": 499
 }
