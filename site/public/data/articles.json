@@ -2,90 +2,61 @@
   "$schema": "../docs/schemas/articles.schema.json",
   "articles": [
     {
-      "id": "75100cf4b2014979",
-      "url": "https://noticias.uol.com.br/ultimas-noticias/rfi/2026/04/11/apos-decada-de-presidentes-efemeros-peru-vai-as-urnas-em-eleicao-fragmentada-e-marcada-pela-violencia.htm",
-      "title": "Após década de presidentes efêmeros, Peru vai às urnas em eleição fragmentada e marcada pela violência",
-      "source": "UOL Noticias",
-      "published_at": "2026-04-11T19:12:05Z",
-      "collected_at": "2026-04-11T19:12:05Z",
-      "status": "raw",
-      "relevance_score": 0.0,
-      "relevance_signals": null,
-      "candidates_mentioned": [],
-      "topics": [],
-      "narrative_cluster_id": null,
-      "duplicate_of": null,
-      "summaries": {
-        "pt-BR": "",
-        "en-US": ""
-      },
-      "content": "Depois de uma década de presidências de curta duração, os peruanos elegem neste domingo (12) seu chefe de Estado entre um número recorde de 35 candidatos, em um contexto de instabilidade política crônica e escalada da criminalidade. Mais de 27,3 milhões de eleitores são chamados às urnas.",
-      "source_category": "mainstream",
-      "sentiment_per_candidate": {},
-      "edit_history": [],
-      "disclaimer_pt": "Análise algorítmica. Não representa pesquisa de opinião.",
-      "disclaimer_en": "Algorithmic analysis. Does not represent polling data.",
-      "sentiment_score": 0.0,
-      "confidence_score": 0.0,
-      "_sentiment_scores": {},
-      "prominence_score": 0.0
-    },
-    {
-      "id": "32fea9470c22f4a4",
-      "url": "https://www1.folha.uol.com.br/poder/2026/04/luciano-zucco-oficializa-candidatura-ao-governo-do-rs-com-presenca-de-flavio-e-apoio-de-zema.shtml",
-      "title": "Luciano Zucco oficializa candidatura ao governo do RS com presença de Flávio e apoio de Zema",
-      "source": "UOL Noticias",
-      "published_at": "2026-04-11T19:12:05Z",
-      "collected_at": "2026-04-11T19:12:05Z",
-      "status": "raw",
-      "relevance_score": 0.0,
-      "relevance_signals": null,
-      "candidates_mentioned": [],
-      "topics": [],
-      "narrative_cluster_id": null,
-      "duplicate_of": null,
-      "summaries": {
-        "pt-BR": "",
-        "en-US": ""
-      },
-      "source_category": "mainstream",
-      "sentiment_per_candidate": {},
-      "edit_history": [],
-      "disclaimer_pt": "Análise algorítmica. Não representa pesquisa de opinião.",
-      "disclaimer_en": "Algorithmic analysis. Does not represent polling data.",
-      "sentiment_score": 0.0,
-      "confidence_score": 0.0,
-      "_sentiment_scores": {},
-      "prominence_score": 0.0
-    },
-    {
       "id": "a4b17708886162af",
       "url": "https://noticias.uol.com.br/ultimas-noticias/agencia-estado/2026/04/11/hugo-motta-diz-que-ve-de-forma-positiva-escolha-de-guimaraes-para-sri.htm",
       "title": "Hugo Motta diz que vê de forma positiva escolha de Guimarães para SRI",
       "source": "UOL Noticias",
       "published_at": "2026-04-11T19:12:05Z",
       "collected_at": "2026-04-11T19:12:05Z",
-      "status": "raw",
-      "relevance_score": 0.0,
-      "relevance_signals": null,
-      "candidates_mentioned": [],
-      "topics": [],
+      "status": "validated",
+      "relevance_score": 0.55,
+      "relevance_signals": {
+        "candidate_signal": 0.5,
+        "topic_signal": 0.0,
+        "keyword_signal": 0.05,
+        "source_signal": 0.0
+      },
+      "candidates_mentioned": [
+        "lula"
+      ],
+      "topics": [
+        "politica_externa"
+      ],
       "narrative_cluster_id": null,
       "duplicate_of": null,
       "summaries": {
-        "pt-BR": "",
-        "en-US": ""
+        "pt-BR": "O presidente da Câmara dos Deputados, Hugo Motta, avaliou de forma positiva a escolha do deputado federal José Guimarães (PT) para chefiar a Secretaria de Relações Institucionais (SRI) pelo presidente Lula. A declaração foi dada ao Broadcast Político neste sábado, 11 de abril.",
+        "en-US": "Chamber of Deputies President Hugo Motta praised President Lula's appointment of federal deputy José Guimarães (PT) to lead the Secretariat of Institutional Relations (SRI), calling it a positive development. The statement was made to Broadcast Político on Saturday, April 11."
       },
       "content": "O presidente da Câmara dos Deputados, Hugo Motta (Republicanos-PB), afirmou ao Broadcast Político neste sábado, 11, que vê de forma positiva a decisão do presidente Luiz Inácio Lula da Silva (PT) de escolher o deputado federal José Guimarães (PT) para chefiar a Secretaria de Relações Institucionais (SRI).",
       "source_category": "mainstream",
-      "sentiment_per_candidate": {},
-      "edit_history": [],
+      "sentiment_per_candidate": {
+        "lula": "positivo"
+      },
+      "edit_history": [
+        {
+          "tier": "editor",
+          "at": "2026-04-11T19:31:20Z",
+          "provider": "nvidia",
+          "action": "validated",
+          "changes": [
+            "summary_pt",
+            "summary_en"
+          ]
+        }
+      ],
       "disclaimer_pt": "Análise algorítmica. Não representa pesquisa de opinião.",
       "disclaimer_en": "Algorithmic analysis. Does not represent polling data.",
-      "sentiment_score": 0.0,
-      "confidence_score": 0.0,
-      "_sentiment_scores": {},
-      "prominence_score": 0.0
+      "sentiment_score": 0.2,
+      "confidence_score": 1.0,
+      "_sentiment_scores": {
+        "lula": 0.2
+      },
+      "prominence_score": 0.0,
+      "_ai_provider": "nvidia",
+      "_ai_model": "nvidia/nemotron-3-super-120b-a12b",
+      "ai_provider_editor": "nvidia/nemotron-3-super-120b-a12b",
+      "editor_note": null
     },
     {
       "id": "8ba531dc3db5d00b",
@@ -94,56 +65,51 @@
       "source": "Veja",
       "published_at": "2026-04-11T19:01:50Z",
       "collected_at": "2026-04-11T19:12:16Z",
-      "status": "raw",
-      "relevance_score": 0.0,
-      "relevance_signals": null,
+      "status": "validated",
+      "relevance_score": 0.35,
+      "relevance_signals": {
+        "candidate_signal": 0.0,
+        "topic_signal": 0.3,
+        "keyword_signal": 0.05,
+        "source_signal": 0.0
+      },
       "candidates_mentioned": [],
-      "topics": [],
+      "topics": [
+        "politica_externa",
+        "corrupcao",
+        "eleicoes"
+      ],
       "narrative_cluster_id": null,
       "duplicate_of": null,
       "summaries": {
-        "pt-BR": "",
-        "en-US": ""
+        "pt-BR": "Jorge Messias, indicado de Lula para o STF, demonstra otimismo para a sabatina no Senado marcada para 29 de abril, destacando apoio crescente até na oposição. Ele afirma estar tranquilo com seu trabalho na AGU e satisfeito com a recepção entre os senadores. O presidente do Congresso, Davi Alcolumbre, encaminhou a indicação à CCJ, cujo relator é o senador Weverton Rocha.",
+        "en-US": "Jorge Messias, Lula's nominee for the Supreme Court, expresses optimism ahead of his Senate confirmation hearing on April 29, noting growing support even among opposition senators. He says he is confident in his work at the AGU and pleased with the reception among lawmakers. Senate President Davi Alcolumbre forwarded the nomination to the CCJ, with Senator Weverton Rocha as rapporteur."
       },
       "content": "Jorge Messias caminha com otimismo para a sabatina no Senado, no próximo dia 29 de abril. O escolhido de Lula para o STF vem conquistando apoios até na oposição. A aliados, o chefe da AGU diz estar tranquilo com o trabalho realizado e feliz com a recepção de sua indicação entre os senadores. Na quinta-feira, o presidente do Congresso, Davi Alcolumbre, mandou a indicação de Messias para a CCJ, comissão que irá sabatinar o ministro. O relator da indicação de Messias no Senado é o senador Weverton Rocha. Publicidade",
       "source_category": "magazine",
       "sentiment_per_candidate": {},
-      "edit_history": [],
+      "edit_history": [
+        {
+          "tier": "editor",
+          "at": "2026-04-11T19:31:23Z",
+          "provider": "nvidia",
+          "action": "validated",
+          "changes": [
+            "summary_pt",
+            "summary_en"
+          ]
+        }
+      ],
       "disclaimer_pt": "Análise algorítmica. Não representa pesquisa de opinião.",
       "disclaimer_en": "Algorithmic analysis. Does not represent polling data.",
       "sentiment_score": 0.0,
-      "confidence_score": 0.0,
+      "confidence_score": 1.0,
       "_sentiment_scores": {},
-      "prominence_score": 0.0
-    },
-    {
-      "id": "98516c5536fcd3bf",
-      "url": "https://oglobo.globo.com/cultura/televisao/bbb/noticia/2026/04/11/quem-vai-sair-do-bbb-26-enquetes-atualizadas-mostram-que-disputa-acirrada-entre-dois-participantes-continua.ghtml",
-      "title": "Quem vai sair do BBB 26? Enquetes atualizadas mostram que disputa acirrada entre dois participantes continua",
-      "source": "O Globo",
-      "published_at": "2026-04-11T18:31:21Z",
-      "collected_at": "2026-04-11T19:12:10Z",
-      "status": "raw",
-      "relevance_score": 0.0,
-      "relevance_signals": null,
-      "candidates_mentioned": [],
-      "topics": [],
-      "narrative_cluster_id": null,
-      "duplicate_of": null,
-      "summaries": {
-        "pt-BR": "",
-        "en-US": ""
-      },
-      "content": "Gabriela, Leandro Boneco e Marciele: quem vai sair do BBB 26? O 15º paredão do Big Brother Brasil está formado vai ao ar neste domingo (12), às 17h30, durante o \"Domingão com Huck\". Após a saída, o eliminado irá ao palco conversar com Luciano Huck. 'A dor e a delícia': Guta Stresser relembra auge na televisão, desavença com colega de elenco e vida após a Bebel Site: Kim Kardashian ignora avisos sobre o passado 'mulherengo' de Lewis Hamilton e planeja casamento com o piloto Initial plugin text Quem vai sair do BBB 26? A enquete da Coluna Play, do GLOBO, mostra uma disputa acirrada entre Leandro Boneco (48,62%) e Marciele (47,93%). Gabriela, com 3,45%, parece não correr risco. Na enquete do Extra, a distância entre os dois primeiros mais votados é maior: Boneco lidera com 53,31%, Marciele fica em segundo com 40,34%, e Gabriela tem 6,35% dos votos. O mesmo acontece na votação do Notícias da TV, do UOL: Boneco tem 53,58% dos votos, Marciele tem 37,71%, e Gabriela aparece com 8,71%. Já na enquete da CNN, Gabriela tem mais votos, 13%, mas ainda fica distante de Marciele, com 37%, e de Leandro Boneco, com 50%. Galerias Relacionadas Como foi formado o paredão? A formação do paredão começou com a indicação do líder Juliano Floss. Ele indicou Gabriela. Marciele e Boneco ficaram empatados entre os mais votados da casa, e coube ao líder desempatar. Floss escolheu Marciele. Milena, por sua vez, tinha o poder de decidir qual dos indicados daria o contragolpe. Ela optou pela Cunhã, que indicou Boneco. Enquete BBB 26: Quem vai sair no paredão entre Gabriela, Leandro Boneco e Marciele? Initial plugin text",
-      "source_category": "mainstream",
-      "sentiment_per_candidate": {},
-      "edit_history": [],
-      "disclaimer_pt": "Análise algorítmica. Não representa pesquisa de opinião.",
-      "disclaimer_en": "Algorithmic analysis. Does not represent polling data.",
-      "sentiment_score": 0.0,
-      "confidence_score": 0.0,
-      "_sentiment_scores": {},
-      "prominence_score": 0.0
+      "prominence_score": 0.0,
+      "_ai_provider": "nvidia",
+      "_ai_model": "nvidia/nemotron-3-super-120b-a12b",
+      "ai_provider_editor": "nvidia/nemotron-3-super-120b-a12b",
+      "editor_note": null
     },
     {
       "id": "731c84989db30c3d",
@@ -263,27 +229,58 @@
       "source": "O Globo",
       "published_at": "2026-04-11T18:22:33Z",
       "collected_at": "2026-04-11T19:12:10Z",
-      "status": "raw",
-      "relevance_score": 0.0,
-      "relevance_signals": null,
-      "candidates_mentioned": [],
-      "topics": [],
+      "status": "validated",
+      "relevance_score": 0.85,
+      "relevance_signals": {
+        "candidate_signal": 0.5,
+        "topic_signal": 0.3,
+        "keyword_signal": 0.05,
+        "source_signal": 0.0
+      },
+      "candidates_mentioned": [
+        "lula"
+      ],
+      "topics": [
+        "economia",
+        "corrupcao",
+        "midia",
+        "eleicoes"
+      ],
       "narrative_cluster_id": null,
       "duplicate_of": null,
       "summaries": {
-        "pt-BR": "",
-        "en-US": ""
+        "pt-BR": "O debate sobre o fim da escala 6x1 aumenta em 30% a qualidade da exposição de Lula nas redes sociais, enquanto associações ao Banco Master e a notícias sobre Lulinha geram impactos negativos de 67% e 74%, respectivamente, sobre a imagem do presidente. O levantamento aponta que, embora a pauta trabalhista tenha efeito positivo, é superada em relevância negativa por escândalos envolvendo familiares e instituições financeiras ligadas ao governo.",
+        "en-US": "The debate over ending the 6x1 work schedule improves Lula's digital exposure quality by approximately 30%, while associations with Banco Master and news about Lulinha negatively impact his image by 67% and 74%, respectively. Although the labor topic has a positive effect, it is outweighed in negative relevance by scandals involving Lula's family and financial institutions linked to the government."
       },
       "content": "O índice que mede a qualidade da exposição de Lula em plataformas digitais sofre impacto positivo de aproximadamente 30% quando associada ao debate sobre o fim da escala 6X1. Já as citações ao Banco Master gera impacto negativo de 67% sobre o conteúdo associado ao presidente, enquanto o noticiário sobre Lulinha tem influência negativa de 74%. Matéria exclusiva para assinantes. Para ter acesso completo, acesse o link da matéria e faça o seu cadastro.",
       "source_category": "mainstream",
-      "sentiment_per_candidate": {},
-      "edit_history": [],
+      "sentiment_per_candidate": {
+        "lula": "neutro"
+      },
+      "edit_history": [
+        {
+          "tier": "editor",
+          "at": "2026-04-11T19:31:39Z",
+          "provider": "nvidia",
+          "action": "validated",
+          "changes": [
+            "summary_pt",
+            "summary_en"
+          ]
+        }
+      ],
       "disclaimer_pt": "Análise algorítmica. Não representa pesquisa de opinião.",
       "disclaimer_en": "Algorithmic analysis. Does not represent polling data.",
-      "sentiment_score": 0.0,
-      "confidence_score": 0.0,
-      "_sentiment_scores": {},
-      "prominence_score": 0.0
+      "sentiment_score": 0.1,
+      "confidence_score": 1.0,
+      "_sentiment_scores": {
+        "lula": 0.1
+      },
+      "prominence_score": 0.0,
+      "_ai_provider": "nvidia",
+      "_ai_model": "nvidia/nemotron-3-super-120b-a12b",
+      "ai_provider_editor": "nvidia/nemotron-3-super-120b-a12b",
+      "editor_note": null
     },
     {
       "id": "aab12eaaa7a94f9a",
@@ -410,85 +407,59 @@
       "source": "O Globo",
       "published_at": "2026-04-11T18:00:06Z",
       "collected_at": "2026-04-11T19:12:10Z",
-      "status": "raw",
-      "relevance_score": 0.0,
-      "relevance_signals": null,
-      "candidates_mentioned": [],
-      "topics": [],
+      "status": "validated",
+      "relevance_score": 0.9,
+      "relevance_signals": {
+        "candidate_signal": 0.5,
+        "topic_signal": 0.35,
+        "keyword_signal": 0.05,
+        "source_signal": 0.0
+      },
+      "candidates_mentioned": [
+        "lula"
+      ],
+      "topics": [
+        "politica_externa",
+        "corrupcao",
+        "impostos",
+        "eleicoes",
+        "midia"
+      ],
       "narrative_cluster_id": null,
       "duplicate_of": null,
       "summaries": {
-        "pt-BR": "",
-        "en-US": ""
+        "pt-BR": "O presidente da Câmara, Hugo Motta, elogiou a indicação de José Guimarães como novo ministro da Secretaria de Relações Institucionais, chamando-a de 'positiva' e destacando sua experiência e moderação. Motta afirmou que será consultado pelo governo sobre a escolha do novo líder do governo na Câmara e que pretende se reunir com Lula para tratar de pautas como a mudança na escala de trabalho 6x1 e o regulamento do trabalho por aplicativos.",
+        "en-US": "House Speaker Hugo Motta praised the appointment of José Guimarães as the new Minister of Institutional Relations, calling it 'positive' and citing his experience and moderation. Motta said he will be consulted by the government on the selection of the new government leader in the Chamber and plans to meet with Lula to discuss issues such as the 6x1 work scale change and the regulation of app-based work."
       },
       "content": "O presidente da Câmara, Hugo Motta (Republicanos-PB), fez elogios a escolha do líder do governo na Casa, José Guimarães (PT-CE), como próximo ministro da Secretaria de Relações Institucionais, responsável pela articulação política. O deputado petista foi definido para o cargo neste sábado e anunciou que vai tomar posse na próxima terça-feira. – O presidente (Lula) foi feliz. O Zé é experiente, ele vai poder ajudar o governo com essa experiência. Ele é um cara moderado, tem a memória dessas tratativas todas porque foi líder do governo o mandato todo praticamente. Conhece a Casa, tem boa relação com os líderes, vejo como muito positiva a indicação – disse Hugo Motta ao GLOBO. Motta disse que deve se reunir com o presidente Luiz Inácio Lula da Silva nos próximos dias para tratar das iniciativas de interesse do governo na Câmara. Uma das prioridades é aprovar mudanças na escala de trabalho 6 x 1. Uma Proposta de Emenda à Constituição (PEC) está em análise na Comissão de Constituição e Justiça (CCJ) da Câmara, mas o governo tenta enviar um projeto de lei de autoria própria, que teria uma tramitação mais simples por não mexer na Constituição. Na última terça-feira, o presidente da Câmara e o próprio Guimarães chegaram a indicar que o governo não deveria mandar um novo projeto sobre o tema, mas integrantes do governo dizem que ainda trabalham com essa possibilidade. As divergências sobre a tramitação da mudança da escala 6x1 devem ser tratadas diretamente entre Lula e Motta. –Acho que nessa conversa que eu devo ter com o presidente vai estar tudo – disse o presidente da Câmara. Motta declarou ainda que foi consultado por integrantes do governo sobre a escolha de Guimarães para a SRI e que avalizou a definição. — Conversei com outros atores do governo, fui consultado acerca do nome dele e sinalizei positivamente, tenho uma boa relação com ele. O chefe da Casa Legislativa disse, no entanto, que não há definição ainda de quem deverá ser o novo líder do governo na Câmara. – Acho que está em aberto isso. Foi agora a decisão (da SRI), ele aceitou hoje, não deu tempo ainda resolver. Tem que esperar o Zé tomar posse para poder ele conduzir essa escolha de quem vai substituí-lo. Apesar de em anos eleitorais o Congresso estar mais esvaziado, o governo ainda enfrenta uma série de demandas pendentes. Além da mudança na escala de trabalho 6 x 1, há também o projeto que regulamenta o trabalho por aplicativos e, no Senado, a indicação do ministro da Advocacia-Geral da União (AGU), Jorge Messias, para o Supremo Tribunal Federal (STF). O governo também quer tentar emplacar o deputado petista Odair Cunha (MG) no Tribunal de Contas da União(TCU), que deverá ter seu nome analisado pela Câmara na próxima semana. A ida de Guimarães para a pasta tira a possibilidade de ele concorrer nas eleições, já que o período de desimcompatibilização já passou. O deputado petista tinha o desejo de concorrer ao Senado, mas a disputa no Ceará já está congestionada com outros aliados do PT no estado – A grande dúvida é se ele ia topar porque tinha como objetivo a questão do Ceará. Como não deu certo lá, ele ficou um pouco na dúvida de disputar ou não a eleição porque tem a questão de ficar sem mandato, mas penso que o apelo do presidente foi mais forte e também claro contou com nosso apoio – declarou Hugo Motta.",
       "source_category": "mainstream",
-      "sentiment_per_candidate": {},
-      "edit_history": [],
-      "disclaimer_pt": "Análise algorítmica. Não representa pesquisa de opinião.",
-      "disclaimer_en": "Algorithmic analysis. Does not represent polling data.",
-      "sentiment_score": 0.0,
-      "confidence_score": 0.0,
-      "_sentiment_scores": {},
-      "prominence_score": 0.0
-    },
-    {
-      "id": "c6af0d608c780d1c",
-      "url": "https://www.estadao.com.br/politica/flavio-diz-que-jair-bolsonaro-e-demais-perseguidos-vao-subir-rampa-do-planalto-se-vencer-eleicao/",
-      "title": "Flávio diz que Jair Bolsonaro e demais ‘perseguidos’ vão subir rampa do Planalto se vencer eleição",
-      "source": "Estadao Politica",
-      "published_at": "2026-04-11T17:54:05Z",
-      "collected_at": "2026-04-11T19:12:12Z",
-      "status": "raw",
-      "relevance_score": 0.0,
-      "relevance_signals": null,
-      "candidates_mentioned": [],
-      "topics": [],
-      "narrative_cluster_id": null,
-      "duplicate_of": null,
-      "summaries": {
-        "pt-BR": "",
-        "en-US": ""
+      "sentiment_per_candidate": {
+        "lula": "positivo"
       },
-      "content": "O senador Flávio Bolsonaro (PL-RJ) , pré-candidato à presidência da República, afirmou que, se vencer a eleição deste ano, o seu pai, o ex-presidente Jair Bolsonaro (PL) , vai “subir a rampa” do Palácio do Planalto com “todas as pessoas perseguidas” em janeiro do ano que vem. As declarações ocorreram neste sábado, 11, em entrevista a jornalistas em Porto Alegre (RS). “Se Deus permitir, nós vamos vencer essa eleição no 1º turno. Há projetos tramitando no Congresso Nacional, não é uma anistia, mas é zerar o jogo de verdade, para fazer justiça não só ao presidente Bolsonaro, mas à Débora do Batom”, declarou Flávio, ao mencionar a cabeleireira Débora Rodrigues dos Santos , condenada a 14 anos de prisão pela participação nos atos golpistas de 8 de janeiro de 2023. O senador prosseguiu: “O Congresso entende isso, só que, ainda, uma parte dele tem um certo medo de votar um projeto como esse. Porque claramente não é inconstitucional. A anistia é de competência exclusiva do Congresso Nacional”. Na sequência, Flávio disse acreditar que, após as eleições de outubro, o Congresso vai aprovar a anistia aos condenados pelos atos golpistas. “É por isso que eu falo: não apenas o presidente Bolsonaro, mas todas as pessoas que foram perseguidas vão subir a rampa junto com a gente em janeiro do ano que vem”, afirmou. Flávio está na capital gaúcha por ocasião do lançamento da pré-candidatura do deputado federal Zucco (PL-RS) ao governo estadual. Mais cedo, ele também participou de um café da manhã com mulheres e disse que o PT vai ser “irrelevante” a partir do ano que vem. Além de apoiar Zucco, Flávio Bolsonaro também endossa as pré-candidaturas dos deputados Marcel Van Hattem (Novo-RS) e Sanderson (PL-RS) para o Senado.",
-      "source_category": "mainstream",
-      "sentiment_per_candidate": {},
-      "edit_history": [],
+      "edit_history": [
+        {
+          "tier": "editor",
+          "at": "2026-04-11T19:32:04Z",
+          "provider": "nvidia",
+          "action": "validated",
+          "changes": [
+            "summary_pt",
+            "summary_en"
+          ]
+        }
+      ],
       "disclaimer_pt": "Análise algorítmica. Não representa pesquisa de opinião.",
       "disclaimer_en": "Algorithmic analysis. Does not represent polling data.",
-      "sentiment_score": 0.0,
-      "confidence_score": 0.0,
-      "_sentiment_scores": {},
-      "prominence_score": 0.0
-    },
-    {
-      "id": "359aacf59b1824c2",
-      "url": "https://www.estadao.com.br/politica/blog-do-fausto-macedo/dois-mil-promotores-e-procuradores-elegem-neste-sabado-chefe-do-ministerio-publico-de-sao-paulo/",
-      "title": "Dois mil promotores e procuradores elegem neste sábado chefe do Ministério Público de São Paulo",
-      "source": "Estadao Politica",
-      "published_at": "2026-04-11T17:53:53Z",
-      "collected_at": "2026-04-11T19:12:12Z",
-      "status": "raw",
-      "relevance_score": 0.0,
-      "relevance_signals": null,
-      "candidates_mentioned": [],
-      "topics": [],
-      "narrative_cluster_id": null,
-      "duplicate_of": null,
-      "summaries": {
-        "pt-BR": "",
-        "en-US": ""
+      "sentiment_score": 0.3,
+      "confidence_score": 1.0,
+      "_sentiment_scores": {
+        "lula": 0.3
       },
-      "content": "Dois mil promotores e procuradores elegem neste sábado, 11, o chefe do Ministério Público de São Paulo. Dois candidatos concorrem ao cargo de procurador-geral de Justiça - Paulo Sérgio de Oliveira e Costa e Marco Antônio Ferreira Lima . A votação, por sistema eletrônico, começa às 9hs e se estende até as 17hs. Em poucos minutos o resultado será conhecido. As propostas dos oponentes seguem caminhos diversos. Paulo Sérgio almeja valorizar grupos especiais de promotores em uma cruzada sem tréguas contra o crime organizad o. Marco Lima defende ‘rompimento com o atual modelo de proximidade com o Governo do Estado ’ e a adoção de um cronograma com ‘escrituração imediata e calendário fixo para pagamento de créditos’ à categoria. “Não permitirei que colegas cheguem aos 90 anos sem receber o que lhes é de direito.” Lista tríplice com dois nomes Paulo Sérgio, atual procurador-geral, busca a recondução ao topo da Instituição para mais um mandato de dois anos. Ele é o favorito. Sua vitória é tida pelos aliados como ‘inapelável’. A indicação deverá ser sacramentada na segunda, 13, pelo governador Tarcísio de Freitas , que detém a prerrogativa de escolher o procurador-geral. O pleito dos promotores ocorre pela via da lista tríplice, ou seja, até três procuradores podem concorrer ao posto - desta vez, porém, apenas dois nomes estão na disputa em São Paulo. O governador pode indicar qualquer um da lista que chegar às suas mãos, não importa a colocação. Paulo Sérgio sai candidato pela chapa ‘União, Liderança e Resultado\". Ele confia que o desempenho de sua gestão, voltada ao enfrentamento do crime organizado, preservação de prerrogativas e direitos e capacitação dos colegas, consolidou seu nome junto à classe. Para um novo mandato, se reconduzido, Paulo Sérgio acena aos promotores com uma atuação rigorosa contra as facções. Ele apoia a valorização dos grupos especiais de promotores que espreitam as falanges do crime. A meta é impedir o avanço do PCC e promover sua descapitalização por meio do arresto de bens patrimoniais e ativos. “O Estado precisa ser mais organizado que o crime organizado”, prega Paulo Sérgio. O atual procurador-geral se dedica à expansão de iniciativas de interesse social e de suporte às vítimas da criminalidade. Ele preza a parceria com outros operadores do sistema de Justiça e com as polícias. É alinhado ao uso da inteligência como melhor estratégia para vencer o grande desafio e abomina confrontos armados nas ruas. “Temos que promover a asfixia financeira do crime.” ‘Rompimento’ e ‘penduricalhos’ Marco Lima, apontado como candidato ‘azarão’, também busca a cadeira número 1 do Ministério Público. As chances são remotas, mas ele acredita em uma boa performance nas urnas a partir da plataforma de diretrizes de sua candidatura. Aos promotores, Lima distribuiu um ‘diagnóstico pormenorizado da atual conjuntura institucional’ e as propostas para o que chama de ‘reforma’ do Ministério Público. Afirma que sua candidatura ‘não possui o apoio do Governo ou de ministros de tribunais superiores , mas nasce do incentivo direto da base de promotores e procuradores’. Propõe ‘independência institucional e rompimento com o atual modelo de proximidade com o Governo do Estado para garantir a autonomia entre o fiscalizador e o fiscalizado’. Em sua avaliação, o MP paulista ‘atravessa um período de estagnação decorrente de um atrelamento de mais de duas décadas a um mesmo grupo hegemônico e ao Poder Executivo’. Marco Lima considera que ‘o cenário atual revela uma instituição literalmente quebrada em termos estruturais’. O candidato aborda em seu programa um capítulo denominado ‘direitos funcionais e transparência remuneratória’. Para ele, “é imperativo retificar a nomenclatura pejorativa de ‘ penduricalhos ’, direitos trabalhistas e legais não constituem privilégios”. “Defendo que o promotor receba direitos análogos aos de qualquer trabalhador, como o terço constitucional de férias e a remuneração por acúmulo de funções e trabalho em finais de semana”, diz. Em março, o Supremo Tribunal Federal decretou o fim de parte dos penduricalhos que privilegiam juízes e também os promotores e procuradores. Marco Lima defende implementação real da simetria com a magistratura para ativos e inativos. Merece destaque em seu projeto de poder a instalação de um cronograma de pagamentos, com ‘escrituração imediata e calendário fixo para pagamento de créditos, sob pena de perecimento desses direitos’. “Diferente de outras esferas que recebem auxílio-paletó ou vinhos rotulados, em São Paulo buscamos apenas créditos devidos. Não permitirei que colegas cheguem aos 90 anos sem receber o que lhes é de direito por uma ‘cautela’ injustificável da administração.” Lima afirma que sua candidatura ‘não possui o apoio do Governo ou de ministros de tribunais superiores, mas nasce do incentivo direto da base de promotores e procuradores’. Ele propõe ‘independência institucional, rompimento com o atual modelo de proximidade com o Governo do Estado para garantir a autonomia entre o fiscalizador e o fiscalizado’.",
-      "source_category": "mainstream",
-      "sentiment_per_candidate": {},
-      "edit_history": [],
-      "disclaimer_pt": "Análise algorítmica. Não representa pesquisa de opinião.",
-      "disclaimer_en": "Algorithmic analysis. Does not represent polling data.",
-      "sentiment_score": 0.0,
-      "confidence_score": 0.0,
-      "_sentiment_scores": {},
-      "prominence_score": 0.0
+      "prominence_score": 0.0,
+      "_ai_provider": "nvidia",
+      "_ai_model": "nvidia/nemotron-3-super-120b-a12b",
+      "ai_provider_editor": "nvidia/nemotron-3-super-120b-a12b",
+      "editor_note": null
     },
     {
       "id": "0675cabdc8ec051b",
@@ -1674,37 +1645,6 @@
       "_ai_model": "nvidia/nemotron-3-super-120b-a12b",
       "ai_provider_editor": "nvidia/nemotron-3-super-120b-a12b",
       "editor_note": null
-    },
-    {
-      "id": "305fb01575e70be5",
-      "url": "https://youtu.be/x9SMbcLdFP0",
-      "title": "🔎 PESQUISA SÃO PAULO 2026: TARCÍSIO LIDERA COM FOLGA E LULA PERDE FORÇA NO 2º TURNO",
-      "source": "YouTube",
-      "source_category": "social",
-      "published_at": "2026-04-11T16:01:34Z",
-      "collected_at": "2026-04-11T19:12:36Z",
-      "status": "raw",
-      "relevance_score": 0.0,
-      "candidates_mentioned": [
-        "lula",
-        "tarcisio"
-      ],
-      "topics": [],
-      "summaries": {
-        "pt-BR": "",
-        "en-US": ""
-      },
-      "sentiment_per_candidate": {},
-      "narrative_cluster_id": null,
-      "edit_history": [],
-      "disclaimer_pt": "Análise algorítmica. Não representa pesquisa de opinião.",
-      "disclaimer_en": "Algorithmic analysis. Does not represent polling data.",
-      "sentiment_score": 0.0,
-      "confidence_score": 0.0,
-      "duplicate_of": null,
-      "relevance_signals": null,
-      "_sentiment_scores": {},
-      "prominence_score": 0.0
     },
     {
       "id": "cf4adbd5eaf7633d",
@@ -31944,6 +31884,6 @@
       "editor_note": null
     }
   ],
-  "last_updated": "2026-04-11T19:17:07Z",
-  "total_count": 500
+  "last_updated": "2026-04-11T19:32:57Z",
+  "total_count": 494
 }
