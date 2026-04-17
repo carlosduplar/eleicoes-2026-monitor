@@ -88,27 +88,52 @@
       "source": "El Pais Brasil",
       "published_at": "2026-04-17T04:00:00Z",
       "collected_at": "2026-04-17T05:56:21Z",
-      "status": "raw",
-      "relevance_score": 0.0,
-      "relevance_signals": null,
+      "status": "validated",
+      "relevance_score": 0.3,
+      "relevance_signals": {
+        "candidate_signal": 0.0,
+        "topic_signal": 0.3,
+        "keyword_signal": 0.0,
+        "source_signal": 0.0
+      },
       "candidates_mentioned": [],
-      "topics": [],
+      "topics": [
+        "politica_externa",
+        "corrupcao",
+        "midia",
+        "eleicoes"
+      ],
       "narrative_cluster_id": null,
       "duplicate_of": null,
       "summaries": {
-        "pt-BR": "",
-        "en-US": ""
+        "pt-BR": "O estado do Rio de Janeiro enfrenta uma crise política agravada pela ausência de um governador eleito, após a renúncia ou impedimento do último titular, deixando o Poder Executivo estadual em vazio de liderança legítima. A situação, descrita como recorrente na mídia local, reflete anos de instabilidade institucional, com o Cristo Redentor simbolicamente representado como sobrecarregado ou desesperado diante do colapso governamental. Com 17 milhões de habitantes e a segunda maior economia do Brasil, o estado vive um vácuo de poder que ameaça a governabilidade e os serviços essenciais.",
+        "en-US": "Rio de Janeiro state is facing an aggravated political crisis due to the absence of an elected governor, following the resignation or removal of the last officeholder, leaving the state executive without legitimate leadership. The situation, described as a recurring theme in local media, reflects years of institutional instability, with Christ the Redeemer symbolically portrayed as overwhelmed or desperate amid the governmental collapse. With 17 million inhabitants and Brazil’s second-largest economy, the state is experiencing a power vacuum that threatens governability and essential services."
       },
       "content": "Es una de las viñetas más comunes en la prensa carioca: el Cristo Redentor llevándose las manos a la cabeza , tapándose la cara, avergonzado, o directamente tirando la toalla y echando a volar desde lo alto del Corcovado. El ambiente de crisis política permanente, al que se han acostumbrado en los últimos años los brasileños del estado de Río de Janeiro (17 millones de habitantes, la segunda economía de Brasil ), se ha recrudecido estas semanas, ante la falta de un gobernador salido de las urnas. Seguir leyendo",
       "source_category": "international",
       "sentiment_per_candidate": {},
-      "edit_history": [],
+      "edit_history": [
+        {
+          "tier": "editor",
+          "at": "2026-04-17T06:55:38Z",
+          "provider": "nvidia",
+          "action": "validated",
+          "changes": [
+            "summary_pt",
+            "summary_en"
+          ]
+        }
+      ],
       "disclaimer_pt": "Análise algorítmica. Não representa pesquisa de opinião.",
       "disclaimer_en": "Algorithmic analysis. Does not represent polling data.",
       "sentiment_score": 0.0,
-      "confidence_score": 0.0,
+      "confidence_score": 1.0,
       "_sentiment_scores": {},
-      "prominence_score": 0.0
+      "prominence_score": 0.0,
+      "_ai_provider": "nvidia",
+      "_ai_model": "nvidia/nemotron-3-super-120b-a12b",
+      "ai_provider_editor": "nvidia/nemotron-3-super-120b-a12b",
+      "editor_note": null
     },
     {
       "id": "1c6d10e043a6c0fb",
@@ -185,27 +210,57 @@
       "source": "El Pais Brasil",
       "published_at": "2026-04-17T03:30:01Z",
       "collected_at": "2026-04-17T05:56:21Z",
-      "status": "raw",
-      "relevance_score": 0.0,
-      "relevance_signals": null,
-      "candidates_mentioned": [],
-      "topics": [],
+      "status": "validated",
+      "relevance_score": 0.8,
+      "relevance_signals": {
+        "candidate_signal": 0.5,
+        "topic_signal": 0.25,
+        "keyword_signal": 0.05,
+        "source_signal": 0.0
+      },
+      "candidates_mentioned": [
+        "lula"
+      ],
+      "topics": [
+        "politica_externa",
+        "eleicoes",
+        "midia"
+      ],
       "narrative_cluster_id": null,
       "duplicate_of": null,
       "summaries": {
-        "pt-BR": "",
-        "en-US": ""
+        "pt-BR": "Pedro Sánchez y Lula da Silva, como líderes de la izquierda en Europa y América Latina, se reunirán en Barcelona para posicionarse como alternativa frente al avance global de la derecha y la ultraderecha liderada por figuras como Donald Trump. Su encuentro busca fortalecer la coordinación política entre progresistas europeos y latinoamericanos ante un contexto internacional de polarización creciente.",
+        "en-US": "Pedro Sánchez and Lula da Silva, as leaders of the left in Europe and Latin America, will meet in Barcelona to position themselves as a global alternative to the rise of right-wing and far-right movements led by figures like Donald Trump. Their meeting aims to strengthen political coordination between progressive forces in Europe and Latin America amid increasing global polarization."
       },
       "content": "La izquierda se reorganiza ante la ola de derecha mundial. Pedro Sánchez y Luiz Inácio Lula da Silva, los líderes con más tirón mediático y político como referentes de los progresistas en Europa y en América, serán este viernes los grandes protagonistas del arranque de un fin de semana en Barcelona centrado en ofrecer una alternativa al mundo de Donald Trump y de la derecha y ultraderecha que domina buena parte de Europa y América. Seguir leyendo",
       "source_category": "international",
-      "sentiment_per_candidate": {},
-      "edit_history": [],
+      "sentiment_per_candidate": {
+        "lula": "positivo"
+      },
+      "edit_history": [
+        {
+          "tier": "editor",
+          "at": "2026-04-17T06:55:43Z",
+          "provider": "nvidia",
+          "action": "validated",
+          "changes": [
+            "summary_pt",
+            "summary_en"
+          ]
+        }
+      ],
       "disclaimer_pt": "Análise algorítmica. Não representa pesquisa de opinião.",
       "disclaimer_en": "Algorithmic analysis. Does not represent polling data.",
-      "sentiment_score": 0.0,
-      "confidence_score": 0.0,
-      "_sentiment_scores": {},
-      "prominence_score": 0.0
+      "sentiment_score": 0.8,
+      "confidence_score": 1.0,
+      "_sentiment_scores": {
+        "lula": 0.8
+      },
+      "prominence_score": 0.0,
+      "_ai_provider": "nvidia",
+      "_ai_model": "nvidia/nemotron-3-super-120b-a12b",
+      "ai_provider_editor": "nvidia/nemotron-3-super-120b-a12b",
+      "editor_note": null
     },
     {
       "id": "3e72f4e5ee3f9d29",
@@ -214,27 +269,55 @@
       "source": "El Pais Brasil",
       "published_at": "2026-04-17T03:30:01Z",
       "collected_at": "2026-04-17T05:56:21Z",
-      "status": "raw",
-      "relevance_score": 0.0,
-      "relevance_signals": null,
-      "candidates_mentioned": [],
-      "topics": [],
+      "status": "validated",
+      "relevance_score": 0.6,
+      "relevance_signals": {
+        "candidate_signal": 0.5,
+        "topic_signal": 0.0,
+        "keyword_signal": 0.1,
+        "source_signal": 0.0
+      },
+      "candidates_mentioned": [
+        "lula"
+      ],
+      "topics": [
+        "politica_externa"
+      ],
       "narrative_cluster_id": null,
       "duplicate_of": null,
       "summaries": {
-        "pt-BR": "",
-        "en-US": ""
+        "pt-BR": "Luiz Inácio Lula da Silva, aos 80 anos e com 11 de presidência no Brasil, alerta que o mundo está como um navio à deriva, sem instituições que guiem o comportamento civilizatório das nações. Ele expressa espanto diante da atual situação geopolítica global, destacando a falta de orientação internacional.",
+        "en-US": "At 80 years old and with 11 years as president of Brazil, Luiz Inácio Lula da Silva warns that the world is like a ship adrift, without institutions to guide the civilizatory conduct of nations. He expresses astonishment at the current global geopolitical situation, emphasizing the lack of international direction."
       },
       "content": "Con sus 80 años, 11 de ellos como presidente de Brasil, Luiz Inácio Lula da Silva es uno de los líderes democráticos más experimentados del mundo. En una entrevista con EL PAÍS, el líder sindical elegido tres veces para encabezar el mayor país de América Latina puso voz al asombro de muchos ciudadanos por la actual situación geopolítica: “Es como si el mundo fuera un navío a la deriva, sin ninguna institución que oriente el comportamiento civilizatorio de las naciones”. Seguir leyendo",
       "source_category": "international",
-      "sentiment_per_candidate": {},
-      "edit_history": [],
+      "sentiment_per_candidate": {
+        "lula": "positivo"
+      },
+      "edit_history": [
+        {
+          "tier": "editor",
+          "at": "2026-04-17T06:55:46Z",
+          "provider": "nvidia",
+          "action": "validated",
+          "changes": [
+            "summary_pt",
+            "summary_en"
+          ]
+        }
+      ],
       "disclaimer_pt": "Análise algorítmica. Não representa pesquisa de opinião.",
       "disclaimer_en": "Algorithmic analysis. Does not represent polling data.",
-      "sentiment_score": 0.0,
-      "confidence_score": 0.0,
-      "_sentiment_scores": {},
-      "prominence_score": 0.0
+      "sentiment_score": 0.9,
+      "confidence_score": 1.0,
+      "_sentiment_scores": {
+        "lula": 0.9
+      },
+      "prominence_score": 0.0,
+      "_ai_provider": "nvidia",
+      "_ai_model": "nvidia/nemotron-3-super-120b-a12b",
+      "ai_provider_editor": "nvidia/nemotron-3-super-120b-a12b",
+      "editor_note": null
     },
     {
       "id": "00f175a6f04a52fd",
@@ -14653,36 +14736,6 @@
       "editor_note": null
     },
     {
-      "id": "1ad97a421e10fcdc",
-      "url": "https://youtu.be/QGRj6PXRMnE",
-      "title": "Eleições 2026: &quot;Presidente Lula precisa frequentar templos evangélicos&quot;, avalia especialista.",
-      "source": "YouTube",
-      "source_category": "social",
-      "published_at": "2026-04-15T20:13:42Z",
-      "collected_at": "2026-04-17T05:56:49Z",
-      "status": "raw",
-      "relevance_score": 0.0,
-      "candidates_mentioned": [
-        "lula"
-      ],
-      "topics": [],
-      "summaries": {
-        "pt-BR": "",
-        "en-US": ""
-      },
-      "sentiment_per_candidate": {},
-      "narrative_cluster_id": null,
-      "edit_history": [],
-      "disclaimer_pt": "Análise algorítmica. Não representa pesquisa de opinião.",
-      "disclaimer_en": "Algorithmic analysis. Does not represent polling data.",
-      "sentiment_score": 0.0,
-      "confidence_score": 0.0,
-      "duplicate_of": null,
-      "relevance_signals": null,
-      "_sentiment_scores": {},
-      "prominence_score": 0.0
-    },
-    {
       "id": "c21a18fa4e418a6a",
       "url": "https://noticias.uol.com.br/confere/ultimas-noticias/2026/04/15/falso-flavio-bolsonaro-privatizar-sus.ghtm",
       "title": "Flávio Bolsonaro não disse que privatizará SUS se for eleito presidente",
@@ -23778,37 +23831,6 @@
       "editor_note": null
     },
     {
-      "id": "3e6e25b14cc0f917",
-      "url": "https://youtu.be/weuyJW9523Y",
-      "title": "ELEIÇÕES 2026/ LULA X FLAVIO BOLSONARO!",
-      "source": "YouTube",
-      "source_category": "social",
-      "published_at": "2026-04-15T01:03:50Z",
-      "collected_at": "2026-04-17T05:56:49Z",
-      "status": "raw",
-      "relevance_score": 0.0,
-      "candidates_mentioned": [
-        "lula",
-        "flavio-bolsonaro"
-      ],
-      "topics": [],
-      "summaries": {
-        "pt-BR": "",
-        "en-US": ""
-      },
-      "sentiment_per_candidate": {},
-      "narrative_cluster_id": null,
-      "edit_history": [],
-      "disclaimer_pt": "Análise algorítmica. Não representa pesquisa de opinião.",
-      "disclaimer_en": "Algorithmic analysis. Does not represent polling data.",
-      "sentiment_score": 0.0,
-      "confidence_score": 0.0,
-      "duplicate_of": null,
-      "relevance_signals": null,
-      "_sentiment_scores": {},
-      "prominence_score": 0.0
-    },
-    {
       "id": "d0ee4f925e1fb9d4",
       "url": "https://veja.abril.com.br/politica/governo-envia-pl-de-fim-da-escala-6x1-sem-urgencia-constitucional/",
       "title": "Após avisar Motta, Lula envia projeto de fim da escala 6×1 para o Congresso",
@@ -31044,27 +31066,50 @@
       "source": "TSE",
       "published_at": "2026-04-14T18:09:47Z",
       "collected_at": "2026-04-17T05:56:24Z",
-      "status": "raw",
-      "relevance_score": 0.0,
-      "relevance_signals": null,
+      "status": "validated",
+      "relevance_score": 0.5,
+      "relevance_signals": {
+        "candidate_signal": 0.0,
+        "topic_signal": 0.25,
+        "keyword_signal": 0.15,
+        "source_signal": 0.1
+      },
       "candidates_mentioned": [],
-      "topics": [],
+      "topics": [
+        "eleicoes",
+        "seguranca"
+      ],
       "narrative_cluster_id": null,
       "duplicate_of": null,
       "summaries": {
-        "pt-BR": "",
-        "en-US": ""
+        "pt-BR": "Os códigos-fonte das urnas e sistemas eleitorais para as Eleições 2026 estão disponíveis para inspeção desde 2 de outubro de 2025, como parte do Ciclo de Transparência Democrática do TSE. Instituições legitimadas podem solicitar acesso enviando ofício com antecedência mínima de 10 dias, indicando técnicos responsáveis e período de permanência, para fiscalizar, questionar e sugerir melhorias nos sistemas.",
+        "en-US": "The source code for the voting machines and electoral systems for the 2026 elections has been available for inspection since October 2, 2025, under the TSE's Democratic Transparency Cycle. Legitimized institutions may request access by submitting an official letter with at least 10 days' notice, specifying responsible technicians and duration, to verify, question technical aspects, and propose improvements to the systems."
       },
       "content": "Códigos-fonte estão disponíveis há seis meses para fiscalizações de instituições legitimadas Desde a abertura do Ciclo de Transparência Democrática - Eleições 2026 em 2 de outubro de 2025, os códigos-fonte das urnas e dos sistemas eleitorais estão à disposição das entidades habilitadas a fiscalizar o processo eleitoral. A iniciativa reafirma o compromisso da Justiça Eleitoral com a transparência, a segurança, a auditabilidade e a integridade dos sistemas a serem utilizados nas Eleições 2026, marcadas para 4 de outubro (1º turno). Para realizar a inspeção, a instituição deve enviar ofício para a Presidência do TSE com pelo menos 10 dias de antecedência, contados do início do prazo requerido para a verificação. O TSE dispõe do e-mail neci@tse.jus.br e dos telefones (61) 3030-7973/8911 para esclarecimentos de dúvidas e mais pedidos de informações. A entidade deve indicar os técnicos responsáveis e o período de permanência, medida necessária para a organização do acesso à estrutura disponibilizada pelo Tribunal. Durante o ciclo, os participantes podem acompanhar o desenvolvimento dos sistemas, questionar aspectos técnicos, solicitar esclarecimentos sobre trechos específicos dos códigos-fonte e apresentar sugestões de melhoria. As contribuições são avaliadas pela equipe técnica do TSE e podem resultar em aperfeiçoamentos nos sistemas eleitorais. Veja mais",
       "source_category": "institutional",
       "sentiment_per_candidate": {},
-      "edit_history": [],
+      "edit_history": [
+        {
+          "tier": "editor",
+          "at": "2026-04-17T06:55:50Z",
+          "provider": "nvidia",
+          "action": "validated",
+          "changes": [
+            "summary_pt",
+            "summary_en"
+          ]
+        }
+      ],
       "disclaimer_pt": "Análise algorítmica. Não representa pesquisa de opinião.",
       "disclaimer_en": "Algorithmic analysis. Does not represent polling data.",
       "sentiment_score": 0.0,
-      "confidence_score": 0.0,
+      "confidence_score": 1.0,
       "_sentiment_scores": {},
-      "prominence_score": 0.0
+      "prominence_score": 0.0,
+      "_ai_provider": "nvidia",
+      "_ai_model": "nvidia/nemotron-3-super-120b-a12b",
+      "ai_provider_editor": "nvidia/nemotron-3-super-120b-a12b",
+      "editor_note": null
     },
     {
       "id": "23a832eb4e3683ab",
@@ -31321,27 +31366,51 @@
       "source": "TSE",
       "published_at": "2026-04-14T16:50:20Z",
       "collected_at": "2026-04-17T05:56:24Z",
-      "status": "raw",
-      "relevance_score": 0.0,
-      "relevance_signals": null,
+      "status": "validated",
+      "relevance_score": 0.5,
+      "relevance_signals": {
+        "candidate_signal": 0.0,
+        "topic_signal": 0.25,
+        "keyword_signal": 0.15,
+        "source_signal": 0.1
+      },
       "candidates_mentioned": [],
-      "topics": [],
+      "topics": [
+        "educacao",
+        "eleicoes",
+        "midia"
+      ],
       "narrative_cluster_id": null,
       "duplicate_of": null,
       "summaries": {
-        "pt-BR": "",
-        "en-US": ""
+        "pt-BR": "O TSE e o UNICEF lançaram uma campanha nacional para incentivar o alistamento eleitoral de adolescentes de 16 e 17 anos, com o objetivo de aumentar a participação juvenil nas eleições de 2026. Apesar de 5,8 milhões de jovens nessa faixa etária serem aptos, apenas 1,8 milhão haviam tirado o título até fevereiro, representando menos de dois em cada dez. A iniciativa inclui ações nas redes sociais e um desafio para os Núcleos de Cidadania do Adolescente (NUCAs) em mais de 2.300 municípios durante abril.",
+        "en-US": "The TSE and UNICEF launched a national campaign to encourage electoral registration among 16- and 17-year-olds, aiming to boost youth participation in the 2026 elections. Although 5.8 million adolescents in this age group are eligible, only 1.8 million had obtained voter titles by February — less than two in ten. The initiative includes social media outreach and a challenge for Adolescent Citizenship Nuclei (NUCAs) across over 2,300 municipalities throughout April."
       },
       "content": "Parceria incentiva alistamento eleitoral de jovens de 16 e 17 anos O Tribunal Superior Eleitoral (TSE) e o Fundo das Nações Unidas para a Infância (UNICEF) lançaram uma mobilização nacional para incentivar adolescentes de 16 e 17 anos a emitirem o primeiro título de eleitor. O objetivo é aumentar os índices de participação nesta faixa etária e garantir que o jovem também seja um dos protagonistas nas decisões políticas de suas comunidades no pleito de outubro. O Brasil tem 5,8 milhões de adolescentes entre 16 e 17 anos. E dados do Tribunal Superior Eleitoral (TSE) mostram que, até fevereiro, quase 1,8 milhão de adolescentes de 15, 16 e 17 anos haviam tirado o título de eleitor. Ou seja, apenas dois em cada 10 jovens aptos já fizeram o cadastro eleitoral. Adolescentes de 15 anos podem se alistar e solicitar o título de eleitor. Porém, estes somente poderão votar nas eleições deste ano se completarem 16 anos até 4 de outubro. A parceria entre as instituições prevê uma campanha intensificada nas redes sociais durante todo o mês de abril. Entre as ações de destaque, está o lançamento de um desafio voltado aos Núcleos de Cidadania do Adolescente (NUCAs), presentes em mais de 2.300 municípios. Veja mais",
       "source_category": "institutional",
       "sentiment_per_candidate": {},
-      "edit_history": [],
+      "edit_history": [
+        {
+          "tier": "editor",
+          "at": "2026-04-17T06:55:54Z",
+          "provider": "nvidia",
+          "action": "validated",
+          "changes": [
+            "summary_pt",
+            "summary_en"
+          ]
+        }
+      ],
       "disclaimer_pt": "Análise algorítmica. Não representa pesquisa de opinião.",
       "disclaimer_en": "Algorithmic analysis. Does not represent polling data.",
       "sentiment_score": 0.0,
-      "confidence_score": 0.0,
+      "confidence_score": 1.0,
       "_sentiment_scores": {},
-      "prominence_score": 0.0
+      "prominence_score": 0.0,
+      "_ai_provider": "nvidia",
+      "_ai_model": "nvidia/nemotron-3-super-120b-a12b",
+      "ai_provider_editor": "nvidia/nemotron-3-super-120b-a12b",
+      "editor_note": null
     },
     {
       "id": "5d59abb4023da81e",
@@ -31350,27 +31419,50 @@
       "source": "TSE",
       "published_at": "2026-04-13T20:47:46Z",
       "collected_at": "2026-04-17T05:56:24Z",
-      "status": "raw",
-      "relevance_score": 0.0,
-      "relevance_signals": null,
+      "status": "validated",
+      "relevance_score": 0.5,
+      "relevance_signals": {
+        "candidate_signal": 0.0,
+        "topic_signal": 0.3,
+        "keyword_signal": 0.1,
+        "source_signal": 0.1
+      },
       "candidates_mentioned": [],
-      "topics": [],
+      "topics": [
+        "eleicoes",
+        "corrupcao"
+      ],
       "narrative_cluster_id": null,
       "duplicate_of": null,
       "summaries": {
-        "pt-BR": "",
-        "en-US": ""
+        "pt-BR": "O TSE retoma o julgamento de recurso envolvendo a cassação do mandato do governador de Roraima, Edilson Damião, e a inelegibilidade do ex-governador Antônio Denarium, ambos condenados pelo TRE-RR por abuso de poder político e econômico nas eleições de 2022. Denarium renunciou ao cargo para disputar o Senado nas eleições de 2022. A sessão, transmitida ao vivo a partir das 19h, analisa 13 processos, com destaque para a possibilidade de novas eleições em Roraima.",
+        "en-US": "The TSE resumes the judgment of an appeal concerning the potential removal of Roraima’s current governor, Edilson Damião, and the ineligibility of former governor Antônio Denarium, both convicted by the TRE-RR for abuse of political and economic power in the 2022 elections. Denarium resigned to run for the Senate in the 2022 general elections. The live session, starting at 7 p.m., will review 13 cases, with focus on whether new elections should be held in Roraima."
       },
       "content": "Sessão será transmitida ao vivo, a partir das 19h, pela TV e Rádio Justiça e pelo canal do TSE no YouTube O Tribunal Superior Eleitoral (TSE) deve julgar, nesta terça-feira (14), a partir das 19h, um total de 13 processos. O destaque da sessão é a retomada do julgamento de recurso que envolve a cassação do mandato do atual governador de Roraima (RR), Edilson Damião (União Brasil), e a inelegibilidade do ex-governador Antônio Denarium (Republicanos). Denarium renunciou ao cargo para disputar uma vaga no Senado Federal nas Eleições Gerais deste ano. Eles foram condenados pelo Tribunal Regional Eleitoral do estado (TRE-RR) por abuso de poder político e econômico nas Eleições Gerais de 2022. O Regional ainda decretou a inelegibilidade de Denarium e determinou a realização de novas eleições para o governo roraimense. Confira abaixo os detalhes do destaque da sessão desta terça: Recurso Ordinário Eleitoral 0600940-96.2022.6.23.0000 Veja mais",
       "source_category": "institutional",
       "sentiment_per_candidate": {},
-      "edit_history": [],
+      "edit_history": [
+        {
+          "tier": "editor",
+          "at": "2026-04-17T06:55:58Z",
+          "provider": "nvidia",
+          "action": "validated",
+          "changes": [
+            "summary_pt",
+            "summary_en"
+          ]
+        }
+      ],
       "disclaimer_pt": "Análise algorítmica. Não representa pesquisa de opinião.",
       "disclaimer_en": "Algorithmic analysis. Does not represent polling data.",
       "sentiment_score": 0.0,
-      "confidence_score": 0.0,
+      "confidence_score": 1.0,
       "_sentiment_scores": {},
-      "prominence_score": 0.0
+      "prominence_score": 0.0,
+      "_ai_provider": "nvidia",
+      "_ai_model": "nvidia/nemotron-3-super-120b-a12b",
+      "ai_provider_editor": "nvidia/nemotron-3-super-120b-a12b",
+      "editor_note": null
     },
     {
       "id": "be68bdc912d23ff3",
@@ -31379,29 +31471,52 @@
       "source": "TSE",
       "published_at": "2026-04-13T14:10:12Z",
       "collected_at": "2026-04-17T05:56:24Z",
-      "status": "raw",
-      "relevance_score": 0.0,
-      "relevance_signals": null,
+      "status": "validated",
+      "relevance_score": 0.5,
+      "relevance_signals": {
+        "candidate_signal": 0.0,
+        "topic_signal": 0.25,
+        "keyword_signal": 0.15,
+        "source_signal": 0.1
+      },
       "candidates_mentioned": [],
-      "topics": [],
+      "topics": [
+        "eleicoes",
+        "midia"
+      ],
       "narrative_cluster_id": null,
       "duplicate_of": null,
       "summaries": {
-        "pt-BR": "",
-        "en-US": ""
+        "pt-BR": "Nesta semana, os partidos Republicanos, União Brasil e Rede Sustentabilidade veicularão propaganda partidária gratuita nas emissoras de rádio e televisão, conforme o calendário eleitoral de 2026. O Republicanos terá 11 minutos distribuídos entre terça (5 min), quinta (4min30s) e sábado (1min30s); a Rede Sustentabilidade exibirá 3min30s no sábado; e o União Brasil veiculará 30 segundos na quinta-feira. A distribuição respeita a Portaria TSE nº 460/2025, que estabelece limites de tempo para o primeiro semestre de 2026.",
+        "en-US": "This week, the parties Republicans, Brazil Union, and Sustainability Rede will air free partisan propaganda on radio and television, in accordance with the 2026 electoral calendar. The Republicans will have 11 minutes distributed across Tuesday (5 min), Thursday (4 min 30 sec), and Saturday (1 min 30 sec); Sustainability Rede will air 3 min 30 sec on Saturday; and Brazil Union will broadcast 30 seconds on Thursday. The distribution complies with TSE Resolution No. 460/2025, which sets time limits for free partisan propaganda in the first half of 2026."
       },
       "content": "Programas das agremiações políticas são veiculados às terças, às quintas-feiras e aos sábados Nesta semana, três legendas ocuparão espaço na programação das emissoras de rádio e televisão para a veiculação da propaganda partidária. As inserções serão exibidas pelos partidos Republicanos, União Brasil (União) e Rede Sustentabilidade (REDE). As transmissões ocorrerão entre 19h30 e 22h30, na terça-feira (14), na quinta-feira (16) e no sábado (18). Em anos eleitorais, como 2026, a legislação permite a propaganda partidária apenas durante o primeiro semestre. De acordo com o calendário de 2026 , o Republicanos veiculará o total de onze minutos de propaganda partidária na semana, divididos em cinco minutos na terça-feira, quatro minutos e meio na quinta-feira e um minuto e meio no sábado. A Rede Sustentabilidade exibirá três minutos e meio no sábado. Já o União Brasil veiculará meio minuto de programa na quinta-feira. A Portaria TSE nº 460, de 21 de outubro de 2025 , estabelece a distribuição de tempo para a propaganda partidária gratuita no rádio e na televisão do primeiro semestre de 2026. Pelo documento, o União Brasil e o Republicanos têm direito cada um a 20 minutos de programas no período e a Rede a cinco minutos. Veja mais",
       "source_category": "institutional",
       "sentiment_per_candidate": {},
-      "edit_history": [],
+      "edit_history": [
+        {
+          "tier": "editor",
+          "at": "2026-04-17T06:56:06Z",
+          "provider": "nvidia",
+          "action": "validated",
+          "changes": [
+            "summary_pt",
+            "summary_en"
+          ]
+        }
+      ],
       "disclaimer_pt": "Análise algorítmica. Não representa pesquisa de opinião.",
       "disclaimer_en": "Algorithmic analysis. Does not represent polling data.",
       "sentiment_score": 0.0,
-      "confidence_score": 0.0,
+      "confidence_score": 1.0,
       "_sentiment_scores": {},
-      "prominence_score": 0.0
+      "prominence_score": 0.0,
+      "_ai_provider": "nvidia",
+      "_ai_model": "nvidia/nemotron-3-super-120b-a12b",
+      "ai_provider_editor": "nvidia/nemotron-3-super-120b-a12b",
+      "editor_note": null
     }
   ],
-  "last_updated": "2026-04-17T06:27:39Z",
-  "total_count": 495
+  "last_updated": "2026-04-17T06:56:30Z",
+  "total_count": 493
 }
