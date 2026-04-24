@@ -2,90 +2,63 @@
   "$schema": "../docs/schemas/articles.schema.json",
   "articles": [
     {
-      "id": "182526c3064f872d",
-      "url": "https://www1.folha.uol.com.br/colunas/painel/2026/04/planalto-ve-como-pouco-provavel-ida-de-lula-a-congresso-do-pt.shtml",
-      "title": "Planalto vê como pouco provável ida de Lula a Congresso do PT",
-      "source": "UOL Noticias",
-      "published_at": "2026-04-24T18:28:43Z",
-      "collected_at": "2026-04-24T18:28:43Z",
-      "status": "raw",
-      "relevance_score": 0.0,
-      "relevance_signals": null,
-      "candidates_mentioned": [],
-      "topics": [],
-      "narrative_cluster_id": null,
-      "duplicate_of": null,
-      "summaries": {
-        "pt-BR": "",
-        "en-US": ""
-      },
-      "source_category": "mainstream",
-      "sentiment_per_candidate": {},
-      "edit_history": [],
-      "disclaimer_pt": "Análise algorítmica. Não representa pesquisa de opinião.",
-      "disclaimer_en": "Algorithmic analysis. Does not represent polling data.",
-      "sentiment_score": 0.0,
-      "confidence_score": 0.0,
-      "_sentiment_scores": {},
-      "prominence_score": 0.0
-    },
-    {
-      "id": "25b322c3edd6a654",
-      "url": "https://noticias.uol.com.br/ultimas-noticias/agencia-estado/2026/04/24/alunos-da-faculdade-de-direito-da-usp-entram-em-greve-mesmo-apos-desmobilizacao-de-servidores.htm",
-      "title": "Alunos da Faculdade de Direito da USP entram em greve, mesmo após desmobilização de servidores",
-      "source": "UOL Noticias",
-      "published_at": "2026-04-24T18:28:43Z",
-      "collected_at": "2026-04-24T18:28:43Z",
-      "status": "raw",
-      "relevance_score": 0.0,
-      "relevance_signals": null,
-      "candidates_mentioned": [],
-      "topics": [],
-      "narrative_cluster_id": null,
-      "duplicate_of": null,
-      "summaries": {
-        "pt-BR": "",
-        "en-US": ""
-      },
-      "content": "Os alunos da Faculdade de Direito da Universidade de São Paulo (USP), no centro da capital paulista, estão em greve. A decisão foi tomada na noite desta quinta-feira, 23, durante assembleia realizada pelo Centro Acadêmico XI de Agosto, com 902 votos a favor da paralisação e 459 contrários.",
-      "source_category": "mainstream",
-      "sentiment_per_candidate": {},
-      "edit_history": [],
-      "disclaimer_pt": "Análise algorítmica. Não representa pesquisa de opinião.",
-      "disclaimer_en": "Algorithmic analysis. Does not represent polling data.",
-      "sentiment_score": 0.0,
-      "confidence_score": 0.0,
-      "_sentiment_scores": {},
-      "prominence_score": 0.0
-    },
-    {
       "id": "2f0f3e480aed8cd7",
       "url": "https://noticias.uol.com.br/ultimas-noticias/agencia-estado/2026/04/24/associacao-de-delegados-da-pf-critica-fala-de-lula-sobre-agentes-que-fingem-trabalhar.htm",
       "title": "Associação de delegados da PF critica fala de Lula sobre agentes que 'fingem trabalhar'",
       "source": "UOL Noticias",
       "published_at": "2026-04-24T18:28:43Z",
       "collected_at": "2026-04-24T18:28:43Z",
-      "status": "raw",
-      "relevance_score": 0.0,
-      "relevance_signals": null,
-      "candidates_mentioned": [],
-      "topics": [],
+      "status": "validated",
+      "relevance_score": 0.6,
+      "relevance_signals": {
+        "candidate_signal": 0.5,
+        "topic_signal": 0.05,
+        "keyword_signal": 0.05,
+        "source_signal": 0.0
+      },
+      "candidates_mentioned": [
+        "lula"
+      ],
+      "topics": [
+        "seguranca",
+        "corrupcao",
+        "politica_externa"
+      ],
       "narrative_cluster_id": null,
       "duplicate_of": null,
       "summaries": {
-        "pt-BR": "",
-        "en-US": ""
+        "pt-BR": "A Associação dos Delegados de Polícia Federal (ADPF) criticou declarações do presidente Luiz Inácio Lula da Silva, que acusou agentes da PF de 'fingirem trabalhar'. A entidade considerou as afirmações injustas e prejudiciais à imagem da corporação, ressaltando o comprometimento dos servidores na luta contra o crime.",
+        "en-US": "The Federal Police Delegates Association (ADPF) criticized statements by President Luiz Inácio Lula da Silva, who accused PF agents of 'pretending to work'. The association called the remarks unjust and damaging to the institution's image, emphasizing the dedication of its members in combating crime."
       },
       "content": "A Associação dos Delegados de Polícia Federal (ADPF) reagiu nesta quinta-feira, 23, a declarações do presidente Luiz Inácio Lula da Silva (PT) sobre suposta falta de atuação de integrantes da corporação.",
       "source_category": "mainstream",
-      "sentiment_per_candidate": {},
-      "edit_history": [],
+      "sentiment_per_candidate": {
+        "lula": "negativo"
+      },
+      "edit_history": [
+        {
+          "tier": "editor",
+          "at": "2026-04-24T19:27:03Z",
+          "provider": "nvidia",
+          "action": "validated",
+          "changes": [
+            "summary_pt",
+            "summary_en"
+          ]
+        }
+      ],
       "disclaimer_pt": "Análise algorítmica. Não representa pesquisa de opinião.",
       "disclaimer_en": "Algorithmic analysis. Does not represent polling data.",
-      "sentiment_score": 0.0,
-      "confidence_score": 0.0,
-      "_sentiment_scores": {},
-      "prominence_score": 0.0
+      "sentiment_score": -0.3,
+      "confidence_score": 1.0,
+      "_sentiment_scores": {
+        "lula": -0.3
+      },
+      "prominence_score": 0.0,
+      "_ai_provider": "nvidia",
+      "_ai_model": "nvidia/nemotron-3-super-120b-a12b",
+      "ai_provider_editor": "nvidia/nemotron-3-super-120b-a12b",
+      "editor_note": null
     },
     {
       "id": "f37c750f7e19c472",
@@ -94,85 +67,55 @@
       "source": "UOL Noticias",
       "published_at": "2026-04-24T18:28:43Z",
       "collected_at": "2026-04-24T18:28:43Z",
-      "status": "raw",
-      "relevance_score": 0.0,
-      "relevance_signals": null,
-      "candidates_mentioned": [],
-      "topics": [],
+      "status": "validated",
+      "relevance_score": 0.55,
+      "relevance_signals": {
+        "candidate_signal": 0.5,
+        "topic_signal": 0.0,
+        "keyword_signal": 0.05,
+        "source_signal": 0.0
+      },
+      "candidates_mentioned": [
+        "lula"
+      ],
+      "topics": [
+        "saude"
+      ],
       "narrative_cluster_id": null,
       "duplicate_of": null,
       "summaries": {
-        "pt-BR": "",
-        "en-US": ""
+        "pt-BR": "O presidente Luiz Inácio Lula da Silva passou por um procedimento cirúrgico na manhã desta sexta-feira (24) em São Paulo para remoção de uma lesão do couro cabeludo. Segundo o médico Ricardo Kalil, que acompanha o presidente, a cirurgia foi bem-sucedida e Lula deve repousar nos próximos dias.",
+        "en-US": "President Luiz Inácio Lula da Silva underwent a surgical procedure on Friday morning (24) in São Paulo to remove a scalp lesion. According to his doctor, Ricardo Kalil, who accompanies the president, the surgery was successful and Lula is expected to rest in the coming days."
       },
       "content": "presidente Lula passou por um procedimento cirúrgico na manhã desta sexta-feira (24), em São Paulo, para retirada de uma lesão do couro cabeludo. Segundo o médico Ricardo Kalil, que acompanha Lula, ...",
       "source_category": "mainstream",
-      "sentiment_per_candidate": {},
-      "edit_history": [],
-      "disclaimer_pt": "Análise algorítmica. Não representa pesquisa de opinião.",
-      "disclaimer_en": "Algorithmic analysis. Does not represent polling data.",
-      "sentiment_score": 0.0,
-      "confidence_score": 0.0,
-      "_sentiment_scores": {},
-      "prominence_score": 0.0
-    },
-    {
-      "id": "10978d0a386200a0",
-      "url": "https://noticias.uol.com.br/ultimas-noticias/reuters/2026/04/24/brasil-proibe-mercados-de-predicao-como-kalshi-e-polymarket.htm",
-      "title": "Brasil proíbe mercados de predição como Kalshi e Polymarket",
-      "source": "UOL Noticias",
-      "published_at": "2026-04-24T18:28:43Z",
-      "collected_at": "2026-04-24T18:28:43Z",
-      "status": "raw",
-      "relevance_score": 0.0,
-      "relevance_signals": null,
-      "candidates_mentioned": [],
-      "topics": [],
-      "narrative_cluster_id": null,
-      "duplicate_of": null,
-      "summaries": {
-        "pt-BR": "",
-        "en-US": ""
+      "sentiment_per_candidate": {
+        "lula": "neutro"
       },
-      "source_category": "mainstream",
-      "content": "Access Denied You don't have permission to access \"http://noticias.uol.com.br/ultimas-noticias/reuters/2026/04/24/brasil-proibe-mercados-de-predicao-como-kalshi-e-polymarket.htm\" on this server. Reference #18.d15ed617.1777055410.130c61f2 https://errors.edgesuite.net/18.d15ed617.1777055410.130c61f2",
-      "sentiment_per_candidate": {},
-      "edit_history": [],
+      "edit_history": [
+        {
+          "tier": "editor",
+          "at": "2026-04-24T19:27:10Z",
+          "provider": "nvidia",
+          "action": "validated",
+          "changes": [
+            "summary_pt",
+            "summary_en"
+          ]
+        }
+      ],
       "disclaimer_pt": "Análise algorítmica. Não representa pesquisa de opinião.",
       "disclaimer_en": "Algorithmic analysis. Does not represent polling data.",
-      "sentiment_score": 0.0,
-      "confidence_score": 0.0,
-      "_sentiment_scores": {},
-      "prominence_score": 0.0
-    },
-    {
-      "id": "57107076797d32b0",
-      "url": "https://noticias.uol.com.br/ultimas-noticias/agencia-estado/2026/04/24/nao-e-facil-mas-e-possivel-b16-valido-ainda-em-2026-diz-presidente-da-aprobio.htm",
-      "title": "Não é fácil, mas é possível B16 válido ainda em 2026. diz presidente da Aprobio",
-      "source": "UOL Noticias",
-      "published_at": "2026-04-24T18:28:43Z",
-      "collected_at": "2026-04-24T18:28:43Z",
-      "status": "raw",
-      "relevance_score": 0.0,
-      "relevance_signals": null,
-      "candidates_mentioned": [],
-      "topics": [],
-      "narrative_cluster_id": null,
-      "duplicate_of": null,
-      "summaries": {
-        "pt-BR": "",
-        "en-US": ""
+      "sentiment_score": 0.1,
+      "confidence_score": 1.0,
+      "_sentiment_scores": {
+        "lula": 0.1
       },
-      "content": "rasília, 24 - No setor de biocombustíveis, existe a consciência de que não será fácil que o governo federal teste e aprove a elevação da mistura do biodisel no diesel de 15% (B15) para 17% (B17) aind...",
-      "source_category": "mainstream",
-      "sentiment_per_candidate": {},
-      "edit_history": [],
-      "disclaimer_pt": "Análise algorítmica. Não representa pesquisa de opinião.",
-      "disclaimer_en": "Algorithmic analysis. Does not represent polling data.",
-      "sentiment_score": 0.0,
-      "confidence_score": 0.0,
-      "_sentiment_scores": {},
-      "prominence_score": 0.0
+      "prominence_score": 0.0,
+      "_ai_provider": "nvidia",
+      "_ai_model": "nvidia/nemotron-3-super-120b-a12b",
+      "ai_provider_editor": "nvidia/nemotron-3-super-120b-a12b",
+      "editor_note": null
     },
     {
       "id": "0dc202d3a1596fd8",
@@ -181,114 +124,51 @@
       "source": "Poder360",
       "published_at": "2026-04-24T18:23:18Z",
       "collected_at": "2026-04-24T18:29:00Z",
-      "status": "raw",
-      "relevance_score": 0.0,
-      "relevance_signals": null,
+      "status": "validated",
+      "relevance_score": 0.45,
+      "relevance_signals": {
+        "candidate_signal": 0.0,
+        "topic_signal": 0.3,
+        "keyword_signal": 0.1,
+        "source_signal": 0.05
+      },
       "candidates_mentioned": [],
-      "topics": [],
+      "topics": [
+        "eleicoes",
+        "corrupcao",
+        "politica_externa"
+      ],
       "narrative_cluster_id": null,
       "duplicate_of": null,
       "summaries": {
-        "pt-BR": "",
-        "en-US": ""
+        "pt-BR": "O ministro Cristiano Zanin, do STF, determinou que o presidente do TJRJ, Ricardo Couto de Castro, continue como governador interino do Rio de Janeiro até que o plenário da Corte defina o processo eleitoral para o mandato tampão. A decisão reafirma liminar anterior e rejeita pedido do novo presidente da Alerj, Douglas Ruas, para assumir o governo, mantendo o status quo enquanto o julgamento sobre a sucessão após a renúncia de Cláudio Castro permanece paralisado por pedido de vista.",
+        "en-US": "Supreme Federal Court Minister Cristiano Zanin ruled that Ricardo Couto de Castro, president of the Rio de Janeiro State Court of Justice, must continue as interim governor until the STF plenary defines the electoral process for the temporary mandate. The decision upholds a prior injunction and rejects a request by newly elected Alerj president Douglas Ruas to assume power, preserving the current arrangement while the succession case following Cláudio Castro's resignation remains stalled due to a request for view."
       },
       "content": "O ministro Cristiano Zanin , do STF (Supremo Tribunal Federal), determinou que o presidente do TJRJ (Tribunal de Justiça do Rio de Janeiro), Ricardo Couto de Castro , continue interinamente no cargo de governador fluminense. A decisão desta 6ª feira (24.abr.2026) reafirmou que o desembargador deve permanecer no posto até que o plenário do STF defina como serão as eleições para o mandato tampão. O julgamento está paralisado. Zanin analisou e acatou um pedido do diretório do PSD no Rio de Janeiro para confirmar a decisão liminar que mantinha Couto de Castro à frente do Palácio Guanabara. No dia 17 de abril, a Alerj elegeu o deputado estadual Douglas Ruas como seu novo presidente. Nesta 5ª feira (23.abr.2026), Ruas foi até o gabinete do ministro Zanin solicitar que o governo do Estado fosse transferido para ele . O ministro entendeu que, como o caso sobre a sucessão do governo depois da renúncia de Cláudio Castro (PL) já foi levado ao plenário do Supremo, deve prevalecer o resultado parcial do julgamento, que estabelece a manutenção do governo interino de Couto de Castro até que a análise seja finalizada. “Neste momento, não há nada a ser provido, pois, como já exposto, o Plenário do Supremo Tribunal Federal explicitou que ‘até nova deliberação permanecerá no exercício do cargo de Governador do Estado do Rio de Janeiro o Exmo. Presidente do Tribunal de Justiça do Estado, com todos os poderes e prerrogativas inerentes à Chefia do Poder Executivo’” , declarou Zanin. PEDIDO DE VISTA NO JULGAMENTO No julgamento do caso, em 4 de abril, o ministro encabeçou a posição para que sejam estabelecidas eleições diretas. Zanin defende o reconhecimento de que a renúncia de Cláudio Castro foi uma estratégia para evitar a cassação e garantir que o sucessor seja eleito pela Alerj. Para ele, o STF deve entender que houve uma cassação do mandato e que deve ser estabelecido um novo processo eleitoral direto para o mandato tampão. O caso foi interrompido com o pedido de vista do ministro Flávio Dino. Mesmo com o pedido, 3 ministros quiseram antecipar o voto em virtude da “urgência do caso”. Veja como está o placar: Eleições diretas – Cristiano Zanin; Eleições indiretas – Luiz Fux; André Mendonça; Nunes Marques; Cármen Lúcia; ACÓRDÃO DO TSE O TSE publicou na noite desta 5ª feira (23.abr.2026) o acórdão do julgamento que condenou o ex-governador do Rio de Janeiro Cláudio Castro (PL) e o presidente da Alerj (Assembleia Legislativa do Rio de Janeiro), Rodrigo Bacellar (União Brasil). A publicação do documento esclarece que o ex-governador não saiu do cargo em virtude de cassação pelo tribunal, mas pela renúncia na véspera. Leia íntegra (PDF – 2,4 MB). Ao reconhecer que não houve uma punição eleitoral para a saída do cargo, a Corte Eleitoral afasta a hipótese de que o sucessor para um mandato tampão deva ser escolhido pela via direta. No entanto, a decisão final caberá ao Supremo Tribunal Federal, que analisa o caso.",
       "source_category": "politics",
       "sentiment_per_candidate": {},
-      "edit_history": [],
+      "edit_history": [
+        {
+          "tier": "editor",
+          "at": "2026-04-24T19:27:32Z",
+          "provider": "nvidia",
+          "action": "validated",
+          "changes": [
+            "summary_pt",
+            "summary_en"
+          ]
+        }
+      ],
       "disclaimer_pt": "Análise algorítmica. Não representa pesquisa de opinião.",
       "disclaimer_en": "Algorithmic analysis. Does not represent polling data.",
       "sentiment_score": 0.0,
-      "confidence_score": 0.0,
+      "confidence_score": 1.0,
       "_sentiment_scores": {},
-      "prominence_score": 0.0
-    },
-    {
-      "id": "2534b1d6cda21ad5",
-      "url": "https://www.metropoles.com/negocios/bolsas-da-europa-recuam-em-mais-uma-semana-de-incerteza-com-a-guerra",
-      "title": "Bolsas da Europa recuam em mais uma semana de incerteza com a guerra",
-      "source": "Metropoles",
-      "published_at": "2026-04-24T18:22:31Z",
-      "collected_at": "2026-04-24T18:28:52Z",
-      "status": "raw",
-      "relevance_score": 0.0,
-      "relevance_signals": null,
-      "candidates_mentioned": [],
-      "topics": [],
-      "narrative_cluster_id": null,
-      "duplicate_of": null,
-      "summaries": {
-        "pt-BR": "",
-        "en-US": ""
-      },
-      "source_category": "mainstream",
-      "content": "Página inicial Negócios Compartilhar notícia Siga Google Discover Cate Gillon/Getty Images 1 de 1 Imagem de pessoa passando em frente a painel da Bolsa de Valores de Londres - Metrópoles\n        - Foto: Cate Gillon/Getty Images Os principais índices das bolsas de valores da Europa fecharam em queda, nesta sexta-feira (24/4) , encerrando mais uma semana marcada por indefinições e incertezas em relação à guerra entre Estados Unidos e Irã no Oriente Médio. Na Europa, os investidores também repercutiram o anúncio do presidente dos EUA, Donald Trump, de que o cessar-fogo entre Israel e Líbano será prorrogado por três semanas . A extensão da trégua ocorre em meio a um cenário muito instável na região, com uma série de ameaças e ataques recentes que colocaram em xeque a interrupção da guerra. Nesta sexta-feira, os preços internacionais do petróleo perderam força e operaram em baixa, depois de atingirem US$ 106 nas primeiras horas de negociação . Na véspera, tanto o barril de petróleo WTI (referência para o mercado norte-americano) quanto o brent (referência para o mercado internacional) fecharam em alta pela quarta sessão consecutiva. O que aconteceu O índice Stoxx 600, que reúne ações de 600 empresas europeias listadas em bolsas, fechou em baixa de 0,58%, aos 610 pontos. Na Bolsa de Frankfurt, o índice DAX terminou o dia com perdas de 0,11%, aos 24,1 mil pontos . Em Londres, o FTSE 100 encerrou o pregão recuando 0,75%, aos 10,3 mil pontos . O CAC 40, da Bolsa de Paris, fechou o dia em queda de 0,84%, aos 8,1 mil pontos . O Ibex 35, de Madri, também encerrou a sessão no vermelho, caindo 1,09%, aos 17,6 mil pontos. Leia também Negócios Depois de bater US$ 106, petróleo perde força com cessar-fogo no radar Negócios Dólar oscila e Bolsa cai com petróleo, Trump-Irã e cessar-fogo em foco Mundo Secretário de Trump diz que nenhum navio sai de Ormuz sem EUA permitir Mundo Trump prorroga cessar-fogo entre Israel e Líbano por três semanas Sem armas nucleares contra o Irã, diz Trump O presidente dos EUA, Donald Trump, descartou, nessa quinta-feira (23/4), qualquer possibilidade de uso de armas nucleares contra o Irã , durante entrevista no Salão Oval da Casa Branca. Questionado por uma repórter se consideraria recorrer a esse tipo de armamento, Trump foi direto: “Não”. Em seguida, criticou a pergunta. “Por que alguém faria uma pergunta tão estúpida? Por que eu usaria uma arma nuclear?”, afirmou. Trump argumentou ainda que não há necessidade desse tipo de escalada, alegando que as forças americanas já teriam causado danos significativos à estrutura militar iraniana. Segundo ele, os EUA já “dizimaram” capacidades do país sem recorrer a armamento nuclear. Estados Unidos dizem ter atingido 78% dos alvos As declarações foram dadas em meio à intensificação das tensões entre Washington e Teerã. Trump afirmou que os EUA já atingiram 78% dos alvos planejados no conflito e ameaçou concluir uma ofensiva militar caso não haja acordo . “Se eles não quiserem fazer um acordo, eu finalizarei o ataque militarmente com os outros 25% dos alvos”, disse o republicano. Segundo Trump, estruturas estratégicas iranianas, como produção de mísseis e drones, já foram desativadas. “Desativamos tudo”, afirmou. Apesar da retórica militar, o governo norte-americano mantém a defesa de uma solução diplomática. Trump voltou a dizer que não está sob pressão para fechar um acordo e que o tempo favorece os EUA nas negociações com o Irã. Até o momento, não há prazo definido para avanço nas tratativas entre os dois países, que seguem marcadas por desconfiança mútua e falta de uma proposta formal iraniana. Estreito de Ormuz permanece bloqueado No campo militar, os EUA mantêm o bloqueio naval no Estreito de Ormuz, ponto estratégico para o comércio global de petróleo. O Comando Central norte-americano informou que 31 embarcações foram obrigadas a retornar aos portos, ampliando a pressão econômica sobre o Irã. Além disso, o cenário de segurança na região segue instável, com avaliações de inteligência indicando que operações de desminagem poderiam levar até seis meses após o fim do conflito. Ormuz é o canal marítimo estratégico localizado entre o Irã e os Emirados Árabes Unidos, considerado o “gargalo” mais importante do mundo para a energia por concentrar cerca de 20% a 30% do petróleo mundial e grande parte do gás natural liquefeito (GNL). O estreito é crucial para a economia global . Programa nuclear deixou de ser foco de negociação, diz Irã O governo do Irã indicou uma mudança relevante no eixo das negociações com os EUA. Segundo o porta-voz do Ministério das Relações Exteriores iraniano, Esmaeil Baghaei, o programa nuclear deixou de ser, neste momento, o principal tema das tratativas . De acordo com Baghaei, as rodadas anteriores de negociação foram centradas na questão nuclear, mas o atual cenário de conflito inviabiliza esse enfoque. “A principal questão agora é encerrar o conflito de uma forma que atenda aos interesses de Teerã”, afirmou. O porta-voz destacou ainda que a pauta das negociações pode mudar conforme a evolução da crise. Entre as prioridades do Irã, ele citou o alívio de sanções econômicas, compensações por danos e garantias de não agressão como elementos essenciais para qualquer acordo. Baghaei também criticou o que chamou de “narrativa recorrente” sobre o programa nuclear iraniano. Segundo ele, há mais de duas décadas o tema é usado para pressionar o país, ao mesmo tempo em que acusou Israel de manter armas nucleares na região – ponto historicamente sensível na geopolítica do Oriente Médio. Entre os principais pontos de atrito entre Washington e Teerã, estão o enriquecimento de urânio – que os EUA querem limitar – e a insistência iraniana no direito ao uso civil da tecnologia nuclear. Cessar-fogo entre Israel e Líbano é prorrogado Trump anunciou, na quinta-feira, a extensão do cessar-fogo entre Israel e Líbano por mais três semanas . A decisão foi divulgada após uma reunião no Salão Oval da Casa Branca com autoridades de alto escalão dos dois países, além de integrantes do governo norte-americano, como o vice-presidente, J.D. Vance, e o secretário de Estado, Marco Rubio. “A reunião correu muito bem. O cessar-fogo entre Israel e o Líbano será estendido por três semanas”, afirmou Trump em publicação na rede Truth Social. Segundo o presidente, o governo norte-americano também irá trabalhar em conjunto com o Líbano para fortalecer sua capacidade de defesa, especialmente diante da atuação do Hezbollah, considerado um dos principais focos de tensão na região. Trump afirmou ainda que pretende receber, em breve, o primeiro-ministro israelense, Benjamin Netanyahu, e o presidente libanês, Joseph Aoun, para dar continuidade às negociações. A extensão ocorre em meio a um cenário ainda instável . Apesar do cessar-fogo em vigor, episódios recentes colocam em dúvida a sustentação da trégua. Um recente ataque israelense no sul do Líbano deixou cinco mortos, incluindo a jornalista Amal Khalil, segundo autoridades libanesas. Além disso, Israel acusa o Hezbollah de violar o acordo ao lançar um drone contra soldados israelenses.",
-      "sentiment_per_candidate": {},
-      "edit_history": [],
-      "disclaimer_pt": "Análise algorítmica. Não representa pesquisa de opinião.",
-      "disclaimer_en": "Algorithmic analysis. Does not represent polling data.",
-      "sentiment_score": 0.0,
-      "confidence_score": 0.0,
-      "_sentiment_scores": {},
-      "prominence_score": 0.0
-    },
-    {
-      "id": "8d15026a711b56c1",
-      "url": "https://www.metropoles.com/minas-gerais/prf-apreende-200-kg-de-maconha-apos-perseguicao-de-13-km-em-minas",
-      "title": "PRF apreende 200 kg de maconha após perseguição de 13 km em Minas. Vídeo",
-      "source": "Metropoles",
-      "published_at": "2026-04-24T18:14:27Z",
-      "collected_at": "2026-04-24T18:28:52Z",
-      "status": "raw",
-      "relevance_score": 0.0,
-      "relevance_signals": null,
-      "candidates_mentioned": [],
-      "topics": [],
-      "narrative_cluster_id": null,
-      "duplicate_of": null,
-      "summaries": {
-        "pt-BR": "",
-        "en-US": ""
-      },
-      "source_category": "mainstream",
-      "content": "Página inicial Minas Gerais Compartilhar notícia Siga Google Discover Belo Horizonte – Aproximadamente 200 kg de maconha foram apreendidos durante uma fiscalização no km 480 da BR-262, em Bom Despacho (MG), região do Alto São Francisco, na tarde desta quinta-feira (23/4). A Polícia Rodoviária Federal em Minas Gerais (PRF-MG) deu ordem de parada a uma caminhonete Fiat Strada Volcano, de cor vermelha, mas o motorista desobedeceu e fugiu em alta velocidade, no sentido Belo Horizonte . O condutor em fuga percorreu cerca de 13 quilômetros, fazendo manobras perigosas e ultrapassagens forçadas, colocando em risco a segurança de outros usuários da rodovia. Em contato com outras equipes, a PRF-MG montou um bloqueio no km 467, nas proximidades da Unidade Operacional da PRF, onde foi feita a interceptação do carro. Leia também Minas Gerais MG: PRF flagra 5.448 veículos acima da velocidade na Semana Santa Minas Gerais PRF persegue carro de saqueadores de mexericas na BR-381, em MG Brasil Policiais são presos por fingir operação para roubar drogas em MS São Paulo Vídeo: após perseguição de 40 km, PRF acha 900 kg de drogas em carro Durante a fiscalização do veículo, os policiais localizaram a droga no compartimento de carga, além de dois aparelhos celulares e R$ 788 em espécie . Também foi identificado que o veículo estava com placa clonada. O veículo original, registrado em Armação de Búzios (RJ), possuía registro de roubo/furto. O motorista foi preso pelos crimes, em tese, de tráfico de drogas, receptação e adulteração de sinal identificador de veículo automotor. Ele foi encaminhado, juntamente com o veículo e o entorpecente apreendido, à Delegacia de Polícia Judiciária para as providências cabíveis. Fique por dentro do que acontece em Minas Gerais. Siga o perfil do Metrópoles MG no Instagram .",
-      "sentiment_per_candidate": {},
-      "edit_history": [],
-      "disclaimer_pt": "Análise algorítmica. Não representa pesquisa de opinião.",
-      "disclaimer_en": "Algorithmic analysis. Does not represent polling data.",
-      "sentiment_score": 0.0,
-      "confidence_score": 0.0,
-      "_sentiment_scores": {},
-      "prominence_score": 0.0
-    },
-    {
-      "id": "8cd90740e953daee",
-      "url": "https://veja.abril.com.br/politica/proposta-nao-e-eleitoral-e-estrutural-diz-autor-de-pec-sobre-fim-da-escala-6x1/",
-      "title": "‘Proposta não é eleitoral, é estrutural’, diz autor de PEC sobre fim da escala 6×1",
-      "source": "Veja",
-      "published_at": "2026-04-24T18:14:09Z",
-      "collected_at": "2026-04-24T18:29:08Z",
-      "status": "raw",
-      "relevance_score": 0.0,
-      "relevance_signals": null,
-      "candidates_mentioned": [],
-      "topics": [],
-      "narrative_cluster_id": null,
-      "duplicate_of": null,
-      "summaries": {
-        "pt-BR": "",
-        "en-US": ""
-      },
-      "content": "O deputado federal Reginaldo Lopes (PT-MG) rebateu críticas de que a proposta de emenda à Constituição que prevê o fim da escala 6×1 teria caráter eleitoral. Em entrevista ao programa Ponto de Vista , de VEJA, o parlamentar afirmou que a medida é resultado de um debate antigo e necessário sobre a modernização das relações de trabalho no país. “Proposta não é eleitoral, é estrutural”, disse. Autor da PEC, apresentada em 2019, Lopes argumentou que o tema já vinha sendo discutido muito antes do atual ciclo eleitoral. Segundo ele, a iniciativa amadureceu ao longo dos anos e agora encontra um ambiente mais favorável para avançar no Congresso. “Esse projeto está maduro”, afirmou. Ao responder diretamente às críticas de populismo, o deputado defendeu que parlamentares devem se posicionar de forma clara sobre temas relevantes. “A sociedade precisa conhecer o que pensam seus deputados e senadores”, declarou, ao afirmar que o debate público não pode ser evitado por causa do calendário eleitoral. A proposta defendida por Lopes prevê o fim da escala 6×1 e a adoção da jornada de 40 horas semanais, com dois dias de descanso. De acordo com ele, a medida busca beneficiar principalmente trabalhadores mais vulneráveis, que ainda não conseguiram reduzir a carga horária por meio de acordos coletivos. O parlamentar também contestou a ideia de que a mudança teria impacto econômico significativo. Segundo ele, estudos indicam efeitos médios limitados sobre os custos das empresas, ao mesmo tempo em que apontam ganhos em produtividade e qualidade de vida. “O impacto é pequeno e os resultados são enormes”, disse. Continua após a publicidade Apesar das resistências de parte do setor produtivo, Lopes afirmou que o texto final será construído com diálogo e possibilidade de transição para segmentos mais afetados. “O que nós podemos discutir é uma transição”, afirmou, ao destacar a necessidade de ouvir diferentes setores da economia. O deputado citou ainda que a jornada de trabalho mais curta já é realidade em grande parte dos setores, o que, segundo ele, reforça a viabilidade da proposta. Para Lopes, a PEC consolida uma tendência já presente no mercado de trabalho brasileiro. Publicidade",
-      "source_category": "magazine",
-      "sentiment_per_candidate": {},
-      "edit_history": [],
-      "disclaimer_pt": "Análise algorítmica. Não representa pesquisa de opinião.",
-      "disclaimer_en": "Algorithmic analysis. Does not represent polling data.",
-      "sentiment_score": 0.0,
-      "confidence_score": 0.0,
-      "_sentiment_scores": {},
-      "prominence_score": 0.0
+      "prominence_score": 0.0,
+      "_ai_provider": "nvidia",
+      "_ai_model": "nvidia/nemotron-3-super-120b-a12b",
+      "ai_provider_editor": "nvidia/nemotron-3-super-120b-a12b",
+      "editor_note": null
     },
     {
       "id": "0e9a3084b4d5cde4",
@@ -297,27 +177,58 @@
       "source": "Veja",
       "published_at": "2026-04-24T18:12:45Z",
       "collected_at": "2026-04-24T18:29:08Z",
-      "status": "raw",
-      "relevance_score": 0.0,
-      "relevance_signals": null,
-      "candidates_mentioned": [],
-      "topics": [],
+      "status": "validated",
+      "relevance_score": 0.9,
+      "relevance_signals": {
+        "candidate_signal": 0.5,
+        "topic_signal": 0.3,
+        "keyword_signal": 0.1,
+        "source_signal": 0.0
+      },
+      "candidates_mentioned": [
+        "lula"
+      ],
+      "topics": [
+        "politica_externa",
+        "eleicoes",
+        "corrupcao",
+        "midia"
+      ],
       "narrative_cluster_id": null,
       "duplicate_of": null,
       "summaries": {
-        "pt-BR": "",
-        "en-US": ""
+        "pt-BR": "Lula volta a atacar Donald Trump em busca de ganhos políticos, repetindo estratégia que já melhorou sua popularidade durante o tarifaço americano. O embate foi intensificado pelo caso de Alexandre Ramagem, ex-deputado que buscou asilo nos EUA, cujo episódio foi politizado por ambos os lados. Analistas alertam que a narrativa americana fortalece o bolsonarista e que um possível asilo político para Ramagem poderia ser visto como derrota para Lula e o STF.",
+        "en-US": "Lula is again targeting Donald Trump to gain political capital, repeating a strategy that previously boosted his popularity during the U.S. tariff episode. The conflict escalated following the arrest and release of Alexandre Ramagem, a former deputy who sought refuge in the U.S., a situation quickly politicized by both governments. Analysts warn that the U.S. narrative benefits Bolsonaro supporters and that granting political asylum to Ramagem could be seen as a defeat for Lula and the Supreme Federal Court."
       },
       "content": "O governo Luiz Inácio Lula da Silva voltou a mirar o presidente dos Estados Unidos, Donald Trump , em meio a um novo atrito diplomático que rapidamente contaminou o debate eleitoral brasileiro. O tema foi discutido no programa Os Três Poderes , apresentado por Ricardo Ferraz, com análises de Robson Bonin, Marcela Rahal e José Benedito da Silva (este texto é um resumo do vídeo acima) . Segundo os comentaristas, o Planalto enxerga no confronto com Trump uma oportunidade política semelhante à explorada durante o episódio do tarifaço americano, quando Lula registrou melhora nos índices de popularidade. Agora, a crise ganhou novos contornos após a atuação de autoridades dos dois países em torno do caso de Alexandre Ramagem, ex-deputado que buscou refúgio em território americano. Por que Lula voltou a atacar Trump? Na avaliação debatida no programa, o presidente tenta repetir uma estratégia que já trouxe dividendos políticos: nacionalizar o embate com Trump e mobilizar sua base nas redes sociais. Durante evento público, Lula ironizou o republicano ao afirmar que seria preciso dar a ele o Prêmio Nobel da Paz “para não ter mais guerra”. A fala foi interpretada como recado político ao eleitorado interno. Para Bonin, o movimento tem forte viés eleitoral. “Bater no Trump ou chamar o Trump para uma discussão ajuda eleitoralmente do ponto de vista do que o petismo engaja nas redes sociais”, afirmou. Como o caso Ramagem agravou a tensão? A crise se intensificou após a prisão e posterior liberação de Ramagem nos EUA. A condução do episódio foi rapidamente politizada pelos dois lados. O governo brasileiro reagiu com base no princípio da reciprocidade após medidas adotadas por Washington contra um agente brasileiro. Lula apoiou publicamente a resposta diplomática. Continua após a publicidade Bonin afirmou que o episódio “deveria ter sido tratado de forma técnica”, mas acabou servindo de “lenha para a fogueira da polarização”. O discurso americano fortalece o bolsonarismo? Para José Benedito, parte da narrativa adotada pelos Estados Unidos interessa diretamente ao campo bolsonarista. Segundo ele, ao mencionar perseguição política, autoridades americanas fornecem argumento para aliados de Jair Bolsonaro sustentarem que investigados e foragidos seriam vítimas de abuso institucional no Brasil. “Esse discurso é tudo o que os bolsonaristas queriam ouvir”, afirmou. Continua após a publicidade Asilo político seria derrota para Lula e STF? O editor avaliou que um eventual reconhecimento formal de perseguição política por parte do governo americano criaria forte desgaste institucional no Brasil. Se houver extradição, disse ele, o Planalto poderá tratar o caso como vitória diplomática. Mas, se houver concessão de asilo, a repercussão tende a atingir tanto o governo Lula quanto o STF . A crise ajuda Lula a conquistar indecisos? Marcela ponderou que o embate com Trump conversa diretamente com a militância petista, mas pode não alcançar a parcela mais decisiva do eleitorado. Ela lembrou que pesquisas recentes mostram um contingente expressivo de brasileiros ainda sem voto definido. Nesse cenário, falar apenas à própria base pode ter efeito limitado. A incógnita para o Planalto é se a confrontação internacional amplia apoio ou apenas reforça convicções já consolidadas. Nos bastidores do Itamaraty, segundo os debatedores, a expectativa é de contenção. Ainda assim, o fator Trump adiciona imprevisibilidade ao cenário. Com a eleição se aproximando, qualquer novo gesto de Washington ou resposta de Brasília tende a repercutir imediatamente na campanha presidencial. VEJA+IA: Este texto resume um trecho do programa audiovisual Ponto de Vista (confira o vídeo acima). Conteúdo produzido com auxílio de inteligência artificial e supervisão humana. Publicidade",
       "source_category": "magazine",
-      "sentiment_per_candidate": {},
-      "edit_history": [],
+      "sentiment_per_candidate": {
+        "lula": "positivo"
+      },
+      "edit_history": [
+        {
+          "tier": "editor",
+          "at": "2026-04-24T19:28:00Z",
+          "provider": "nvidia",
+          "action": "validated",
+          "changes": [
+            "summary_pt",
+            "summary_en"
+          ]
+        }
+      ],
       "disclaimer_pt": "Análise algorítmica. Não representa pesquisa de opinião.",
       "disclaimer_en": "Algorithmic analysis. Does not represent polling data.",
-      "sentiment_score": 0.0,
-      "confidence_score": 0.0,
-      "_sentiment_scores": {},
-      "prominence_score": 0.0
+      "sentiment_score": 0.4,
+      "confidence_score": 1.0,
+      "_sentiment_scores": {
+        "lula": 0.4
+      },
+      "prominence_score": 0.0,
+      "_ai_provider": "nvidia",
+      "_ai_model": "nvidia/nemotron-3-super-120b-a12b",
+      "ai_provider_editor": "nvidia/nemotron-3-super-120b-a12b",
+      "editor_note": null
     },
     {
       "id": "223492a9cb8fbd61",
@@ -326,114 +237,58 @@
       "source": "O Antagonista",
       "published_at": "2026-04-24T18:10:00Z",
       "collected_at": "2026-04-24T18:29:04Z",
-      "status": "raw",
-      "relevance_score": 0.0,
-      "relevance_signals": null,
-      "candidates_mentioned": [],
-      "topics": [],
+      "status": "validated",
+      "relevance_score": 1.0,
+      "relevance_signals": {
+        "candidate_signal": 0.5,
+        "topic_signal": 0.35,
+        "keyword_signal": 0.15,
+        "source_signal": 0.05
+      },
+      "candidates_mentioned": [
+        "zema"
+      ],
+      "topics": [
+        "corrupcao",
+        "politica_externa",
+        "eleicoes",
+        "impostos"
+      ],
       "narrative_cluster_id": null,
       "duplicate_of": null,
       "summaries": {
-        "pt-BR": "",
-        "en-US": ""
+        "pt-BR": "Romeu Zema, ex-governador de Minas Gerais pelo partido Novo, criticou em postagem na rede social X o uso de recursos públicos como privilégio para agentes do governo, afirmando que dinheiro público não deve ser considerado prêmio para políticos. Sem citar nomes ou casos específicos, seu discurso teve tom eleitoral e enfocou críticas à máquina pública e possíveis enriquecimentos ilícitos dentro dela.",
+        "en-US": "Former Minas Gerais governor Romeu Zema (Novo) criticized on social media X the use of public funds as a privilege for government officials, stating that public money should not be seen as a reward for politicians. Without naming specific individuals or cases, his politically toned post focused on corruption within the public machine and alleged enrichment of public agents."
       },
       "content": "O ex-governador de Minas Gerais, Romeu Zema (Novo), divulgou nesta sexta-feira, 24, na rede social X, mensagem com críticas ao que classificou como privilégios dentro da máquina pública e ao uso de recursos por agentes do governo, em discurso com tom político eleitoral. Sem mencionar nomes ou casos específicos, Zema afirmou que há enriquecimento dentro... The post “Dinheiro público não é prêmio pra político”, diz Zema appeared first on O Antagonista .",
       "source_category": "politics",
-      "sentiment_per_candidate": {},
-      "edit_history": [],
-      "disclaimer_pt": "Análise algorítmica. Não representa pesquisa de opinião.",
-      "disclaimer_en": "Algorithmic analysis. Does not represent polling data.",
-      "sentiment_score": 0.0,
-      "confidence_score": 0.0,
-      "_sentiment_scores": {},
-      "prominence_score": 0.0
-    },
-    {
-      "id": "a594250741b7e3f8",
-      "url": "https://www.metropoles.com/brasil/bets-governo-anuncia-medidas-para-restringir-mercado-de-predicao",
-      "title": "Bets: governo anuncia medidas para restringir mercado de predição",
-      "source": "Metropoles",
-      "published_at": "2026-04-24T18:06:43Z",
-      "collected_at": "2026-04-24T18:28:52Z",
-      "status": "raw",
-      "relevance_score": 0.0,
-      "relevance_signals": null,
-      "candidates_mentioned": [],
-      "topics": [],
-      "narrative_cluster_id": null,
-      "duplicate_of": null,
-      "summaries": {
-        "pt-BR": "",
-        "en-US": ""
+      "sentiment_per_candidate": {
+        "zema": "negativo"
       },
-      "source_category": "mainstream",
-      "content": "Página inicial Brasil Compartilhar notícia Siga Google Discover Krisanapong Detraphiphat/Getty Images 1 de 1 Bets\n        - Foto: Krisanapong Detraphiphat/Getty Images O governo do presidente Luiz Inácio Lula da Silva (PT) anunciou, nesta sexta-feira (24/4), medidas para restringir o mercado de apostas esportivas no país, as chamadas bets, em especial os palpites baseados em previsões. Uma resolução do Conselho Monetário Nacional (CMN), publicada nesta sexta, proibiu a oferta e negociação de contratos derivativos que estejam relacionados a: eventos esportivos reais; eventos em jogos virtuais on-line; e evento real ou virtual de natureza política, eleitoral, social, cultural, de entretenimento e outra temática. Na prática, a mudança impõe novas restrições ao mercado preditivo no Brasil, que consiste em plataformas de negociação baseadas em eventos que ainda vão acontecer, a exemplo de resultado de eleições, previsão do tempo, jogos esportivos, mortes de personalidades , entre outros. A nova regra foi anunciada em uma coletiva de imprensa com os ministros Dario Durigan, da Fazenda, e Miriam Belchior, da Casa Civil, além de autoridades das seguintes autoridades: Octavio Pieranti, diretor-conselheiro da Agência Nacional de Telecomunicações; Ricardo Morishita, secretário Nacional do Consumidor; Danielle Correa Cardoso, secretária de Prêmios e Apostas do Ministério da Fazenda; e Regis Dudena, secretário de Reformas Econômicas da Fazenda . Segundo a ministra da Casa Civil, Miriam Belchior, a medida busca controlar o mercado de predição no país. O objetivo do governo, segundo ela, é “proteger a renda, evitar perdas financeiras para as pessoas e reduzir a exposição das famílias a práticas inseguras”. O ministro da Fazenda, Dario Durigan, afirmou que os produtos oferecidos por essas plataformas violam a Lei das Bets, aprovada pelo Congresso em 2023, que estabelece possibilidades em que as apostas são permitidas. Segundo o ministro, até o momento, foram bloqueadas 28 plataformas que atuam nesse setor. Leia também Brasil Governo divulga novos preços de combustíveis para cálculo do ICMS Mirelle Pinheiro “O lago do crime”: PF rastreia dinheiro de bets em obra de luxo São Paulo MC Ryan: fintech “chinesa” sem aval do BC é acusada de golpe com bets São Paulo Alvo da PF, irmão de MC Ryan divulgava bets em esquema bilionário O titular da equipe econômica ressaltou ainda que o governo não descarta adotar novas medidas para restringir o mercado de bets. Nos últimos dias, o presidente Lula subiu o tom contra as bets. O petista atribui a alta do endividamento das famílias ao crescimento das apostas on-line. As medidas anunciadas nesta sexta compõem a ofensiva do governo contra a inadimplência. O Planalto avalia que as dívidas têm contribuído para a percepção negativa dos brasileiros sobre a economia. Receba notícias de Brasil no seu WhatsApp e fique por dentro de tudo! Basta acessar o canal de notícias do Metrópoles no WhatsApp . Receba notícias do Metrópoles no seu Telegram e fique por dentro de tudo! Basta acessar o canal de notícias no Telegram .",
-      "sentiment_per_candidate": {},
-      "edit_history": [],
+      "edit_history": [
+        {
+          "tier": "editor",
+          "at": "2026-04-24T19:28:19Z",
+          "provider": "nvidia",
+          "action": "validated",
+          "changes": [
+            "summary_pt",
+            "summary_en"
+          ]
+        }
+      ],
       "disclaimer_pt": "Análise algorítmica. Não representa pesquisa de opinião.",
       "disclaimer_en": "Algorithmic analysis. Does not represent polling data.",
-      "sentiment_score": 0.0,
-      "confidence_score": 0.0,
-      "_sentiment_scores": {},
-      "prominence_score": 0.0
-    },
-    {
-      "id": "f07964f8c06780c1",
-      "url": "https://www12.senado.leg.br/noticias/materias/2026/04/24/projeto-incentiva-contratacao-de-mulheres-40-na-area-de-tecnologia",
-      "title": "Projeto incentiva contratação de mulheres 40+ na área de tecnologia",
-      "source": "Agencia Senado",
-      "published_at": "2026-04-24T18:04:08Z",
-      "collected_at": "2026-04-24T18:29:18Z",
-      "status": "raw",
-      "relevance_score": 0.0,
-      "relevance_signals": null,
-      "candidates_mentioned": [],
-      "topics": [],
-      "narrative_cluster_id": null,
-      "duplicate_of": null,
-      "summaries": {
-        "pt-BR": "",
-        "en-US": ""
+      "sentiment_score": -0.2,
+      "confidence_score": 1.0,
+      "_sentiment_scores": {
+        "zema": -0.2
       },
-      "content": "O Senado vai analisar um projeto que incentiva a capacitação e a contratação de mulheres com 40 anos ou mais nas áreas de ciência, tecnologia e matemática. O PL 990/2026, do senador Jader Barbalho (MDB-PA), aguarda distribuição para as comissões. A medida prevê incentivos fiscais para empresas que implementarem iniciativas nas seguintes áreas: mentoria profissional para inserção ou reinserção de mulheres com idade igual ou superior a 40 anos no mercado de trabalho tecnológico; capacitação e qualificação profissional nas áreas de tecnologia, inovação e desenvolvimento digital; contratação ou recolocação profissional de mulheres com idade igual ou superior a 40 anos em funções relacionadas às áreas tecnológicas; oferta de bolsas de estudo destinadas à transição de carreira para mulheres que desejem ingressar ou migrar para áreas tecnológicas. As empresas que executarem os programas podem deduzir parte dos gastos no Imposto de Renda. Os limites da dedução serão definidos em regulamento. Pelo texto, o Poder Executivo pode firmar parcerias com universidades e centros de pesquisa para implementar os programas de capacitação, mentoria ou contratação. Para Jader Barbalho, o momento de crescente transformação digital torna fundamental a ampliação de oportunidades para as profissionais das áreas de tecnologia e ciência. “A participação feminina nas áreas de tecnologia, inovação e ciência ainda é significativamente inferior à participação masculina, especialmente quando se analisa a presença de mulheres com idade superior a 40 anos. Muitas empresas focam em jovens, deixando de fora mulheres que precisam de requalificação profissional após períodos de hiato por maternidade ou cuidado familiar”, afirma Jader. Equidade na educação Em 2021, o Senado aprovou outro projeto com teor semelhante. O PLS 398/2018, da ex-senadora Maria do Carmo Alves (SE), inclui na Lei de Diretrizes e Bases da Educação Nacional incentivos à maior participação de mulheres em cursos de ciência, tecnologia, engenharia e matemática, além de propor estratégias de combate a preconceitos e barreiras culturais à participação feminina nessas áreas. O projeto tramita na Comissão de Constituição e Justiça da Câmara dos Deputados. Por Bruno Augusto, sob supervisão de Dante Accioly",
-      "source_category": "institutional",
-      "sentiment_per_candidate": {},
-      "edit_history": [],
-      "disclaimer_pt": "Análise algorítmica. Não representa pesquisa de opinião.",
-      "disclaimer_en": "Algorithmic analysis. Does not represent polling data.",
-      "sentiment_score": 0.0,
-      "confidence_score": 0.0,
-      "_sentiment_scores": {},
-      "prominence_score": 0.0
-    },
-    {
-      "id": "0b4472337c688596",
-      "url": "https://www12.senado.leg.br/noticias/videos/2026/04/ao-vivo-sessao-especial-celebra-o-66o-aniversario-de-brasilia-2013-24-4-26",
-      "title": "Vídeo: Ao vivo: Sessão especial celebra o 66º aniversário de Brasília – 24/4/26",
-      "source": "Agencia Senado",
-      "published_at": "2026-04-24T18:03:54Z",
-      "collected_at": "2026-04-24T18:29:18Z",
-      "status": "raw",
-      "relevance_score": 0.0,
-      "relevance_signals": null,
-      "candidates_mentioned": [],
-      "topics": [],
-      "narrative_cluster_id": null,
-      "duplicate_of": null,
-      "summaries": {
-        "pt-BR": "",
-        "en-US": ""
-      },
-      "source_category": "institutional",
-      "content": "Buscar Ao vivo: Sessão especial celebra o 66º aniversário de Brasília – 24/4/26 Compartilhe este conteúdo no Whatsapp Compartilhe este conteúdo no Facebook Compartilhe este conteúdo no Twitter Compartilhe este conteúdo no Telegram Compartilhe este conteúdo no Linkedin 24/04/2026, 15h03 Buscar Mais vídeos Últimos vídeos Mais Vídeos › Ao vivo: Sessão especial celebra o 66º aniversário de Brasília – 24/4/26 Debatedores na CDH defendem ampliar uso de medicamento contra raquitismo Vítimas de zika vírus recebem indenização do governo CDH debate tratamento do raquitismo no SUS - 23/4/26 Alta no preço do petróleo beneficia contas do governo, aponta IFI Avança projeto que permite dedução no IR de serviços ambientais Davi Alcolumbre manifesta pesar pela morte de Oscar Schmidt Senado Aprova: Regulamentação dos percentuais mínimos de cacau em seus derivados Em sessão especial, senadores destacam legado de Chico Anysio para o país Visitas ao Congresso têm programação especial no feriado de 21 de abril Davi Alcolumbre oferece a senadores apoio da Advocacia do Senado CRE aprova requerimento para missão oficial nos Estados Unidos Ao vivo: Sessão especial celebra o 66º aniversário de Brasília – 24/4/26 Debatedores na CDH defendem ampliar uso de medicamento contra raquitismo Vítimas de zika vírus recebem indenização do governo CDH debate tratamento do raquitismo no SUS - 23/4/26 Alta no preço do petróleo beneficia contas do governo, aponta IFI Avança projeto que permite dedução no IR de serviços ambientais Davi Alcolumbre manifesta pesar pela morte de Oscar Schmidt Senado Aprova: Regulamentação dos percentuais mínimos de cacau em seus derivados Em sessão especial, senadores destacam legado de Chico Anysio para o país Visitas ao Congresso têm programação especial no feriado de 21 de abril Davi Alcolumbre oferece a senadores apoio da Advocacia do Senado CRE aprova requerimento para missão oficial nos Estados Unidos Mais vistos Mais Vídeos › Alesssandro apresenta relatório da CPI do Crime Organizado – 14/4/26 Saiba quem é Jorge Messias, indicado por Lula para o cargo de ministro do STF Reunião da CPI do Crime Organizado para oitivas - 8/4/26 CCJ aprova jornada de 36 horas semanais para enfermeiros Filme imersivo conta a trajetória da primeira senadora brasileira Alessandro Vieira: CPI do Crime Organizado cumpriu sua missão Senado Aprova: Aumento do prazo de validade para pedidos de exames médicos Senado Aprova: Regulamentação dos percentuais mínimos de cacau em seus derivados Davi Alcolumbre manifesta pesar pela morte de Oscar Schmidt Senado aprova reajuste para policiais e bombeiros do Distrito Federal Sessão deliberativa ordinária – 8/4/26 Senado Verifica orienta sobre fake news no período pré-eleitoral Alesssandro apresenta relatório da CPI do Crime Organizado – 14/4/26 Saiba quem é Jorge Messias, indicado por Lula para o cargo de ministro do STF Reunião da CPI do Crime Organizado para oitivas - 8/4/26 CCJ aprova jornada de 36 horas semanais para enfermeiros Filme imersivo conta a trajetória da primeira senadora brasileira Alessandro Vieira: CPI do Crime Organizado cumpriu sua missão Senado Aprova: Aumento do prazo de validade para pedidos de exames médicos Senado Aprova: Regulamentação dos percentuais mínimos de cacau em seus derivados Davi Alcolumbre manifesta pesar pela morte de Oscar Schmidt Senado aprova reajuste para policiais e bombeiros do Distrito Federal Sessão deliberativa ordinária – 8/4/26 Senado Verifica orienta sobre fake news no período pré-eleitoral",
-      "sentiment_per_candidate": {},
-      "edit_history": [],
-      "disclaimer_pt": "Análise algorítmica. Não representa pesquisa de opinião.",
-      "disclaimer_en": "Algorithmic analysis. Does not represent polling data.",
-      "sentiment_score": 0.0,
-      "confidence_score": 0.0,
-      "_sentiment_scores": {},
-      "prominence_score": 0.0
+      "prominence_score": 0.0,
+      "_ai_provider": "nvidia",
+      "_ai_model": "nvidia/nemotron-3-super-120b-a12b",
+      "ai_provider_editor": "nvidia/nemotron-3-super-120b-a12b",
+      "editor_note": null
     },
     {
       "id": "73f81398f48285cd",
@@ -442,27 +297,57 @@
       "source": "O Globo",
       "published_at": "2026-04-24T18:02:33Z",
       "collected_at": "2026-04-24T18:28:50Z",
-      "status": "raw",
-      "relevance_score": 0.0,
-      "relevance_signals": null,
-      "candidates_mentioned": [],
-      "topics": [],
+      "status": "validated",
+      "relevance_score": 0.85,
+      "relevance_signals": {
+        "candidate_signal": 0.5,
+        "topic_signal": 0.3,
+        "keyword_signal": 0.05,
+        "source_signal": 0.0
+      },
+      "candidates_mentioned": [
+        "zema"
+      ],
+      "topics": [
+        "midia",
+        "eleicoes",
+        "corrupcao"
+      ],
       "narrative_cluster_id": null,
       "duplicate_of": null,
       "summaries": {
-        "pt-BR": "",
-        "en-US": ""
+        "pt-BR": "A campanha do governador de Minas Gerais, Romeu Zema, anunciou que deixará de publicar vídeos satíricos que criticavam ministros do Supremo Tribunal Federal (STF). A decisão vem após crescentes críticas sobre o tom agressivo e potencialmente inadequado desse tipo de conteúdo. A matéria completa está disponível apenas para assinantes do veículo.",
+        "en-US": "The campaign of Minas Gerais Governor Romeu Zema announced it will stop publishing satirical videos criticizing ministers of the Federal Supreme Court (STF). The decision follows growing criticism over the aggressive and potentially inappropriate tone of such content. The full article is available only to subscribers of the outlet."
       },
       "content": "A campanha de Romeu Zema não publicará novos vídeos satíricos com críticas a ministros do STF. Matéria exclusiva para assinantes. Para ter acesso completo, acesse o link da matéria e faça o seu cadastro.",
       "source_category": "mainstream",
-      "sentiment_per_candidate": {},
-      "edit_history": [],
+      "sentiment_per_candidate": {
+        "zema": "negativo"
+      },
+      "edit_history": [
+        {
+          "tier": "editor",
+          "at": "2026-04-24T19:28:39Z",
+          "provider": "nvidia",
+          "action": "validated",
+          "changes": [
+            "summary_pt",
+            "summary_en"
+          ]
+        }
+      ],
       "disclaimer_pt": "Análise algorítmica. Não representa pesquisa de opinião.",
       "disclaimer_en": "Algorithmic analysis. Does not represent polling data.",
-      "sentiment_score": 0.0,
-      "confidence_score": 0.0,
-      "_sentiment_scores": {},
-      "prominence_score": 0.0
+      "sentiment_score": -0.7,
+      "confidence_score": 1.0,
+      "_sentiment_scores": {
+        "zema": -0.7
+      },
+      "prominence_score": 0.0,
+      "_ai_provider": "nvidia",
+      "_ai_model": "nvidia/nemotron-3-super-120b-a12b",
+      "ai_provider_editor": "nvidia/nemotron-3-super-120b-a12b",
+      "editor_note": null
     },
     {
       "id": "a290a19a02638f68",
@@ -471,114 +356,53 @@
       "source": "Poder360",
       "published_at": "2026-04-24T18:01:38Z",
       "collected_at": "2026-04-24T18:29:00Z",
-      "status": "raw",
-      "relevance_score": 0.0,
-      "relevance_signals": null,
+      "status": "validated",
+      "relevance_score": 0.35,
+      "relevance_signals": {
+        "candidate_signal": 0.0,
+        "topic_signal": 0.25,
+        "keyword_signal": 0.05,
+        "source_signal": 0.05
+      },
       "candidates_mentioned": [],
-      "topics": [],
+      "topics": [
+        "economia",
+        "seguranca",
+        "politica_externa",
+        "eleicoes",
+        "midia"
+      ],
       "narrative_cluster_id": null,
       "duplicate_of": null,
       "summaries": {
-        "pt-BR": "",
-        "en-US": ""
+        "pt-BR": "O Banco Central proibiu operações de mercados preditivos em contratos vinculados a eventos não econômicos, como eleições, esportes e realities, argumentando que se tratam de apostas não reguladas e apresentam riscos de manipulação, lavagem de dinheiro e impacto na integridade de eventos. A decisão, parte da resolução CMN nº 5.298, estabelece que apenas ativos com referencial econômico-financeiro podem ser negociados no ambiente regulado, excluindo assim plataformas como Kalshi e Polymarket do território brasileiro.",
+        "en-US": "The Central Bank banned predictive market operations tied to non-economic events such as elections, sports, and reality shows, stating they resemble unregulated gambling and pose risks of manipulation, money laundering, and threats to event integrity. The measure, part of CMN Resolution No. 5.298, restricts regulated financial trading to assets with economic-financial benchmarks, effectively excluding platforms like Kalshi and Polymarket from operating in Brazil."
       },
       "content": "O Banco Central barrou operações de mercados preditivos que envolvem apostas sobre eleições, esportes e reality shows, em decisão publicada nesta 6ª feira (24.abr.2026). A medida impede que empresas que operam contratos baseados em eventos futuros, como Kalshi e Polymarket, ofereçam apostas sobre temas não ligados à economia. A decisão não afeta as bets. A decisão faz parte da resolução CMN nº 5.298 , que estruturou o registro e a negociação de recebíveis no país. A norma organizou a infraestrutura para ativos financeiros, com rastreabilidade, transparência e definição de titularidade. Leia a íntegra (PDF – 164 kB). Embora não trate diretamente de mercados preditivos, a resolução estabelece os limites operacionais do sistema financeiro. Ou seja, os ativos precisam se enquadrar no ambiente regulado para ganhar legitimidade. A exclusão dos mercados de previsão indica que o BC não reconhece, por ora, esses contratos como instrumentos financeiros formais. Segundo autoridade monetária, ficam vedadas a oferta e a negociação, no país, de contratos derivativos cujos ativos estejam relacionados a: evento real de temática esportiva; evento virtual de jogos on-line; evento real ou virtual de natureza política, eleitoral, social, cultural, de entretenimento ou de qualquer outra temática que, a critério da Comissão de Valores Mobiliários, não seja representativa de referencial econômico-financeiro. De acordo com o BC, essas operações se aproximam de apostas e não têm regulação específica no país. O BC deu ênfase a riscos como manipulação, lavagem de dinheiro e impacto sobre a integridade de eventos públicos e privados. A organização e o funcionamento do mercado de derivativos devem observar, segundo o BC, os seguintes princípios: proteção aos investidores e adequação aos produtos, serviços e operações; transparência e clareza na prestação de informações; integridade e eficiência do mercado; prevenção à arbitragem regulatória e à especulação nocivas aos investidores e prejudiciais ao interesse público; estímulo à inovação. O tema ganha relevância porque esses mercados vinham sendo apresentados como instrumentos financeiros, semelhantes a derivativos. Nesse modelo, usuários negociavam probabilidades de eventos, o que atraía investidores e empresas de tecnologia financeira. A ausência de regras claras criou um impasse entre inovação e supervisão. O movimento se dá em um momento de avanço global dessas plataformas. Em outros países, há experiências regulatórias distintas, com parte dos mercados sendo tratada como investimento e outra como aposta. No Brasil, a indefinição tende a frear a expansão do setor e limitar o acesso a financiamento estruturado. Para o sistema financeiro, a decisão preserva o controle sobre ativos que podem ser usados como garantia ou instrumento de crédito. Para empresas de tecnologia, o recado é de que a inovação precisa se alinhar às regras existentes ou aguardar regulamentação específica.",
       "source_category": "politics",
       "sentiment_per_candidate": {},
-      "edit_history": [],
+      "edit_history": [
+        {
+          "tier": "editor",
+          "at": "2026-04-24T19:28:46Z",
+          "provider": "nvidia",
+          "action": "validated",
+          "changes": [
+            "summary_pt",
+            "summary_en"
+          ]
+        }
+      ],
       "disclaimer_pt": "Análise algorítmica. Não representa pesquisa de opinião.",
       "disclaimer_en": "Algorithmic analysis. Does not represent polling data.",
       "sentiment_score": 0.0,
-      "confidence_score": 0.0,
+      "confidence_score": 1.0,
       "_sentiment_scores": {},
-      "prominence_score": 0.0
-    },
-    {
-      "id": "8a222255b80f0577",
-      "url": "https://www12.senado.leg.br/noticias/audios/2026/04/paim-qualquer-uma-das-4-propostas-de-reducao-da-jornada-beneficia-trabalhador",
-      "title": "Áudio: Paim: qualquer uma das 4 propostas de redução da jornada beneficia trabalhador",
-      "source": "Agencia Senado",
-      "published_at": "2026-04-24T18:01:37Z",
-      "collected_at": "2026-04-24T18:29:18Z",
-      "status": "raw",
-      "relevance_score": 0.0,
-      "relevance_signals": null,
-      "candidates_mentioned": [],
-      "topics": [],
-      "narrative_cluster_id": null,
-      "duplicate_of": null,
-      "summaries": {
-        "pt-BR": "",
-        "en-US": ""
-      },
-      "content": "Autor de uma proposta de emenda à Constituição que reduz a jornada de trabalho (PEC 148/2015), o senador Paulo Paim (PT-RS) declarou que o mais importante é o trabalhador garantir o benefício este ano, independentemente de qual proposição seja aprovada no Congresso. Ele se referiu à aprovação pela Comissão de Constituição e Justiça da Câmara das PECs 221/2019, do deputado Reginaldo Lopes (PT-MG), que institui a redução gradual da jornada em 10 anos; e 8/2025, da deputada Erika Hilton (PSol-SP), que prevê quatro dias de trabalho com limite de 36 horas semanais. Ao citar ainda o projeto de jornada de 40 horas enviado pelo governo ao Congresso com pedido de urgência (PL 1.838/2026), Paim reforçou que a autoria não importa, desde que a redução seja aprovada logo. O vice-líder da Oposição, senador Marcos Rogério (PL-RO), defendeu a desoneração da folha de pagamento para os empregadores, como forma de evitar o repasse dos custos da mudança para as empresas e consumidores.",
-      "source_category": "institutional",
-      "sentiment_per_candidate": {},
-      "edit_history": [],
-      "disclaimer_pt": "Análise algorítmica. Não representa pesquisa de opinião.",
-      "disclaimer_en": "Algorithmic analysis. Does not represent polling data.",
-      "sentiment_score": 0.0,
-      "confidence_score": 0.0,
-      "_sentiment_scores": {},
-      "prominence_score": 0.0
-    },
-    {
-      "id": "149a03472072acd8",
-      "url": "https://www.cartacapital.com.br/politica/tarcisio-define-chapa-pura-do-bolsonarismo-em-sao-paulo/",
-      "title": "Tarcísio define chapa pura do bolsonarismo em São Paulo",
-      "source": "CartaCapital",
-      "published_at": "2026-04-24T18:00:52Z",
-      "collected_at": "2026-04-24T18:29:09Z",
-      "status": "raw",
-      "relevance_score": 0.0,
-      "relevance_signals": null,
-      "candidates_mentioned": [],
-      "topics": [],
-      "narrative_cluster_id": null,
-      "duplicate_of": null,
-      "summaries": {
-        "pt-BR": "",
-        "en-US": ""
-      },
-      "source_category": "magazine",
-      "content": "Política Tarcísio define chapa pura do bolsonarismo em São Paulo Valdemar Costa Neto e Eduardo Bolsonaro decidiram quem será o candidato do PL e pregam que a formação representa o ‘bolsonarismo raiz’ Por Vinícius Nunes 24.04.2026 15h00 O governador Tarcísio de Freitas (Republicanos), o deputado estadual André do Prado (PL-SP), e o presidente nacional do PL, Valdemar Costa Neto. Foto: Rodrigo Costa/Alesp Apoie Siga-nos no Eleições 2026 O governador de São Paulo, Tarcísio de Freitas (Republicanos), fechou nesta semana a sua chapa para buscar a reeleição. Devem disputar o Senado na aliança o presidente da Assembleia Legislativa, deputado estadual André do Prado (PL), e o deputado federal Guilherme Derrite (PP). A formação ocorreu após o aval do ex-deputado federal Eduardo Bolsonaro, a quem foi delegada a função de montar a chapa paulista. O presidente nacional do PL, Valdemar Costa Neto, tem afirmado a aliados que a escolha representa o “bolsonarismo raiz”. André do Prado e Guilherme Derrite desbancaram outros postulantes ao Senado, como o deputado federal Mário Frias (PL-SP) – que deve desistir da disputa e tentar novamente a Câmara – e o coronel da PM Mello Araújo (PL), vice-prefeito da capital paulista. Receba no Discover da CartaCapital as análises que realmente importam: política, economia e sociedade explicadas com profundidade SEGUIR Na mais recente pesquisa de intenção de votos, o Paraná Pesquisas mostrou que as ex-ministras Marina Silva (Rede) e Simone Tebet (PSB) despontam como favoritas no estado. Elas aparecem com 37,8% e 32,9% das intenções de voto, respectivamente. O bolsonarista que mais se aproxima das favoritas é Derrite, com 27,4%, enquanto Do Prado marca apenas 9,8%. Integrantes do PL alegam que os dois tendem a subir nas pesquisas quando a campanha começar e eles se tornarem mais “conhecidos”. O levantamento da Paraná Pesquisas ouviu 1.600 eleitores de 11 a 14 de abril. A margem de erro é de 2,5 pontos percentuais. O levantamento foi registrado no Tribunal Superior Eleitoral sob o código SP-00378/2026. Recomendadas Agente dos EUA deixa o Brasil após reação do governo Lula a medida de Trump Kalil anuncia cirurgia ‘sem intercorrência’ e prevê alta de Lula nesta sexta Paes lidera e pode ser eleito em primeiro turno no RJ, mostra Paraná Pesquisas Lula realizará procedimentos médicos em São Paulo nesta sexta-feira Mais Lidas Vinícius Nunes Repórter de CartaCapital baseado em Brasília. Cobre os Três Poderes. Já trabalhou em Jovem Pan, Poder360, UOL, Blog do Noblat, JOTA e SBT News. ENTENDA MAIS SOBRE: André do Prado , Eduardo Bolsonaro , Eleições 2026 , Flávio Bolsonaro , Guilherme Derrite , Lula , Marina Silva , PL , São Paulo , Senado Federal , Simone Tebet , Tarcísio de Freitas , Valdemar Costa Neto , Jornalismo crítico e inteligente. Todos os dias, no seu e-mail Assine nossa newsletter Assine nossa newsletter e receba um boletim matinal exclusivo Assinar Inscreva-se Apoie o jornalismo que chama as coisas pelo nome Muita gente esqueceu o que escreveu, disse ou defendeu. Nós não. O compromisso de CartaCapital com os princípios do bom jornalismo permanece o mesmo. O combate à desigualdade nos importa. A denúncia das injustiças importa. Importa uma democracia digna do nome. Importa o apego à verdade factual e a honestidade. Estamos aqui, há mais de 30 anos, porque nos importamos. Como nossos fiéis leitores, CartaCapital segue atenta. Se o bom jornalismo também importa para você, nos ajude a seguir lutando. Assine a edição semanal de CartaCapital ou contribua com o quanto puder. Única Mensal Anual R$25 R$50 R$100 R$200 Outro Quero apoiar Leia também Política Marina supera insatisfação interna e garante apoio da Rede ao Senado por São Paulo Por Vinícius Nunes CartaExpressa União Brasil em São Paulo ameaça implodir federação com o PP Por CartaCapital Política A disputa entre Tarcísio e Haddad pelo governo de São Paulo, segundo o Paraná Pesquisas Por CartaCapital Jornalismo crítico e inteligente. Todos os dias, no seu e-mail Assine nossa newsletter Assine nossa newsletter e receba um boletim matinal exclusivo Assinar Inscreva-se",
-      "sentiment_per_candidate": {},
-      "edit_history": [],
-      "disclaimer_pt": "Análise algorítmica. Não representa pesquisa de opinião.",
-      "disclaimer_en": "Algorithmic analysis. Does not represent polling data.",
-      "sentiment_score": 0.0,
-      "confidence_score": 0.0,
-      "_sentiment_scores": {},
-      "prominence_score": 0.0
-    },
-    {
-      "id": "13415e26212fcc14",
-      "url": "https://oglobo.globo.com/patrocinado/dino/noticia/2026/04/24/allp-lanca-linha-de-suplementos-em-abril-1.ghtml",
-      "title": "Allp lança linha de suplementos em abril",
-      "source": "O Globo",
-      "published_at": "2026-04-24T17:59:18Z",
-      "collected_at": "2026-04-24T18:28:50Z",
-      "status": "raw",
-      "relevance_score": 0.0,
-      "relevance_signals": null,
-      "candidates_mentioned": [],
-      "topics": [],
-      "narrative_cluster_id": null,
-      "duplicate_of": null,
-      "summaries": {
-        "pt-BR": "",
-        "en-US": ""
-      },
-      "content": "Allp, marca de suplementação da rede Allp Fit, lançou em 20 de abril de 2024 uma nova linha de suplementos on‑the‑go no Brasil. O portfólio inclui barrinhas proteicas, alfajores de alto teor proteico e bebidas prontas para consumo em lata, com foco em conveniência para consumidores em movimento. O lançamento ocorre em um contexto de expansão do segmento de suplementos alimentares no país. De acordo com relatório da Future Market Insights (FMI), o Brasil ocupa a terceira posição global em crescimento de demanda, com projeção de aumento anual de 9,5% entre 2026 e 2036, atrás apenas da Índia e da China. O estudo atribui esse ritmo ao aumento de consumidores orientados à saúde preventiva e à busca por formatos práticos, que já representam cerca de 70% das preferências de compra. A nova linha traz três novos sabores de barrinhas proteicas — frutas vermelhas, doce de leite e cookies and cream — que se somam aos sabores já existentes pistache, abacaxi e brownie. Os alfajores, disponíveis nos sabores leite em pó, avelã e doce de leite, oferecem alto teor proteico em formato de biscoito. As bebidas Allp Protein Drink e Allp Pre‑workout foram ampliadas com os sabores uva e limão, além das opções já comercializadas de mação verde e frutas tropicais, ambas em latas de 269 ml. Guilherme Alcantara, Head de Produtos e Inovação da Allp, explicou que a estratégia visa atender à demanda por produtos que integrem nutrição e praticidade. \"Não se trata apenas de suplementar, mas de integrar saúde à rotina de forma simples, acessível e contínua\", afirmou. A identidade visual da linha foi renovada, com novas embalagens para barrinhas, bebidas e pré‑treinos, reforçando o posicionamento da marca como fornecedora de experiência ao consumidor, sem ênfase em preço. Pesquisa publicada pela revista Veja ao final de 2025 indica que a creatina lidera as preferências de compra de suplementos no Brasil, citada por 57,8% dos entrevistados, seguida pelo whey protein (31,3%). O levantamento aponta que os consumidores buscam resultados com menor complexidade de uso. A Allp Fit, rede de academias que adota o conceito \"Top to All\", oferece em suas unidades estrutura moderna, tecnologia e atendimento qualificado, complementando a oferta de suplementos com serviços de treinamento e bem‑estar. Com a ampliação do portfólio, a empresa busca consolidar sua presença no mercado de suplementos on‑the‑go, alinhando-se ao crescimento projetado para o setor e às preferências de um público que prioriza conveniência, qualidade nutricional e integração ao dia a dia.",
-      "source_category": "mainstream",
-      "sentiment_per_candidate": {},
-      "edit_history": [],
-      "disclaimer_pt": "Análise algorítmica. Não representa pesquisa de opinião.",
-      "disclaimer_en": "Algorithmic analysis. Does not represent polling data.",
-      "sentiment_score": 0.0,
-      "confidence_score": 0.0,
-      "_sentiment_scores": {},
-      "prominence_score": 0.0
+      "prominence_score": 0.0,
+      "_ai_provider": "nvidia",
+      "_ai_model": "nvidia/nemotron-3-super-120b-a12b",
+      "ai_provider_editor": "nvidia/nemotron-3-super-120b-a12b",
+      "editor_note": null
     },
     {
       "id": "a9b66267dce4f97f",
@@ -587,288 +411,55 @@
       "source": "Folha Poder",
       "published_at": "2026-04-24T17:59:00Z",
       "collected_at": "2026-04-24T18:28:45Z",
-      "status": "raw",
-      "relevance_score": 0.0,
-      "relevance_signals": null,
-      "candidates_mentioned": [],
-      "topics": [],
+      "status": "validated",
+      "relevance_score": 0.55,
+      "relevance_signals": {
+        "candidate_signal": 0.5,
+        "topic_signal": 0.0,
+        "keyword_signal": 0.05,
+        "source_signal": 0.0
+      },
+      "candidates_mentioned": [
+        "lula"
+      ],
+      "topics": [
+        "saude"
+      ],
       "narrative_cluster_id": null,
       "duplicate_of": null,
       "summaries": {
-        "pt-BR": "",
-        "en-US": ""
+        "pt-BR": "O presidente Luiz Inácio Lula da Silva passou por um procedimento para remover uma lesão do couro cabeludo diagnosticada como carcinoma basocelular, o tipo mais comum e menos agressivo de câncer de pele. O tratamento foi realizado nesta manhã e, segundo fontes, não há indicações de gravidade ou riscos à sua saúde.",
+        "en-US": "President Luiz Inácio Lula da Silva underwent a procedure this morning to remove a lesion from his scalp, diagnosed as basal cell carcinoma, the most common and least aggressive form of skin cancer. The treatment was performed without complications, and there are no indications of serious health risks at this time."
       },
       "content": "O presidente Luiz Inácio Lula da Silva ( PT ) passou nesta manhã por um procedimento para retirar uma lesão do couro cabeludo. Trata-se de um carcinoma basocelular, tipo mais comum e menos grave de câncer de pele . Leia mais (04/24/2026 - 14h59)",
       "source_category": "mainstream",
-      "sentiment_per_candidate": {},
-      "edit_history": [],
-      "disclaimer_pt": "Análise algorítmica. Não representa pesquisa de opinião.",
-      "disclaimer_en": "Algorithmic analysis. Does not represent polling data.",
-      "sentiment_score": 0.0,
-      "confidence_score": 0.0,
-      "_sentiment_scores": {},
-      "prominence_score": 0.0
-    },
-    {
-      "id": "c042ff53997012ca",
-      "url": "https://www.poder360.com.br/poder-justica/stf-decide-manter-limite-a-compra-de-terras-por-estrangeiros/",
-      "title": "STF decide manter limite à compra de terras por estrangeiros",
-      "source": "Poder360",
-      "published_at": "2026-04-24T17:55:45Z",
-      "collected_at": "2026-04-24T18:29:00Z",
-      "status": "raw",
-      "relevance_score": 0.0,
-      "relevance_signals": null,
-      "candidates_mentioned": [],
-      "topics": [],
-      "narrative_cluster_id": null,
-      "duplicate_of": null,
-      "summaries": {
-        "pt-BR": "",
-        "en-US": ""
+      "sentiment_per_candidate": {
+        "lula": "positivo"
       },
-      "content": "O STF (Supremo Tribunal Federal) decidiu na 5ª feira (23.abr.2026) manter as regras que limitam a compra de imóveis rurais por empresas com capital estrangeiro no país. Por unanimidade, a Corte declarou a constitucionalidade da lei nº 5.709 de 1971 . A lei estabelece restrições para a aquisição de terras por estrangeiros residentes e por empresas estrangeiras autorizadas a operar no Brasil. A norma determina, por exemplo, limite máximo de 50 módulos de exploração por propriedade, exige autorização prévia para compras em áreas consideradas de segurança nacional e o registro das aquisições no Incra (Instituto Nacional de Colonização e Reforma Agrária). A constitucionalidade da lei foi questionada no STF por entidades ligadas ao agronegócio. As ações, apresentadas em 2015, argumentavam que as restrições prejudicam empresas brasileiras com participação de capital estrangeiro ao impor limites à aquisição de terras. O julgamento teve início em 2021 e foi concluído na sessão desta 5ª feira. O plenário acompanhou o voto do relator, o ex-ministro Marco Aurélio Mello , hoje aposentado. Em seu voto, o relator afirmou que as restrições previstas na lei são necessárias para garantir a soberania nacional e a independência do país. O entendimento foi seguido pelos demais ministros. A AGU (Advocacia-Geral da União) atuou no processo como representante do governo federal e defendeu a validade da norma. O órgão argumentou que a legislação tem como objetivo proteger a soberania nacional e evitar a especulação fundiária no Brasil. Com informações da Agência Brasil",
-      "source_category": "politics",
-      "sentiment_per_candidate": {},
-      "edit_history": [],
+      "edit_history": [
+        {
+          "tier": "editor",
+          "at": "2026-04-24T19:29:41Z",
+          "provider": "nvidia",
+          "action": "validated",
+          "changes": [
+            "summary_pt",
+            "summary_en"
+          ]
+        }
+      ],
       "disclaimer_pt": "Análise algorítmica. Não representa pesquisa de opinião.",
       "disclaimer_en": "Algorithmic analysis. Does not represent polling data.",
-      "sentiment_score": 0.0,
-      "confidence_score": 0.0,
-      "_sentiment_scores": {},
-      "prominence_score": 0.0
-    },
-    {
-      "id": "3ae68a1e59b8ca42",
-      "url": "https://www.metropoles.com/celebridades/ex-the-voice-brasil-recorre-a-doacoes-apos-piora-de-doenca-grave",
-      "title": "Ex-The Voice Brasil recorre a doações após piora de doença grave",
-      "source": "Metropoles",
-      "published_at": "2026-04-24T17:54:26Z",
-      "collected_at": "2026-04-24T18:28:52Z",
-      "status": "raw",
-      "relevance_score": 0.0,
-      "relevance_signals": null,
-      "candidates_mentioned": [],
-      "topics": [],
-      "narrative_cluster_id": null,
-      "duplicate_of": null,
-      "summaries": {
-        "pt-BR": "",
-        "en-US": ""
+      "sentiment_score": 0.2,
+      "confidence_score": 1.0,
+      "_sentiment_scores": {
+        "lula": 0.2
       },
-      "source_category": "mainstream",
-      "content": "Página inicial Celebridades Compartilhar notícia Siga Google Discover Reprodução/Instagram 1 de 1 Montaggemcom fotos de Karina Zeviani\n        - Foto: Reprodução/Instagram Karina Zeviani , cantora de 51 anos que participou do The Voice Brasil em 2020, usou as redes sociais para pedir doações . A artista precisa de ajuda financeira para arcar com o tratamento contra um câncer, diagnosticado há dois anos e agravado desde janeiro. Na sexta-feira (23/4), ela atualizou o estado de saúde. Após a doença atingir o fígado em janeiro de 2026, Karina enfrentou complicações graves, como infecção, anemia e risco de falência do órgão, ficando semanas internada na Unidade de Terapia Intensiva (UTI) . Atualmente, segue em novo protocolo de quimioterapia, focado na estabilização e recuperação. 3 imagens Fechar modal. 1 de 3 Karina Zeviani usou redes sociais para pedir ajuda Reprodução/Instagram 2 de 3 Karina Zeviani participou do The Voice Brasil em 2020 Reprodução/Instagram 3 de 3 Karina Zeviani arrecada fundos para custear tratamento contra câncer Reprodução/Instagram Em um vídeo publicado no Instagram, ela agradeceu o apoio recebido. “Eu estou passando aqui para, primeiramente, agradecer a essa enxurrada incrível de suporte, de amor, de orações, de torcida pela minha recuperação, de doações, mobilização de tanta gente. Eu estou com o coração cheio há três dias”, disse. Leia também Celebridades Ex-participante do The Voice morre após ser picada por cobra Fábia Oliveira Péricles abre o jogo sobre Exaltasamba, The Voice e futuro na TV Televisão The Voice Brasil estreia com indireta a Vale Tudo e treta com Ratinho Fábia Oliveira Ratinho reclama de atitude do SBT, cita The Voice e pede “respeito” A campanha foi criada em janeiro deste ano e arrecadou mais de R$ 60 mil em quatro meses. Segundo a divulgação, os custos incluem medicamentos contínuos, suplementos, equipe médica multidisciplinar, terapia e deslocamentos. O gasto mensal gira em torno de R$ 8 mil. A artista também rebateu dúvidas sobre a veracidade da campanha: “Não é golpe, para quem está perguntando direto aqui para os meus entes mais próximos. Estou realmente passando por isso. Há pouco tempo, eu realmente tive uma crise sistêmica gravíssima, em que eu cheguei muito perto de perder minha vida”. Ver essa foto no Instagram Um post compartilhado por karina Zeviani (@karinazeviani) Fique por dentro! Receba notícias de Entretenimento/Celebridades no seu WhatsApp e fique por dentro de tudo! Basta acessar o canal de notícias do Metrópoles no WhatsApp . Para ficar por dentro de tudo sobre o universo dos famosos e do entretenimento siga o perfil Metrópoles Fun no Instagram .",
-      "sentiment_per_candidate": {},
-      "edit_history": [],
-      "disclaimer_pt": "Análise algorítmica. Não representa pesquisa de opinião.",
-      "disclaimer_en": "Algorithmic analysis. Does not represent polling data.",
-      "sentiment_score": 0.0,
-      "confidence_score": 0.0,
-      "_sentiment_scores": {},
-      "prominence_score": 0.0
-    },
-    {
-      "id": "4a0db9b67bcaeb7e",
-      "url": "https://www.cartacapital.com.br/justica/maioria-da-2a-turma-do-stf-mantem-a-prisao-de-ex-presidente-do-brb-no-caso-master/",
-      "title": "Maioria da 2ª Turma do STF mantém a prisão de ex-presidente do BRB no Caso Master",
-      "source": "CartaCapital",
-      "published_at": "2026-04-24T17:51:21Z",
-      "collected_at": "2026-04-24T18:29:09Z",
-      "status": "raw",
-      "relevance_score": 0.0,
-      "relevance_signals": null,
-      "candidates_mentioned": [],
-      "topics": [],
-      "narrative_cluster_id": null,
-      "duplicate_of": null,
-      "summaries": {
-        "pt-BR": "",
-        "en-US": ""
-      },
-      "source_category": "magazine",
-      "content": "Justiça Maioria da 2ª Turma do STF mantém a prisão de ex-presidente do BRB no Caso Master Os ministros André Mendonça, Luiz Fux e Kassio Nunes Marques votaram por referendar a decisão Por CartaCapital 24.04.2026 14h51 Foto: Rosinei Coutinho/STF Apoie Siga-nos no A Segunda Turma do Supremo Tribunal Federal formou maioria, nesta sexta-feira 24, para confirmar a decisão do ministro André Mendonça de mandar prender o ex-presidente do Banco Regional de Brasília Paulo Henrique Costa e o advogado Daniel Lopes Monteiro , no âmbito da investigação sobre as fraudes do Banco Master. Votaram por chancelar a decisão, além de Mendonça, os ministros Luiz Fux e Kassio Nunes Marques. Dias Toffoli se declarou impedido e não participa do julgamento. Resta apenas a manifestação de Gilmar Mendes, que pode se pronunciar até as 23h59 desta sexta. A Polícia Federal prendeu Costa e Monteiro em 16 de abril, em uma nova etapa da Operação Compliance Zero. O caso envolve crimes contra o Sistema Financeiro Nacional, como gestão fraudulenta ou temerária de instituição financeira, além de corrupção, lavagem de dinheiro e organização criminosa. Segundo Mendonça, há indícios da existência de uma engrenagem ilícita para viabilizar a fabricação, a venda e a cessão de carteiras de crédito fictícias do Master ao BRB. As operações teriam alcançado 12,2 bilhões de reais em carteiras de crédito irregulares adquiridas pelo Banco Regional de Brasília. As investigações também apontam uma negociação estimada em 146 milhões de reais em imóveis de luxo entre Vorcaro e Costa, como propina. Recomendadas Zanin mantém presidente do TJ como governador do Rio de Janeiro PSD vai ao STF para impedir que Douglas Ruas assuma o governo do Rio Fachin barra tentativa de declarar Moraes suspeito em processo sobre a Petrobras Gilmar pede desculpas após citar homossexualidade em resposta a críticas de Zema Mais Lidas CartaCapital Há 31 anos, a maior referência progressista em jornalismo no Brasil. ENTENDA MAIS SOBRE: Andre Mendonca , Banco Master , BRB , Daniel Vorcaro , Paulo Henrique Costa , STF , Jornalismo crítico e inteligente. Todos os dias, no seu e-mail Assine nossa newsletter Assine nossa newsletter e receba um boletim matinal exclusivo Assinar Inscreva-se 2026 já começou Às vésperas das eleições de 2026 , o País volta a encarar um ponto de inflexão: o futuro democrático está novamente em jogo . A ameaça bolsonarista não foi derrotada, apenas recuou . No Congresso, forças conservadoras seguem ditando o ritmo . Lá fora, o avanço da extrema-direita e os conflitos em Gaza, no Irã e na Ucrânia agravam a instabilidade global. Se você valoriza o jornalismo crítico, independente e comprometido com a democracia, este é o momento de agir . Assine ou contribua com o quanto puder . Assine a CartaCapital Faça uma doação Leia também Justiça PF conclui investigação sobre a morte do ‘Sicário’ de Vorcaro Por Wendal Carmo Justiça O freio de arrumação de Vorcaro Por Maiara Marinho CartaExpressa Mendonça autoriza que Vorcaro realize exames médicos em hospital Por Maiara Marinho Justiça Ex de Vorcaro, Martha Graeff diz ter sido vítima de ‘violência sem tamanho’ após vazamentos Por Vinícius Nunes Jornalismo crítico e inteligente. Todos os dias, no seu e-mail Assine nossa newsletter Assine nossa newsletter e receba um boletim matinal exclusivo Assinar Inscreva-se",
-      "sentiment_per_candidate": {},
-      "edit_history": [],
-      "disclaimer_pt": "Análise algorítmica. Não representa pesquisa de opinião.",
-      "disclaimer_en": "Algorithmic analysis. Does not represent polling data.",
-      "sentiment_score": 0.0,
-      "confidence_score": 0.0,
-      "_sentiment_scores": {},
-      "prominence_score": 0.0
-    },
-    {
-      "id": "1acff9ad42d2ad32",
-      "url": "https://oglobo.globo.com/patrocinado/dino/noticia/2026/04/24/fim-do-verao-impulsiona-busca-por-cuidados-com-a-pele-1.ghtml",
-      "title": "Fim do verão impulsiona busca por cuidados com a pele",
-      "source": "O Globo",
-      "published_at": "2026-04-24T17:51:15Z",
-      "collected_at": "2026-04-24T18:28:50Z",
-      "status": "raw",
-      "relevance_score": 0.0,
-      "relevance_signals": null,
-      "candidates_mentioned": [],
-      "topics": [],
-      "narrative_cluster_id": null,
-      "duplicate_of": null,
-      "summaries": {
-        "pt-BR": "",
-        "en-US": ""
-      },
-      "content": "O fim do verão e a chegada de temperaturas mais amenas no outono marcam uma transição não apenas no guarda-roupa, mas principalmente na rotina de cuidados com a pele. Após meses de exposição solar intensa, cloro e sal, a pele acumula danos que se manifestam em forma de flacidez, manchas e uma desidratação geral que rouba sua luminosidade. Segundo a dermatologista Ritha Capelato (CRM-PR 28191/RQE18890), este é o momento ideal para iniciar protocolos de recuperação. \"Esse também é o momento de aproveitar para tratar aquelas alterações que surgiram ou se intensificaram durante o verão. E, com o surgimento de novas tecnologias, os resultados estão cada vez mais eficazes e naturais e o tempo de recuperação, cada vez mais curto. Nosso foco principal é estimular a pele a se regenerar de dentro para fora, reconstruindo sua estrutura de colágeno e elastina, além de recuperar a hidratação e a qualidade que foram perdidas,\" explica a Dra. Ritha. Para uma recuperação completa, a especialista recomenda um protocolo que une o poder de tratamentos em consultório à consistência da rotina de skincare em casa. O primeiro passo: regeneração da pele O ponto de partida para recuperar a pele danificada é estimular seus próprios mecanismos de regeneração. Para isso, a Dra. Ritha Capelato explica que os bioestimuladores de colágeno são peças-chave no tratamento. \"Eles agem estimulando as células a reconstruírem a estrutura de suporte da pele de dentro para fora. O objetivo não é apenas tratar a flacidez, mas sim regenerar a base da pele, devolvendo a ela sua espessura, firmeza e elasticidade,\" detalha a dermatologista. É o caso de Sculptra, o único bioestimulador com ação regenerativa completa. Além de aumentar a espessura dérmica, o produto age regenerando a matriz extracelular estrutura vital que sustenta as células e regula suas funções. Ele ainda estimula a produção de colágeno e elastina da própria pele, deixando-a mais firme, com resultados que podem durar mais de dois anos. O influenciador Theodoro é adepto do tratamento e conta sua experiência. \"Cuidar da pele, para mim, é um investimento na autoconfiança, então eu busquei por um resultado que fosse duradouro e, acima de tudo, bem natural. O que me conquistou no Sculptra foi a sua proposta de regeneração completa da pele,\" celebra. O segundo passo: devolvendo o viço e a hidratação da pele A próxima etapa é focar na hidratação da superfície, muito afetada pelo sol. A Dra. Ritha Capelato explica que os procedimentos com ácido hialurônico injetável, por exemplo, são ideais para essa finalidade. \"O uso de ácido hialurônico injetável, como os skinboosters, é super válido para melhorar a qualidade geral da pele. Esse procedimento atua diretamente na derme, onde a perda de água é mais difícil de corrigir apenas com produtos tópicos, aumentando a capacidade da pele de reter água por mais tempo. O resultado é uma pele mais hidratada, luminosa e com aspecto saudável,\" conclui a médica. Restylane é uma das linhas de ácido hialurônico injetável disponíveis no mercado, reconhecida por redefinir contornos e melhorar a qualidade da pele, com naturalidade e personalização. O portfólio conta com Restylane Skinboosters que, além de proporcionar melhora na hidratação, também age melhorando outros aspectos da pele, como: brilho, tom, textura, maciez, linhas finas e rugas, cicatrizes de acne e poros. O terceiro passo: cuidado diário em casa Conforme explica a Dra. Ritha, paralelo ao investimento em alta tecnologia no consultório, é importante manter uma rotina de cuidados diários. \"Nenhum tratamento atinge seu potencial máximo sem um bom skincare. Além da rotina básica, produtos com tecnologias regenerativas têm ganhado destaque para potencializar os resultados, preparando a pele para os procedimentos e ajudando na manutenção da saúde da barreira cutânea,\" diz a Dra. Ritha. A marca de skincare regenerativo Alastin, por exemplo, conta com alguns produtos que apresentam em sua formulação a exclusiva Tecnologia TriHex, uma combinação de peptídeos que ajuda a remover fragmentos de colágeno e elastina danificados, estimulando a regeneração da pele. Estudos já mostram como a associação de Sculptra e Alastin Restorative Skin Complex, por exemplo, favorece resultados estéticos superiores, com melhora em radiância, textura e do dano causado à pele pela exposição cumulativa ao sol, além de conferir maior densidade e firmeza. A influenciadora Natália Mosca destaca a eficácia da marca. \"Com o tempo, entendi que o cuidado com a pele precisa ser contínuo. Na minha rotina de skincare, incluí o Alastin Restorative Skin Complex,\" conta. Vale lembrar que Sculptra e Restylane devem ser aplicados por profissionais habilitados à prática de injetáveis. E antes de usar qualquer produto, é indicado consultar um dermatologista para garantir a melhor escolha e segurança para a sua pele.",
-      "source_category": "mainstream",
-      "sentiment_per_candidate": {},
-      "edit_history": [],
-      "disclaimer_pt": "Análise algorítmica. Não representa pesquisa de opinião.",
-      "disclaimer_en": "Algorithmic analysis. Does not represent polling data.",
-      "sentiment_score": 0.0,
-      "confidence_score": 0.0,
-      "_sentiment_scores": {},
-      "prominence_score": 0.0
-    },
-    {
-      "id": "e5cde82998cf3925",
-      "url": "https://www.metropoles.com/minas-gerais/mg-processo-seletivo-simplificado-da-funed-paga-ate-r-58-mil",
-      "title": "MG: processo seletivo simplificado da Funed paga até R$ 5,8 mil",
-      "source": "Metropoles",
-      "published_at": "2026-04-24T17:51:10Z",
-      "collected_at": "2026-04-24T18:28:52Z",
-      "status": "raw",
-      "relevance_score": 0.0,
-      "relevance_signals": null,
-      "candidates_mentioned": [],
-      "topics": [],
-      "narrative_cluster_id": null,
-      "duplicate_of": null,
-      "summaries": {
-        "pt-BR": "",
-        "en-US": ""
-      },
-      "source_category": "mainstream",
-      "content": "Página inicial Minas Gerais Compartilhar notícia Siga Google Discover Direção Concursos 1 de 1 Imagem colorida, pessoa estudando - Metrópoles\n        - Foto: Direção Concursos Belo Horizonte – Os interessados em participar do processo seletivo simplificado da Fundação Ezequiel Dias (Funed) já podem fazer as inscrições . São oferecidas 16 vagas temporárias de entrada imediata, além de oito vagas para formação de cadastro reserva. Os salários variam de R$ 1.957,49 a R$ 5.830,52, e incluem também gratificações e ajuda de custo previstas no edital nº 02/2026 , onde constam todas as informações sobre o processo seletivo simplificado. As inscrições podem ser feitas a partir desta sexta-feira (24/4) até as 18h do dia 30 de abril. Os interessados em participar poderão se inscrever por meio do endereço www.processoseletivo.mg.gov.br Sobre as vagas As vagas são destinadas aos cargos de nível técnico e superior, para diversos setores da Funed, conforme previsto no edital. Serão disponibilizadas 14 vagas para a ampla concorrência e duas para os candidatos que se autodeclararem como Pessoas com Deficiência (PCD). Na primeira etapa será realizada a candidatura e habilitação. O candidato deverá preencher o formulário eletrônico com informações pessoais e dados curriculares ; ainda nesta etapa é feita a análise de currículo e títulos, para a verificação das informações prestadas relativas às experiências acadêmicas e profissionais. Na segunda etapa será feita a entrevista com os candidatos aptos às vagas. Leia também Minas Gerais Prefeitura de BH abre processo seletivo simplificado. Veja salários Minas Gerais Cidade do interior de MG abre concurso com salários de até R$ 20 mil Minas Gerais MG: cidade da Zona da Mata abre concurso com salário de até R$ 6,1 mil Minas Gerais Ipatinga (MG) abre concurso com 400 vagas e salário de até R$ 13,9 mil Sobre o processo seletivo O processo seletivo será conduzido com base nos termos do Decreto Estadual nº 47.910, de 7 de abril de 2020, da Lei Estadual nº 23.750, de 23 de dezembro de 2020, e do Decreto Estadual n.º 48.097/2020. Fique por dentro do que acontece em Minas Gerais. Siga o perfil do Metrópoles MG no Instagram .",
-      "sentiment_per_candidate": {},
-      "edit_history": [],
-      "disclaimer_pt": "Análise algorítmica. Não representa pesquisa de opinião.",
-      "disclaimer_en": "Algorithmic analysis. Does not represent polling data.",
-      "sentiment_score": 0.0,
-      "confidence_score": 0.0,
-      "_sentiment_scores": {},
-      "prominence_score": 0.0
-    },
-    {
-      "id": "1fee64d08e158d6f",
-      "url": "https://www.poder360.com.br/poder-sportsmkt/conmebol-avalia-equador-como-sede-da-copa-america-de-2028/",
-      "title": "Conmebol avalia Equador como sede da Copa América de 2028",
-      "source": "Poder360",
-      "published_at": "2026-04-24T17:50:25Z",
-      "collected_at": "2026-04-24T18:29:00Z",
-      "status": "raw",
-      "relevance_score": 0.0,
-      "relevance_signals": null,
-      "candidates_mentioned": [],
-      "topics": [],
-      "narrative_cluster_id": null,
-      "duplicate_of": null,
-      "summaries": {
-        "pt-BR": "",
-        "en-US": ""
-      },
-      "content": "A Conmebol considera o Equador como possível sede da Copa América de 2028. O presidente da entidade, Alejandro Domínguez , fez a declaração nesta 5ª feira (24.abr.2026), durante o Congresso Ordinário da confederação em Quito . A decisão final será tomada pelo Conselho da Conmebol. Domínguez disse que o Equador está entre as opções avaliadas para receber o torneio e afirmou que “há muita concorrência” pela sede. Questionado sobre a candidatura equatoriana, afirmou que o tema está em discussão e que caberá ao Conselho a decisão final. Disse ainda que a confederação vai “tomar a melhor decisão” para o futebol sul-americano. O Equador já sediou a Copa América em 1993. Na ocasião, a Argentina derrotou o México na final. A Copa América de 2024 foi realizada nos Estados Unidos e enfrentou críticas relacionadas à organização e à segurança. Houve registros de altas temperaturas, falhas operacionais, más condições dos gramados e incidentes nas arquibancadas. Apesar dos problemas, a Argentina, liderada por Lionel Messi , conquistou o título ao vencer a Colômbia , de James Rodríguez , na final. O Congresso Ordinário da Conmebol contou com a presença do presidente da Fifa, Gianni Infantino . Dirigentes da Fifa, da Conmebol e da FEF (Federação Equatoriana de Futebol) se reuniram com o presidente do Equador, Daniel Noboa . Infantino falou sobre a Copa do Mundo de 2026 , que será realizada em Estados Unidos, Canadá e México, com 48 seleções. O dirigente destacou a importância do torneio como instrumento de união. Em “um mundo muito dividido”, disse que é necessário “unir todos os países” e torcedores em ambiente de paz. A Conmebol não informou quando o Conselho decidirá a sede da Copa América de 2028 nem quais outros países estão na disputa.",
-      "source_category": "politics",
-      "sentiment_per_candidate": {},
-      "edit_history": [],
-      "disclaimer_pt": "Análise algorítmica. Não representa pesquisa de opinião.",
-      "disclaimer_en": "Algorithmic analysis. Does not represent polling data.",
-      "sentiment_score": 0.0,
-      "confidence_score": 0.0,
-      "_sentiment_scores": {},
-      "prominence_score": 0.0
-    },
-    {
-      "id": "183bfd37b9439d57",
-      "url": "https://www.metropoles.com/colunas/manoela-alcantara/stf-preso-ex-presidente-brb",
-      "title": "Com Nunes Marques, STF tem maioria para manter preso ex-chefe do BRB",
-      "source": "Metropoles",
-      "published_at": "2026-04-24T17:50:21Z",
-      "collected_at": "2026-04-24T18:28:52Z",
-      "status": "raw",
-      "relevance_score": 0.0,
-      "relevance_signals": null,
-      "candidates_mentioned": [],
-      "topics": [],
-      "narrative_cluster_id": null,
-      "duplicate_of": null,
-      "summaries": {
-        "pt-BR": "",
-        "en-US": ""
-      },
-      "source_category": "mainstream",
-      "content": "Página inicial Colunas Manoela Alcântara Compartilhar notícia Siga Google Discover Breno Esaki/Metrópoles @BrenoEsakiFoto 1 de 1 Paulo Henrique Costa, ex-presidente do BRB Metrópoles\n        - Foto: Breno Esaki/Metrópoles @BrenoEsakiFoto A Segunda Turma do Supremo Tribunal Federal (STF) formou maioria, nesta sexta-feira (24/4), para manter a prisão do ex-presidente do Banco de Brasília (BRB), Paulo Henrique Costa e do advogado Daniel Monteiro, que teria representado o Banco Master em negociações com o BRB. Os dois foram presos em 16 de abril pela Polícia Federal (PF) , por decisão do ministro André Mendonça, com manifestação favorável da Procuradoria Geral da República (PGR). A maioria no julgamento ocorreu com o voto do ministro Nunes Marques, que concordou com o relator e com o ministro Luiz Fux. Assim, o placar ficou em 3 a 0 pela manutenção da prisão. Leia também Manoela Alcântara STF conclui julgamento sobre prisão de ex-chefe do BRB nesta sexta Brasil Troca de defesa do ex-presidente do BRB abre caminho para delação premiada Grande Angular Ex-presidente do BRB, Paulo Henrique Costa troca advogado após prisão Manoela Alcântara Turma do STF tem 2 a 0 para manter prisão de ex-presidente do BRB Alvo de investigação da PF, o ex-presidente do BRB está preso no Complexo Penitenciário da Papuda. Voto No voto acompanhado pelos outros dois ministros do colegiado, Mendonça considerou que medidas cautelares diversas da prisão seriam insuficientes diante do grau de articulação dos investigados, da complexidade do esquema e da continuidade dos atos de lavagem de dinheiro. O relator do caso ressaltou que a necessidade de preventiva se mantém: “ Diante do grau de articulação dos investigados, da natureza empresarial e documental do esquema, da possibilidade de influência sobre pessoas , documentos e fluxos financeiros, bem como da permanência dos atos de lavagem. Assim, providências como comparecimento periódico, proibição de contato ou monitoração eletrônica mostram-se insuficientes para neutralizar os riscos concretos identificados”, disse o ministro no voto. Fux e Nunes Marques acompanharam o voto. Falta ainda o posicionamento do presidente da Turma, ministro Gilmar Mendes. O ministro Dias Toffoli se declarou suspeito para julgar o caso , que envolve o Banco Master, de Daniel Vorcaro. Prisões Paulo Henrique e Daniel Monteiro foram presos durante a 4ª fase da operação Compliance Zero . A decisão de Mendonça pelas preventivas atendeu a um pedido da Polícia Federal. O caso envolve crimes contra o Sistema Financeiro Nacional, como gestão fraudulenta ou temerária de instituição financeira, além de corrupção, lavagem de dinheiro e organização criminosa. Imóveis A prisão de Paulo Henrique tem a ver com suposta propina oferecida pelo Master em negociações com o BRB, envolvendo o ex-presidente e a transação de seis imóveis, no valor de R$ 146,5 milhões. O dinheiro seria usado para a compra de seis imóveis: quatro em São Paulo e dois em Brasília. De acordo com as apurações, os alvos teriam atuado para estruturar esquema de compliance paralelo a fim de burlar controles internos e regras no BRB. A suspeita é de que o pagamento de vantagens indevidas tenha ocorrido com a aquisição e transferência de apartamentos, com uso de empresas de fachada. A 4ª fase da Operação Compliance Zero apura esquema de lavagem de dinheiro para o pagamento de vantagens indevidas que teriam sido destinadas a agentes públicos. São investigados crimes de corrupção, lavagem de dinheiro, crimes financeiros e organização criminosa. A defesa de Paulo Henrique Costa afirma nos autos que não há qualquer registro de tentativa de coação de testemunhas, ocultação de provas ou embaraço às investigações por parte do ex-presidente do BRB que justifique a prisão. Lavagem de capitais De acordo com as investigações, ocorreram movimentações para venda de ao menos um dos imóveis , localizado em um edifício de alto padrão na região do Itaim Bibi, em São Paulo. Os imóveis são Arbórea, Casa Lafer, Ennius Muniz, Heritage, One Sixty e Valle dos Ipês. Segundo os investigadores, os bens teriam sido usados como forma de ocultar a origem do dinheiro, em um modelo considerado sofisticado de lavagem de capitais. Também preso e com julgamento na Segunda Turma, o advogado Daniel Monteiro é suspeito de ter atuado na montagem da estrutura financeira usada para ocultar valores ligados à negociação entre o BRB e o Banco Master. A investigação aponta que o advogado teria ligação direta com Paulo Henrique Costa e participação nas tratativas envolvendo a transação. Já leu todas as notas e reportagens da coluna hoje? Acesse a coluna do Metrópoles .",
-      "sentiment_per_candidate": {},
-      "edit_history": [],
-      "disclaimer_pt": "Análise algorítmica. Não representa pesquisa de opinião.",
-      "disclaimer_en": "Algorithmic analysis. Does not represent polling data.",
-      "sentiment_score": 0.0,
-      "confidence_score": 0.0,
-      "_sentiment_scores": {},
-      "prominence_score": 0.0
-    },
-    {
-      "id": "bb82c992eb01fec8",
-      "url": "https://www.jota.info/eleicoes/eleicoes-2026/cristiano-zanin-mantem-presidente-do-tjrj-como-governador-tampao-do-rio-de-janeiro",
-      "title": "Cristiano Zanin mantém presidente do TJRJ como governador-tampão do Rio de Janeiro",
-      "source": "JOTA",
-      "published_at": "2026-04-24T17:49:53Z",
-      "collected_at": "2026-04-24T18:29:03Z",
-      "status": "raw",
-      "relevance_score": 0.0,
-      "relevance_signals": null,
-      "candidates_mentioned": [],
-      "topics": [],
-      "narrative_cluster_id": null,
-      "duplicate_of": null,
-      "summaries": {
-        "pt-BR": "",
-        "en-US": ""
-      },
-      "content": "O ministro Cristiano Zanin , do Supremo Tribunal Federal ( STF ), manteve nesta sexta-feira (24/4) o desembargador Ricardo Couto como o governador interino do Rio de Janeiro. A decisão foi tomada após o diretório do PSD do Rio de Janeiro solicitar a confirmação da liminar dada por Zanin em 27 de março. Conheça o JOTA PRO Poder, plataforma de monitoramento que oferece transparência e previsibilidade para empresas O pedido do PSD é reflexo da petição apresentada pelo presidente da Assembleia Legislativa do Rio de Janeiro (Alerj), Douglas Ruas (PL-RJ) em outra ação sob relatoria do ministro Luiz Fux, requerendo o cargo de governador tampão por ser o segundo na linha sucessória. Ruas defendeu que a presidência da Alerj não está mais vaga e, portanto, teria direito ao cargo. Zanin argumentou que a liminar está mantida pois o julgamento das duas ações relativas às eleições do Rio de Janeiro já tiveram o julgamento iniciado em plenário e que, após o pedido de vista de Flávio Dino, o colegiado consignou que Couto permaneceria no Palácio da Guanabara até o término do debate. Além disso, o ministro sustentou que as eleições para a Alerj também estão sendo contestadas no Supremo. “Em outras palavras, de acordo com o contexto dos autos desta reclamação, a eleição realizada em 17/4/2026, para Presidente da ALERJ, que, reitero, também se encontra sub judice, poderá ter efeitos inter corporis, porém não tem o condão de modificar a decisão proclamada em julgamento do Plenário do Supremo Tribunal Federal em 9/4/2026”. A decisão foi tomada na RCL 92.644. Imbróglio no Palácio Guanabara O desembargador Ricardo Couto ocupa um mandato-tampão no Rio de Janeiro após a renúncia do então governador Cláudio Castro, no dia 23 de março, um dia antes do julgamento no Tribunal Superior Eleitoral (TSE), que poderia levar à sua cassação. Castro não tinha vice-governador, pois Thiago Pampolha havia deixado o cargo para assumir o posto de conselheiro do Tribunal de Contas do Estado do Rio de Janeiro (TCE-RJ). E na linha sucessória, o então presidente da Alerj, Rodrigo Bacellar, também estava afastado do comando do Legislativo pelo STF em investigação sobre vazamento de operações policiais. Dessa forma, a saída de Castro levaria o estado para eleições indiretas, ou seja, via Alerj, e não voto popular. Porém, o PSD, partido de oposição a Castro e Ruas, ajuizou duas ações no STF, uma questionando o formato das eleições indiretas e outra alegando que, ao renunciar, Castro fez uma manobra para direcionar as eleições indiretas e não diretas, que ocorreriam caso ele fosse cassado pelo TSE.",
-      "source_category": "politics",
-      "sentiment_per_candidate": {},
-      "edit_history": [],
-      "disclaimer_pt": "Análise algorítmica. Não representa pesquisa de opinião.",
-      "disclaimer_en": "Algorithmic analysis. Does not represent polling data.",
-      "sentiment_score": 0.0,
-      "confidence_score": 0.0,
-      "_sentiment_scores": {},
-      "prominence_score": 0.0
-    },
-    {
-      "id": "807b730dca72050b",
-      "url": "https://www.estadao.com.br/politica/blog-do-fausto-macedo/stf-forma-maioria-e-mantem-ex-presidente-do-brb-e-advogado-do-master-na-prisao/",
-      "title": "STF tem maioria para manter ex-presidente do BRB e advogado do Master na prisão",
-      "source": "Estadao Politica",
-      "published_at": "2026-04-24T17:49:44Z",
-      "collected_at": "2026-04-24T18:28:51Z",
-      "status": "raw",
-      "relevance_score": 0.0,
-      "relevance_signals": null,
-      "candidates_mentioned": [],
-      "topics": [],
-      "narrative_cluster_id": null,
-      "duplicate_of": null,
-      "summaries": {
-        "pt-BR": "",
-        "en-US": ""
-      },
-      "content": "A Segunda Turma do Supremo Tribunal Federal (STF) formou maioria nesta sexta-feira, 24, para manter as prisões preventivas do ex-presidente do Banco Regional de Brasília (BRB) Paulo Henrique Costa e do advogado do Banco Master , Daniel Monteiro, alvos da Operação Compliance Zero . Os ministros Luiz Fux e Kassio Nunes Marques acompanharam o relator André Mendonça , levando o placar a 3 a 0 pela manutenção das prisões, enquanto Dias Toffoli se declarou suspeito. Resta o voto de Gilmar Mendes . O advogado de Paulo Henrique Costa, Cléber Lopes, afirmou que a defesa “continua firme na convicção de que ele não praticou crime algum”. A defesa de Daniel Monteiro informou que “sua atuação sempre se deu de forma estritamente técnica, na condição de advogado do Banco Master”. Preso na última quinta-feira, 16, Paulo Henrique Costa é suspeito de receber propina na negociação de venda do Banco Master ao BRB , por meio de uma operação envolvendo a aquisição de apartamentos de luxo em São Paulo e Brasília. Segundo a investigação da Polícia Federal, a vantagem indevida paga por Daniel Vorcaro teria somado cerca de R$ 146 milhões em imóveis . O advogado do Banco Master, Daniel Monteiro, é apontado pela PF como responsável por estruturar a operação usada para viabilizar o repasse da propina ao ex-presidente do BRB . A quarta fase da Operação Compliace Zero foi deflagrada para aprofundar os crimes envolvendo a transação do BRB com o Master. O Banco Regional de Brasília injetou R$ 12 bilhões na instituição de Daniel Vorcaro, comprando carteiras de crédito consignado fraudulentas. A operação deu prejuízo bilionário ao BRB,que ainda não calculou a cifra final e adiou a divulgação do seu balanço de 2025.",
-      "source_category": "mainstream",
-      "sentiment_per_candidate": {},
-      "edit_history": [],
-      "disclaimer_pt": "Análise algorítmica. Não representa pesquisa de opinião.",
-      "disclaimer_en": "Algorithmic analysis. Does not represent polling data.",
-      "sentiment_score": 0.0,
-      "confidence_score": 0.0,
-      "_sentiment_scores": {},
-      "prominence_score": 0.0
+      "prominence_score": 0.0,
+      "_ai_provider": "nvidia",
+      "_ai_model": "nvidia/nemotron-3-super-120b-a12b",
+      "ai_provider_editor": "nvidia/nemotron-3-super-120b-a12b",
+      "editor_note": null
     },
     {
       "id": "1a0278e5c2c95e86",
@@ -877,27 +468,59 @@
       "source": "Veja",
       "published_at": "2026-04-24T17:49:42Z",
       "collected_at": "2026-04-24T18:29:08Z",
-      "status": "raw",
-      "relevance_score": 0.0,
-      "relevance_signals": null,
-      "candidates_mentioned": [],
-      "topics": [],
+      "status": "validated",
+      "relevance_score": 0.95,
+      "relevance_signals": {
+        "candidate_signal": 0.5,
+        "topic_signal": 0.3,
+        "keyword_signal": 0.15,
+        "source_signal": 0.0
+      },
+      "candidates_mentioned": [
+        "zema"
+      ],
+      "topics": [
+        "corrupcao",
+        "politica_externa",
+        "eleicoes",
+        "midia",
+        "lgbtq"
+      ],
       "narrative_cluster_id": null,
       "duplicate_of": null,
       "summaries": {
-        "pt-BR": "",
-        "en-US": ""
+        "pt-BR": "Romeu Zema, pré-candidato da direita, intensificou seu confronto com o ministro Gilmar Mendes do STF ao associar membros da Corte a escândalos, em uma estratégia de apelo popular baseada no discurso antipoderes. Segundo o colunista Robson Bonin, Zema busca ocupar um espaço eleitoral semelhante ao de Enéas e Fernando Collor, transformando eventuais ações judiciais contra si em capital político, já que uma possível prisão poderia convertê-lo em mártir e aumentar sua visibilidade.",
+        "en-US": "Romeu Zema, a right-wing pre-candidate, intensified his confrontation with Supreme Court Minister Gilmar Mendes by associating justices with recent scandals, in a popular appeal strategy rooted in anti-establishment rhetoric. According to columnist Robson Bonin, Zema aims to occupy an electoral space akin to Enéas and Fernando Collor, turning potential legal actions against him into political capital, as a possible arrest could martyr him and boost his visibility."
       },
       "content": "O confronto entre o ex-governador de Minas Gerais, Romeu Zema , e o ministro do Supremo Tribunal Federal (STF) Gilmar Mendes ganhou novos contornos políticos e pode se transformar em ativo eleitoral para o pré-candidato da direita. O tema foi debatido no programa Ponto de Vista , apresentado por Marcela Rahal, com análise do colunista Robson Bonin (este texto é um resumo do vídeo acima) . Segundo Bonin, a escalada começou após Zema publicar vídeos associando ministros do STF a escândalos recentes, em uma estratégia de forte apelo popular. A reação de Gilmar, incluindo ameaça de medidas jurídicas e declarações públicas que geraram controvérsia, acabou ampliando a visibilidade do adversário. Por que Zema comprou a briga com o STF? Na avaliação de Bonin, o movimento tem cálculo político claro. Com desempenho discreto nas pesquisas, Zema buscaria ocupar um espaço eleitoral ligado ao discurso antipoderes e ao desgaste do Judiciário. “O que Zema fez foi encarnar uma mistura de Enéas com Fernando Collor”, afirmou o colunista, comparando a estratégia a campanhas baseadas em enfrentamento direto ao sistema político. O discurso de “caça aos intocáveis” encontra ressonância em parte do eleitorado cansado de denúncias e escândalos recorrentes em Brasília. A reação do Supremo pode fortalecer Zema, segundo Bonin. O colunista afirmou que a eventual abertura de investigação contra Zema pode gerar ainda mais projeção ao ex-governador. “Se ele for preso, vira um mártir”, disse. Nos bastidores, segundo ele, aliados do político já trabalham com essa hipótese diante da possibilidade de desdobramentos no inquérito das fake news. Continua após a publicidade A leitura é que o episódio cria um ambiente de “ganha-ganha”: o STF tenta impor limites a ataques públicos, enquanto Zema transforma o conflito em visibilidade política. Gilmar errou ao entrar no debate político? A repercussão negativa se concentrou em declarações do ministro ao comparar, em tom hipotético, acusações de corrupção a referências sobre homossexualidade. Após críticas, Gilmar pediu desculpas publicamente. Para Bonin, a entrada de integrantes do Supremo no debate político tende a produzir desgaste institucional. “Quando o ministro do Supremo vai para o debate político com candidato, acaba nisso”, afirmou. Continua após a publicidade Zema soube explorar o episódio, segundo análise do programa. O ex-governador respondeu rapidamente, acusando preconceito e defendendo o direito à sátira política. Bonin afirmou que Zema conseguiu transformar a polêmica em crescimento digital e capital político. “Ele está conseguindo ganhar milhares de seguidores por causa disso”, disse. O STF virou tema central da eleição? O episódio reforça uma tendência já observada no cenário nacional: o Supremo passou a ser personagem frequente da disputa presidencial e das campanhas proporcionais. “Todo mundo sabe que o Supremo é um motor de impopularidade no país”, afirmou Bonin, ao explicar por que ataques à Corte encontram eco em determinados segmentos. Com isso, o Judiciário tende a permanecer no centro do debate político até 2026. VEJA+IA: Este texto resume um trecho do programa audiovisual Ponto de Vista (confira o vídeo acima). Conteúdo produzido com auxílio de inteligência artificial e supervisão humana. Publicidade",
       "source_category": "magazine",
-      "sentiment_per_candidate": {},
-      "edit_history": [],
+      "sentiment_per_candidate": {
+        "zema": "positivo"
+      },
+      "edit_history": [
+        {
+          "tier": "editor",
+          "at": "2026-04-24T19:31:07Z",
+          "provider": "nvidia",
+          "action": "validated",
+          "changes": [
+            "summary_pt",
+            "summary_en"
+          ]
+        }
+      ],
       "disclaimer_pt": "Análise algorítmica. Não representa pesquisa de opinião.",
       "disclaimer_en": "Algorithmic analysis. Does not represent polling data.",
-      "sentiment_score": 0.0,
-      "confidence_score": 0.0,
-      "_sentiment_scores": {},
-      "prominence_score": 0.0
+      "sentiment_score": 0.5,
+      "confidence_score": 1.0,
+      "_sentiment_scores": {
+        "zema": 0.5
+      },
+      "prominence_score": 0.0,
+      "_ai_provider": "nvidia",
+      "_ai_model": "nvidia/nemotron-3-super-120b-a12b",
+      "ai_provider_editor": "nvidia/nemotron-3-super-120b-a12b",
+      "editor_note": null
     },
     {
       "id": "dfe9cf755a21dc3d",
@@ -906,56 +529,64 @@
       "source": "Poder360",
       "published_at": "2026-04-24T17:47:14Z",
       "collected_at": "2026-04-24T18:29:00Z",
-      "status": "raw",
-      "relevance_score": 0.0,
-      "relevance_signals": null,
+      "status": "validated",
+      "relevance_score": 0.5,
+      "relevance_signals": {
+        "candidate_signal": 0.0,
+        "topic_signal": 0.4,
+        "keyword_signal": 0.05,
+        "source_signal": 0.05
+      },
       "candidates_mentioned": [],
-      "topics": [],
+      "topics": [
+        "politica_externa",
+        "educacao",
+        "meio_ambiente",
+        "corrupcao",
+        "impostos",
+        "previdencia",
+        "saude",
+        "seguranca",
+        "economia",
+        "lgbtq",
+        "aborto",
+        "indigenas",
+        "armas",
+        "privatizacao",
+        "midia",
+        "eleicoes"
+      ],
       "narrative_cluster_id": null,
       "duplicate_of": null,
       "summaries": {
-        "pt-BR": "",
-        "en-US": ""
+        "pt-BR": "O ex-presidente José Sarney completou 96 anos em 24 de abril de 2026, celebrando com um bolo personalizado do Flamengo em família, em São Luís. Com trajetória marcante como primeiro presidente civil após o regime militar, senador por cinco mandatos e presidente do Senado por nove anos, Sarney permanece ativo politicamente no Maranhão e é reconhecido como figura histórica da política nacional. Ele também é autor de 123 livros, membro da Academia Brasileira de Letras, e pretende lançar seu 124º livro em 2025.",
+        "en-US": "Former Brazilian President José Sarney turned 96 on April 24, 2026, celebrating with a Flamengo-themed cake alongside family in São Luís. As the first civilian president after the military regime, a five-term senator, and nine-year Senate president, Sarney remains politically active in Maranhão and is regarded as a national historical figure. He is also the author of 123 books, a member of the Brazilian Academy of Letters, and plans to release his 124th book in 2025."
       },
       "content": "O ex-presidente José Sarney completou 96 anos nesta 6ª feira (24.abr.2026), e celebrou a data com familiares em São Luís . Nas imagens, divulgadas em seu perfil no Instagram, Sarney aparece segurando um bolo personalizado com seu nome e o escudo do Flamengo . Sarney governou o Brasil de 1985 a 1990, período em que se tornou o 1º civil a assumir a Presidência depois do regime militar. Ao longo da carreira, também se elegeu senador por cinco mandatos e presidiu o Senado por nove anos. O ex-presidente mantém atuação política no Maranhão e segue como uma das figuras históricas da política nacional. Em 12 de março de 2025, o ex-presidente recebeu o Poder360 para uma entrevista em sua casa em Brasília. Havia acabado de fazer sua fisioterapia diária e exercícios de condicionamento físico. Este jornal digital perguntou a Sarney qual era o segredo para chegar bem nessa fase da vida. Eis o que respondeu o ex-presidente da República: “Os chineses dizem que é o seguinte: dormir muito, comer pouco e não discutir com mulher [risos]” . Entrevista do ex-presidente da República José Sarney ao Poder360 Sérgio Lima/Poder360 - 12.mar.2025 Aos 94 anos, Sarney é autor de 123 livros; ocupa a cadeira de nª 38 da Academia Brasileira de Letras Aos 94 anos, Sarney é autor de 123 livros; ocupa a cadeira de nª 38 da Academia Brasileira de Letras Sérgio Lima/Poder360 - 12.mar.2025 Na imagem acima, José Sarney nos jardins da residência onde mora em Brasília | Sérgio Lima/Poder360 Na imagem acima, José Sarney nos jardins da residência onde mora em Brasília | Sérgio Lima/Poder360 Sérgio Lima/Poder360 - 12.mar.2025 Em entrevista ao \"Poder360\", Sarney diz não ter mágoas nem inimigos: \"Nasci com a absoluta impossibilidade de ter ódio\" Em entrevista ao \"Poder360\", Sarney diz não ter mágoas nem inimigos: \"Nasci com a absoluta impossibilidade de ter ódio\" Sérgio Lima/Poder360 - 12.mar.2025 Na imagem acima, o ex-presidente da República José Sarney durante a entrevista concedida ao diretor de Redação do Poder360, Fernando Rodrigues Na imagem acima, o ex-presidente da República José Sarney durante a entrevista concedida ao diretor de Redação do Poder360, Fernando Rodrigues Sérgio Lima/Poder360 - 12.mar.2025 O ex-presidente pretende finalizar em 2025 seu 124º livro: \"O Brasil e seu labirinto\" O ex-presidente pretende finalizar em 2025 seu 124º livro: \"O Brasil e seu labirinto\" Sérgio Lima/Poder360 - 12.mar.2025 Para Sarney, democracia é liberdade. \"É a definição mais precisa\", afirma o ex-presidente Para Sarney, democracia é liberdade. \"É a definição mais precisa\", afirma o ex-presidente Sérgio Lima/Poder360 - 12.mar.2025 Detalhe de cômoda na residência do ex-presidente José Sarney, em Brasília Detalhe de cômoda na residência do ex-presidente José Sarney, em Brasília Sérgio Lima/Poder360 - 12.mar.2025 Muito criticado pela imprensa na época em que foi presidente, Sarney diz que nunca entrou na Justiça contra um jornalista ou um veículo de mídia Muito criticado pela imprensa na época em que foi presidente, Sarney diz que nunca entrou na Justiça contra um jornalista ou um veículo de mídia Sérgio Lima/Poder360 - 12.mar.2025 José Sarney foi o 1º presidente da República a tomar posse depois da ditadura militar (1964-1985) | Sérgio Lima/ Poder360 - 10.mar.2025 José Sarney foi o 1º presidente da República a tomar posse depois da ditadura militar (1964-1985) | Sérgio Lima/ Poder360 - 10.mar.2025 Sérgio Lima/Poder360 - 12.mar.2025 Na imagem acima, o ex-presidente e o Diretor de Redação do jornal digital \"Poder360\", Fernando Rodrigues Na imagem acima, o ex-presidente e o Diretor de Redação do jornal digital \"Poder360\", Fernando Rodrigues Na 5ª feira (16.abr), Sarney postou em seu perfil no Instagram sua rotina de atividades físicas. “A rotina de exercícios segue, sempre ao lado da Marly. Cuidar da saúde é importante, mas ter com quem dividir esse caminho faz toda a diferença” , escreveu. Assista (1min23s): Sarney é casado com Marly desde 1952. Eles têm 3 filhos: Roseana , 72 anos; Fernando, 70 anos; José Sarney Filho, o Zequinha Sarney , 68 anos.",
       "source_category": "politics",
       "sentiment_per_candidate": {},
-      "edit_history": [],
+      "edit_history": [
+        {
+          "tier": "editor",
+          "at": "2026-04-24T19:31:22Z",
+          "provider": "nvidia",
+          "action": "validated",
+          "changes": [
+            "summary_pt",
+            "summary_en"
+          ]
+        }
+      ],
       "disclaimer_pt": "Análise algorítmica. Não representa pesquisa de opinião.",
       "disclaimer_en": "Algorithmic analysis. Does not represent polling data.",
       "sentiment_score": 0.0,
-      "confidence_score": 0.0,
+      "confidence_score": 1.0,
       "_sentiment_scores": {},
-      "prominence_score": 0.0
-    },
-    {
-      "id": "8a32dff8ed8c511f",
-      "url": "https://www.poder360.com.br/poder-eleicoes/mateus-simoes-diz-que-direita-quer-evitar-vitoria-de-lula-no-1o-turno/",
-      "title": "Mateus Simões diz que direita quer evitar vitória de Lula no 1º turno",
-      "source": "Poder360",
-      "published_at": "2026-04-24T17:38:07Z",
-      "collected_at": "2026-04-24T18:29:00Z",
-      "status": "raw",
-      "relevance_score": 0.0,
-      "relevance_signals": null,
-      "candidates_mentioned": [],
-      "topics": [],
-      "narrative_cluster_id": null,
-      "duplicate_of": null,
-      "summaries": {
-        "pt-BR": "",
-        "en-US": ""
-      },
-      "content": "O governador de Minas Gerais, Mateus Simões (PSD), afirmou que o principal objetivo do campo da direita nas eleições de 2026 é impedir a vitória do presidente Luiz Inácio Lula da Silva (PT) já no 1º turno. “O inimigo é o PT”, declarou em entrevista à revista Veja . Simões atua no 2º maior colégio eleitoral do país e diz trabalhar para unificar candidaturas do mesmo espectro político. Defende que nomes como o ex-governador Romeu Zema (Novo), o senador Flávio Bolsonaro (PL-RJ) e o governador de Goiás, Ronaldo Caiado (PSD), permaneçam no debate como alternativas competitivas. Em 2022, Simões foi eleito vice na chapa de Zema e assumiu o governo após a renúncia do então governador para disputar a Presidência. Apesar de ocupar o cargo, admite que ainda enfrenta dificuldades para se consolidar eleitoralmente. Segundo ele, a baixa exposição e o pouco tempo à frente do governo impactam as intenções de voto. Afirma que o cenário tende a mudar com o avanço da campanha e aposta no apoio do eleitorado alinhado à direita. Também avalia que a adesão de aliados é fator determinante para fortalecer sua posição. Estratégia da direita Simões defende estratégia com múltiplas candidaturas no 1º turno para ampliar o alcance do campo conservador. Na avaliação dele, a fragmentação inicial não impede convergência posterior. “A ideia é impedir que o presidente Lula vença no 1º turno. Depois, as forças de direita se reorganizam” , afirmou. Ele também mencionou a importância de palanques regionais fortes e da articulação com lideranças nacionais, incluindo o ex-presidente Jair Bolsonaro (PL). O governador afirma que o objetivo comum entre Zema, Flávio Bolsonaro e Caiado é evitar a reeleição de Lula. Próximos passos Nos próximos meses, Simões pretende intensificar agendas no interior de Minas Gerais para ampliar sua visibilidade. Diz que a construção de alianças será decisiva tanto no cenário estadual quanto nacional. Apesar das incertezas sobre a configuração das candidaturas, afirma haver convergência entre lideranças da direita em torno de um objetivo central: levar a disputa presidencial ao 2º turno.",
-      "source_category": "politics",
-      "sentiment_per_candidate": {},
-      "edit_history": [],
-      "disclaimer_pt": "Análise algorítmica. Não representa pesquisa de opinião.",
-      "disclaimer_en": "Algorithmic analysis. Does not represent polling data.",
-      "sentiment_score": 0.0,
-      "confidence_score": 0.0,
-      "_sentiment_scores": {},
-      "prominence_score": 0.0
+      "prominence_score": 0.0,
+      "_ai_provider": "nvidia",
+      "_ai_model": "nvidia/nemotron-3-super-120b-a12b",
+      "ai_provider_editor": "nvidia/nemotron-3-super-120b-a12b",
+      "editor_note": null
     },
     {
       "id": "c881a5eacf76702c",
@@ -30974,6 +30605,6 @@
       "editor_note": null
     }
   ],
-  "last_updated": "2026-04-24T18:35:54Z",
-  "total_count": 500
+  "last_updated": "2026-04-24T19:32:25Z",
+  "total_count": 477
 }
