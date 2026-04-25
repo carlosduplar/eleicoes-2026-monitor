@@ -77,27 +77,59 @@
       "source": "O Antagonista",
       "published_at": "2026-04-25T21:48:03Z",
       "collected_at": "2026-04-25T21:52:53Z",
-      "status": "raw",
-      "relevance_score": 0.0,
-      "relevance_signals": null,
+      "status": "validated",
+      "relevance_score": 0.5,
+      "relevance_signals": {
+        "candidate_signal": 0.0,
+        "topic_signal": 0.3,
+        "keyword_signal": 0.15,
+        "source_signal": 0.05
+      },
       "candidates_mentioned": [],
-      "topics": [],
+      "topics": [
+        "saude",
+        "politica_externa",
+        "corrupcao",
+        "midia",
+        "eleicoes"
+      ],
       "narrative_cluster_id": null,
       "duplicate_of": null,
       "summaries": {
-        "pt-BR": "",
-        "en-US": ""
+        "pt-BR": "O ex-vereador Carlos Bolsonaro (PL), pré-candidato ao Senado por Santa Catarina, visitou o pai, Jair Bolsonaro (PL), em Brasília no sábado (25). Após o encontro, Carlos afirmou que o ex-presidente aguarda autorização do ministro Alexandre de Moraes para uma cirurgia no ombro, que o 'incomoda bastante'. A expressão 'ministro médico' é usada de forma irônica, refletindo críticas ao ministro do STF.",
+        "en-US": "Carlos Bolsonaro (PL), pre-candidate for Senate from Santa Catarina, visited his father, Jair Bolsonaro (PL), in Brasília on Saturday, the 25th. After the meeting, Carlos stated that the former president is awaiting authorization from Minister Alexandre de Moraes for shoulder surgery, which 'bothers him quite a bit'. The term 'minister doctor' is used ironically, reflecting criticism of the Supreme Court justice."
       },
       "content": "O ex-vereador Carlos Bolsonaro (PL), pré-candidato ao Senado por Santa Catarina, visitou o pai, Jair Bolsonaro (PL), em Brasília neste sábado, 25. Após o encontro, ele descreveu o estado de saúde do ex-presidente. Segundo Carluxo, Jair Bolsonaro aguarda autorização do “ministro médico Alexandre de Moraes” para cirurgia no ombro, “que o incomoda bastante, como sempre... The post Bolsonaro aguarda autorização do “ministro médico” Moraes para cirurgia, diz Carluxo appeared first on O Antagonista .",
       "source_category": "politics",
-      "sentiment_per_candidate": {},
-      "edit_history": [],
+      "sentiment_per_candidate": {
+        "lula": "neutro",
+        "flavio-bolsonaro": "neutro"
+      },
+      "edit_history": [
+        {
+          "tier": "editor",
+          "at": "2026-04-25T22:30:47Z",
+          "provider": "nvidia",
+          "action": "validated",
+          "changes": [
+            "summary_pt",
+            "summary_en"
+          ]
+        }
+      ],
       "disclaimer_pt": "Análise algorítmica. Não representa pesquisa de opinião.",
       "disclaimer_en": "Algorithmic analysis. Does not represent polling data.",
-      "sentiment_score": 0.0,
-      "confidence_score": 0.0,
-      "_sentiment_scores": {},
-      "prominence_score": 0.0
+      "sentiment_score": -0.05,
+      "confidence_score": 1.0,
+      "_sentiment_scores": {
+        "lula": -0.1,
+        "flavio-bolsonaro": 0.0
+      },
+      "prominence_score": 0.0,
+      "_ai_provider": "nvidia",
+      "_ai_model": "nvidia/nemotron-3-super-120b-a12b",
+      "ai_provider_editor": "nvidia/nemotron-3-super-120b-a12b",
+      "editor_note": null
     },
     {
       "id": "56dd5ebaba72cb80",
@@ -176,91 +208,63 @@
       "prominence_score": 0.9019
     },
     {
-      "id": "367b5c66d074873a",
-      "url": "https://www.poder360.com.br/poder-justica/gilmar-vota-para-soltar-advogado-do-master-e-e-derrotado-no-stf/",
-      "title": "Gilmar vota para soltar advogado do Master e é derrotado no STF",
-      "source": "Poder360",
-      "published_at": "2026-04-25T21:36:11Z",
-      "collected_at": "2026-04-25T21:52:51Z",
-      "status": "raw",
-      "relevance_score": 0.0,
-      "relevance_signals": null,
-      "candidates_mentioned": [],
-      "topics": [],
-      "narrative_cluster_id": null,
-      "duplicate_of": null,
-      "summaries": {
-        "pt-BR": "",
-        "en-US": ""
-      },
-      "content": "A 2ª Turma do STF (Supremo Tribunal Federal) decidiu manter a prisão preventiva de Daniel Monteiro, advogado no caso Master, contrariando voto do ministro Gilmar Mendes . A votação se deu em plenário virtual do tribunal, com a análise da decisão tendo sido iniciada em 22 de abril de 2026. A prisão de Monteiro foi autorizada pelo ministro André Mendonça sob a suspeita de ter negociado R$ 146 milhões em propina com Daniel Vorcaro, fundador do Banco Master, segundo a PF (Polícia Federal). Desse total, R$ 74 milhões teriam sido efetivamente transferidos. Gilmar propôs substituir a prisão preventiva do advogado por medidas cautelares alternativas, como o uso de tornozeleira eletrônica, a suspensão do exercício da advocacia e a proibição de mudança de residência. Os ministros da 2ª Turma do STF também decidiram, por unanimidade, pela manutenção da prisão do ex-presidente do BRB Paulo Henrique Costa. O relator do caso, ministro André Mendonça, votou por manter a prisão de Costa e recebeu apoio dos ministros Luiz Fux, Nunes Marques e Gilmar. O placar foi de 4 votos a 0. “Reiterando a compreensão já externada, com base na fundamentação reproduzida, voto pelo referendo da decisão cautelar, nos termos em que proferida” , afirmou Mendonça. O ministro Dias Toffoli se declarou suspeito para julgar o caso. O julgamento começou na 3ª feira (22.abr.2026). O prazo para os ministros depositarem seus votos se encerrava às 23h59 da 2ª feira (28.abr.2026). IMÓVEIS DE LUXO Os investigadores da PF identificaram 6 imóveis de luxo que teriam sido usados como forma de pagamento das propinas. Todos foram atribuídos a Paulo Henrique Costa. São eles: Heritage, Arbórea, One Sixty, Casa Lafer, Ennius Muniz e Valle dos Ipês. As apurações indicaram que Vorcaro interrompeu os pagamentos depois que tomou conhecimento de uma investigação do Ministério Público Federal. O procedimento foi instaurado em abril de 2025 para apurar o pagamento de propina a Costa. “O conjunto de elementos informativos colhidos até o momento aponta a alta probabilidade de que ele [ Vorcaro] tenha tido ciência da instauração do procedimento antes do recebimento das respectivas cópias”, afirmou Mendonça na decisão. Segundo a Polícia Federal, Vorcaro ordenou ao advogado Daniel Monteiro que “travasse tudo” . A ordem bloqueou os pagamentos e a formalização do registro das transações. As prisões de Costa e Monteiro foram decretadas na 3ª feira (16.abr.2026), durante a operação Compliance Zero.",
-      "source_category": "politics",
-      "sentiment_per_candidate": {},
-      "edit_history": [],
-      "disclaimer_pt": "Análise algorítmica. Não representa pesquisa de opinião.",
-      "disclaimer_en": "Algorithmic analysis. Does not represent polling data.",
-      "sentiment_score": 0.0,
-      "confidence_score": 0.0,
-      "_sentiment_scores": {},
-      "prominence_score": 0.0
-    },
-    {
-      "id": "e0c0d0008f6f334c",
-      "url": "https://oantagonista.com.br/ladooa/tecnologia/bluetooth-ligado-o-tempo-todo-e-realmente-perigoso-ou-so-gasta-bateria/",
-      "title": "Bluetooth ligado o tempo todo é realmente perigoso ou só gasta bateria?",
-      "source": "O Antagonista",
-      "published_at": "2026-04-25T21:23:00Z",
-      "collected_at": "2026-04-25T21:52:53Z",
-      "status": "raw",
-      "relevance_score": 0.0,
-      "relevance_signals": null,
-      "candidates_mentioned": [],
-      "topics": [],
-      "narrative_cluster_id": null,
-      "duplicate_of": null,
-      "summaries": {
-        "pt-BR": "",
-        "en-US": ""
-      },
-      "content": "Deixar o Bluetooth ligado o tempo todo não significa que o celular será invadido automaticamente, mas também não é algo totalmente irrelevante. O risco existe em situações específicas, principalmente quando há dispositivo desconhecido, sistema desatualizado, pareamento feito sem atenção ou conexão automática com acessórios que você nem reconhece. Bluetooth ligado oferece risco de segurança? O... The post Bluetooth ligado o tempo todo é realmente perigoso ou só gasta bateria? appeared first on O Antagonista .",
-      "source_category": "politics",
-      "sentiment_per_candidate": {},
-      "edit_history": [],
-      "disclaimer_pt": "Análise algorítmica. Não representa pesquisa de opinião.",
-      "disclaimer_en": "Algorithmic analysis. Does not represent polling data.",
-      "sentiment_score": 0.0,
-      "confidence_score": 0.0,
-      "_sentiment_scores": {},
-      "prominence_score": 0.0
-    },
-    {
       "id": "c8a834defdde590a",
       "url": "https://www.metropoles.com/brasil/dona-maria-pt-aciona-tse-contra-perfil-criado-por-ia-para-atacar-lula",
       "title": "\"Dona Maria\": PT aciona TSE contra perfil criado por IA para atacar Lula",
       "source": "Metropoles",
       "published_at": "2026-04-25T21:18:28Z",
       "collected_at": "2026-04-25T21:52:43Z",
-      "status": "raw",
-      "relevance_score": 0.0,
-      "relevance_signals": null,
-      "candidates_mentioned": [],
-      "topics": [],
+      "status": "validated",
+      "relevance_score": 0.95,
+      "relevance_signals": {
+        "candidate_signal": 0.5,
+        "topic_signal": 0.3,
+        "keyword_signal": 0.15,
+        "source_signal": 0.0
+      },
+      "candidates_mentioned": [
+        "lula"
+      ],
+      "topics": [
+        "midia",
+        "eleicoes",
+        "corrupcao"
+      ],
       "narrative_cluster_id": null,
       "duplicate_of": null,
       "summaries": {
-        "pt-BR": "",
-        "en-US": ""
+        "pt-BR": "A Federação Brasil da Esperança (PT, PV e PCdoB) protocolou no TSE uma representação pedindo a suspensão do perfil 'Dona Maria' nas redes sociais, alegando que ele usa uma personagem criada por inteligência artificial para disseminar desinformação contra o presidente Lula, elogiar Bolsonaro e atacar o STF. O perfil, com 724 mil seguidores no Instagram, é administrado por Daniel Cristiano, que criticou a ação como 'desespero'.",
+        "en-US": "The Brazil of Hope Federation (PT, PV, and PCdoB) filed a complaint with the TSE requesting the suspension of the 'Dona Maria' social media profiles, claiming they use an AI-generated character to spread disinformation against President Lula, praise Bolsonaro, and attack the Supreme Court. The profile, with 724k Instagram followers, is run by Daniel Cristiano, who called the action 'desperation'."
       },
       "source_category": "mainstream",
       "content": "Página inicial Brasil Compartilhar notícia Siga Google Discover Reprodução/PT 1 de 1 Imagem colorida\n        - Foto: Reprodução/PT A Federação Brasil da Esperança (Fé Brasil) , composta pelo PT, PV e PCdoB, protocolou, na última quinta-feira (25/4), uma representação no Tribunal Superior Eleitoral (TSE) solicitando a suspensão dos perfis “Dona Maria” de todas as redes sociais. De acordo com a federação, o perfil usa uma personagem criada por inteligência artificial (IA) para atacar o presidente Luiz Inácio Lula da Silva (PT). Com 724 mil seguidores no Instagram, a personagem Dona Maria acumula milhões de visualizações. O dono da página é Daniel Cristiano. Em publicação no seu perfil, o criador da Dona Maria comentou a ação do PT. “O desespero e grande. Que descontrole é esse por uma simples página”, disse. O perfil usa a imagem realista de uma senhora idosa e negra. Ver essa foto no Instagram Um post compartilhado por DN Maria (@dn.marias) Leia também Brasil Lula diz em congresso do PT que “não corre atrás de adversário” Brasil Edinho Silva cobra humildade do PT e defende reforma no Judiciário Manoela Alcântara Congresso do PT tem banner que defende volta de Maduro: “Los queremos de Vuelta” Brasil Congresso do PT debate plano de governo de Lula e multilateralismo Segundo os advogados da Federação Brasil da Esperança, o viés político do perfil é evidente: “É um perfil voltado a propagar desinformação contra o Presidente Luiz Inácio Lula da Silva, falar mal do Supremo Tribunal Federal, sobretudo de seus ministros, além de se manter elogioso a Jair Bolsonaro e a seus apoiadores”, diz a representação. Receba notícias de Brasil no seu WhatsApp e fique por dentro de tudo! Basta acessar o canal de notícias do Metrópoles no WhatsApp . Receba notícias do Metrópoles no seu Telegram e fique por dentro de tudo! Basta acessar o canal de notícias no Telegram .",
-      "sentiment_per_candidate": {},
-      "edit_history": [],
+      "sentiment_per_candidate": {
+        "lula": "positivo"
+      },
+      "edit_history": [
+        {
+          "tier": "editor",
+          "at": "2026-04-25T22:31:09Z",
+          "provider": "nvidia",
+          "action": "validated",
+          "changes": [
+            "summary_pt",
+            "summary_en"
+          ]
+        }
+      ],
       "disclaimer_pt": "Análise algorítmica. Não representa pesquisa de opinião.",
       "disclaimer_en": "Algorithmic analysis. Does not represent polling data.",
-      "sentiment_score": 0.0,
-      "confidence_score": 0.0,
-      "_sentiment_scores": {},
-      "prominence_score": 0.0
+      "sentiment_score": 0.8,
+      "confidence_score": 1.0,
+      "_sentiment_scores": {
+        "lula": 0.8
+      },
+      "prominence_score": 0.0,
+      "_ai_provider": "nvidia",
+      "_ai_model": "nvidia/nemotron-3-super-120b-a12b",
+      "ai_provider_editor": "nvidia/nemotron-3-super-120b-a12b",
+      "editor_note": null
     },
     {
       "id": "37ff195231422a73",
@@ -269,27 +273,62 @@
       "source": "Veja",
       "published_at": "2026-04-25T21:11:00Z",
       "collected_at": "2026-04-25T21:52:56Z",
-      "status": "raw",
-      "relevance_score": 0.0,
-      "relevance_signals": null,
-      "candidates_mentioned": [],
-      "topics": [],
+      "status": "validated",
+      "relevance_score": 1.0,
+      "relevance_signals": {
+        "candidate_signal": 0.6,
+        "topic_signal": 0.25,
+        "keyword_signal": 0.15,
+        "source_signal": 0.0
+      },
+      "candidates_mentioned": [
+        "lula",
+        "flavio-bolsonaro"
+      ],
+      "topics": [
+        "seguranca",
+        "saude",
+        "educacao",
+        "politica_externa",
+        "eleicoes"
+      ],
       "narrative_cluster_id": null,
       "duplicate_of": null,
       "summaries": {
-        "pt-BR": "",
-        "en-US": ""
+        "pt-BR": "O apoio das mulheres a Lula vem declinando gradualmente, apesar de ainda superar a média nacional, conforme mostram pesquisas Genial/Quaest e Datafolha. O governo tentou recuperar esse eleitorado com medidas como o pacto nacional contra o feminicídio, sanção de leis de proteção e a recriação do Ministério das Mulheres, mas especialistas apontam que a falta de foco em ações concretas de segurança, saúde e educação está afastando o voto feminino, que representa uma vantagem eleitoral crucial devido à sua maioria no eleitorado.",
+        "en-US": "Women's support for Lula is gradually declining, despite still exceeding the national average, according to Genial/Quaest and Datafolha polls. The government has attempted to regain this electorate through initiatives like the national pact against femicide, signing protective laws, and recreating the Ministry of Women, but experts argue that the lack of focus on concrete actions in security, health, and education is driving away the female vote, which represents a crucial electoral advantage due to its majority in the electorate."
       },
       "content": "Estimulado pela alta rejeição a Jair Bolsonaro, o eleitorado feminino foi determinante para a vitória de Lula na eleição presidencial de 2022. Quatro anos depois, esse segmento continua sendo uma das principais bases de apoio ao presidente, mas tem se afastado dele de forma gradativa. A última pesquisa Genial/Quaest mostrou que a aprovação das mulheres ao governo caiu de 48% em janeiro para 45% em abril, nível que ainda supera a média nacional, de 43%, puxada para baixo pelos homens. Já um levantamento do Datafolha revelou que, na simulação de segundo turno, a vantagem de Lula sobre o senador Flávio Bolsonaro na população feminina caiu de treze pontos, em março, para quatro pontos, em abril. Para tentar recuperar o terreno perdido, o presidente anunciou em fevereiro um pacto nacional contra o feminicídio, que promete envolver representantes dos Três Poderes na luta contra esse tipo de crime, que bateu recorde em 2025. Em abril, ele também sancionou leis destinadas à proteção das mulheres que preveem o uso imediato de tornozeleira eletrônica por agressores e a tipificação do crime de vicaricídio, que é o assassinato de filhos ou parentes num contexto de violência doméstica. Nicho estratégico No início de seu terceiro mandato, numa tentativa de demonstrar compromisso com a pauta feminina, Lula recriou o Ministério das Mulheres, atualmente comandado por Márcia Lopes. O problema é que a pasta, o conjunto da Esplanada e a Presidência padecem de uma falha de foco. A conquista do voto feminino depende cada vez menos de gestos simbólicos, feitos sob medida para agradar a setores progressistas, e cada vez mais de ações capazes de melhorar a qualidade de vida das mulheres e de seus familiares. Continua após a publicidade Nesse segmento, a demanda prioritária é por mais segurança, saúde e educação. “O voto feminino tem uma relação muito direta com a realidade prática das pessoas. A violência que atinge as mulheres e seus filhos é um elemento”, resume Flávia Biroli, professora de Ciência Política da Universidade de Brasília (UnB). Os números deixam claro o que está em jogo. Até o início de abril, o Tribunal Superior Eleitoral ( TSE ) registrava 156,2 milhões de cidadãos habilitados a votar, dos quais 82,6 milhões de eleitoras e 73,6 milhões de eleitores, uma diferença de nove milhões de votos, ou mais de quatro vezes a vantagem registrada por Lula ao bater Jair Bolsonaro no segundo turno de 2022 (2,1 milhões de votos). A caminho de sua sétima candidatura, o petista sabe que a reeleição depende da reconquista do eleitorado feminino. Publicidade",
       "source_category": "magazine",
-      "sentiment_per_candidate": {},
-      "edit_history": [],
+      "sentiment_per_candidate": {
+        "lula": "negativo",
+        "flavio-bolsonaro": "neutro"
+      },
+      "edit_history": [
+        {
+          "tier": "editor",
+          "at": "2026-04-25T22:31:18Z",
+          "provider": "nvidia",
+          "action": "validated",
+          "changes": [
+            "summary_pt",
+            "summary_en"
+          ]
+        }
+      ],
       "disclaimer_pt": "Análise algorítmica. Não representa pesquisa de opinião.",
       "disclaimer_en": "Algorithmic analysis. Does not represent polling data.",
-      "sentiment_score": 0.0,
-      "confidence_score": 0.0,
-      "_sentiment_scores": {},
-      "prominence_score": 0.0
+      "sentiment_score": -0.1,
+      "confidence_score": 1.0,
+      "_sentiment_scores": {
+        "lula": -0.3,
+        "flavio-bolsonaro": 0.1
+      },
+      "prominence_score": 0.0,
+      "_ai_provider": "nvidia",
+      "_ai_model": "nvidia/nemotron-3-super-120b-a12b",
+      "ai_provider_editor": "nvidia/nemotron-3-super-120b-a12b",
+      "editor_note": null
     },
     {
       "id": "c31d8083fdd29b33",
@@ -298,27 +337,58 @@
       "source": "Poder360",
       "published_at": "2026-04-25T21:08:22Z",
       "collected_at": "2026-04-25T21:52:51Z",
-      "status": "raw",
-      "relevance_score": 0.0,
-      "relevance_signals": null,
-      "candidates_mentioned": [],
-      "topics": [],
+      "status": "validated",
+      "relevance_score": 0.9,
+      "relevance_signals": {
+        "candidate_signal": 0.5,
+        "topic_signal": 0.3,
+        "keyword_signal": 0.05,
+        "source_signal": 0.05
+      },
+      "candidates_mentioned": [
+        "zema"
+      ],
+      "topics": [
+        "corrupcao",
+        "midia",
+        "eleicoes",
+        "politica_externa"
+      ],
       "narrative_cluster_id": null,
       "duplicate_of": null,
       "summaries": {
-        "pt-BR": "",
-        "en-US": ""
+        "pt-BR": "Romeu Zema (Novo-MG) publicou um vídeo satirizando os ministros do STF Gilmar Mendes e Alexandre de Moraes, usando bonecos de IA para criticar a inclusão de seu nome no inquérito das fake news e referenciar o caso Banco Master e voos em jatinhos ligados a Daniel Vorcaro. O vídeo é parte da série 'Os Intocáveis', que Zema utiliza para se defender do que chama de perseguição institucional.",
+        "en-US": "Romeu Zema (Novo-MG) released a video satirizing STF ministers Gilmar Mendes and Alexandre de Moraes, using AI-generated puppets to criticize his inclusion in the fake news inquiry and referencing the Banco Master case and flights on aircraft linked to Daniel Vorcaro. The video is part of his 'Os Intocáveis' series, which he uses to respond to what he describes as institutional persecution."
       },
       "content": "O ex-governador de Minas Gerais e pré-candidato à Presidência, Romeu Zema (Novo-MG), publicou neste sábado (25.abr.2026) mais um episódio da sua série “Os Intocáveis” , satirizando o ministro do Supremo Tribunal Federal Gilmar Mendes. Com bonecos de fantoche produzidos com IA (inteligência artificial), o vídeo satiriza a notícia-crime de Gilmar enviada ao ministro Alexandre de Moraes para a inclusão de Zema no inquérito das fake news . A peça deste sábado ainda traz referências ao caso do Banco Master . “Ele [Ze ma] é uma ameaça institucional. Primeiro o povo ri, depois ele entende e depois a gente se ferra, digníssimo” , afirma o fantoche que representa Gilmar. Ele então fala para o boneco que representa Moraes: “Você não tem aquele inquérito das fake news aí? Onde você coloca tudo que não te agrada, te irrita ou te contraria emocionalmente?” . Diz para censurar Zema e trocar a censura por outro nome: “Fake news” . Assista ao vídeo (2min42s): Há também citações às ligações dos ministros ao Master: o boneco de Moraes veste um roupão do resort Tayayá, que foi da família de Dias Toffoli ; o boneco de Moraes também afirma ter “129 milhões de problemas”, em referência ao contrato do Master com o escritório de sua mulher, Viviane Barci de Moraes. Em outro trecho, o boneco que representa Moraes está voando em um jatinho. Na lateral do avião é possível ver o nome do Banco Master com um X em cima. No lugar, está apenas “STF Airlines”. O ministro fez ao menos 8 voos em aeronaves ligadas ao ex-banqueiro Daniel Vorcaro. Ainda não se sabe se este será o ultimo episódio da série. ENTENDA O CASO O embate entre o ex-governador mineiro Zema e o decano Gilmar Mendes teve início na 2ª feira (20.abr), quando o ministro do STF enviou a Alexandre de Moraes uma notícia-crime contra Zema para que seja investigado no inquérito das fake news. O pedido se baseia no 2º episódio da sério “Os Intocáveis”, publicado nas redes sociais do mineiro em 2 de março. O pedido de Gilmar já foi encaminhado por Moraes à PGR (Procuradoria-Geral da República). Em resposta, Zema fez diversas críticas ao STF. Na mesma 2ª feira, em vídeo publicado em seu perfil oficial no X, Zema disse estar sendo perseguido e acrescentou: “Aqueles que se julgam intocáveis não toleram mais qualquer tipo de piada”. Assista ao vídeo (3min43s): Zema continuou com as críticas na 3ª feira (21.abr.2026), quando, durante a cerimônia de entrega da Medalha da Inconfidência, em Ouro Preto, fez referência a Tiradentes ao pedir “coragem” contra o que chamou de “intocáveis” da Corte . Assista ao vídeo (1min56s): Na 4ª feira (22.abr.2026), o pré-candidato afirmou que o STF “está podre” . Assista ao vídeo (1min46s): Até então as críticas partiam unilateralmente de Zema. No meio da semana, porém, Gilmar Mendes se manifestou publicamente. Em entrevista à jornalista Renata Lo Prete, no “Jornal da Globo” . Gilmar afirmou que Zema “tenta sapatear aproveitando o momento eleitoral” . “Todos nós que atuamos na vida pública temos que ter responsabilidade e não podemos fazer esse tipo de brincadeira” , disse. “Ele [Zema] fala uma língua próxima do português, mas que é entendida como ofensiva, e isso precisa ser aferido” , declarou. No mesmo dia, em entrevista à Record News, Gilmar desdenhou novamente do modo de falar do ex-governador: “Ele fala um dialeto próximo do português. Muitas vezes a gente não o entende. Estava imaginando que ele fala uma língua lá do Timor-Leste, um tétum ou coisa assim, mas, de qualquer forma, naquilo que for inteligível, é importante que a Procuradoria, a Polícia Federal, o próprio ministro Alexandre [de Moraes] aprecie” , disse. Em resposta, Zema afirmou: “Sabe por que você não entende o que eu falo, Gilmar Mendes? É que o linguajar de brasileiros simples como eu é diferente do português esnobe dos intocáveis de Brasília”, escreveu em seu perfil no X. Assista ao vídeo (1min15s): Na 5ª feira (23.abr.2026), o embate continuou quando, em entrevista ao Metrópoles , Gilmar Mendes questionou: “Se começamos a fazer piadas com coisas sérias, com as instituições, imagine que comecemos a fazer bonecos do Zema como homossexual. Será que não é ofensivo? É correto brincar com isso?” . Segundo Zema, a declaração do ministro mostrou ao Brasil seu “mais puro preconceito” . As críticas levaram Gilmar Mendes a pedir desculpas. Em seu perfil oficial no X, ainda na 5ª feira, o decano da Corte declarou : “Há uma indústria de difamação e de acusações caluniosas contra o Supremo. Vou enfrentá-la. E não tenho receio de reconhecer um erro. Errei quando citei a homossexualidade ao me referir ao que seria uma acusação injuriosa contra o ex-governador Romeu Zema. Desculpo-me pelo erro. E reitero o que está certo” . Em entrevista ao programa “ É Notícia ”, da RedeTV! , Zema disse que espera que o Senado tenha coragem de seguir com o processo de impeachment de Gilmar. Segundo o político, o STF deixou de ser uma instituição respeitada para se tornar o “ grande causador de conflitos ” no Brasil. “ Eu pedi o impeachment do Gilmar Mendes porque julgo que a iniciativa cabe e espero que o Senado venha a ter coragem de apreciar ”, declaro. ENTENDA O INQUÉRITO DAS FAKE NEWS O inquérito das fake news foi aberto pelo STF em 14 de março de 2019 sob o nº 4.781 ( íntegra da portaria de abertura – PDF – 621 kB). A investigação continua aberta até hoje, está sob sigilo , já teve centenas de indiciados e não tem prazo para acabar. A criação do inquérito das fake news se deu por decisão do então presidente do Supremo, Dias Toffoli. O objetivo era difuso. Visava a apurar ofensas consideradas criminosas à Corte e seus integrantes. À época, havia uma disputa entre o Supremo e os então procuradores da operação Lava Jato, liderados por Deltan Dallagnol. Os integrantes do Ministério Público discordavam de decisões tomadas pelos ministros do STF e publicavam vídeos e textos na internet incentivando a população a fazer pressão e a defender as apurações da Lava Jato –que ao longo dos anos foram anuladas em várias Instâncias do Judiciário, apesar da abundância de provas materiais contra os acusados. Toffoli criou o inquérito de ofício em março de 2019, sem ter sido provocado pelo Ministério Público. Também resolveu sozinho nomear, de ofício, o ministro Alexandre de Moraes como relator. Na portaria de instauração da investigação, Toffoli apresentou de maneira genérica a criação do inquérito: “Considerando a existência de notícias fraudulentas (fake news), denunciações caluniosas, ameaças e infrações revestidas de animus calumniandi, diffamandi e injuriandi, que atingem a honorabilidade e a segurança do Supremo Tribunal Federal, de seus membros e familiares” [resolve] “instaurar inquérito para apuração dos fatos e infrações correspondentes, em toda a sua dimensão.” Toffoli não detalhou nenhum fato específico ao abrir o inquérito das fake news . O ministro tampouco explicou por que não seguiu o que determina o artigo 66 do Regimento Interno do STF sobre como devem ser escolhidos os ministros relatores: “ A distribuição será feita por sorteio ou prevenção, mediante sistema informatizado, acionado automaticamente, em cada classe de processo ”. A então procuradora-geral da República, Raquel Dodge, manifestou-se em julho de 2019 a favor de pedido da ANPR (Associação Nacional dos Procuradores da República) pela suspensão do inquérito aberto das fake news . No seu parecer, Dodge argumentou que a investigação, da forma como havia sido instaurada, representava violação ao sistema constitucional acusatório e dos princípios da separação de Poderes e do juiz natural. Depois de muito debate, o julgamento da legalidade do inquérito das fake news foi concluído em junho de 2020 pelo próprio STF só mais de 1 ano após ter sido instaurado. Por 10 a 1, a Corte decidiu que a investigação era legal e deveria ser mantida. Só o então ministro Marco Aurélio Mello divergiu. Votaram a favor de manter o inquérito Edson Fachin (relator do pedido de suspensão), Alexandre de Moraes (relator do inquérito), Roberto Barroso, Gilmar Mendes, Rosa Weber, Luiz Fux, Cármen Lúcia, Ricardo Lewandowski, Celso de Mello e Dias Toffoli. Leia mais sobre o inquérito nesta reportagem .",
       "source_category": "politics",
-      "sentiment_per_candidate": {},
-      "edit_history": [],
+      "sentiment_per_candidate": {
+        "zema": "positivo"
+      },
+      "edit_history": [
+        {
+          "tier": "editor",
+          "at": "2026-04-25T22:31:22Z",
+          "provider": "nvidia",
+          "action": "validated",
+          "changes": [
+            "summary_pt",
+            "summary_en"
+          ]
+        }
+      ],
       "disclaimer_pt": "Análise algorítmica. Não representa pesquisa de opinião.",
       "disclaimer_en": "Algorithmic analysis. Does not represent polling data.",
-      "sentiment_score": 0.0,
-      "confidence_score": 0.0,
-      "_sentiment_scores": {},
-      "prominence_score": 0.0
+      "sentiment_score": 0.5,
+      "confidence_score": 1.0,
+      "_sentiment_scores": {
+        "zema": 0.5
+      },
+      "prominence_score": 0.0,
+      "_ai_provider": "nvidia",
+      "_ai_model": "nvidia/nemotron-3-super-120b-a12b",
+      "ai_provider_editor": "nvidia/nemotron-3-super-120b-a12b",
+      "editor_note": null
     },
     {
       "id": "8a36a8557bb9fe9c",
@@ -393,35 +463,6 @@
       "prominence_score": 0.9003
     },
     {
-      "id": "964a5b5a2100e814",
-      "url": "https://www.metropoles.com/negocios/fitch-rebaixa-a-nota-da-enel-brasil-e-subsidiarias-em-sp-rio-e-ceara",
-      "title": "Fitch rebaixa a nota da Enel Brasil e subsidiárias em SP, Rio e Ceará",
-      "source": "Metropoles",
-      "published_at": "2026-04-25T21:02:37Z",
-      "collected_at": "2026-04-25T21:52:43Z",
-      "status": "raw",
-      "relevance_score": 0.0,
-      "relevance_signals": null,
-      "candidates_mentioned": [],
-      "topics": [],
-      "narrative_cluster_id": null,
-      "duplicate_of": null,
-      "summaries": {
-        "pt-BR": "",
-        "en-US": ""
-      },
-      "source_category": "mainstream",
-      "content": "Página inicial Negócios Compartilhar notícia Siga Google Discover William Cardoso/Metrópoles 1 de 1 Imagem mostra trabalhadores da Enel e troca de poste - Metrópoles\n        - Foto: William Cardoso/Metrópoles A agência de análise de riscos Fitch rebaixou o rating nacional da Enel Brasil e de suas subsidiárias em São Paulo, Rio de Janeiro e Ceará. A classificação da empresa caiu de “AAA” para “AA+”. A decisão foi anunciada na sexta-feira (24/4). De acordo com a Fitch, o rebaixamento reflete o maior risco de não renovação da concessão da Enel SP, principal ativo do grupo no Brasil, depois da abertura de um processo regulatório que pode levar à recomendação de caducidade do contrato. Leia também São Paulo Enel pede que Aneel revise processo de caducidade em São Paulo São Paulo Enel SP cai 9 posições e fica em 30º lugar em ranking de qualidade São Paulo Enel ainda pode manter o contrato de concessão em São Paulo? Entenda São Paulo Enel: diretor da Aneel cita “baixa performance” em voto por caducidade “A Fitch avalia que uma eventual perda da concessão reduziria a eficiência operacional e a rentabilidade do grupo”, informou a agência em nota, acrescentando: “Em caso de declaração de caducidade, a dívida da Enel SP seria acelerada, sendo que a linha de crédito de US$ 2,0 bilhões, recém-disponibilizada pela Enel Américas à Enel Brasil, é um importante instrumento de liquidez. A agência considera que a “perspectiva negativa” atribuída à empresa está associada à potencial deterioração adicional no perfil de crédito do grupo. Isso, mais uma vez, caso a concessão da Enel SP não seja renovada ou tenha sua caducidade decretada. Em 7 de abril, a Aneel abriu o processo para definir a eventual caducidade da concessão da Enel SP. A medida ocorreu depois de terem sido constadas “falhas estruturais” na prestação dos serviços. Tais problemas podem levar à aplicação da penalidade mais grave prevista para uma concessionária de energia elétrica. A Enel, contudo, pediu que a Aneel revise o processo .",
-      "sentiment_per_candidate": {},
-      "edit_history": [],
-      "disclaimer_pt": "Análise algorítmica. Não representa pesquisa de opinião.",
-      "disclaimer_en": "Algorithmic analysis. Does not represent polling data.",
-      "sentiment_score": 0.0,
-      "confidence_score": 0.0,
-      "_sentiment_scores": {},
-      "prominence_score": 0.0
-    },
-    {
       "id": "c107bb4f9cb600ab",
       "url": "https://oantagonista.com.br/brasil/zema-publica-novo-video-com-fantoches-de-gilmar-e-moraes/",
       "title": "Zema publica novo vídeo com fantoches de Gilmar e Moraes",
@@ -489,35 +530,6 @@
       "_ai_model": "nvidia/nemotron-3-super-120b-a12b",
       "ai_provider_editor": "nvidia/nemotron-3-super-120b-a12b",
       "editor_note": null
-    },
-    {
-      "id": "d57a9e5d886e3a88",
-      "url": "https://www.metropoles.com/celebridades/cassia-kis-e-acusada-de-transfobia-em-banheiro-de-shopping-no-rio",
-      "title": "Cássia Kis é acusada de transfobia em banheiro de shopping no Rio. Veja vídeo",
-      "source": "Metropoles",
-      "published_at": "2026-04-25T20:51:51Z",
-      "collected_at": "2026-04-25T21:52:43Z",
-      "status": "raw",
-      "relevance_score": 0.0,
-      "relevance_signals": null,
-      "candidates_mentioned": [],
-      "topics": [],
-      "narrative_cluster_id": null,
-      "duplicate_of": null,
-      "summaries": {
-        "pt-BR": "",
-        "en-US": ""
-      },
-      "source_category": "mainstream",
-      "content": "Página inicial Celebridades Compartilhar notícia Siga Google Discover Divulgação 1 de 1 Cássia Kis em foto colorida - Metrópoles\n        - Foto: Divulgação Cássia Kis foi acusada de transfobia neste sábado (25/4) por uma mulher trans no Rio de Janeiro. O caso teria acontecido no banheiro do Barra Shopping e a situação foi registrada em vídeo pela denunciante, identificada como Roberta. Veja o vídeo. Roberta, Mulher Trans, alega ter sofrido TRANSFOBIA por atriz Cássia Kis, em banheiro de shopping. 🏳️‍⚧️ A MULHER alega ter ouvido a atriz dizer que o Brasil estava perdido, pois tinha “homem” no banheiro feminino e que não havia placas para autorizar a entrada da moça no local. pic.twitter.com/zGmsjG0O55 — UpdateCharts (@updatecharts) April 25, 2026 Leia também Fábia Oliveira Paulo Betti diz que não se arrepende de debochar de Cássia Kiss Lucas Pasin Paulo Betti diz que debochar de Cássia Kiss é uma “punição razoável” Fábia Oliveira Vídeo: “Maluca”, dispara Tuca Andrada ao falar de Cassia Kis Fábia Oliveira Paulo Betti debocha de Cássia Kis em vídeo e dá o que falar Nas imagens, é possível ver Roberta afirmar que está sendo discriminada por usar o banheiro feminino . “Estou sofrendo transfobia no Barra Shopping aqui no banheiro. A atriz Cássia Kis está sendo transfóbica comigo”, denuncia a mulher. 4 imagens Fechar modal. 1 de 4 Cássia Kis Divulgação 2 de 4 Cássia Kis Reprodução. 3 de 4 Cidália de Travessia Reprodução/TV Globo 4 de 4 Cássia Kis votou em Jair Bolsonaro (PL) nas eleições 2022 e diz que fez campanha para o ex-presidente da República A atriz Cássia Kis no Encontro Em seguida, ela faz um desabafo. “Eu tenho documento. Mesmo que eu não tivesse, eu me identifico…”, declarou durante a gravação. Na sequência, Cássia Kis respondeu: “Eu frequento o banheiro feminino, não vou ao banheiro dos homens”. Roberta rebateu: “Problema seu. Eu frequento aqui, porque sou uma mulher trans”. Esta não é a primeira polêmica da atriz envolvendo gênero. Em 2022, Cássia criticou as políticas identitárias e se tornou um problema nos bastidores da TV Globo. Após o caso, ela perdeu prestígio e atualmente não está com trabalhos na televisão. Fique por dentro! Receba notícias de Entretenimento/Celebridades no seu WhatsApp e fique por dentro de tudo! Basta acessar o canal de notícias do Metrópoles no WhatsApp . Para ficar por dentro de tudo sobre o universo dos famosos e do entretenimento siga o perfil Metrópoles Fun no Instagram .",
-      "sentiment_per_candidate": {},
-      "edit_history": [],
-      "disclaimer_pt": "Análise algorítmica. Não representa pesquisa de opinião.",
-      "disclaimer_en": "Algorithmic analysis. Does not represent polling data.",
-      "sentiment_score": 0.0,
-      "confidence_score": 0.0,
-      "_sentiment_scores": {},
-      "prominence_score": 0.0
     },
     {
       "id": "03322637cee0cb78",
@@ -731,27 +743,57 @@
       "source": "Metropoles",
       "published_at": "2026-04-25T20:19:09Z",
       "collected_at": "2026-04-25T21:52:43Z",
-      "status": "raw",
-      "relevance_score": 0.0,
-      "relevance_signals": null,
+      "status": "validated",
+      "relevance_score": 0.4,
+      "relevance_signals": {
+        "candidate_signal": 0.0,
+        "topic_signal": 0.25,
+        "keyword_signal": 0.15,
+        "source_signal": 0.0
+      },
       "candidates_mentioned": [],
-      "topics": [],
+      "topics": [
+        "saude",
+        "politica_externa",
+        "eleicoes"
+      ],
       "narrative_cluster_id": null,
       "duplicate_of": null,
       "summaries": {
-        "pt-BR": "",
-        "en-US": ""
+        "pt-BR": "Carlos Bolsonaro anunciou que seu pai, o ex-presidente Jair Bolsonaro, está aguardando a autorização do ministro Alexandre de Moraes do STF para realizar uma cirurgia no ombro, após três pneumonias seguidas. O pedido já foi protocolado e contou com apoio da Procuradoria-Geral da República. Carlos também revelou que Jair Bolsonaro está finalizando uma lista de pré-candidatos ao Senado para as eleições de 2026.",
+        "en-US": "Carlos Bolsonaro announced that his father, former President Jair Bolsonaro, is awaiting authorization from Supreme Court Minister Alexandre de Moraes to undergo shoulder surgery, following three consecutive pneumonias. The request has already been filed and received support from the Prosecutor General's Office. Carlos also revealed that Jair Bolsonaro is finalizing a list of Senate pre-candidates for the 2026 elections."
       },
       "source_category": "mainstream",
       "content": "Página inicial Brasil Compartilhar notícia Siga Google Discover Luis Nova/Especial Metrópoles @LuisGustavoNova 1 de 1 Carlos Bolsonaro em frente ao hospital em que o pai, Jair, fará cirurgia\n        - Foto: Luis Nova/Especial Metrópoles @LuisGustavoNova O pré-candidato ao Senado por Santa Catarina, Carlos Bolsonaro (PL), visitou o pai, o ex-presidente Jair Bolsonaro (PL) , em Brasília, neste sábado (25/4). Após o encontro, Carlos publicou nas redes sociais que o pai está esperando a autorização do “ministro médico Moraes” para a realização de uma cirurgia no ombro. “Agora, ele aguarda que o ministro médico Alexandre de Moraes autorize a realização da cirurgia no local que o incomoda bastante, como sempre aprendendo a conviver com a dor. Soluçando um pouco, mas se sentindo melhor por estar em casa, fico preocupado com a nova cirurgia a ser autorizada, devido ao seu quadro clínico de três pneumonias seguidas”, publicou Carlos no X. A defesa de Bolsonaro pediu que o ministro Alexandre de Moraes, do Supremo Tribunal Federal (STF) , autorize o procedimento. O pedido foi protolado na terça-feira (21/4). 4 imagens Fechar modal. 1 de 4 Vereador Carlos Bolsonaro visita o pai BRENO ESAKI/METRÓPOLES @BrenoEsaki 2 de 4 Carlos Bolsonaro KEBEC NOGUEIRA/METRÓPOLES @kebecfotografo 3 de 4 Carlos Bolsonaro VINÍCIUS SCHMIDT/METRÓPOLES @vinicius.foto 4 de 4 BRENO ESAKI/METRÓPOLES @BrenoEsaki Leia também Paulo Cappelli DPU recorre de decisão de Moraes em processo contra Tagliaferro Manoela Alcântara Moraes manda ex-diretor da PRF e mais 4 cumprirem pena por trama golpista Manoela Alcântara Após ordem de Moraes, PF cumpre mandado e delegada passa a cumprir pena Manoela Alcântara Moraes abre prazo para alegações finais em ação contra Eduardo Nessa sexta-feira (24/4), após despacho de Moraes em relação ao caso, a Procuradoria-Geral da República (PGR) se manifestou a favor do pedido de nova cirurgia para Bolsonaro. Na mesma publicação, Carlos revelou, ainda, que o pai está na fase final da produção de uma lista de pré-candidatos ao Senado a serem indicados por ele para disputar as eleições deste ano. Receba notícias de Brasil no seu WhatsApp e fique por dentro de tudo! Basta acessar o canal de notícias do Metrópoles no WhatsApp . Receba notícias do Metrópoles no seu Telegram e fique por dentro de tudo! Basta acessar o canal de notícias no Telegram .",
-      "sentiment_per_candidate": {},
-      "edit_history": [],
+      "sentiment_per_candidate": {
+        "lula": "neutro",
+        "flavio-bolsonaro": "neutro"
+      },
+      "edit_history": [
+        {
+          "tier": "editor",
+          "at": "2026-04-25T22:31:37Z",
+          "provider": "nvidia",
+          "action": "validated",
+          "changes": [
+            "summary_pt",
+            "summary_en"
+          ]
+        }
+      ],
       "disclaimer_pt": "Análise algorítmica. Não representa pesquisa de opinião.",
       "disclaimer_en": "Algorithmic analysis. Does not represent polling data.",
-      "sentiment_score": 0.0,
-      "confidence_score": 0.0,
-      "_sentiment_scores": {},
-      "prominence_score": 0.0
+      "sentiment_score": -0.05,
+      "confidence_score": 1.0,
+      "_sentiment_scores": {
+        "lula": -0.1,
+        "flavio-bolsonaro": 0.0
+      },
+      "prominence_score": 0.0,
+      "_ai_provider": "nvidia",
+      "_ai_model": "nvidia/nemotron-3-super-120b-a12b",
+      "ai_provider_editor": "nvidia/nemotron-3-super-120b-a12b",
+      "editor_note": null
     },
     {
       "id": "59c36c298ec7b9f2",
@@ -1162,35 +1204,6 @@
       "editor_note": null
     },
     {
-      "id": "5c04f63a6570be35",
-      "url": "https://istoe.com.br/atentado-bomba-colombia-25426",
-      "title": "Ataque a bomba deixa 7 mortos na Colômbia a um mês das eleições presidenciais",
-      "source": "IstoE",
-      "published_at": "2026-04-25T19:25:00Z",
-      "collected_at": "2026-04-25T21:52:57Z",
-      "status": "raw",
-      "relevance_score": 0.0,
-      "relevance_signals": null,
-      "candidates_mentioned": [],
-      "topics": [],
-      "narrative_cluster_id": null,
-      "duplicate_of": null,
-      "summaries": {
-        "pt-BR": "",
-        "en-US": ""
-      },
-      "content": "Um ataque a bomba deixou sete mortos e 20 feridos neste sábado, 25, em uma região com forte presença de guerrilhas na Colômbia, em meio a uma série de atentados e faltando pouco mais de um mês para as eleições presidenciais, informou o governador do departamento de Cauca. +‘Colômbia Solar’: símbolo da ambiciosa, mas limitada, transição energética de Petro +Petro encerra negociações de paz com uma das maiores guerrilhas da Colômbia A explosão foi registrada em uma estrada do departamento e atingiu diversos veículos. Desde ontem, foram registrados vários atentados que as autoridades atribuem aos dissidentes da extinta guerrilha das Farc, que não aderiram ao acordo de paz de 2016. “Foi acionado um artefato explosivo” que “deixa sete civis mortos e mais de 20 feridos com gravidade”, disse, na rede social X, Octavio Guzmán, governador de Cauca. Ele também publicou um vídeo que mostra as vítimas no chão e veículos destruídos após o ataque.",
-      "source_category": "magazine",
-      "sentiment_per_candidate": {},
-      "edit_history": [],
-      "disclaimer_pt": "Análise algorítmica. Não representa pesquisa de opinião.",
-      "disclaimer_en": "Algorithmic analysis. Does not represent polling data.",
-      "sentiment_score": 0.0,
-      "confidence_score": 0.0,
-      "_sentiment_scores": {},
-      "prominence_score": 0.0
-    },
-    {
       "id": "5112d65b08d77c6a",
       "url": "https://oantagonista.com.br/brasil/ta-na-hora-de-largar-o-osso-e-sair-diz-tarcisio-sobre-lula/",
       "title": "“Tá na hora de largar o osso e sair”, diz Tarcísio sobre Lula",
@@ -1261,35 +1274,6 @@
       "_ai_model": "nvidia/nemotron-3-super-120b-a12b",
       "ai_provider_editor": "nvidia/nemotron-3-super-120b-a12b",
       "editor_note": null
-    },
-    {
-      "id": "5519caee118302dd",
-      "url": "https://istoe.com.br/michael-1-bilhao-estreia-cinema-2026",
-      "title": "‘Michael’ arrecada R$ 1 bilhão e torna-se a 2ª maior estreia nos cinemas em 2026",
-      "source": "IstoE",
-      "published_at": "2026-04-25T19:07:00Z",
-      "collected_at": "2026-04-25T21:52:57Z",
-      "status": "raw",
-      "relevance_score": 0.0,
-      "relevance_signals": null,
-      "candidates_mentioned": [],
-      "topics": [],
-      "narrative_cluster_id": null,
-      "duplicate_of": null,
-      "summaries": {
-        "pt-BR": "",
-        "en-US": ""
-      },
-      "content": "Michael , a polêmica cinebiografia de Michael Jackson, registrou a segunda maior estreia do ano nas bilheterias ao redor do mundo. O filme chegou aos cinemas brasileiros na última semana e tem dividido opiniões e movimentado conversas em torno do legado do Rei do Pop. +Sobrinho de Michael Jackson reage a críticas da imprensa sobre filme do artista +Bad Bunny celebra diversidade e unidade da América no Super Bowl De acordo com o site especializado Deadline , o longa-metragem arrecadou cerca de U$ 206,4 milhões (pouco mais de R$ 1 bilhão, na cotação atual) até o momento, sendo US$ 111,4 milhões de cinemas de 82 territórios e US$ 95 milhões apenas na América do Norte. O único filme a ficar na frente, neste ano, é Super Mario Galaxy: O Filme , que arrecadou impressionantes US$ 372,5 milhões ao redor do mundo na semana de estreia. Entre os filmes live-action, Michael fica à frente de Devoradores de Estrelas , que estreou com arrecadação de US$ 140,9 milhões internacionalmente. ‘Michael’, o filme A cinebiografia é dirigida por Antoine Fuqua (O Protetor) e estrelada por Jaafar Jackson, sobrinho do cantor. O longa recria a trajetória do artista desde sua infância com o grupo musical Jackson 5 até o auge de sua carreira, no final dos anos 1980. O filme, porém, deixa de fora alguns dos momentos mais controversos da vida do astro, incluindo as acusações de pedofilia que eclodiram em 1993. Além disso, enfrentou problemas com figuras como Janet Jackson, que não autorizou o uso de sua imagem, e Diana Ross, que precisou ser cortada por “questões legais”, segundo a atriz Kat Graham.",
-      "source_category": "magazine",
-      "sentiment_per_candidate": {},
-      "edit_history": [],
-      "disclaimer_pt": "Análise algorítmica. Não representa pesquisa de opinião.",
-      "disclaimer_en": "Algorithmic analysis. Does not represent polling data.",
-      "sentiment_score": 0.0,
-      "confidence_score": 0.0,
-      "_sentiment_scores": {},
-      "prominence_score": 0.0
     },
     {
       "id": "727ff96b5bc09ef9",
@@ -1428,36 +1412,6 @@
       "_ai_model": "nvidia/nemotron-3-super-120b-a12b",
       "ai_provider_editor": "nvidia/nemotron-3-super-120b-a12b",
       "editor_note": null
-    },
-    {
-      "id": "54d07df2c6e1efe7",
-      "url": "https://youtu.be/hdZdqdP_TT4",
-      "title": "LULA x FLAVIO: QUEM VENCE NAS 3 MAIORES REGIÕES DO BRASIL? Pesquisa em todos os estados!",
-      "source": "YouTube",
-      "source_category": "social",
-      "published_at": "2026-04-25T19:00:38Z",
-      "collected_at": "2026-04-25T21:53:53Z",
-      "status": "raw",
-      "relevance_score": 0.0,
-      "candidates_mentioned": [
-        "lula"
-      ],
-      "topics": [],
-      "summaries": {
-        "pt-BR": "",
-        "en-US": ""
-      },
-      "sentiment_per_candidate": {},
-      "narrative_cluster_id": null,
-      "edit_history": [],
-      "disclaimer_pt": "Análise algorítmica. Não representa pesquisa de opinião.",
-      "disclaimer_en": "Algorithmic analysis. Does not represent polling data.",
-      "sentiment_score": 0.0,
-      "confidence_score": 0.0,
-      "duplicate_of": null,
-      "relevance_signals": null,
-      "_sentiment_scores": {},
-      "prominence_score": 0.0
     },
     {
       "id": "a49a8cb60d7756c4",
@@ -31908,6 +31862,6 @@
       "editor_note": null
     }
   ],
-  "last_updated": "2026-04-25T22:22:52Z",
-  "total_count": 500
+  "last_updated": "2026-04-25T22:32:29Z",
+  "total_count": 493
 }
