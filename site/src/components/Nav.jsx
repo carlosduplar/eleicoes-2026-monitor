@@ -8,6 +8,7 @@ const navItems = [
   { to: '/', key: 'noticias', end: true },
   { to: '/sentimento', key: 'sentimento' },
   { to: '/pesquisas', key: 'pesquisas' },
+  { to: '/mercados', key: 'mercados' },
   { to: '/candidatos', key: 'candidatos' },
   { to: '/quiz', key: 'quiz' },
   { to: '/metodologia', key: 'metodologia' },

@@ -57,6 +57,7 @@ const bottomNavItems = [
   { to: '/', key: 'noticias', Icon: IconHome, end: true },
   { to: '/sentimento', key: 'sentimento', Icon: IconSentiment },
   { to: '/pesquisas', key: 'pesquisas', Icon: IconPolls },
+  { to: '/mercados', key: 'mercados', Icon: IconPolls },
   { to: '/quiz', key: 'quiz', Icon: IconQuiz },
   { to: '/candidatos', key: 'candidatos', Icon: IconCandidates },
 ];

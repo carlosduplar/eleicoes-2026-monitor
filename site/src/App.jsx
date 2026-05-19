@@ -10,6 +10,7 @@ import CandidatesPage from './pages/CandidatesPage';
 import ComparisonPage from './pages/ComparisonPage';
 import CaseStudyPage from './pages/CaseStudyPage';
 import Home from './pages/Home';
+import MarketsPage from './pages/MarketsPage';
 import MethodologyPage from './pages/MethodologyPage';
 import PollsPage from './pages/PollsPage';
 import QuizPage from './pages/QuizPage';
@@ -48,6 +49,7 @@ function AppShell() {
   const pathLabels = {
     '/': t('home.feed_title'),
     '/sentimento': t('sentiment.title'),
+    '/mercados': t('markets.title'),
     '/pesquisas': t('polls.title'),
     '/quiz': t('quiz.title'),
     '/quiz/resultado': t('quiz.result_title'),
@@ -144,6 +146,7 @@ export const routes = [
     children: [
       { index: true, element: <Home /> },
       { path: 'sentimento', element: <SentimentPage /> },
+      { path: 'mercados', element: <MarketsPage /> },
       { path: 'pesquisas', element: <PollsPage /> },
       { path: 'candidatos', element: <CandidatesPage /> },
       { path: 'candidato/:slug', element: <CandidatePage /> },

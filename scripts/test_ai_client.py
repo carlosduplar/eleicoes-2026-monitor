@@ -302,9 +302,9 @@ def test_generate_quiz_topic_options_recovers_truncated_array(
         "_call_with_fallback_for_task",
         lambda **_kwargs: {
             "content": truncated,
-            "provider": "vertex",
-            "model": "gemini-3.1-pro-preview",
-            "paid": True,
+            "provider": "nvidia",
+            "model": "moonshotai/kimi-k2.6",
+            "paid": False,
         },
     )
     known_positions = [
@@ -495,7 +495,7 @@ def test_summarize_article_parses_json(monkeypatch: pytest.MonkeyPatch) -> None:
         lambda **_kwargs: {
             "content": payload,
             "provider": "nvidia",
-            "model": "moonshotai/kimi-k2.5",
+            "model": "moonshotai/kimi-k2.6",
             "paid": False,
         },
     )
@@ -520,7 +520,7 @@ def test_summarize_article_parse_error_fallback(
         lambda **_kwargs: {
             "content": "not-json",
             "provider": "nvidia",
-            "model": "moonshotai/kimi-k2.5",
+            "model": "moonshotai/kimi-k2.6",
             "paid": False,
         },
     )
@@ -574,9 +574,9 @@ def test_extract_candidate_topic_position_retries_on_parse_failure(
     responses = [
         {
             "content": "not-json",
-            "provider": "vertex",
-            "model": "gemini-3.1-pro-preview",
-            "paid": True,
+            "provider": "nvidia",
+            "model": "moonshotai/kimi-k2.6",
+            "paid": False,
         },
         {
             "content": json.dumps(
@@ -590,9 +590,9 @@ def test_extract_candidate_topic_position_retries_on_parse_failure(
                     "confidence_reasoning": "Há evidência textual direta.",
                 }
             ),
-            "provider": "vertex",
-            "model": "gemini-3.1-pro-preview",
-            "paid": True,
+            "provider": "nvidia",
+            "model": "moonshotai/kimi-k2.6",
+            "paid": False,
         },
     ]
     calls: list[str] = []
@@ -630,9 +630,9 @@ def test_extract_candidate_topic_position_recovers_partial_json(
         calls += 1
         return {
             "content": truncated,
-            "provider": "vertex",
-            "model": "gemini-3.1-pro-preview",
-            "paid": True,
+            "provider": "nvidia",
+            "model": "moonshotai/kimi-k2.6",
+            "paid": False,
         }
 
     monkeypatch.setattr(ai_client, "_call_with_fallback_for_task", fake_call)

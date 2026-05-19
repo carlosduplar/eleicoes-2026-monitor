@@ -247,6 +247,26 @@ export interface CandidatePositionsFile {
   topics: Record<string, TopicPositions>;
 }
 
+// --- Markets (data/markets.json) ---
+
+export interface Market {
+  id: string;
+  slug: string;
+  question: string;
+  yes_price: number; // 0-1
+  no_price: number; // 0-1
+  volume: number;
+  liquidity?: number;
+  market_url: string;
+  collected_at: string; // ISO 8601
+}
+
+export interface MarketsFile {
+  markets: Market[];
+  last_updated?: string | null; // ISO 8601
+  total_count?: number;
+}
+
 // --- AI Usage (data/ai_usage.json) ---
 
 export type AIUsage = Record<string, number>; // "{provider}_{YYYY-MM-DD}" -> count
