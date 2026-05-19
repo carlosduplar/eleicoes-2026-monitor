@@ -94,15 +94,15 @@ _THINKING_DISABLE_EXTRA_BODY: dict[str, dict[str, object]] = {
     "nvidia/nemotron-3-super-120b-a12b": {
         "chat_template_kwargs": {"enable_thinking": False}
     },
-    "moonshotai/kimi-k2.5": {"thinking": {"type": "disabled"}},
-    "minimaxai/minimax-m2.5": {"thinking": {"type": "disabled"}},
+    "moonshotai/kimi-k2.6": {"thinking": {"type": "disabled"}},
+    "minimaxai/minimax-m2.7": {"thinking": {"type": "disabled"}},
 }
 
 NVIDIA_MODELS: dict[str, str] = {
     "summarization": "nvidia/nemotron-3-super-120b-a12b",
     "sentiment": "nvidia/nemotron-3-super-120b-a12b",
     "multilingual": "nvidia/nemotron-3-super-120b-a12b",
-    "quiz_extract": "minimaxai/minimax-m2.5",
+    "quiz_extract": "minimaxai/minimax-m2.7",
 }
 
 NVIDIA_FALLBACKS: list[str] = []
@@ -155,11 +155,11 @@ def _provider_chain_for_task(task: str) -> list[ProviderConfig]:
     if task in {"positions_extract", "quiz_generate", "quiz_extract"}:
         return [
             {
-                "name": "vertex",
-                "base_url": "VERTEX_BASE_URL",
-                "key_env": "VERTEX_API_KEY",
-                "model": _get_vertex_model(task),
-                "paid": True,
+                "name": "nvidia",
+                "base_url": "https://integrate.api.nvidia.com/v1",
+                "key_env": "NVIDIA_API_KEY",
+                "model": "moonshotai/kimi-k2.6",
+                "paid": False,
             },
             {
                 "name": "ollama",
@@ -172,19 +172,26 @@ def _provider_chain_for_task(task: str) -> list[ProviderConfig]:
                 "name": "nvidia",
                 "base_url": "https://integrate.api.nvidia.com/v1",
                 "key_env": "NVIDIA_API_KEY",
-                "model": "minimaxai/minimax-m2.5",
+                "model": "minimaxai/minimax-m2.7",
                 "paid": False,
+            },
+            {
+                "name": "vertex",
+                "base_url": "VERTEX_BASE_URL",
+                "key_env": "VERTEX_ACCESS_TOKEN",
+                "model": _get_vertex_model(task),
+                "paid": True,
             },
         ]
 
     if task == "quiz_validate":
         return [
             {
-                "name": "vertex",
-                "base_url": "VERTEX_BASE_URL",
-                "key_env": "VERTEX_API_KEY",
-                "model": _get_vertex_model(task),
-                "paid": True,
+                "name": "nvidia",
+                "base_url": "https://integrate.api.nvidia.com/v1",
+                "key_env": "NVIDIA_API_KEY",
+                "model": "moonshotai/kimi-k2.6",
+                "paid": False,
             },
             {
                 "name": "ollama",
@@ -197,8 +204,15 @@ def _provider_chain_for_task(task: str) -> list[ProviderConfig]:
                 "name": "nvidia",
                 "base_url": "https://integrate.api.nvidia.com/v1",
                 "key_env": "NVIDIA_API_KEY",
-                "model": "minimaxai/minimax-m2.5",
+                "model": "minimaxai/minimax-m2.7",
                 "paid": False,
+            },
+            {
+                "name": "vertex",
+                "base_url": "VERTEX_BASE_URL",
+                "key_env": "VERTEX_ACCESS_TOKEN",
+                "model": _get_vertex_model(task),
+                "paid": True,
             },
         ]
 

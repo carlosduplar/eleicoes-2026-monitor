@@ -87,6 +87,7 @@ jobs:
           python scripts/collect_parties.py || echo "[warn] collect_parties failed"
           python scripts/collect_polls.py || echo "[warn] collect_polls failed"
           python scripts/collect_social.py || echo "[warn] collect_social failed"
+          python scripts/collect_markets.py || echo "[warn] collect_markets failed"
 
       - name: Scrape article content
         run: python scripts/scrape_articles.py --limit "${SCRAPE_LIMIT}" || echo "scrape failed, continuing"
