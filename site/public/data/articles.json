@@ -2,61 +2,63 @@
   "$schema": "../docs/schemas/articles.schema.json",
   "articles": [
     {
-      "id": "5012de5da3ff0d00",
-      "url": "https://www1.folha.uol.com.br/cotidiano/2026/05/lula-diz-que-recuou-de-programa-para-devolucao-de-celulares-roubados-no-brasil.shtml",
-      "title": "Lula diz que recuou de programa para devolução de celulares roubados no Brasil",
-      "source": "UOL Noticias",
-      "published_at": "2026-05-21T22:46:11Z",
-      "collected_at": "2026-05-21T22:46:11Z",
-      "status": "raw",
-      "relevance_score": 0.0,
-      "relevance_signals": null,
-      "candidates_mentioned": [],
-      "topics": [],
-      "narrative_cluster_id": null,
-      "duplicate_of": null,
-      "summaries": {
-        "pt-BR": "",
-        "en-US": ""
-      },
-      "source_category": "mainstream",
-      "sentiment_per_candidate": {},
-      "edit_history": [],
-      "disclaimer_pt": "Análise algorítmica. Não representa pesquisa de opinião.",
-      "disclaimer_en": "Algorithmic analysis. Does not represent polling data.",
-      "sentiment_score": 0.0,
-      "confidence_score": 0.0,
-      "_sentiment_scores": {},
-      "prominence_score": 0.0
-    },
-    {
       "id": "ade11d7bae0f7ebe",
       "url": "https://www.poder360.com.br/poder-governo/lula-da-entrevista-ao-sem-censura-da-ebc-na-6a-feira/",
       "title": "Lula dá entrevista ao “Sem Censura”, da EBC, na 6ª feira",
       "source": "Poder360",
       "published_at": "2026-05-21T22:42:26Z",
       "collected_at": "2026-05-21T22:46:20Z",
-      "status": "raw",
-      "relevance_score": 0.0,
-      "relevance_signals": null,
-      "candidates_mentioned": [],
-      "topics": [],
+      "status": "validated",
+      "relevance_score": 0.65,
+      "relevance_signals": {
+        "candidate_signal": 0.5,
+        "topic_signal": 0.0,
+        "keyword_signal": 0.1,
+        "source_signal": 0.05
+      },
+      "candidates_mentioned": [
+        "lula"
+      ],
+      "topics": [
+        "saude",
+        "midia",
+        "politica_externa"
+      ],
       "narrative_cluster_id": null,
       "duplicate_of": null,
       "summaries": {
-        "pt-BR": "",
-        "en-US": ""
+        "pt-BR": "O presidente Luiz Inácio Lula da Silva concederá entrevista ao programa 'Sem Censura' da EBC nesta sexta-feira (21.mai.2026) às 16h, no Rio de Janeiro, com a apresentadora Cissa Guimarães e convidados Nath Finanças, Luciana Barreto e Muka. Na mesma data à noite, ele deverá comparecer à posse de seu cardiologista, Roberto Kalil Filho, na ANM. No sábado (23.abr), inaugurará a sede do CDTS da Fiocruz em Manguinhos.",
+        "en-US": "President Luiz Inácio Lula da Silva will give an interview to EBC's 'Sem Censura' program this Friday (May 21, 2026) at 4 PM in Rio de Janeiro, hosted by Cissa Guimarães with guests Nath Finanças, Luciana Barreto, and Muka. Later that evening, he is expected to attend the inauguration of his cardiologist, Roberto Kalil Filho, at the ANM. On Saturday (April 23), he will inaugurate the CDTS headquarters of Fiocruz in Manguinhos."
       },
       "content": "O presidente Luiz Inácio Lula da Silva (PT) dará entrevista ao programa “Sem Censura”, da EBC , na 6ª feira (21.mai.2026) às 16h. O petista participará ao vivo do programa, no estúdio da EBC no Rio. Apresentado por Cissa Guimarães, o programa terá os seguintes convidados: a influencer Nath Finanças, a jornalista Luciana Barreto e o produtor Muka. Lula cumpre agenda na capital fluminense. Na noite de 6ª feira (22.mai), há a expectativa de que o presidente compareça à posse de seu cardiologista, Roberto Kalil Filho, na ANM (Academia Nacional de Medicina). Já no sábado (23.abr), o petista vai inaugurar a sede do CDTS (Centro de Desenvolvimento Tecnológico em Saúde) da Fiocruz, em Manguinhos (RJ). JANJA NO SEM CENSURA Em março de 2026, a primeira-dama Janja da Silva participou do “Sem Censura”. No programa, falou sobre violência contra a mulher e declarou ter sido assediada duas vezes como primeira-dama. “Se eu, como primeira-dama com uma equipe em torno, já passei por isso, imagina uma mulher no ponto de ônibus às 22h” , disse. CISSA GUIMARÃES Em 2025, a EBC aumentou a remuneração da apresentadora de R$ 70 mil para R$ 100 mil por mês. A atriz está à frente do programa desde fevereiro de 2024. Segundo a empresa, o aumento se deu devido a uma ampliação nos serviços prestados pela apresentadora. Em nota, afirmou: “No caso da apresentadora, ela estará disponível para outras gravações, como 10 edições especiais, a serem realizadas em outras cidades, bem como a gravação de conteúdo original para redes sociais”.",
       "source_category": "politics",
-      "sentiment_per_candidate": {},
-      "edit_history": [],
+      "sentiment_per_candidate": {
+        "lula": "positivo"
+      },
+      "edit_history": [
+        {
+          "tier": "editor",
+          "at": "2026-05-21T22:53:43Z",
+          "provider": "nvidia",
+          "action": "validated",
+          "changes": [
+            "summary_pt",
+            "summary_en"
+          ]
+        }
+      ],
       "disclaimer_pt": "Análise algorítmica. Não representa pesquisa de opinião.",
       "disclaimer_en": "Algorithmic analysis. Does not represent polling data.",
-      "sentiment_score": 0.0,
-      "confidence_score": 0.0,
-      "_sentiment_scores": {},
-      "prominence_score": 0.0
+      "sentiment_score": 0.2,
+      "confidence_score": 1.0,
+      "_sentiment_scores": {
+        "lula": 0.2
+      },
+      "prominence_score": 0.0,
+      "_ai_provider": "nvidia",
+      "_ai_model": "nvidia/nemotron-3-super-120b-a12b",
+      "ai_provider_editor": "nvidia/nemotron-3-super-120b-a12b",
+      "editor_note": null
     },
     {
       "id": "e1e79948f52019ff",
@@ -65,27 +67,60 @@
       "source": "Poder360",
       "published_at": "2026-05-21T22:38:58Z",
       "collected_at": "2026-05-21T22:46:20Z",
-      "status": "raw",
-      "relevance_score": 0.0,
-      "relevance_signals": null,
-      "candidates_mentioned": [],
-      "topics": [],
+      "status": "validated",
+      "relevance_score": 1.0,
+      "relevance_signals": {
+        "candidate_signal": 0.6,
+        "topic_signal": 0.25,
+        "keyword_signal": 0.15,
+        "source_signal": 0.05
+      },
+      "candidates_mentioned": [
+        "flavio-bolsonaro",
+        "lula"
+      ],
+      "topics": [
+        "politica_externa",
+        "eleicoes",
+        "midia"
+      ],
       "narrative_cluster_id": null,
       "duplicate_of": null,
       "summaries": {
-        "pt-BR": "",
-        "en-US": ""
+        "pt-BR": "Flávio Bolsonaro negou ter solicitado encontro com Donald Trump, afirmando que qualquer reunião depende de convite da Casa Branca. Ele afirmou que a equipe indicou possível agenda para a próxima semana, mas Washington ainda não confirmou. Flávio também ironizou Lula por não falar inglês, reforçando que os detalhes do encontro dependem exclusivamente dos EUA.",
+        "en-US": "Flávio Bolsonaro denied requesting a meeting with Donald Trump, stating any encounter would depend on an invitation from the White House. He said his team indicated a possible meeting next week, but the U.S. government has not confirmed it. Flávio also mocked Lula for not speaking English, emphasizing that the meeting’s details are solely up to Washington."
       },
       "content": "O senador e pré-candidato à Presidência Flávio Bolsonaro (PL-RJ) afirmou nesta 5ª feira (21.mai.2026) que um eventual encontro com o presidente dos Estados Unidos, Donald Trump (Partido Republicano), só acontecerá a convite do próprio governo norte-americano. O congressista refutou a informação de que ele ou seu irmão, o ex-deputado Eduardo Bolsonaro (PL-SP), solicitaram a agenda. Em entrevista a jornalistas no Congresso Nacional, a equipe de Flávio indicou que a reunião com o republicano pode ser realizada na próxima semana. A Casa Branca ainda não confirmou o compromisso. Questionado sobre a autoria do pedido, Flávio respondeu em inglês: “ No, I didn’t ask anything. Nobody asked” (Não, não pedi nada. Ninguém pediu, em tradução livre). Na sequência, ironizou o presidente Luiz Inácio Lula da Silva (PT), afirmando que ele não compreenderia o que estava sendo dito. Nesta 5ª feira (21.mai), Lula disse que não sabe falar inglês e que aprendeu somente as palavras “I love you” (eu te amo, em tradução livre), para dizer a Janja. Flávio declarou que os detalhes sobre a realização do encontro dependem de Washington. “Tem que perguntar para a Casa Branca” , disse. Eduardo Bolsonaro, apontado como um dos elos com a ala republicana, reside nos EUA desde o ano passado. CENÁRIO NO PL A declaração do congressista vem depois dos questionamentos sobre a sua pré-campanha ao Palácio do Planalto. Sobre os próximos passos da sua candidatura, o senador disse que trabalha com “um dia de cada vez” . Na última semana, Flávio teve conversas vazadas com Daniel Vorcaro, fundador do Banco Master. Em áudio, pediu aportes financeiros para a produção do filme “Dark Horse” , sobre seu pai, o ex-presidente Jair Bolsonaro (PL). Apesar das pressões, a cúpula do Partido Liberal nega qualquer intenção de retirar o senador da disputa. O líder da Oposição na Câmara, Cabo Gilberto Silva (PL-PB), classificou as hipóteses de substituição da candidatura como “especulação” .",
       "source_category": "politics",
-      "sentiment_per_candidate": {},
-      "edit_history": [],
+      "sentiment_per_candidate": {
+        "flavio-bolsonaro": "neutro",
+        "lula": "neutro"
+      },
+      "edit_history": [
+        {
+          "tier": "editor",
+          "at": "2026-05-21T22:53:52Z",
+          "provider": "nvidia",
+          "action": "validated",
+          "changes": [
+            "summary_pt",
+            "summary_en"
+          ]
+        }
+      ],
       "disclaimer_pt": "Análise algorítmica. Não representa pesquisa de opinião.",
       "disclaimer_en": "Algorithmic analysis. Does not represent polling data.",
-      "sentiment_score": 0.0,
-      "confidence_score": 0.0,
-      "_sentiment_scores": {},
-      "prominence_score": 0.0
+      "sentiment_score": 0.05,
+      "confidence_score": 1.0,
+      "_sentiment_scores": {
+        "flavio-bolsonaro": 0.1,
+        "lula": 0.0
+      },
+      "prominence_score": 0.0,
+      "_ai_provider": "nvidia",
+      "_ai_model": "nvidia/nemotron-3-super-120b-a12b",
+      "ai_provider_editor": "nvidia/nemotron-3-super-120b-a12b",
+      "editor_note": null
     },
     {
       "id": "0bc2ac1bea7870f8",
@@ -94,85 +129,57 @@
       "source": "O Antagonista",
       "published_at": "2026-05-21T22:38:37Z",
       "collected_at": "2026-05-21T22:46:24Z",
-      "status": "raw",
-      "relevance_score": 0.0,
-      "relevance_signals": null,
-      "candidates_mentioned": [],
-      "topics": [],
+      "status": "validated",
+      "relevance_score": 0.95,
+      "relevance_signals": {
+        "candidate_signal": 0.5,
+        "topic_signal": 0.25,
+        "keyword_signal": 0.15,
+        "source_signal": 0.05
+      },
+      "candidates_mentioned": [
+        "lula"
+      ],
+      "topics": [
+        "economia",
+        "politica_externa",
+        "eleicoes"
+      ],
       "narrative_cluster_id": null,
       "duplicate_of": null,
       "summaries": {
-        "pt-BR": "",
-        "en-US": ""
+        "pt-BR": "O governo Lula negocia com o Congresso para aprovar a extinção da escala 6×1 de trabalho, com o objetivo de que a medida entre em vigor em setembro ou outubro de 2026, pouco antes das eleições. A estratégia visa antecipar os efeitos da reforma trabalhista para influenciar o eleitorado durante a campanha.",
+        "en-US": "The Lula government is negotiating with Congress to approve the abolition of the 6×1 work schedule, aiming for the measure to take effect in September or October 2026, shortly before the elections. The strategy seeks to advance the labor reform’s impact to influence voters during the campaign."
       },
       "content": "O governo Lula articula junto ao Congresso para que a proposta de extinção da escala 6×1 comece a produzir efeitos ainda durante o calendário eleitoral de 2026. A estratégia pressupõe reduzir o período de transição da medida, de modo que os novos direitos trabalhistas passem a valer em setembro ou outubro, às vésperas ou entre... The post Governo quer fim da escala 6×1 aprovado na reta final da campanha appeared first on O Antagonista .",
       "source_category": "politics",
-      "sentiment_per_candidate": {},
-      "edit_history": [],
-      "disclaimer_pt": "Análise algorítmica. Não representa pesquisa de opinião.",
-      "disclaimer_en": "Algorithmic analysis. Does not represent polling data.",
-      "sentiment_score": 0.0,
-      "confidence_score": 0.0,
-      "_sentiment_scores": {},
-      "prominence_score": 0.0
-    },
-    {
-      "id": "717d876358c79454",
-      "url": "https://www.cartacapital.com.br/economia/governo-deve-lancar-o-desenrola-para-adimplentes-nas-proximas-semanas-diz-durigan/",
-      "title": "Governo deve lançar o Desenrola para adimplentes nas próximas semanas, diz Durigan",
-      "source": "CartaCapital",
-      "published_at": "2026-05-21T22:38:20Z",
-      "collected_at": "2026-05-21T22:46:28Z",
-      "status": "raw",
-      "relevance_score": 0.0,
-      "relevance_signals": null,
-      "candidates_mentioned": [],
-      "topics": [],
-      "narrative_cluster_id": null,
-      "duplicate_of": null,
-      "summaries": {
-        "pt-BR": "",
-        "en-US": ""
+      "sentiment_per_candidate": {
+        "lula": "positivo"
       },
-      "source_category": "magazine",
-      "content": "Economia Governo deve lançar o Desenrola para adimplentes nas próximas semanas, diz Durigan O objetivo é reduzir as taxas de juros de dívidas, mesmo para o que estão com os pagamentos em dia Por CartaCapital 21.05.2026 19h38 O ministro da Fazenda, Dario Durigan. Foto: Washington Costa/MF Apoie Siga-nos no O ministro da Fazenda, Dario Durigan , afirmou nesta quinta-feira 21 que o governo pretende lançar em junho deste ano uma nova fase do programa Desenrola adimplentes, as empresas ou pessoas que estão com o pagamento em dia, mas enfrentam altas taxas de juros. “O Desenrola de adimplentes está sendo desenhado aqui dentro do Ministério da Fazenda, com a minha coordenação e o do secretário [executivo Rogério] Ceron. Muito em breve, vamos trazer mais detalhes sobre isso”, afirmou. “Vamos fazer dentro do mês de junho, antes de qualquer discussão eleitoral. A mobilização de 90 dias, que será o mesmo prazo delimitado para o Desenrola Adimplentes, a garantir que tenhamos um período determinado”, completou o ministro A ideia é que o Desenrola Adimplentes permita a troca de dívidas com maiores taxas de juros, como cartão de crédito, cheque especial e crédito pessoal, por crédito de “maior qualidade”, com juros menores. A operação será viabilizada por meio da garantia do Fundo Garantidor de Operações. O Desenrola é a principal iniciativa do governo Lula (PT) para combater o endividamento dos brasileiros, que bateu recorde e já atinge 76,1% da população. Desde o lançamento no começo de maio, o Novo Desenrola renegociou cerca de 12 bilhões de reais em dívidas de famílias e contratos do Fundo de Financiamento Estudantil (Fies). Recomendadas Risco moral CMN regulamenta linha emergencial para auxílio a companhias aéreas Fazenda estuda Fundo Garantidor para dívidas rurais Senado aprova Otto Lobo para presidência da CVM Mais Lidas CartaCapital Há 31 anos, a maior referência progressista em jornalismo no Brasil. ENTENDA MAIS SOBRE: Dario Durigan , Desenrola , Ministério da Fazenda , Jornalismo crítico e inteligente. Todos os dias, no seu e-mail Assine nossa newsletter Assine nossa newsletter e receba um boletim matinal exclusivo Assinar Inscreva-se Apoie o jornalismo que chama as coisas pelo nome Muita gente esqueceu o que escreveu, disse ou defendeu. Nós não. O compromisso de CartaCapital com os princípios do bom jornalismo permanece o mesmo. O combate à desigualdade nos importa. A denúncia das injustiças importa. Importa uma democracia digna do nome. Importa o apego à verdade factual e a honestidade. Estamos aqui, há mais de 30 anos, porque nos importamos. Como nossos fiéis leitores, CartaCapital segue atenta. Se o bom jornalismo também importa para você, nos ajude a seguir lutando. Assine a edição semanal de CartaCapital ou contribua com o quanto puder. Única Mensal Anual R$25 R$50 R$100 R$200 Outro Quero apoiar Leia também Economia Durigan se diz ‘radicalmente contra’ indenização às empresas por fim da escala 6×1 Por Wendal Carmo Economia Desenrola 2.0 renegocia quase R$ 1 bilhão em dívidas, diz Durigan Por Agência Brasil Política Durigan anuncia Rogério Ceron como novo secretário-executivo da Fazenda Por CartaCapital Jornalismo crítico e inteligente. Todos os dias, no seu e-mail Assine nossa newsletter Assine nossa newsletter e receba um boletim matinal exclusivo Assinar Inscreva-se",
-      "sentiment_per_candidate": {},
-      "edit_history": [],
+      "edit_history": [
+        {
+          "tier": "editor",
+          "at": "2026-05-21T22:54:09Z",
+          "provider": "nvidia",
+          "action": "validated",
+          "changes": [
+            "summary_pt",
+            "summary_en"
+          ]
+        }
+      ],
       "disclaimer_pt": "Análise algorítmica. Não representa pesquisa de opinião.",
       "disclaimer_en": "Algorithmic analysis. Does not represent polling data.",
-      "sentiment_score": 0.0,
-      "confidence_score": 0.0,
-      "_sentiment_scores": {},
-      "prominence_score": 0.0
-    },
-    {
-      "id": "1d07b365feba11bf",
-      "url": "https://veja.abril.com.br/coluna/veja-gente/o-motivo-que-faz-christopher-nolan-nunca-usar-e-mails-ou-celular/",
-      "title": "O motivo que faz Christopher Nolan nunca usar e-mails ou celular",
-      "source": "Veja",
-      "published_at": "2026-05-21T22:37:06Z",
-      "collected_at": "2026-05-21T22:46:26Z",
-      "status": "raw",
-      "relevance_score": 0.0,
-      "relevance_signals": null,
-      "candidates_mentioned": [],
-      "topics": [],
-      "narrative_cluster_id": null,
-      "duplicate_of": null,
-      "summaries": {
-        "pt-BR": "",
-        "en-US": ""
+      "sentiment_score": 0.3,
+      "confidence_score": 1.0,
+      "_sentiment_scores": {
+        "lula": 0.3
       },
-      "content": "Agora a coluna GENTE também está no Instagram . Siga o perfil @veja.gente Christopher Nolan , 55, diretor de sucessos como Interestelar , Batman: O Cavaleiro das Trevas e Oppenheimer , revelou que nunca teve um celular ou que sequer abre e-mails. Em entrevista ao programa 60 Minutes , ele confessou que não tem contato com tecnologia. De acordo com o cineasta, a decisão está ligada à falta de interesse por dispositivos: “Nunca usei”, afirma. Sobre o celular, ele diz que a “cultura do QR Code” tem dificultado as coisas. “Está ficando cada vez mais difícil. A volta do QR Code complicou bastante”, lamentou. Publicidade",
-      "source_category": "magazine",
-      "sentiment_per_candidate": {},
-      "edit_history": [],
-      "disclaimer_pt": "Análise algorítmica. Não representa pesquisa de opinião.",
-      "disclaimer_en": "Algorithmic analysis. Does not represent polling data.",
-      "sentiment_score": 0.0,
-      "confidence_score": 0.0,
-      "_sentiment_scores": {},
-      "prominence_score": 0.0
+      "prominence_score": 0.0,
+      "_ai_provider": "nvidia",
+      "_ai_model": "nvidia/nemotron-3-super-120b-a12b",
+      "ai_provider_editor": "nvidia/nemotron-3-super-120b-a12b",
+      "editor_note": null
     },
     {
       "id": "75a2b412bd4c6b45",
@@ -181,114 +188,58 @@
       "source": "CartaCapital",
       "published_at": "2026-05-21T22:31:55Z",
       "collected_at": "2026-05-21T22:46:28Z",
-      "status": "raw",
-      "relevance_score": 0.0,
-      "relevance_signals": null,
-      "candidates_mentioned": [],
-      "topics": [],
+      "status": "validated",
+      "relevance_score": 0.9,
+      "relevance_signals": {
+        "candidate_signal": 0.5,
+        "topic_signal": 0.3,
+        "keyword_signal": 0.1,
+        "source_signal": 0.0
+      },
+      "candidates_mentioned": [
+        "flavio-bolsonaro"
+      ],
+      "topics": [
+        "corrupcao",
+        "eleicoes",
+        "politica_externa",
+        "midia"
+      ],
       "narrative_cluster_id": null,
       "duplicate_of": null,
       "summaries": {
-        "pt-BR": "",
-        "en-US": ""
+        "pt-BR": "O senador Ciro Nogueira (PP-PI) disse que o senador Flávio Bolsonaro (PL) deve ser investigado com seriedade e isenção sobre suas ligações com Daniel Vorcaro, dono do Banco Master, e que, se comprovada a culpa, deve pagar exemplarmente pela lei. Ele ressaltou que ninguém deve ser beneficiado por proteção política e que a inocência também deve ser reconhecida. Nogueira, alvo da Operação Compliance Zero, negou estar defendendo ou acusando Flávio, afirmando apenas a necessidade de justiça imparcial.",
+        "en-US": "Senator Ciro Nogueira (PP-PI) stated that Senator Flávio Bolsonaro (PL) must be seriously and impartially investigated regarding his ties to Daniel Vorcaro, owner of Banco Master, and that if found guilty, he should be punished exemplarily under the law. He emphasized that no one should be shielded by political protection and that innocence must also be acknowledged. Nogueira, a target of Operation Compliance Zero, denied defending or accusing Flávio, insisting only on the need for impartial justice."
       },
       "source_category": "magazine",
       "content": "CartaExpressa ‘Se for culpado, tem de pagar exemplarmente’, diz Ciro Nogueira sobre Flávio Bolsonaro O senador do PP é investigado no Caso Master Por CartaCapital 21.05.2026 19h31 O senador Ciro Nogueira (PP-PI). Foto: Andressa Anholete/Agência Senado Apoie Siga-nos no Eleições 2026 O senador Ciro Nogueira (PP-PI) defendeu, nesta quinta-feira 21, uma investigação “séria e isenta” sobre o senador e pré-candidato à Presidência Flávio Bolsonaro (PL) devido às suas relações com Daniel Vorcaro, dono do Banco Master. Questionado sobre seu alinhamento com Flávio em entrevista à TV Clube , Ciro afirmou não estar ali para defender ou acusar o senador. “Ele tem que ser investigado, como todos, como eu estou sendo . E se for inocente, que seja, lógico, reconhecida a sua inocência. Se for culpado, tem que pagar exemplarmente.” Ciro declarou não poder haver no País “ninguém cometendo ilícito que possa ser beneficiado por proteção”. “Temos que investigar com isenção. Quem for inocente, que seja considerado inocente. E se for culpado, que pague severamente, de acordo com a lei.” Siga a Carta no Discover e receba as notícias que realmente importam. SEGUIR Presidente do PP, Ciro Nogueira foi o principal alvo da fase da Operação Compliance Zero deflagrada em 7 de maio. Recomendadas Alcolumbre rejeita ler requerimento para instalar a CPI do Master Democracia Cristã expulsa Aldo Rebelo em meio a racha por candidatura a presidente Em crise, Flávio busca ‘agenda positiva’ e deve ter encontro com Trump A popularidade de Tarcísio a pouco mais de 4 meses da eleição em São Paulo Mais Lidas CartaCapital Há 31 anos, a maior referência progressista em jornalismo no Brasil. ENTENDA MAIS SOBRE: Banco Master , Ciro Nogueira , Daniel Vorcaro , Eleições 2026 , Flávio Bolsonaro , Jornalismo crítico e inteligente. Todos os dias, no seu e-mail Assine nossa newsletter Assine nossa newsletter e receba um boletim matinal exclusivo Assinar Inscreva-se Apoie o jornalismo que chama as coisas pelo nome Muita gente esqueceu o que escreveu, disse ou defendeu. Nós não. O compromisso de CartaCapital com os princípios do bom jornalismo permanece o mesmo. O combate à desigualdade nos importa. A denúncia das injustiças importa. Importa uma democracia digna do nome. Importa o apego à verdade factual e a honestidade. Estamos aqui, há mais de 30 anos, porque nos importamos. Como nossos fiéis leitores, CartaCapital segue atenta. Se o bom jornalismo também importa para você, nos ajude a seguir lutando. Assine a edição semanal de CartaCapital ou contribua com o quanto puder. Única Mensal Anual R$25 R$50 R$100 R$200 Outro Quero apoiar Leia também Política Após crise do caso Vorcaro, coordenador de comunicação deixa campanha de Flávio Bolsonaro Por CartaCapital Política ‘Tem de perguntar a ele’, diz Michelle Bolsonaro sobre relação de Flávio com Vorcaro Por CartaCapital Política Áudios de Flávio a Vorcaro abalam tentativa de superar desgaste da rachadinha, diz analista do AtlasIntel Por Leonardo Miazzo Política Aumento da rejeição e outras más notícias: o impacto dos áudios a Vorcaro para Flávio Bolsonaro Por CartaCapital Jornalismo crítico e inteligente. Todos os dias, no seu e-mail Assine nossa newsletter Assine nossa newsletter e receba um boletim matinal exclusivo Assinar Inscreva-se",
-      "sentiment_per_candidate": {},
-      "edit_history": [],
-      "disclaimer_pt": "Análise algorítmica. Não representa pesquisa de opinião.",
-      "disclaimer_en": "Algorithmic analysis. Does not represent polling data.",
-      "sentiment_score": 0.0,
-      "confidence_score": 0.0,
-      "_sentiment_scores": {},
-      "prominence_score": 0.0
-    },
-    {
-      "id": "9fcaf62c45345153",
-      "url": "https://www.cartacapital.com.br/blogs/fora-da-faria/entretenimento-nao-e-distracao-por-que-as-marcas-precisam-aprender-a-contar-boas-historias/",
-      "title": "Entretenimento não é distração: por que as marcas precisam aprender a contar boas histórias",
-      "source": "CartaCapital",
-      "published_at": "2026-05-21T22:30:28Z",
-      "collected_at": "2026-05-21T22:46:28Z",
-      "status": "raw",
-      "relevance_score": 0.0,
-      "relevance_signals": null,
-      "candidates_mentioned": [],
-      "topics": [],
-      "narrative_cluster_id": null,
-      "duplicate_of": null,
-      "summaries": {
-        "pt-BR": "",
-        "en-US": ""
+      "sentiment_per_candidate": {
+        "flavio-bolsonaro": "negativo"
       },
-      "source_category": "magazine",
-      "content": "Fora da Faria Uma coluna de negócios focada na economia real. Fora da Faria Entretenimento não é distração: por que as marcas precisam aprender a contar boas histórias Conexão não se impõe, se constrói. E se constrói quando a marca faz parte de algo maior Por Cacá Malta 21.05.2026 19h30 | Atualizado há 1 hora (FOTO: Helena Yoshioka/Rock In Rio Oficial) Volta. O Lollapalooza, adiado em 2020 e em 2021, deve acontecer em março do ano que vem no Autódromo de Interlagos. Apoie Siga-nos no [O Brasil se transformou em um dos maiores palcos mundiais para shows e festivais. Isso significa crescimento econômico e uma mudança conceitual para as marcas. Nesta edição do Fora da Faria convidamos Cacá Malta , Head de Atendimento, Negócios e Operações da Artplan, agência de publicidade que faz parte do Grupo Dreamers, parceiro estratégico da Rock World, empresa do Rock in Rio, The Town e Lollapalooza, para escrever sobre o assunto.] Em um cenário em que a atenção se tornou um dos ativos mais disputados, a forma como as marcas se conectam com as pessoas também mudou. É nesse contexto que o entretenimento ganha um papel importante dentro da comunicação. A publicidade se transformou e, hoje, qualquer estratégia consistente precisa considerar oportunidades de impactar os consumidores para além da veiculação tradicional, conectando pessoas com experiências, emoções e histórias. Durante muito tempo, a publicidade era construída na base da interrupção. A marca falava, o consumidor ouvia. Hoje, ninguém quer ser interrompido, as pessoas querem ser envolvidas. É justamente nesse ponto que entretenimento e publicidade deixam de ocupar territórios separados. O entretenimento não é distração. É uma forma poderosa de criar vínculo emocional , e é o vínculo que constrói relevância de verdade. Em vez de disputar espaço, marcas que entendem isso passam a conquistar presença. Geram conexões, especialmente quando deixam de apenas transmitir mensagens e passam a contar boas histórias. Dentro de festivais de música, isso se materializa de forma concreta. O público não está ali para consumir publicidade, mas para viver momentos e experiências únicas. E as marcas que conseguem se inserir com relevância, criando experiências, ativações e conteúdos alinhados a esse contexto, deixam de ser apenas patrocinadoras e passam a construir histórias junto com o público. Esse movimento também transforma o papel das agências. O desafio passa a ser pensar a marca dentro de ecossistemas culturais mais amplos, entender seu papel, como gerar valor real e como se aproximar do público de formas até então inéditas. As agências ampliam seu papel e passam a atuar como criadoras de experiências. Traduzem posicionamento em narrativas e vivências concretas. O que essa marca tem a dizer? Como engaja? Como cria conexão verdadeira? Isso pede repertório, entendimento de contexto e uma nova forma de olhar estrategicamente para a marca. Não basta estar presente, é preciso ser relevante. Não basta aparecer, é preciso pertencer. E, principalmente, não basta comunicar, é preciso criar algo que as pessoas queiram viver, compartilhar e lembrar. No meio de tanto ruído, é preciso fazer parte da cultura. Festivais são um retrato pulsante da sociedade. Concentram tendências, refletem comportamentos e apontam transformações. Marcas que entendem isso deixam de apenas se comunicar para ocupar um espaço real dentro dessas narrativas. No fim, o entretenimento revela algo essencial sobre a comunicação contemporânea. Conexão não se impõe, se constrói. E se constrói quando a marca faz parte de algo maior, quando entende o contexto, respeita a cultura e usa o entretenimento como ponte. São as histórias, inseridas de forma legítima nesse território, que criam identificação. Porque, em um cenário de excesso de estímulos, são as marcas que conseguem entreter com relevância e contar boas histórias que não apenas aparecem, mas constroem vínculos que permanecem. Recomendadas Caso Ypê: quando a contaminação encontra a polarização A maior jogada da Copa do Mundo de 2026 é o marketing O Vale do Silício tropical de Pequim Alta-fidelidade Mais Lidas Cacá Malta Head de Atendimento, Negócios e Operações da Artplan ENTENDA MAIS SOBRE: agências de publicidade , conteúdo de marca , Entretenimento , festivais de música , Propaganda , Publicidade , Jornalismo crítico e inteligente. Todos os dias, no seu e-mail Assine nossa newsletter Assine nossa newsletter e receba um boletim matinal exclusivo Assinar Inscreva-se Apoie o jornalismo que chama as coisas pelo nome Muita gente esqueceu o que escreveu, disse ou defendeu. Nós não. O compromisso de CartaCapital com os princípios do bom jornalismo permanece o mesmo. O combate à desigualdade nos importa. A denúncia das injustiças importa. Importa uma democracia digna do nome. Importa o apego à verdade factual e a honestidade. Estamos aqui, há mais de 30 anos, porque nos importamos. Como nossos fiéis leitores, CartaCapital segue atenta. Se o bom jornalismo também importa para você, nos ajude a seguir lutando. Assine a edição semanal de CartaCapital ou contribua com o quanto puder. Única Mensal Anual R$25 R$50 R$100 R$200 Outro Quero apoiar Jornalismo crítico e inteligente. Todos os dias, no seu e-mail Assine nossa newsletter Assine nossa newsletter e receba um boletim matinal exclusivo Assinar Inscreva-se",
-      "sentiment_per_candidate": {},
-      "edit_history": [],
+      "edit_history": [
+        {
+          "tier": "editor",
+          "at": "2026-05-21T22:54:34Z",
+          "provider": "nvidia",
+          "action": "validated",
+          "changes": [
+            "summary_pt",
+            "summary_en"
+          ]
+        }
+      ],
       "disclaimer_pt": "Análise algorítmica. Não representa pesquisa de opinião.",
       "disclaimer_en": "Algorithmic analysis. Does not represent polling data.",
-      "sentiment_score": 0.0,
-      "confidence_score": 0.0,
-      "_sentiment_scores": {},
-      "prominence_score": 0.0
-    },
-    {
-      "id": "585034b2e7ce21ac",
-      "url": "https://www.poder360.com.br/poder-congresso/camara-aprova-projeto-que-reduz-40-de-floresta-no-para/",
-      "title": "Câmara aprova projeto que reduz 40% de Floresta Nacional no Pará",
-      "source": "Poder360",
-      "published_at": "2026-05-21T22:29:26Z",
-      "collected_at": "2026-05-21T22:46:20Z",
-      "status": "raw",
-      "relevance_score": 0.0,
-      "relevance_signals": null,
-      "candidates_mentioned": [],
-      "topics": [],
-      "narrative_cluster_id": null,
-      "duplicate_of": null,
-      "summaries": {
-        "pt-BR": "",
-        "en-US": ""
+      "sentiment_score": -0.4,
+      "confidence_score": 1.0,
+      "_sentiment_scores": {
+        "flavio-bolsonaro": -0.4
       },
-      "content": "A Câmara dos Deputados aprovou na 4ª feira (20.mai.2026) o projeto de lei que reduz os limites da Flona (Floresta Nacional) do Jamanxim, no Pará. A matéria segue para o Senado. A proposta ( PL 2.486 de 2026 ) é de autoria do deputado Isnaldo Bulhões Jr. (MDB-AL). Foi aprovada na forma do substitutivo do relator, deputado José Priante (MDB-PA). O texto aprovado retira 486 mil hectares dos atuais 1,3 milhão de hectares da reserva para criar uma APA (Área de Proteção Ambiental). A Flona ficará com 815 mil hectares. A região do Jamanxim registra conflitos frequentes provocados por desmatamento e garimpo ilegais. O projeto permite a mineração dentro da floresta e da nova APA, desde que prevista em planos de manejo. Flonas e APAs As Flonas e as APAs pertencem ao grupo de unidades de uso sustentável. Esta categoria permite atividades como extração de madeira, agricultura e extrativismo. Já os parques nacionais são de proteção integral, onde atividades econômicas são restritas. Segundo José Priante, há uma “necessidade incontornável” de resolver conflitos fundiários na região, cuja ocupação é anterior à área protegida, tanto em área de garimpo quanto em área de zoneamento de atividade produtiva. “O projeto não extingue áreas protegidas, apenas recategoriza parcela da Floresta Nacional do Jamanxim” , afirmou. Criados em 2006, a Flona (Floresta Nacional) e o Parque Nacional do Jamanxim fizeram parte de estratégia para conter a degradação ambiental na região provocada pela rodovia BR-163. A estrada corta a área desde 1976 e liga Cuiabá (MT) a Santarém (PA). Atualmente, a rodovia se estende até o Rio Grande do Sul. O desmatamento na região, contudo, persistiu ao longo dos anos. O relator da proposta, deputado José Priante (MDB-PA), afirmou que o decreto de criação da Flona do Jamanxim incluiu áreas já ocupadas por produtores rurais integrados a políticas públicas de colonização e desenvolvimento regional. “Desde a criação da Floresta Nacional do Jamanxim revela-se uma tensão permanente entre a pressão pela regularização fundiária e pela expansão das atividades agropecuárias na região, de um lado, e os compromissos constitucionais e legais de proteção da Amazônia, de outro” , declarou Priante. Este texto foi publicado originalmente pela Agência Câmara , em 20 de maio de 2026, às 19h04. O conteúdo é livre para republicação, citada a fonte, e foi adaptado para o padrão do Poder360.",
-      "source_category": "politics",
-      "sentiment_per_candidate": {},
-      "edit_history": [],
-      "disclaimer_pt": "Análise algorítmica. Não representa pesquisa de opinião.",
-      "disclaimer_en": "Algorithmic analysis. Does not represent polling data.",
-      "sentiment_score": 0.0,
-      "confidence_score": 0.0,
-      "_sentiment_scores": {},
-      "prominence_score": 0.0
-    },
-    {
-      "id": "9aa7b23518d6623a",
-      "url": "https://veja.abril.com.br/brasil/operacao-da-policia-civil-prende-deolane-bezerra-e-escancara-vinculos-com-o-pcc/",
-      "title": "Operação da Polícia Civil prende Deolane Bezerra e escancara vínculos com o PCC",
-      "source": "Veja",
-      "published_at": "2026-05-21T22:27:57Z",
-      "collected_at": "2026-05-21T22:46:26Z",
-      "status": "raw",
-      "relevance_score": 0.0,
-      "relevance_signals": null,
-      "candidates_mentioned": [],
-      "topics": [],
-      "narrative_cluster_id": null,
-      "duplicate_of": null,
-      "summaries": {
-        "pt-BR": "",
-        "en-US": ""
-      },
-      "content": "Uma operação da Polícia Civil contra a lavagem de dinheiro para o PCC prendeu a influenciadora digital e advogada Deolane Bezerra . Ela é considerada peça-chave no esquema criminoso. O presidente do Senado, Davi Alcolumbre, rejeitou nesta quinta-feira pedidos para ler o requerimento de abertura de uma CPMI sobre o Banco Master. Alcolumbre afirmou que a sessão do Congresso seria apenas para análise do veto do presidente Luiz Inácio Lula da Silva ao trecho da LDO que autorizava os municípios inadimplentes de até 65 mil habitantes a receber recursos federais. Mais cedo, durante a sessão, o senador Flávio Bolsonaro ocupou a tribuna e voltou a defender a abertura de uma CPMI do Banco Master. Ele acusou a oposição de não querer a investigação. Líder do governo no Congresso, o deputado Lindbergh Farias rebateu a afirmação de Flávio Bolsonaro de que a oposição não assinou pedidos de CPMI do Banco Master. E cobrou do senador resposta sobre o uso do dinheiro repassado por Daniel Vorcaro para o filme sobre a vida de Jair Bolsonaro . Continua após a publicidade O presidente nacional do Partido Liberal , Valdemar Costa Neto , negou que tenha estipulado um prazo de 15 dias para decidir sobre a viabilidade da candidatura de Flávio Bolsonaro à Presidência. Em entrevista à Laisa Dall’Agnol , Valdemar afirmou que, apesar do desgaste causado pela revelação do áudio entre Flávio e Daniel Vorcaro, o partido está unido em torno da candidatura do senador. Um novo levantamento do Paraná Pesquisas, divulgado nesta quinta-feira, mostra que o governador de São Paulo, Tarcísio de Freitas, do Republicanos, continua como principal favorito na disputa pelo Palácio dos Bandeirantes contra o ex-ministro da Fazenda Fernando Haddad , do PT. A simulação de primeiro turno, com quatro possíveis candidatos, mostra que Tarcísio e Haddad continuam como principais nomes. O atual governador aparece com 47,3%, enquanto o ex-ministro de Lula tem 33,5%. Empatados dentro da margem de erro aparecem Paulo Serra, do PSDB, com 4,3%, e o deputado federal Kim Kataguiri , do Missão, com 3,4%. Branco, nulo ou nenhum somam 6,5%. Não sabem ou não opinaram, 5,1%. Continua após a publicidade A pesquisa mostra que, em um eventual segundo turno entre Tarcísio e Haddad, o atual governador teria 52,7% das intenções de voto, enquanto o petista alcançaria 37,6%. Não sabe ou não opinou, 4%. Nenhum, branco ou nulo, 5,7%. O Instituto Paraná Pesquisas divulgou também dois cenários para a disputa do Senado por São Paulo. Nas duas simulações, o indicado do ex-deputado federal Eduardo Bolsonaro aparece na última posição. As escolhidas do presidente Luiz Inácio Lula da Silva estão na liderança. No primeiro cenário, a ex-ministra do Meio Ambiente Marina Silva, da Rede, aparece com 36,6%, empatada na margem de erro com a também ex-ministra Simone Tebet , do PSB, com 34,3%. Na terceira posição está o ex-secretário de Segurança Pública de São Paulo Guilherme Derrite, do PP, com 25,1%. Continua após a publicidade O deputado federal Ricardo Salles , do Novo, é o quarto colocado com 18,7%. Depois, Paulinho da Força , do Solidariedade, aparece com 13,6%. Por fim, está André do Prado , do PL, com 11,3%. Nenhum, branco ou nulo somam 12,1%. Não sabem ou não responderam representam 7,1%. Eduardo Bolsonaro anunciou no dia 5 deste mês que deverá ser o primeiro suplente de Prado na disputa pelo Senado Federal. Para o cargo, cada titular pode ter até dois substitutos — o ex-deputado federal está nos Estados Unidos, de onde pretende fazer campanha para aliados. No outro cenário simulado pelo Instituto, com Márcio França na disputa e sem Simone Tebet, Marina Silva continua na primeira posição com 37,4%. Depois, aparecem Márcio França e Guilherme Derrite com, respectivamente, 27,1% e 25,8%. Salles é quarto com 18,5%. Paulinho da Força é o quinto, com 15,4%. E André do Prado aparece com 11,8%. Continua após a publicidade Em entrevista ao Ponto de Vista, Murilo Hidalgo analisou a vantagem das candidatas Simone Tebet e Marina Silva ao Senado por São Paulo. Um dos maiores projetos gratuitos de qualificação de jovens artistas da música sinfônica está em turnê pelo Sudeste. A Academia Jovem Concertante completa 15 anos de história com apresentações em Minas Gerais, São Paulo e Rio de Janeiro. Na capital paulista, os concertos serão amanhã e domingo, na Sala São Paulo . Confira a entrevista com a pianista Simone Leitão , idealizadora do projeto. Publicidade",
-      "source_category": "magazine",
-      "sentiment_per_candidate": {},
-      "edit_history": [],
-      "disclaimer_pt": "Análise algorítmica. Não representa pesquisa de opinião.",
-      "disclaimer_en": "Algorithmic analysis. Does not represent polling data.",
-      "sentiment_score": 0.0,
-      "confidence_score": 0.0,
-      "_sentiment_scores": {},
-      "prominence_score": 0.0
+      "prominence_score": 0.0,
+      "_ai_provider": "nvidia",
+      "_ai_model": "nvidia/nemotron-3-super-120b-a12b",
+      "ai_provider_editor": "nvidia/nemotron-3-super-120b-a12b",
+      "editor_note": null
     },
     {
       "id": "ac72191aefeb7b3b",
@@ -297,85 +248,51 @@
       "source": "Veja",
       "published_at": "2026-05-21T22:22:53Z",
       "collected_at": "2026-05-21T22:46:26Z",
-      "status": "raw",
-      "relevance_score": 0.0,
-      "relevance_signals": null,
+      "status": "validated",
+      "relevance_score": 0.45,
+      "relevance_signals": {
+        "candidate_signal": 0.0,
+        "topic_signal": 0.3,
+        "keyword_signal": 0.15,
+        "source_signal": 0.0
+      },
       "candidates_mentioned": [],
-      "topics": [],
+      "topics": [
+        "eleicoes",
+        "midia",
+        "corrupcao"
+      ],
       "narrative_cluster_id": null,
       "duplicate_of": null,
       "summaries": {
-        "pt-BR": "",
-        "en-US": ""
+        "pt-BR": "O presidente do TSE, ministro Nunes Marques, decidiu ampliar o efetivo de magistrados responsáveis por julgar ações sobre propaganda eleitoral irregular, antecipando a sobrecarga esperada devido ao início antecipado da disputa entre lulistas e bolsonaristas. Além da ministra Estela Aranha, que já relatoria mais de 80 ações desse tipo, Nunes Marques e o vice-presidente André Mendonça também passarão a dividir as relatorias dos casos. A medida visa garantir a celeridade no julgamento de processos eleitorais antes do início oficial da campanha.",
+        "en-US": "TSE President Minister Nunes Marques has decided to increase the number of magistrates responsible for judging electoral propaganda irregularities, anticipating an early overload due to the premature intensification of the Lula-Bolsonaro rivalry. Besides Minister Estela Aranha, who already rapporteurs over 80 such cases, Marques and Vice President André Mendonça will also share rapporteurship duties. The move aims to ensure timely adjudication of electoral cases before the official campaign period begins."
       },
       "content": "Ainda faltam três meses para o início regular da campanha eleitoral no pais, mas a guerra entre lulistas e bolsonaristas já abarrota o TSE de ações eleitorais. A ministra Estela Aranha, responsável por analisar os processos sobre propaganda irregular, já tem mais de 80 ações desse tipo sob sua relatoria. Esse fluxo inesperado de trabalho levou o presidente do TSE, ministro Nunes Marques, a reforçar o contingente de magistrados responsáveis por ações sobre propaganda eleitoral. Além de Estela, também ele e o vice, André Mendonça, vão dividir as relatorias dos casos que chegarem ao TSE. Publicidade",
       "source_category": "magazine",
       "sentiment_per_candidate": {},
-      "edit_history": [],
+      "edit_history": [
+        {
+          "tier": "editor",
+          "at": "2026-05-21T22:55:31Z",
+          "provider": "nvidia",
+          "action": "validated",
+          "changes": [
+            "summary_pt",
+            "summary_en"
+          ]
+        }
+      ],
       "disclaimer_pt": "Análise algorítmica. Não representa pesquisa de opinião.",
       "disclaimer_en": "Algorithmic analysis. Does not represent polling data.",
       "sentiment_score": 0.0,
-      "confidence_score": 0.0,
+      "confidence_score": 1.0,
       "_sentiment_scores": {},
-      "prominence_score": 0.0
-    },
-    {
-      "id": "76433f6fe158f87e",
-      "url": "https://www.poder360.com.br/poder-internacional/ira-rejeita-retirar-estoque-de-uranio-enriquecido-do-pais/",
-      "title": "Irã rejeita retirar estoque de urânio enriquecido do país",
-      "source": "Poder360",
-      "published_at": "2026-05-21T22:19:16Z",
-      "collected_at": "2026-05-21T22:46:20Z",
-      "status": "raw",
-      "relevance_score": 0.0,
-      "relevance_signals": null,
-      "candidates_mentioned": [],
-      "topics": [],
-      "narrative_cluster_id": null,
-      "duplicate_of": null,
-      "summaries": {
-        "pt-BR": "",
-        "en-US": ""
-      },
-      "content": "O líder supremo do Irã, Mojtaba Khamenei , determinou nesta 5ª feira (21.mai.2026) que o estoque de urânio enriquecido do país não seja enviado ao exterior. A informações é da Reuters . A retirada do urânio enriquecido é um dos principais pontos das negociações entre Irã e Estados Unidos sobre o programa nuclear iraniano. O governo norte-americano defende que o material seja enviado para outro país para limitar a capacidade nuclear de Teerã. O presidente dos Estados Unidos, Donald Trump (Partido Republicano), afirmou também nesta 5ª feira (21.mai) que os EUA vão “recuperar” o estoque de urânio altamente enriquecido do Irã e que o material “provavelmente” será destruído depois. Em entrevista a jornalistas, Trump disse que não permitirá que Teerã mantenha substâncias que possam ser usadas em armas nucleares. O republicano também declarou que os EUA não precisam do material iraniano e que o objetivo é impedir qualquer avanço do programa nuclear do país persa. O Irã tem cerca de 440 kg de urânio enriquecido a 60%, segundo estimativas citadas pelo Poder360. Especialistas afirmam que o país precisaria de poucas semanas para alcançar o nível de 90%, considerado suficiente para a produção de ogivas nucleares. O Tratado de Não Proliferação Nuclear estabelece o limite de 20% para atividades civis. Segundo as fontes ouvidas pela Reuters , integrantes do governo e das Forças Armadas iranianas apoiam a decisão de manter o estoque no país. Para Teerã, abrir mão do material reduziria o poder de negociação diante do Ocidente. Autoridades israelenses disseram à agência que Trump teria garantido a Israel que qualquer acordo incluiria a retirada do material nuclear iraniano. O primeiro-ministro israelense, Benjamin Netanyahu, afirmou que não considera o conflito encerrado enquanto o estoque de urânio enriquecido permanecer no Irã. Netanyahu também declarou que Teerã continua investindo em programas de mísseis balísticos e apoiando grupos armados aliados no Oriente Médio, como Hezbollah e Houthis. O Irã nega buscar armas nucleares e afirma que seu programa nuclear tem fins civis, como geração de energia e uso médico.",
-      "source_category": "politics",
-      "sentiment_per_candidate": {},
-      "edit_history": [],
-      "disclaimer_pt": "Análise algorítmica. Não representa pesquisa de opinião.",
-      "disclaimer_en": "Algorithmic analysis. Does not represent polling data.",
-      "sentiment_score": 0.0,
-      "confidence_score": 0.0,
-      "_sentiment_scores": {},
-      "prominence_score": 0.0
-    },
-    {
-      "id": "a51a5a5e8ff5b3a4",
-      "url": "https://www.cartacapital.com.br/mundo/trump-anuncia-o-envio-de-5-mil-soldados-dos-eua-a-polonia/",
-      "title": "Trump anuncia o envio de 5 mil soldados dos EUA à Polônia",
-      "source": "CartaCapital",
-      "published_at": "2026-05-21T22:18:53Z",
-      "collected_at": "2026-05-21T22:46:28Z",
-      "status": "raw",
-      "relevance_score": 0.0,
-      "relevance_signals": null,
-      "candidates_mentioned": [],
-      "topics": [],
-      "narrative_cluster_id": null,
-      "duplicate_of": null,
-      "summaries": {
-        "pt-BR": "",
-        "en-US": ""
-      },
-      "source_category": "magazine",
-      "content": "Mundo Trump anuncia o envio de 5 mil soldados dos EUA à Polônia A afirmação ocorre em meio à pressão do presidente norte-americano sobre a Europa Por AFP 21.05.2026 19h18 O presidente dos EUA, Donald Trump. Foto: Kent Nishimura/AFP Apoie Siga-nos no O presidente dos Estados Unidos, Donald Trump , anunciou nesta quinta-feira 21 que enviará cinco mil soldados à Polônia, embora não tenha especificado se fazia referência a um deslocamento já previsto anteriormente, adiado em meio à sua pressão sobre a Europa . O mandatário afirmou que a medida se baseava em sua relação com seu par polonês, Karol Nawrocki , um aliado nacionalista que, segundo disse, tem “orgulho de apoiar” nas eleições que venceu em 2025. “Tenho o prazer de anunciar que os Estados Unidos enviarão 5 mil soldados adicionais à Polônia”, escreveu Trump em sua rede Truth Social. Trump não deu mais detalhes, mas seus comentários pareciam se referir a um deslocamento de vários milhares de soldados americanos para a Polônia, cujo destino tem sido incerto há vários dias. Na semana passada, autoridades americanas disseram que o deslocamento de quatro mil soldados para a Polônia havia sido descartado, a mais recente medida do governo Trump para reduzir o número de tropas e punir aliados da Otan por não ajudarem na guerra contra o Irã. Depois, o vice-presidente JD Vance esclareceu na terça-feira que o deslocamento dos quatro mil soldados havia sido adiado, não cancelado, acrescentando que Trump não havia tomado uma “decisão definitiva”. Vance afirmou, no entanto, que a Europa precisava se virar “mais por conta própria”, enquanto Trump continua pressionando para que os aliados europeus assumam uma parcela maior do peso de sua defesa. O presidente norte-americano parece decidido a punir aliados que não apoiaram a guerra no Oriente Médio nem colaboraram com seu pedido de ajuda para reabrir o Estreito de Ormuz, que o Irã mantém fechado em resposta aos ataques dos Estados Unidos e de Israel de 28 de fevereiro. O Pentágono anunciou no início de maio que Washington retiraria cinco mil soldados da Alemanha depois que o chanceler Friedrich Merz disse que o Irã estava “humilhando” os Estados Unidos na mesa de negociações. Recomendadas Chefe da diplomacia europeia pede fim do controle e isolamento de Cuba Trump eliminará restrições a gases de efeito estufa usados na refrigeração Rubio anuncia viagem de Delcy Rodríguez à Índia Trump diz que não há necessidade de escalada contra Cuba Mais Lidas AFP Agência de notícias francesa, uma das maiores do mundo. Fundada em 1835, como Agência Havas. ENTENDA MAIS SOBRE: Donald Trump , EUA , Europa , Geopolítica , Otan , Polônia , Jornalismo crítico e inteligente. Todos os dias, no seu e-mail Assine nossa newsletter Assine nossa newsletter e receba um boletim matinal exclusivo Assinar Inscreva-se 2026 já começou Às vésperas das eleições de 2026 , o País volta a encarar um ponto de inflexão: o futuro democrático está novamente em jogo . A ameaça bolsonarista não foi derrotada, apenas recuou . No Congresso, forças conservadoras seguem ditando o ritmo . Lá fora, o avanço da extrema-direita e os conflitos em Gaza, no Irã e na Ucrânia agravam a instabilidade global. Se você valoriza o jornalismo crítico, independente e comprometido com a democracia, este é o momento de agir . Assine ou contribua com o quanto puder . Assine a CartaCapital Faça uma doação Leia também Mundo Trump eliminará restrições a gases de efeito estufa usados na refrigeração Por AFP CartaExpressa Em crise, Flávio busca ‘agenda positiva’ e deve ter encontro com Trump Por Wendal Carmo CartaExpressa Trump diz que não há necessidade de escalada contra Cuba Por AFP Mundo Putin visita a China para reafirmar laços após viagem de Trump Por AFP Jornalismo crítico e inteligente. Todos os dias, no seu e-mail Assine nossa newsletter Assine nossa newsletter e receba um boletim matinal exclusivo Assinar Inscreva-se",
-      "sentiment_per_candidate": {},
-      "edit_history": [],
-      "disclaimer_pt": "Análise algorítmica. Não representa pesquisa de opinião.",
-      "disclaimer_en": "Algorithmic analysis. Does not represent polling data.",
-      "sentiment_score": 0.0,
-      "confidence_score": 0.0,
-      "_sentiment_scores": {},
-      "prominence_score": 0.0
+      "prominence_score": 0.0,
+      "_ai_provider": "nvidia",
+      "_ai_model": "nvidia/nemotron-3-super-120b-a12b",
+      "ai_provider_editor": "nvidia/nemotron-3-super-120b-a12b",
+      "editor_note": null
     },
     {
       "id": "b1bb1d5fc211780c",
@@ -384,27 +301,57 @@
       "source": "O Globo",
       "published_at": "2026-05-21T22:18:34Z",
       "collected_at": "2026-05-21T22:46:16Z",
-      "status": "raw",
-      "relevance_score": 0.0,
-      "relevance_signals": null,
-      "candidates_mentioned": [],
-      "topics": [],
+      "status": "validated",
+      "relevance_score": 0.95,
+      "relevance_signals": {
+        "candidate_signal": 0.5,
+        "topic_signal": 0.3,
+        "keyword_signal": 0.15,
+        "source_signal": 0.0
+      },
+      "candidates_mentioned": [
+        "lula"
+      ],
+      "topics": [
+        "economia",
+        "previdencia",
+        "eleicoes"
+      ],
       "narrative_cluster_id": null,
       "duplicate_of": null,
       "summaries": {
-        "pt-BR": "",
-        "en-US": ""
+        "pt-BR": "A PEC que propõe o fim da escala 6x1 e a redução da jornada semanal de 44 para 40 horas deve incluir um prazo de transição de 60, 90 ou 120 dias após a promulgação, com possibilidade de entrada em vigor durante o período eleitoral. O texto também discute regras progressivas para a redução da carga horária, com opções de dois ou três anos, e busca mitigar custos para empregadores excluindo encargos sobre as horas reduzidas. A proposta é uma bandeira central da reeleição de Lula em 2026, com definição do relatório esperada até segunda-feira.",
+        "en-US": "The PEC proposing the end of the 6x1 work scale and reduction of the weekly workweek from 44 to 40 hours will include a transition period of 60, 90, or 120 days after promulgation, potentially taking effect during the electoral period. The text also discusses gradual implementation over two or three years, aiming to reduce employer costs by excluding certain charges on reduced hours. The proposal is a key electoral banner for Lula’s 2026 re-election bid, with the rapporteur’s report expected to be finalized by Monday."
       },
       "content": "A Proposta de Emenda Constitucional (PEC) que prevê o fim da escala 6x1 vai prever um prazo para que as novas regras entrem em vigor, a contar da promulgação do projeto em sessão conjunta da Câmara dos Deputados e do Senado. Há três alternativas de prazo sobre a mesa, de 60 dias, 90 dias e 120 dias. Escala 6x1: Motta se reúne com governo e cúpula da PEC, mas impasse sobre regra de transição segue até segunda-feira STF: Fachin deixa de levar revisão da vida toda a julgamento físico e placar desfavorável a aposentados volta a valer Com isso, há uma possibilidade de o dia extra de folga entrar em vigor no meio do período eleitoral. Caso seja aplicado um período de 90 dias e a PEC seja finalizada em julho, por exemplo, ela entraria em vigor em outubro. O fim da escala 6x1 é uma das principais bandeiras eleitorais do presidente Lula nas eleições deste ano, na qual ele tenta a reeleição. O texto em discussão também deve prever um prazo de transição para a redução da jornada semanal que hoje é de 44 horas e passará a ser de 40 horas. Neste caso, há duas possibilidades em discussão: de três anos, sendo uma hora neste ano e depois uma a cada 12 meses e de dois anos; e de duas horas em 2026 e uma hora a cada 12 meses. Master: Comissão do Senado convoca ministro da Previdência para explicar negociações de fundos com banco Segundo interlocutores do governo, o martelo será batido até segunda-feira, quando está prevista a apresentação do relatório da PEC, do deputado Leo Prates (Republicanos-BA), na comissão especial que analisa a proposta. Prates deverá se reunir até segunda com o ministro do Trabalho, Luiz Marinho, e com o presidente da Câmara dos Deputados, Hugo Motta (Republicanos-PB) para fechar os detalhes do relatório. Motta também deverá se reunir com o presidente Lula antes da apresentação do texto. Fim da escala 6x1: 'Robô não vai fazer greve, não vai pedir aumento, mas enquanto tiver trabalhador tem que respeitar', diz Lula Há outro ponto polêmico pendente de negociação diz respeito ao pagamento da horas descontadas da jornada atual e não trabalhada. Para aliviar o custo para os empregadores durante a transição, uma das ideias é retirar a incidência sobre encargos, como 13º e férias, sobre essa hora trabalhada. Como existem no país vários tipos de escala de trabalho, como 12x36, por exemplo, adotada na área da saúde, o texto da PEC deve ser genérico: limitar a carga horária semanal a 40 horas semanais com dois dias de descanso remunerados, seguidos ou não. Jornadas acima desse teto poderão ser negociadas com os sindicatos via acordos ou convenções coletivas, com adoção de banco de horas ou pagamento de hora extra. Fim da escala 6x1: Regra de transição é impasse na reta final para apresentação de relatório Trabalhadores com carga horária menor ou igual a 36 horas não terão redução automática de quatro horas. Contudo, isso poderá ser negociado com sindicatos. A carga horária para as categorias que têm regras específicas, como aeronautas, por exemplo, será tratada posteriormente em outro projeto, enviado pelo Executivo ao Congresso.",
       "source_category": "mainstream",
-      "sentiment_per_candidate": {},
-      "edit_history": [],
+      "sentiment_per_candidate": {
+        "lula": "positivo"
+      },
+      "edit_history": [
+        {
+          "tier": "editor",
+          "at": "2026-05-21T22:55:57Z",
+          "provider": "nvidia",
+          "action": "validated",
+          "changes": [
+            "summary_pt",
+            "summary_en"
+          ]
+        }
+      ],
       "disclaimer_pt": "Análise algorítmica. Não representa pesquisa de opinião.",
       "disclaimer_en": "Algorithmic analysis. Does not represent polling data.",
-      "sentiment_score": 0.0,
-      "confidence_score": 0.0,
-      "_sentiment_scores": {},
-      "prominence_score": 0.0
+      "sentiment_score": 0.2,
+      "confidence_score": 1.0,
+      "_sentiment_scores": {
+        "lula": 0.2
+      },
+      "prominence_score": 0.0,
+      "_ai_provider": "nvidia",
+      "_ai_model": "nvidia/nemotron-3-super-120b-a12b",
+      "ai_provider_editor": "nvidia/nemotron-3-super-120b-a12b",
+      "editor_note": null
     },
     {
       "id": "6862ba9e2299f965",
@@ -413,56 +360,51 @@
       "source": "CartaCapital",
       "published_at": "2026-05-21T22:18:01Z",
       "collected_at": "2026-05-21T22:46:28Z",
-      "status": "raw",
-      "relevance_score": 0.0,
-      "relevance_signals": null,
+      "status": "validated",
+      "relevance_score": 0.45,
+      "relevance_signals": {
+        "candidate_signal": 0.0,
+        "topic_signal": 0.3,
+        "keyword_signal": 0.15,
+        "source_signal": 0.0
+      },
       "candidates_mentioned": [],
-      "topics": [],
+      "topics": [
+        "eleicoes",
+        "corrupcao",
+        "midia"
+      ],
       "narrative_cluster_id": null,
       "duplicate_of": null,
       "summaries": {
-        "pt-BR": "",
-        "en-US": ""
+        "pt-BR": "O ministro Flávio Dino votou para derrubar a anistia a partidos que não cumpriram a cota racial nas eleições de 2022, considerando o perdão de sanções como um retrocesso social. Ele abriu divergência em julgamento no plenário virtual do STF, que avalia a constitucionalidade da emenda que perdoa a não aplicação de recursos a candidaturas de mulheres e negros. O relator Cristiano Zanin e Dias Toffoli defendem a constitucionalidade da norma, argumentando que o piso de 30% representa avanço na ação afirmativa.",
+        "en-US": "Minister Flávio Dino voted to overturn the amnesty for political parties that failed to meet racial quotas in the 2022 elections, calling the pardon of sanctions a social setback. He filed a dissent in the STF’s virtual plenary judgment reviewing the constitutionality of the amendment that forgives parties for not allocating resources to Black and female candidatures. Relator Cristiano Zanin and Dias Toffoli support the amendment, stating the 30% resource floor is an unprecedented advancement in affirmative action policies."
       },
       "source_category": "magazine",
       "content": "Justiça Dino abre divergência e vota para derrubar anistia a partidos que descumpriram cota racial O julgamento acontece no plenário virtual até esta sexta-feira 22 Por Maiara Marinho 21.05.2026 19h18 Ministro Flávio Dino na sessão plenária do STF\n\n \n\nFoto: Rosinei Coutinho/STF Apoie Siga-nos no O ministro Flávio Dino , do Supremo Tribunal Federal, votou nesta quinta-feira 21 para derrubar a anistia a partidos políticos que descumpriram cotas raciais. Ele abriu divergência em julgamento que acontece no plenário virtual até esta sexta-feira 22. O relator, Cristiano Zanin , se manifestou pela constitucionalidade integral da emenda à Constituição que perdoa sanções impostas a partidos que não cumpriram a cota de recursos a candidaturas de mulheres e negros nas eleições de 2022. Ele foi acompanhado por Dias Toffoli . Para Dino, a anistia prevista na norma promove um “ retrocesso social” proibido pela Constituição. O ministro afirma que a medida desresponsabiliza condutas ilícitas anteriores, convertendo uma política obrigatória em mera recomendação . Um trecho da emenda afirma que a aplicação de qualquer valor em candidaturas de pessoas pretas e pardas realizadas por partidos nas eleições ocorridas até agosto de 2024 deve ser considerada cumprida. Outro ponto controverso e questionado no processo é o que estabelece em 30% o total de recursos a serem investidos em candidaturas de pessoas pretas. Os autores das ações – Rede Sustentabilidade, Federação Nacional das Associações Quilombolas e a Procuradoria-Geral da República – alegam que a jurisprudência do Tribunal Superior Eleitoral prevê a aplicação proporcional dos recursos, adotando-se um piso mínimo de 30%. No entendimento de Zanin, a fixação de 30% de verbas para candidatos pretos e pardos diretamente no texto constitucional representa um avanço inédito nas políticas de ação afirmativa. O Congresso Nacional e a Advocacia-Geral da União se manifestaram pela improcedência do pedido. Para a AGU, o percentual estabelecido na norma “confere efetividade a fundamentos e objetivos fundamentais da República, tais como a dignidade da pessoa humana, o pluralismo político e a construção de uma sociedade justa e contrária à discriminação por raça”. Recomendadas Maioria do STF valida lei sobre a construção da Ferrogrão Após recusar mais uma proposta de delação, PGR decide manter acordo com Daniel Vorcaro STF torna policiais réus em novo desdobramento do Caso Marielle Moraes concede prisão domiciliar a mulher condenada a 17 anos pelo 8 de Janeiro Mais Lidas Maiara Marinho Repórter de CartaCapital baseada em Brasília, com menção honrosa pela Agência LivreJor e mestrado em Comunicação e Cultura na UFRJ. Publicações em Le Monde Diplomatique Brasil, Ecoa UOL e Repórter Brasil. ENTENDA MAIS SOBRE: Cotas Raciais , EC 133/2024 , STF , Jornalismo crítico e inteligente. Todos os dias, no seu e-mail Assine nossa newsletter Assine nossa newsletter e receba um boletim matinal exclusivo Assinar Inscreva-se Apoie o jornalismo que chama as coisas pelo nome Muita gente esqueceu o que escreveu, disse ou defendeu. Nós não. O compromisso de CartaCapital com os princípios do bom jornalismo permanece o mesmo. O combate à desigualdade nos importa. A denúncia das injustiças importa. Importa uma democracia digna do nome. Importa o apego à verdade factual e a honestidade. Estamos aqui, há mais de 30 anos, porque nos importamos. Como nossos fiéis leitores, CartaCapital segue atenta. Se o bom jornalismo também importa para você, nos ajude a seguir lutando. Assine a edição semanal de CartaCapital ou contribua com o quanto puder. Única Mensal Anual R$25 R$50 R$100 R$200 Outro Quero apoiar Leia também Justiça Após recusar mais uma proposta de delação, PGR decide manter acordo com Daniel Vorcaro Por Maiara Marinho Justiça Maioria do STF valida lei sobre a construção da Ferrogrão Por Maiara Marinho Sociedade Os detalhes da investigação que prendeu Deolane Bezerra, apontada como elo do PCC Por CartaCapital Jornalismo crítico e inteligente. Todos os dias, no seu e-mail Assine nossa newsletter Assine nossa newsletter e receba um boletim matinal exclusivo Assinar Inscreva-se",
       "sentiment_per_candidate": {},
-      "edit_history": [],
+      "edit_history": [
+        {
+          "tier": "editor",
+          "at": "2026-05-21T22:56:01Z",
+          "provider": "nvidia",
+          "action": "validated",
+          "changes": [
+            "summary_pt",
+            "summary_en"
+          ]
+        }
+      ],
       "disclaimer_pt": "Análise algorítmica. Não representa pesquisa de opinião.",
       "disclaimer_en": "Algorithmic analysis. Does not represent polling data.",
       "sentiment_score": 0.0,
-      "confidence_score": 0.0,
+      "confidence_score": 1.0,
       "_sentiment_scores": {},
-      "prominence_score": 0.0
-    },
-    {
-      "id": "ae17ae1ffbc92f0f",
-      "url": "https://www.poder360.com.br/poder-justica/dirigentes-da-justica-militar-fazem-visita-oficial-a-china/",
-      "title": "Dirigentes da Justiça Militar fazem visita oficial à China",
-      "source": "Poder360",
-      "published_at": "2026-05-21T22:13:09Z",
-      "collected_at": "2026-05-21T22:46:20Z",
-      "status": "raw",
-      "relevance_score": 0.0,
-      "relevance_signals": null,
-      "candidates_mentioned": [],
-      "topics": [],
-      "narrative_cluster_id": null,
-      "duplicate_of": null,
-      "summaries": {
-        "pt-BR": "",
-        "en-US": ""
-      },
-      "content": "Dirigentes do STM (Superior Tribunal Militar) visitaram a China na 4ª feira (20.mai.2026) para uma reunião oficial. Na ocasião, foram debatidos com representantes do CIISS (China Institute for International Strategic Studies) temas de geopolítica e cooperação internacional e institucional entre os países. A comitiva do STM é composta pela presidente, Maria Elizabeth Rocha, o vice Francisco Joseli Parente Camelo, pelo juiz auxiliar da Presidência, Flávio Freitas, e pelo diretor-geral do Tribunal, José Carlos Nader Motta. Durante a reunião, foram apresentadas as competências da Justiça Militar brasileira. A comitiva abordou sua atuação no julgamento de práticas ilícitas nas Forças Armadas para a preservação de sua hierarquia, disciplina e integridade institucional. O encontro também abordou o cenário geopolítico da América Latina e os desafios relacionados à preservação da soberania das nações. De acordo com o STM, representantes chineses afirmaram que “a China respeita a soberania dos países e não busca ampliar sua esfera de influência” . Como parte da agenda institucional, integrantes do STM participarão também de seminários e mesas de debates em universidades chinesas.",
-      "source_category": "politics",
-      "sentiment_per_candidate": {},
-      "edit_history": [],
-      "disclaimer_pt": "Análise algorítmica. Não representa pesquisa de opinião.",
-      "disclaimer_en": "Algorithmic analysis. Does not represent polling data.",
-      "sentiment_score": 0.0,
-      "confidence_score": 0.0,
-      "_sentiment_scores": {},
-      "prominence_score": 0.0
+      "prominence_score": 0.0,
+      "_ai_provider": "nvidia",
+      "_ai_model": "nvidia/nemotron-3-super-120b-a12b",
+      "ai_provider_editor": "nvidia/nemotron-3-super-120b-a12b",
+      "editor_note": null
     },
     {
       "id": "5e8d7dcec0c265b2",
@@ -471,27 +413,57 @@
       "source": "Veja",
       "published_at": "2026-05-21T22:08:55Z",
       "collected_at": "2026-05-21T22:46:26Z",
-      "status": "raw",
-      "relevance_score": 0.0,
-      "relevance_signals": null,
-      "candidates_mentioned": [],
-      "topics": [],
+      "status": "validated",
+      "relevance_score": 0.95,
+      "relevance_signals": {
+        "candidate_signal": 0.5,
+        "topic_signal": 0.3,
+        "keyword_signal": 0.15,
+        "source_signal": 0.0
+      },
+      "candidates_mentioned": [
+        "flavio-bolsonaro"
+      ],
+      "topics": [
+        "corrupcao",
+        "eleicoes",
+        "midia"
+      ],
       "narrative_cluster_id": null,
       "duplicate_of": null,
       "summaries": {
-        "pt-BR": "",
-        "en-US": ""
+        "pt-BR": "Valdemar Costa Neto, presidente do PL, defendeu a instalação de uma CPMI para investigar o Banco Master e afirmou que o partido apoia a oitiva do banqueiro Daniel Vorcaro, cujo depoimento à PF não é público. Apesar do áudio revelado pelo The Intercept Brasil mostrando que Flávio Bolsonaro pediu recursos a Vorcaro para finalizar o filme 'Dark Horse', Valdemar reiterou que a candidatura presidencial de Flávio está mantida e que o partido está focado em sua pré-campanha, negando qualquer prazo para decisão sobre sua viabilidade eleitoral.",
+        "en-US": "Valdemar Costa Neto, president of the PL, advocated for the installation of a CPMI to investigate Banco Master and stated that the party supports the testimony of banker Daniel Vorcaro, whose deposition to the Federal Police is not public. Despite an audio leak by The Intercept Brasil showing Flávio Bolsonaro requesting funds from Vorcaro to finish the film 'Dark Horse', Valdemar reiterated that Flávio's presidential candidacy remains intact and that the party is focused on his pre-campaign, denying any deadline for deciding on his electoral viability."
       },
       "content": "O presidente nacional do PL, Valdemar Costa Neto , defendeu a criação de uma CPMI do Banco Master e disse que as bancadas do partido no Congresso seriam favoráveis à investigação. As declarações foram feitas durante entrevista a VEJA, nesta quinta-feira, 21. “Queremos que instale a CPMI. Nós apoiamos, e o PT não apoia. Qual o brasileiro que não quer ver o [Daniel] Vorcaro falando? Ver ele falando é só numa CPMI”, disse o cacique, acrescentando que os depoimentos do banqueiro junto à Polícia Federal não são de conhecimento público. “Nós queremos ver o Vorcaro falando”, prosseguiu. Nesta quinta, 21, o presidente do Congresso, Davi Alcolumbre (União Brasil-AP), rejeitou pedidos para ler o requerimento de abertura de uma CPMI sobre o Banco Master. Pela manhã, parlamentares tanto da base governista quanto da oposição se manifestaram a favor da instalação de investigação que apure o envolvimento do banco Master na prática de fraudes financeiras. Um desses nomes foi o próprio senador Flávio Bolsonaro (PL-RJ), candidato do PL à Presidência que, cercado de correligionários, subiu à tribuna da Casa para defender a abertura da CPMI. Na última semana, áudio divulgado pelo The Intercept Brasil revelou que Flávio pediu recursos a Vorcaro para finalizar a produção de Dark Horse , obra biográfica de Jair Bolsonaro. O veículo também revelou que o senador visitou o banqueiro após a eclosão da Polícia Federal, quando ele já usava tornozeleira eletrônica. Continua após a publicidade Candidatura mantida Apesar da implicação de Flávio junto a Vorcaro, Valdemar Costa Neto afirmou que a candidatura à Presidência do senador está mantida . A manifestação do cacique se deu em meio à repercussão de que o partido teria dado um prazo de quinze dias para decidir sobre a viabilidade eleitoral do filho Zero Um de Bolsonaro após o escândalo — o que o presidente do PL negou. Ele explicou que esse período é o estimado pela sigla para que o presidenciável volte a crescer nas pesquisas de intenção de voto. Pesquisa AtlasIntel divulgada na terça-feira, 19 , mostra que, após a divulgação do áudio, Lula tem quase treze pontos de vantagem para Flávio no primeiro turno (47,0% a 34,3%). O petista praticamente manteve estável a sua intenção de votos, mas o senador viu recuar o percentual de apoiadores em mais de cinco pontos. Na entrevista concedida a VEJA nesta quinta-feira, 21, Valdemar reforçou que o partido está focado na pré-campanha de Flávio ao Planalto. “[A candidatura] Está totalmente mantida. Nós estamos unidos em torno dele. O Flávio é o nosso candidato. E o que houve foi que alguns jornalistas mal intencionados, que comentei com nossos deputados que, dentro de quinze dias faremos uma avaliação para ver o rumo da campanha, como vamos conduzir a nossa campanha”, afirmou Publicidade",
       "source_category": "magazine",
-      "sentiment_per_candidate": {},
-      "edit_history": [],
+      "sentiment_per_candidate": {
+        "flavio-bolsonaro": "positivo"
+      },
+      "edit_history": [
+        {
+          "tier": "editor",
+          "at": "2026-05-21T22:56:11Z",
+          "provider": "nvidia",
+          "action": "validated",
+          "changes": [
+            "summary_pt",
+            "summary_en"
+          ]
+        }
+      ],
       "disclaimer_pt": "Análise algorítmica. Não representa pesquisa de opinião.",
       "disclaimer_en": "Algorithmic analysis. Does not represent polling data.",
-      "sentiment_score": 0.0,
-      "confidence_score": 0.0,
-      "_sentiment_scores": {},
-      "prominence_score": 0.0
+      "sentiment_score": 0.3,
+      "confidence_score": 1.0,
+      "_sentiment_scores": {
+        "flavio-bolsonaro": 0.3
+      },
+      "prominence_score": 0.0,
+      "_ai_provider": "nvidia",
+      "_ai_model": "nvidia/nemotron-3-super-120b-a12b",
+      "ai_provider_editor": "nvidia/nemotron-3-super-120b-a12b",
+      "editor_note": null
     },
     {
       "id": "57c0b82553450c6c",
@@ -500,56 +472,58 @@
       "source": "G1 Politica",
       "published_at": "2026-05-21T22:07:46Z",
       "collected_at": "2026-05-21T22:46:08Z",
-      "status": "raw",
-      "relevance_score": 0.0,
-      "relevance_signals": null,
-      "candidates_mentioned": [],
-      "topics": [],
+      "status": "validated",
+      "relevance_score": 0.9,
+      "relevance_signals": {
+        "candidate_signal": 0.5,
+        "topic_signal": 0.3,
+        "keyword_signal": 0.1,
+        "source_signal": 0.0
+      },
+      "candidates_mentioned": [
+        "flavio-bolsonaro"
+      ],
+      "topics": [
+        "corrupcao",
+        "politica_externa",
+        "midia",
+        "eleicoes"
+      ],
       "narrative_cluster_id": null,
       "duplicate_of": null,
       "summaries": {
-        "pt-BR": "",
-        "en-US": ""
+        "pt-BR": "Flávio Bolsonaro admite que escondeu publicamente seu contato com Daniel Vorcaro, alegando cláusula de confidencialidade relacionada ao financiamento do filme 'Dark Horse'. Durante sessão do Congresso, ele defendeu a instalação de uma CPMI para investigar o Banco Master e afirmou que não tem 'nada a esconder', apesar de ter mentido anteriormente sobre o relacionamento com o banqueiro preso.",
+        "en-US": "Flávio Bolsonaro admitted to publicly hiding his contact with Daniel Vorcaro, citing a confidentiality clause tied to the financing of the film 'Dark Horse'. During a congressional session, he advocated for a CPMI to investigate Banco Master and claimed he has 'nothing to hide', despite previously denying any relationship with the imprisoned banker."
       },
       "content": "Flávio Bolsonaro sobre relação com Vorcaro: 'não tenho nada a temer' Nesta quinta-feira (21), parlamentares de diversos partidos se manifestaram a favor de uma CPMI para investigar as suspeitas de fraudes financeiras envolvendo o banco de Daniel Vorcaro, preso desde março pela Polícia Federal (PF), na operação Compliance Zero. Entre eles, o senador Flávio Bolsonaro (PL-RJ). 📱Baixe o app do g1 para ver notícias em tempo real e de graça A declaração ocorreu durante sessão do Congresso Nacional, nesta manhã, para análise de um veto à Lei de Diretrizes Orçamentárias (LDO) que restringe a transferência de recursos federais para municípios considerados inadimplentes. \"É necessária a instalação da CPMI do Master. Faço um desafio: quero Daniel Vorcaro e Augusto Lima sentados no banco da CPMI, explicando qual era a relação deles com Flávio Bolsonaro, Lula e Alexandre de Moraes. Porque eu não tenho nada a temer, nada a esconder”, declarou. Flávio admitiu em entrevista à GloboNews, na semana passada, que escondeu publicamente que tinha contato com Vorcaro. Ele alegou uma cláusula de confidencialidade ligada ao financiamento do filme \"Dark Horse\", sobre Jair Bolsonaro. Naquele dia, o site The Intercept divulgou conversas de Flávio e Vorcaro. O senador disse que pediu dinheiro para Vorcaro para custear o filme sobre seu pai, Jair Bolsonaro, e chegou a visitar o banqueiro enquanto ele usava tornozeleira eletrônica. Flávio Bolsonaro defende CPMI do Banco Master. Lula Marques/Agência Brasil À GloboNews, questionado sobre declarações anteriores, em que ele afirmava nunca ter tido contato com Vorcaro, nem ele nem integrantes da família Bolsonaro, Flávio admitiu ter mentido. “Eu menti. Eu podia descumprir uma cláusula contratual? Isso gera multa, isso gera exposição dos investidores”, disse o pré-candidato. Segundo o senador, o contato com Vorcaro era “exclusivamente” para tratar do projeto audiovisual e negou irregularidade na relação. Flávio Bolsonaro defende CPMI do Banco Master. Reprodução/Globonews",
       "source_category": "mainstream",
-      "sentiment_per_candidate": {},
-      "edit_history": [],
-      "disclaimer_pt": "Análise algorítmica. Não representa pesquisa de opinião.",
-      "disclaimer_en": "Algorithmic analysis. Does not represent polling data.",
-      "sentiment_score": 0.0,
-      "confidence_score": 0.0,
-      "_sentiment_scores": {},
-      "prominence_score": 0.0
-    },
-    {
-      "id": "c91513ab1f8845b6",
-      "url": "https://www.poder360.com.br/poder-economia/desenrola-atinge-1-milhao-de-pessoas-e-renegocia-r-10-bi-em-dividas/",
-      "title": "Desenrola atinge 1 milhão de pessoas e renegocia R$ 10 bi em dívidas",
-      "source": "Poder360",
-      "published_at": "2026-05-21T21:57:12Z",
-      "collected_at": "2026-05-21T22:46:20Z",
-      "status": "raw",
-      "relevance_score": 0.0,
-      "relevance_signals": null,
-      "candidates_mentioned": [],
-      "topics": [],
-      "narrative_cluster_id": null,
-      "duplicate_of": null,
-      "summaries": {
-        "pt-BR": "",
-        "en-US": ""
+      "sentiment_per_candidate": {
+        "flavio-bolsonaro": "positivo"
       },
-      "content": "O programa Desenrola Famílias concluiu 1.134.507 operações e resultou na negociação de R$ 10 bilhões. O balanço foi apresentado pelo ministro da Fazenda, Dario Durigan, nesta 5ª feira (21.mai.2026), em Brasília. Os dados do novo Desenrola abrangem o período de 4 de maio, quando o programa foi divulgado, a 19 de maio, data de atualização dos refinanciamentos . O ministro também anunciou que a partir de 3ª feira (26.mai.2026) os devedores poderão usar parte do saldo do FGTS (Fundo de Garantia do Tempo de Serviço) para quitar ou amortizar os débitos. QUITAÇÕES À VISTA Foram 449.003 operações de pessoas que optaram por pagar o acordo em uma única parcela. O valor original desses débitos, antes da repactuação, era de R$ 1,06 bilhão. C om a aplicação de um desconto médio de aproximadamente 85%, o valor efetivamente pago pelas famílias caiu para R$ 154,2 milhões. REFINANCIAMENTO A maior fatia do programa se concentra nas dívidas que foram parceladas. Foram 685.504 operações refinanciadas que contam com a garantia do FGO (Fundo de Garantia de Operações). As dívidas originais chegavam a R$ 9 bilhões. Após a repactuação, essas dívidas foram transformadas em novas operações que ficam em R$ 1,36 bilhão. USO DO FGTS E FIES Para acelerar a limpeza do nome dos inadimplentes, o programa estipula a liberação de até 20% do saldo do FGTS, exclusivamente para famílias com renda mensal de até 5 salários mínimos, o que permite usar o recurso para as negociações. No desenrola Fies, violtado para a Educação, foram renegociados 34.087 contratos estudantis. Com um desconto médio de aproximadamente 80%, a dívida original de R$ 2,04 bilhões foi reduzida para R$ 410,2 milhões em novas operações. CRÉDITO EMPRESARIAL Na ponta focada em injetar dinheiro novo na economia para capital de giro, o eixo empresarial liberou novas linhas de crédito. O volume foi puxado pelo Pronampe, que emprestou R$ 5,1 bilhões por meio de 31.502 operações. O programa registrou uma média de 3.500 contratações diárias, um aumento de 174% em comparação a abril de 2026. Já o Procred totalizou R$ 396 milhões em valor de operações, alcançando 9.703 contratos.",
-      "source_category": "politics",
-      "sentiment_per_candidate": {},
-      "edit_history": [],
+      "edit_history": [
+        {
+          "tier": "editor",
+          "at": "2026-05-21T22:56:23Z",
+          "provider": "nvidia",
+          "action": "validated",
+          "changes": [
+            "summary_pt",
+            "summary_en"
+          ]
+        }
+      ],
       "disclaimer_pt": "Análise algorítmica. Não representa pesquisa de opinião.",
       "disclaimer_en": "Algorithmic analysis. Does not represent polling data.",
-      "sentiment_score": 0.0,
-      "confidence_score": 0.0,
-      "_sentiment_scores": {},
-      "prominence_score": 0.0
+      "sentiment_score": 0.4,
+      "confidence_score": 1.0,
+      "_sentiment_scores": {
+        "flavio-bolsonaro": 0.4
+      },
+      "prominence_score": 0.0,
+      "_ai_provider": "nvidia",
+      "_ai_model": "nvidia/nemotron-3-super-120b-a12b",
+      "ai_provider_editor": "nvidia/nemotron-3-super-120b-a12b",
+      "editor_note": null
     },
     {
       "id": "3f5997c344281847",
@@ -558,27 +532,57 @@
       "source": "O Antagonista",
       "published_at": "2026-05-21T21:56:29Z",
       "collected_at": "2026-05-21T22:46:24Z",
-      "status": "raw",
-      "relevance_score": 0.0,
-      "relevance_signals": null,
-      "candidates_mentioned": [],
-      "topics": [],
+      "status": "validated",
+      "relevance_score": 1.0,
+      "relevance_signals": {
+        "candidate_signal": 0.5,
+        "topic_signal": 0.3,
+        "keyword_signal": 0.15,
+        "source_signal": 0.05
+      },
+      "candidates_mentioned": [
+        "flavio-bolsonaro"
+      ],
+      "topics": [
+        "corrupcao",
+        "eleicoes",
+        "midia"
+      ],
       "narrative_cluster_id": null,
       "duplicate_of": null,
       "summaries": {
-        "pt-BR": "",
-        "en-US": ""
+        "pt-BR": "O senador Ciro Nogueira (PP-PI) afirmou que Flávio Bolsonaro (PL-RJ), pré-candidato à Presidência e colega de partido, 'tem que ser investigado' no caso do Banco Master, evitando tomar partido apesar de ambos estarem entre os investigados. A declaração foi feita em entrevista à TV Clube na quinta-feira, 21, após novos contornos no caso com a divulgação de mensagens.",
+        "en-US": "Senator Ciro Nogueira (PP-PI) stated that Flávio Bolsonaro (PL-RJ), a pre-candidate for president and fellow party member, 'must be investigated' in the Banco Master case, refraining from taking sides despite both being under investigation. The comment was made in an interview with TV Clube on Thursday, the 21st, following new developments in the case after the release of messages."
       },
       "content": "Em entrevista exibida nesta quinta-feira, 21, pela TV Clube, o senador Ciro Nogueira (PP-PI) preferiu não tomar partido em favor do colega e pré-candidato à Presidência, Flávio Bolsonaro (PL-RJ), também envolvido nas investigações relacionadas ao Banco Master. Ambos os parlamentares estão entre os investigados no caso, que ganhou novos contornos após a divulgação de mensagens... The post Ciro Nogueira diz que Flávio “tem que ser investigado” appeared first on O Antagonista .",
       "source_category": "politics",
-      "sentiment_per_candidate": {},
-      "edit_history": [],
+      "sentiment_per_candidate": {
+        "flavio-bolsonaro": "negativo"
+      },
+      "edit_history": [
+        {
+          "tier": "editor",
+          "at": "2026-05-21T22:56:52Z",
+          "provider": "nvidia",
+          "action": "validated",
+          "changes": [
+            "summary_pt",
+            "summary_en"
+          ]
+        }
+      ],
       "disclaimer_pt": "Análise algorítmica. Não representa pesquisa de opinião.",
       "disclaimer_en": "Algorithmic analysis. Does not represent polling data.",
-      "sentiment_score": 0.0,
-      "confidence_score": 0.0,
-      "_sentiment_scores": {},
-      "prominence_score": 0.0
+      "sentiment_score": -0.2,
+      "confidence_score": 1.0,
+      "_sentiment_scores": {
+        "flavio-bolsonaro": -0.2
+      },
+      "prominence_score": 0.0,
+      "_ai_provider": "nvidia",
+      "_ai_model": "nvidia/nemotron-3-super-120b-a12b",
+      "ai_provider_editor": "nvidia/nemotron-3-super-120b-a12b",
+      "editor_note": null
     },
     {
       "id": "f15b79bb7f98efa2",
@@ -587,27 +591,60 @@
       "source": "Folha Poder",
       "published_at": "2026-05-21T21:54:00Z",
       "collected_at": "2026-05-21T22:46:12Z",
-      "status": "raw",
-      "relevance_score": 0.0,
-      "relevance_signals": null,
-      "candidates_mentioned": [],
-      "topics": [],
+      "status": "validated",
+      "relevance_score": 0.95,
+      "relevance_signals": {
+        "candidate_signal": 0.5,
+        "topic_signal": 0.3,
+        "keyword_signal": 0.15,
+        "source_signal": 0.0
+      },
+      "candidates_mentioned": [
+        "lula"
+      ],
+      "topics": [
+        "corrupcao",
+        "eleicoes",
+        "midia",
+        "politica_externa"
+      ],
       "narrative_cluster_id": null,
       "duplicate_of": null,
       "summaries": {
-        "pt-BR": "",
-        "en-US": ""
+        "pt-BR": "O PL protocolou representação no TSE contra o presidente Luiz Inácio Lula da Silva, alegando uso indevido da máquina pública para promoção pessoal por meio de eventos institucionais e canais oficiais do governo. O partido cita como precedente a condenação de Jair Bolsonaro por abuso de poder político e uso da máquina em 2022. A ação foi protocolada em 21 de maio de 2026.",
+        "en-US": "The PL party filed a representation with the TSE against President Luiz Inácio Lula da Silva, alleging improper use of public resources for personal political promotion through institutional events and official government channels. The party cites the 2022 conviction of Jair Bolsonaro for abuse of political power and misuse of state apparatus as a precedent. The action was filed on May 21, 2026."
       },
       "content": "O PL , partido do pré-candidato Flávio Bolsonaro , entrou com uma representação no Tribunal Superior Eleitoral (TSE) contra o presidente Luiz Inácio Lula da Silva, com a justificativa de que ele promoveu eventos institucionais ao longo deste mês para promoção pessoal e política, com uso de estruturas públicas e canais oficiais de comunicação do governo. Leia mais (05/21/2026 - 18h54)",
       "source_category": "mainstream",
-      "sentiment_per_candidate": {},
-      "edit_history": [],
+      "sentiment_per_candidate": {
+        "lula": "positivo",
+        "flavio-bolsonaro": "neutro"
+      },
+      "edit_history": [
+        {
+          "tier": "editor",
+          "at": "2026-05-21T22:56:56Z",
+          "provider": "nvidia",
+          "action": "validated",
+          "changes": [
+            "summary_pt",
+            "summary_en"
+          ]
+        }
+      ],
       "disclaimer_pt": "Análise algorítmica. Não representa pesquisa de opinião.",
       "disclaimer_en": "Algorithmic analysis. Does not represent polling data.",
-      "sentiment_score": 0.0,
-      "confidence_score": 0.0,
-      "_sentiment_scores": {},
-      "prominence_score": 0.0
+      "sentiment_score": 0.05,
+      "confidence_score": 1.0,
+      "_sentiment_scores": {
+        "lula": 0.2,
+        "flavio-bolsonaro": -0.1
+      },
+      "prominence_score": 0.0,
+      "_ai_provider": "nvidia",
+      "_ai_model": "nvidia/nemotron-3-super-120b-a12b",
+      "ai_provider_editor": "nvidia/nemotron-3-super-120b-a12b",
+      "editor_note": null
     },
     {
       "id": "29eac66b3fe35212",
@@ -616,85 +653,56 @@
       "source": "Veja",
       "published_at": "2026-05-21T21:52:51Z",
       "collected_at": "2026-05-21T22:46:26Z",
-      "status": "raw",
-      "relevance_score": 0.0,
-      "relevance_signals": null,
-      "candidates_mentioned": [],
-      "topics": [],
+      "status": "validated",
+      "relevance_score": 0.95,
+      "relevance_signals": {
+        "candidate_signal": 0.5,
+        "topic_signal": 0.3,
+        "keyword_signal": 0.15,
+        "source_signal": 0.0
+      },
+      "candidates_mentioned": [
+        "aldo-rebelo"
+      ],
+      "topics": [
+        "eleicoes",
+        "corrupcao"
+      ],
       "narrative_cluster_id": null,
       "duplicate_of": null,
       "summaries": {
-        "pt-BR": "",
-        "en-US": ""
+        "pt-BR": "O ex-ministro Aldo Rebelo contestou a possível expulsão da Democracia Cristã (DC) por decisão do presidente do partido, João Caldas, que apoia a pré-candidatura de Joaquim Barbosa à presidência em 2026. Rebelo afirma que o processo disciplinar viola o estatuto partidário e não tem fundamento, defendendo que a decisão deve ser tomada pela convenção. A disputa gerou racha no partido, com lideranças estaduais opostas a Barbosa e a retirada da pré-candidatura de Paulo Cesar Quartiero em Roraima.",
+        "en-US": "Former minister Aldo Rebelo challenged a potential expulsion from the Christian Democracy (DC) party, initiated by party president João Caldas, who is promoting Joaquim Barbosa as the party’s 2026 presidential candidate. Rebelo argues the disciplinary process lacks factual basis, violates party statute, and should be decided by the party convention. The conflict has caused a party split, with state leaders opposing Barbosa and Paulo Cesar Quartiero withdrawing his gubernatorial bid in Roraima."
       },
       "content": "O ex-ministro Aldo Rebelo contestou o processo aberto pela executiva nacional da Democracia Cristã (DC) que pode levar à sua expulsão do partido. A decisão sobre sua permanência na sigla e na disputa presidencial de 2026, segundo ele, deve ser tomada pela convenção partidária. “A nota da direção nacional da Democracia Cristã (DC) não atinge minha honra e a dignidade públicas pela ausência de qualquer fato apontado que justifique a medida extrema contra minha filiação”, afirma Rebelo em nota enviada à imprensa nesta quinta-feira, 21. A instauração do processo disciplinar que pode levar à desfiliação de Aldo Rebelo foi divulgada mais cedo, nesta quinta-feira, pelo diretório nacional do DC. A manobra é capitaneada pelo presidente do partido, o ex-deputado federal João Caldas , que tenta remover Rebelo da sigla e consolidar como presidenciável Joaquim Barbosa , ex-ministro do Supremo Tribunal Federal . Para Rebelo, o procedimento aberto contra ele viola o estatuto partidário do DC e o princípio da livre manifestação dos filiados. “Considera-se exercício abusivo de direito, que deve ser rechaçado no âmbito da jurisdição caso se insista com a temerária iniciativa antidemocrática”, acrescenta o comunicado do ex-ministro. Conforme publicado por VEJA nos últimos dias, a decisão de Caldas de lançar Joaquim Barbosa ao Planalto gerou indignação entre dirigentes estaduais do DC, que dizem não ter sido avisados da decisão e marcam oposição ferrenha ao nome do ex-magistrado do STF . Alas do partido defendem a manutenção da pré-candidatura de Rebelo , lançada pela Democracia Cristã em janeiro deste ano. O racha já levou o ex-vice-governador de Roraima e presidente local do DC, Paulo Cesar Quartiero , a retirar sua pré-candidatura ao governo do estado em 2026. A VEJA, Quartiero diz ter sido removido dos grupos internos do partido após se manifestar contra a escolha de Barbosa, enquanto Caldas sustenta que “não há divergência” e que o colega será destituído da coordenação do diretório roraimense da sigla. Publicidade",
       "source_category": "magazine",
-      "sentiment_per_candidate": {},
-      "edit_history": [],
-      "disclaimer_pt": "Análise algorítmica. Não representa pesquisa de opinião.",
-      "disclaimer_en": "Algorithmic analysis. Does not represent polling data.",
-      "sentiment_score": 0.0,
-      "confidence_score": 0.0,
-      "_sentiment_scores": {},
-      "prominence_score": 0.0
-    },
-    {
-      "id": "93d7e28294c8d447",
-      "url": "https://www.poder360.com.br/poder-copa-2026/netflix-quer-negociar-direitos-de-transmissao-da-copa-de-2030/",
-      "title": "Netflix quer negociar direitos de transmissão da Copa de 2030",
-      "source": "Poder360",
-      "published_at": "2026-05-21T21:40:50Z",
-      "collected_at": "2026-05-21T22:46:20Z",
-      "status": "raw",
-      "relevance_score": 0.0,
-      "relevance_signals": null,
-      "candidates_mentioned": [],
-      "topics": [],
-      "narrative_cluster_id": null,
-      "duplicate_of": null,
-      "summaries": {
-        "pt-BR": "",
-        "en-US": ""
+      "sentiment_per_candidate": {
+        "aldo-rebelo": "positivo"
       },
-      "content": "A Netflix pretende negociar com a Fifa a aquisição dos direitos de transmissão da Copa do Mundo de 2030. A declaração foi feita por Gabe Spitzer, vice-presidente de esportes da plataforma de streaming, ao podcast do The Athletic . O interesse marca uma mudança de patamar na estratégia de conteúdo esportivo da Netflix . Atualmente, os direitos de transmissão do Mundial nos Estados Unidos pertencem à Fox. O contrato encerra depois da Copa de 2026. O torneio de 2030 terá como sedes principais Marrocos, Portugal e Espanha. Segundo Spitzer, a Netflix busca consolidar uma estratégia de esportes que não seja limitada apenas ao mercado norte-americano. “ Queremos direitos globais quando pudermos obtê-los “, declarou o executivo. Ele citou como exemplos as lutas de boxe e os jogos da NFL, que já são disponibilizados pela plataforma para todo o mundo. COPA FEMININA Antes de avançar para o Mundial masculino, a Netflix terá seu maior desafio de transmissão na Copa do Mundo Feminina de 2027 , que será disputada no Brasil. Spitzer classificou o projeto como “ de longe, a coisa mais ambiciosa ” já realizada pela empresa no setor. Para o torneio feminino, a plataforma planeja uma estrutura robusta: Base no Rio: a operação será sediada no Rio de Janeiro; Estúdio em Copacabana: a Netflix planeja construir cenários na praia de Copacabana com vista para o mar; Equipe: mais de 100 talentos atuarão nas transmissões em inglês e espanhol para os Estados Unidos e Canadá; Volume: cobertura de todos os 64 jogos da competição ao longo de 1 mês. A movimentação da Netflix ocorre em um momento de expansão da Copa do Mundo , que terá 48 seleções e 104 partidas a partir de 2026. Enquanto a Fifa defende preços de mercado elevados para ingressos e direitos, argumentando que o entretenimento nos EUA é o mais desenvolvido do mundo, plataformas de tecnologia tentam abocanhar fatias antes restritas às emissoras tradicionais.",
-      "source_category": "politics",
-      "sentiment_per_candidate": {},
-      "edit_history": [],
+      "edit_history": [
+        {
+          "tier": "editor",
+          "at": "2026-05-21T22:57:01Z",
+          "provider": "nvidia",
+          "action": "validated",
+          "changes": [
+            "summary_pt",
+            "summary_en"
+          ]
+        }
+      ],
       "disclaimer_pt": "Análise algorítmica. Não representa pesquisa de opinião.",
       "disclaimer_en": "Algorithmic analysis. Does not represent polling data.",
-      "sentiment_score": 0.0,
-      "confidence_score": 0.0,
-      "_sentiment_scores": {},
-      "prominence_score": 0.0
-    },
-    {
-      "id": "39a46f8c40d7cc8b",
-      "url": "https://veja.abril.com.br/economia/congresso-tenta-empurrar-rombo-do-banco-master-para-todo-o-sistema-bancario/",
-      "title": "Congresso tenta empurrar rombo do Banco Master para todo o sistema bancário",
-      "source": "Veja",
-      "published_at": "2026-05-21T21:38:34Z",
-      "collected_at": "2026-05-21T22:46:26Z",
-      "status": "raw",
-      "relevance_score": 0.0,
-      "relevance_signals": null,
-      "candidates_mentioned": [],
-      "topics": [],
-      "narrative_cluster_id": null,
-      "duplicate_of": null,
-      "summaries": {
-        "pt-BR": "",
-        "en-US": ""
+      "sentiment_score": 0.3,
+      "confidence_score": 1.0,
+      "_sentiment_scores": {
+        "aldo-rebelo": 0.3
       },
-      "content": "Em meio às investigações sobre o colapso do Banco Master, uma absurda proposta apresentada no Senado tenta impor ao sistema financeiro brasileiro uma conta bilionária decorrente de aplicações temerárias feitas por fundos públicos de previdência em uma instituição já cercada de alertas no mercado. O PL 2502/2026, apresentado pelo senador Renan Calheiros, obriga o Fundo Garantidor de Créditos (FGC) a cobrir integralmente depósitos feitos por regimes próprios de previdência de estados e municípios no conglomerado Banco Master, eliminando os limites atualmente previstos nas regras do sistema financeiro. Na prática, a proposta cria um privilégio inédito: um socorro direcionado e retroativo para investidores institucionais que decidiram concentrar recursos públicos em uma instituição financeira de risco elevado. O texto menciona nominalmente o Banco Master, algo incomum em legislações desse tipo e que evidencia o caráter emergencial e casuístico da medida. Hoje, o FGC cobre depósitos de até R$ 250 mil por CPF ou CNPJ por instituição financeira. O projeto rompe essa lógica ao estabelecer cobertura ilimitada especificamente para fundos previdenciários expostos ao Master. Continua após a publicidade Na justificativa, Renan reconhece que houve “equívoco” nas aplicações e admite a existência de “indícios de corrupção” em parte das operações. Ainda assim, sustenta que os fundos públicos não deveriam arcar financeiramente com as perdas. O problema é que o FGC não foi criado para funcionar como uma espécie de seguro irrestrito contra apostas malsucedidas de gestores públicos. O fundo opera como um mecanismo de proteção a pequenos depositantes e de estabilidade sistêmica, financiado pelos próprios bancos. Continua após a publicidade Ao ampliar artificialmente essa cobertura, o projeto transfere para todo o setor financeiro o custo de decisões que deveriam ser alvo de responsabilização administrativa, civil e eventualmente criminal. O temor no mercado é que a proposta institucionalize um perigoso mecanismo de “moral hazard”, expressão usada para definir situações em que agentes assumem riscos excessivos acreditando que serão resgatados posteriormente. O colapso do Banco Master já produziu uma das maiores pressões recentes sobre o FGC. Continua após a publicidade Segundo declarações do presidente do Banco Central , Gabriel Galípolo, a quebra da instituição consumiu cerca de R$ 40 bilhões do fundo, equivalente a aproximadamente um terço de seus recursos. Dados do Ministério da Previdência mostram que ao menos 18 fundos públicos tinham aproximadamente R$ 1,86 bilhão expostos ao banco em operações sem cobertura do FGC. Nos bastidores do sistema financeiro, a leitura predominante é que o projeto cria um precedente perigoso. Continua após a publicidade Se aprovado, abre-se espaço para que futuras perdas decorrentes de aplicações de risco em bancos menores sejam socializadas entre todas as instituições financeiras e, indiretamente, repassadas aos clientes por meio de crédito mais caro e spreads maiores. A crise também expôs fragilidades graves na gestão dos fundos públicos de previdência. Investigações da Polícia Federal apontam suspeitas de gestão temerária e possíveis irregularidades em aplicações feitas por institutos municipais em produtos ligados ao Banco Master. Em vez de concentrar esforços em fiscalização, responsabilização de gestores e revisão dos critérios de investimento dos RPPS, o Congresso agora discute uma proposta que, na avaliação de críticos, premia imprudência financeira com cobertura estatal indireta. O episódio evidencia uma distorção recorrente no Brasil: lucros permanecem privados durante os períodos de bonança, enquanto prejuízos acabam distribuídos coletivamente quando apostas financeiras fracassam. Publicidade",
-      "source_category": "magazine",
-      "sentiment_per_candidate": {},
-      "edit_history": [],
-      "disclaimer_pt": "Análise algorítmica. Não representa pesquisa de opinião.",
-      "disclaimer_en": "Algorithmic analysis. Does not represent polling data.",
-      "sentiment_score": 0.0,
-      "confidence_score": 0.0,
-      "_sentiment_scores": {},
-      "prominence_score": 0.0
+      "prominence_score": 0.0,
+      "_ai_provider": "nvidia",
+      "_ai_model": "nvidia/nemotron-3-super-120b-a12b",
+      "ai_provider_editor": "nvidia/nemotron-3-super-120b-a12b",
+      "editor_note": null
     },
     {
       "id": "faeea0d2df1557e2",
@@ -703,56 +711,57 @@
       "source": "O Antagonista",
       "published_at": "2026-05-21T21:38:14Z",
       "collected_at": "2026-05-21T22:46:24Z",
-      "status": "raw",
-      "relevance_score": 0.0,
-      "relevance_signals": null,
-      "candidates_mentioned": [],
-      "topics": [],
+      "status": "validated",
+      "relevance_score": 0.9,
+      "relevance_signals": {
+        "candidate_signal": 0.5,
+        "topic_signal": 0.3,
+        "keyword_signal": 0.05,
+        "source_signal": 0.05
+      },
+      "candidates_mentioned": [
+        "aldo-rebelo"
+      ],
+      "topics": [
+        "politica_externa",
+        "corrupcao",
+        "eleicoes"
+      ],
       "narrative_cluster_id": null,
       "duplicate_of": null,
       "summaries": {
-        "pt-BR": "",
-        "en-US": ""
+        "pt-BR": "O ex-presidente da Câmara dos Deputados, Aldo Rebelo, rejeitou o processo disciplinar aberto pela Democracia Cristã para expulsá-lo do partido, afirmando que a medida 'não atinge' sua honra e classificando-a como uma iniciativa infundada. Ele defendeu sua trajetória política e questionou a legitimidade do procedimento interno da legenda.",
+        "en-US": "Former Chamber of Deputies president Aldo Rebelo rejected the disciplinary process initiated by the Christian Democracy party to expel him, stating the move 'does not reach' his honor and calling it unfounded. He defended his political trajectory and questioned the legitimacy of the party's internal procedure."
       },
       "content": "O ex-presidente da Câmara dos Deputados Aldo Rebelo reagiu nesta quinta-feira, 21, à decisão da Democracia Cristã de abrir um processo disciplinar para expulsá-lo da legenda. Por meio de nota enviada para a imprensa, o político afirmou que a manifestação da direção nacional do partido “não atinge” sua honra e classificou a iniciativa como uma... The post Aldo desafia cúpula do DC após processo de expulsão appeared first on O Antagonista .",
       "source_category": "politics",
-      "sentiment_per_candidate": {},
-      "edit_history": [],
-      "disclaimer_pt": "Análise algorítmica. Não representa pesquisa de opinião.",
-      "disclaimer_en": "Algorithmic analysis. Does not represent polling data.",
-      "sentiment_score": 0.0,
-      "confidence_score": 0.0,
-      "_sentiment_scores": {},
-      "prominence_score": 0.0
-    },
-    {
-      "id": "4f954e9066645c05",
-      "url": "https://www.poder360.com.br/poder-justica/stf-mantem-reducao-de-parque-no-para-para-construcao-da-ferrograo/",
-      "title": "STF mantém redução de parque no Pará para construção da Ferrogrão",
-      "source": "Poder360",
-      "published_at": "2026-05-21T21:36:36Z",
-      "collected_at": "2026-05-21T22:46:20Z",
-      "status": "raw",
-      "relevance_score": 0.0,
-      "relevance_signals": null,
-      "candidates_mentioned": [],
-      "topics": [],
-      "narrative_cluster_id": null,
-      "duplicate_of": null,
-      "summaries": {
-        "pt-BR": "",
-        "en-US": ""
+      "sentiment_per_candidate": {
+        "aldo-rebelo": "positivo"
       },
-      "content": "O Supremo Tribunal Federal validou nesta 5ª feira (21.mai.2026) a lei que reduziu os limites do Parque Nacional do Jamanxim, no Pará, para permitir a construção da Ferrogrão, ferrovia que ligará o Estado ao Mato Grosso. Por 8 votos a 1 , a Corte declarou a constitucionalidade da Lei 13.452 de 2017 e rejeitou a ADI (Ação Direta de Inconstitucionalidade) protocolada pelo Psol (Partido Socialismo e Liberdade). O julgamento foi retomado na 4ª feira (20.mai.2026), quando o placar foi aberto com 2 a 0 pela validade da lei. Votaram nesse sentido o relator da ação, ministro Alexandre de Moraes —que anteriormente havia concedido decisão provisória suspendendo a norma—, e o ministro Luís Roberto Barroso, hoje aposentado, que já havia apresentado voto antes do pedido de vista de Flávio Dino. A análise estava suspensa desde então. Na sessão desta 5ª feira (21.mai), seguiram Moraes os ministros Cristiano Zanin, André Mendonça, Nunes Marques, Luiz Fux, Dias Toffoli e Gilmar Mendes. A ministra Cármen Lúcia não participou da sessão e, por isso, não votou. VOTOS DOS MINISTROS O ministro Flávio Dino participou da sessão por videoconferência e apresentou voto pela procedência parcial da ação. Segundo ele, o STF não debate o mérito ou a conveniência da Ferrogrão para o país, mas sim as regras para a alteração de unidades de conservação. Dino afirmou que não existem terras indígenas no traçado da ferrovia, estando as mais próximas localizadas a 4 km e 7 km da obra. Leia a íntegra do voto do ministro Flávio Dino (PDF – 242 KB). Para garantir a proteção ambiental, Dino propôs condicionantes impedindo novas reduções futuras da área protegida e sugeriu que o governo federal recompusesse os 862 hectares retirados do parque. As propostas, porém, não obtiveram adesão da maioria do plenário. Prevaleceu o entendimento do relator, ministro Alexandre de Moraes. Para ele, não houve irregularidade no processo legislativo que resultou na edição da lei, nem retrocesso ambiental, já que a construção da ferrovia continuará condicionada à obtenção de licenças dos órgãos competentes. O ministro Cristiano Zanin considerou a lei válida ao declarar que a redução representa só 0,054% do total do parque e “não extingue o núcleo essencial de proteção da unidade”. Zanin afirmou que vincular a área diminuída ao perímetro da ferrovia antes da conclusão de estudos detalhados é um erro de técnica legislativa. Por outro lado, disse que a decisão não significa autorização prévia para o início das obras. O relator, ministro Alexandre de Moraes, declarou que o texto legal já exige de forma clara todos os licenciamentos perante os órgãos competentes. O ministro André Mendonça acompanhou o relator e declarou que há convergência entre os valores do desenvolvimento econômico e da proteção ao meio ambiente. Segundo ele, a malha ferroviária representa uma alternativa mais segura e de menor impacto ambiental do que as rodovias para o escoamento da produção nacional. Os ministros Nunes Marques e Dias Toffoli também votaram pela constitucionalidade. O ministro Luiz Fux afirmou que a Ferrogrão é “vital para a economia nacional” porque projeta reduzir em até 50% o custo logístico do transporte de grãos do Centro-Oeste aos portos do Norte, além de diminuir a emissão de CO2. O ministro Gilmar Mendes acompanhou a maioria e disse que não houve prejuízo ou redução de áreas para as comunidades indígenas. Ficaram vencidos os ministros Flávio Dino, parcialmente, e Edson Fachin, que votou pela inconstitucionalidade da lei por entender que o texto legislativo não cumpriu os requisitos de legalidade exigidos. O Caso Ferrogrão O processo analisou a constitucionalidade da Lei 13.452 de 2017, que retirou cerca de 862 hectares do Parque Nacional do Jamanxim , no Pará, para viabilizar a Ferrogrão. O megaprojeto orçado em R$ 21,5 bilhões pretende ligar as cidades de Sinop (MT) e Miritituba (PA) por meio de 933,2 km de ferrovia para escoamento da produção de soja e grãos. A ação do Psol questionava a constitucionalidade da MP (Medida Provisória) 758 de 2016, posteriormente convertida na lei 13.452 de 2017, editada durante o governo Michel Temer (MDB).",
-      "source_category": "politics",
-      "sentiment_per_candidate": {},
-      "edit_history": [],
+      "edit_history": [
+        {
+          "tier": "editor",
+          "at": "2026-05-21T22:57:24Z",
+          "provider": "nvidia",
+          "action": "validated",
+          "changes": [
+            "summary_pt",
+            "summary_en"
+          ]
+        }
+      ],
       "disclaimer_pt": "Análise algorítmica. Não representa pesquisa de opinião.",
       "disclaimer_en": "Algorithmic analysis. Does not represent polling data.",
-      "sentiment_score": 0.0,
-      "confidence_score": 0.0,
-      "_sentiment_scores": {},
-      "prominence_score": 0.0
+      "sentiment_score": 0.3,
+      "confidence_score": 1.0,
+      "_sentiment_scores": {
+        "aldo-rebelo": 0.3
+      },
+      "prominence_score": 0.0,
+      "_ai_provider": "nvidia",
+      "_ai_model": "nvidia/nemotron-3-super-120b-a12b",
+      "ai_provider_editor": "nvidia/nemotron-3-super-120b-a12b",
+      "editor_note": null
     },
     {
       "id": "cc9a817c602d675c",
@@ -761,56 +770,58 @@
       "source": "G1 Politica",
       "published_at": "2026-05-21T21:35:06Z",
       "collected_at": "2026-05-21T22:46:08Z",
-      "status": "raw",
-      "relevance_score": 0.0,
-      "relevance_signals": null,
-      "candidates_mentioned": [],
-      "topics": [],
+      "status": "validated",
+      "relevance_score": 1.0,
+      "relevance_signals": {
+        "candidate_signal": 0.5,
+        "topic_signal": 0.35,
+        "keyword_signal": 0.15,
+        "source_signal": 0.0
+      },
+      "candidates_mentioned": [
+        "flavio-bolsonaro"
+      ],
+      "topics": [
+        "eleicoes",
+        "corrupcao",
+        "politica_externa",
+        "impostos"
+      ],
       "narrative_cluster_id": null,
       "duplicate_of": null,
       "summaries": {
-        "pt-BR": "",
-        "en-US": ""
+        "pt-BR": "O Republicanos em Minas Gerais está considerando o senador Cleitinho como possível candidato à Presidência da República em 2026, diante do desgaste da imagem de Flávio Bolsonaro devido à sua relação com o banqueiro Daniel Vorcaro. Apesar de liderar as pesquisas para o governo de Minas, Cleitinho ainda não definiu sua candidatura e afirma que decidirá até junho, dependendo de questões pessoais e familiares. O partido também não descarta uma composição com o PL em Minas, caso Cleitinho dispute o estadual, visando unir a direita.",
+        "en-US": "The Republicans party in Minas Gerais is considering Senator Cleitinho as a potential presidential candidate for 2026 amid the image wear of Flávio Bolsonaro due to his ties with banker Daniel Vorcaro. Although Cleitinho leads polls for the Minas Gerais gubernatorial race, he has not yet decided his candidacy, stating he will make a decision by June based on personal and family matters. The party also leaves open the possibility of a PL alliance in Minas if Cleitinho runs for state office, aiming to unite the right."
       },
       "content": "Cleitinho (Republicanos-MG) Agência Senado/Reprodução O presidente do Republicanos em Minas Gerais, o deputado federal Euclydes Pettersen, afirmou que o senador Cleitinho passou a ser cogitado internamente como possível candidato à Presidência da República em meio ao desgaste da imagem do senador e pré-candidato Flávio Bolsonaro (PL) após a relação dele com o banqueiro Daniel Vorcaro, dono do Banco Master, vir a público. Cleitinho lidera as pesquisas de intenção de voto para o governo de Minas, mas tem dito que só definirá sua candidatura em junho (leia mais abaixo). ✅Clique aqui para seguir o canal do g1 MG no WhatsApp Segundo Pettersen, o nome de Cleitinho para a Presidência começou a ser incluído em pesquisas internas e monitoramentos realizados por grupos ligados ao campo conservador. De acordo com o presidente do partido em Minas, o senador mineiro vem apresentando o melhor desempenho entre os nomes avaliados nesse cenário. Apesar da movimentação, o Republicanos não descarta a possibilidade de Cleitinho disputar o governo de Minas Gerais em 2026. O g1 procurou o senador Cleitinho, mas não obteve resposta até a última atualização desta reportagem. Quaest: Cleitinho lidera todos os cenários em que aparece na disputa para o governo de MG Interesse em composição com PL em MG Segundo Pettersen, caso o senador concorra ao Palácio Tiradentes, do governo de Minas, a intenção do partido é buscar uma composição com o PL no estado. Não existe ainda uma definição da legenda da família Bolsonaro sobre o cenário eleitoral mineiro. “Nosso intuito é unir a direita”, afirmou o presidente estadual do Republicanos em Minas. O período oficial das convenções partidárias, quando os partidos definem seus candidatos, ocorrerá entre 20 de julho e 5 de agosto de 2026. Os pedidos de registro de candidatura deverão ser apresentados à Justiça Eleitoral até 15 de agosto. Situação de Cleitinho ainda é indefinida Cleitinho lidera atualmente as pesquisas de intenção de voto para o governo de Minas. Em levantamento divulgado pela Quaest, o senador aparece na frente em todos os cenários testados, tanto no primeiro quanto no segundo turno. Nos cenários de primeiro turno, ele registra entre 30% e 37% das intenções de voto. Em entrevista ao g1 após a divulgação da pesquisa, Cleitinho afirmou que ainda não definiu se será candidato ao governo estadual. Segundo ele, a decisão deve ser tomada até junho e depende de questões pessoais e familiares. “Ainda não está definido. Eu tenho umas questões particulares para resolver, questões de saúde para olhar na minha família. Vou definir isso mais para junho, quando estiver mais perto das convenções”, declarou. Mesmo sem confirmação oficial, o senador reconheceu que tem interesse em disputar o comando do estado. “Qualquer pessoa que está na política tem esse desejo. Tenho esse desejo, sim”, disse. Vídeos mais assistidos do g1 MG",
       "source_category": "mainstream",
-      "sentiment_per_candidate": {},
-      "edit_history": [],
-      "disclaimer_pt": "Análise algorítmica. Não representa pesquisa de opinião.",
-      "disclaimer_en": "Algorithmic analysis. Does not represent polling data.",
-      "sentiment_score": 0.0,
-      "confidence_score": 0.0,
-      "_sentiment_scores": {},
-      "prominence_score": 0.0
-    },
-    {
-      "id": "f75574936a1328f5",
-      "url": "https://www.jota.info/eleicoes/eleicoes-2026/quem-sao-os-pre-candidatos-a-senador-pelo-rio-grande-do-norte-rn-nas-eleicoes-2026",
-      "title": "Quem são os pré-candidatos a senador pelo Rio Grande do Norte (RN) nas eleições 2026",
-      "source": "JOTA",
-      "published_at": "2026-05-21T21:31:43Z",
-      "collected_at": "2026-05-21T22:46:23Z",
-      "status": "raw",
-      "relevance_score": 0.0,
-      "relevance_signals": null,
-      "candidates_mentioned": [],
-      "topics": [],
-      "narrative_cluster_id": null,
-      "duplicate_of": null,
-      "summaries": {
-        "pt-BR": "",
-        "en-US": ""
+      "sentiment_per_candidate": {
+        "flavio-bolsonaro": "negativo"
       },
-      "content": "Nas eleições de 2026, os eleitores escolherão dois senadores por estado, com mandato até 2035. Até o momento, oito políticos se colocam como candidatos a senador pelo Rio Grande do Norte (RN) nas eleições 2026. Três mulheres e cinco homens se colocam para a disputa. Atualmente, a bancada potiguar no Senado Federal é composta por: Rogério Marinho (PL), com mandato até 2031, Styvenson Valentim (Podemos) e Zenaide Maia (PSD), cujos mandatos terminam em janeiro de 2027. Os dois devem ser candidatos à reeleição ao Senado pelo Rio Grande do Norte (RN) nestas eleições. Receba no seu email as principais notícias sobre as eleições 2026 no Rio Grande do Norte no Brasil. É grátis! Além deles, devem ser candidatos a uma das duas vagas de senador pelo Rio Grande do Norte (RN) nas eleições 2026: Rafael Motta (PDT), Samanda Alves (PT), Coronel Hélio (PL), Flávio Rocha (Novo), Sandro Pimentel (PSOL) e Rosália Fernandes (PSTU). O primeiro turno das eleições de 2026 será realizado no dia 4 de outubro. Para o Senado, o pleito é decidido em um único turno por maioria de votos. Confira a lista dos pré-candidatos ao Senado pelo Rio Grande do Norte (RN) em 2026 Styvenson Valentim (Podemos) Natural de Rio Branco, Eann Styvenson Valentim Mendes tem 49 anos e foi capitão da Polícia Militar. Formado em Direito, ganhou notoriedade no cenário potiguar pelo rigor na coordenação da Operação Lei Seca entre 2012 e 2016. Em 2018, estreou na política ao ser eleito senador pelo Rio Grande do Norte. Em 2022, pediu licença para concorrer ao governo do estado, mas em terceiro. Agora Styvenson Valentim será candidato à reeleição como senador pelo Rio Grande do Norte (RN) nas eleições 2026. + JOTA : Quem são os possíveis candidatos a governador do Rio Grande do Norte nas eleições 2026 Zenaide Maia (PSD) Zenaide Maia Calado Pereira dos Santos, de 71 anos, é uma médica infectologista natural de Brejo do Cruz (PB). Deu início à vida pública em 1991 como secretária de Saúde de São Gonçalo do Amarante, na Grande Natal, onde atuou ao longo de dois mandatos. Em 2014, elegeu-se deputada federal, cargo que exerceu até 2018, quando foi candidata ao Senado pelo Rio Grande do Norte (RN) e foi eleita. Agora tenta Zenaide Maia tentará a reeleição como senadora nas eleições 2026. Coronel Hélio (PL) Natural do Rio de Janeiro, Hélio Imbrosio Oliveira, de 61 anos, é coronel aviador da reserva da Força Aérea Brasileira (FAB) e empresário. Graduado em ciências aeronáuticas, é líder estadual do Partido Liberal (PL) e dirige as relações institucionais da Associação dos Polos Industriais do Rio Grande do Norte. Disputou a Prefeitura de Natal em 2020, mas terminou em sexto lugar. Agora Coronel Hélio deve ser candidato ao Senado pelo Rio Grande do Norte (RN) nas eleições 2026. + JOTA : Quem são os pré-candidatos a presidente da República nas eleições 2026 Flávio Rocha (Novo) Natural do Recife, Flávio Gurgel Rocha, de 68 anos, é formado em administração e controlador do Grupo Guararapes, dono das lojas Riachuelo. Foi deputado federal pelo Rio Grande do Norte de 1987 a 1995, período em que participou da Assembleia Nacional Constituinte. Ele chegou a se lançar como pré-candidato a presidente da República em 2018, mas retirou seu nome da disputa. Deve Agora Flávio Rocha deve ser candidato a senador pelo Rio Grande do Norte (RN) nas eleições 2026. Rafael Motta (PDT) Natural de Natal, Rafael Huete da Motta, de 40 anos, é engenheiro de produção e empresário. Começou na vida pública em 2011 como secretário da Juventude e, no ano seguinte, foi eleito vereador na capital potiguar. Em 2014, conquistou o primeiro mandato como deputado federal, sendo reeleito para o cargo em 2018. Ficou em terceiro lugar na disputa ao Senado em 2022 e em quarto lugar na eleição para a Prefeitura do Natal em 2024. No ano passado, sofreu um acidente de kitesurfe e ficou 12 dias em coma induzido. Agora Rafael Motta deve ser candidato ao Senado pelo Rio Grande do Norte (RN) nas eleições 2026. Rosália Fernandes (PSTU) Natural de Marcelino Vieira (RN), Rosália Maria Fernandes tem 58 anos e é assistente social. Figura central do Partido Socialista dos Trabalhadores Unificado (PSTU) no Rio Grande do Norte, já disputou a Prefeitura do Natal duas vezes: em 2016, ficando em sexto lugar, e em 2020, alcançando a décima segunda posição. Concorreu ao governo do Rio Grande do Norte em 2022, mas terminou em sexto lugar. Agora Rosália Fernandes é candidata a senadora pelo Rio Grande do Norte (RN) nas eleições 2026. Samanda Alves (PT) Samanda Alves de Freitas, de 45 anos, é natural de Mossoró (RN) e formada em engenharia da computação. Líder estadual do Partido dos Trabalhadores (PT), trabalhou por mais de 20 anos ao lado da governadora Fátima Bezerra (PT). Em 2022, concorreu à Câmara dos Deputados, mas terminou como primeira suplente da sigla. Em 2024 foi eleita vereadora de Natal. Agora Samanda Alves é candidata ao Senado pelo Rio Grande do Norte (RN) nas eleições 2026. Sandro Pimentel (PSOL) Sandro Pimentel tem 59 anos e é natural de Ceará-Mirim (RN). Servidor público, trabalha como vigilante em uma universidade. É formado em gestão pública e mestre em estudos urbanos e regionais. Foi eleito duas vezes vereador de Natal, cargo que ocupou de 2013 a 2019. Em 2018, elegeu-se deputado estadual, mas teve o mandato cassado em 2022 pelo Tribunal Superior Eleitoral (TSE) por irregularidades na campanha. Agora Sandro Pimentel se coloca como candidato a senador pelo Rio Grande do Norte (RN) nas eleições 2026.",
-      "source_category": "politics",
-      "sentiment_per_candidate": {},
-      "edit_history": [],
+      "edit_history": [
+        {
+          "tier": "editor",
+          "at": "2026-05-21T22:57:33Z",
+          "provider": "nvidia",
+          "action": "validated",
+          "changes": [
+            "summary_pt",
+            "summary_en"
+          ]
+        }
+      ],
       "disclaimer_pt": "Análise algorítmica. Não representa pesquisa de opinião.",
       "disclaimer_en": "Algorithmic analysis. Does not represent polling data.",
-      "sentiment_score": 0.0,
-      "confidence_score": 0.0,
-      "_sentiment_scores": {},
-      "prominence_score": 0.0
+      "sentiment_score": -0.2,
+      "confidence_score": 1.0,
+      "_sentiment_scores": {
+        "flavio-bolsonaro": -0.2
+      },
+      "prominence_score": 0.0,
+      "_ai_provider": "nvidia",
+      "_ai_model": "nvidia/nemotron-3-super-120b-a12b",
+      "ai_provider_editor": "nvidia/nemotron-3-super-120b-a12b",
+      "editor_note": null
     },
     {
       "id": "6e4509c67c96c153",
@@ -819,27 +830,58 @@
       "source": "O Globo",
       "published_at": "2026-05-21T21:20:16Z",
       "collected_at": "2026-05-21T22:46:16Z",
-      "status": "raw",
-      "relevance_score": 0.0,
-      "relevance_signals": null,
-      "candidates_mentioned": [],
-      "topics": [],
+      "status": "validated",
+      "relevance_score": 0.9,
+      "relevance_signals": {
+        "candidate_signal": 0.5,
+        "topic_signal": 0.3,
+        "keyword_signal": 0.1,
+        "source_signal": 0.0
+      },
+      "candidates_mentioned": [
+        "flavio-bolsonaro"
+      ],
+      "topics": [
+        "corrupcao",
+        "politica_externa",
+        "midia",
+        "eleicoes"
+      ],
       "narrative_cluster_id": null,
       "duplicate_of": null,
       "summaries": {
-        "pt-BR": "",
-        "en-US": ""
+        "pt-BR": "O senador Ciro Nogueira (PP-PI) evitou defender ou acusar Flávio Bolsonaro (PL-RJ) nas investigações do caso Banco Master, afirmando que se for culpado, deve pagar exemplarmente, e destacando a necessidade de investigações isentas. Ele também denunciou um suposto 'vazamento seletivo' na mídia que favorece a esquerda e prejudica a direita, citando falta de cobertura sobre escândalos na Bahia envolvendo aliados do governo.",
+        "en-US": "Senator Ciro Nogueira (PP-PI) avoided defending or accusing Flávio Bolsonaro (PL-RJ) in the Banco Master investigation, stating that if guilty, he must pay exemplarily, and emphasizing the need for impartial investigations. He also denounced an alleged 'selective leak' in the media favoring the left and harming the right, noting the lack of coverage on scandals in Bahia involving government allies."
       },
       "content": "O senador Ciro Nogueira (PP-PI) evitou defender o aliado e pré-candidato à Presidência da República Flávio Bolsonaro (PL-RJ) em entrevista ao canal de televisão TV Clube nesta quinta-feira. Ao comentar os desdobramentos das investigações do caso do Banco Master, que atingiram ambos, Nogueira disse nem \"defender nem acusar o senador Flávio\". Agendas de Janja e viagem de Lula: Câmara aprova projeto que proíbe sigilo sobre dados públicos Leia mais: Lula condiciona reaproximação a convite de Alcolumbre para conversa ou gesto em votação, dizem aliados — Ele tem que ser investigado, como todos, como eu estou sendo. E, se for inocente, que seja, lógico, reconhecida a sua inocência. Se for culpado, tem que pagar exemplarmente — disse o Ciro Nogueira ao canal de TV — Neste país, não pode mais haver ninguém cometendo ilícito que possa ser beneficiado por proteção. Temos que investigar com isenção e, quem for inocente, que seja considerado inocente. O filho do ex-presidente Jair Bolsonaro sofreu um abalo em sua pré-campanha presidencial após vir à tona mensagens e áudios trocados com Daniel Vorcaro, dono do Banco Master e alvo de investigações da PF. O senador posteriormente admitiu o banqueiro era financiador do filme Dark Horse, que conta a história do pai. 'Se for culpado, tem que pagar exemplarmente', diz Ciro Nogueira sobre Flávio Bolsonaro00 mil à \"estrutura vinculada ao senado\", o uso de um imóvel de Vorcaro como se fosse do próprio senador e custeio de viagens internacionais, hospedagens, restaurantes e voos privados Na entrevista, o senador piauiense criticou o que chamou de \"vazamento seletivo\" de informações relacionadas a nomes da oposição. Ele disse ainda confiar no trabalho da Polícia Federal e do Ministério Público. — Existe um vazamento seletivo em Brasília. O maior escândalo dessa questão do Master é na Bahia. Você já viu algum vazamento dos atores da Bahia? Não acontece. É um vazamento muito direcionado para a direita — disse Ciro Nogueira, que acrescentou — Se for comprovada alguma coisa ilícita que possa manchar a minha honra, eu jamais vou voltar para o meu estado com alguma mácula no meu mandato — disse o senador.",
       "source_category": "mainstream",
-      "sentiment_per_candidate": {},
-      "edit_history": [],
+      "sentiment_per_candidate": {
+        "flavio-bolsonaro": "negativo"
+      },
+      "edit_history": [
+        {
+          "tier": "editor",
+          "at": "2026-05-21T22:58:25Z",
+          "provider": "nvidia",
+          "action": "validated",
+          "changes": [
+            "summary_pt",
+            "summary_en"
+          ]
+        }
+      ],
       "disclaimer_pt": "Análise algorítmica. Não representa pesquisa de opinião.",
       "disclaimer_en": "Algorithmic analysis. Does not represent polling data.",
-      "sentiment_score": 0.0,
-      "confidence_score": 0.0,
-      "_sentiment_scores": {},
-      "prominence_score": 0.0
+      "sentiment_score": -0.3,
+      "confidence_score": 1.0,
+      "_sentiment_scores": {
+        "flavio-bolsonaro": -0.3
+      },
+      "prominence_score": 0.0,
+      "_ai_provider": "nvidia",
+      "_ai_model": "nvidia/nemotron-3-super-120b-a12b",
+      "ai_provider_editor": "nvidia/nemotron-3-super-120b-a12b",
+      "editor_note": null
     },
     {
       "id": "16f43b6b70528b91",
@@ -848,27 +890,51 @@
       "source": "Folha Poder",
       "published_at": "2026-05-21T21:19:00Z",
       "collected_at": "2026-05-21T22:46:12Z",
-      "status": "raw",
-      "relevance_score": 0.0,
-      "relevance_signals": null,
+      "status": "validated",
+      "relevance_score": 0.45,
+      "relevance_signals": {
+        "candidate_signal": 0.0,
+        "topic_signal": 0.3,
+        "keyword_signal": 0.15,
+        "source_signal": 0.0
+      },
       "candidates_mentioned": [],
-      "topics": [],
+      "topics": [
+        "corrupcao",
+        "midia",
+        "eleicoes"
+      ],
       "narrative_cluster_id": null,
       "duplicate_of": null,
       "summaries": {
-        "pt-BR": "",
-        "en-US": ""
+        "pt-BR": "O deputado federal Arlindo Chinaglia (PT-SP) protocolou representação junto ao Ministério Público Eleitoral e ao TSE para investigar o suposto financiamento milionário e não declarado do filme 'Dark Horse', que ele considera uma possível violação da legislação eleitoral. O parlamentar alega que o filme pode estar sendo utilizado como instrumento de campanha eleitoral disfarçada, beneficiando candidatos não identificados. O pedido visa apurar se há uso ilegal de recursos em prol de candidaturas nas eleições de 2026.",
+        "en-US": "Federal deputy Arlindo Chinaglia (PT-SP) filed a representation with the Electoral Public Ministry and the TSE to investigate the alleged undisclosed million-dollar financing of the film 'Dark Horse', which he claims may violate electoral legislation. He argues the film could be functioning as a disguised campaign tool benefiting unidentified candidates. The request aims to determine whether illegal resources are being used to support candidacies in the 2026 elections."
       },
       "content": "O deputado federal Arlindo Chinaglia (PT-SP) acionou o Ministério Público Eleitoral e o TSE (Tribunal Superior Eleitoral) para que haja uma investigação no âmbito eleitoral sobre o financiamento milionário do filme \" Dark Horse \". Leia mais (05/21/2026 - 18h19)",
       "source_category": "mainstream",
       "sentiment_per_candidate": {},
-      "edit_history": [],
+      "edit_history": [
+        {
+          "tier": "editor",
+          "at": "2026-05-21T22:58:33Z",
+          "provider": "nvidia",
+          "action": "validated",
+          "changes": [
+            "summary_pt",
+            "summary_en"
+          ]
+        }
+      ],
       "disclaimer_pt": "Análise algorítmica. Não representa pesquisa de opinião.",
       "disclaimer_en": "Algorithmic analysis. Does not represent polling data.",
       "sentiment_score": 0.0,
-      "confidence_score": 0.0,
+      "confidence_score": 1.0,
       "_sentiment_scores": {},
-      "prominence_score": 0.0
+      "prominence_score": 0.0,
+      "_ai_provider": "nvidia",
+      "_ai_model": "nvidia/nemotron-3-super-120b-a12b",
+      "ai_provider_editor": "nvidia/nemotron-3-super-120b-a12b",
+      "editor_note": null
     },
     {
       "id": "ba15f565324ee774",
@@ -877,27 +943,59 @@
       "source": "Agencia Senado",
       "published_at": "2026-05-21T21:18:16Z",
       "collected_at": "2026-05-21T22:46:37Z",
-      "status": "raw",
-      "relevance_score": 0.0,
-      "relevance_signals": null,
-      "candidates_mentioned": [],
-      "topics": [],
+      "status": "validated",
+      "relevance_score": 0.95,
+      "relevance_signals": {
+        "candidate_signal": 0.5,
+        "topic_signal": 0.3,
+        "keyword_signal": 0.05,
+        "source_signal": 0.1
+      },
+      "candidates_mentioned": [
+        "lula"
+      ],
+      "topics": [
+        "seguranca",
+        "politica_externa",
+        "corrupcao",
+        "midia",
+        "eleicoes"
+      ],
       "narrative_cluster_id": null,
       "duplicate_of": null,
       "summaries": {
-        "pt-BR": "",
-        "en-US": ""
+        "pt-BR": "A nova Lei 15.412/2024, sancionada por Lula, estabelece a execução imediata de medidas protetivas cíveis para mulheres vítimas de violência, eliminando a necessidade de ajuizamento de ação pela vítima. A lei atualiza a Lei Maria da Penha, retirando referência ao CPC de 1973 e adequando-se ao CPC de 2015, ampliando a efetividade das ordens judiciais de proteção no âmbito familiar, patrimonial e doméstico.",
+        "en-US": "The new Law 15.412/2024, signed by Lula, mandates the immediate execution of civil protective measures for women victims of violence, removing the requirement for the victim to file a lawsuit. The law updates the Maria da Penha Law by removing references to the 1973 Code of Civil Procedure and aligning it with the 2015 CPC, enhancing the effectiveness of judicial protection orders in family, patrimonial, and domestic spheres."
       },
       "content": "Medidas protetivas de natureza cível para a mulher vítima de violência devem ter execução imediata. É o que prevê a Lei 15.412, sancionada pelo presidente Luiz Inácio Lula da Silva e publicada no Diário Oficial da União desta quinta-feira (21). À diferença do que ocorre no processo penal, as medidas protetivas de natureza cível não são punições diretas ao agressor: são ordens judiciais para proteger a mulher e seus dependentes na vida familiar, patrimonial ou doméstica. São exemplos: afastamento do agressor do lar; suspensão ou restrição de visitas aos filhos; proibição de venda ou retirada de bens do casal ou da vítima; ou encaminhamento da mulher e dependentes a programa de proteção ou atendimento. A nova lei altera a Lei Maria da Penha (Lei 11.340, de 2006). De acordo com o texto sancionado, o juiz pode determinar o cumprimento das medidas protetivas sem necessidade de ajuizamento da ação pela vítima. O projeto teve origem no PL 5.609/2019, apresentado pelo ex-senador Fernando Bezerra Coelho. A proposta passou pela Comissão de Direitos Humanos (CDH) e foi aprovada em decisão terminativa pela Comissão de Constituição e Justiça (CCJ) do Senado, em maio de 2023. Na Câmara dos Deputados, o texto foi aprovado neste ano sem alterações. Na justificativa, o autor afirma que a proposta busca garantir maior efetividade às medidas protetivas e evitar que mulheres em situação de vulnerabilidade fiquem desamparadas pela demora na tramitação judicial. “A nosso ver, entendimentos contrários tornam letra morta o propósito da lei em questão, deixando as mulheres em situação de hipervulnerabilidade em completo desamparo”, escreveu. A nova lei também atualiza a Lei Maria da Penha ao retirar uma referência ao Código de Processo Civil de 1973, que foi revogado, e adequar o texto à Lei 13.105, de 2015, que instituiu o atual Código de Processo Civil. Vitória Clementino, sob supervisão de Dante Accioly",
       "source_category": "institutional",
-      "sentiment_per_candidate": {},
-      "edit_history": [],
+      "sentiment_per_candidate": {
+        "lula": "positivo"
+      },
+      "edit_history": [
+        {
+          "tier": "editor",
+          "at": "2026-05-21T22:58:45Z",
+          "provider": "nvidia",
+          "action": "validated",
+          "changes": [
+            "summary_pt",
+            "summary_en"
+          ]
+        }
+      ],
       "disclaimer_pt": "Análise algorítmica. Não representa pesquisa de opinião.",
       "disclaimer_en": "Algorithmic analysis. Does not represent polling data.",
-      "sentiment_score": 0.0,
-      "confidence_score": 0.0,
-      "_sentiment_scores": {},
-      "prominence_score": 0.0
+      "sentiment_score": 0.5,
+      "confidence_score": 1.0,
+      "_sentiment_scores": {
+        "lula": 0.5
+      },
+      "prominence_score": 0.0,
+      "_ai_provider": "nvidia",
+      "_ai_model": "nvidia/nemotron-3-super-120b-a12b",
+      "ai_provider_editor": "nvidia/nemotron-3-super-120b-a12b",
+      "editor_note": null
     },
     {
       "id": "4f67859b10cd2734",
@@ -25461,6 +25559,6 @@
       "editor_note": null
     }
   ],
-  "last_updated": "2026-05-21T22:52:27Z",
-  "total_count": 500
+  "last_updated": "2026-05-21T22:59:27Z",
+  "total_count": 486
 }
