@@ -2,61 +2,56 @@
   "$schema": "../docs/schemas/articles.schema.json",
   "articles": [
     {
-      "id": "ad244e8402d187ba",
-      "url": "https://www.metropoles.com/colunas/igor-gadelha/flavio-bolsonaro-transfere-qg-de-sua-campanha-para-sp",
-      "title": "Flávio Bolsonaro transfere QG de sua campanha para SP",
-      "source": "Metropoles",
-      "published_at": "2026-06-24T19:03:50Z",
-      "collected_at": "2026-06-24T19:03:54Z",
-      "status": "raw",
-      "relevance_score": 0.0,
-      "relevance_signals": null,
-      "candidates_mentioned": [],
-      "topics": [],
-      "narrative_cluster_id": null,
-      "duplicate_of": null,
-      "summaries": {
-        "pt-BR": "",
-        "en-US": ""
-      },
-      "source_category": "mainstream",
-      "sentiment_per_candidate": {},
-      "edit_history": [],
-      "disclaimer_pt": "Análise algorítmica. Não representa pesquisa de opinião.",
-      "disclaimer_en": "Algorithmic analysis. Does not represent polling data.",
-      "sentiment_score": 0.0,
-      "confidence_score": 0.0,
-      "_sentiment_scores": {},
-      "prominence_score": 0.0
-    },
-    {
       "id": "6d42628e8db1278e",
       "url": "https://www.tse.jus.br/comunicacao/noticias/2026/Junho/sociedade-brasileira-de-computacao-inspeciona-codigos-fonte-dos-sistemas-das-eleicoes-2026",
       "title": "Sociedade Brasileira de Computação inspeciona códigos-fonte dos sistemas das Eleições 2026",
       "source": "TSE",
       "published_at": "2026-06-24T19:03:13Z",
       "collected_at": "2026-06-24T19:04:16Z",
-      "status": "raw",
-      "relevance_score": 0.0,
-      "relevance_signals": null,
+      "status": "validated",
+      "relevance_score": 0.5,
+      "relevance_signals": {
+        "candidate_signal": 0.0,
+        "topic_signal": 0.25,
+        "keyword_signal": 0.15,
+        "source_signal": 0.1
+      },
       "candidates_mentioned": [],
-      "topics": [],
+      "topics": [
+        "eleicoes",
+        "seguranca"
+      ],
       "narrative_cluster_id": null,
       "duplicate_of": null,
       "summaries": {
-        "pt-BR": "",
-        "en-US": ""
+        "pt-BR": "A Sociedade Brasileira de Computação (SBC) inspecionou os códigos-fonte dos sistemas eleitorais do TSE em preparação para as Eleições Gerais de 2026. A análise, parte do Ciclo de Transparência Democrática, incluiu sistemas operacionais, programas de votação, transmissão, totalização e criptografia, com o coordenador elogiando o sistema brasileiro como 'o mais sofisticado do mundo'. A abertura do código-fonte ocorre com um ano de antecedência para permitir validação por partidos, órgãos de controle e academia.",
+        "en-US": "The Brazilian Computing Society (SBC) inspected the source code of the TSE's electoral systems in preparation for the 2026 General Elections. The review, part of the Democratic Transparency Cycle, covered operating systems, voting software, transmission, tallying, and encryption mechanisms, with the coordinator praising Brazil's system as 'the most sophisticated in the world'. The source code was opened one year in advance to allow thorough validation by political parties, oversight bodies, and academia."
       },
       "content": "Representantes da SBC analisam softwares e criptografia. Coordenador do grupo definiu o sistema brasileiro de votação como “o mais sofisticado do mundo” O Tribunal Superior Eleitoral (TSE) recebeu, nesta quarta-feira (24), representantes da Sociedade Brasileira de Computação (SBC) para mais uma etapa de inspeção dos códigos-fonte dos sistemas eleitorais que serão utilizados nas Eleições Gerais de 2026 . A atividade faz parte das ações do Ciclo de Transparência Democrática. A comitiva da SBC vistori ou as linhas de comando e os softwares que integram o ecossistema das urnas eletrônicas. A análise ocorreu no espaço dedicado à auditoria, localizado no edifício-sede do Tribunal, em Brasília. Nesta quinta-feira (25), está prevista a continuidade dos trabalhos do grup o . Os representantes examinaram os sistemas operacionais, os programas de votação, os módulos de transmissão e de totalização de dados, além dos mecanismos de criptografia que garantem o sigilo e a segurança do voto. A abertura do s código s -fonte às entidades fiscalizadoras ocorre com um ano de antecedência em relação ao pleito. A medida visa expandir o tempo disponível para que partidos políticos, órgãos de controle e a academia validem de forma minuciosa a integridade e o funcionamento dos programas desenvolvidos pela Justiça Eleitoral. Veja mais",
       "source_category": "institutional",
       "sentiment_per_candidate": {},
-      "edit_history": [],
+      "edit_history": [
+        {
+          "tier": "editor",
+          "at": "2026-06-24T19:11:55Z",
+          "provider": "nvidia",
+          "action": "validated",
+          "changes": [
+            "summary_pt",
+            "summary_en"
+          ]
+        }
+      ],
       "disclaimer_pt": "Análise algorítmica. Não representa pesquisa de opinião.",
       "disclaimer_en": "Algorithmic analysis. Does not represent polling data.",
       "sentiment_score": 0.0,
-      "confidence_score": 0.0,
+      "confidence_score": 1.0,
       "_sentiment_scores": {},
-      "prominence_score": 0.0
+      "prominence_score": 0.0,
+      "_ai_provider": "nvidia",
+      "_ai_model": "nvidia/nemotron-3-super-120b-a12b",
+      "ai_provider_editor": "nvidia/nemotron-3-super-120b-a12b",
+      "editor_note": null
     },
     {
       "id": "7c13da91a910f99d",
@@ -65,114 +60,60 @@
       "source": "Veja",
       "published_at": "2026-06-24T19:00:53Z",
       "collected_at": "2026-06-24T19:04:04Z",
-      "status": "raw",
-      "relevance_score": 0.0,
-      "relevance_signals": null,
-      "candidates_mentioned": [],
-      "topics": [],
+      "status": "validated",
+      "relevance_score": 1.0,
+      "relevance_signals": {
+        "candidate_signal": 0.6,
+        "topic_signal": 0.25,
+        "keyword_signal": 0.15,
+        "source_signal": 0.0
+      },
+      "candidates_mentioned": [
+        "flavio-bolsonaro",
+        "lula"
+      ],
+      "topics": [
+        "midia",
+        "eleicoes",
+        "politica_externa"
+      ],
       "narrative_cluster_id": null,
       "duplicate_of": null,
       "summaries": {
-        "pt-BR": "",
-        "en-US": ""
+        "pt-BR": "O senador Flávio Bolsonaro (PL-RJ) usou um vídeo com inteligência artificial para atacar o presidente Lula, colocando-se como piloto da FAB resgatando Neymar após a declaração petista de que o jogador seria o 'primeiro convocado home office do mundo'. O conteúdo, divulgado horas antes do jogo Brasil x Escócia pela Copa do Mundo de 2026, ressalta a relação histórica entre Neymar e o bolsonarismo, incluindo condecorações e pedidos de voto em campanhas anteriores.",
+        "en-US": "Senator Flávio Bolsonaro (PL-RJ) used an AI-generated video to attack President Lula, portraying himself as a Brazilian Air Force pilot rescuing Neymar after Lula called him the 'first home office call-up in the world'. Released hours before Brazil’s 2026 World Cup match against Scotland, the video highlights Neymar’s longstanding ties to Bolsonarismo, including receiving a medal from Jair Bolsonaro and urging votes for him in 2022."
       },
       "content": "O senador Flávio Bolsonaro (PL-RJ) voltou a usar o atacante Neymar nesta quarta-feira, 24, para atacar o presidente Luiz Inácio Lula da Silva (PT) – horas antes da partida decisiva entre Brasil e Escócia pela Copa do Mundo . Em um vídeo feito com inteligência artificial e publicado nas redes sociais, o presidenciável se coloca como piloto da Força Aérea Brasileira (FAB) e pega um jato para levar Neymar até o estádio. A produção começa reproduzindo a fala do petista de que Neymar é o “primeiro convocado home office do mundo”. A declaração incomodou políticos da direita e provocou uma nova polarização em meio a disputa da seleção brasileira no Mundial. “Eles disseram que não precisavam mais de mim”, diz o camisa 10 do Brasil no vídeo. Na sequência, o senador responde: “Quem foi o maluco que disse isso?”. Após quase 40 dias sem jogar, Neymar poderá estrear no Mundial de 2026. Segundo o técnico Carlo Ancelotti, o atacante está à disposição para o jogo contra a Escócia, às 19h. Continua após a publicidade Copas com Neymar Esta é a quarta Copa do Mundo de Neymar, que tenta repetir o feito de craques que foram campeões, como Pelé, Garrincha, Tostão, Romário, Bebeto, Ronaldo, Rivaldo e Ronaldinho. A seleção brasileira foi campeã em 1958, 1962, 1970, 1994 e 2002. Caso não conquiste o hexa em 2026, o Brasil chegará ao maior jejum de títulos da sua história. 2014 – Eliminado para a Alemanha nas semis 2018 – Eliminado para a Bélgica nas quartas 2022 – Eliminado para a Croácia nas quartas 2026 – Ainda não jogou Continua após a publicidade Neymar e o bolsonarismo A convocação de Neymar para o Mundial foi comemorada pelo senador Flávio Bolsonaro (PL) em maio. O pré-candidato à Presidência da República publicou que “já sabia” e que “agora o hexa vem”. Esta foi mais uma de várias interações entre a família e o camisa 10 da seleção. Em 2023, o jogador recebeu do ex-presidente Jair Bolsonaro (PL) a medalha “imbrochável, imorrível e incomível” . Um ano antes, em 2022, Neymar pediu votos para o então candidato à reeleição. O episódio gerou atritos na seleção brasileira em meio à preparação para a Copa de 2022. Publicidade",
       "source_category": "magazine",
-      "sentiment_per_candidate": {},
-      "edit_history": [],
-      "disclaimer_pt": "Análise algorítmica. Não representa pesquisa de opinião.",
-      "disclaimer_en": "Algorithmic analysis. Does not represent polling data.",
-      "sentiment_score": 0.0,
-      "confidence_score": 0.0,
-      "_sentiment_scores": {},
-      "prominence_score": 0.0
-    },
-    {
-      "id": "a61472f7708221e5",
-      "url": "https://www12.senado.leg.br/noticias/audios/2026/06/mulheres-surdas-poderao-ter-mais-apoio-durante-atendimentos-de-saude",
-      "title": "Áudio: Mulheres surdas poderão ter mais apoio durante atendimentos de saúde",
-      "source": "Agencia Senado",
-      "published_at": "2026-06-24T18:56:08Z",
-      "collected_at": "2026-06-24T19:04:20Z",
-      "status": "raw",
-      "relevance_score": 0.0,
-      "relevance_signals": null,
-      "candidates_mentioned": [],
-      "topics": [],
-      "narrative_cluster_id": null,
-      "duplicate_of": null,
-      "summaries": {
-        "pt-BR": "",
-        "en-US": ""
+      "sentiment_per_candidate": {
+        "flavio-bolsonaro": "negativo",
+        "lula": "positivo"
       },
-      "content": "Segue para votação final na Comissão de Assuntos Sociais (CAS) um projeto (PL 559/2026) que facilita a comunicação de mulheres surdas no atendimento de saúde. Recursos de acessibilidade, tecnologia assistiva e até presença de intérprete da Língua Brasileira de Sinais (Libras) estão previstos no texto, aprovado pela Comissão de Direitos Humanos nesta quarta-feira (24), com parecer favorável de Mara Gabrilli (PSD-SP).",
-      "source_category": "institutional",
-      "sentiment_per_candidate": {},
-      "edit_history": [],
+      "edit_history": [
+        {
+          "tier": "editor",
+          "at": "2026-06-24T19:12:00Z",
+          "provider": "nvidia",
+          "action": "validated",
+          "changes": [
+            "summary_pt",
+            "summary_en"
+          ]
+        }
+      ],
       "disclaimer_pt": "Análise algorítmica. Não representa pesquisa de opinião.",
       "disclaimer_en": "Algorithmic analysis. Does not represent polling data.",
-      "sentiment_score": 0.0,
-      "confidence_score": 0.0,
-      "_sentiment_scores": {},
-      "prominence_score": 0.0
-    },
-    {
-      "id": "3eb3ee7d8645bcdb",
-      "url": "https://noticias.uol.com.br/ultimas-noticias/agencia-estado/2026/06/24/como-descobrir-se-o-aparelho-que-comprei-e-roubado-celular-seguro-permitira-consulta.htm",
-      "title": "Como descobrir se o aparelho que comprei é roubado? 'Celular Seguro' permitirá consulta",
-      "source": "UOL Noticias",
-      "published_at": "2026-06-24T18:55:00Z",
-      "collected_at": "2026-06-24T19:03:38Z",
-      "status": "raw",
-      "relevance_score": 0.0,
-      "relevance_signals": null,
-      "candidates_mentioned": [],
-      "topics": [],
-      "narrative_cluster_id": null,
-      "duplicate_of": null,
-      "summaries": {
-        "pt-BR": "",
-        "en-US": ""
+      "sentiment_score": -0.05,
+      "confidence_score": 1.0,
+      "_sentiment_scores": {
+        "flavio-bolsonaro": -0.6,
+        "lula": 0.5
       },
-      "content": "A nova fase do programa Celular Seguro, do governo federal, começou nesta quarta-feira, 24, em todo o País. O \"Modo Recuperação\" tem como objetivo combater a receptação e recuperar aparelhos celulares roubados.",
-      "source_category": "mainstream",
-      "sentiment_per_candidate": {},
-      "edit_history": [],
-      "disclaimer_pt": "Análise algorítmica. Não representa pesquisa de opinião.",
-      "disclaimer_en": "Algorithmic analysis. Does not represent polling data.",
-      "sentiment_score": 0.0,
-      "confidence_score": 0.0,
-      "_sentiment_scores": {},
-      "prominence_score": 0.0
-    },
-    {
-      "id": "efe452c09ebb0af5",
-      "url": "https://noticias.uol.com.br/ultimas-noticias/rfi/2026/06/24/candidato-governista-reconhece-derrota-e-confirma-vitoria-da-extrema-direita-na-colombia.htm",
-      "title": "Candidato governista reconhece derrota e confirma vitória da extrema direita na Colômbia",
-      "source": "UOL Noticias",
-      "published_at": "2026-06-24T18:51:33Z",
-      "collected_at": "2026-06-24T19:03:38Z",
-      "status": "raw",
-      "relevance_score": 0.0,
-      "relevance_signals": null,
-      "candidates_mentioned": [],
-      "topics": [],
-      "narrative_cluster_id": null,
-      "duplicate_of": null,
-      "summaries": {
-        "pt-BR": "",
-        "en-US": ""
-      },
-      "content": "A passagem da esquerda pelo poder chegou ao fim na Colômbia depois que o sucessor de Gustavo Petro, Iván Cepeda, reconheceu, nesta quarta-feira (24), a derrota para o candidato da extrema-direita, Abelardo de la Espriella, na eleição presidencial mais acirrada e com maior participação eleitoral da história do país sul-americano.",
-      "source_category": "mainstream",
-      "sentiment_per_candidate": {},
-      "edit_history": [],
-      "disclaimer_pt": "Análise algorítmica. Não representa pesquisa de opinião.",
-      "disclaimer_en": "Algorithmic analysis. Does not represent polling data.",
-      "sentiment_score": 0.0,
-      "confidence_score": 0.0,
-      "_sentiment_scores": {},
-      "prominence_score": 0.0
+      "prominence_score": 0.0,
+      "_ai_provider": "nvidia",
+      "_ai_model": "nvidia/nemotron-3-super-120b-a12b",
+      "ai_provider_editor": "nvidia/nemotron-3-super-120b-a12b",
+      "editor_note": null
     },
     {
       "id": "bffeac31c774e158",
@@ -181,143 +122,60 @@
       "source": "Veja",
       "published_at": "2026-06-24T18:50:45Z",
       "collected_at": "2026-06-24T19:04:04Z",
-      "status": "raw",
-      "relevance_score": 0.0,
-      "relevance_signals": null,
-      "candidates_mentioned": [],
-      "topics": [],
+      "status": "validated",
+      "relevance_score": 1.0,
+      "relevance_signals": {
+        "candidate_signal": 0.6,
+        "topic_signal": 0.3,
+        "keyword_signal": 0.15,
+        "source_signal": 0.0
+      },
+      "candidates_mentioned": [
+        "lula",
+        "flavio-bolsonaro"
+      ],
+      "topics": [
+        "corrupcao",
+        "eleicoes",
+        "economia"
+      ],
       "narrative_cluster_id": null,
       "duplicate_of": null,
       "summaries": {
-        "pt-BR": "",
-        "en-US": ""
+        "pt-BR": "O 'Lulômetro' do Real Time Big Data detectou queda na popularidade do presidente Lula devido à associação do caso Banco Master ao PT, embora o efeito seja menor que o sofrido por Flávio Bolsonaro, já que as acusações não recaem diretamente sobre ele. Apesar do desgaste, Lula vinha apresentando recuperação gradual na aprovação, com a desaprovação do governo caindo de acima de 40% para 38%, impulsionada por medidas como o Desenrola e a proposta de redução da jornada de trabalho. O diretor da empresa alertou que novos desdobramentos do escândalo podem influenciar as intenções de voto em 2026.",
+        "en-US": "The 'Lulômetro' by Real Time Big Data detected a decline in President Lula's popularity due to the Banco Master scandal's association with the PT, though the impact is less severe than that faced by Flávio Bolsonaro, as the accusations do not directly target him. Despite this setback, Lula had been showing gradual recovery in approval ratings, with government disapproval falling from over 40% to 38%, driven by economic measures like Desenrola and the proposed workweek reduction. The firm's director warned that further developments in the scandal could influence voting intentions in the 2026 election."
       },
       "content": "O diretor-executivo do Real Time Big Data, Lucas Thut Sahd , afirmou, em entrevista ao programa VEJA em Foco , que o chamado “Lulômetro” já detectou uma queda na popularidade do presidente Luiz Inácio Lula da Silva após o avanço das investigações sobre o Banco Master, que atingiram o líder do governo no Senado, Jaques Wagner (PT-BA). Segundo Sahd, o monitoramento diário realizado pela empresa identificou um impacto negativo na imagem do presidente diante da associação do caso ao PT. “Já notamos que caiu a sua popularidade por ver o seu partido mais uma vez enredado no escândalo de corrupção”, afirmou. O executivo ponderou, no entanto, que o efeito político do caso sobre Lula tende a ser menor do que o desgaste enfrentado pelo senador Flávio Bolsonaro (PL-RJ), já que, no caso do parlamentar, as acusações recaem diretamente sobre ele. “Jaques Wagner não é o presidente Lula, obviamente. Então não tem uma ligação direta 100%, mas é o líder do seu governo. Então abala bastante a imagem do presidente do partido”, disse. Apesar do novo desgaste, Sahd afirmou que o presidente vinha apresentando recuperação gradual nos indicadores de aprovação nos últimos meses. De acordo com ele, a desaprovação do governo, que chegou a superar os 40%, recuou para 38%. Na avaliação do diretor do Real Time Big Data, medidas econômicas voltadas à população de menor renda têm contribuído para essa melhora. Entre elas, ele citou o programa Desenrola e o debate sobre a redução da jornada de trabalho. “A tentativa do presidente de recuperar a economia do país, principalmente impactar a vida do cidadão mais pobre, tem surtido efeito na avaliação do presidente”, afirmou. Continua após a publicidade Sahd também avaliou que os desdobramentos do escândalo envolvendo o Banco Master ainda podem influenciar o cenário eleitoral de 2026. “Esses escândalos impactam, sim, nas intenções de voto”, disse, acrescentando que novas revelações envolvendo aliados de diferentes campos políticos podem surgir ao longo da pré-campanha. Publicidade",
       "source_category": "magazine",
-      "sentiment_per_candidate": {},
-      "edit_history": [],
-      "disclaimer_pt": "Análise algorítmica. Não representa pesquisa de opinião.",
-      "disclaimer_en": "Algorithmic analysis. Does not represent polling data.",
-      "sentiment_score": 0.0,
-      "confidence_score": 0.0,
-      "_sentiment_scores": {},
-      "prominence_score": 0.0
-    },
-    {
-      "id": "5008e85777443869",
-      "url": "https://www.metropoles.com/colunas/grande-angular/vice-da-cldf-quer-obrigar-gdf-a-ressarcir-vitimas-de-descontos-ilegais",
-      "title": "Vice da CLDF quer obrigar GDF a ressarcir vítimas de descontos ilegais",
-      "source": "Metropoles",
-      "published_at": "2026-06-24T18:50:37Z",
-      "collected_at": "2026-06-24T19:03:52Z",
-      "status": "raw",
-      "relevance_score": 0.0,
-      "relevance_signals": null,
-      "candidates_mentioned": [],
-      "topics": [],
-      "narrative_cluster_id": null,
-      "duplicate_of": null,
-      "summaries": {
-        "pt-BR": "",
-        "en-US": ""
+      "sentiment_per_candidate": {
+        "lula": "negativo",
+        "flavio-bolsonaro": "positivo"
       },
-      "source_category": "mainstream",
-      "content": "Michael Melo/Metrópoles Vice-presidente da Câmara Legislativa do Distrito Federal, o deputado Ricardo Vale ( PT ) protocolou, nesta quarta-feira (24/6), um projeto de lei que obriga o Governo do Distrito Federal ( GDF ) a devolver valores descontados de forma irregular dos contracheques de servidores ativos, aposentados e pensionistas . A proposta também cria novas regras para autorizar consignações em folha e prevê a responsabilização dos envolvidos nas irregularidades. O projeto determina que o DF, as autarquias e as fundações públicas verifiquem a regularidade dos descontos em folha. Para autorizar as consignações, o texto exige assinatura eletrônica do servidor, aposentado ou pensionista em plataformas oficiais ou por meio de certificado digital, além da validação da autenticidade da assinatura. Leia também Grande Angular Flávio Bolsonaro pede opiniões sobre Bia Kicis ser candidata a vice Grande Angular Celina diz que veto não impede nomeações e prevê contratações após agosto Grande Angular “Ninguém quer trabalhar”: desembargador que criticou pensão alimentícia se retrata Grande Angular Crime da 113 Sul: STJ leva recurso do MP a plenário presencial Caso sejam identificados descontos indevidos, o órgão responsável deverá devolver os valores, cobrar o ressarcimento dos responsáveis e apurar a eventual participação de agentes públicos. Na justificativa, Ricardo Vale afirma que “os servidores públicos, aposentados e pensionistas do Distrito Federal não têm sossego” e cita investigações sobre descontos em contracheques e contas bancárias. O deputado cita a Operação Juros Zero , que apura um esquema envolvendo o BRB, o PicPay e a folha de pagamento dos servidores do Distrito Federal, e a Operação Parasitas , que investiga descontos em contas de aposentados e pensionistas. “Esses prejuízos não podem ser arcados pelos aposentados, pensionistas e servidores”, afirma o deputado. Ricardo Vale afirma que o objetivo é estabelecer regras para as consignações em folha e garantir a devolução dos valores descontados de forma irregular. Receba no seu email as notícias da coluna Grande Angular Frequência de envio: Diário Ver todas Assinar Ver todas as newsletters",
-      "sentiment_per_candidate": {},
-      "edit_history": [],
+      "edit_history": [
+        {
+          "tier": "editor",
+          "at": "2026-06-24T19:12:11Z",
+          "provider": "nvidia",
+          "action": "validated",
+          "changes": [
+            "summary_pt",
+            "summary_en"
+          ]
+        }
+      ],
       "disclaimer_pt": "Análise algorítmica. Não representa pesquisa de opinião.",
       "disclaimer_en": "Algorithmic analysis. Does not represent polling data.",
-      "sentiment_score": 0.0,
-      "confidence_score": 0.0,
-      "_sentiment_scores": {},
-      "prominence_score": 0.0
-    },
-    {
-      "id": "e11defcaa424d3a8",
-      "url": "https://oantagonista.com.br/ladooa/entretenimento/crusoe-paris-filmes-diz-que-nao-vai-distribuir-dark-horse/",
-      "title": "Crusoé: Paris Filmes diz que não vai distribuir ‘Dark Horse’",
-      "source": "O Antagonista",
-      "published_at": "2026-06-24T18:48:32Z",
-      "collected_at": "2026-06-24T19:03:59Z",
-      "status": "raw",
-      "relevance_score": 0.0,
-      "relevance_signals": null,
-      "candidates_mentioned": [],
-      "topics": [],
-      "narrative_cluster_id": null,
-      "duplicate_of": null,
-      "summaries": {
-        "pt-BR": "",
-        "en-US": ""
+      "sentiment_score": -0.15,
+      "confidence_score": 1.0,
+      "_sentiment_scores": {
+        "lula": -0.7,
+        "flavio-bolsonaro": 0.4
       },
-      "content": "A Paris Filmes decidiu não fazer a distribuição de Dark Horse, filme baseado na trajetória do ex-presidente Jair Bolsonaro. Produzido com investimentos do banqueiro Daniel Vorcaro, ex-dono do Master, o longa vem enfrentando resistência do mercado audiovisual. Em comunicado, a distribuidora confirmou ter sido procurada pela Go Up Entertainment e recusado o contrato. “A empresa... The post Crusoé: Paris Filmes diz que não vai distribuir ‘Dark Horse’ appeared first on O Antagonista .",
-      "source_category": "politics",
-      "sentiment_per_candidate": {},
-      "edit_history": [],
-      "disclaimer_pt": "Análise algorítmica. Não representa pesquisa de opinião.",
-      "disclaimer_en": "Algorithmic analysis. Does not represent polling data.",
-      "sentiment_score": 0.0,
-      "confidence_score": 0.0,
-      "_sentiment_scores": {},
-      "prominence_score": 0.0
-    },
-    {
-      "id": "99d6847cca848f9b",
-      "url": "https://veja.abril.com.br/esporte/africa-do-sul-x-coreia-do-sul-na-copa-onde-assistir-horario-e-escalacoes/",
-      "title": "África do Sul x Coreia do Sul na Copa: onde assistir, horário e escalações",
-      "source": "Veja",
-      "published_at": "2026-06-24T18:45:41Z",
-      "collected_at": "2026-06-24T19:04:04Z",
-      "status": "raw",
-      "relevance_score": 0.0,
-      "relevance_signals": null,
-      "candidates_mentioned": [],
-      "topics": [],
-      "narrative_cluster_id": null,
-      "duplicate_of": null,
-      "summaries": {
-        "pt-BR": "",
-        "en-US": ""
-      },
-      "content": "África do Sul e Coreia do Sul se enfrentam nesta quarta, 24, às 22h (horário de Brasília), no estádio de Monterrey, no México, pela última rodada do Grupo A da Copa do Mundo de 2026 . + Jogos de hoje, quarta, 24 de junho: onde assistir futebol ao vivo e horários da Copa O México venceu as duas primeiras rodadas e já está garantido na liderança do Grupo A. Na segunda colocação, com três pontos, aparece a Coreia do Sul. Na sequência vêm Tchéquia e África do Sul, ambas com um ponto, mas com os tchecos à frente pelo saldo de gols. A África do Sul precisa vencer para continuar sonhando com a classificação. Um empate ou uma derrota significam eliminação. A seleção comandada por Hugo Broos chega pressionada após perder para o México e empatar com a Tchéquia e a necessidade de vitória deve obrigar os Bafana Bafana a abandonar parte da cautela exibida nas primeiras rodadas. Neymar, Lula, Cristiano e mais: as maiores polêmicas da Copa 2026 Do outro lado, a Coreia do Sul, segunda colocada do Grupo A com três pontos, depende apenas de si. Com vitória ou empate, termina na segunda posição e garante classificação direta para a fase de 16 avos de final. Em caso de derrota para a África do Sul, a situação coreana dependerá de Tchéquia x México: Continua após a publicidade Se a Tchéquia vencer, os coreanos cairão para o quarto lugar e estarão eliminados. Se a Tchéquia empatar ou perder, a Coreia ficará em terceiro, com três pontos, e dependerá da comparação com os demais terceiros colocados. Os oito melhores avançam. Como assistir ao jogo entre África do Sul e Coreia do Sul hoje? África do Sul e Coreia do Sul vão se enfrentar nesta quarta, 24, às 22h (horário de Brasília), em partida válida pela última rodada do Grupo A da Copa do Mundo 2026, no estádio de Monterrey, no México. A partida terá transmissão exclusiva da CazéTV . Prováveis escalações: África do Sul: Ronwen Williams; Khuliso Mudau, Ime Okon, Mbekezeli Mbokazi e Aubrey Modiba; Thalente Mbatha e Jayden Adams; Thapelo Maseko, Relebohile Mofokeng e Oswin Appollis; Lyle Foster. Técnico: Hugo Broos. Coreia do Sul: Kim Seung-gyu; Kim Moon-hwan, Lee Han-beom, Kim Min-jae, Lee Gi-hyuk e Seol Young-woo; Paik Seung-ho e Hwang In-beom; Lee Kang-in e Lee Jae-sung; Son Heung-min. Técnico: Hong Myung-bo. Odds para África do Sul x Coreia do Sul : Resultado final Betano: África do Sul (5.50) – Empate (3.85) – Coreia do Sul (1.65) Continua após a publicidade Bet365: África do Sul (5.75) – Empate (4.00) – Coreia do Sul (1.60) Arbitragem: Continua após a publicidade Continua após a publicidade Árbitro: Facundo Tello (Argentina); Assistentes: Juan Pablo Belatti (Argentina) e Gabriel Chade (Argentina); Quarto árbitro: Andrés Rojas (Colômbia); VAR: Juan Lara (Chile). Continua após a publicidade Publicidade",
-      "source_category": "magazine",
-      "sentiment_per_candidate": {},
-      "edit_history": [],
-      "disclaimer_pt": "Análise algorítmica. Não representa pesquisa de opinião.",
-      "disclaimer_en": "Algorithmic analysis. Does not represent polling data.",
-      "sentiment_score": 0.0,
-      "confidence_score": 0.0,
-      "_sentiment_scores": {},
-      "prominence_score": 0.0
-    },
-    {
-      "id": "4ec0bc17360b5211",
-      "url": "https://www.poder360.com.br/poder-infra/rota-sao-paulo-bahia-sobe-para-3a-posicao-em-voos-mais-movimentados/",
-      "title": "Rota São Paulo-Bahia sobe para 3ª posição em voos mais movimentados",
-      "source": "Poder360",
-      "published_at": "2026-06-24T18:43:09Z",
-      "collected_at": "2026-06-24T19:03:56Z",
-      "status": "raw",
-      "relevance_score": 0.0,
-      "relevance_signals": null,
-      "candidates_mentioned": [],
-      "topics": [],
-      "narrative_cluster_id": null,
-      "duplicate_of": null,
-      "summaries": {
-        "pt-BR": "",
-        "en-US": ""
-      },
-      "content": "A rota aérea entre São Paulo e Bahia passou a ocupar a 3ª posição entre os trechos domésticos mais movimentados do Brasil de janeiro a maio de 2026. O corredor transportou 2,49 milhões de passageiros no período, alta de 8% em relação aos 2,29 milhões registrados no mesmo intervalo de 2025. Os dados foram divulgados nesta 4ª feira (24.jun.2026) pelo Ministério do Turismo com base em informações da Anac (Agência Nacional de Aviação Civil). MUDANÇA NO RANKING A rota São Paulo-Santa Catarina caiu da 3ª para a 4ª colocação. O número de passageiros recuou 1,5%, passando de 2,4 milhões para 2,37 milhões. O trecho São Paulo-Rio Grande do Sul avançou da 6ª para a 5ª posição. O corredor registrou 2,11 milhões de passageiros entre janeiro e maio de 2026, crescimento de 5% ante os 2 milhões contabilizados no mesmo período de 2025. Já a rota São Paulo-Minas Gerais caiu da 5ª para a 6ª colocação. O volume de passageiros recuou de 2,14 milhões para 2,05 milhões na comparação anual. A rota São Paulo-Rio de Janeiro manteve a liderança pelo 2º ano consecutivo, com cerca de 2,9 milhões de passageiros entre janeiro e maio de 2026. O trecho São Paulo-Paraná permaneceu na 2ª posição, com aproximadamente 2,8 milhões de passageiros no acumulado do ano. ROTAS MAIS MOVIMENTADAS As 5 rotas domésticas com maior movimentação de passageiros entre janeiro e maio de 2026 foram: São Paulo–Rio de Janeiro; São Paulo–Paraná; São Paulo–Bahia; São Paulo–Santa Catarina; São Paulo–Rio Grande do Sul. AVIAÇÃO CRECEU 6% NO PAÍS A aviação doméstica brasileira movimentou 42 milhões de passageiros entre janeiro e maio de 2026, segundo a Anac. O volume é 6% superior aos 39,8 milhões registrados no mesmo período de 2025 e representa o maior já registrado para o intervalo. Em maio, 8,31 milhões de passageiros viajaram em voos domésticos no país, alta de 2% em relação aos 8,16 milhões contabilizados no mesmo mês do ano anterior. Segundo o Ministério do Turismo, foi o maior volume já registrado para o mês desde o início da série histórica, em 2000.",
-      "source_category": "politics",
-      "sentiment_per_candidate": {},
-      "edit_history": [],
-      "disclaimer_pt": "Análise algorítmica. Não representa pesquisa de opinião.",
-      "disclaimer_en": "Algorithmic analysis. Does not represent polling data.",
-      "sentiment_score": 0.0,
-      "confidence_score": 0.0,
-      "_sentiment_scores": {},
-      "prominence_score": 0.0
+      "prominence_score": 0.0,
+      "_ai_provider": "nvidia",
+      "_ai_model": "nvidia/nemotron-3-super-120b-a12b",
+      "ai_provider_editor": "nvidia/nemotron-3-super-120b-a12b",
+      "editor_note": null
     },
     {
       "id": "d123ddeb9c858c68",
@@ -326,56 +184,58 @@
       "source": "UOL Noticias",
       "published_at": "2026-06-24T18:41:35Z",
       "collected_at": "2026-06-24T19:03:38Z",
-      "status": "raw",
-      "relevance_score": 0.0,
-      "relevance_signals": null,
-      "candidates_mentioned": [],
-      "topics": [],
+      "status": "validated",
+      "relevance_score": 0.85,
+      "relevance_signals": {
+        "candidate_signal": 0.5,
+        "topic_signal": 0.3,
+        "keyword_signal": 0.05,
+        "source_signal": 0.0
+      },
+      "candidates_mentioned": [
+        "flavio-bolsonaro"
+      ],
+      "topics": [
+        "corrupcao",
+        "politica_externa",
+        "midia",
+        "eleicoes"
+      ],
       "narrative_cluster_id": null,
       "duplicate_of": null,
       "summaries": {
-        "pt-BR": "",
-        "en-US": ""
+        "pt-BR": "O presidente do STF, Edson Fachin, solicitou à área técnica da corte esclarecimentos sobre a distribuição da ação que investiga Jair Bolsonaro e seus filhos Flávio e Eduardo Bolsonaro por supostas irregularidades relacionadas ao filme 'Dark Horse'. O pedido visa garantir transparência antes da definição do relator do caso.",
+        "en-US": "Supreme Court President Edson Fachin requested technical clarification from the court's staff regarding the distribution of the case investigating Jair Bolsonaro and his sons Flávio and Eduardo Bolsonaro over alleged irregularities linked to the film 'Dark Horse'. The request aims to ensure transparency before appointing a rapporteur for the case."
       },
       "content": "O presidente do STF (Supremo Tribunal Federal), Edson Fachin, pediu que a área técnica da corte preste esclarecimentos sobre a distribuição da ação que busca investigar Jair Bolsonaro (PL) e seus filhos Flávio (PL-RJ) e Eduardo Bolsonaro (PL-SP) por supostas irregularidades ligadas ao filme \"Dark Horse\".",
       "source_category": "mainstream",
-      "sentiment_per_candidate": {},
-      "edit_history": [],
-      "disclaimer_pt": "Análise algorítmica. Não representa pesquisa de opinião.",
-      "disclaimer_en": "Algorithmic analysis. Does not represent polling data.",
-      "sentiment_score": 0.0,
-      "confidence_score": 0.0,
-      "_sentiment_scores": {},
-      "prominence_score": 0.0
-    },
-    {
-      "id": "fc8fe5f456b21b4e",
-      "url": "https://oglobo.globo.com/esportes/copa-do-mundo-2026/noticia/2026/06/24/capitao-do-tetra-dunga-diz-quem-deve-ficar-com-a-faixa-no-brasil-e-descarta-vini-jr-nao-e-lider-de-vestiario.ghtml",
-      "title": "Capitão do Tetra, Dunga diz quem deve ficar com a faixa no Brasil e descarta Vini Jr.: 'Não é líder de vestiário'",
-      "source": "O Globo",
-      "published_at": "2026-06-24T18:37:06Z",
-      "collected_at": "2026-06-24T19:03:45Z",
-      "status": "raw",
-      "relevance_score": 0.0,
-      "relevance_signals": null,
-      "candidates_mentioned": [],
-      "topics": [],
-      "narrative_cluster_id": null,
-      "duplicate_of": null,
-      "summaries": {
-        "pt-BR": "",
-        "en-US": ""
+      "sentiment_per_candidate": {
+        "flavio-bolsonaro": "negativo"
       },
-      "content": "Dunga é um dos poucos brasileiros que puderam levantar a taça da Copa do Mundo como capitão. No lugar de treinador, não teve o mesmo sucesso, sendo eliminado na copa de 2010 pela Holanda. Hoje nos bastidores, ele comenta as suas impressões da atual seleção. 'Remada viking' da Noruega, sensação da Copa, irrita vizinhos escandinavos, e jogadores suecos debocham 'Pouca fé': Jornal inglês vê Brasil cercado por desconfiança e pessimismo antes de duelo com a Escócia Em entrevista ao jornal alemão Bild, Dunga afirmou que Vini Jr. não é candidato a capitão da seleção. Nos dois jogos da Copa de 2026, a faixa ficou com o zagueiro Marquinhos, nome mais adequado para o posto, segundo o tetracampeão. — Vini é alguém que faz jogadas, que avança. Mas o Brasil precisa de um líder no vestiário. É por isso que Marquinhos assume esse papel — afirmou o ex-jogador. Dunga também lembrou que o Brasil não é campeão mundial há 24 anos, o mesmo período que a seleção não conquistava a taça quando ele foi tetra, em uma final dramática contra a Itália. Mas ele destaca que este time não está na primeira prateleira das seleções atualmente, não figurando como um dos favoritos. — Se você olhar os resultados na Copa do Mundo na classificação, é evidente que algumas seleções nacionais estão à frente do Brasil. No entanto, não estamos tão atrás. Se nossos jogadores mostrarem a atitude certa, a coragem certa e o caráter certo, o Brasil se tornará o que costumava ser: campeão mundial — completou. Dunga comandou a seleção brasileira na Copa do Mundo de 2010 Márcio Alves Dunga também fez parte deste período sem taças para o Brasil, já que foi treinador por duas oportunidades e esteva na África do Sul, comandando a equipe brasileira em 2010. Atualmente, ele veste a camisa de torcedor. — O Brasil ainda tem jogadores excelentes. E: Esse misticismo fala por nós: Antes do nosso triunfo em 1994, também havíamos passado 24 anos sem ganhar um título, e nos tornamos campeões mundiais. Agora estamos novamente há 24 anos sem um título. Isso é um bom presságio. Uma nação do futebol como Brasil não dá para ficar tanto tempo sem ganhar o título — torce o ex-jogador.",
-      "source_category": "mainstream",
-      "sentiment_per_candidate": {},
-      "edit_history": [],
+      "edit_history": [
+        {
+          "tier": "editor",
+          "at": "2026-06-24T19:12:24Z",
+          "provider": "nvidia",
+          "action": "validated",
+          "changes": [
+            "summary_pt",
+            "summary_en"
+          ]
+        }
+      ],
       "disclaimer_pt": "Análise algorítmica. Não representa pesquisa de opinião.",
       "disclaimer_en": "Algorithmic analysis. Does not represent polling data.",
-      "sentiment_score": 0.0,
-      "confidence_score": 0.0,
-      "_sentiment_scores": {},
-      "prominence_score": 0.0
+      "sentiment_score": -0.5,
+      "confidence_score": 1.0,
+      "_sentiment_scores": {
+        "flavio-bolsonaro": -0.5
+      },
+      "prominence_score": 0.0,
+      "_ai_provider": "nvidia",
+      "_ai_model": "nvidia/nemotron-3-super-120b-a12b",
+      "ai_provider_editor": "nvidia/nemotron-3-super-120b-a12b",
+      "editor_note": null
     },
     {
       "id": "21f112fed8f46ce1",
@@ -384,56 +244,57 @@
       "source": "Veja",
       "published_at": "2026-06-24T18:30:56Z",
       "collected_at": "2026-06-24T19:04:04Z",
-      "status": "raw",
-      "relevance_score": 0.0,
-      "relevance_signals": null,
-      "candidates_mentioned": [],
-      "topics": [],
+      "status": "validated",
+      "relevance_score": 0.55,
+      "relevance_signals": {
+        "candidate_signal": 0.5,
+        "topic_signal": 0.05,
+        "keyword_signal": 0.0,
+        "source_signal": 0.0
+      },
+      "candidates_mentioned": [
+        "lula"
+      ],
+      "topics": [
+        "seguranca",
+        "corrupcao",
+        "politica_externa"
+      ],
       "narrative_cluster_id": null,
       "duplicate_of": null,
       "summaries": {
-        "pt-BR": "",
-        "en-US": ""
+        "pt-BR": "O ministro Alexandre de Moraes, do STF, aceitou parcialmente o pedido do general da reserva Mario Fernandes para parcelar a multa de R$ 194,520 mil imposta por sua condenação na trama golpista, reduzindo o parcelamento de 60 para 36 vezes. Apesar de Fernandes alegar que sobram apenas R$ 4,1 mil após despesas, Moraes decidiu que o pagamento mensal será de R$ 5,4 mil (equivalente a dois salários mínimos), considerando sua renda líquida de R$ 23 mil como reserva militar suficiente para cumprir a sanção sem perder seu caráter punitivo.",
+        "en-US": "Supreme Court Justice Alexandre de Moraes partially approved a request by retired General Mario Fernandes to pay a R$ 194,520 fine imposed for his role in a coup plot, reducing the installment plan from 60 to 36 months. Although Fernandes claimed only R$ 4,100 remained after expenses, Moraes set monthly payments at R$ 5,400 (two minimum wages), citing Fernandes’ R$ 23,000 monthly reserve military income as sufficient to maintain the fine’s punitive and deterrent purpose."
       },
       "content": "O ministro Alexandre de Moraes , do STF, aceitou parcialmente um pedido do general da reserva Mario Fernandes para parcelar a multa que recebeu como parte de sua condenação pela trama golpista. Fernandes queria dividir em 60 vezes o pagamento de 194,520 mil reais que lhe foi imposto. Moraes concordou com o parcelamento, mas decidiu que deveria ser menor, em 36 vezes. Após analisar os dados de gastos mensais de Fernandes, o ministro considerou que “embora o apenado tenha apresentado documentação que indica comprometimento de sua renda com despesas ordinárias e essenciais, a sua capacidade econômica não pode ser considerada insuficiente”. “O patamar remuneratório do apenado é substancialmente superior à média nacional, o que permite o adimplemento da sanção desde que ajustado o fluxo de pagamentos”, avaliou. Como militar da reserva, o general recebe 23 mil reais líquidos por mês. Mas alegou que, com todas as despesas suas e de sua família, sobram apenas 4,1 mil reais. Continua após a publicidade Moraes afirmou que a “pena de multa deve preservar o seu caráter punitivo e dissuasório, sob pena de se tornar inócua”. O ministro considerou, então, que estabelecer cada parcela no valor de dois salários-mínimos (3.242 mil reais) “mostra-se condizente com os princípios da razoabilidade e da proporcionalidade”. Apesar da determinação, a divisão do valor total em 36 vezes exigira um pagamento mensal de 5,4 mil reais. Continua após a publicidade Fernandes recebeu uma pena de 26 anos e seis meses de prisão, por ter elaborado um plano de assassinato contra o presidente Luiz Inácio Lula da Silva, o vice-presidente Geraldo Alckmin e o próprio Moraes. Ele admitiu ter elaborado o documento, mas afirmou que era um “pensamento digitalizado”. Publicidade",
       "source_category": "magazine",
-      "sentiment_per_candidate": {},
-      "edit_history": [],
-      "disclaimer_pt": "Análise algorítmica. Não representa pesquisa de opinião.",
-      "disclaimer_en": "Algorithmic analysis. Does not represent polling data.",
-      "sentiment_score": 0.0,
-      "confidence_score": 0.0,
-      "_sentiment_scores": {},
-      "prominence_score": 0.0
-    },
-    {
-      "id": "c4ccbf510673c349",
-      "url": "https://www.metropoles.com/esportes/de-volta-a-selecao-neymar-usara-chuteira-especial-contra-a-escocia",
-      "title": "De volta à Seleção, Neymar usará chuteira especial contra a Escócia",
-      "source": "Metropoles",
-      "published_at": "2026-06-24T18:28:02Z",
-      "collected_at": "2026-06-24T19:03:51Z",
-      "status": "raw",
-      "relevance_score": 0.0,
-      "relevance_signals": null,
-      "candidates_mentioned": [],
-      "topics": [],
-      "narrative_cluster_id": null,
-      "duplicate_of": null,
-      "summaries": {
-        "pt-BR": "",
-        "en-US": ""
+      "sentiment_per_candidate": {
+        "lula": "positivo"
       },
-      "source_category": "mainstream",
-      "content": "Reprodução/Puma De volta aos gramados com a camisa da Seleção Brasileira depois de três anos, o atacante Neymar usará uma chuteira especial no jogo contra a Escócia. A partida desta quarta-feira (24/6) marca a despedida da Amarelinha da fase de grupos da Copa do Mundo de 2026 . Já classificado, o time de Carlo Ancelotti busca terminar a primeira fase como líder do grupo C. A fornecedora de material esportiva Puma usou as redes sociais para anunciar a chuteira especial que será usada por Neymar. O calçado é amarelo com detalhes verdes e laranjas. Ver essa foto no Instagram Um post compartilhado por PUMA Football (@pumafootball) 7 imagens Fechar modal. 1 de 7 Nelson Terme / CBF 2 de 7 Neymar é o camisa 10 da Seleção Brasileira Nelson Terme / CBF 3 de 7 Harry Langer/DeFodi Images/DeFodi via Getty Images 4 de 7 O Brasil deve contar com retorno de Neymar Nelson Terme / CBF 5 de 7 O jogador se recupera de lesão na panturrilha Nelson Terme / CBF 6 de 7 Rafael Ribeiro / CBF 7 de 7 O Brasil deve contar com retorno de Neymar Buda Mendes - FIFA/FIFA via Getty Images Chuteiras na Copa Nos primeiros jogos da Copa do Mundo 2026 foi possível perceber um detalhe que tem se repetido nos gramados dos Estados Unidos, México e Canadá: a presença cada vez maior de chuteiras cor de rosa nos pés dos jogadores. Leia também Palpites e odds Palpite Tchéquia x México – Copa do Mundo – 24/06/26 Palpites e odds Palpite Escócia x Brasil – Copa do Mundo – 24/06/26 Esportes Onde assistir a Escócia x Brasil pela Copa do Mundo Esportes Bélgica é única cabeça de chave que ainda não venceu na Copa do Mundo A tendência tem explicação: a onda rosa é uma aposta conjunta das principais fabricantes de material esportivo. Nike, Adidas, Puma e New Balance lançaram coleções especiais para o Mundial, com modelos em tons semelhantes, buscando aumentar a visibilidade dos produtos e destacar os atletas em campo. Odinga Nimako, integrante da equipe global de desenvolvimento de chuteiras da Nike, deu entrevista ao jornal The Athletic, do New York Times, e explicou que a escolha foi baseada em pesquisas com jogadores e consumidores, que associam cores vibrantes à confiança e personalidade. O contraste fica ainda mais evidente porque nenhuma das 48 seleções participantes da Copa utiliza o rosa como cor predominante em seus uniformes. Com isso, as chuteiras acabam chamando atenção de forma natural durante os jogos.",
-      "sentiment_per_candidate": {},
-      "edit_history": [],
+      "edit_history": [
+        {
+          "tier": "editor",
+          "at": "2026-06-24T19:12:32Z",
+          "provider": "nvidia",
+          "action": "validated",
+          "changes": [
+            "summary_pt",
+            "summary_en"
+          ]
+        }
+      ],
       "disclaimer_pt": "Análise algorítmica. Não representa pesquisa de opinião.",
       "disclaimer_en": "Algorithmic analysis. Does not represent polling data.",
-      "sentiment_score": 0.0,
-      "confidence_score": 0.0,
-      "_sentiment_scores": {},
-      "prominence_score": 0.0
+      "sentiment_score": 0.3,
+      "confidence_score": 1.0,
+      "_sentiment_scores": {
+        "lula": 0.3
+      },
+      "prominence_score": 0.0,
+      "_ai_provider": "nvidia",
+      "_ai_model": "nvidia/nemotron-3-super-120b-a12b",
+      "ai_provider_editor": "nvidia/nemotron-3-super-120b-a12b",
+      "editor_note": null
     },
     {
       "id": "0e4dffaf0d55ade0",
@@ -442,27 +303,60 @@
       "source": "O Antagonista",
       "published_at": "2026-06-24T18:27:17Z",
       "collected_at": "2026-06-24T19:04:00Z",
-      "status": "raw",
-      "relevance_score": 0.0,
-      "relevance_signals": null,
-      "candidates_mentioned": [],
-      "topics": [],
+      "status": "validated",
+      "relevance_score": 1.0,
+      "relevance_signals": {
+        "candidate_signal": 0.6,
+        "topic_signal": 0.3,
+        "keyword_signal": 0.15,
+        "source_signal": 0.05
+      },
+      "candidates_mentioned": [
+        "zema",
+        "flavio-bolsonaro"
+      ],
+      "topics": [
+        "corrupcao",
+        "politica_externa",
+        "eleicoes"
+      ],
       "narrative_cluster_id": null,
       "duplicate_of": null,
       "summaries": {
-        "pt-BR": "",
-        "en-US": ""
+        "pt-BR": "Romeu Zema reafirmou suas críticas ao senador Flávio Bolsonaro após o vazamento de áudios envolvendo o ex-banqueiro Daniel Vorcaro, afirmando que não se arrepende e que não pode aplaudir quem se envolveu com 'aquele banqueiro bandido'. O pré-candidato à Presidência pelo Novo destacou sua coerência e disse que suas posições não mudaram.",
+        "en-US": "Romeu Zema reaffirmed his criticism of Senator Flávio Bolsonaro following the leak of audio involving former banker Daniel Vorcaro, stating he has no regrets and cannot applaud someone who associated with 'that criminal banker'. The Novo party’s presidential pre-candidate emphasized his consistency and said his stance remains unchanged."
       },
       "content": "O ex-governador de Minas Gerais e pré-candidato à presidência, Romeu Zema (Novo), afirmou não se arrepender das críticas feitas ao senador Flávio Bolsonaro (PL-RJ) após o vazamento de áudios envolvendo o ex-banqueiro Daniel Vorcaro. Zema disse ser “sempre uma pessoa coerente” e que não poderia aplaudir “alguém que se envolveu com aquele banqueiro bandido”. Em... The post Zema reafirma crítica a Flávio após áudios com Vorcaro appeared first on O Antagonista .",
       "source_category": "politics",
-      "sentiment_per_candidate": {},
-      "edit_history": [],
+      "sentiment_per_candidate": {
+        "zema": "neutro",
+        "flavio-bolsonaro": "negativo"
+      },
+      "edit_history": [
+        {
+          "tier": "editor",
+          "at": "2026-06-24T19:12:38Z",
+          "provider": "nvidia",
+          "action": "validated",
+          "changes": [
+            "summary_pt",
+            "summary_en"
+          ]
+        }
+      ],
       "disclaimer_pt": "Análise algorítmica. Não representa pesquisa de opinião.",
       "disclaimer_en": "Algorithmic analysis. Does not represent polling data.",
-      "sentiment_score": 0.0,
-      "confidence_score": 0.0,
-      "_sentiment_scores": {},
-      "prominence_score": 0.0
+      "sentiment_score": -0.3,
+      "confidence_score": 1.0,
+      "_sentiment_scores": {
+        "zema": 0.0,
+        "flavio-bolsonaro": -0.6
+      },
+      "prominence_score": 0.0,
+      "_ai_provider": "nvidia",
+      "_ai_model": "nvidia/nemotron-3-super-120b-a12b",
+      "ai_provider_editor": "nvidia/nemotron-3-super-120b-a12b",
+      "editor_note": null
     },
     {
       "id": "65322396f4505421",
@@ -471,201 +365,55 @@
       "source": "Estadao Politica",
       "published_at": "2026-06-24T18:26:17Z",
       "collected_at": "2026-06-24T19:03:49Z",
-      "status": "raw",
-      "relevance_score": 0.0,
-      "relevance_signals": null,
-      "candidates_mentioned": [],
-      "topics": [],
+      "status": "validated",
+      "relevance_score": 0.9,
+      "relevance_signals": {
+        "candidate_signal": 0.5,
+        "topic_signal": 0.25,
+        "keyword_signal": 0.15,
+        "source_signal": 0.0
+      },
+      "candidates_mentioned": [
+        "flavio-bolsonaro"
+      ],
+      "topics": [
+        "eleicoes"
+      ],
       "narrative_cluster_id": null,
       "duplicate_of": null,
       "summaries": {
-        "pt-BR": "",
-        "en-US": ""
+        "pt-BR": "O senador Flávio Bolsonaro (PL-RJ), candidato à Presidência, disse que está considerando o nome da deputada Bia Kicis (PL-DF) para vice em sua chapa presidencial de 2026. Ele elogiou sua preparação, caráter conservador e capacidade de diálogo, afirmando que quer ouvir a opinião do público sobre a escolha. Flávio também mencionou ter conversado com outras mulheres do PL, como Júlia Zanatta, Simone Marquetto, Tereza Cristina e Clarissa Tércio, na busca por uma companhia de chapa.",
+        "en-US": "Senator Flávio Bolsonaro (PL-RJ), a presidential candidate, said he is considering naming Deputy Bia Kicis (PL-DF) as his running mate for the 2026 election. He praised her preparation, conservative stance, and ability to negotiate across political lines, saying he wants public opinion on the idea. Flávio also noted he has spoken with other PL women, including Júlia Zanatta, Simone Marquetto, Tereza Cristina, and Clarissa Tércio, in his search for a vice-presidential candidate."
       },
       "content": "O senador Flávio Bolsonaro (PL-RJ), candidato a presidente da República, disse nesta quarta-feira, 24, que cogita o nome da deputada Bia Kicis (PL-DF) para vice em sua chapa. Logo depois de se reunir com o presidenciável do PL, quando gravaram um vídeo em que falam do assunto, Bia Kicis contou à Coluna do Estadão que o senador perguntou se ela queria ser candidata a vice-presidente. “Ele me disse: ‘você é um dos quadros mais preparados que temos, quero uma mulher conservadora e quero cogitar o seu nome. Que tal você vir de vice?’”, afirmou a parlamentar do PL do Distrito Federal, pré-candidata ao Senado. A deputada disse ainda que Flávio perguntou “como ela conseguia” ter um projeto sancionado pelo presidente Lula, rival do senador nas eleições, ao que ela teria respondido que tem ”poder de diálogo e de negociação” para além da bolha bolsonarista. No vídeo gravado ao lado de Bia Kicis, Flávio diz saber que a deputada gosta de desafios e tece elogios a ela. “Não estou falando que ela vai ser a vice não, tá, gente, mas quero que vocês comentem se ela seria uma boa escolha ou não. Saibam que tenho um carinho gigante por ela”, afirmou o senador. Flávio tem ampliado as conversas com mulheres do partido nos últimos dias em busca de um nome para concorrer à Presidência ao seu lado. Ele também conversou recentemente com a deputada Júlia Zanatta (PL-SC). Entre os outros nomes femininos que o senador cogita estão a deputada Simone Marquetto (PP-SP), a senadora Tereza Cristina (PP-MS), que já disse que não quer concorrer, e a deputada Clarissa Tércio (PP-PE).",
       "source_category": "mainstream",
-      "sentiment_per_candidate": {},
-      "edit_history": [],
-      "disclaimer_pt": "Análise algorítmica. Não representa pesquisa de opinião.",
-      "disclaimer_en": "Algorithmic analysis. Does not represent polling data.",
-      "sentiment_score": 0.0,
-      "confidence_score": 0.0,
-      "_sentiment_scores": {},
-      "prominence_score": 0.0
-    },
-    {
-      "id": "527ecbba5d9bcbc0",
-      "url": "https://oglobo.globo.com/mundo/noticia/2026/06/24/trump-suspende-assinatura-de-projeto-bipartidario-de-habitacao-e-condiciona-sancao-a-aprovacao-de-pacote-eleitoral.ghtml",
-      "title": "Trump suspende assinatura de projeto bipartidário de habitação e condiciona sanção a aprovação de pacote eleitoral",
-      "source": "O Globo",
-      "published_at": "2026-06-24T18:24:08Z",
-      "collected_at": "2026-06-24T19:03:46Z",
-      "status": "raw",
-      "relevance_score": 0.0,
-      "relevance_signals": null,
-      "candidates_mentioned": [],
-      "topics": [],
-      "narrative_cluster_id": null,
-      "duplicate_of": null,
-      "summaries": {
-        "pt-BR": "",
-        "en-US": ""
+      "sentiment_per_candidate": {
+        "flavio-bolsonaro": "positivo"
       },
-      "content": "O presidente dos EUA, Donald Trump, cancelou abruptamente nesta quarta-feira a assinatura de um projeto de lei destinado a melhorar o acesso à moradia, aprovado no Congresso com apoio dos dois partidos americanos, condicionando sua sanção à aprovação de um outro projeto, que tem o objetivo de endurecer a regra de registro de eleitores — incluindo restrições à identificação do eleitor no dia da votação e ao voto por correio. 'Choque da esquerda': Primárias democratas em NY aumentam força de Mamdani e embaralham estratégia da oposição para novembro Ataque a centro do ICE: Manifestante acusado de integrar grupo de extrema esquerda nos EUA é condenado a 100 anos \"A coletiva de imprensa e a assinatura do projeto de habitação de hoje estão canceladas até que aprovemos a tão desesperadamente necessária Lei para Salvar os Estados Unidos [Save America Act, em inglês], que considero uma emergência nacional\", publicou Trump nas redes sociais, apenas horas antes de uma cerimônia programada para comemorar a aprovação da proposta com parlamentares no Capitólio. Initial plugin text O Save America Act é um projeto que exige que os estados americanos — que constitucionalmente detêm a prerrogativa sobre a organização das eleições —, obriguem os eleitores a apresentarem uma prova de cidadania ao se registrar para votar e um documento de identificação com foto para poder votar. A medida está parada no Senado, onde a forte oposição democrata tem impedido seu avanço, por considerar as exigências discriminatórias e denunciar o projeto como uma tentativa de prejudicar seu eleitorado. A decisão contrariando interesses republicanos — incluindo do próprio governo, que prometeu entregar uma redução no custo de vida — oferece um novo vislumbre do interesse de Trump em ampliar o papel do Executivo federal no processo eleitoral. Em um ano crucial para a segunda metade do mandato de Trump, os EUA realizam as eleições midterms em outubro, enquanto o presidente passa por uma crise de popularidade. O presidente estimulou estados vistos como chave a redesenharem mapas eleitorais favorecendo aos republicanos, ao passo que tenta interferir de outras formas. Uma das frentes foi bloqueada pela juíza federal Sparkle Sooknanan, de Washington, D.C., que bloqueou uma tentativa de Trump de utilizar uma versão reformulada de um banco de dados de imigração para verificar a precisão das listas estaduais de eleitores, afirmando que a reformulação do sistema tornou-o menos preciso e criou o risco de privar eleitores elegíveis de seu direito de voto. Disputa com o Legislativo A decisão de Trump em cancelar a assinatura da lei de habitação irritou democratas e republicanos, estes em particular, de exibirem uma conquista legislativa em um ano com poucas vitórias desse tipo. Mesmo enquanto Trump desqualificava o projeto habitacional, a liderança republicana da Câmara dos Representantes o defendia durante uma coletiva de imprensa semanal. — Os republicanos da Câmara serão o partido que governa e entrega resultados — disse o deputado Tom Emmer, de Minnesota, o terceiro republicano mais influente da Câmara, aparentemente sem saber da publicação de Trump nas redes sociais. O senador Chuck Schumer, democrata de Nova York e líder da minoria no Senado, acusou Trump na manhã de quarta-feira de \"fugir de uma das poucas realizações que poderiam realmente ajudar o povo americano\". A Casa Branca também havia promovido o projeto — a primeira grande legislação sobre habitação aprovada em mais de 30 anos — e divulgou, na noite de terça-feira, uma declaração igualmente favorável sobre seus componentes. Mas, na quarta-feira, Trump afirmou que o projeto era \"de importância secundária\" e que \"empalidecia em comparação\" com sua proposta de legislação eleitoral. A proposta busca reduzir os custos da moradia tornando mais fácil e mais barato construir novas residências. Com cerca de 380 páginas, a chamada Lei Caminho para a Habitação do Século XXI (21st Century Road to Housing Act) reduz uma série de regulamentações federais e procura incentivar mais desenvolvimento habitacional em nível local, adotando uma abordagem que, em geral, recebeu amplo apoio de economistas e especialistas em habitação. Ainda há muita incerteza sobre os planos exatos do presidente para o pacote habitacional. Trump não informou se pretendia cancelar apenas a cerimônia de assinatura ou se daria o passo adicional de vetar um projeto que seus assessores haviam dito anteriormente que ele sancionaria. Caso o presidente simplesmente deixe de assinar a medida, ela ainda poderá se tornar lei. Quando o Congresso está em sessão, um projeto geralmente pode virar lei dez dias após ser oficialmente encaminhado ao presidente. (Com AFP e NYT)",
-      "source_category": "mainstream",
-      "sentiment_per_candidate": {},
-      "edit_history": [],
+      "edit_history": [
+        {
+          "tier": "editor",
+          "at": "2026-06-24T19:12:43Z",
+          "provider": "nvidia",
+          "action": "validated",
+          "changes": [
+            "summary_pt",
+            "summary_en"
+          ]
+        }
+      ],
       "disclaimer_pt": "Análise algorítmica. Não representa pesquisa de opinião.",
       "disclaimer_en": "Algorithmic analysis. Does not represent polling data.",
-      "sentiment_score": 0.0,
-      "confidence_score": 0.0,
-      "_sentiment_scores": {},
-      "prominence_score": 0.0
-    },
-    {
-      "id": "eac8f3064174fdbc",
-      "url": "https://redir.folha.com.br/redir/online/colunas/monicabergamo/rss091/*https://www1.folha.uol.com.br/colunas/monicabergamo/2026/06/rai-lancara-autobiografia-no-brasil-no-segundo-semestre.shtml",
-      "title": "Raí lançará autobiografia no Brasil no segundo semestre",
-      "source": "UOL Noticias",
-      "published_at": "2026-06-24T18:24:00Z",
-      "collected_at": "2026-06-24T19:03:39Z",
-      "status": "raw",
-      "relevance_score": 0.0,
-      "relevance_signals": null,
-      "candidates_mentioned": [],
-      "topics": [],
-      "narrative_cluster_id": null,
-      "duplicate_of": null,
-      "summaries": {
-        "pt-BR": "",
-        "en-US": ""
+      "sentiment_score": 0.5,
+      "confidence_score": 1.0,
+      "_sentiment_scores": {
+        "flavio-bolsonaro": 0.5
       },
-      "content": "O ex-jogador Raí, um dos principais nomes da história do futebol brasileiro, lançará sua autobiografia no Brasil no segundo semestre de 2026 pela editora Boitempo. Publicado inicialmente na França como \"Les Buts de Ma Vie\", o livro chegará ao país com o título provisório \"Os Gols da Minha Vida\".Leia mais (06/24/2026 - 15h24)",
-      "source_category": "mainstream",
-      "sentiment_per_candidate": {},
-      "edit_history": [],
-      "disclaimer_pt": "Análise algorítmica. Não representa pesquisa de opinião.",
-      "disclaimer_en": "Algorithmic analysis. Does not represent polling data.",
-      "sentiment_score": 0.0,
-      "confidence_score": 0.0,
-      "_sentiment_scores": {},
-      "prominence_score": 0.0
-    },
-    {
-      "id": "378605a2cea7c535",
-      "url": "https://oglobo.globo.com/blogs/sonar-a-escuta-das-redes/post/2026/06/nao-acho-que-debater-nas-redes-seja-a-melhor-forma-de-resolver-diz-presidente-da-federacao-psol-rede-a-erika-hilton.ghtml",
-      "title": "'Não acho que debater nas redes seja a melhor forma de resolver', diz presidente da federação PSOL-Rede à Erika Hilton",
-      "source": "O Globo",
-      "published_at": "2026-06-24T18:20:47Z",
-      "collected_at": "2026-06-24T19:03:46Z",
-      "status": "raw",
-      "relevance_score": 0.0,
-      "relevance_signals": null,
-      "candidates_mentioned": [],
-      "topics": [],
-      "narrative_cluster_id": null,
-      "duplicate_of": null,
-      "summaries": {
-        "pt-BR": "",
-        "en-US": ""
-      },
-      "content": "O presidente da federação PSOL-Rede, Juliano Medeiros, rebateu nesta quarta-feira a declaração da deputada federal Erika Hilton (PSOL), por meio de postagem no X, que acusa os partidos de “rasgar” acordos firmados internamente sobre distribuição de recursos para a campanha eleitoral deste ano. \"Não acho que debater nas redes sociais seja a melhor forma de resolver essas questões\", escreveu. 'Rasgando acordos' x 'candidatura com mais investimento': Erika Hilton e PSOL divergem sobre distribuição de recursos 'Não aceitarei ser negligenciado de novo': Vereador mais votado do PSOL no Rio endossa reclamação de Erika Hilton A parlamentar acusou, na terça-feira, a direção nacional da sigla de “rasgar” acordos firmados internamente e alegou que o cenário estaria “inviabilizando” sua postulação. A manifestação pública dela ocorre três semanas antes da reunião da Executiva Nacional do PSOL que, em 18 de julho, baterá o martelo sobre a divisão de recursos. O presidente da federação, por sua vez, defende que o partido manteve os critérios de distribuição do fundo eleitoral: \"A destinação maior de recursos para mulheres, LGBTs, negros, pessoas com deficiência e indígenas é uma política consolidada no partido e vai continuar\", disse Medeiros. O PSOL prevê R$ 2,3 milhões do fundo eleitoral para a reeleição de Erika. O total é superior aos R$ 2,2 milhões a ser recebido por outros deputados do partido que tentam novos mandatos na Câmara, e é 61,5% maior ao recurso recebido pela deputada em 2022. Segundo Medeiros, Erika \"cumpre um papel fundamental na disputa política do Brasil e será uma grande puxadora de votos\". Ele defende que \"é muito importante que o PSOL esteja reconhecendo isso, colocando a sua candidatura como prioridade\". Medeiros aponta, por outro lado, que Erika é uma candidata com reeleição assegurada e destaca o objetivo da federação de \"eleger o máximo possível de deputados\". \"Para isso, o PSOL está fortalecendo a chapa da federação com nomes fundamentais, como Manuela d'Ávila, Jones Manoel, Marina Silva, Áurea Carolina, entre outros\", pontua. Crise interna Na terça-feira, Erika sustentou que, para percorrer o estado de São Paulo como puxadora de votos do partido, é preciso logística e um forte esquema de segurança. Segundo a deputada, ela e seu grupo político “correm riscos que a burocracia do partido não pode simplesmente ignorar”, sob o risco, ainda de acordo com Erika, de inviabilização de pré-candidaturas, rebaixamento do potencial de votos e ameaças à integridade física. Em março, o grupo de Erika, Revolução Solidária, decidiu disputar as eleições deste ano pelo PSOL, mesmo após o diretório nacional decidir não ingressar na federação PT-PCdoB-PV. A união era defendida pela deputada e pelo ministro da Secretaria-Geral da Presidência, Guilherme Boulos. Internamente, a ala oposta à de Erika entende que a manifestação da parlamentar tem três objetivos principais: barganhar o crescimento do valor do fundo destinado à campanha dela, trabalhar pela eleição de Natália Boulos à Câmara e iniciar a construção de uma narrativa para a saída do partido em um futuro próximo. Integrantes da direção nacional defendem que a destinação superior à Erika já representa uma “deferência a ela”. Segundo a sigla, em 2022, nenhum candidato recebeu a mais que os demais, conforme as faixas. Inclusive o puxador de votos naquele ano, Guilherme Boulos, recebeu menos do que candidatos em reeleição, segundo a sigla. Fontes do PSOL questionam a interpretação de que a manifestação de Erika Hilton seja um “ensaio” para sair da legenda. Alegam que a parlamentar não precisaria de uma “desculpa” como essa, depois da divulgação de carta pública da Revolução Solidária após a direção do PSOL, sob comando de Paula Coradi, rejeitar por maioria a formação de uma federação com o PT. O grupo, do qual Erika e Guilherme Boulos fazem parte, disse na ocasião que o PSOL optou por um “caminho de isolamento” em detrimento do debate de soluções políticas e deixou em aberto o rumo político dos integrantes. A ala que apoia Erika Hilton sustenta que o apelo da deputada vem num momento de crise interna do partido e a tensão pela possibilidade de uma saída coletiva após as eleições. Isso, segundo as mesmas fontes, pode estar interferindo na discussão financeira, com a ideia de não investir em campanhas de figuras que possam vir a deixar o PSOL. Também argumentam que a tensão interna tem exposto privilégios a pré-candidatos cis, heterossexuais e brancos. O cenário teria ficado ainda mais preocupante, segundo elas, depois de o STF validar por maioria a emenda que anistia partidos que violaram cotas eleitorais de minorias. Critérios questionados Na terça-feira, Erika questionou os critérios adotados para o financiamento das campanhas e comparou o valor a ser recebido por ela com a verba prevista para outros nomes, com menos tempo no Congresso ou na federação PSOL-Rede. À coluna de Lauro Jardim, a deputada afirmou que se comprometeu a permanecer no PSOL para que a sigla alcançasse a cláusula de barreira e, para isso, teria direito a recursos a mais definidos para uma categoria de puxadores de voto. Em postagem nas redes sociais, a deputada cita os deputados estaduais Renata Souza (RJ) e Carlos Giannazi (SP) e o vereador Rick Azevedo (RJ) — que receberá R$ 900 mil, como outros vereadores que vão concorrer à Câmara dos Deputados — como outros parlamentares que estariam insatisfeitos com a gestão. A parlamentar também afirmou que foi informada por aliados de que a executiva nacional apresentou uma planilha que não a teria incluído na faixa combinada e que não teve acesso ao documento. “Hoje, Juliano Medeiros, presidente da Federação PSOL-Rede, em sua primeira candidatura, teria exatamente a mesma prioridade que eu. Manuela d’Ávila, que acabou de chegar ao partido, tem previsão de receber mais que o dobro. Respeito a trajetória deles e adoraria vê-los eleitos, mas isso é o privilégio branco e cis sobrepondo tudo: os acordos feitos conosco, cálculos eleitorais sérios… A inteligência política passou longe”, disse. Manuela é pré-candidata ao Senado pelo Rio Grande do Sul e lidera as pesquisas de intenções de voto. Aposta da esquerda gaúcha, Manuela integra a chapa encabeçada por Juliana Brizola (PDT) e Edegar Pretto (PT) ao governo. Já Medeiros disputará uma vaga na Câmara por São Paulo, assim como Natalia Boulos, que é próxima de Erika. O partido prevê que Manuela d'Ávila receba R$ 5 milhões. A sigla defende que o valor deva ser maior por se tratar de uma eleição majoritária e por avaliar que a campanha dela vai alavancar proporcional no Rio Grande do Sul, ou seja, fazer mais deputados federais no estado. Ela vai receber o teto do repasse previsto para postulante ao Senado. Medeiros e Natalia Boulos receberão, por sua vez, R$ 2 milhões cada. À coluna de Lauro Jardim, Erika exemplificou que, na chapa estadual em São Paulo, Luiza Erundina receberia a mais que aqueles que tentam se reeleger. Segundo o PSOL, Erundina sairia para federal, vai para estadual e é vista como puxadora de voto. Vai receber bem menos do que se fosse para federal, mas vai ser mais do que a média, acrescenta a legenda.",
-      "source_category": "mainstream",
-      "sentiment_per_candidate": {},
-      "edit_history": [],
-      "disclaimer_pt": "Análise algorítmica. Não representa pesquisa de opinião.",
-      "disclaimer_en": "Algorithmic analysis. Does not represent polling data.",
-      "sentiment_score": 0.0,
-      "confidence_score": 0.0,
-      "_sentiment_scores": {},
-      "prominence_score": 0.0
-    },
-    {
-      "id": "6971312f65e44a01",
-      "url": "https://www12.senado.leg.br/noticias/materias/2026/06/24/cdh-aprova-penas-maiores-para-crimes-de-violencia-sexual-digital-contra-menores",
-      "title": "CDH aprova penas maiores para crimes de violência sexual digital contra menores",
-      "source": "Agencia Senado",
-      "published_at": "2026-06-24T18:17:44Z",
-      "collected_at": "2026-06-24T19:04:20Z",
-      "status": "raw",
-      "relevance_score": 0.0,
-      "relevance_signals": null,
-      "candidates_mentioned": [],
-      "topics": [],
-      "narrative_cluster_id": null,
-      "duplicate_of": null,
-      "summaries": {
-        "pt-BR": "",
-        "en-US": ""
-      },
-      "content": "A Comissão de Direitos Humanos do Senado (CDH) aprovou nesta quarta (24) um projeto de lei que endurece as punições para a violência sexual digital contra crianças e adolescentes — inclusive nos casos em que é utilizada a inteligência artificial. O projeto (PL 3.066/2025), entre outras medidas, aumenta a pena para quem produzir, divulgar ou comercializar conteúdo de violência sexual contra menores por meio da internet ou das redes sociais. Também prevê a atualização da linguagem utilizada na legislação: o texto substitui a expressão “pornografia infantil” por “violência sexual contra criança ou adolescente”. Agora a proposta segue para votação no Plenário do Senado — junto com um requerimento de urgência. O autor do projeto é o deputado federal Osmar Terra (PL-RS). A relatora da matéria na CDH foi a senadora Damares Alves (Republicanos-DF), que apresentou parecer favorável à iniciativa. Damares ressaltou que o texto foi elaborado com a participação de especialistas, representantes do governo e da sociedade civil, e que por isso representa uma solução de consenso. — Todos os anos batemos recordes prendendo abusadores de criança que usam o mundo on-line. Inclusive, em 2022, aqui nesta Casa, foi preso um servidor do Senado que estava de posse de dois mil arquivos [com imagens de abuso sexual de menores]. Ele foi para a delegacia, pagou uma fiança de R$ 15 mil e está respondendo em liberdade — disse a senadora. Produção e divulgação O texto aumenta as penas de crimes já previstos no Estatuto da Criança e do Adolescente. Nos casos de produção, reprodução, direção, fotografia, filmagem ou registro de conteúdo de violência sexual contra criança ou adolescente, assim como a sua venda ou exposição, a pena atual é de 4 a 8 anos de reclusão e multa. O projeto eleva essa punição para 4 a 10 anos de reclusão e multa. O texto aumenta a pena em um terço se a venda ou exposição ocorrer por meio da internet, das redes sociais ou de outras tecnologias da informação e comunicação. Além disso, a proposta aumenta a punição para quem oferece, troca, disponibiliza, transmite, distribui, publica ou divulga material de violência sexual contra criança ou adolescente. Hoje, a pena prevista para esses atos é de 3 a 6 anos de reclusão e multa. O texto proposto permite aumentar a pena para 4 a 10 anos de reclusão e multa. O projeto aumenta a pena em um terço quando o conteúdo for publicado ou compartilhado em mais de uma plataforma digital, rede social, serviço de vídeo sob demanda ou aplicativo acessível ao público. Armazenamento A pena atual para quem adquire, possui ou armazena esse tipo de material é de 1 a 4 anos de reclusão e multa. O projeto aumenta essa punição para 3 a 6 anos de reclusão e multa. O texto também cita explicitamente o ato de solicitar esse material. E prevê a mesma pena para quem acessa ou visualiza deliberadamente aplicações de internet, serviços de streaming ou outras formas de registro que apresentem material de violência sexual contra criança ou adolescente. Aliciamento Também está prevista pena maior para o crime de aliciamento de menor. Atualmente, o Estatuto da Criança e do Adolescente estabelece pena de 1 a 3 anos de reclusão e multa para o aliciamento de criança para a prática de ato libidinoso. O projeto prevê, para o aliciamento de menores de 14 anos, punição de 3 a 5 anos de reclusão e multa. Inteligência artificial O texto prevê que as penas podem ser aumentadas de um terço a dois terços quando o criminoso promete vantagem à vítima ou se aproveita de relação de confiança, autoridade, cuidado, proteção, vigilância, educação, convivência familiar ou profissional. O mesmo aumento deve ocorrer em caso de uso de: inteligência artificial; deepfake (montagem feita com inteligência artificial para alterar rosto ou voz); filtros; perfis falsos; \"anonimização\" (quando se utilizam mecanismos para impedir a identificação do criminoso); aplicativos de mensagens; redes sociais; jogos on-line; Para os casos em que há a simulação da participação de menores em conteúdo de violência sexual (como montagens, adulterações ou modificações de imagem), a proposta aumenta a pena (que hoje é de 1 a 3 anos de reclusão e multa) para 3 a 5 anos de reclusão e multa. Além disso, o projeto acrescenta um novo artigo ao Estatuto da Criança e do Adolescente (o artigo 226-A) para aumentar de um terço a dois terços a pena do criminoso que, com o objetivo de impedir ou dificultar sua identificação, usar modulador de proxy (recurso que \"disfarça\" a conexão para ocultar a origem do acesso) ou técnica de mascaramento, ocultação, falsificação, alteração ou \"anonimização\" de endereço IP ou de outro identificador digital. Mas o texto preserva o uso legítimo de tecnologias de privacidade e segurança digital quando aplicadas para fins lícitos (como proteção de dados pessoais, privacidade e segurança cibernética). O autor da matéria, deputado Osmar Terra, acompanhou a votação do projeto na CDH. Ele declarou que as mudanças são necessárias porque há lacunas na legislação atual, especialmente diante da rapidez com que as novas tecnologias são utilizadas pelos criminosos para praticar, esconder e disseminar seus atos. Ronda virtual A proposta autoriza a chamada ronda virtual, a ser realizada por órgãos investigativos oficiais, para identificar e coletar arquivos em ambientes digitais públicos, desde que relacionados a crimes de violência sexual contra menores. Esses ambientes incluem redes peer-to-peer, fóruns, sites, canais e redes sociais, entre outros. O projeto destaca que essa coleta em ambiente público não configura interceptação de comunicações nem infiltração policial, dispensando autorização judicial prévia. Nos casos de flagrante, de risco à vida ou de risco à integridade física de menor identificado durante a ronda virtual, o órgão responsável poderá requisitar dados de conexão e os dados cadastrais diretamente ao provedor de conexão e ao de aplicação, sem ordem judicial. Mas o texto exige comunicação à autoridade judicial em até 48 horas. Proteção às vítimas Além da repressão penal, o projeto contém medidas de proteção às vítimas. O texto prevê que crianças e adolescentes vítimas ou testemunhas de violência sexual terão direito a atendimento psicológico e psicossocial individual, especializado, contínuo e integral. O texto também prevê que esse atendimento considere os impactos da revitimização causada pela circulação e pela permanência de imagens e vídeos em ambiente digital, inclusive em outros países (a revitimização acontece quando a vítima revive o trauma provocado pelo crime). Responsabilização financeira Outra medida prevista é a responsabilização financeira do agressor. O projeto determina que quem causar lesão corporal ou praticar violência física, sexual ou psicológica contra criança ou adolescente deverá cobrir integralmente os custos do tratamento da vítima, inclusive com ressarcimento ao Sistema Único de Saúde (SUS). O texto determina que os valores arrecadados serão destinados ao Fundo de Saúde do ente federado responsável pela unidade que prestou o atendimento. Crime hediondo A proposta inclui diversos crimes relacionados à violência sexual contra menores no rol dos crimes hediondos.",
-      "source_category": "institutional",
-      "sentiment_per_candidate": {},
-      "edit_history": [],
-      "disclaimer_pt": "Análise algorítmica. Não representa pesquisa de opinião.",
-      "disclaimer_en": "Algorithmic analysis. Does not represent polling data.",
-      "sentiment_score": 0.0,
-      "confidence_score": 0.0,
-      "_sentiment_scores": {},
-      "prominence_score": 0.0
-    },
-    {
-      "id": "756ab7ddf8a36deb",
-      "url": "https://www12.senado.leg.br/noticias/materias/2026/06/24/vai-a-ctfc-divulgacao-de-banco-de-dados-sobre-violencia-contra-a-mulher",
-      "title": "Vai à CTFC divulgação de banco de dados sobre violência contra a mulher",
-      "source": "Agencia Senado",
-      "published_at": "2026-06-24T18:15:16Z",
-      "collected_at": "2026-06-24T19:04:20Z",
-      "status": "raw",
-      "relevance_score": 0.0,
-      "relevance_signals": null,
-      "candidates_mentioned": [],
-      "topics": [],
-      "narrative_cluster_id": null,
-      "duplicate_of": null,
-      "summaries": {
-        "pt-BR": "",
-        "en-US": ""
-      },
-      "content": "A Comissão de Direitos Humanos (CDH) aprovou nesta quarta-feira (24) projeto que torna públicas informações do Registro Unificado de Dados e Informações sobre Violência contra as Mulheres, com anonimato das vítimas e sigilo de dados protegidos pela lei. O texto segue para a Comissão de Fiscalização e Controle (CTFC). O registro possui dados de casos de violência (como local, data, tipo de violência, entre outros), perfil da mulher agredida, características do agressor, inquéritos abertos, processos na Justiça, entre outras informações estatísticas. As informações devem embasar ações governamentais sobre o tema. A relatora do Projeto de Lei (PL) 3.109/2025, senadora Ivete da Silveira (MDB-SC), afirmou que a divulgação proposta pela ex-senadora Augusta Brito (PT-CE) aumentará o monitoramento pela sociedade civil. — Contribuirá, ainda, para a identificação de gargalos regionais e estruturais, possibilitando estratégias de intervenção específicas. Favorecerá a formulação de políticas públicas baseadas em evidências e ampliará o acesso da comunidade científica, estimulando pesquisas acadêmicas. O texto altera a Lei 14.232, de 2021, que cria a Política Nacional de Dados e Informações relacionadas à Violência contra as Mulheres. A política já prevê um relatório a cada dois anos, com análise dos dados do registro, a partir de 2026, em virtude da Lei 15.336. A reunião foi conduzida pela presidente da Comissão, senadora Damares Alves (Republicanos-DF).",
-      "source_category": "institutional",
-      "sentiment_per_candidate": {},
-      "edit_history": [],
-      "disclaimer_pt": "Análise algorítmica. Não representa pesquisa de opinião.",
-      "disclaimer_en": "Algorithmic analysis. Does not represent polling data.",
-      "sentiment_score": 0.0,
-      "confidence_score": 0.0,
-      "_sentiment_scores": {},
-      "prominence_score": 0.0
-    },
-    {
-      "id": "9bb0b64f30c1c9fc",
-      "url": "https://www.poder360.com.br/poder-economia/isentar-kits-de-carros-eletricos-favorece-consumidor-diz-ministro/",
-      "title": "Isentar kits de carros elétricos favorece consumidor, diz ministro",
-      "source": "Poder360",
-      "published_at": "2026-06-24T18:11:10Z",
-      "collected_at": "2026-06-24T19:03:56Z",
-      "status": "raw",
-      "relevance_score": 0.0,
-      "relevance_signals": null,
-      "candidates_mentioned": [],
-      "topics": [],
-      "narrative_cluster_id": null,
-      "duplicate_of": null,
-      "summaries": {
-        "pt-BR": "",
-        "en-US": ""
-      },
-      "content": "O ministro da Indústria, Desenvolvimento e Comércio, Márcio Elias Rosa, defendeu, nesta 4ª feira (24.jun.2026), a renovação das cotas de importação com alíquota zero de veículos elétricos e híbridos desmontados e semidesmontados . Disse que a medida favorece sobretudo os consumidores e mantém o país aberto a quem quiser produzir localmente. A declaração foi feita no programa “ Bom Dia, Ministro ” da EBC (Empresa Brasil de Comunicação). “ No Brasil, quem quiser montar, fabricar e produzir aqui encontra vantagens e instrumentos de fomento, de apoio ”, afirmou Rosa. Segundo o ministro, a decisão de renovação da isenção “ foi tomada porque essas montadoras estão se instalando no país para produzir ”. A decisão tomada pela Gecex-Camex (Comitê-Executivo de Gestão da Câmara de Comércio Exterior) deve beneficiar principalmente a chinesa BYD, que defendia a renovação do benefício. A empresa iniciou a produção no Brasil com veículos no sistema SKD (semidesmontados) e avança para o modelo CKD (desmontados) em sua fábrica em Camaçari (BA). Associações brasileiras de fabricantes de veículos criticaram a prorrogação. Afirmaram que a medida cria distorções no mercado automotivo, reduz a previsibilidade e pode afetar investimentos anunciados por montadoras e fabricantes de autopeças. Rosa rebateu as críticas e disse que a decisão é boa para o mercado e para a criação de emprego. “ Aquele que não fabricar no país não vai poder acessar as linhas de financiamento ”, afirmou. COTAS As cotas para a importação de kits de veículos elétricos terminaram em fevereiro de 2026, conforme cronograma definido pelo governo depois de debates com o setor produtivo. Já as novas valerão por 6 meses, a partir de 1º de julho, e terão limite de US$ 463 milhões. Acima do limite, permanecerá a cobrança de 35% para veículos SKD e de 14% para CKD. A importação de carros montados não será contemplada. Leia mais: Tarifaço deve ser tratado como pauta comercial, diz ministro",
-      "source_category": "politics",
-      "sentiment_per_candidate": {},
-      "edit_history": [],
-      "disclaimer_pt": "Análise algorítmica. Não representa pesquisa de opinião.",
-      "disclaimer_en": "Algorithmic analysis. Does not represent polling data.",
-      "sentiment_score": 0.0,
-      "confidence_score": 0.0,
-      "_sentiment_scores": {},
-      "prominence_score": 0.0
+      "prominence_score": 0.0,
+      "_ai_provider": "nvidia",
+      "_ai_model": "nvidia/nemotron-3-super-120b-a12b",
+      "ai_provider_editor": "nvidia/nemotron-3-super-120b-a12b",
+      "editor_note": null
     },
     {
       "id": "818f34f086c617a2",
@@ -674,27 +422,58 @@
       "source": "Poder360",
       "published_at": "2026-06-24T18:10:57Z",
       "collected_at": "2026-06-24T19:03:56Z",
-      "status": "raw",
-      "relevance_score": 0.0,
-      "relevance_signals": null,
-      "candidates_mentioned": [],
-      "topics": [],
+      "status": "validated",
+      "relevance_score": 0.9,
+      "relevance_signals": {
+        "candidate_signal": 0.5,
+        "topic_signal": 0.3,
+        "keyword_signal": 0.05,
+        "source_signal": 0.05
+      },
+      "candidates_mentioned": [
+        "lula"
+      ],
+      "topics": [
+        "politica_externa",
+        "corrupcao",
+        "midia",
+        "eleicoes"
+      ],
       "narrative_cluster_id": null,
       "duplicate_of": null,
       "summaries": {
-        "pt-BR": "",
-        "en-US": ""
+        "pt-BR": "O deputado federal Nikolas Ferreira (PL-MG) ironizou uma declaração do presidente Lula sobre honestidade na política, concordando publicamente com o petista ao afirmar que 'finalmente falou a verdade'. Ele utilizou trechos de falas de Lula em suas redes sociais para criticá-lo, repetindo uma estratégia já utilizada anteriormente, como no caso da fala sobre Neymar, onde comparou o afastamento do jogador por lesão com a própria inelegibilidade de Lula após condenação judicial.",
+        "en-US": "Federal Deputy Nikolas Ferreira (PL-MG) mocked President Lula's statement about honesty in politics, publicly agreeing with the petista by saying 'finally he told the truth'. He used clips of Lula's speeches on social media to criticize him, repeating a strategy previously used, such as in the case of Lula's comment about Neymar, where Ferreira contrasted the athlete's injury-related absence with Lula's disqualification due to a judicial conviction."
       },
       "content": "O deputado federal Nikolas Ferreira (PL-MG) usou seu perfil no Instagram para ironizar uma declaração do presidente Luiz Inácio Lula da Silva (PT), que havia afirmado que o político honesto buscado pela população não está nele, mas nas próprias pessoas. Ao republicar o conteúdo, o congressista comentou: “Ai, dessa vez eu vou ter que concordar com o Lula” . Em seguida, acrescentou que o petista “finalmente falou a verdade” . A publicação foi feita nesta 4ª feira (24.jun.2026), depois de Nikolas compartilhar um vídeo com um trecho da fala de Lula. Críticas em sequência Não foi a primeira vez que Nikolas utilizou trechos de declarações do próprio Lula para criticar o presidente. Em publicação anterior, o deputado rebateu uma declaração do petista sobre o jogador Neymar . Na ocasião, Lula havia chamado o atacante de “primeiro jogador home office” da seleção . Nikolas respondeu em vídeo nas redes sociais, destacando o que chamou de “grande diferença” entre o afastamento do atleta por lesão e o período em que o presidente ficou impedido de exercer cargos públicos após condenação judicial. “Tem uma pequena diferença aí, Lula. O Neymar estava em casa e agora foi convocado porque estava machucado. Você ficou em casa durante um tempo porque tinha sido condenado. É uma diferença bem grande” , disse Nikolas.",
       "source_category": "politics",
-      "sentiment_per_candidate": {},
-      "edit_history": [],
+      "sentiment_per_candidate": {
+        "lula": "negativo"
+      },
+      "edit_history": [
+        {
+          "tier": "editor",
+          "at": "2026-06-24T19:13:52Z",
+          "provider": "nvidia",
+          "action": "validated",
+          "changes": [
+            "summary_pt",
+            "summary_en"
+          ]
+        }
+      ],
       "disclaimer_pt": "Análise algorítmica. Não representa pesquisa de opinião.",
       "disclaimer_en": "Algorithmic analysis. Does not represent polling data.",
-      "sentiment_score": 0.0,
-      "confidence_score": 0.0,
-      "_sentiment_scores": {},
-      "prominence_score": 0.0
+      "sentiment_score": -0.2,
+      "confidence_score": 1.0,
+      "_sentiment_scores": {
+        "lula": -0.2
+      },
+      "prominence_score": 0.0,
+      "_ai_provider": "nvidia",
+      "_ai_model": "nvidia/nemotron-3-super-120b-a12b",
+      "ai_provider_editor": "nvidia/nemotron-3-super-120b-a12b",
+      "editor_note": null
     },
     {
       "id": "44b09d951ffdf3bd",
@@ -703,172 +482,57 @@
       "source": "Folha Poder",
       "published_at": "2026-06-24T18:09:00Z",
       "collected_at": "2026-06-24T19:03:40Z",
-      "status": "raw",
-      "relevance_score": 0.0,
-      "relevance_signals": null,
-      "candidates_mentioned": [],
-      "topics": [],
+      "status": "validated",
+      "relevance_score": 0.65,
+      "relevance_signals": {
+        "candidate_signal": 0.5,
+        "topic_signal": 0.1,
+        "keyword_signal": 0.05,
+        "source_signal": 0.0
+      },
+      "candidates_mentioned": [
+        "lula"
+      ],
+      "topics": [
+        "corrupcao",
+        "politica_externa",
+        "impostos"
+      ],
       "narrative_cluster_id": null,
       "duplicate_of": null,
       "summaries": {
-        "pt-BR": "",
-        "en-US": ""
+        "pt-BR": "O ministro do Trabalho, Luiz Marinho, do PT, defendeu nesta quarta-feira que o presidente Lula retire o senador Jaques Wagner do cargo de líder do governo no Senado, devido às suspeitas de envolvimento do senador com o Banco Master. A declaração reflete tensões internas do PT em meio a investigações sobre supostas irregularidades financeiras.",
+        "en-US": "Labor Minister Luiz Marinho of the PT party said on Wednesday that President Lula should remove Senator Jaques Wagner from his position as Senate government leader, amid suspicions of Wagner's involvement with Banco Master. The statement reflects internal PT tensions amid ongoing investigations into alleged financial irregularities."
       },
       "content": "O ministro do Trabalho, Luiz Marinho , defendeu nesta quarta-feira (24) que o presidente Lula (PT) retire Jaques Wagner (PT-BA) do cargo o líder do governo no Senado , em meio às suspeitas do senador envolvendo o Banco Master . Leia mais (06/24/2026 - 15h09)",
       "source_category": "mainstream",
-      "sentiment_per_candidate": {},
-      "edit_history": [],
-      "disclaimer_pt": "Análise algorítmica. Não representa pesquisa de opinião.",
-      "disclaimer_en": "Algorithmic analysis. Does not represent polling data.",
-      "sentiment_score": 0.0,
-      "confidence_score": 0.0,
-      "_sentiment_scores": {},
-      "prominence_score": 0.0
-    },
-    {
-      "id": "43a61aac3fa55e82",
-      "url": "https://www.metropoles.com/brasil/rais-setor-publico-faz-1-milhao-de-contratacoes-no-1o-bimestre-do-ano",
-      "title": "Rais: setor público faz 1 milhão de contratações no 1º bimestre do ano",
-      "source": "Metropoles",
-      "published_at": "2026-06-24T18:08:33Z",
-      "collected_at": "2026-06-24T19:03:52Z",
-      "status": "raw",
-      "relevance_score": 0.0,
-      "relevance_signals": null,
-      "candidates_mentioned": [],
-      "topics": [],
-      "narrative_cluster_id": null,
-      "duplicate_of": null,
-      "summaries": {
-        "pt-BR": "",
-        "en-US": ""
+      "sentiment_per_candidate": {
+        "lula": "neutro"
       },
-      "source_category": "mainstream",
-      "content": "Marcello Casal Jr/Agência Brasil O Brasil tinha 62,2 milhões de vínculos formais ativos em fevereiro deste ano, segundo dados da Relação Anual de Informações Sociais ( Rais ), que contém resultados dos setores público e privado ao longo do ano. Na comparação com os dados de dezembro de 2025, houve aumento de 1,4 milhões de empregos, dos quais, 1,001 milhão ocorreu entre agentes públicos. Leia também Brasil Caged: Brasil cria 85,8 mil empregos com carteira assinada em abril Brasil Caged: Brasil cria 228 mil empregos com carteira assinada em março Brasil Caged: Brasil cria 255 mil empregos com carteira assinada em fevereiro Brasil Caged: Brasil cria 85,8 mil empregos com carteira assinada em novembro Embora o próprio nome da Rais a descreva como uma anotação anual, o resultado passa a ter divulgação mensalizada. Os dados da série de janeiro de 2025 a fevereiro de 2026 divulgados nesta quarta-feira (24/6) pelo Ministério do Trabalho e Emprego ( MTE ) são os primeiros a serem repassados publicamente neste formato . O incremento de 1,001 milhão de postos de trabalho no setor público representa aumento de 7,81% no período analisado, o que fez o estoque total chegar a 13,82 milhões em fevereiro deste ano. Do total de novos postos de trabalho, a maior parte (886,9 mil) são contratações a prazo determinado. Com isto, os empregos voltam ao patamar semelhante ao verificado outubro e novembro passado. “Muitos estados, pode ser que tenha municípios também, acabam no fim do ano demitindo, especialmente na educação e recontratando, provalvalmente, no fim de fevereriro (para a volta às aulas)”, explicou o titular do MTE, Luiz Marinho. Setor privado Entre os celetistas, excluindo-se trabalho temporário e empregos domésticos, houve ampliação de 0,81% no estoque de postos de trabalho. O volume total passou de 47,59 milhões em ao fim de 2025 para 47,97 milhões em fevereiro passado. Neste caso, as variações absolutas mais representativas foram em contratos de prazo indeterminado. Variações percentuais nas contratações por porte de empresa foram: micro: -0,11%; pequenas empresas: -0,89%; empresas com receita acima de R$ 4,8 milhões: 3,1%; contratações por microempreendedores (MEIs): 4,2%. Jornada de trabalho e rendimento Do total de trabalhadores celetistas em fevereiro, considerando os setores público e privado, havia 37,11 milhões com jornada semanal acima de 41 horas . Outros 9,24 milhões tinham trabalhavam de 31 a 40 horas na semana. Para 2,16 milhões, o tempo em trabalho por semana variava de 21 a 30 horas. Por outro lado, para 1,81 milhão, a jornada semanal era de até 20 horas semanais. A remuneração média teve um crescimento médio de 3,8% de fevereiro de 2025 para dezembro de 2025. O valor absoluto passou de R$ 4.208,58 para R$ 4.369,02. O MTE não revelou a variação de dezembro de 2025 para fevereiro deste ano. O motivo foi uma falta importante por parte dos informantes deste dado. Habitualmente, a remuneração média apresenta um pico de crescimento em janeiro. Em janeiro de 2025, por exemplo, o valor (R$ 4.415,09) foi superior ao verificado no fim daquele ano. O ministério acredita que isto tenha relação com o encerramento no fim de cada ano dos contratos de prazo determinado, pois são salários de menor valor. Com isto, a média acaba tendo um acréscimo. Receba no seu email as notícias de Boletim Metrópoles Frequência de envio: Diário Ver todas Assinar Ver todas as newsletters",
-      "sentiment_per_candidate": {},
-      "edit_history": [],
+      "edit_history": [
+        {
+          "tier": "editor",
+          "at": "2026-06-24T19:13:56Z",
+          "provider": "nvidia",
+          "action": "validated",
+          "changes": [
+            "summary_pt",
+            "summary_en"
+          ]
+        }
+      ],
       "disclaimer_pt": "Análise algorítmica. Não representa pesquisa de opinião.",
       "disclaimer_en": "Algorithmic analysis. Does not represent polling data.",
-      "sentiment_score": 0.0,
-      "confidence_score": 0.0,
-      "_sentiment_scores": {},
-      "prominence_score": 0.0
-    },
-    {
-      "id": "8b0147ef755b76c3",
-      "url": "https://oantagonista.com.br/brasil/pt-decide-lancar-candidatura-propria-ao-governo-de-minas-gerais/",
-      "title": "PT decide lançar candidatura própria ao governo de Minas Gerais",
-      "source": "O Antagonista",
-      "published_at": "2026-06-24T18:08:33Z",
-      "collected_at": "2026-06-24T19:04:00Z",
-      "status": "raw",
-      "relevance_score": 0.0,
-      "relevance_signals": null,
-      "candidates_mentioned": [],
-      "topics": [],
-      "narrative_cluster_id": null,
-      "duplicate_of": null,
-      "summaries": {
-        "pt-BR": "",
-        "en-US": ""
+      "sentiment_score": 0.1,
+      "confidence_score": 1.0,
+      "_sentiment_scores": {
+        "lula": 0.1
       },
-      "content": "O Partidos dos Trabalhadores (PT) terá candidatura própria ao governo de Minas Gerais nas eleições de 2026, após não conseguir convencer o senador Rodrigo Pacheco (PSB-MG) a concorrer a governador no pleito. A decisão foi reforçada em reunião da presidente do diretório mineiro do PT, deputada estadual Leninha, com a bancada federal petista mineira, representantes... The post PT decide lançar candidatura própria ao governo de Minas Gerais appeared first on O Antagonista .",
-      "source_category": "politics",
-      "sentiment_per_candidate": {},
-      "edit_history": [],
-      "disclaimer_pt": "Análise algorítmica. Não representa pesquisa de opinião.",
-      "disclaimer_en": "Algorithmic analysis. Does not represent polling data.",
-      "sentiment_score": 0.0,
-      "confidence_score": 0.0,
-      "_sentiment_scores": {},
-      "prominence_score": 0.0
-    },
-    {
-      "id": "60defd754a547be3",
-      "url": "https://redir.folha.com.br/redir/online/poder/rss091/*https://www1.folha.uol.com.br/blogs/brasilia-hoje/2026/06/presidente-de-federacao-do-psol-rebate-erika-hilton-e-diz-que-ela-recebera-r-23-mi-do-fundo-eleitoral.shtml",
-      "title": "Presidente de federação do PSOL rebate Erika Hilton e diz que ela receberá R$ 2,3 mi do fundo eleitoral",
-      "source": "Folha Poder",
-      "published_at": "2026-06-24T18:06:00Z",
-      "collected_at": "2026-06-24T19:03:40Z",
-      "status": "raw",
-      "relevance_score": 0.0,
-      "relevance_signals": null,
-      "candidates_mentioned": [],
-      "topics": [],
-      "narrative_cluster_id": null,
-      "duplicate_of": null,
-      "summaries": {
-        "pt-BR": "",
-        "en-US": ""
-      },
-      "content": "O presidente da federação PSOL -Rede, Juliano Medeiros, rebateu nesta quarta-feira (24) a crítica feita pela deputada federal Erika Hilton (PSOL-SP) acerca dos valores a serem repassados a ela pelo fundo eleitoral. De acordo com ele, a colega de partido irá receber R$ 2,3 milhões da verba. Leia mais (06/24/2026 - 15h06)",
-      "source_category": "mainstream",
-      "sentiment_per_candidate": {},
-      "edit_history": [],
-      "disclaimer_pt": "Análise algorítmica. Não representa pesquisa de opinião.",
-      "disclaimer_en": "Algorithmic analysis. Does not represent polling data.",
-      "sentiment_score": 0.0,
-      "confidence_score": 0.0,
-      "_sentiment_scores": {},
-      "prominence_score": 0.0
-    },
-    {
-      "id": "497851a83e8d64ef",
-      "url": "https://www.metropoles.com/mundo/terremoto-de-magnitude-56-atinge-o-norte-da-california",
-      "title": "Terremoto de magnitude 5,6 atinge o norte da Califórnia",
-      "source": "Metropoles",
-      "published_at": "2026-06-24T18:04:16Z",
-      "collected_at": "2026-06-24T19:03:53Z",
-      "status": "raw",
-      "relevance_score": 0.0,
-      "relevance_signals": null,
-      "candidates_mentioned": [],
-      "topics": [],
-      "narrative_cluster_id": null,
-      "duplicate_of": null,
-      "summaries": {
-        "pt-BR": "",
-        "en-US": ""
-      },
-      "source_category": "mainstream",
-      "content": "Reprodução/USGS Um terremoto de magnitude 5,6 atingiu a região norte da Califórnia , nesta quarta-feira (24/6), de acordo com o Serviço Geológico dos Estados Unidos ( USGS ). O tremor foi registrado às 8h16 (12h16 no horário de Brasília), no condado de Mendocino. O epicentro do fenômeno localizou-se a aproximadamente 11 quilômetros de distância da comunidade de Redwood Valley, segundo informações divulgadas pelo órgão. Veja: First footage emerging after a powerful 5.6 magnitude earthquake struck near Redwood Valley, California pic.twitter.com/nX9lvqTSbD — Surajit (@surajit_ghosh2) June 24, 2026 Segundo o USGS, o terremoto teve uma profundidade de cerca de 8 quilômetros. Até o momento, não há relatos imediatos de vítimas ou danos causados pelo abalo sísmico. Cerca de 7,4 mil residências e empresas ficaram sem energia no Condado de Mendocino, na Califórnia, após o terremoto. Os dados são do PowerOutage.us, plataforma que monitora interrupções no fornecimento de eletricidade nos EUA. Leia também Mundo Terremoto na China deixa ao menos um morto e quatro feridos Mundo Terremoto de magnitude 6,7 atinge a Indonésia Mundo Novo terremoto de magnitude 6,2 atinge o sul das Filipinas Mundo Terremoto de magnitude 5,1 atinge fronteira entre Peru e Equador Governador acompanha situação O governador da Califórnia, Gavin Newsom, foi informado sobre os detalhes técnicos do terremoto logo após a emissão do alerta oficial pelas autoridades federais. Em comunicado, o gabinete do governador afirmou que acompanha a situação e busca tranquilizar a população diante dos impactos provocados pelo tremor. Segundo o governo estadual, equipes trabalham em conjunto com os órgãos de emergência para avaliar os danos e mapear as áreas afetadas. Técnicos e agentes da Defesa Civil dos EEUA realizam inspeções em redes elétricas e outras estruturas de infraestrutura para identificar possíveis danos causados pelo terremoto.",
-      "sentiment_per_candidate": {},
-      "edit_history": [],
-      "disclaimer_pt": "Análise algorítmica. Não representa pesquisa de opinião.",
-      "disclaimer_en": "Algorithmic analysis. Does not represent polling data.",
-      "sentiment_score": 0.0,
-      "confidence_score": 0.0,
-      "_sentiment_scores": {},
-      "prominence_score": 0.0
-    },
-    {
-      "id": "62866c8a654bc69f",
-      "url": "https://oglobo.globo.com/economia/fabio-graner/post/2026/06/percepcao-de-piora-na-situacao-fiscal-aumenta-muito-no-mercado-mesmo-com-melhora-na-projecao-de-resultado-primario.ghtml",
-      "title": "Percepção de piora na situação fiscal aumenta muito no mercado, mesmo com melhora na projeção de resultado primário",
-      "source": "O Globo",
-      "published_at": "2026-06-24T18:03:02Z",
-      "collected_at": "2026-06-24T19:03:46Z",
-      "status": "raw",
-      "relevance_score": 0.0,
-      "relevance_signals": null,
-      "candidates_mentioned": [],
-      "topics": [],
-      "narrative_cluster_id": null,
-      "duplicate_of": null,
-      "summaries": {
-        "pt-BR": "",
-        "en-US": ""
-      },
-      "content": "A preocupação do mercado financeiro com o quadro fiscal do Brasil subiu muito desde março, mesmo com uma relativa melhora nas projeções para o resultado primário deste e do próximo ano. É o que mostra o Questionário Pré-Copom (QPC), pesquisa que o BC realiza com agentes do setor financeiro para entender melhor os cenários e tomar sua decisão sobre a taxa de juros. O levantamento mostrou que em apenas três meses, entre a reunião realizada em março e a de junho, o índice dos que acham que as condições fiscais pioraram passou de 6% para 50%. Em abril, quando houve outro levantamento, os que viam uma situação fiscal pior era de 22%. Nos últimos dois anos, o QPC mostrou números piores ou igual em apenas três ocasiões. Apenas 2% acham que a situação melhorou, nível que era de 8% em março. As respostas têm um alto grau de subjetividade, é importante destacar, porque basicamente trata-se de uma questão qualitativa sobre percepção dos economistas: \"Como você avalia a evolução da situação fiscal desde o último Copom, considerando tanto seu cenário central quanto os riscos envolvidos?\", foi a pergunta do BC. De outro lado, no aspecto quantitativo, os analistas até esperam um resultado primário (receitas menos despesas, sem juros) melhor para 2026, com déficit de R$ 61 bilhões (ante R$ 70 bilhões em abril), nível que se espera que fique mantido nas projeções para 2027. As projeções de dívida, tanto bruta como líquida, não tiveram alterações muito fortes. A explicação para a suposta incoerência parece estar no aumento das chamadas medidas “parafiscais”, que aumentam a oferta de crédito direcionado na economia. Não à toa, a expectativa de expansão do crédito direcionado é de 12,1% para 2026, ante 10,5% em março, no grupo das empresas, enquanto nas pessoas físicas, subiu de 8,6% para 9,3% entre março e junho. O Copom tem sistematicamente levantado os riscos de uma preocupação com a situação fiscal e de políticas desalinhadas com a estratégia de política monetária em seus documentos. Não foi diferente na ata da última reunião, divulgada ontem. “O Comitê reafirma a visão de que o esmorecimento no esforço de reformas estruturais e disciplina fiscal, o aumento de crédito direcionado e as incertezas sobre a estabilização da dívida pública têm o potencial de elevar a taxa de juros neutra da economia, com impactos deletérios sobre a potência da política monetária e, consequentemente, sobre o custo de desinflação em termos de atividade”, diz o texto. “O Comitê mantém a firme convicção de que as políticas devem ser previsíveis, críveis e anticíclicas. Em particular, o debate do Comitê reforça, novamente, a necessidade de políticas fiscal e monetária harmoniosas”, completou o BC. Para o chefe da área de macroeconomia do Asa e ex-secretário do Tesouro, Jeferson Bittencourt, a melhora das projeções de resultado primário reflete a expectativa de aumento das receitas, sobretudo por conta do choque do petróleo, mas também por expectativa maior de inflação. — Não se pode dizer que são ganhos estruturais de resultado primário, o que diminui o otimismo da percepção de melhora, principalmente considerando o grau de indexação da despesa pública. Na visão dele, a piora da percepção de risco fiscal reflete a disposição do governo nestes três meses de criar programas com custos fiscais implícitos, por meio de operações de crédito que têm fonte de recursos no governo. — Isso reforçou a percepção de fragilidade do compromisso com a sustentabilidade fiscal. Essa percepção de maior risco por conta do “parafiscal” pode ser visto discretamente no fato de que, para 2027, o mercado promoveu uma leve redução na dívida bruta entre março e junho, mas elevou a expectativa de dívida líquida, ainda que com magnitudes pequenas. —Ambas projeções deveriam cair em função da revisão para cima da inflação, mas a DLSP capta muito melhor os efeitos da política parafiscal que a DBGG, deixando mais evidente o risco fiscal embutido nestes programas — disse Bittencourt. O QPC também mostra um mercado bastante dividido sobre o que o Banco Central deveria fazer em termos de taxa de juros, tanto na reunião da semana passada, recheada de polêmica por conta da comunicação do BC, como na próxima reunião, programada para agosto. A despeito de uma maioria entender que o juro deveria ser cortado em 0,25 ponto porcentual em junho, mas com 45% considerando que o correto seria manter. Esses índices se invertem para agosto, com a maioria defendendo parar de cortar. Nessa quinta-feira, o BC divulga o relatório de política monetária de junho, que em tese deve trazer mais detalhadamente seus cenários para a economia brasileira. É mais uma chance para a autoridade monetária tentar explicar sua última decisão e reconquistar parte da credibilidade que ficou no caminho de uma comunicação incoerente com o cenário apresentado.",
-      "source_category": "mainstream",
-      "sentiment_per_candidate": {},
-      "edit_history": [],
-      "disclaimer_pt": "Análise algorítmica. Não representa pesquisa de opinião.",
-      "disclaimer_en": "Algorithmic analysis. Does not represent polling data.",
-      "sentiment_score": 0.0,
-      "confidence_score": 0.0,
-      "_sentiment_scores": {},
-      "prominence_score": 0.0
+      "prominence_score": 0.0,
+      "_ai_provider": "nvidia",
+      "_ai_model": "nvidia/nemotron-3-super-120b-a12b",
+      "ai_provider_editor": "nvidia/nemotron-3-super-120b-a12b",
+      "editor_note": null
     },
     {
       "id": "6f9d91d2b9d36c41",
@@ -877,27 +541,55 @@
       "source": "O Antagonista",
       "published_at": "2026-06-24T18:02:52Z",
       "collected_at": "2026-06-24T19:04:00Z",
-      "status": "raw",
-      "relevance_score": 0.0,
-      "relevance_signals": null,
-      "candidates_mentioned": [],
-      "topics": [],
+      "status": "validated",
+      "relevance_score": 0.6,
+      "relevance_signals": {
+        "candidate_signal": 0.5,
+        "topic_signal": 0.0,
+        "keyword_signal": 0.05,
+        "source_signal": 0.05
+      },
+      "candidates_mentioned": [
+        "lula"
+      ],
+      "topics": [
+        "midia"
+      ],
       "narrative_cluster_id": null,
       "duplicate_of": null,
       "summaries": {
-        "pt-BR": "",
-        "en-US": ""
+        "pt-BR": "A primeira-dama Janja, esposa do presidente Lula, reclamou da falta de atenção da imprensa brasileira, afirmando que se sente mais respeitada pela mídia internacional. Em entrevista ao canal do PT no YouTube, ela chegou a mencionar que em determinado momento considerou voltar para São Paulo com suas cachorras. A reclamação destaca uma percepção de desvalorização da figura da primeira-dama na cobertura jornalística nacional.",
+        "en-US": "Brazil's First Lady Janja, wife of President Lula, complained about the lack of attention from Brazilian media, saying she feels more respected by international press. In an interview on the PT's YouTube channel, she mentioned at one point wanting to return to São Paulo with her dogs. The complaint highlights a perceived undervaluation of the First Lady's role in national media coverage."
       },
       "content": "A primeira-dama Janja reclamou da falta de atenção da imprensa brasileira a ela. Em entrevista ao YouTube do PT, a esposa do presidente Lula disse que é mais respeitada pela imprensa de fora do país. “Teve momento em que eu queria pegar a minha bolsa, minhas cachorras e voltar para São Paulo. Eu sou uma... The post Crusoé: Janja reclama da falta de atenção da imprensa appeared first on O Antagonista .",
       "source_category": "politics",
-      "sentiment_per_candidate": {},
-      "edit_history": [],
+      "sentiment_per_candidate": {
+        "lula": "negativo"
+      },
+      "edit_history": [
+        {
+          "tier": "editor",
+          "at": "2026-06-24T19:14:30Z",
+          "provider": "nvidia",
+          "action": "validated",
+          "changes": [
+            "summary_pt",
+            "summary_en"
+          ]
+        }
+      ],
       "disclaimer_pt": "Análise algorítmica. Não representa pesquisa de opinião.",
       "disclaimer_en": "Algorithmic analysis. Does not represent polling data.",
-      "sentiment_score": 0.0,
-      "confidence_score": 0.0,
-      "_sentiment_scores": {},
-      "prominence_score": 0.0
+      "sentiment_score": -0.4,
+      "confidence_score": 1.0,
+      "_sentiment_scores": {
+        "lula": -0.4
+      },
+      "prominence_score": 0.0,
+      "_ai_provider": "nvidia",
+      "_ai_model": "nvidia/nemotron-3-super-120b-a12b",
+      "ai_provider_editor": "nvidia/nemotron-3-super-120b-a12b",
+      "editor_note": null
     },
     {
       "id": "56e83cb15de80589",
@@ -6473,7 +6165,10 @@
       },
       "content": "Nesta quinta-feira (25), Gil do Vigor participará do “Mais você” diretamente dos EUA. Ele vai falar sobre Escócia x Brasil. Leia também: As parceiras de jogadores da Copa do Mundo de 2026 que são atrizes e têm uma legião de fãs E mais: Memes que marcaram transmissões da primeira rodada da Copa do Mundo 2026 A partida será nesta quarta-feira, às 19h (horário de Brasília), no Hard Rock Stadium, em Miami, pela terceira e última rodada da fase de grupos da Copa do Mundo de 2026. Galerias Relacionadas Initial plugin text",
       "source_category": "mainstream",
-      "sentiment_per_candidate": {},
+      "sentiment_per_candidate": {
+        "lula": "positivo",
+        "flavio-bolsonaro": "neutro"
+      },
       "edit_history": [
         {
           "tier": "editor",
@@ -6488,9 +6183,12 @@
       ],
       "disclaimer_pt": "Análise algorítmica. Não representa pesquisa de opinião.",
       "disclaimer_en": "Algorithmic analysis. Does not represent polling data.",
-      "sentiment_score": 0.0,
+      "sentiment_score": 0.05,
       "confidence_score": 1.0,
-      "_sentiment_scores": {},
+      "_sentiment_scores": {
+        "lula": 0.2,
+        "flavio-bolsonaro": -0.1
+      },
       "prominence_score": 0.6107,
       "_ai_provider": "nvidia",
       "_ai_model": "nvidia/nemotron-3-super-120b-a12b",
@@ -25256,6 +24954,6 @@
       "editor_note": null
     }
   ],
-  "last_updated": "2026-06-24T19:07:59Z",
-  "total_count": 500
+  "last_updated": "2026-06-24T19:15:07Z",
+  "total_count": 479
 }
