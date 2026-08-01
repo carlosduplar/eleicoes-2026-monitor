@@ -2,61 +2,68 @@
   "$schema": "../docs/schemas/articles.schema.json",
   "articles": [
     {
-      "id": "a3b342d2e6083914",
-      "url": "https://www1.folha.uol.com.br/poder/2026/08/michelle-bolsonaro-sera-candidata-ao-senado-diz-bia-kicis.shtml",
-      "title": "Michelle Bolsonaro será candidata ao Senado, diz Bia Kicis",
-      "source": "UOL Noticias",
-      "published_at": "2026-08-01T22:36:26Z",
-      "collected_at": "2026-08-01T22:36:26Z",
-      "status": "raw",
-      "relevance_score": 0.0,
-      "relevance_signals": null,
-      "candidates_mentioned": [],
-      "topics": [],
-      "narrative_cluster_id": null,
-      "duplicate_of": null,
-      "summaries": {
-        "pt-BR": "",
-        "en-US": ""
-      },
-      "source_category": "mainstream",
-      "sentiment_per_candidate": {},
-      "edit_history": [],
-      "disclaimer_pt": "Análise algorítmica. Não representa pesquisa de opinião.",
-      "disclaimer_en": "Algorithmic analysis. Does not represent polling data.",
-      "sentiment_score": 0.0,
-      "confidence_score": 0.0,
-      "_sentiment_scores": {},
-      "prominence_score": 0.0
-    },
-    {
       "id": "3fc48006ba1eeab6",
       "url": "https://noticias.uol.com.br/eleicoes/2026/08/01/missao-renan-santos-candidatura-presidente-eleicoes-2026.ghtm",
       "title": "Missão lança candidaturas e 'desafia' Lula e Flávio para debate com Renan",
       "source": "UOL Noticias",
       "published_at": "2026-08-01T22:36:26Z",
       "collected_at": "2026-08-01T22:36:26Z",
-      "status": "raw",
-      "relevance_score": 0.0,
-      "relevance_signals": null,
-      "candidates_mentioned": [],
-      "topics": [],
+      "status": "validated",
+      "relevance_score": 1.0,
+      "relevance_signals": {
+        "candidate_signal": 0.6,
+        "topic_signal": 0.3,
+        "keyword_signal": 0.15,
+        "source_signal": 0.0
+      },
+      "candidates_mentioned": [
+        "renan-santos",
+        "lula",
+        "flavio-bolsonaro"
+      ],
+      "topics": [
+        "seguranca",
+        "corrupcao",
+        "eleicoes",
+        "politica_externa"
+      ],
       "narrative_cluster_id": null,
       "duplicate_of": null,
       "summaries": {
-        "pt-BR": "",
-        "en-US": ""
+        "pt-BR": "O movimento Missão lançou oficialmente a candidatura de Renan Santos à Presidência da República e de outros candidatos aos governos estaduais, em convenção marcada por vaias a Lula (PT) e críticas a Flávio Bolsonaro (PL), com foco no combate ao crime organizado.",
+        "en-US": "The Missão movement officially launched Renan Santos as its presidential candidate and other candidates for state governorships, in a convention marked by boos for Lula (PT) and criticism of Flávio Bolsonaro (PL), with a focus on combating organized crime."
       },
       "content": "O Missão oficializou hoje, de forma pública, a candidatura de Renan Santos à Presidência da República e de outros candidatos aos governos estaduais. A convenção contou com vaias a Lula (PT), críticas ao candidato Flávio Bolsonaro (PL) e foco no crime organizado.",
       "source_category": "mainstream",
-      "sentiment_per_candidate": {},
-      "edit_history": [],
+      "sentiment_per_candidate": {
+        "lula": "negativo",
+        "flavio-bolsonaro": "negativo"
+      },
+      "edit_history": [
+        {
+          "tier": "editor",
+          "at": "2026-08-01T23:27:51Z",
+          "provider": "nvidia",
+          "action": "validated",
+          "changes": [
+            "summary_pt",
+            "summary_en"
+          ]
+        }
+      ],
       "disclaimer_pt": "Análise algorítmica. Não representa pesquisa de opinião.",
       "disclaimer_en": "Algorithmic analysis. Does not represent polling data.",
-      "sentiment_score": 0.0,
-      "confidence_score": 0.0,
-      "_sentiment_scores": {},
-      "prominence_score": 0.0
+      "sentiment_score": -0.6,
+      "confidence_score": 1.0,
+      "_sentiment_scores": {
+        "lula": -0.7,
+        "flavio-bolsonaro": -0.5
+      },
+      "prominence_score": 0.0,
+      "_ai_provider": "nvidia",
+      "_ai_model": "nvidia/nemotron-3-super-120b-a12b",
+      "ai_provider_editor": "nvidia/nemotron-3-super-120b-a12b",
+      "editor_note": null
     },
     {
       "id": "3ddf7d5127558806",
@@ -65,27 +72,60 @@
       "source": "UOL Noticias",
       "published_at": "2026-08-01T22:36:25Z",
       "collected_at": "2026-08-01T22:36:25Z",
-      "status": "raw",
-      "relevance_score": 0.0,
-      "relevance_signals": null,
-      "candidates_mentioned": [],
-      "topics": [],
+      "status": "validated",
+      "relevance_score": 1.0,
+      "relevance_signals": {
+        "candidate_signal": 0.6,
+        "topic_signal": 0.3,
+        "keyword_signal": 0.15,
+        "source_signal": 0.0
+      },
+      "candidates_mentioned": [
+        "flavio-bolsonaro",
+        "lula"
+      ],
+      "topics": [
+        "eleicoes",
+        "politica_externa",
+        "corrupcao"
+      ],
       "narrative_cluster_id": null,
       "duplicate_of": null,
       "summaries": {
-        "pt-BR": "",
-        "en-US": ""
+        "pt-BR": "O candidato à Presidência da República, Flávio Bolsonaro (PL), durante a convenção do partido em Santa Catarina, chamou o presidente Lula de 'projeto de ditador' e afirmou que vai 'demiti-lo' nas eleições de outubro. A declaração ocorreu no evento que oficializou a candidatura de Jorginho Mello à reeleição como governador.",
+        "en-US": "Flávio Bolsonaro (PL), presidential candidate, called President Lula a 'dictatorship project' during a party convention in Santa Catarina and said he will 'fire him' in the October elections. The remarks were made at the event that formalized Jorginho Mello's reelection bid as governor."
       },
       "content": "O candidato à Presidência da República, Flávio Bolsonaro (PL), durante a convenção do partido em Santa Catarina que oficializou a candidatura do governador Jorginho Mello à reeleição, chamou o presidente Lula de \"projeto de ditador\" e que vai demiti-lo em outubro. \"Lula é um projeto de ditador e nós vamos demiti-lo em outubro\", disse.",
       "source_category": "mainstream",
-      "sentiment_per_candidate": {},
-      "edit_history": [],
+      "sentiment_per_candidate": {
+        "flavio-bolsonaro": "positivo",
+        "lula": "negativo"
+      },
+      "edit_history": [
+        {
+          "tier": "editor",
+          "at": "2026-08-01T23:27:53Z",
+          "provider": "nvidia",
+          "action": "validated",
+          "changes": [
+            "summary_pt",
+            "summary_en"
+          ]
+        }
+      ],
       "disclaimer_pt": "Análise algorítmica. Não representa pesquisa de opinião.",
       "disclaimer_en": "Algorithmic analysis. Does not represent polling data.",
       "sentiment_score": 0.0,
-      "confidence_score": 0.0,
-      "_sentiment_scores": {},
-      "prominence_score": 0.0
+      "confidence_score": 1.0,
+      "_sentiment_scores": {
+        "flavio-bolsonaro": 0.8,
+        "lula": -0.8
+      },
+      "prominence_score": 0.0,
+      "_ai_provider": "nvidia",
+      "_ai_model": "nvidia/nemotron-3-super-120b-a12b",
+      "ai_provider_editor": "nvidia/nemotron-3-super-120b-a12b",
+      "editor_note": null
     },
     {
       "id": "e2239be840f9bcd0",
@@ -94,27 +134,64 @@
       "source": "UOL Noticias",
       "published_at": "2026-08-01T22:36:25Z",
       "collected_at": "2026-08-01T22:36:25Z",
-      "status": "raw",
-      "relevance_score": 0.0,
-      "relevance_signals": null,
-      "candidates_mentioned": [],
-      "topics": [],
+      "status": "validated",
+      "relevance_score": 1.0,
+      "relevance_signals": {
+        "candidate_signal": 0.6,
+        "topic_signal": 0.3,
+        "keyword_signal": 0.15,
+        "source_signal": 0.0
+      },
+      "candidates_mentioned": [
+        "renan-santos",
+        "lula",
+        "flavio-bolsonaro"
+      ],
+      "topics": [
+        "corrupcao",
+        "seguranca",
+        "politica_externa",
+        "eleicoes"
+      ],
       "narrative_cluster_id": null,
       "duplicate_of": null,
       "summaries": {
-        "pt-BR": "",
-        "en-US": ""
+        "pt-BR": "Renan Santos, candidato à Presidência pela Missão, criticou duramente o presidente Luiz Inácio Lula da Silva e o senador Flávio Bolsonaro durante o lançamento de sua campanha, chamando Sergio Moro de 'vassalo' e ameaçando 'matar quem roubar'. Ele rejeitou os rótulos ideológicos atribuídos a ele, mas manteve um discurso de linha dura contra corrupção e violência.",
+        "en-US": "Renan Santos, presidential candidate for the Mission party, harshly criticized President Luiz Inácio Lula da Silva and Senator Flávio Bolsonaro during his campaign launch, calling Sergio Moro a 'vassal' and threatening to 'kill whoever steals'. He rejected ideological labels attributed to him but maintained a hardline stance against corruption and violence."
       },
       "content": "candidato a presidente Renan Santos (Missão) criticou o presidente Luiz Inácio Lula da Silva (PT) e Flávio Bolsonaro (PL) durante o lançamento de sua campanha à Presidência, mas rejeitou os rótulos ...",
       "source_category": "mainstream",
-      "sentiment_per_candidate": {},
-      "edit_history": [],
+      "sentiment_per_candidate": {
+        "renan-santos": "positivo",
+        "lula": "negativo",
+        "flavio-bolsonaro": "negativo"
+      },
+      "edit_history": [
+        {
+          "tier": "editor",
+          "at": "2026-08-01T23:27:56Z",
+          "provider": "nvidia",
+          "action": "validated",
+          "changes": [
+            "summary_pt",
+            "summary_en"
+          ]
+        }
+      ],
       "disclaimer_pt": "Análise algorítmica. Não representa pesquisa de opinião.",
       "disclaimer_en": "Algorithmic analysis. Does not represent polling data.",
-      "sentiment_score": 0.0,
-      "confidence_score": 0.0,
-      "_sentiment_scores": {},
-      "prominence_score": 0.0
+      "sentiment_score": -0.2333,
+      "confidence_score": 1.0,
+      "_sentiment_scores": {
+        "renan-santos": 0.6,
+        "lula": -0.7,
+        "flavio-bolsonaro": -0.6
+      },
+      "prominence_score": 0.0,
+      "_ai_provider": "nvidia",
+      "_ai_model": "nvidia/nemotron-3-super-120b-a12b",
+      "ai_provider_editor": "nvidia/nemotron-3-super-120b-a12b",
+      "editor_note": null
     },
     {
       "id": "ee43dacce8d155f6",
@@ -123,27 +200,58 @@
       "source": "JOTA",
       "published_at": "2026-08-01T22:35:51Z",
       "collected_at": "2026-08-01T22:36:40Z",
-      "status": "raw",
-      "relevance_score": 0.0,
-      "relevance_signals": null,
-      "candidates_mentioned": [],
-      "topics": [],
+      "status": "validated",
+      "relevance_score": 1.0,
+      "relevance_signals": {
+        "candidate_signal": 0.5,
+        "topic_signal": 0.3,
+        "keyword_signal": 0.15,
+        "source_signal": 0.05
+      },
+      "candidates_mentioned": [
+        "renan-santos"
+      ],
+      "topics": [
+        "politica_externa",
+        "corrupcao",
+        "midia",
+        "eleicoes"
+      ],
       "narrative_cluster_id": null,
       "duplicate_of": null,
       "summaries": {
-        "pt-BR": "",
-        "en-US": ""
+        "pt-BR": "O partido Missão, criado pelos fundadores do MBL, realizou seu primeiro congresso nacional em São Paulo para promover a candidatura de Renan Santos à Presidência em 2026. O evento, realizado em um espaço para baladas com open bar, área VIP e símbolos como a onça no logotipo, destacou-se pela predominância de homens entre 30 e 40 anos, discursos de figuras como Kim Katagiri e Aroldo Medina, e a menção ao derrubamento de Dilma Rousseff em 2016 como mérito de Santos. Apesar do clima festivo, a área VIP de alto valor teve cadeiras vazias inicialmente, preenchidas posteriormente por militantes da área comum.",
+        "en-US": "The Missão party, founded by MBL creators, held its first national congress in São Paulo to promote Renan Santos’ 2026 presidential candidacy. The event, held in a nightclub-style venue with open bar, VIP sections, and jaguar-themed symbolism, drew a predominantly male crowd aged 30–40, featuring speeches by Kim Katagiri and Aroldo Medina, who referenced Jânio Quadros and emphasized male authority. Santos was praised by allies for his role in Dilma Rousseff’s 2016 impeachment, despite the party’s receipt of over R$3 million from the FEFC fund, which was not disclosed during the event."
       },
       "content": "O partido Missão, criado pelos fundadores do MBL , fez seu primeiro congresso nacional neste sábado (1/8), em São Paulo, apesar de o candidato presidencial do partido, Renan Santos , já ter sido lançado em uma convenção online em 20 de julho. O evento presencial tentou criar um clima de direita festiva: foi feito em um espaço para baladas, teve área VIP, bastões fluorescentes e mezanino com open bar de cerveja. Receba no seu email as principais notícias sobre as eleições 2026 em São Paulo e no Brasil! É grátis! Apesar de o local do evento estar cheio, a área VIP, com ingressos de até R$ 7 mil, ainda tinha algumas cadeiras vazias depois de 3 horas de evento — que foram preenchidas com algumas pessoas da área comum, realocadas para perto do palco antes do discurso de Renan Santos. A onça, que é usada no logo do partido criado no passado, estava em todo lugar, inclusive na roupa de algumas militantes, que vieram com vestidos de oncinha. O público foi majoritariamente de homens entre 30 e 40 anos. Alguns usavam a camiseta com o slogan “prendeu, matou” e outros com referências nerds, como aos Cavaleiros do Zodíaco, ao videogame Sonic — e até uma bandeira e chapéu de palha do anime japonês One Piece. Os homens também foram maioria entre os mais de doze discursos no palco. A única mulher a falar, a vereadora de São Paulo Amanda Vettorazzo, teve apenas cinco minutos, bem menos do que outros membros de destaque do partido. O deputado federal Kim Katagiri apresentou o programa de governo — nomeado “Livro Amarelo” . Ele falou ao mesmo tempo de fim de benefícios sociais, de Estado Novo e de reformas de base (no caso, melhorias na infraestrutura, não as reformas de Jango nos anos 1960). Kataguiri também falou que a Missão foi o único partido bancado por apoiadores, já que não tem acesso ao Fundo Eleitoral — mas não citou os mais de R$ 3 milhões recebidos pelo partido do Fundo Especial de Financiamento de Campanha para as Eleições (FEFC). O candidato a vice-presidente, o militar da reserva Aroldo Medina, emulou Jânio Quadros levando uma vassoura para o palco e falou da importância da autoridade masculina em casa. Ao JOTA , Medina disse que resolveu “aprimorar o gesto de Jânio”, que muitos jovens não devem lembrar, e que a metáfora “deve render muitos memes”. Boa parte do evento foi dedicada a apresentar o candidato presidencial do partido, com depoimentos de outros filiados dizendo que ele foi responsável por derrubar a ex-presidente Dilma Rousseff em 2016. O MBL foi um dos movimentos que surgiram durante os protestos pelo impeachment — e é hoje o mais bem sucedido. Conheça o JOTA PRO Eleições, cobertura eleitoral especial do JOTA que oferece transparência e previsibilidade para empresas Também foi exibido um vídeo sobre a história de Renan Santos — com depoimentos de família, colegas e amigos — que comparou o candidato ao líder macedônio Alexandre, o Grande. O candidato a vice-presidente Aroldo Medina disse que Renan é um autodidata e que, apesar de não ter diploma universitário, ele “assusta Flávio Bolsonaro e Lula com sua inteligência e intelectualidade”. Glorioso e distante Apesar do slogan “O Futuro Será Glorioso”, membros reconheceram que a candidatura neste ano tem poucas chances e é uma forma de projetar o partido para o futuro. No camarote, o candidato ao governo de Minas Gerais, o advogado Ben Mendes, dizia a um colega que, nesta eleição, a expectativa era perder, mas para construir o partido nos próximos quatro anos. No palco, o mestre de cerimônias afirmou que o evento era “o começo daqueles que escolheram perder” com Renan, “mas para construir um projeto de longo prazo.” Já o discurso de Renan Santos foi bastante focado em criticar o PT e Flávio Bolsonaro — apesar de dizer que o partido não se define apenas em relação à oposição aos adversários. “O sonho do PT era tão forte que aos outros sobrou se nomear antipetista”, disse Renan. “E nós fomos condenados por esse sonho maldito.” Ele também chamou os bolsonaristas de “ratos que se vestem de verde-amarelo” e se apropriam dos símbolos nacionais. O senador Sergio Moro (PL), candidato ao governo do Paraná, também foi bastante criticado, tratado como traidor — e recebeu tantas vaias quanto Lula e Flávio Bolsonaro. Renan disse que passou por um inferno para defender suas ideias, falou em censura e cancelamentos e disse que os militantes foram vítimas de “ridicularização” e zombaria ao tentar montar o partido. “Nós estudamos mais do que todo mundo, nós sofremos mais do que todo mundo”, afirmou. Renan Santos disse também que pretende “transformar favelas em bairros e favelados em cidadãos”. Depois ele esclareceu, dizendo que seu objetivo é que as pessoas que moram em favelas tenham acesso real aos direitos dos quais são titulares. O candidato também falou sobre segurança pública, tema em que seu discurso é mais duro. “Ninguém vai roubar nada que é teu, porque nós vamos matar quem roubar”, disse.",
       "source_category": "politics",
-      "sentiment_per_candidate": {},
-      "edit_history": [],
+      "sentiment_per_candidate": {
+        "renan-santos": "positivo"
+      },
+      "edit_history": [
+        {
+          "tier": "editor",
+          "at": "2026-08-01T23:27:59Z",
+          "provider": "nvidia",
+          "action": "validated",
+          "changes": [
+            "summary_pt",
+            "summary_en"
+          ]
+        }
+      ],
       "disclaimer_pt": "Análise algorítmica. Não representa pesquisa de opinião.",
       "disclaimer_en": "Algorithmic analysis. Does not represent polling data.",
-      "sentiment_score": 0.0,
-      "confidence_score": 0.0,
-      "_sentiment_scores": {},
-      "prominence_score": 0.0
+      "sentiment_score": 0.4,
+      "confidence_score": 1.0,
+      "_sentiment_scores": {
+        "renan-santos": 0.4
+      },
+      "prominence_score": 0.0,
+      "_ai_provider": "nvidia",
+      "_ai_model": "nvidia/nemotron-3-super-120b-a12b",
+      "ai_provider_editor": "nvidia/nemotron-3-super-120b-a12b",
+      "editor_note": null
     },
     {
       "id": "5ea5d97a42726589",
@@ -221,27 +329,52 @@
       "source": "Metropoles",
       "published_at": "2026-08-01T22:16:07Z",
       "collected_at": "2026-08-01T22:36:36Z",
-      "status": "raw",
-      "relevance_score": 0.0,
-      "relevance_signals": null,
+      "status": "validated",
+      "relevance_score": 0.4,
+      "relevance_signals": {
+        "candidate_signal": 0.0,
+        "topic_signal": 0.3,
+        "keyword_signal": 0.1,
+        "source_signal": 0.0
+      },
       "candidates_mentioned": [],
-      "topics": [],
+      "topics": [
+        "eleicoes",
+        "politica_externa",
+        "corrupcao",
+        "midia"
+      ],
       "narrative_cluster_id": null,
       "duplicate_of": null,
       "summaries": {
-        "pt-BR": "",
-        "en-US": ""
+        "pt-BR": "O Partido Liberal (PL) lançou a candidatura da deputada federal Bia Kicis ao Senado pelo Distrito Federal, após dois mandatos na Câmara dos Deputados. Kicis afirmou que busca o Senado para fiscalizar outros Poderes, incluindo a possibilidade de sabatinar ministros do Supremo Tribunal Federal. Ela também confirmou que a ex-primeira-dama Michelle Bolsonaro será o segundo nome do PL na disputa pelas duas vagas senatoriais do DF.",
+        "en-US": "The Liberal Party (PL) launched the candidacy of federal deputy Bia Kicis for the Senate in the Federal District, following two terms in the Chamber of Deputies. Kicis stated she seeks the Senate to oversee other branches of government, including the power to question Supreme Court ministers. She also confirmed that former First Lady Michelle Bolsonaro will be the PL's second nominee in the race for DF's two Senate seats."
       },
       "content": "O Partido Liberal (PL) lançou a candidatura da deputada federal Bia Kicis ao Senado pelo Distrito Federal (DF), neste sábado (1º/8). Após dois mandatos como deputada federal, Kicis afirma que escolheu disputar o Senado para “fiscalizar” outros órgãos e Poderes. “O Senado é o único que pode colocar de volta o sistema de freio e contrapesos. É o único que pode fiscalizar outros órgãos, sabatinar ministros do Supremo, por exemplo”, afirmou Bia Kicis. Na eleição deste ano estarão em disputa duas vagas ao Senado por cada unidade de Federação. No evento, Bia Kicis confirmou que a ex-primeira-dama Michelle Bolsonaro (PL) aceitou ser o segundo nome do PL na disputa pela Casa Alta . 8 imagens Fechar modal. 1 de 8 PL lança candidatura de Bia Kicis ao Senado pelo DF VINÍCIUS SCHMIDT/METRÓPOLES @vinicius.foto 2 de 8 PL lança candidatura de Bia Kicis ao Senado pelo DF VINÍCIUS SCHMIDT/METRÓPOLES @vinicius.foto 3 de 8 PL lança candidatura de Bia Kicis ao Senado pelo DF. Imagem mostra Bia Kicis e a governadora do DF, Celina Leão VINÍCIUS SCHMIDT/METRÓPOLES @vinicius.foto 4 de 8 PL lança candidatura de Bia Kicis ao Senado pelo DF VINÍCIUS SCHMIDT/METRÓPOLES @vinicius.foto 5 de 8 PL lança candidatura de Bia Kicis ao Senado pelo DF. Bia posa ao lado de Valdemar, Izalci e Alberto Fraga VINÍCIUS SCHMIDT/METRÓPOLES @vinicius.foto 6 de 8 PL lança candidatura de Bia Kicis ao Senado pelo DF VINÍCIUS SCHMIDT/METRÓPOLES @vinicius.foto 7 de 8 PL lança candidatura de Bia Kicis ao Senado pelo DF VINÍCIUS SCHMIDT/METRÓPOLES @vinicius.foto 8 de 8 PL lança candidatura de Bia Kicis ao Senado pelo DF VINÍCIUS SCHMIDT/METRÓPOLES @vinicius.foto Leia também Grande Angular Em evento do Republicanos, Bia Kicis fala de Michelle: “Estamos empenhados” Grande Angular Em evento, Bia Kicis e Celina Leão defendem candidatura de Michelle Milena Teixeira Republicanos bate o martelo e fecha apoio a Bia Kicis no Senado Grande Angular “Quem está nos dividindo é Alexandre de Moraes”, diz Bia Kicis Com as convenções seguindo até a próxima quarta (5/8), o cenário de pré-candidatos ainda não está totalmente definido. Até o momento, se sabe que Sebastião Coelho (Novo), Érika Kokay (PT), Bia Kicis (PL), Michelle Bolsonaro (PL) e Leila Barros (PDT) devem tentar uma das vagas. Quem é Bia Kicis Nascida em Resende, no Rio de Janeiro, Bia Kicis é formada em Direito pela Universidade de Brasília (UnB). Atuou por mais de duas décadas como procuradora geral do Distrito Federal, se aposentando em 2016. O primeiro mandato dela como deputada federal pelo DF foi em 2018, quando venceu as eleições pelo PRP. Em 2022 foi reeleita pelo Partido Liberal (PL).",
       "source_category": "mainstream",
       "sentiment_per_candidate": {},
-      "edit_history": [],
+      "edit_history": [
+        {
+          "tier": "editor",
+          "at": "2026-08-01T23:28:02Z",
+          "provider": "nvidia",
+          "action": "validated",
+          "changes": [
+            "summary_pt",
+            "summary_en"
+          ]
+        }
+      ],
       "disclaimer_pt": "Análise algorítmica. Não representa pesquisa de opinião.",
       "disclaimer_en": "Algorithmic analysis. Does not represent polling data.",
       "sentiment_score": 0.0,
-      "confidence_score": 0.0,
+      "confidence_score": 1.0,
       "_sentiment_scores": {},
-      "prominence_score": 0.0
+      "prominence_score": 0.0,
+      "_ai_provider": "nvidia",
+      "_ai_model": "nvidia/nemotron-3-super-120b-a12b",
+      "ai_provider_editor": "nvidia/nemotron-3-super-120b-a12b",
+      "editor_note": null
     },
     {
       "id": "380991cba1a3094f",
@@ -250,85 +383,58 @@
       "source": "Poder360",
       "published_at": "2026-08-01T22:09:26Z",
       "collected_at": "2026-08-01T22:36:38Z",
-      "status": "raw",
-      "relevance_score": 0.0,
-      "relevance_signals": null,
-      "candidates_mentioned": [],
-      "topics": [],
+      "status": "validated",
+      "relevance_score": 1.0,
+      "relevance_signals": {
+        "candidate_signal": 0.6,
+        "topic_signal": 0.25,
+        "keyword_signal": 0.15,
+        "source_signal": 0.05
+      },
+      "candidates_mentioned": [
+        "flavio-bolsonaro",
+        "lula"
+      ],
+      "topics": [
+        "eleicoes"
+      ],
       "narrative_cluster_id": null,
       "duplicate_of": null,
       "summaries": {
-        "pt-BR": "",
-        "en-US": ""
+        "pt-BR": "O senador Flávio Bolsonaro (PL), candidato à Presidência em 2026, pediu voto publicamente em convenção do partido em Santa Catarina no dia 1º de agosto, antes do prazo permitido pelo TSE, que autoriza campanhas apenas a partir de 16 de agosto. Ele repetiu o mesmo comportamento de Luiz Inácio Lula da Silva (PT), que fez idêntica declaração em evento na Bahia no mesmo dia. Nenhuma das campanhas respondeu às solicitações de comentário do Poder360 até a publicação da reportagem.",
+        "en-US": "Senator Flávio Bolsonaro (PL), a 2026 presidential candidate, publicly asked for votes at a PL party convention in Santa Catarina on August 1st, before the August 16th legal campaign start date set by the TSE. He mirrored the same action taken earlier that day by President Luiz Inácio Lula da Silva (PT) at a PT event in Bahia. Neither campaign responded to Poder360’s request for comment by the time of publication."
       },
       "content": "O senador e candidato do PL à Presidência, Flávio Bolsonaro , repetiu o presidente Luiz Inácio Lula da Silva (PT) neste sábado (1º.ago.2026) ao pedir voto antes do prazo permitido. Durante seu discurso na convenção do PL em Santa Catarina, Flávio disse o seguinte: “Quero dizer a todos, até aqueles que não gostam do Flávio, votem no Flávio porque senão nem isso vocês vão conseguir mais com mais um governo dessa quadrilha que tomou conta do nosso país” . Segundo o TSE, os candidatos só podem pedir votos a partir de 16 de agosto -início da campanha oficial. Leia aqui o calendário eleitoral. Mais cedo neste sábado, o petista fez o mesmo durante evento do PT na Bahia. O Poder360 procurou a equipe do senador e candidato à Presidência para perguntar se gostaria de se manifestar a respeito da declaração. Não houve resposta até a publicação desta reportagem. O texto será atualizado caso uma manifestação seja enviada a este jornal digital. Assista ao discurso de Flávio (25min23s): CONVENÇÃO DO PL O evento deste sábado (1º.ago) lançou os nomes do partido que disputarão as eleições por Santa Catarina. Entre eles estão os irmãos de Flávio: Carlos Bolsonaro (PL) – vai concorrer ao Senado; Jair Renan (PL) – vai disputar a Câmara dos Deputados. Neste final de semana, Flávio faz um giro por convenções partidárias que vão lançar integrantes da família Bolsonaro. Assista aos discursos na convenção do PL em SC: Carlos Bolsonaro Carol de Toni Flávio Bolsonaro Jorginho Mello Rogério Marinho",
       "source_category": "politics",
-      "sentiment_per_candidate": {},
-      "edit_history": [],
-      "disclaimer_pt": "Análise algorítmica. Não representa pesquisa de opinião.",
-      "disclaimer_en": "Algorithmic analysis. Does not represent polling data.",
-      "sentiment_score": 0.0,
-      "confidence_score": 0.0,
-      "_sentiment_scores": {},
-      "prominence_score": 0.0
-    },
-    {
-      "id": "6bfe2dc552f82a2a",
-      "url": "https://www.metropoles.com/distrito-federal/celina-e-kicis-confirmam-que-michelle-bolsonaro-aceitou-ser-candidata-ao-senado",
-      "title": "Celina e Kicis confirmam que Michelle Bolsonaro aceitou ser candidata ao Senado",
-      "source": "Metropoles",
-      "published_at": "2026-08-01T21:57:44Z",
-      "collected_at": "2026-08-01T22:36:37Z",
-      "status": "raw",
-      "relevance_score": 0.0,
-      "relevance_signals": null,
-      "candidates_mentioned": [],
-      "topics": [],
-      "narrative_cluster_id": null,
-      "duplicate_of": null,
-      "summaries": {
-        "pt-BR": "",
-        "en-US": ""
+      "sentiment_per_candidate": {
+        "lula": "positivo",
+        "flavio-bolsonaro": "neutro"
       },
-      "content": "A ex-primeira-dama Michelle Bolsonaro aceitou ser candidata ao Senado pelo Distrito Federal . O anúncio foi feito pela deputada federal Bia Kicis (PL) e pela governadora do DF, Celina Leão (PP), na noite deste sábado (1º/8). A confirmação foi feita durante o evento de lançamento da candidatura de Bia Kicis ao Senado, realizado na capital federal. Segundo a deputada, Michelle participaria do evento para anunciar a candidatura, mas teve que faltar ao compromisso por questões de saúde. Leia também Brasil Ao STF, Bolsonaro pede que irmã de Michelle cuide de filha do casal Grande Angular Michelle diz estar presa com Bolsonaro e definirá candidatura com ele “A nossa querida Michelle estava programada para vir até aqui, mas hoje ela teve que enfrentar muitos problemas […] e, portanto, ela não vai poder estar aqui pessoalmente, mas ela me incumbiu de dar a vocês essa grande notícia, presidente Valdemar: Michelle Bolsonaro anuncia que ela é, sim, pré-candidata ao Senado pelo PL do Distrito Federal. Acabou a dúvida, acabou o mistério, nós caminharemos juntas”, disse Bia Kicis. 5 imagens Fechar modal. 1 de 5 PL lança candidatura de Bia Kicis ao Senado pelo DF VINÍCIUS SCHMIDT/METRÓPOLES @vinicius.foto 2 de 5 PL lança candidatura de Bia Kicis ao Senado pelo DF. Bia posa ao lado de Valdemar, Izalci e Alberto Fraga VINÍCIUS SCHMIDT/METRÓPOLES @vinicius.foto 3 de 5 PL lança candidatura de Bia Kicis ao Senado pelo DF. Imagem mostra Bia Kicis e a governadora do DF, Celina Leão VINÍCIUS SCHMIDT/METRÓPOLES @vinicius.foto 4 de 5 PL lança candidatura de Bia Kicis ao Senado pelo DF VINÍCIUS SCHMIDT/METRÓPOLES @vinicius.foto 5 de 5 PL lança candidatura de Bia Kicis ao Senado pelo DF VINÍCIUS SCHMIDT/METRÓPOLES @vinicius.foto Com isso, a deputada e Michelle vão disputar juntas as duas vagas da capital federal na Casa Alta pela legenda . O nome de Michelle tem sido ventilado para a disputa nos últimos meses mas, até o momento, a ex-primeira-dama não havia feito nenhuma confirmação oficial sobre a candidatura. Bia Kicis e Celina Leão são duas das principais aliadas de Michelle e contam com apoio do PL e de Jair Bolsonaro (PL) na corrida eleitoral na capital do país. Em discurso, a governadora do Distrito Federal reforçou o elo do trio. “ Nós temos que estar unidas em todos os lugares. Bia, aonde eu tiver, você estará. Aonde eu botar meu pé, você vai estar e a Michelle estará também “, disse Celina ao confirmar que Michelle também ligou para ela para confirmar candidatura ao Senado Federal. Michelle hospitalizada Michelle Bolsonaro se ausentou do evento de Bia Kicis em decorrência de problemas de saúde. Conforme informou a própria deputada, Michelle estava no hospital esperando para realização de exames. Neste sábado (1º/8), a defesa de Jair Bolsonaro (PL) pediu ao Supremo Tribunal Federal (STF) autorização para que a irmã de Michelle pudesse acessar a residência da família para cuidar da filha do casal enquanto a ex-primeira-dama realiza exames médicos. Em decorrência da prisão domiciliar do ex-mandatário, as visitas devem ser autorizadas pelo ministro Alexandre de Moraes . Na petição, os advogados alegam que Michelle “será submetida a exames médicos em ambiente hospitalar, em razão de recorrentes crises de enxaqueca, não se descartando eventual necessidade de internação”.",
-      "source_category": "mainstream",
-      "sentiment_per_candidate": {},
-      "edit_history": [],
+      "edit_history": [
+        {
+          "tier": "editor",
+          "at": "2026-08-01T23:28:05Z",
+          "provider": "nvidia",
+          "action": "validated",
+          "changes": [
+            "summary_pt",
+            "summary_en"
+          ]
+        }
+      ],
       "disclaimer_pt": "Análise algorítmica. Não representa pesquisa de opinião.",
       "disclaimer_en": "Algorithmic analysis. Does not represent polling data.",
-      "sentiment_score": 0.0,
-      "confidence_score": 0.0,
-      "_sentiment_scores": {},
-      "prominence_score": 0.0
-    },
-    {
-      "id": "b949bd68c903ccdc",
-      "url": "https://oantagonista.com.br/brasil/lindbergh-e-freixo-disputam-numero-do-pt-com-filho-de-quaqua/",
-      "title": "Lindbergh e Freixo disputam número do PT com filho de Quaquá",
-      "source": "O Antagonista",
-      "published_at": "2026-08-01T21:57:12Z",
-      "collected_at": "2026-08-01T22:36:42Z",
-      "status": "raw",
-      "relevance_score": 0.0,
-      "relevance_signals": null,
-      "candidates_mentioned": [],
-      "topics": [],
-      "narrative_cluster_id": null,
-      "duplicate_of": null,
-      "summaries": {
-        "pt-BR": "",
-        "en-US": ""
+      "sentiment_score": 0.05,
+      "confidence_score": 1.0,
+      "_sentiment_scores": {
+        "lula": 0.2,
+        "flavio-bolsonaro": -0.1
       },
-      "content": "O petistas do Rio de Janeiro travam uma disputa pelo número 1313 na corrida por uma vaga na Câmara Federal na eleição deste ano. O deputado federal Lindbergh Farias (PT-RJ) se uniu a Marcelo Freixo, que deixou a presidência da Embratur para concorrer a deputado, para protestar contra o fato de Washington Quaquá, prefeito de... The post Lindbergh e Freixo disputam número do PT com filho de Quaquá appeared first on O Antagonista .",
-      "source_category": "politics",
-      "sentiment_per_candidate": {},
-      "edit_history": [],
-      "disclaimer_pt": "Análise algorítmica. Não representa pesquisa de opinião.",
-      "disclaimer_en": "Algorithmic analysis. Does not represent polling data.",
-      "sentiment_score": 0.0,
-      "confidence_score": 0.0,
-      "_sentiment_scores": {},
-      "prominence_score": 0.0
+      "prominence_score": 0.0,
+      "_ai_provider": "nvidia",
+      "_ai_model": "nvidia/nemotron-3-super-120b-a12b",
+      "ai_provider_editor": "nvidia/nemotron-3-super-120b-a12b",
+      "editor_note": null
     },
     {
       "id": "bafc998432d91ec6",
@@ -337,27 +443,61 @@
       "source": "Poder360",
       "published_at": "2026-08-01T21:56:06Z",
       "collected_at": "2026-08-01T22:36:38Z",
-      "status": "raw",
-      "relevance_score": 0.0,
-      "relevance_signals": null,
-      "candidates_mentioned": [],
-      "topics": [],
+      "status": "validated",
+      "relevance_score": 1.0,
+      "relevance_signals": {
+        "candidate_signal": 0.6,
+        "topic_signal": 0.3,
+        "keyword_signal": 0.15,
+        "source_signal": 0.05
+      },
+      "candidates_mentioned": [
+        "flavio-bolsonaro",
+        "lula"
+      ],
+      "topics": [
+        "eleicoes",
+        "corrupcao",
+        "politica_externa",
+        "midia"
+      ],
       "narrative_cluster_id": null,
       "duplicate_of": null,
       "summaries": {
-        "pt-BR": "",
-        "en-US": ""
+        "pt-BR": "Flávio Bolsonaro, senador e candidato do PL à Presidência, discursou na convenção do partido em Santa Catarina, chamando o presidente Luiz Inácio Lula da Silva de \"projeto de ditador\" e prometendo derrotá-lo nas eleições de outubro. Ele apelou aos eleitores, inclusive aos que não o simpatizam, para votarem nele a fim de evitar a continuidade do que chamou de \"governo dessa quadrilha\". O discurso, com duração de 25 minutos e 23 segundos, foi transmitido na íntegra.",
+        "en-US": "Flávio Bolsonaro, senator and PL presidential candidate, spoke at the party's convention in Santa Catarina, calling President Luiz Inácio Lula da Silva a \"dictatorship project\" and vowing to defeat him in the October elections. He urged voters, even those who dislike him, to support him to prevent the continuation of what he described as \"this gang's government.\" The full 25-minute and 23-second speech was made available for viewing."
       },
       "content": "O senador e candidato do PL à Presidência, Flávio Bolsonaro , discursou neste sábado (1º.ago.2026) na convenção do PL em Santa Catarina. O evento lançou os nomes do partido que disputarão as eleições pelo Estado. Em seu discurso, chamou o presidente Luiz Inácio Lula da Silva (PT) de “projeto de ditador” e disse que vai demiti-lo nas eleições de outubro. “Quero dizer a todos, até aqueles que não gostam do Flávio, votem no Flávio porque senão nem isso vocês vão conseguir mais com mais um governo dessa quadrilha que tomou conta do nosso país” , declarou. Assista a íntegra do discurso (25min23s):",
       "source_category": "politics",
-      "sentiment_per_candidate": {},
-      "edit_history": [],
+      "sentiment_per_candidate": {
+        "lula": "negativo",
+        "flavio-bolsonaro": "positivo"
+      },
+      "edit_history": [
+        {
+          "tier": "editor",
+          "at": "2026-08-01T23:28:12Z",
+          "provider": "nvidia",
+          "action": "validated",
+          "changes": [
+            "summary_pt",
+            "summary_en"
+          ]
+        }
+      ],
       "disclaimer_pt": "Análise algorítmica. Não representa pesquisa de opinião.",
       "disclaimer_en": "Algorithmic analysis. Does not represent polling data.",
       "sentiment_score": 0.0,
-      "confidence_score": 0.0,
-      "_sentiment_scores": {},
-      "prominence_score": 0.0
+      "confidence_score": 1.0,
+      "_sentiment_scores": {
+        "lula": -0.4,
+        "flavio-bolsonaro": 0.4
+      },
+      "prominence_score": 0.0,
+      "_ai_provider": "nvidia",
+      "_ai_model": "nvidia/nemotron-3-super-120b-a12b",
+      "ai_provider_editor": "nvidia/nemotron-3-super-120b-a12b",
+      "editor_note": null
     },
     {
       "id": "9c155628f6141c6e",
@@ -366,172 +506,58 @@
       "source": "O Antagonista",
       "published_at": "2026-08-01T21:53:03Z",
       "collected_at": "2026-08-01T22:36:42Z",
-      "status": "raw",
-      "relevance_score": 0.0,
-      "relevance_signals": null,
-      "candidates_mentioned": [],
-      "topics": [],
+      "status": "validated",
+      "relevance_score": 0.75,
+      "relevance_signals": {
+        "candidate_signal": 0.5,
+        "topic_signal": 0.05,
+        "keyword_signal": 0.15,
+        "source_signal": 0.05
+      },
+      "candidates_mentioned": [
+        "renan-santos"
+      ],
+      "topics": [
+        "economia",
+        "seguranca",
+        "politica_externa",
+        "impostos"
+      ],
       "narrative_cluster_id": null,
       "duplicate_of": null,
       "summaries": {
-        "pt-BR": "",
-        "en-US": ""
+        "pt-BR": "O Partido Missão lançou a candidatura presidencial de Renan Santos em São Paulo, propondo políticas de emprego, segurança e combate à pobreza, ao mesmo tempo em que critica assistencialismo e afirma que não pretende ampliar a distribuição de benefícios como gás e celulares.",
+        "en-US": "The Mission Party launched the presidential candidacy of Renan Santos in São Paulo, proposing policies on employment, security, and poverty reduction while criticizing welfare programs and stating he does not intend to expand the distribution of benefits such as gas and cell phones."
       },
       "content": "O Partido Missão lançou neste sábado, 1º, em São Paulo, a candidatura presidencial de Renan Santos. Durante o 1º Congresso Nacional da legenda, o candidato apresentou propostas para emprego, segurança e combate à pobreza e criticou políticas assistenciais. Ao defender que a população tenha autonomia financeira, Renan afirmou que não pretende ampliar a distribuição de... The post “Não vou dar gás nem celular para ninguém” appeared first on O Antagonista .",
       "source_category": "politics",
-      "sentiment_per_candidate": {},
-      "edit_history": [],
-      "disclaimer_pt": "Análise algorítmica. Não representa pesquisa de opinião.",
-      "disclaimer_en": "Algorithmic analysis. Does not represent polling data.",
-      "sentiment_score": 0.0,
-      "confidence_score": 0.0,
-      "_sentiment_scores": {},
-      "prominence_score": 0.0
-    },
-    {
-      "id": "e411ee26e5d18c61",
-      "url": "https://www.poder360.com.br/poder-eleicoes-2026/assista-ao-discurso-de-jorginho-mello-na-convencao-do-pl-em-sc/",
-      "title": "Assista ao discurso de Jorginho Mello na convenção do PL em SC",
-      "source": "Poder360",
-      "published_at": "2026-08-01T21:49:58Z",
-      "collected_at": "2026-08-01T22:36:38Z",
-      "status": "raw",
-      "relevance_score": 0.0,
-      "relevance_signals": null,
-      "candidates_mentioned": [],
-      "topics": [],
-      "narrative_cluster_id": null,
-      "duplicate_of": null,
-      "summaries": {
-        "pt-BR": "",
-        "en-US": ""
+      "sentiment_per_candidate": {
+        "renan-santos": "negativo"
       },
-      "content": "O governador de Santa Catarina Jorginho Mello (PL) discursou neste sábado (1º.ago.2026) na convenção regional do PL. O evento lançou os nomes do partido que disputarão as eleições pelo Estado. O político de 70 anos tentará a reeleição em outubro de 2026. A convenção foi realizada na Arena Opus, em São José (SC). Assista à íntegra do discurso (13min46s):",
-      "source_category": "politics",
-      "sentiment_per_candidate": {},
-      "edit_history": [],
+      "edit_history": [
+        {
+          "tier": "editor",
+          "at": "2026-08-01T23:28:14Z",
+          "provider": "nvidia",
+          "action": "validated",
+          "changes": [
+            "summary_pt",
+            "summary_en"
+          ]
+        }
+      ],
       "disclaimer_pt": "Análise algorítmica. Não representa pesquisa de opinião.",
       "disclaimer_en": "Algorithmic analysis. Does not represent polling data.",
-      "sentiment_score": 0.0,
-      "confidence_score": 0.0,
-      "_sentiment_scores": {},
-      "prominence_score": 0.0
-    },
-    {
-      "id": "f4b8cb29a3810b9f",
-      "url": "https://www.metropoles.com/brasil/psb-lanca-candidatura-de-joao-campos-ao-governo-de-pernambuco",
-      "title": "PSB lança candidatura de João Campos ao governo de Pernambuco",
-      "source": "Metropoles",
-      "published_at": "2026-08-01T21:46:43Z",
-      "collected_at": "2026-08-01T22:36:37Z",
-      "status": "raw",
-      "relevance_score": 0.0,
-      "relevance_signals": null,
-      "candidates_mentioned": [],
-      "topics": [],
-      "narrative_cluster_id": null,
-      "duplicate_of": null,
-      "summaries": {
-        "pt-BR": "",
-        "en-US": ""
+      "sentiment_score": -0.3,
+      "confidence_score": 1.0,
+      "_sentiment_scores": {
+        "renan-santos": -0.3
       },
-      "content": "O PSB oficializou, neste sábado (1º/8), a candidatura do ex-prefeito do Recife João Campos ao governo de Pernambuco. Presidente nacional da legenda, o socialista foi lançado durante a convenção da Frente Popular, realizada no Clube Internacional do Recife. Em discurso, Campos afirma que a candidatura atende “a um chamado do povo de Pernambuco” . “Fui o deputado mais votado da história desse estado, o prefeito mais jovem da história das capitais, e depois reeleito com quase 80% dos votos. E aí chegou a hora da gente fazer não apenas pelo Recife, chegou a hora da gente fazer por Pernambuco”, afirmou. O lançamento da candidatura contou com a presença do vice-presidente Geraldo Alckmin, que chamou Campos de “melhor candidato a governador” . A convenção do PSB também formalizou a chapa pernambucana, que será formada po r Carlos Costa (Republicanos), candidato a vice-governador, e por Marília Arraes (PDT) e Humberto Costa (PT), que disputarão as duas vagas de Pernambuco no Senado. A presença de Marília no palanque também marca uma reconciliação política dentro da família Arraes . Ela é neta de Miguel Arraes, enquanto João é bisneto do ex-governador. Os dois foram adversários no segundo turno da eleição para a Prefeitura do Recife, em 2020, vencida pelo socialista com 56,27% dos votos válidos. O ato abre oficialmente a campanha de Campos em uma disputa que tem a governadora Raquel Lyra (PSD) como principal adversária. Pesquisas divulgadas na última semana mostram os dois alternando a liderança nas intenções de voto. Leia também Brasil Real Time: em Pernambuco, Raquel tem 45% e Campos, 44% no 2º turno Brasil Ipespe: em PE, Raquel Lyra tem 47% e João Campos, 45% no 2º turno Brasil Túlio Gadêlha critica João Campos e sai em defesa de Raquel Lyra Igor Gadelha Lula terá conversa com Marília Campos para decidir palanque em MG Disputa pelo apoio de Lula A convenção também apresentará a chapa de João como o palanque de Lula em Pernambuco. O presidente declarou publicamente apoio ao socialista, e o PT aprovou formalmente a aliança no estado. O apoio virou motivo de tensão em junho, quando o ministro Wellington Dias sugeriu que Lula poderia dividir a agenda entre João e Raquel Lyra. A declaração desagradou ao socialista e levou a cúpula petista a reafirmar que apoiaria a candidatura do PSB. Raquel, por sua vez, também busca manter a proximidade com o presidente. Deputados do PSD de Pernambuco chegaram a pedir ao Palácio do Planalto um gesto de Lula em direção à governadora. A convenção de João é realizada na véspera do ato nacional do PT, marcado para domingo (2/8), em São Paulo, que oficializará a candidatura de Lula à reeleição, com Geraldo Alckmin novamente como vice.",
-      "source_category": "mainstream",
-      "sentiment_per_candidate": {},
-      "edit_history": [],
-      "disclaimer_pt": "Análise algorítmica. Não representa pesquisa de opinião.",
-      "disclaimer_en": "Algorithmic analysis. Does not represent polling data.",
-      "sentiment_score": 0.0,
-      "confidence_score": 0.0,
-      "_sentiment_scores": {},
-      "prominence_score": 0.0
-    },
-    {
-      "id": "8fcee3f87b6e2c8a",
-      "url": "https://www.estadao.com.br/politica/renan-santos-ataca-lula-e-flavio-chama-moro-de-vassalo-e-promete-matar-quem-roubar/",
-      "title": "Renan Santos ataca Lula e Flávio, chama Moro de ‘vassalo’ e promete ‘matar quem roubar’",
-      "source": "Estadao Politica",
-      "published_at": "2026-08-01T21:40:42Z",
-      "collected_at": "2026-08-01T22:36:35Z",
-      "status": "raw",
-      "relevance_score": 0.0,
-      "relevance_signals": null,
-      "candidates_mentioned": [],
-      "topics": [],
-      "narrative_cluster_id": null,
-      "duplicate_of": null,
-      "summaries": {
-        "pt-BR": "",
-        "en-US": ""
-      },
-      "content": "O candidato a presidente Renan Santos ( Missão ) criticou o presidente Luiz Inácio Lula da Silva (PT) e Flávio Bolsonaro (PL) durante o lançamento de sua campanha à Presidência, mas rejeitou os rótulos de “antipetista” e de “terceira via”. Na área de segurança pública, Renan prometeu “matar quem roubar”. A pena de morte é proibida no Brasil para crimes comuns e não pode ser alterada nem mesmo por emenda constitucional. Renan disse que Flávio Bolsonaro é “farsante, fraco e corrompido” e, ao fim do seu discurso o chamou também de “mongoloide”. A Lula, direcionou a alcunha de “cachaceiro senil”, e depois pediu ao público “perdão pelos insultos proferidos na campanha”. Também criticou o que chamou de “governadores que nunca tiveram postura de líder” e o senador Sérgio Moro (União Brasil), a quem chamou de “vassalo”. Para Renan, o ex-ministro da Justiça de Jair Bolsonaro (PL) “aceitou ser um escravo daqueles que destruíram sua maior obra, que foi a Lava Jato”. Renan Santos é candidato a presidente em chapa com Aroldo Medina. O tenente-coronel da reserva da Brigada Militar do Rio Grande do Sul foi o primeiro a discursar no evento. O candidato a vice comparou Lula e Flávio Bolsonaro a “vassouras velhas”, que não funcionam bem, e afirmou que, uma vez eleito, Renan vai “limpar o Brasil”. O candidato à Presidência ainda estabeleceu como meta a redução do número de homicídios para menos de 10 mil ao ano, prometeu realizar um ajuste fiscal e proteger a venda de terras raras, e defendeu que professores possam “punir alunos rebeldes”. O candidato do Missão registrou 7,8% das intenções de voto na última pesquisa Atlas/Bloomberg, divulgada na quarta-feira, 29, na terceira posição atrás de Lula, com 49,2% e Flávio, com 42,9%. Ato marcado por ingressos e venda de suvenires O evento do Missão foi marcado pela venda de suvenires como forma de arrecadação de recursos para a campanha dos candidatos da sigla. Os ingressos mais básicos para o ato, que ocorreu no Komplexo Tempo, centro de convenções na Mooca, zona leste de São Paulo, foram vendidos a R$ 94, enquanto outras categorias saíram por até R$ 7 mil, incluindo, além da entrada no evento, acesso a um mezanino com visão privilegiada, “open bar” e um almoço com lideranças da legenda. Os suvenires vendidos variaram de itens de moda a pelúcias de onça, mascote da legenda. Além disso, também foi anunciada uma edição “de luxo” do Livro Amarelo, obra que reúne o ideário do partido e serviu de base para o plano de governo de Renan Santos. A versão mais cara do livro, como parte de um ‘kit para patronos’, foi a R$ 7 mil.",
-      "source_category": "mainstream",
-      "sentiment_per_candidate": {},
-      "edit_history": [],
-      "disclaimer_pt": "Análise algorítmica. Não representa pesquisa de opinião.",
-      "disclaimer_en": "Algorithmic analysis. Does not represent polling data.",
-      "sentiment_score": 0.0,
-      "confidence_score": 0.0,
-      "_sentiment_scores": {},
-      "prominence_score": 0.0
-    },
-    {
-      "id": "655c53f7821b9672",
-      "url": "https://www.poder360.com.br/poder-eleicoes-2026/flavio-chama-lula-de-projeto-de-ditador-e-diz-que-vai-demiti-lo/",
-      "title": "Flávio chama Lula de “projeto de ditador” e diz que vai demiti-lo",
-      "source": "Poder360",
-      "published_at": "2026-08-01T21:40:00Z",
-      "collected_at": "2026-08-01T22:36:38Z",
-      "status": "raw",
-      "relevance_score": 0.0,
-      "relevance_signals": null,
-      "candidates_mentioned": [],
-      "topics": [],
-      "narrative_cluster_id": null,
-      "duplicate_of": null,
-      "summaries": {
-        "pt-BR": "",
-        "en-US": ""
-      },
-      "content": "O senador e candidato à Presidência Flávio Bolsonaro (PL-RJ) chamou neste sábado (1º.ago.2026) o presidente Luiz Inácio Lula da Silva (PT) de “projeto de ditador” e disse que vai demiti-lo nas eleições de outubro. “Quero dizer a todos, até aqueles que não gostam do Flávio, votem no Flávio porque senão nem isso vocês vão conseguir mais com mais um governo dessa quadrilha que tomou conta do nosso país” , declarou durante a convenção do PL em Santa Catarina. Assista ao discurso de Flávio em SC (25min23s): Em outro momento do discurso, afirmou que “um único ministro do Supremo pode liberar as drogas, liberar o aborto, interferir em uma grande obra em Santa Catarina, pode até condenar inocentes” . Disse que o próximo presidente vai indicar 4 nomes ao Supremo Tribunal Federal . “Imaginem mais um governo como o que temos hoje indicando 4 Alexandres de Moraes para o Supremo” , declarou o candidato. O evento deste sábado (1º.ago) lançou os nomes do partido que disputarão as eleições pelo Estado. Entre eles estão seus irmãos -o ex-vereador Carlos Bolsonaro (PL), que vai concorrer ao Senado, e o vereador de Balneário Camboriú Jair Renan (PL), que vai disputar a Câmara dos Deputados. Neste final de semana, Flávio faz um giro por convenções partidárias que vão lançar integrantes da família Bolsonaro a cargos na Câmara e no Senado.",
-      "source_category": "politics",
-      "sentiment_per_candidate": {},
-      "edit_history": [],
-      "disclaimer_pt": "Análise algorítmica. Não representa pesquisa de opinião.",
-      "disclaimer_en": "Algorithmic analysis. Does not represent polling data.",
-      "sentiment_score": 0.0,
-      "confidence_score": 0.0,
-      "_sentiment_scores": {},
-      "prominence_score": 0.0
-    },
-    {
-      "id": "5725eebff5627066",
-      "url": "https://www.metropoles.com/sao-paulo/renan-santos-e-oficializado-como-candidato-a-presidencia-pelo-missao",
-      "title": "Com ataques a Lula e Flávio, Missão oficializa Renan Santos",
-      "source": "Metropoles",
-      "published_at": "2026-08-01T21:38:20Z",
-      "collected_at": "2026-08-01T22:36:37Z",
-      "status": "raw",
-      "relevance_score": 0.0,
-      "relevance_signals": null,
-      "candidates_mentioned": [],
-      "topics": [],
-      "narrative_cluster_id": null,
-      "duplicate_of": null,
-      "summaries": {
-        "pt-BR": "",
-        "en-US": ""
-      },
-      "content": "O Partido Missão oficializou neste sábado (1/8) a candidatura de Renan Santos à Presidência da República na disputa das eleições de 2026 durante o Congresso Nacional do partido, realizado na zona leste de São Paulo . Renan já havia sido anunciado pelo partido no último dia 20 de julho , durante convenção on-line, por medida de segurança. Durante discurso de quase 1h, Renan fez críticas ao presidente Luiz Inácio Lula da Silva (PT) e ao Partido dos Trabalhadores, reforçando que o partido Missão é a “última linha de defesa do Brasil produtivo contra a vitória do pesadelo e da noite Petista”. O adversário dele na corrida eleitora, Flávio Bolsonaro (PL-RJ) também foi alvo de ataques. O candidato do Missão afirmou que o senador é “o farsante, o fraco, o corrompido” na disputa eleitoral e que trocou “os milhões na rua pelos milhões na conta”, em referência ao áudio em que Flávio pediu dinheiro ao dono do Banco Master Daniel Vorcaro para financiar a produção de um filme sobre o ex-presidente Jair Bolsonaro (PL). “Nós não somos a negação do PT. Nós não somos antipetistas. Nós não somos como dos ratos que se vestem de verde e amarelo, se apropriando dos símbolos nacionais, só para dizerem, “veja só, eu sou o oposto do Lula”. Quando você se define pelo seu inimigo, você nunca o supera. E é por isso que ambos têm que ir para a lata de lixo da história juntos”, afirmou Renan. Renan fez ainda referências à criação do Movimento Brasil Livre (MBL) e atuação do grupo durante os protestos de 2013 e os pedidos de impeachment da então presidente Dilma Rousseff (PT). “Não era tudo isso que eles queriam. O destino sempre foi nosso. Nós, nós somos o grupo escolhido. Nós somos, somos nós os escolhidos. Somos nós os escolhidos, o destino quis que fôssemos nós. Em 2014, quando nós montamos o Movimento Brasil Livre, o maior e mais importante movimento da história do Brasil, nós não éramos nada além de um grupo de rapazes, num escritório mofado no centro de São Paulo, com um sonho na cabeça, grandes ambições, e em um ano e meio de trabalho, o governo do PT havia caído. Moro vaiado: “vai tomar no c*” O discurso de Renan Santos também teve críticas a outros nomes da direita, como o candidato ao governo do Paraná, Sérgio Moro (PL-PR). Moro foi um dos mais vaiados pelos que estavam no congresso e foi definido pelo candidato do Missão como “um vassalo, um homem que não teve a estatura de defender o próprio legado e se submeteu a ser escravo daqueles que destruíram a sua grande obra, que era a Lava Jato”. Veja abaixo : Leia também São Paulo Lula e Flavio têm medo de Renan, diz vice na chapa do Missão Andreza Matais Jingle de Renan é resposta a “Lula lá” e se chama “A vingança do povo” São Paulo O que é o “Livro Amarelo”, base do programa de governo do Partido Missão Combate ao Crime Organizado Uma das bandeiras de Renan é a criação de superpresídios para lideranças criminosas e o confisco de bens de integrantes de facções – parte da militância do Missão que acompanhou o evento vestia camisetas com a frase “prendeu, matou”. Durante a fala dele, Renan prometeu combater o crime organizado pelo país. “Eu quero que a minha geração veja a destruição dessas siglas malditas como Comando Vermelho, PCC, [as] mesmas siglas que estão me ameaçando de morte. Venham pegar, seus vagabundos! Venham pegar!”, Comando Vermelho e PCC, matem a mim antes, porque se eu chegar lá, não sobrará um. Ou eles se entregam, ou eles servirão de tapete para a população brasileira desfilar”, disse. Renan alegou ter recebido ameaças das facções criminosas durante agendas no Ceará, São Paulo e Rio de Janeiro, o que fez com que ele antecipasse o anúncio da candidatura dele e permitisse que fosse escoltado pela Polícia Federal (PF). Congresso Nacional O evento foi realizado neste sábado um pavilhão, às margens de trilhos de trem desativados na Mooca, bairro da zona leste de São Paulo. Durante o dia, foram realizados debates e palestras de formação partidária, além de e a apresentação do Livro Amarelo , coletânea de estudos e diretrizes do MBL, que baseiam o programa e o plano de governo das candidaturas do Missão. 3 imagens Fechar modal. 1 de 3 Candidato à Presidência, Renan Santos (Missão) durante Congresso Nacional do partido Sam Pancher/Metrópoles 2 de 3 Renan foi oficializado pelo partido no último dia 20, em convenção online Reprodução/Partido Missão 3 de 3 Sam Pancher/Metrópoles Livro Amarelo e plano de governo Ao todo, o livro tem quase 500 páginas. São 14 capítulos ilustrados e divididos em três partes que tratam de temas como: ajuste fiscal, segurança pública, saúde, educação, terras raras e política externa no Brasil. De acordo com o Missão, o projeto foi desenvolvido ao longo de mais de dois anos, com a participação de mais de 200 voluntários. 2 imagens Fechar modal. 1 de 2 Obra é base do plano de governo do Partido Missão 2 de 2 Livro Amarelo foi lançado durante Congresso Nacional do Missão Reprodução/Partido Missão Antes de ser oficializado, Renan afirmou, em entrevista ao Metrópoles TV , que estará na disputa de 2º turno pelo Palácio do Planalto. Ele também se recusou a apoiar Flávio Bolsonaro (PL) em uma eventual disputa contra o presidente Lula (veja abaixo) . “São dois incompetentes, são dois imbecis, são dois ladrões. O Brasil não pode ficar na mão desses caras. Então eu não consigo imaginar um segundo turno neles. O segundo turno com essas duas pessoas é uma derrota total e completa do país. É uma vergonha pra gente, é uma falta de ambição”, afirmou. Renan ainda falou sobre ter se tornado alvo do crime organizado ainda durante a pré-campanha, o que fez com que o partido antecipasse a oficialização da candidatura dele por questões de segurança. Veja a entrevista na íntegra:",
-      "source_category": "mainstream",
-      "sentiment_per_candidate": {},
-      "edit_history": [],
-      "disclaimer_pt": "Análise algorítmica. Não representa pesquisa de opinião.",
-      "disclaimer_en": "Algorithmic analysis. Does not represent polling data.",
-      "sentiment_score": 0.0,
-      "confidence_score": 0.0,
-      "_sentiment_scores": {},
-      "prominence_score": 0.0
+      "prominence_score": 0.0,
+      "_ai_provider": "nvidia",
+      "_ai_model": "nvidia/nemotron-3-super-120b-a12b",
+      "ai_provider_editor": "nvidia/nemotron-3-super-120b-a12b",
+      "editor_note": null
     },
     {
       "id": "fcd6e4ff7ff38de3",
@@ -32452,6 +32478,6 @@
       "editor_note": null
     }
   ],
-  "last_updated": "2026-08-01T22:41:51Z",
-  "total_count": 500
+  "last_updated": "2026-08-01T23:29:13Z",
+  "total_count": 492
 }
