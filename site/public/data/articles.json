@@ -2,90 +2,63 @@
   "$schema": "../docs/schemas/articles.schema.json",
   "articles": [
     {
-      "id": "7c7db15deee4ada2",
-      "url": "https://www1.folha.uol.com.br/colunas/painel/2026/08/novo-amplia-leque-de-candidatos-e-lanca-indigenas-e-quilombolas.shtml",
-      "title": "Novo amplia leque de candidatos e lança indígenas e quilombolas",
-      "source": "UOL Noticias",
-      "published_at": "2026-08-07T09:14:57Z",
-      "collected_at": "2026-08-07T09:14:57Z",
-      "status": "raw",
-      "relevance_score": 0.0,
-      "relevance_signals": null,
-      "candidates_mentioned": [],
-      "topics": [],
-      "narrative_cluster_id": null,
-      "duplicate_of": null,
-      "summaries": {
-        "pt-BR": "",
-        "en-US": ""
-      },
-      "source_category": "mainstream",
-      "sentiment_per_candidate": {},
-      "edit_history": [],
-      "disclaimer_pt": "Análise algorítmica. Não representa pesquisa de opinião.",
-      "disclaimer_en": "Algorithmic analysis. Does not represent polling data.",
-      "sentiment_score": 0.0,
-      "confidence_score": 0.0,
-      "_sentiment_scores": {},
-      "prominence_score": 0.0
-    },
-    {
       "id": "1a594cce5f5a3333",
       "url": "https://noticias.uol.com.br/colunas/jose-fucs/2026/08/07/por-que-o-debate-sobre-as-urnas-eletronicas-virou-tabu.htm",
       "title": "Por que o debate sobre as urnas eletrônicas virou tabu?",
       "source": "UOL Noticias",
       "published_at": "2026-08-07T09:14:57Z",
       "collected_at": "2026-08-07T09:14:57Z",
-      "status": "raw",
-      "relevance_score": 0.0,
-      "relevance_signals": null,
-      "candidates_mentioned": [],
-      "topics": [],
+      "status": "validated",
+      "relevance_score": 0.95,
+      "relevance_signals": {
+        "candidate_signal": 0.5,
+        "topic_signal": 0.3,
+        "keyword_signal": 0.15,
+        "source_signal": 0.0
+      },
+      "candidates_mentioned": [
+        "flavio-bolsonaro"
+      ],
+      "topics": [
+        "eleicoes",
+        "corrupcao",
+        "midia"
+      ],
       "narrative_cluster_id": null,
       "duplicate_of": null,
       "summaries": {
-        "pt-BR": "",
-        "en-US": ""
+        "pt-BR": "O senador Flávio Bolsonaro reacendeu o debate sobre as urnas eletrônicas do Brasil durante uma reunião com diplomatas, trazendo à tona uma discussão que persiste há 30 anos. Suas declarações, feitas como candidato ao Planalto pelo PL, reforçaram a polarização em torno da confiabilidade do sistema de votação, um tema recorrente e sensível na política brasileira.",
+        "en-US": "Senator Flávio Bolsonaro reignited the debate on Brazil's electronic voting machines during a meeting with diplomats, reviving a discussion that has persisted for 30 years. His remarks, made as a PL presidential candidate, intensified polarization around the reliability of the voting system, a recurring and sensitive issue in Brazilian politics."
       },
       "content": "A fala sobre as urnas eletrônicas do senador Flávio Bolsonaro, candidato ao Planalto pelo PL, feita em reunião com diplomatas há duas semanas, trouxe de volta a discussão sobre o sistema de votação do país, que se tornou um dos temas mais polarizados e recorrentes no debate nacional praticamente desde a sua implantação, há 30 anos.",
       "source_category": "mainstream",
-      "sentiment_per_candidate": {},
-      "edit_history": [],
-      "disclaimer_pt": "Análise algorítmica. Não representa pesquisa de opinião.",
-      "disclaimer_en": "Algorithmic analysis. Does not represent polling data.",
-      "sentiment_score": 0.0,
-      "confidence_score": 0.0,
-      "_sentiment_scores": {},
-      "prominence_score": 0.0
-    },
-    {
-      "id": "4a62c10c00441b8e",
-      "url": "https://noticias.uol.com.br/colunas/a-hora/2026/08/07/sem-gesto-pacificador-dos-eua-brasil-deve-segurar-licenca-a-embaixador.htm",
-      "title": "Sem gesto pacificador dos EUA, Brasil deve segurar licença a embaixador",
-      "source": "UOL Noticias",
-      "published_at": "2026-08-07T09:14:57Z",
-      "collected_at": "2026-08-07T09:14:57Z",
-      "status": "raw",
-      "relevance_score": 0.0,
-      "relevance_signals": null,
-      "candidates_mentioned": [],
-      "topics": [],
-      "narrative_cluster_id": null,
-      "duplicate_of": null,
-      "summaries": {
-        "pt-BR": "",
-        "en-US": ""
+      "sentiment_per_candidate": {
+        "flavio-bolsonaro": "negativo"
       },
-      "source_category": "mainstream",
-      "content": "Access Denied You don't have permission to access \"http://noticias.uol.com.br/colunas/a-hora/2026/08/07/sem-gesto-pacificador-dos-eua-brasil-deve-segurar-licenca-a-embaixador.htm\" on this server. Reference #18.5eed2c17.1786094193.b8c5f77f https://errors.edgesuite.net/18.5eed2c17.1786094193.b8c5f77f",
-      "sentiment_per_candidate": {},
-      "edit_history": [],
+      "edit_history": [
+        {
+          "tier": "editor",
+          "at": "2026-08-07T09:31:08Z",
+          "provider": "nvidia",
+          "action": "validated",
+          "changes": [
+            "summary_pt",
+            "summary_en"
+          ]
+        }
+      ],
       "disclaimer_pt": "Análise algorítmica. Não representa pesquisa de opinião.",
       "disclaimer_en": "Algorithmic analysis. Does not represent polling data.",
-      "sentiment_score": 0.0,
-      "confidence_score": 0.0,
-      "_sentiment_scores": {},
-      "prominence_score": 0.0
+      "sentiment_score": -0.3,
+      "confidence_score": 1.0,
+      "_sentiment_scores": {
+        "flavio-bolsonaro": -0.3
+      },
+      "prominence_score": 0.0,
+      "_ai_provider": "nvidia",
+      "_ai_model": "nvidia/nemotron-3-super-120b-a12b",
+      "ai_provider_editor": "nvidia/nemotron-3-super-120b-a12b",
+      "editor_note": null
     },
     {
       "id": "a0474323ecf21cb4",
@@ -94,143 +67,58 @@
       "source": "UOL Noticias",
       "published_at": "2026-08-07T09:14:57Z",
       "collected_at": "2026-08-07T09:14:57Z",
-      "status": "raw",
-      "relevance_score": 0.0,
-      "relevance_signals": null,
-      "candidates_mentioned": [],
-      "topics": [],
+      "status": "validated",
+      "relevance_score": 1.0,
+      "relevance_signals": {
+        "candidate_signal": 0.6,
+        "topic_signal": 0.25,
+        "keyword_signal": 0.15,
+        "source_signal": 0.0
+      },
+      "candidates_mentioned": [
+        "lula",
+        "flavio-bolsonaro"
+      ],
+      "topics": [
+        "eleicoes"
+      ],
       "narrative_cluster_id": null,
       "duplicate_of": null,
       "summaries": {
-        "pt-BR": "",
-        "en-US": ""
+        "pt-BR": "Segundo a pesquisa Quaest, 55% do eleitorado prevê vitória de Lula nas eleições de 2026, enquanto 28% apostam em Flávio Bolsonaro. A margem de 27 pontos entre os dois candidatos reflete uma clara vantagem do atual presidente no cenário de expectativas eleitorais.",
+        "en-US": "According to the Quaest poll, 55% of the electorate expects Lula to win the 2026 presidential election, while 28% believe Flávio Bolsonaro will prevail. The 27-point gap between the two candidates reflects a clear advantage for the incumbent president in voter expectations."
       },
       "content": "Recorte exclusivo da última pesquisa Quaest obtido pela coluna mostra que a maioria do eleitorado prevê a vitória do presidente Lula (PT) na disputa presidencial de outubro. Ao responder a pergunta \"quem você acha que vai ganhar a eleição\", 55% responderam Lula, enquanto 28% citaram Flávio Bolsonaro (PL).",
       "source_category": "mainstream",
-      "sentiment_per_candidate": {},
-      "edit_history": [],
-      "disclaimer_pt": "Análise algorítmica. Não representa pesquisa de opinião.",
-      "disclaimer_en": "Algorithmic analysis. Does not represent polling data.",
-      "sentiment_score": 0.0,
-      "confidence_score": 0.0,
-      "_sentiment_scores": {},
-      "prominence_score": 0.0
-    },
-    {
-      "id": "75b9868358435523",
-      "url": "https://www.metropoles.com/brasil/defesa-civil-emite-novo-alerta-em-celulares-no-rio-para-ventos-fortes",
-      "title": "Defesa Civil emite novo alerta em celulares no Rio para ventos fortes",
-      "source": "Metropoles",
-      "published_at": "2026-08-07T09:11:44Z",
-      "collected_at": "2026-08-07T09:15:15Z",
-      "status": "raw",
-      "relevance_score": 0.0,
-      "relevance_signals": null,
-      "candidates_mentioned": [],
-      "topics": [],
-      "narrative_cluster_id": null,
-      "duplicate_of": null,
-      "summaries": {
-        "pt-BR": "",
-        "en-US": ""
+      "sentiment_per_candidate": {
+        "lula": "positivo",
+        "flavio-bolsonaro": "negativo"
       },
-      "content": "A Defesa Civil do Rio de Janeiro disparou três alertas em celulares no início da manhã desta sexta-feira (7/8) para risco de chuvas e ventos fortes. O alerta severo pede que as pessoas evitem deslocamentos. A previsão é que os vendavais possam chegar a 90 km/h. Segundo o Centro de Operações do Rio de Janeiro, ventos moderados a fortes foram registrados durante a madrugada. Confira: 2h20: vento moderado, de 43,1 km/h 2h45: vento forte, de 54,6 km/h 2h50: vento moderado, de 48,9 km/h 3h15: vento moderado, de 51,8 km/h As aulas da rede municipal e estadual foram suspensas . Na noite de quinta-feira (6/8), o Rio entrou em estágio 2, segundo nível em uma escala de cinco, e significa que há riscos de ocorrências de alto impacto na cidade. Leia também São Paulo Especialistas veem cidades despreparadas para crise climática Ciência Mudanças climáticas estão fazendo borboletas migrarem para novas áreas São Paulo Rajadas de vento atingem 97 km/h no litoral sul, diz Defesa Civil Brasil Rio retoma parceria com Cacique Cobra Coral após alerta de vendavais Alertas para todo o país Em meio ao “ciclone-bomba” que se formou na quinta-feira (6/8), o Instituto Nacional de Meteorologia (Inmet) emitiu alerta de tempestades e vendavais para 11 estados nesta sexta-feira (7/8). A região mais afetada é o litoral da região Sul, onde há previsão de ventos de 60 km/h a 100 km/h para 482 municípios. O alerta de perigo vale até as 23h59 desta sexta. Há risco de queda de árvores, destelhamento de casas e danos gerais em edificações e plantações. Nesta quinta, o Rio Grande do Sul já foi atingido por um tornado. Também há alerta de ventos costeiros para 23 municípios em uma área que vai do Espírito Santo ao Rio de Janeiro. As aulas foram canceladas no Rio devido ao risco de ventos acima de 90 km/h. Vendavais são esperados, ainda, na região central do país. O alerta é válido para Paraná, Minas Gerais, Goiás, São Paulo, Mato Grosso, Mato Grosso do Sul e Bahia. No Sul, também há riscos de tempestades entre 30 e 60 mm/h ou 50 e 100 mm/dia, ventos intensos e queda de granizo para 793 municípios de Santa Catarina, Rio Grande do Sul, Paraná e Mato Grosso do Sul.",
-      "source_category": "mainstream",
-      "sentiment_per_candidate": {},
-      "edit_history": [],
+      "edit_history": [
+        {
+          "tier": "editor",
+          "at": "2026-08-07T09:31:18Z",
+          "provider": "nvidia",
+          "action": "validated",
+          "changes": [
+            "summary_pt",
+            "summary_en"
+          ]
+        }
+      ],
       "disclaimer_pt": "Análise algorítmica. Não representa pesquisa de opinião.",
       "disclaimer_en": "Algorithmic analysis. Does not represent polling data.",
-      "sentiment_score": 0.0,
-      "confidence_score": 0.0,
-      "_sentiment_scores": {},
-      "prominence_score": 0.0
-    },
-    {
-      "id": "629ec2a7300fc06d",
-      "url": "https://veja.abril.com.br/brasil/o-desabafo-da-amiga-de-lulinha-sobre-acusacoes-no-caso-marcola/",
-      "title": "O desabafo da amiga de Lulinha sobre acusações no caso Marcola",
-      "source": "Veja",
-      "published_at": "2026-08-07T09:01:32Z",
-      "collected_at": "2026-08-07T09:15:22Z",
-      "status": "raw",
-      "relevance_score": 0.0,
-      "relevance_signals": null,
-      "candidates_mentioned": [],
-      "topics": [],
-      "narrative_cluster_id": null,
-      "duplicate_of": null,
-      "summaries": {
-        "pt-BR": "",
-        "en-US": ""
+      "sentiment_score": 0.15,
+      "confidence_score": 1.0,
+      "_sentiment_scores": {
+        "lula": 0.5,
+        "flavio-bolsonaro": -0.2
       },
-      "content": "No olho do furacão das investigações de tráfico de influência que envolvem Fábio Luís Lula da Silva e Marcola, o ex-chefe de gabinete de Lula, Roberta Luchsinger tem vivido o que chama de processo “desumano” de acusações. Numa conversa recente com um interlocutor, ela defendeu o ex-assessor de Lula. “Estão desclassificando uma pessoa muito correta”, escreveu. O dinheiro passado a Marcola — 249.000 reais –, segundo o relato de Roberta, foi um favor feito por amizade e devidamente pago: “Ele é um amigo pessoal e me pediu um favor por não dispor de um valor que ele necessitava na época. Não é nada além disso. Inclusive, ele me devolveu quando pode. Faz tempos isso”, disse. Apontada como lobista no esquema do empresário Antônio Carlos Camilo, o Careca do INSS , Roberta sustenta, na conversa, que suas relações e agendas sempre foram públicas — algumas estão postadas no Instagram dela –, e que tudo foi resgatado agora para ser distorcido. Continua após a publicidade Vivendo um momento delicado, em que se recupera de uma cirurgia, ela lamentou a “dimensão política surreal” do caso. “Escrevem como se eu fosse uma bandida. Mas todos os questionamentos da Justiça eu sempre respondi — e com provas. Jamais me furtei a colaborar”, desabafou. Roberta também lamentou, nessa conversa, o impacto do caso sobre a família: “A dor da gente não sai no jornal. O que estão fazendo é desumano”. Publicidade",
-      "source_category": "magazine",
-      "sentiment_per_candidate": {},
-      "edit_history": [],
-      "disclaimer_pt": "Análise algorítmica. Não representa pesquisa de opinião.",
-      "disclaimer_en": "Algorithmic analysis. Does not represent polling data.",
-      "sentiment_score": 0.0,
-      "confidence_score": 0.0,
-      "_sentiment_scores": {},
-      "prominence_score": 0.0
-    },
-    {
-      "id": "d11f768ca968819d",
-      "url": "https://veja.abril.com.br/paginas-amarelas/eduardo-riedel-a-direita-vai-se-unir/",
-      "title": "Eduardo Riedel: “A direita vai se unir”",
-      "source": "Veja",
-      "published_at": "2026-08-07T09:00:48Z",
-      "collected_at": "2026-08-07T09:15:22Z",
-      "status": "raw",
-      "relevance_score": 0.0,
-      "relevance_signals": null,
-      "candidates_mentioned": [],
-      "topics": [],
-      "narrative_cluster_id": null,
-      "duplicate_of": null,
-      "summaries": {
-        "pt-BR": "",
-        "en-US": ""
-      },
-      "content": "Com uma longa trajetória no universo do agronegócio, o produtor rural Eduardo Riedel foi diretor de várias entidades ligadas ao setor, desde a década de 1990 até entrar na política, em 2022, quando venceu a eleição para o governo de Mato Grosso do Sul. Depois de mais de duas décadas no PSDB, deixou o ninho tucano em 2025 para se filiar ao PP, sigla pela qual construiu uma frente com nove partidos para tentar um segundo mandato em outubro — amparado por uma aprovação de cerca de 70% a sua gestão, segundo as últimas pesquisas. Na plataforma da campanha estão temas como responsabilidade fiscal, expansão do agronegócio, investimentos em educação e endurecimento no combate ao crime organizado — o que inclui a redução da maioridade penal. Apesar de não se considerar antipetista, apoia a candidatura de Flávio Bolsonaro (PL) ao Palácio do Planalto e diz que a “agenda econômica defendida pelo PT envelheceu”. Em entrevista, ele afirma ainda que a direita vai se unir naturalmente no segundo turno contra Lula , prega uma reforma política para reduzir o número de partidos e avalia que o Brasil foi capturado por narrativas políticas ideológicas. “A gente precisa voltar a discutir uma agenda de Estado” , defende. O senhor lidera ampla coalizão em Mato Grosso do Sul. O que explica essa convergência estadual no momento em que a direita está dividida nacionalmente? A realidade do estado é diferente da nacional. Desde que assumi o governo, meu compromisso sempre foi o de construir um projeto para o estado, e não uma disputa de poder. Nós reunimos um secretariado técnico, buscamos apoio político amplo e concentramos esforços em entregar resultados. Os indicadores mostram isso. O estado cresceu acima da média nacional, reduziu a pobreza extrema, ampliou investimentos e manteve níveis muito baixos de desemprego. Quando se entregam resultados, as forças políticas tendem a convergir em torno do projeto. No cenário nacional há uma polarização muito mais intensa. A direita ainda busca um caminho comum. Isso faz parte do processo. Por que optou por apoiar Flávio Bolsonaro (PL) para a Presidência em vez de outros nomes da direita, como Ronaldo Caiado e Romeu Zema? Tenho o maior respeito pelos dois, meus colegas de governadoria. Mas, no momento das convenções, a convergência do nosso campo político no estado, que inclui PP, União Brasil, PL e Republicanos, foi pelo apoio a Flávio. Acredito que no segundo turno haverá uma reunião natural em torno de uma candidatura única desse campo. “A agenda econômica defendida pelo PT envelheceu. O Brasil mudou, o mundo mudou, e continuamos discutindo temas que já não respondem aos desafios atuais” As investigações envolvendo o Banco Master e figuras de seu campo político, como Flávio Bolsonaro e o presidente de seu partido, Ciro Nogueira, não arranham sua candidatura? As instituições e os partidos estão acima das pessoas. Houve relações do Banco Master com atores de diversos campos — direita, centro e esquerda — e precisamos separar o que é fato do que é narrativa de rede social. Ciro Nogueira certamente dará suas explicações no devido processo legal. Sou contra pré-julgamentos baseados em notícias veiculadas. Devemos aguardar as conclusões legais com respaldo para os órgãos de investigação. Continua após a publicidade Na polarização nacional, o senhor se considera um antipetista? Não gosto dessa definição. Não sou do “anti”. O PT tem uma trajetória importante na política brasileira e governou o país durante muitos anos. A minha divergência é de visão de Estado. A agenda econômica defendida pelo PT envelheceu. O Brasil mudou, o mundo mudou, e continuamos discutindo temas que já não respondem aos desafios atuais. Sinto falta de agenda mais clara voltada para equilíbrio fiscal, competitividade, modernização administrativa e crescimento sustentado. Lula deixou de construir um planejamento estratégico para o país? O que vejo é um governo muito concentrado nas discussões de curto prazo. Precisamos pensar menos em agendas de governo e mais em agendas de Estado. O Brasil precisa recuperar competitividade. Isso passa pelo equilíbrio das contas públicas, pela confiança dos investidores, por reformas estruturantes e por um ambiente econômico capaz de estimular investimentos de longo prazo. Sem isso, o país perde capacidade de crescer. Eu não digo isso apenas pensando no agronegócio. Essa é uma necessidade de toda a economia. O Brasil ficou muito capturado pelas narrativas políticas e ideológicas dos últimos anos. Eu sinto falta de uma discussão mais profunda sobre reformas estruturantes. Falamos pouco sobre reforma administrativa, sobre produtividade, sobre como tornar o país mais competitivo. Sem isso, seguiremos perdendo oportunidades. Quais reformas deveriam ser prioridade? A reforma política é uma delas. O Brasil ainda convive com um sistema partidário excessivamente fragmentado. Não faz sentido imaginar que existam mais de trinta projetos ideológicos diferentes convivendo ao mesmo tempo. Defendo um sistema com menos siglas, o fim da reeleição ao Executivo, mandato único de cinco anos e a unificação das eleições municipais e nacionais. Hoje vivemos um processo eleitoral permanente. A cada dois anos, o país interrompe suas agendas para discutir eleições. Não considero isso saudável para a sociedade nem para a administração pública. O eleitor amadureceu. A democracia está consolidada o suficiente para permitir um modelo institucional mais racional e voltado a resultados. Continua após a publicidade O governo federal tem dado a atenção necessária ao agronegócio? Eu ampliaria essa discussão. Não vejo apenas um problema na relação com o agronegócio, mas com o ambiente macroeconômico como um todo. O empresário precisa confiar para investir. Isso depende de estabilidade, previsibilidade e equilíbrio fiscal. Quando o ambiente econômico se deteriora, todos os setores perdem competitividade, não apenas o agro. O governo Lula avançou em concessões e parcerias com a iniciativa privada, inclusive em projetos importantes para Mato Grosso do Sul. Isso é positivo. Mas existe uma contradição entre esse movimento e um discurso historicamente contrário às privatizações. O país precisa superar essa incoerência e criar um ambiente cada vez mais favorável ao investimento privado. O Brasil conduziu corretamente a negociação do tarifaço com os Estados Unidos? Acho que houve excesso de narrativas e pouca objetividade. Bravatas funcionam em palanque, mas não resolvem problemas comerciais. O Brasil sempre teve tradição diplomática e capacidade de negociação. Precisamos recuperar essa característica. Nossa preocupação deveria ser fortalecer a política comercial brasileira e criar condições para que o país volte a competir em igualdade de condições. Isso exige estabilidade, previsibilidade e uma estratégia consistente para os próximos anos, não apenas para a próxima eleição. A segurança pública é a principal preocupação do eleitor. Por fazer fronteira com Bolívia e Paraguai, Mato Grosso do Sul tornou-se uma das principais portas de entrada do tráfico internacional de drogas. O que essa realidade exige? Segurança pública depende de três pilares: investimento, inteligência e integração. Talvez a integração seja o maior desafio, porque exige que forças federais, estaduais e municipais trabalhem de maneira coordenada. Nós temos mais de 1 500 quilômetros de fronteira, parte dela completamente aberta. É uma realidade muito diferente daquela vivida pela maior parte dos estados. Continua após a publicidade “Houve excesso de narrativas e pouca objetividade na negociação das tarifas com os EUA. Bravatas funcionam em palanques, mas não resolvem problemas comerciais” O que o Estado tem feito? O nosso Departamento de Operações de Fronteira faz um trabalho extraordinário com a Polícia Federal e a Polícia Rodoviária Federal e estamos entre os estados que mais apreendem drogas no país. Mas essa atuação também gera um enorme impacto sobre o sistema prisional estadual. Temos a maior taxa de encarceramento do Brasil, com 700 presos para cada 100 000 habitantes, acima da média dos Estados Unidos ( 542 por 100 000 ) e muito acima da média brasileira ( 452 ). Boa parte desses presos nem sequer é do estado; são pessoas ligadas ao tráfico internacional. Isso demonstra que o combate às facções deixou de ser um problema regional. É um problema nacional e internacional, que exige investimentos permanentes da União nas forças que atuam na fronteira. O crime organizado avançou mais rapidamente do que o Estado? Em muitos lugares, sim. Talvez o Brasil tenha demorado a compreender a dimensão dessa ameaça. As facções cresceram, ganharam capacidade financeira, se internacionalizaram e passaram a disputar espaços onde o Estado perdeu presença. Esse enfrentamento precisa ser firme. Não pode haver relativização. Quando uma organização criminosa substitui o Estado em determinado território, ela passa a impor regras próprias, controlar comunidades e interferir diretamente na vida das pessoas. Isso é extremamente grave. Continua após a publicidade O senhor é favorável à redução da maioridade penal, um dos temas que têm mobilizado parte do Congresso? Essa é uma discussão difícil, mas necessária. Ao longo dos anos, nós reduzimos a idade para uma série de direitos e deveres, e entendo que isso precisa ser feito também na área penal. Mas essa medida sozinha não resolve o problema. O Estado precisa criar condições para que esses jovens tenham outra perspectiva de vida. Quando um adolescente deixa uma unidade socioeducativa, ele não pode simplesmente voltar para o mesmo ambiente que o levou ao crime. É preciso combinar educação, qualificação profissional, presença do Estado e oportunidades de trabalho. Se o Estado não ocupar esse espaço, alguém vai ocupar. E, muitas vezes, quem ocupa é o crime organizado. De uma forma geral, qual é a perspectiva de longo prazo para Mato Grosso do Sul? O estado vive um momento de transformação. Nós queremos consolidá-lo como um polo logístico, industrial e de serviços, aproveitando a diversificação da economia e os investimentos que já estão chegando. A Rota Bioceânica ( corredor rodoviário de 2 400 quilômetros que liga o Brasil ao Oceano Pacífico ) é decisiva nesse processo. Ela aproxima o Brasil dos mercados asiáticos, reduz custos logísticos e transforma o estado em ponto estratégico para importação e exportação. Pela posição geográfica, fazendo fronteira com Bolívia e Paraguai e divisa com cinco estados brasileiros, Mato Grosso do Sul pode se tornar um grande centro de distribuição para o Centro-Oeste, o Sudeste e o Sul do país. Muitos investimentos privados chegaram justamente pela perspectiva de funcionamento da rota. Gostaria que fôssemos reconhecidos como um estado que cresceu sem abrir mão da responsabilidade fiscal, da inclusão social e da educação. Publicado em VEJA de 7 de agosto de 2026, edição nº 3007 Publicidade",
-      "source_category": "magazine",
-      "sentiment_per_candidate": {},
-      "edit_history": [],
-      "disclaimer_pt": "Análise algorítmica. Não representa pesquisa de opinião.",
-      "disclaimer_en": "Algorithmic analysis. Does not represent polling data.",
-      "sentiment_score": 0.0,
-      "confidence_score": 0.0,
-      "_sentiment_scores": {},
-      "prominence_score": 0.0
-    },
-    {
-      "id": "8b2fbe81dcad49ff",
-      "url": "https://veja.abril.com.br/tecnologia/abuso-digital-contra-criancas-e-adolescentes-cresce-e-mobiliza-autoridades/",
-      "title": "Abuso digital contra crianças e adolescentes cresce e mobiliza autoridades",
-      "source": "Veja",
-      "published_at": "2026-08-07T09:00:48Z",
-      "collected_at": "2026-08-07T09:15:22Z",
-      "status": "raw",
-      "relevance_score": 0.0,
-      "relevance_signals": null,
-      "candidates_mentioned": [],
-      "topics": [],
-      "narrative_cluster_id": null,
-      "duplicate_of": null,
-      "summaries": {
-        "pt-BR": "",
-        "en-US": ""
-      },
-      "content": "A pedagoga paulistana Flávia de Melo Belém, de 49 anos, estava acostumada à dificuldade de socialização do filho Luan, vítima de bullying desde pequeno. Em casa, ele era dócil e alegre — pelo menos até os 12 anos, quando tudo mudou. O menino ficou agressivo, distante e cada vez mais mergulhado nas redes sociais, a ponto de um dia avisar à mãe: “O Luan morreu. Só existe o Lucy”, apelido que havia adotado na web. Assustada, Flávia exigiu que ele desbloqueasse o celular para entender o que acontecia na tela. Luan reagiu mal, tentou atacá-la e entrou em surto psicótico. No hospital, depois de o filho ser medicado, ela descobriu cortes espalhados pelo corpo frágil do menino, entre eles uma suástica gravada com gilete. Casos chocantes como esse são o maior pesadelo dos pais em tempos de multiplicação das telas digitais — e, infelizmente, estão longe de ser isolados. Cerca de 300 milhões de crianças e adolescentes no mundo sofrem exploração ou abuso sexual on-line a cada ano, segundo o Unicef ( leia o quadro ). Apesar dos conteúdos divertidos e educativos — sim, existem —, as redes sociais também funcionam como porta de entrada para aliciadores de menores. A estratégia, segundo a polícia, segue um padrão: os criminosos se aproximam virtualmente, manipulam a vítima e recorrem à chantagem e à violência psicológica para levá-la à humilhação pública e exploração sexual. NA MIRA DA JUSTIÇA – A interface típica da Discord: plataforma concentra os casos de violência infantil Gabby Jones/Bloomberg/Getty Images Foi assim que Luan caiu nas mãos de criminosos, que, além de induzi-lo à automutilação, promoveram repetidos estupros virtuais diante de plateias em chats fechados, com data e hora marcadas. As sessões costumam ser gravadas e vendidas mundo afora. Os responsáveis integram um ecossistema digital internacional pouco conhecido, formado por organizações criminosas como o grupo extremista 764, investigado por autoridades de diversos países atualmente. A escolha da vítima em geral começa em jogos como Minecraft ou em comentários no Instagram, no YouTube e em outras redes populares. “O criminoso oferece amizade, faz elogios, cria um vínculo afetivo e conquista a confiança da vítima”, diz a delegada Lisandréa Colabuono, coordenadora do Núcleo de Observação e Análise Digital (Noad). O passo seguinte é convidá-la para chats fechados em plataformas como o Discord, onde usuários conversam em tempo real e podem compartilhar a tela do computador. É nesse ambiente que o crime escala. “Basta uma foto, um nude, para começar a chantagem, peça-chave da manipulação”, diz ela. Continua após a publicidade Foi o aumento dos crimes que levou Lisandréa a criar, em 2024, o primeiro e único centro de inteligência dedicado ao combate a crimes digitais contra crianças e adolescentes no país ( leia a entrevista ). O núcleo , atrelado à Secretaria da Segurança Pública de São Paulo, monitora 1 800 pessoas em diferentes regiões do Brasil com histórico de acesso à violência extrema. A equipe passa madrugadas patrulhando a internet. Quando identifica um menor em risco, tenta convencer as plataformas a interromper as transmissões de tortura. Nem todas colaboram. O Discord, campeão de ocorrências, demora horas para agir — quando o faz, segundo o Noad. A demora acaba de levar o Ministério Público paulista a reabrir uma ação contra a rede. Como a maioria dos casos ocorre à noite, a equipe costuma telefonar para pais que, muitas vezes, estão dormindo e custam a acreditar que o filho corre perigo no quarto ao lado. Nos casos mais graves, uma ambulância é acionada imediatamente. Ao mesmo tempo, a delegacia responsável pelo local onde o crime é praticado — em qualquer ponto do país ou até no exterior — é comunicada. Recentemente, o FBI, principal agência de investigação criminal dos Estados Unidos, alertou pais e responsáveis sobre o crescimento de redes extremistas que usam a internet para manipular crianças e adolescentes. O problema passou a ser tratado como ameaça à segurança nacional. Pais foram à rua em protesto, assustados. MOBILIZAÇÃO - Pais americanos pressionam autoridades: governos discutem regras de acesso às redes Jemal Countess/Getty Images Mesmo antes de os crimes explodirem, a preocupação já crescia, à medida que se acumulavam evidências dos prejuízos do uso excessivo das telas, como redução da atenção, da cognição e do desenvolvimento emocional. O cenário levou vários países a restringir o acesso de menores às redes. Recentemente, a França proibiu perfis de menores de 15 anos e determinou a exclusão das contas existentes nessa faixa etária em plataformas como TikTok, Instagram, Snapchat e Facebook. O Reino Unido seguiu a linha, com vetos aos menores de 16 anos, em passo dado também pela Austrália. Espanha e Dinamarca discutem medidas similares. Continua após a publicidade O Brasil ainda não adotou política semelhante, mas também vem tentando aumentar a proteção. “O país encontrou uma solução mais interessante, dividindo responsabilidades entre governo, plataformas e sociedade”, diz Thiago Vizioli, gerente da Childhood Brasil, que atua na prevenção do abuso infantil. Ele se refere ao ECA Digital, lei sancionada em março que permite o acesso de menores às redes, desde que as contas estejam vinculadas às de um responsável, que passa a supervisionar o conteúdo. As plataformas são obrigadas a adotar mecanismos de verificação etária e podem receber multas de até 50 milhões de reais por omissão. Mas a implantação ainda tem entraves burocráticos e tecnológicos, como o reconhecimento facial da idade dos usuários. RESTRIÇÃO – Os jovens já não podem acessar celulares na sala de aula: proibição surte bons efeitos FG Trade/Getty Images Antes disso, o Brasil já havia restringido o uso de celulares nas escolas. O país é o segundo onde a população passa mais tempo diante das telas: são nove horas diárias, atrás apenas da África do Sul. Segundo o Ministério da Educação , entre 71% e 95% dos gestores e professores relataram melhora na concentração dos estudantes após a proibição. “A medida trouxe o barulho de volta à hora do recreio”, diz Valdenice Minatel, professora do Colégio Dante Alighieri, em São Paulo. Os alunos voltaram a brincar e a socializar. Mas dentro de casa o problema continua: em julho, período de férias, os crimes virtuais contra menores aumentaram 78%. Para orientar as famílias, escolas passaram a promover encontros com especialistas. Os pais são orientados a observar mudanças bruscas de comportamento que podem indicar risco ( leia o quadro ). “Minha filha ficou arredia e vivia trancada no quarto”, diz uma fonoaudióloga paulistana que prefere não se identificar. O marido, médico, acreditava ser uma alteração normal da idade. Depois de acessar o e-mail da filha, ela descobriu que a menina participava de um grupo de automutilação — e não era a única do colégio. Continua após a publicidade O tratamento das vítimas virou prioridade. O Ministério Público de São Paulo criou um núcleo de atendimento cujo primeiro grupo começa nesta semana. “Queremos dar aos jovens recursos para que não voltem a cair nisso”, diz o psicólogo Cristiano Nabuco, especialista em dependência digital e coordenador do serviço. Os pais também participam. Alguns tentam vigiar os filhos com espiões no celular. Outros põem filtro na rede de casa. Mas nada substitui a confiança familiar: a maior rede de proteção contra os abusos digitais é um adulto presente na vida de crianças e adolescentes. A xerife das plataformas Lisandréa Colabuono, delegada paulistana, falou a VEJA sobre sua experiência à frente do primeiro núcleo de combate aos crimes digitais contra crianças e adolescentes. PROPÓSITO - Lisandréa: luta sem trégua contra o abuso on-line ./Arquivo pessoal Continua após a publicidade Como surgiu a força especializada nesses crimes? Durante as investigações do ataque a duas escolas, percebemos que eram ações planejadas, incentivadas e até celebradas dentro do Discord. Entendemos então que precisávamos mudar a lógica de atuação. A polícia não pode esperar o crime acontecer para investigar. Hoje, nosso objetivo é interromper a violência antes que ela aconteça. Esses grupos têm estrutura organizada? Sim. Os servidores recebem o nome de “panelas”, e os integrantes, de “paneleiros”. Existe uma hierarquia rígida, na qual quanto maior a crueldade e o sofrimento da vítima jovem, maior o status do agressor. As plataformas colaboram para retirar do ar um provedor criminoso? Muito pouco. Já registramos situações em que o Discord levou dezessete horas para retirar do ar um servidor criminoso. Por que algumas crianças são mais vulneráveis que outras? Porque são mais fragilizadas emocionalmente, mais carentes e, portanto, suscetíveis às novas conexões aparentemente acolhedoras. Continua após a publicidade O que é preciso mudar? As famílias precisam assumir um papel mais ativo. É fundamental instalar controles parentais, retirar o acesso aos celulares na madrugada e conversar constantemente sobre os riscos da internet. Também precisamos de centros como o nosso em todos os estados. Publicado em VEJA de 7 de agosto de 2026, edição nº 3007 Publicidade",
-      "source_category": "magazine",
-      "sentiment_per_candidate": {},
-      "edit_history": [],
-      "disclaimer_pt": "Análise algorítmica. Não representa pesquisa de opinião.",
-      "disclaimer_en": "Algorithmic analysis. Does not represent polling data.",
-      "sentiment_score": 0.0,
-      "confidence_score": 0.0,
-      "_sentiment_scores": {},
-      "prominence_score": 0.0
+      "prominence_score": 0.0,
+      "_ai_provider": "nvidia",
+      "_ai_model": "nvidia/nemotron-3-super-120b-a12b",
+      "ai_provider_editor": "nvidia/nemotron-3-super-120b-a12b",
+      "editor_note": null
     },
     {
       "id": "fa7a872b00c3d490",
@@ -239,27 +127,60 @@
       "source": "Veja",
       "published_at": "2026-08-07T09:00:46Z",
       "collected_at": "2026-08-07T09:15:22Z",
-      "status": "raw",
-      "relevance_score": 0.0,
-      "relevance_signals": null,
-      "candidates_mentioned": [],
-      "topics": [],
+      "status": "validated",
+      "relevance_score": 0.6,
+      "relevance_signals": {
+        "candidate_signal": 0.5,
+        "topic_signal": 0.05,
+        "keyword_signal": 0.05,
+        "source_signal": 0.0
+      },
+      "candidates_mentioned": [
+        "lula"
+      ],
+      "topics": [
+        "economia",
+        "seguranca",
+        "corrupcao",
+        "politica_externa",
+        "meio_ambiente",
+        "saude"
+      ],
       "narrative_cluster_id": null,
       "duplicate_of": null,
       "summaries": {
-        "pt-BR": "",
-        "en-US": ""
+        "pt-BR": "A Eve Air Mobility, subsidiária da Embraer, realizou o primeiro voo de seu eVTOL em Melbourne, marcando avanço na mobilidade aérea urbana. Enquanto isso, os Correios enfrentam crise com o Postal Saúde apresentando prejuízo recorde de 844 milhões de reais em 2025. No cenário político, o vice-líder do governo Lula no Senado teve familiares alvo de operação da PF que investiga fraudes no INSS, e a juíza que sucedeu Sergio Moro na Lava-Jato foi afastada pelo CNJ por dois anos devido a ilegalidades em um fundo da operação.",
+        "en-US": "Eve Air Mobility, Embraer's subsidiary, completed the first flight of its eVTOL aircraft in Melbourne, signaling progress in urban air mobility. Meanwhile, Correios faces a crisis as its Postal Health plan posted a record loss of 844 million reais in 2025. Politically, the Senate deputy leader of Lula's government saw his wife, daughter, and two sisters subjected to PF searches in an INSS fraud investigation, and the judge who succeeded Sergio Moro in the Lava-Jato task force was suspended for two years by the CNJ over illegalities in an operation-related fund."
       },
       "content": "SOBE EMBRAER A Eve Air Mobility, subsidiária da companhia, fez em Melbourne (Austrália) o primeiro voo de sua aeronave elétrica de decolagem e pouso vertical (eVTOL), conhecida como “carro voador”. PRIMEIRA CNH Alavancados pelo fim das aulas obrigatórias em autoescolas, os novos motoristas saltaram 222% nos sete primeiros meses em relação a igual período de 2025. KEROLIN Vendida por 1,2 milhão de euros pelo Manchester City ao Barcelona, a atacante se tornou a maior venda de uma jogadora de futebol brasileira da história. DESCE CORREIOS O Postal Saúde, plano médico dos funcionários da estatal, teve prejuízo de 844 milhões de reais em 2025, o maior desde que foi criado por Dilma, em 2013. Continua após a publicidade WEVERTON ROCHA Após ele próprio ter sido alvo em dezembro de 2025, o vice-líder do governo Lula no Senado viu a esposa, uma filha e duas irmãs sofrerem buscas pela PF em ação que apura fraudes no INSS. GABRIELA HARDT A juíza que sucedeu a Sergio Moro na vara da Lava-Jato, em Curitiba, foi afastada por dois anos pelo CNJ por ilegalidade em um fundo criado na operação. Publicado em VEJA de 7 de agosto de 2026, edição nº 3007 Publicidade",
       "source_category": "magazine",
-      "sentiment_per_candidate": {},
-      "edit_history": [],
+      "sentiment_per_candidate": {
+        "lula": "neutro"
+      },
+      "edit_history": [
+        {
+          "tier": "editor",
+          "at": "2026-08-07T09:32:58Z",
+          "provider": "nvidia",
+          "action": "validated",
+          "changes": [
+            "summary_pt",
+            "summary_en"
+          ]
+        }
+      ],
       "disclaimer_pt": "Análise algorítmica. Não representa pesquisa de opinião.",
       "disclaimer_en": "Algorithmic analysis. Does not represent polling data.",
-      "sentiment_score": 0.0,
-      "confidence_score": 0.0,
-      "_sentiment_scores": {},
-      "prominence_score": 0.0
+      "sentiment_score": 0.1,
+      "confidence_score": 1.0,
+      "_sentiment_scores": {
+        "lula": 0.1
+      },
+      "prominence_score": 0.0,
+      "_ai_provider": "nvidia",
+      "_ai_model": "nvidia/nemotron-3-super-120b-a12b",
+      "ai_provider_editor": "nvidia/nemotron-3-super-120b-a12b",
+      "editor_note": null
     },
     {
       "id": "c87d8fa224214d4a",
@@ -268,27 +189,61 @@
       "source": "Veja",
       "published_at": "2026-08-07T09:00:42Z",
       "collected_at": "2026-08-07T09:15:22Z",
-      "status": "raw",
-      "relevance_score": 0.0,
-      "relevance_signals": null,
-      "candidates_mentioned": [],
-      "topics": [],
+      "status": "validated",
+      "relevance_score": 1.0,
+      "relevance_signals": {
+        "candidate_signal": 0.6,
+        "topic_signal": 0.3,
+        "keyword_signal": 0.15,
+        "source_signal": 0.0
+      },
+      "candidates_mentioned": [
+        "lula",
+        "flavio-bolsonaro"
+      ],
+      "topics": [
+        "politica_externa",
+        "corrupcao",
+        "economia",
+        "eleicoes"
+      ],
       "narrative_cluster_id": null,
       "duplicate_of": null,
       "summaries": {
-        "pt-BR": "",
-        "en-US": ""
+        "pt-BR": "A eleição presidencial brasileira de 2026 ocorre em meio a escândalos envolvendo Lula e Flávio Bolsonaro, mas será decidida principalmente por fatores geopolíticos inéditos, como tensões com os EUA, a Argentina e conflitos globais que afetam exportações e estabilidade interna. Ambos os líderes lideram as pesquisas apesar da rejeição, sugerindo que o vencedor será o 'menos odiado'.",
+        "en-US": "The 2026 Brazilian presidential election unfolds amid scandals involving Lula and Flávio Bolsonaro, but will likely be decided by unprecedented geopolitical factors, including tensions with the U.S., Argentina, and global conflicts affecting exports and domestic stability. Despite leading in polls, both face unprecedented rejection, suggesting the winner will be the 'least hated'."
       },
       "content": "As eleições presidenciais brasileiras, ao menos desde o segundo mandato de Lula , sempre foram tumultuadas. Lula reelegeu-se em 2006 sob a sombra do mensalão. Dilma Rousseff, em 2010, foi a exceção: Lula gozava de popularidade tão vasta que teria eleito um poste. A reeleição de Dilma, em 2014, veio tisnada pelas manifestações de 2013, pela eclosão da Lava-Jato e pelo acidente que vitimou o candidato Eduardo Campos — e desembocou na tempestade perfeita de escândalos, descontrole fiscal e recessão que resultou no impeachment. Bolsonaro venceu em 2018 em meio à destruição do centro político, à facada e à prisão de Lula. E a eleição de 2022 teve disputa acirrada, atrito com o STF e uma transição tensa, marcada por vandalismo e ensaios de golpe. Cada eleição teve seus dramas, quase sempre encobrindo o debate dos problemas que mais afligem a cidadania: segurança pública, inflação, saúde, serviços públicos. A eleição deste ano não foge à regra. Traz ingredientes antigos — escândalos, denúncias, investigações — e um novo, de peso inédito na cena tupiniquim neste século: a geopolítica. No terreno dos escândalos, Lula e Flávio Bolsonaro são alvejados pelos casos do Master e do INSS . O maior dano, até aqui, coube a Flávio; mas ambos saem feridos. Para Lula, o acúmulo é constrangedor — as denúncias envolvendo Jaques Wagner e o Banco Master; o caso de seu ex-chefe de gabinete, Marco Aurélio, o “Marcola”, que recebeu empréstimos de uma operadora política de Brasília; e as investigações sobre Lulinha, por suposto tráfico de influência. A consequência é uma rejeição inédita a ambos — que, paradoxalmente, lideram as pesquisas. No final das contas, será eleito o menos odiado. “Pela primeira vez, o resultado da eleição pode ser decidido por fatores externos” Porém, nunca, na história recente, a geopolítica pesou tanto em uma eleição. Bolsonaro buscou o apoio de Trump e Putin em 2022, mas ficou no ensaio. Nada se compara ao momento atual, marcado por tarifaços e trocas de farpas entre Lula, Javier Milei e Trump. Milei fez acusações pesadas contra Lula, que retirou o embaixador de Buenos Aires. Com os Estados Unidos, a tensão pode ter atingido o ponto máximo com a notícia do cancelamento do visto da embaixadora Maria Luiza Viotti em Washington — se confirmada, é fato inédito nas relações entre os dois países. Tudo em meio a um tarifaço que atinge severamente nossas exportações, enquanto ressoam as guerras do Golfo Pérsico e da Ucrânia e suas consequências. O Brasil sempre teve o privilégio e a maldição de criar os próprios problemas — e eles tinham efeitos internos. Agora, temos problemas causados por nós e também por outros, vindos de fora. Com consequências que podem perdurar após as eleições. Independentemente de quem for eleito. A conclusão da cena de uma eleição tumultuada não é a crise — é a normalidade da crise que, desde 2023, foi agravada pelos atos do 8 de Janeiro, o julgamento dos mesmos e depois por dois escândalos ciclópicos, INSS e Banco Master. O que muda é a procedência da tempestade que não é apenas made in Brazil . Antes, ela nascia dentro do país. Agora, parte expressiva vem de fora, escapando do controle dos próprios candidatos. A novidade de 2026 não é haver drama, o que já é tradição nacional. É que, pela primeira vez, com empate técnico e cercado de escândalos, o resultado da eleição pode ser decidido por fatores externos. Publicado em VEJA de 7 de agosto de 2026, edição nº 3007 Publicidade",
       "source_category": "magazine",
-      "sentiment_per_candidate": {},
-      "edit_history": [],
+      "sentiment_per_candidate": {
+        "lula": "positivo",
+        "flavio-bolsonaro": "negativo"
+      },
+      "edit_history": [
+        {
+          "tier": "editor",
+          "at": "2026-08-07T09:33:04Z",
+          "provider": "nvidia",
+          "action": "validated",
+          "changes": [
+            "summary_pt",
+            "summary_en"
+          ]
+        }
+      ],
       "disclaimer_pt": "Análise algorítmica. Não representa pesquisa de opinião.",
       "disclaimer_en": "Algorithmic analysis. Does not represent polling data.",
-      "sentiment_score": 0.0,
-      "confidence_score": 0.0,
-      "_sentiment_scores": {},
-      "prominence_score": 0.0
+      "sentiment_score": -0.05,
+      "confidence_score": 1.0,
+      "_sentiment_scores": {
+        "lula": 0.3,
+        "flavio-bolsonaro": -0.4
+      },
+      "prominence_score": 0.0,
+      "_ai_provider": "nvidia",
+      "_ai_model": "nvidia/nemotron-3-super-120b-a12b",
+      "ai_provider_editor": "nvidia/nemotron-3-super-120b-a12b",
+      "editor_note": null
     },
     {
       "id": "5b274907800cf7b0",
@@ -297,27 +252,61 @@
       "source": "Veja",
       "published_at": "2026-08-07T09:00:42Z",
       "collected_at": "2026-08-07T09:15:23Z",
-      "status": "raw",
-      "relevance_score": 0.0,
-      "relevance_signals": null,
-      "candidates_mentioned": [],
-      "topics": [],
+      "status": "validated",
+      "relevance_score": 1.0,
+      "relevance_signals": {
+        "candidate_signal": 0.6,
+        "topic_signal": 0.3,
+        "keyword_signal": 0.15,
+        "source_signal": 0.0
+      },
+      "candidates_mentioned": [
+        "lula",
+        "flavio-bolsonaro"
+      ],
+      "topics": [
+        "politica_externa",
+        "eleicoes",
+        "corrupcao",
+        "midia"
+      ],
       "narrative_cluster_id": null,
       "duplicate_of": null,
       "summaries": {
-        "pt-BR": "",
-        "en-US": ""
+        "pt-BR": "A revogação do visto da embaixadora brasileira Maria Luiza Viotti pelos Estados Unidos, em retaliação à suposta demora do Brasil em aceitar o novo embaixador Daniel Perez, aprofundou a crise diplomática entre os dois países. O governo Lula classificou a medida como arbitrária e motivada politicamente, vinculando-a à estratégia do trumpismo de pressionar o Brasil sobre suas urnas eletrônicas e apoiar candidatos de extrema direita na América Latina.",
+        "en-US": "The revocation of Brazilian Ambassador Maria Luiza Viotti's U.S. visa, in retaliation for Brazil's alleged delay in accepting the new U.S. ambassador Daniel Perez, has deepened the diplomatic crisis between the two nations. The Lula government denounced the move as arbitrary and politically motivated, linking it to the Trump administration's strategy of pressuring Brazil over its electronic voting system and supporting far-right candidates across Latin America."
       },
       "content": "No dia 7 de maio, os presidentes do Brasil, Luiz Inácio Lula da Silva, e dos Estados Unidos, Donald Trump, se reuniram na Casa Branca e trocaram elogios após o encontro. Lula falou em “amor à primeira vista”, enquanto o americano disse que o colega era “um bom homem”. De lá para cá, no entanto, o amor virou fel. A gestão trumpista classificou as facções PCC e Comando Vermelho como terroristas, contrariando Lula e dando munição à oposição, apenas dois dias após ter ouvido o pedido durante visita de Flávio Bolsonaro (PL). O episódio marcou uma inflexão política e deu um componente eleitoral à tensão entre os dois países. Em seguida, vieram a imposição de tarifas a produtos nacionais e as evidências de que o trumpismo preparava uma investida sobre as urnas eletrônicas, um fetiche da direita brasileira. Por fim, na terça 4, os EUA revogaram o visto da embaixadora Maria Luiza Viotti, gesto interpretado como arbitrário pelo governo Lula e que fez escalar o estresse institucional entre os dois países. A revogação do visto da embaixadora tem, de fato, caráter político. A decisão, tida como grave e sem precedentes, não impede Viotti de continuar no país, embora não possa deixá-­lo e depois voltar. O motivo alegado é a demora do governo em conceder o agreement (aceite) ao novo embaixador para o Brasil, o deputado da Flórida Daniel Perez, nomeado em 1º de junho. Filiado ao Partido Republicano, ele é ligado a Marco Rubio, o chefe do Departamento de Estado, que lidera uma cruzada contra a esquerda nas Américas e que recentemente incluiu o Brasil na lista de países que não são aliados, ao lado de Nicarágua e Cuba. CRISE - Maria Luiza Viotti e Daniel Perez: trumpismo sancionou a diplomata por uma suposta demora do Brasil em aceitar seu novo representante para o país Evan Schneider/United Nations; Jose A. Iglesias/Miami Herald/TNS/Getty Images O Itamaraty diz que segue o rito regular, enquanto Lula aproveita o caso para fazer exploração política. Disse que a atitude era “irresponsável” e viu motivação eleitoral do trumpismo. Citou a decisão de negar vistos a dois funcionários do Departamento de Estado em julho, que viriam ao país para produzir um relatório sobre as urnas eletrônicas. “O Brasil vai enfrentar qualquer pessoa de fora que queira interferir no nosso processo eleitoral”, afirmou. Especialistas consideram remota a possibilidade de o clima melhorar antes da eleição. “O Departamento de Estado tem apoiado candidatos identificados com a extrema direita em diferentes países”, diz o ex-embaixador nos EUA, Rubens Barbosa. Para ele, porém, interesses estratégicos compartilhados pelos países deverão prevalecer após outubro. A ofensiva de Trump não é um fenômeno isolado. Nas últimas semanas, escalou também a crise com a Argentina depois que seu presidente, Javier Milei, veio à convenção de Flávio e chamou Lula de “presidiário”, “ladrão” e “lixo socialista”, xingamentos que repetiu em entrevista em seu país. Na primeira rodada de ofensas, Lula foi irônico. “Quem é esse cara?”, indagou. Mas o governo depois foi mais duro. Trouxe de volta o embaixador Julio Bitelli e mandou embora seu colega argentino, Guillermo Daniel Raimondi, rebaixando as relações entre os países. Para a professora Mariana Kalil, da Escola Superior de Guerra e do grupo de pesquisa Segurança e Democracia nas Américas, há uma articulação entre o trumpismo e Milei. “Os EUA estão usando a Argentina como plataforma para pressionar Lula”, diz. Ela cita o recente acordo para ampliar o patrulhamento do Atlântico Sul e a realização de exercícios militares no Paraguai. “O objetivo é elevar o custo das decisões brasileiras e sinalizar capacidade de influência regional”, afirma. O Itamaraty vê afinidade política entre as gestões Trump e Milei, refletida nas declarações públicas, mas diz que não há elementos que permitam afirmar a existência de uma ação coordenada. Continua após a publicidade ARTILHARIA - Milei: líder argentino chamou brasileiro de “lixo socialista” Chris Ratcliffe/Bloomberg/Getty Images As escaramuças mostram disposição da direita para estender ao Brasil a “onda azul”, como se convencionou chamar as recentes vitórias desse campo político na região, como na Colômbia e Peru. A chance de Lula ser derrotado por Flávio não é desprezível, como mostram as pesquisas, mas há dúvida se Trump e Milei ajudam ou atrapalham. Segundo a pesquisa Meio/Ideia da última semana, apenas 20% dos eleitores disseram que votariam em um candidato se ele fosse apoiado pelo americano, enquanto 44,9% afirmam o contrário. Já a Genial/Quaest traz que Lula defende melhor os interesses do Brasil do que Flávio (46% a 38%), mas esse percentual era maior em julho (51% a 34%), o que sinaliza que o discurso de defesa da soberania usado por Lula pode estar dando alguns sinais de fadiga. O que se espera sempre é que os atos entre os países sejam marcados pelo respeito, algo comum no longo histórico de amizade entre as nações. As motivações ideológicas não devem se sobrepor aos interesses dos países. Publicado em VEJA de 7 de agosto de 2026, edição nº 3007 Publicidade",
       "source_category": "magazine",
-      "sentiment_per_candidate": {},
-      "edit_history": [],
+      "sentiment_per_candidate": {
+        "lula": "positivo",
+        "flavio-bolsonaro": "negativo"
+      },
+      "edit_history": [
+        {
+          "tier": "editor",
+          "at": "2026-08-07T09:33:19Z",
+          "provider": "nvidia",
+          "action": "validated",
+          "changes": [
+            "summary_pt",
+            "summary_en"
+          ]
+        }
+      ],
       "disclaimer_pt": "Análise algorítmica. Não representa pesquisa de opinião.",
       "disclaimer_en": "Algorithmic analysis. Does not represent polling data.",
-      "sentiment_score": 0.0,
-      "confidence_score": 0.0,
-      "_sentiment_scores": {},
-      "prominence_score": 0.0
+      "sentiment_score": -0.05,
+      "confidence_score": 1.0,
+      "_sentiment_scores": {
+        "lula": 0.2,
+        "flavio-bolsonaro": -0.3
+      },
+      "prominence_score": 0.0,
+      "_ai_provider": "nvidia",
+      "_ai_model": "nvidia/nemotron-3-super-120b-a12b",
+      "ai_provider_editor": "nvidia/nemotron-3-super-120b-a12b",
+      "editor_note": null
     },
     {
       "id": "3813d0c9a4863ad8",
@@ -326,27 +315,49 @@
       "source": "Metropoles",
       "published_at": "2026-08-07T09:00:32Z",
       "collected_at": "2026-08-07T09:15:15Z",
-      "status": "raw",
-      "relevance_score": 0.0,
-      "relevance_signals": null,
+      "status": "validated",
+      "relevance_score": 0.3,
+      "relevance_signals": {
+        "candidate_signal": 0.0,
+        "topic_signal": 0.25,
+        "keyword_signal": 0.05,
+        "source_signal": 0.0
+      },
       "candidates_mentioned": [],
-      "topics": [],
+      "topics": [
+        "eleicoes"
+      ],
       "narrative_cluster_id": null,
       "duplicate_of": null,
       "summaries": {
-        "pt-BR": "",
-        "en-US": ""
+        "pt-BR": "Vila Nova recebe o Sport na 21ª rodada da Série B como mandante imbatível em casa, com sete vitórias e dois empates em nove jogos no Campeonato Brasileiro 2026. O Sport busca encerrar uma sequência de nove jogos sem vitória, tendo empatado os últimos quatro. As odds indicam favoritismo do Vila Nova (1.88), com empate em 3.25 e vitória do Sport em 4.40.",
+        "en-US": "Vila Nova hosts Sport in the 21st round of the Série B as an unbeaten home team, with seven wins and two draws in nine home matches in the 2026 Brazilian Championship. Sport aims to end a nine-game winless streak, having drawn their last four. Odds favor Vila Nova (1.88), with a draw at 3.25 and a Sport win at 4.40."
       },
       "content": "Depois de dez dias de pausa, a Série B do Campeonato Brasileiro retorna neste fim de semana com a 21ª rodada. No sábado (8/8), às 16h (de Brasília), o Vila Nova recebe o Sport no OBA e conta com a força como mandante para conquistar os três pontos. Confira os números e também as odds da partida. Quem vai vencer o jogo? Vila Nova: Odds 1.88* Empate: Odds 3.25* Sport: Odds 4.40 * Apostar na Lotogreen *As odds verificadas no momento da redação deste artigo e estão sujeitas a alterações. Note que esta é apenas uma análise e não significa que a aposta será bem-sucedida, pois os esportes são imprevisíveis. **Lotogreen: autorizada pela portaria SPA/MF nº 399/2025. O Vila Nova tem sido um mandante praticamente imbatível em 2026. Em toda a temporada, foram 20 partidas contando com o apoio da torcida, somando Campeonato Goiano, Copa Centro-Oeste, Copa do Brasil e Série B, com 11 vitórias, oito empates e apenas uma derrota. Na Série B do Campeonato Brasileiro, foram nove partidas como mandante, e o Vila Nova ainda não perdeu. O Tigre conquistou sete vitórias e dois empates dentro de casa na competição. Veja os jogos do Vila Nova como mandante na Série B 21/7/2026 – Vila Nova 2×1 Fortaleza 6/7/2026 – Vila Nova 2×1 São Bernardo 20/6/2026 – Vila Nova 4×3 Náutico 8/6/2026 – Vila Nova 1×0 Botafogo-SP 17/5/2026 – Vila Nova 2×0 Avaí 4/5/2026 – Vila Nova 1×1 Athletic 18/4/2026 – Vila Nova 2×1 Operário-PR 4/4/2026 – Vila Nova 2×1 Atlético-GO 21/3/2026 – Vila Nova 2×2 CRB-AL No outro lado do confronto, o Sport precisa da vitória para encerrar uma sequência de nove jogos sem ganhar na competição. O Leão vem de sete empates e duas derrotas, tendo empatado os últimos quatro jogos. O Sport tem tido uma boa campanha como visitante na Série B. Em nove jogos longe de casa, foram três vitórias, quatro empates e duas derrotas. Os dois times vão marcar? Ambos marcam: Odds 1.83* Ambos não marcam: Odds 1.83* Apostar na Lottoland *As odds verificadas no momento da redação deste artigo e estão sujeitas a alterações. Note que esta é apenas uma análise e não significa que a aposta será bem-sucedida, pois os esportes são imprevisíveis. **Lottoland: autorizada pela portaria SPA/MF nº 259/2025. Outra possibilidade de aposta para a partida entre Vila Nova e Sport é o mercado de ambos marcam. Das nove partidas do Tigre dentro de casa na Série B, em sete delas houve pelo menos um gol de cada time envolvido. Já o Sport vem de uma sequência de quatro jogos com as duas equipes balançando as redes. Vila Nova vai conseguir o título da Série B? Criciúma: Odds 2.10* Fortaleza: Odds 5.00* Grêmio Novorizontino: Odds 8.00* Juventude: Odds 9.00* Operário-PR: Odds 9.00* Vila Nova: Odds 17.00* Apostar na BigBet *As odds verificadas no momento da redação deste artigo e estão sujeitas a alterações. Note que esta é apenas uma análise e não significa que a aposta será bem-sucedida, pois os esportes são imprevisíveis. **Bigbet: autorizada pela portaria SPA/MF nº 370/2025. O Vila Nova está na briga pelo acesso à Série A do Campeonato Brasileiro e também pelo título da Série B. A equipe está na quinta colocação da competição, com 34 pontos. A liderança é ocupada pelo Criciúma, que soma 40. Descubra os melhores sites de apostas para bets na Série B do Brasileirão. Onde assistir A partida entre Vila Nova e Sport, pela Série B do Campeonato Brasileiro, terá transmissão da ESPN (TV fechada), do X Sports (TV fechada), do SportyNet (YouTube) e do Disney+ (streaming).",
       "source_category": "mainstream",
       "sentiment_per_candidate": {},
-      "edit_history": [],
+      "edit_history": [
+        {
+          "tier": "editor",
+          "at": "2026-08-07T09:33:28Z",
+          "provider": "nvidia",
+          "action": "validated",
+          "changes": [
+            "summary_pt",
+            "summary_en"
+          ]
+        }
+      ],
       "disclaimer_pt": "Análise algorítmica. Não representa pesquisa de opinião.",
       "disclaimer_en": "Algorithmic analysis. Does not represent polling data.",
       "sentiment_score": 0.0,
-      "confidence_score": 0.0,
+      "confidence_score": 1.0,
       "_sentiment_scores": {},
-      "prominence_score": 0.0
+      "prominence_score": 0.0,
+      "_ai_provider": "nvidia",
+      "_ai_model": "nvidia/nemotron-3-super-120b-a12b",
+      "ai_provider_editor": "nvidia/nemotron-3-super-120b-a12b",
+      "editor_note": null
     },
     {
       "id": "3f7f0723cecf9080",
@@ -355,27 +366,62 @@
       "source": "Veja",
       "published_at": "2026-08-07T09:00:23Z",
       "collected_at": "2026-08-07T09:15:23Z",
-      "status": "raw",
-      "relevance_score": 0.0,
-      "relevance_signals": null,
-      "candidates_mentioned": [],
-      "topics": [],
+      "status": "validated",
+      "relevance_score": 1.0,
+      "relevance_signals": {
+        "candidate_signal": 0.6,
+        "topic_signal": 0.3,
+        "keyword_signal": 0.15,
+        "source_signal": 0.0
+      },
+      "candidates_mentioned": [
+        "lula",
+        "flavio-bolsonaro"
+      ],
+      "topics": [
+        "economia",
+        "educacao",
+        "politica_externa",
+        "impostos",
+        "eleicoes"
+      ],
       "narrative_cluster_id": null,
       "duplicate_of": null,
       "summaries": {
-        "pt-BR": "",
-        "en-US": ""
+        "pt-BR": "A campanha eleitoral de 2026 começou com Lula e Flávio Bolsonaro evitando discutir a crise fiscal, apesar de ser o maior desafio para o próximo governo. Lula, ao lançar sua reeleição, focou em temas simbólicos e sociais, enquanto Flávio recuou de propostas de corte de gastos após reação negativa. A dívida pública já chegou a 82% do PIB e pode chegar a 87% até 2029, segundo o Tesouro Nacional.",
+        "en-US": "The 2026 electoral campaign began with Lula and Flávio Bolsonaro avoiding discussion of the fiscal crisis, despite it being the greatest challenge for the next government. Lula, in launching his re-election bid, focused on symbolic and social themes, while Flávio retreated from spending-cut proposals after negative backlash. Public debt has already reached 82% of GDP and may rise to 87% by 2029, according to the National Treasury."
       },
       "content": "Ao lançar sua candidatura à reeleição na convenção do PT, no domingo 2, Lula reclamou da falta de mulheres no evento, relembrou cenas de sua infância em Garanhuns, prometeu fortalecer a indústria militar, anunciou o ex-ministro Fernando Haddad como seu sucessor político, disse que criará um programa especial para os idosos, criticou as emendas parlamentares, falou em resolver os problemas da educação, garantiu que as terras-raras continuarão sob controle dos brasileiros e comparou a tentativa de se eleger para um quarto mandato ao número de Copas do Mundo disputadas por Pelé. Em um discurso que durou mais de uma hora, o presidente não dedicou um único segundo àquele que talvez seja o problema mais desafiador que o futuro ocupante do Palácio do Planalto terá de enfrentar: o desarranjo das contas públicas. Uma semana antes, na convenção do PL, Flávio Bolsonaro ensaiou propor um “tesouraço” nas despesas do governo, mas depois recolheu os flaps ao perceber que a declaração deu munição para a esquerda difundir nas redes que ele cortaria programas sociais. Da moratória da dívida externa decretada em 1987 pelo então presidente José Sarney até hoje, o rombo nas contas públicas é uma chaga que marca governos dos mais variados matizes ideológicos, mas o terceiro mandato de Lula entrará para a história como aquele em que a dívida alcançou seu patamar mais alto em tempos de normalidade. Desde que voltou ao Palácio do Planalto, em 2023, ela saltou de 72% para 82% do PIB, nível inferior apenas aos 88% vistos no momento mais crítico da gestão de Jair Bolsonaro, quando o ex-presidente lidava com os impactos da pandemia da covid-19. Segundo o Fundo Monetário Internacional, a dívida brasileira está proporcionalmente entre as quinze maiores do mundo, quando comparada com países de renda semelhante — e a perspectiva é de piora. O próprio Tesouro Nacional prevê que ela pode atingir 87% do PIB em 2029. “Quem for eleito precisará fazer uma grande reforma fiscal”, diz Márcio Holland, professor da Fundação Getulio Vargas. Os candidatos — todos eles — sabem disso. A questão é que falar em corte de gastos, revisão de programas e ajustes não rende votos. O atual governo, por exemplo, nunca se preocupou em equilibrar as contas. Pelo contrário. Inventado por Fernando Haddad , então ministro da Fazenda e hoje candidato a governador de São Paulo, para substituir o teto de gastos implantado por Michel Temer no fim de 2016, o chamado arcabouço fiscal é visto pelo mercado como parte do problema ao permitir que as despesas cresçam acima da inflação. Isso, aliado às medidas populistas de Lula mirando a reeleição, contribuiu para que as despesas federais aumentassem 22% neste terceiro mandato, chegando a 2,6 trilhões de reais nos últimos doze meses. IMPACTO - Indústria: o menor nível de confiança desde 2020, quando o mundo enfrentou a pandemia de covid-19 Jin Haoyuan/Xinhua/AFP Continua após a publicidade O impacto do descontrole já reflete em vários setores. O Índice de Confiança do Empresário Industrial, medido pela Confederação Nacional da Indústria, a CNI, por exemplo, atingiu o menor nível desde junho de 2020, quando o mundo enfrentava a pandemia do coronavírus. O pessimismo também alcançou o eleitorado. Na última pesquisa divulgada pela Genial/Quaest, 43% dos entrevistados afirmaram que a economia do Brasil piorou nos últimos doze meses. Só 20% disseram que melhorou, e para 33% está tudo igual. CICLO VICIOSO - Consumo: descontrole gera aumento de preços dos produtos, elevação dos juros e inflação Marco Ambrosio/AtoPress/Folhapress/. Sem debate público, os candidatos têm designado a auxiliares a missão de tranquilizar o mercado e mostrar que eles estão atentos ao problema. O ministro da Fazenda, Dario Durigan, por exemplo, tem garantido que Lula, em um eventual quarto mandato, reduzirá o crescimento das despesas. O gesto, porém, não convenceu, especialmente depois do desassossego provocado pelas declarações de José Sergio Gabrielli, coordenador do programa de governo do PT, que defendeu propostas heterodoxas, como controle de capitais, para incentivar o crescimento econômico. “É difícil acreditar que Lula assumirá um compromisso sério com o ajuste fiscal em um novo governo”, afirma Ângelo Passos, sócio da assessoria de investimento Faz Capital. O ceticismo se justifica quando se sabe que o próprio partido do presidente é um obstáculo. O PT já aprovou, por exemplo, uma resolução contra o que classifica como “austericídio fiscal”, termo cunhado para criticar políticas de austeridade que resultem em corte de gastos em áreas como saúde e assistência social. Continua após a publicidade Pelo lado da oposição, Flávio Bolsonaro já falou em um corte de 200 bilhões de reais nas despesas. “Um governo que chega a esse patamar de dívida é um governo gastador, irresponsável, e todo mundo está sentindo a consequência disso no mercado: uma comida cara, porque a inflação chegou com força e não tem mais mecanismos para você lançar mão, a não ser corte de gastos”, afirmou em entrevista ao programa Canal Livre , da BandNews. Na sequência, revelou que tem discutido com sua equipe a criação de um gatilho automático que seria acionado quando a relação dívida/PIB alcançasse “um determinado patamar” — sem, no entanto, esclarecer que patamar seria esse. “AUSTERICÍDIO” - Haddad: ceticismo do mercado quanto à disposição do PT Roberto Casimiro/Fotoarena/. Entre as medidas aventadas como parte de um choque de gestão, a administradora Daniella Marques, porta-voz da campanha para temas econômicos, afirmou a VEJA que, se eleito, o senador pretende criar um fundo imobiliário para explorar cerca de 700 000 imóveis pertencentes ao governo, securitizar valores que a União tem a receber de contribuintes e, ainda no período de transição, apresentar uma emenda à Constituição criando o mecanismo de controle da trajetória da dívida. As propostas estão sendo finalizadas pelo senador Rogério Marinho, coordenador do programa de governo do PL. “O programa econômico de Flávio, por enquanto, é muito superficial”, afirma Alexandre Schwartsman, ex-diretor do Banco Central e colunista de VEJA. Continua após a publicidade Com os partidos do Centrão declarando-se neutros na disputa eleitoral, Flávio, assim como Lula, também foi incapaz até o momento de convencer o mercado de que terá força política para aprovar no Congresso as medidas de austeridade que promete. “Ele não conseguiu até agora atrair nenhum nome relevante para a campanha”, destaca Rodolfo Amstalden, fundador da casa de análises Empiricus. Se os dois principais postulantes ao Planalto enfrentam o ceticismo da Faria Lima, os nomes que se apresentam como uma possível terceira via também não empolgam. É o caso do ex-governador de Goiás Ronaldo Caiado (PSD), que surge em um distante terceiro lugar nas pesquisas, com cerca de 4% das intenções de voto. As chances mínimas de vitória também levaram o mercado, até agora, a prestar pouca atenção em nomes como o do ex-governador de Minas Gerais Romeu Zema (Novo) e de Renan Santos (Missão). “Os grandes temas econômicos não estão sendo debatidos”, atesta Walter Maciel, presidente da gestora AZ Quest. MISSÃO - Rogério Marinho: ele é o responsável pelo programa de governo do PL Vinicius Nunes/Ag. F8/Folhapress/. Outro aspecto grave do momento é o efeito bola de neve, alimentado pelo conjunto de problemas e desarranjos econômicos. A inflação fora da meta força o Banco Central a manter a Selic em patamar alto, em 14% (mesmo com o corte de 0,25 anunciado na quarta 5, ela segue entre as maiores do mundo). Juros altos encarecem o custo de refinanciamento da dívida pública, o que eleva o endividamento total do país. Além de não cortar despesas, o governo alimenta esse ciclo perverso, indo na direção oposta ao BC, com incentivos ao consumo. Continua após a publicidade Por qualquer ângulo que se analise essa conjuntura, a situação é bastante grave. Se a trajetória de ascensão da dívida pública não for interrompida, a primeira consequência será sentida no câmbio, já que grandes investidores estrangeiros devem levar os recursos hoje aplicados no Brasil para mercados mais seguros. Com isso, o dólar tende a subir, pressionando o preço dos produtos importados. Sem contar com o governo para ajudar a combater a inflação, restará ao Banco Central manter os juros em patamares altos. Esse movimento ganhará um impulso extra, à medida que os investidores dispostos a financiar a dívida pública cobrarem juros ainda maiores, em troca do risco de emprestar dinheiro para um país irresponsável com suas contas. Segundo Alexandre Schwartsman, o desfecho dessa história é retratado pelos economistas Kenneth Rogoff e Carmen Reinhart no livro This Time Is Different (Desta vez é diferente, em português), publicado em 2009 e que avalia a crise financeira que estourou um ano antes nos Estados Unidos. “Cedo ou tarde, um calote aparece”, diz o ex-diretor do BC. Caso isso aconteça, o Brasil de 2027 lembrará bastante o de José Sarney em 1987 — um cenário de caos. Está mais do que na hora, portanto, de exigir dos candidatos propostas mais aprofundadas de como evitar o pior. Publicado em VEJA de 7 de agosto de 2026, edição nº 3007 Publicidade",
       "source_category": "magazine",
-      "sentiment_per_candidate": {},
-      "edit_history": [],
+      "sentiment_per_candidate": {
+        "lula": "positivo",
+        "flavio-bolsonaro": "neutro"
+      },
+      "edit_history": [
+        {
+          "tier": "editor",
+          "at": "2026-08-07T09:33:42Z",
+          "provider": "nvidia",
+          "action": "validated",
+          "changes": [
+            "summary_pt",
+            "summary_en"
+          ]
+        }
+      ],
       "disclaimer_pt": "Análise algorítmica. Não representa pesquisa de opinião.",
       "disclaimer_en": "Algorithmic analysis. Does not represent polling data.",
-      "sentiment_score": 0.0,
-      "confidence_score": 0.0,
-      "_sentiment_scores": {},
-      "prominence_score": 0.0
+      "sentiment_score": 0.05,
+      "confidence_score": 1.0,
+      "_sentiment_scores": {
+        "lula": 0.2,
+        "flavio-bolsonaro": -0.1
+      },
+      "prominence_score": 0.0,
+      "_ai_provider": "nvidia",
+      "_ai_model": "nvidia/nemotron-3-super-120b-a12b",
+      "ai_provider_editor": "nvidia/nemotron-3-super-120b-a12b",
+      "editor_note": null
     },
     {
       "id": "33f6181e10267a5b",
@@ -384,27 +430,58 @@
       "source": "Veja",
       "published_at": "2026-08-07T09:00:23Z",
       "collected_at": "2026-08-07T09:15:23Z",
-      "status": "raw",
-      "relevance_score": 0.0,
-      "relevance_signals": null,
-      "candidates_mentioned": [],
-      "topics": [],
+      "status": "validated",
+      "relevance_score": 0.95,
+      "relevance_signals": {
+        "candidate_signal": 0.5,
+        "topic_signal": 0.3,
+        "keyword_signal": 0.15,
+        "source_signal": 0.0
+      },
+      "candidates_mentioned": [
+        "flavio-bolsonaro"
+      ],
+      "topics": [
+        "eleicoes",
+        "midia",
+        "corrupcao",
+        "politica_externa"
+      ],
       "narrative_cluster_id": null,
       "duplicate_of": null,
       "summaries": {
-        "pt-BR": "",
-        "en-US": ""
+        "pt-BR": "Mesmo preso e condenado a 27 anos de prisão, Jair Bolsonaro continua sendo o eixo central da campanha presidencial do filho Flávio Bolsonaro, orientando alianças, escolhendo candidatos e sendo referência de imagem e discurso. No entanto, seu uso de inteligência artificial para simular discursos políticos e a proibição do STF de atuar nas redes sociais expuseram a campanha a investigações eleitorais, transformando o ex-presidente tanto em ativo quanto em problema jurídico para a chapa do PL.",
+        "en-US": "Despite being imprisoned and sentenced to 27 years, Jair Bolsonaro remains the central figure in his son Flávio Bolsonaro’s presidential campaign, directing alliances, selecting candidates, and shaping the candidate’s image and rhetoric. Yet, his use of AI-generated speeches and the STF’s ban on political communication have exposed the campaign to electoral investigations, making him both a key asset and a legal liability for the PL ticket."
       },
       "content": "Centralizador, Jair Bolsonaro anunciou ainda em 2025 que a formação dos principais palanques para a campanha dos candidatos de direita nas eleições deste ano passaria pelo crivo dele. Condenado a 27 anos de prisão por tentativa de golpe de Estado, o ex-presidente deu instruções sobre a formação das alianças estaduais, escolheu a dedo candidatos do PL ao Senado e, à revelia de conselheiros e para surpresa geral de ninguém, ungiu o primogênito como nome a defender seu espólio como candidato ao Palácio do Planalto. Até poucas semanas atrás, não havia decisão estratégica na campanha presidencial do filho que não passasse por consultas prévias ao antigo mandatário, mesmo preso em regime domiciliar e proibido de ter contato com quem quer que seja do mundo político, a não ser com sua esposa, Michelle, agora candidata ao Senado pelo Distrito Federal. Nas últimas semanas, Flávio Bolsonaro promoveu até algumas correções de rota para aproximar ainda mais sua imagem e seu discurso aos do capitão. A sombra do pai sempre foi — e ainda é — o principal ativo do senador. PROCESSO - Moraes: pedido para que o caso seja investigado como crime Rosinei Coutinho/STF Parece um paradoxo, mas Jair Bolsonaro também tem sido uma fonte de problemas para a campanha do filho. Impedido pelo Supremo Tribunal Federal (STF) de usar as redes sociais e de transmitir mensagens políticas por meio de terceiros, o ex-presidente escreveu em julho uma “Carta aos Brasileiros” na qual pedia aos aliados que deixassem de lado as diferenças e reforçava que o filho era a melhor opção para disputar a Presidência da República. Depois, na convenção nacional do partido, uma versão do ex-presidente criada por inteligência artificial fez um discurso político saudando a candidatura do filho. Em ambos os casos, o PT recorreu ao Tribunal Superior Eleitoral ( TSE ). Resultado: o candidato do PL começará a corrida ao Planalto investigado por crime eleitoral. A Justiça proíbe na propaganda dos candidatos a utilização de imagens e conteúdos que tenham o objetivo de ludibriar os eleitores ou promover campanha negativa. A versão digital do ex-presidente, em tese, não ludibriou ninguém, já que, desde o início, foi informado tratar-se de uma montagem produzida por inteligência artificial (IA). O caso acelerou o debate sobre o uso da IA nas campanhas políticas. O PT teme que o ex-­presidente assuma à distância o papel de principal cabo eleitoral do filho. O partido mantém uma equipe jurídica de prontidão para ingressar, se necessário, com representações na Justiça para impedir a campanha adversária de veicular novas mensagens do capitão em sua versão digital. Sabe-se que uma expressiva parcela do eleitorado de direita vota em qualquer candidato indicado pelo ex-presidente, e sua “aparição” pode influir decisivamente nas disputas locais. A campanha do PL, por sua vez, não esperava que a peça publicitária tivesse repercussão tão grande. Os marqueteiros do senador afirmam que queriam apenas deixar claro que Flávio é o herdeiro da direita e o escolhido pelo pai para manter vivo seu projeto político. PEDINDO VOTO - Vídeo: a presença de Bolsonaro nos palanques é considerada decisiva em alguns estados PL-SC/. Continua após a publicidade A equipe jurídica do PL deu seu aval à ideia por entender que as regras valiam apenas para o período em que a campanha fosse oficialmente iniciada, no próximo dia 16. Para evitar problemas futuros, o Bolsonaro virtual ficará arquivado até que fique claro o que é e o que não é permitido nesse território. Discursos que exploraram menções ao ex-presidente motivaram o ministro do STF Alexandre de Moraes a encaminhar ao Ministério Público pedido para que os casos fossem investigados como possível campanha eleitoral antecipada. Responsável por acompanhar o cumprimento de pena do antigo mandatário pela condenação na trama golpista, o magistrado ainda cobrou que o político explicasse se havia ou não autorizado o uso de sua imagem em IA. Em caso de uma resposta positiva, o capitão reformado poderia perder o direito à prisão domiciliar e voltar para a cadeia. ESTREIA - Michelle: candidata ao Senado pelo Distrito Federal @michellebolsonaro/Instagram O TSE pretende realizar uma reunião a portas fechadas, na quarta-feira 12, para decidir eventuais punições à campanha de Flávio pelo uso de IA. Uma resolução do tribunal proíbe qualquer tipo de mensagem de deep­fake, mesmo as autorizadas pela pessoa cuja voz ou imagem foi fabricada artificialmente, mas a vedação só é válida para a propaganda eleitoral, que ainda não começou. Os ministros devem debater também se serão permitidos avatares, hologramas e discursos feitos em IA nas campanhas de 2026 e levar o tema à votação no dia 17. O diagnóstico é de todo desafiador. O Observatório IA nas Eleições, mantido pela Data Privacy Brasil e pelo Aláfia Lab, identificou 357 conteúdos políticos sintéticos publicados entre 1º de janeiro e 15 de julho de 2026. Prevalecem publicações com ataques (67%), em comparação a endossos a candidatos (32%). Entre os políticos, Flávio Bolsonaro e o deputado Mario Frias despontam como os principais adeptos da ferramenta, segundo o levantamento feito a pedido de VEJA. A maior parte das mensagens, no entanto, foi produzida por usuários anônimos. “O potencial desinformativo é muito maior”, alerta o pesquisador Matheus Soares, um dos coordenadores do Observatório IA nas Eleições. Continua após a publicidade Responsabilizar uma campanha por postagens publicadas por terceiros ou perfis apócrifos será outro desafio da eleição. Para se chegar aos responsáveis, é necessário iniciar uma investigação judicial e demonstrar que houve coordenação, financiamento ou algum outro vínculo entre os autores e a candidatura beneficiada. Quem for acusado de fabricar deepfakes indevidamente, terá de provar o contrário — uma inversão do ônus da prova promovida pela Justiça Eleitoral por considerar que quem publica o material tem melhores condições de apresentar o arquivo original. Na prática, tais inquéritos têm se revelado pouco eficazes. Por isso, diante de dúvida relevante sobre a autenticidade de um conteúdo potencialmente danoso, a tendência, segundo advogados especializados ouvidos por VEJA, deve ser a simples remoção das publicações. Posicionados entre o avatar e o eleitor, os togados terão de definir o limite entre a criatividade e a fraude. ISOLAMENTO – Alfredo Gaspar: candidato a vice anunciado na última hora Andre Borges/EFE Em meio à polêmica do uso da IA, com o empuxo do pai, mas ainda sim rejeitado por 54% dos eleitores, segundo levantamento da pesquisa Genial/Quaest, Flávio chega ao início da corrida presidencial com vinte palanques estaduais montados, depois de trombadas na formação de parcerias políticas como a do Ceará, que provocou uma briga pública entre ele e a ex-primeira-dama Michelle Bolsonaro. Chega também sem alianças formais com partidos do Centrão e sem ter conseguido viabilizar uma mulher como candidata a vice, solução que buscava para conquistar a simpatia do eleitorado feminino. A solenidade que oficializou, na quarta-feira 5, o nome do deputado federal Alfredo Gaspar (PL-­AL) como candidato a vice revela algumas dificuldades da campanha bolsonarista. Apesar do simbolismo que marca cerimônias dessa natureza, nenhum dos irmãos Bolsonaro, nenhum cacique estadual do partido e nenhum dos mais importantes apoiadores do candidato do PL, como o governador Tarcísio de Freitas, foi a Brasília para o anúncio. Continua após a publicidade PALAVRA FINAL - Nunes Marques: TSE vai definir limites para o uso de IA Antonio Augusto/TSE A despeito das polêmicas e do isolamento político, Flávio é o candidato da direita mais bem posicionado nas pesquisas. Segundo levantamento da Quaest divulgado na quarta-feira 5, o senador diminuiu de 8 para 5 pontos percentuais a vantagem do presidente Lula em um confronto direto e voltou a centralizar a preferência do eleitor antipetista. Em um eventual segundo turno, o senador teria 81% das intenções de voto da direita não bolsonarista e 95% dos votos daqueles que se declaram bolsonaristas. Manter esses índices inabaláveis é fundamental para as pretensões do senador. Assim como ocorreu no anúncio do nome de Gaspar para vice, em que mais uma vez Jair Bolsonaro foi descrito como um preso “em cativeiro”, não há fala política em que Flávio não mencione o pai ex-presidente. Na convenção que o oficializou como principal nome da direita na corrida pelo Palácio do Planalto, por exemplo, ele se referia a si mesmo como “o filho mais velho do capitão” e disse saber “o tamanho da responsabilidade que o meu nome carrega”. Faltando dois meses para o primeiro turno das eleições, Flávio trocou a equipe de comunicação, isolou alguns coordenadores, promoveu outros e passou a emular em atos públicos uma versão dele mais parecida com o ex-presidente. Atacou as urnas eletrônicas, incorporou críticas ao Supremo como matéria-prima de seus discursos e passou a fazer lives periódicas — virou um avatar do próprio pai. Publicado em VEJA de 7 de agosto de 2026, edição nº 3007 Publicidade",
       "source_category": "magazine",
-      "sentiment_per_candidate": {},
-      "edit_history": [],
+      "sentiment_per_candidate": {
+        "flavio-bolsonaro": "negativo"
+      },
+      "edit_history": [
+        {
+          "tier": "editor",
+          "at": "2026-08-07T09:33:54Z",
+          "provider": "nvidia",
+          "action": "validated",
+          "changes": [
+            "summary_pt",
+            "summary_en"
+          ]
+        }
+      ],
       "disclaimer_pt": "Análise algorítmica. Não representa pesquisa de opinião.",
       "disclaimer_en": "Algorithmic analysis. Does not represent polling data.",
-      "sentiment_score": 0.0,
-      "confidence_score": 0.0,
-      "_sentiment_scores": {},
-      "prominence_score": 0.0
+      "sentiment_score": -0.3,
+      "confidence_score": 1.0,
+      "_sentiment_scores": {
+        "flavio-bolsonaro": -0.3
+      },
+      "prominence_score": 0.0,
+      "_ai_provider": "nvidia",
+      "_ai_model": "nvidia/nemotron-3-super-120b-a12b",
+      "ai_provider_editor": "nvidia/nemotron-3-super-120b-a12b",
+      "editor_note": null
     },
     {
       "id": "1db08614d8f79447",
@@ -413,27 +490,60 @@
       "source": "O Globo",
       "published_at": "2026-08-07T09:00:18Z",
       "collected_at": "2026-08-07T09:15:07Z",
-      "status": "raw",
-      "relevance_score": 0.0,
-      "relevance_signals": null,
-      "candidates_mentioned": [],
-      "topics": [],
+      "status": "validated",
+      "relevance_score": 1.0,
+      "relevance_signals": {
+        "candidate_signal": 0.6,
+        "topic_signal": 0.3,
+        "keyword_signal": 0.1,
+        "source_signal": 0.0
+      },
+      "candidates_mentioned": [
+        "lula",
+        "flavio-bolsonaro"
+      ],
+      "topics": [
+        "midia",
+        "eleicoes",
+        "corrupcao"
+      ],
       "narrative_cluster_id": null,
       "duplicate_of": null,
       "summaries": {
-        "pt-BR": "",
-        "en-US": ""
+        "pt-BR": "O PT protocolou uma representação ao TSE pedindo a retirada do ar do site Direita Já, ligado ao PL, por suposta disseminação de desinformação contra Lula e aliados, incluindo deep fakes e acusações infundadas. O partido afirma que o site funciona como um 'hub' de conteúdo político, com até 50 posts semanais, e que há um programa 'creators' que paga influenciadores para divulgar material. O PT pede ainda a apuração de eventual uso ilegal de fundo partidário para financiar essas atividades.",
+        "en-US": "The PT filed a representation with the TSE requesting the removal of content from the Direita Já website, linked to the PL, alleging it spreads disinformation against Lula and allies, including deep fakes and unfounded accusations. The party claims the site acts as a 'hub' for political content, publishing up to 50 posts weekly, and operates a 'creators' program that pays influencers to disseminate such material. The PT also requests an investigation into whether public party funds are being illegally used to finance these activities."
       },
       "content": "Em mais um capítulo da guerra jurídica travada pelas campanhas de Luiz Inácio Lula da Silva e Flávio Bolsonaro, o PT protocolou nesta quinta-feira uma representação no Tribunal Superior Eleitoral (TSE) para que o conteúdo disponibilizado no site Direita Já, ligado ao PL, seja retirado do ar. No documento, o partido de Lula alega que a página é um “hub de alimentação de outras páginas na internet” com disponibilização de cards e vídeos. Diz ainda que são liberados até 50 posts por semana, a grande maioria com ataques contra o atual presidente e aliados. A página possui um espaço para um programa denominado “creators”, em que influenciadores fazem um cadastro com informações sobre suas redes e recebem a promessa de que irão obter 50 milhões de visualizações com publicação do material disponibilizado pela página. “Essa ‘munição visual’ fornecida pelo Partido Liberal carrega o intento explícito de atacar Luiz Inácio Lula da Silva e o Partido dos Trabalhadores, com conteúdo composto por uma mistura de elementos degradantes a Lula e ao PT, inclusive repletos de deep fakes”, afirma a a representação. Entre o material, há posts de exaltação a Flávio e do vice Alfredo Gaspar, mas também material que vincula Lula aos escândalos do Banco Master e do INSS. O documento afirma que há ainda postz para serem republicados que associam Lula ao PCC, ao Comando Vermelho e ao narcotráfico. “Muitos desses conteúdos (feitos pelo PL, disponibilizados coordenadamente para qualquer usuário e para influenciadores) confrontam as decisões deste TSE inseridas no chamado “Repositório – Enfrentamento à desinformação , a respeito de conteúdos já carimbados pelo Tribunal Superior Eleitoral como ‘fatos notoriamente inverídicos ou gravemente descontextualizados que atinjam a integridade do processo eleitoral’”, diz o partido. Na representação, o PT pede a retirada do ar dos conteúdo irregulares, a suspensão do suspender do programa creators e apuração para verificar há uso do fundo partidário para remunerar os influenciadores e custear a produção do material irregular.",
       "source_category": "mainstream",
-      "sentiment_per_candidate": {},
-      "edit_history": [],
+      "sentiment_per_candidate": {
+        "lula": "positivo",
+        "flavio-bolsonaro": "negativo"
+      },
+      "edit_history": [
+        {
+          "tier": "editor",
+          "at": "2026-08-07T09:34:02Z",
+          "provider": "nvidia",
+          "action": "validated",
+          "changes": [
+            "summary_pt",
+            "summary_en"
+          ]
+        }
+      ],
       "disclaimer_pt": "Análise algorítmica. Não representa pesquisa de opinião.",
       "disclaimer_en": "Algorithmic analysis. Does not represent polling data.",
-      "sentiment_score": 0.0,
-      "confidence_score": 0.0,
-      "_sentiment_scores": {},
-      "prominence_score": 0.0
+      "sentiment_score": 0.05,
+      "confidence_score": 1.0,
+      "_sentiment_scores": {
+        "lula": 0.3,
+        "flavio-bolsonaro": -0.2
+      },
+      "prominence_score": 0.0,
+      "_ai_provider": "nvidia",
+      "_ai_model": "nvidia/nemotron-3-super-120b-a12b",
+      "ai_provider_editor": "nvidia/nemotron-3-super-120b-a12b",
+      "editor_note": null
     },
     {
       "id": "ee98364b28da8947",
@@ -442,85 +552,58 @@
       "source": "Veja",
       "published_at": "2026-08-07T09:00:11Z",
       "collected_at": "2026-08-07T09:15:23Z",
-      "status": "raw",
-      "relevance_score": 0.0,
-      "relevance_signals": null,
-      "candidates_mentioned": [],
-      "topics": [],
+      "status": "validated",
+      "relevance_score": 0.95,
+      "relevance_signals": {
+        "candidate_signal": 0.5,
+        "topic_signal": 0.3,
+        "keyword_signal": 0.15,
+        "source_signal": 0.0
+      },
+      "candidates_mentioned": [
+        "flavio-bolsonaro"
+      ],
+      "topics": [
+        "eleicoes",
+        "politica_externa",
+        "corrupcao",
+        "midia"
+      ],
       "narrative_cluster_id": null,
       "duplicate_of": null,
       "summaries": {
-        "pt-BR": "",
-        "en-US": ""
+        "pt-BR": "Flávio Bolsonaro tenta liderar a direita fragmentada nas eleições de 2026, mas sua candidatura depende fortemente do legado do pai, Jair Bolsonaro, sem propostas próprias ou autonomia política. Apesar de ser o candidato da oposição mais destacado nas pesquisas, ele enfrenta críticas por falta de maturidade, visão original e capacidade de governar, sendo visto como uma continuação tutelada do clã Bolsonaro. Pesquisadores apontam que, embora o desejo de mudança persista entre os eleitores de direita, Flávio não conseguiu demonstrar ser uma alternativa segura, concreta ou autônoma.",
+        "en-US": "Flávio Bolsonaro attempts to lead the fragmented right in the 2026 elections, but his candidacy remains heavily dependent on his father Jair Bolsonaro’s legacy, lacking original proposals or political autonomy. Despite being the leading opposition candidate in polls, he faces criticism for immaturity, lack of independent vision, and inability to govern effectively, being perceived as a tutelade continuation of the Bolsonaro clan. Researchers note that while the desire for change persists among right-wing voters, Flávio has failed to demonstrate himself as a secure, concrete, or autonomous alternative."
       },
       "content": "Flávio Bolsonaro tenta agrupar e liderar a direita que está fragmentada na disputa pela Presidência da República. Não conseguiu grande coisa, mas sobram oito semanas até a votação no domingo, 4 de outubro. É caso curioso de político que não se emancipou, embora já tenha atravessado metade dos 45 anos de idade em mandatos no Legislativo. Ele segue dependente do sobrenome, seu principal ativo desde os 21 anos, quando o pai, na época deputado federal, conseguiu elegê-lo deputado estadual no Rio. Até hoje Flávio Bolsonaro evoca a figura do pai quando se apresenta aos eleitores, como se fosse um cartão de visita. Repetiu a fórmula do “candidato do pai” ao confirmar a candidatura à Presidência pelo Partido Liberal. Em vinte minutos de discurso fez uma dúzia de citações a Jair Bolsonaro — uma a cada minuto e meio. Um grupo de anônimos se reuniu no dia seguinte no Instituto Democracia em Xeque, em São Paulo, para nova sessão da pesquisa qualitativa sobre motivações, valores e atitudes do eleitorado autodeclarado de direita, que há meses é dirigida pelos sociólogos Esther Solano e Beto Vasques. — Não conheço nenhum projeto nem ideia do Flávio, nem de quando ele era senador — provocou um eleitor. Continua após a publicidade — Atrapalha muito que ele só tenha o passado do pai dele… — atalhou outro. — Concordo… São as coisas do pai, não tem uma visão própria dele… Me lembra quando a Dilma ( Rousseff ) entrou ( na disputa presidencial de 2010 ). As pessoas votaram nela pelo Lula , né? As pessoas sabiam que o Lula estaria por trás dela. Então, é a mesma coisa com o pai do Flávio. Os pesquisadores deixaram suas impressões na “ata” dessa roda de conversa: “Flávio segue vivo porque o desejo de mudança permanece (…). A candidatura se mostra isolada, sem coligações claras, sem propostas reconhecidas, sem autonomia diante do pai, e sem maturidade e previsibilidade suficientes para se impor como alternativa. A mudança continua desejada, mas ( ele ) não conseguiu demonstrar que seria uma mudança governável nem segura (…). Flávio precisa provar que a sua ‘novidade’ não é tutela paterna, improviso, fragilidade ou mergulho no escuro. A mudança segue aberta como desejo. Mas, para vencer, ( a candidatura ) terá que parecer adulta, autônoma, concreta, confiável e capaz de governar”. Continua após a publicidade “Isolamento na campanha mostra o clã Bolsonaro em inédita vulnerabilidade” Ele continua sendo o candidato da oposição mais destacado nas pesquisas de intenção de voto. No primeiro turno, está atrás de Lula (30% a 39%), segundo a pesquisa Genial/Quaest divulgada na quarta 5. Sua distância para o líder é de 9 pontos, o triplo do que era no trimestre passado, antes das revelações sobre suas transações obscuras com o antigo dono do Banco Master, preso por fraudes bilionárias. O principal oposicionista, no entanto, agora está mais isolado do que no verão passado, quando se proclamou candidato designado pelo pai, inelegível e condenado à prisão até completar 97 anos de vida, no ano 2052, por crimes contra a Constituição, entre eles tentativa de golpe de Estado. Continua após a publicidade Nos últimos dias, Flávio Bolsonaro foi protagonista de um espetáculo singular na política — o da rejeição pública, coletiva, sucessiva e terminante às propostas de aliança que fez aos partidos Progressistas, União Brasil, Republicanos, Podemos e PSDB, entre outros, que nos plenários do Congresso integram o bloco conhecido como Centrão. Experimentou a solidão eleitoral no confuso e frustrado processo de escolha do seu candidato a vice-presidente. Começou procurando uma mulher para vice em diferentes partidos. Seria, em tese, uma forma de compensar a desconfiança do eleitorado feminino, expressa na vantagem (cerca de 12 pontos à frente) do adversário Lula nesse segmento. Deu tudo errado, e acabou abraçado ao deputado Alfredo Gaspar, do Partido Liberal de Alagoas. Pode não ter resolvido o seu problema, mas ajudou Arthur Lira , principal líder do Progressistas. O ex-presidente da Câmara disputava com Gaspar por uma vaga ao Senado. O concorrente virou vice de Flávio Bolsonaro, que tem a eterna gratidão de Lira. Continua após a publicidade Até agora, ele fracassou naquilo que parecia essencial: agrupar e liderar a direita. É exatamente o contrário do que faz o adversário. Pela primeira vez em 37 anos de disputas presidenciais, Lula reúne sete partidos na sua chapa eleitoral (PT, PSB, Rede, PDT, PSOL, PCdoB e PV). O isolamento do “candidato do pai” na campanha mostra o clã Bolsonaro em inédita vulnerabilidade à direita. Os textos dos colunistas não refletem, necessariamente, a opinião de VEJA Publicado em VEJA de 7 de agosto de 2026, edição nº 3007 Publicidade",
       "source_category": "magazine",
-      "sentiment_per_candidate": {},
-      "edit_history": [],
-      "disclaimer_pt": "Análise algorítmica. Não representa pesquisa de opinião.",
-      "disclaimer_en": "Algorithmic analysis. Does not represent polling data.",
-      "sentiment_score": 0.0,
-      "confidence_score": 0.0,
-      "_sentiment_scores": {},
-      "prominence_score": 0.0
-    },
-    {
-      "id": "e91879b4ed98ab4e",
-      "url": "https://veja.abril.com.br/esporte/jogos-de-hoje-sexta-7-de-agosto-onde-assistir-futebol-ao-vivo-e-horarios/",
-      "title": "Jogos de hoje, sexta, 7 de agosto: onde assistir futebol ao vivo e horários",
-      "source": "Veja",
-      "published_at": "2026-08-07T09:00:10Z",
-      "collected_at": "2026-08-07T09:15:23Z",
-      "status": "raw",
-      "relevance_score": 0.0,
-      "relevance_signals": null,
-      "candidates_mentioned": [],
-      "topics": [],
-      "narrative_cluster_id": null,
-      "duplicate_of": null,
-      "summaries": {
-        "pt-BR": "",
-        "en-US": ""
+      "sentiment_per_candidate": {
+        "flavio-bolsonaro": "negativo"
       },
-      "content": "A agenda de futebol desta sexta-feira, 7 de agosto , reúne amistoso de pré-temporada, competições europeias em início de calendário e partidas importantes no cenário nacional. O principal destaque da manhã será o encontro entre Bayern de Munique e Aston Villa , às 9h, em mais um teste de preparação para a temporada europeia. Durante a tarde, a programação se volta para a Copa da Liga Inglesa e para o Campeonato Português . Wolverhampton e Port Vale entram em campo às 15h45, pouco antes de Middlesbrough e Wrexham medirem forças às 16h. Na sequência, Estoril e Famalicão abrem espaço para o futebol português, em uma partida que marca o início de uma nova caminhada nacional e ajuda a dar forma ao primeiro fim de semana de competições oficiais na Europa. No Brasil, a Série B concentra boa parte da atenção noturna. Operário-PR e São Bernardo se enfrentam às 19h30, enquanto Ceará e Ponte Preta jogam uma hora depois. O Campeonato Brasileiro Feminino também ocupa espaço de destaque com o clássico entre Botafogo e Fluminense , às 21h30. Fechando a programação internacional, Independiente Rivadavia e Estudiantes de Río Cuarto entram em campo pelo Campeonato Argentino . Futebol: as contratações de peso na temporada Confira a agenda dos principais jogos desta sexta-feira, 7 de agosto de 2026, com horários e canais: CAMPEONATOS INTERNACIONAIS Amistosos de clubes 09h00 – Bayern de Munique x Aston Villa – SportyNet (TV e YouTube) Continua após a publicidade Copa da Liga Inglesa 15h45 – Wolverhampton x Port Vale – ESPN e Disney+ 16h00 – Middlesbrough x Wrexham – ESPN 4 e Disney+ Campeonato Português 16h15 – Estoril x Famalicão – Disney+ Campeonato Argentino 21h45 – Independiente Rivadavia x Estudiantes de Río Cuarto – Disney+ Continua após a publicidade CAMPEONATOS NACIONAIS Campeonato Brasileiro — Série B 19h30 – Operário-PR x São Bernardo – ESPN e Disney+ 20h30 – Ceará x Ponte Preta – Disney+ Campeonato Brasileiro Feminino 21h30 – Botafogo x Fluminense – SporTV Publicidade",
-      "source_category": "magazine",
-      "sentiment_per_candidate": {},
-      "edit_history": [],
+      "edit_history": [
+        {
+          "tier": "editor",
+          "at": "2026-08-07T09:34:14Z",
+          "provider": "nvidia",
+          "action": "validated",
+          "changes": [
+            "summary_pt",
+            "summary_en"
+          ]
+        }
+      ],
       "disclaimer_pt": "Análise algorítmica. Não representa pesquisa de opinião.",
       "disclaimer_en": "Algorithmic analysis. Does not represent polling data.",
-      "sentiment_score": 0.0,
-      "confidence_score": 0.0,
-      "_sentiment_scores": {},
-      "prominence_score": 0.0
-    },
-    {
-      "id": "c04d6ae41de7ec30",
-      "url": "https://veja.abril.com.br/saude/dois-novos-casos-de-cura-indicam-que-o-hiv-pode-estar-com-dias-contados/",
-      "title": "Dois novos casos de cura indicam que o HIV pode estar com dias contados",
-      "source": "Veja",
-      "published_at": "2026-08-07T09:00:09Z",
-      "collected_at": "2026-08-07T09:15:23Z",
-      "status": "raw",
-      "relevance_score": 0.0,
-      "relevance_signals": null,
-      "candidates_mentioned": [],
-      "topics": [],
-      "narrative_cluster_id": null,
-      "duplicate_of": null,
-      "summaries": {
-        "pt-BR": "",
-        "en-US": ""
+      "sentiment_score": -0.4,
+      "confidence_score": 1.0,
+      "_sentiment_scores": {
+        "flavio-bolsonaro": -0.4
       },
-      "content": "Receber o diagnóstico de duas doenças graves costuma soar como uma sentença de morte. Em algumas circunstâncias, porém, essa combinação improvável, somada a fatores biológicos, abre caminho a algo pelo qual a medicina batalha há mais de quatro décadas: a vitória sobre o HIV e a cura da aids. Foi o que aconteceu, em 2007, com o americano Timothy Ray Brown, o primeiro ser humano a se libertar da infecção na história. Além do vírus, o “paciente de Berlim”, como ficou chamado devido ao tratamento realizado em um hospital alemão, foi surpreendido por uma leucemia, que exigia um transplante de medula. Numa sacada de mestre, os especialistas encontraram um doador com uma característica presente em menos de 1% da população: uma mutação genética que bloqueia a entrada do HIV nas células de defesa. Com a medula “premiada”, Brown superou o câncer e o vírus da aids, eliminando todos os vestígios detectáveis do patógeno e vivendo sem a terapia antirretroviral até 2020, quando, aos 54 anos, morreu em decorrência do retorno da leucemia. Quase duas décadas depois, em meio à principal conferência científica sobre o assunto, sediada no Rio de Janeiro, dois novos casos de cura foram divulgados nos Estados Unidos. Agora, o mundo conta oficialmente com treze pessoas que se livraram das garras da aids. NÚMERO 1 - “O paciente de Berlim”: Timothy Ray Brown foi curado após transplante de medula em 2007 @TimothyRayBrown/Facebook Brown e os doze integrantes dessa virtuosa lista são personagens ainda atípicos de uma saga médica e social em torno da pandemia que, desde os anos 1980, afetou mais de 92 milhões de pessoas e matou ao menos 44 milhões pelo planeta. Atípicos porque, devido a uma conjunção de fatores — o diagnóstico concomitante de uma leucemia e a realização de um transplante com células naturalmente resistentes ao vírus —, entraram em remissão completa, mesmo sem antivirais, pelo menos doze meses depois do procedimento. Embora seja impossível reproduzir essa mesma estratégia nos 40 milhões de pessoas que convivem com o HIV hoje, ela sinaliza que existem formas de derrotar um micro-organismo terrivelmente astuto. “Esse tipo de tratamento prova que a cura do HIV é biologicamente possível”, afirma o infectologista Ricardo Sobhie Diaz, professor da Universidade Federal de São Paulo (Unifesp) e um dos maiores pesquisadores na área. “A gente olha para o que deu certo no transplante de medula e pergunta: como replicar esse mesmo mecanismo sem precisar de uma técnica complexa como essa?” Trata-se de uma pergunta na qual se debruçam cientistas no mundo todo e que, apesar dos avanços inegáveis no tratamento antirretroviral — que passou de um coquetel com drogas bastante tóxicas a esquemas de poucos comprimidos diários, bem mais toleráveis —, alimenta um sonho de médicos e pacientes. Uma das tentativas de respondê-la está em andamento na própria Unifesp. A ideia é emular a combinação de mecanismos do transplante de medula para desmontar os pilares da infecção. Isso envolve reduzir drasticamente os reservatórios do vírus e “resetar” o sistema imunológico, onde ele se esconde — o que, antes de um transplante, é feito com sessões de químio e até radioterapia. Só que, em vez desse bombardeio que exige altos cuidados e isolamento em hospital, Diaz e sua equipe testam medicamentos capazes de eliminar seletivamente as células que abrigam o vírus. E, no lugar da medula geneticamente resistente, a ideia é usar drogas que bloqueiam o ponto de entrada do patógeno nas células. Por fim, para dar o golpe de misericórdia, os estudiosos buscam repetir um fenômeno que ocorreu em alguns pacientes “curados”. Depois do transplante, eles tiveram uma reação contra as células do doador. Embora isso seja potencialmente grave, demandou o uso de fármacos que parecem ter acordado o HIV alojado em esconderijos no corpo, tornando-o mais vulnerável ao ataque. Essa é a receita que inspirou o time de Diaz a bolar a nova abordagem em estudo. Continua após a publicidade Nos testes em andamento, cinco voluntários receberam, além da terapia antirretroviral convencional, uma combinação de medicamentos com o objetivo de diminuir os reservatórios virais e reativar o HIV “escondido”. Após interromper o protocolo, um deles, que ficou conhecido como o “paciente de São Paulo”, permaneceu por mais de um ano sem sinais detectáveis de replicação do vírus. O trabalho ganhou repercussão internacional por ser o primeiro a apresentar resultados promissores contra o HIV utilizando apenas remédios. “Agora, estamos analisando o perfil genético desse paciente para entender o que pode ter levado a essa resposta excepcional”, afirma Diaz. “O objetivo é identificar características que permitam prever quem teria maior chance de responder a esse tipo de tratamento e, no futuro, reproduzir o resultado em outras pessoas.” DUAS VEZES AO ANO – Antiviral semestral: remédio já disponível aumenta a adesão ao tratamento e sua eficácia Anilakkus/Getty Images Se a cura ainda depende de táticas complexas e experimentais, os novos medicamentos de longa ação já começam a mudar a trajetória da epidemia. Considerados o grande avanço dos últimos anos, eles miram um dos principais obstáculos: a dificuldade de manter a adesão ao tratamento, que também tem caráter preventivo. Diferentemente dos comprimidos diários utilizados em alguns regimes terapêuticos e na profilaxia pré-exposição (PrEP), essas novas opções oferecem proteção por semanas ou até meses. O principal exemplo é o lenacapavir, um medicamento injetável aplicado no abdome apenas duas vezes por ano. Outro é o cabotegravir, administrado por injeção nas nádegas a cada dois meses. Durante a Conferência Internacional sobre Aids, no Rio de Janeiro, o ministro da Saúde, Alexandre Padilha, anunciou que a pasta pretende encaminhar a proposta de incorporar o cabotegravir no SUS. A VEJA, o Ministério da Saúde informou ainda que realizou uma reunião no último dia 30 de julho com a empresa Gilead, detentora da patente do lenacapavir, para dar continuidade às negociações que envolvem a redução do preço e a possível transferência de tecnologia para o Brasil. Continua após a publicidade A PrEP oral e as versões de longa ação apresentam eficácia semelhante na prevenção da infecção, mas a expectativa é que as injeções consigam alcançar um número maior de pessoas, até pela maior praticidade e aceitação das picadas. Os primeiros resultados de um estudo de implementação da estratégia liderado pela médica Beatriz Grinsztejn, na Fiocruz, reforçam a tese. Entre cerca de 1 500 participantes que puderam escolher entre a PrEP oral e o cabotegravir, 83% preferiram a injeção. E, ao longo de dois anos de acompanhamento, 90% das aplicações foram realizadas dentro da janela de tempo recomendada, indicando alta adesão ao tratamento. “Nossa expectativa é que o cabotegravir alcance principalmente as populações mais vulneráveis, porque o perfil sociodemográfico de quem acessa a PrEP pelo SUS ainda é predominantemente de pessoas brancas e com maior escolaridade”, diz Grinsztejn, hoje presidente da Sociedade Internacional de Aids. “Esperamos mudar a situação atual e levar prevenção ao público mais acometido pelas novas infecções hoje.” A ideia de diagnosticar, tratar e manter o vírus indetectável é crítica não só para a qualidade de vida dos indivíduos como para estancar a disseminação do HIV, que continua um dos principais desafios de saúde pública. O nó maior ainda se dá na África Subsaariana, que concentra mais de 50% dos novos casos no planeta. Mas, mesmo com tanto progresso, o Brasil tem muito trabalho pela frente — foram 39 200 casos em 2024, número 21% maior do que uma década antes. Desenvolver e disponibilizar terapias mais viáveis e eficazes certamente é um dos meios para virar o jogo de vez. Nessa direção, uma notícia a ser celebrada foi o acordo entre Fiocruz e MSD para viabilizar a produção nacional do antiviral alimatravir, um comprimido mensal que poderá substituir o esquema diário. Continua após a publicidade DESAFIO - O drama na África: o maior número de infecções e mortes no mundo Per-Anders Pettersson/Getty Images Se, há quatro décadas, um diagnóstico de HIV era quase sinônimo de morte em questão de meses ou anos, hoje o cenário é outro. “Se entrar agora um paciente no meu consultório e ele vier com uma sorologia positiva para HIV no início da infecção, eu digo: ‘Você vai ter a mesma expectativa de vida que qualquer pessoa. Basta tomar um único comprimido por dia, o que, em breve, deve mudar’”, afirma Alexandre Naime Barbosa, chefe do departamento de infectologia da Universidade Estadual Paulista (Unesp). O tratamento, de fato, elimina os dois maiores medos associados ao vírus: o adoecimento inevitável e a transmissão para outras pessoas. Na teoria, isso não deveria continuar ocorrendo. Mas, na prática… Embora o Brasil ofereça testes rápidos, tratamento e PrEP gratuitamente pelo SUS, entre 30% e 35% dos novos diagnósticos são feitos em indivíduos que já desenvolveram aids, a síndrome da imunodeficiência que caracteriza o estágio mais avançado da infecção. “Um paciente morrer como víamos acontecer nos anos 1980 é absolutamente inaceitável, dados os recursos que temos hoje”, diz Barbosa. PREVENÇÃO - PrEP: regime de comprimidos diários está no SUS e impede contágio pelo vírus Cristine Rochol/PMPA/. Continua após a publicidade Assim, muito além da cura em si, é fundamental combater os redutos de desinformação e estigma que atrapalham a detecção e o controle viral, bem como as desigualdades sociais que acolhem alguns, enquanto abandonam outros. Nesse sentido, a cidade de São Paulo é vista como exemplo internacional de uma mudança de paradigma para cercar o HIV. Com oferta de PrEP em estações de metrô, horários estendidos de atendimento aos pacientes e outras ações, ela registra, pelo nono ano, redução nas taxas da infecção. É o caminho para eliminar a epidemia. A cura dá passos notáveis, em uma estrada montada com tijolos de esperança. Publicado em VEJA de 7 de agosto de 2026, edição nº 3007 Publicidade",
-      "source_category": "magazine",
-      "sentiment_per_candidate": {},
-      "edit_history": [],
-      "disclaimer_pt": "Análise algorítmica. Não representa pesquisa de opinião.",
-      "disclaimer_en": "Algorithmic analysis. Does not represent polling data.",
-      "sentiment_score": 0.0,
-      "confidence_score": 0.0,
-      "_sentiment_scores": {},
-      "prominence_score": 0.0
+      "prominence_score": 0.0,
+      "_ai_provider": "nvidia",
+      "_ai_model": "nvidia/nemotron-3-super-120b-a12b",
+      "ai_provider_editor": "nvidia/nemotron-3-super-120b-a12b",
+      "editor_note": null
     },
     {
       "id": "2e1d57e556e69d6f",
@@ -529,27 +612,55 @@
       "source": "O Globo",
       "published_at": "2026-08-07T09:00:08Z",
       "collected_at": "2026-08-07T09:15:07Z",
-      "status": "raw",
-      "relevance_score": 0.0,
-      "relevance_signals": null,
-      "candidates_mentioned": [],
-      "topics": [],
+      "status": "validated",
+      "relevance_score": 0.9,
+      "relevance_signals": {
+        "candidate_signal": 0.5,
+        "topic_signal": 0.25,
+        "keyword_signal": 0.15,
+        "source_signal": 0.0
+      },
+      "candidates_mentioned": [
+        "flavio-bolsonaro"
+      ],
+      "topics": [
+        "eleicoes"
+      ],
       "narrative_cluster_id": null,
       "duplicate_of": null,
       "summaries": {
-        "pt-BR": "",
-        "en-US": ""
+        "pt-BR": "Valdemar Costa Neto, presidente nacional do PL, sondou Michelle Bolsonaro sobre a possibilidade de ser vice na chapa de Flávio Bolsonaro para as eleições de 2026. A ideia foi descartada, e a vaga foi ocupada por Alfredo Gaspar (PL-AL), anunciada na última quarta-feira (5). A decisão frustrou aliados que esperavam uma mulher na chapa para reduzir a rejeição de Flávio Bolsonaro entre eleitoras.",
+        "en-US": "Valdemar Costa Neto, national president of the PL, reportedly approached Michelle Bolsonaro about running as vice president on Flávio Bolsonaro's 2026 ticket. The idea was abandoned, and the spot went to federal deputy Alfredo Gaspar (PL-AL), announced last Wednesday (5). Allies expressed disappointment, as they had hoped a female running mate would mitigate Flávio Bolsonaro's unpopularity among women voters."
       },
       "content": "Enquanto tentava atrair aliados e costurar alianças com outros partidos, o presidente nacional do PL, Valdemar Costa Neto, chegou a sondar na semana passada a ex-primeira-dama Michelle Bolsonaro sobre a possibilidade de ela ser companheira de chapa do enteado, o senador Flávio Bolsonaro (PL-RJ). A vaga acabou ficando com o deputado federal Alfredo Gaspar (PL-AL), anunciado na última quarta-feira (5). A escolha frustrou aliados que preferiam uma mulher para tentar reduzir a rejeição ao filho de Jair Bolsonaro no eleitorado feminino. Matéria exclusiva para assinantes. Para ter acesso completo, acesse o link da matéria e faça o seu cadastro.",
       "source_category": "mainstream",
-      "sentiment_per_candidate": {},
-      "edit_history": [],
+      "sentiment_per_candidate": {
+        "flavio-bolsonaro": "neutro"
+      },
+      "edit_history": [
+        {
+          "tier": "editor",
+          "at": "2026-08-07T09:34:43Z",
+          "provider": "nvidia",
+          "action": "validated",
+          "changes": [
+            "summary_pt",
+            "summary_en"
+          ]
+        }
+      ],
       "disclaimer_pt": "Análise algorítmica. Não representa pesquisa de opinião.",
       "disclaimer_en": "Algorithmic analysis. Does not represent polling data.",
-      "sentiment_score": 0.0,
-      "confidence_score": 0.0,
-      "_sentiment_scores": {},
-      "prominence_score": 0.0
+      "sentiment_score": -0.1,
+      "confidence_score": 1.0,
+      "_sentiment_scores": {
+        "flavio-bolsonaro": -0.1
+      },
+      "prominence_score": 0.0,
+      "_ai_provider": "nvidia",
+      "_ai_model": "nvidia/nemotron-3-super-120b-a12b",
+      "ai_provider_editor": "nvidia/nemotron-3-super-120b-a12b",
+      "editor_note": null
     },
     {
       "id": "356ad80eee4dc059",
@@ -558,114 +669,53 @@
       "source": "Metropoles",
       "published_at": "2026-08-07T09:00:01Z",
       "collected_at": "2026-08-07T09:15:15Z",
-      "status": "raw",
-      "relevance_score": 0.0,
-      "relevance_signals": null,
+      "status": "validated",
+      "relevance_score": 0.4,
+      "relevance_signals": {
+        "candidate_signal": 0.0,
+        "topic_signal": 0.25,
+        "keyword_signal": 0.15,
+        "source_signal": 0.0
+      },
       "candidates_mentioned": [],
-      "topics": [],
+      "topics": [
+        "eleicoes",
+        "politica_externa",
+        "meio_ambiente",
+        "educacao",
+        "seguranca"
+      ],
       "narrative_cluster_id": null,
       "duplicate_of": null,
       "summaries": {
-        "pt-BR": "",
-        "en-US": ""
+        "pt-BR": "Uma enquete do blog do Noblat indica que 31,5% dos leitores acreditam que a eleição presidencial de 2026 será tão ou mais apertada que a de 2022, enquanto 68,5% discordam. O conteúdo também menciona críticas de Malafaia ao vice de Flávio, embora admita apoio por falta de opção, além de artigos sobre clima, aviação e tensões entre PF e STF.",
+        "en-US": "A Noblat blog poll shows 31.5% of readers believe the 2026 presidential election will be as close or closer than 2022, while 68.5% disagree. The content also notes Malafaia criticizing Flávio's running mate but admitting support due to lack of alternatives, plus articles on climate, aviation, and PF-STF tensions."
       },
       "source_category": "mainstream",
       "content": "Otávio Augusto/ Arte Metrópoles O resultado da eleição presidencial deste ano será tão ou mais apertado do que foi o de 2022. Não acha? Respostas de 891 leitores: Concordo – 31,5% Discordo – 68,5% Últimas do Blog Enquetes Eleição apertada? Charges Charge do Aroeira Blog do Noblat Malafaia critica vice de Flávio, mas admite apoio por falta de opção Artigos Escórcios, Lito e o clima que mudou a forma de voar (Mariana Caminha) Blog do Noblat As tensões entre PF e STF",
       "sentiment_per_candidate": {},
-      "edit_history": [],
+      "edit_history": [
+        {
+          "tier": "editor",
+          "at": "2026-08-07T09:35:01Z",
+          "provider": "nvidia",
+          "action": "validated",
+          "changes": [
+            "summary_pt",
+            "summary_en"
+          ]
+        }
+      ],
       "disclaimer_pt": "Análise algorítmica. Não representa pesquisa de opinião.",
       "disclaimer_en": "Algorithmic analysis. Does not represent polling data.",
       "sentiment_score": 0.0,
-      "confidence_score": 0.0,
+      "confidence_score": 1.0,
       "_sentiment_scores": {},
-      "prominence_score": 0.0
-    },
-    {
-      "id": "7626f5e541d70555",
-      "url": "https://oglobo.globo.com/esportes/noticia/2026/08/07/infantino-ganha-reforco-politico-de-conmebol-e-mexico-em-meio-a-crise-na-fifa.ghtml",
-      "title": "Infantino ganha reforço político de Conmebol e México em meio à crise na Fifa",
-      "source": "O Globo",
-      "published_at": "2026-08-07T08:59:55Z",
-      "collected_at": "2026-08-07T09:15:07Z",
-      "status": "raw",
-      "relevance_score": 0.0,
-      "relevance_signals": null,
-      "candidates_mentioned": [],
-      "topics": [],
-      "narrative_cluster_id": null,
-      "duplicate_of": null,
-      "summaries": {
-        "pt-BR": "",
-        "en-US": ""
-      },
-      "content": "Em meio à maior crise política de sua gestão, o presidente da Fifa, Gianni Infantino, recebeu nesta quinta-feira um importante reforço de apoio. As dez associações nacionais filiadas à Conmebol, lideradas pela Associação do Futebol Argentino (AFA), além da Federação Mexicana de Futebol (FMF), declararam publicamente respaldo ao dirigente suíço após a retirada da proposta que previa a comercialização dos torneios da entidade por meio de uma empresa subsidiária. O movimento fortalece a posição de Infantino às vésperas do processo eleitoral de 2027 e amplia sua base de sustentação política depois da forte reação de federações europeias ao projeto conhecido como FIFA Forward Enterprise, que previa a criação de uma empresa para administrar ativos comerciais da entidade. Em comunicado, a AFA afirmou que apoia a gestão conduzida por Infantino nos últimos dez anos e destacou \"o desenvolvimento do futebol em todo o mundo e a solidez institucional baseada em um modelo de governança claro, estável e transparente\" como marcas da atual administração. A entidade argentina também elogiou a decisão do presidente da Fifa de retirar a proposta de comercialização dos torneios. Segundo a AFA, a decisão demonstra que \"priorizar as normas de governança é um pilar fundamental para fortalecer as relações entre a Fifa, suas associações-membro e as confederações\". A federação ainda afirmou que Infantino promoveu uma \"transformação profunda\" na entidade e concluiu manifestando apoio para que o dirigente permaneça no cargo após as eleições do próximo ano. A posição argentina segue a linha adotada oficialmente pela Conmebol. Em nota divulgada após o recuo da Fifa, a confederação presidida por Alejandro Domínguez comemorou o abandono do projeto e afirmou que a decisão preserva os princípios de transparência e boa governança da entidade. A organização também fez um apelo à unidade entre as federações nacionais e declarou que não apoiará iniciativas conduzidas fora dos mecanismos institucionais da Fifa. O apoio também foi estendido pela Federação Mexicana de Futebol, integrante da Concacaf. A entidade afirmou que não apoiará qualquer processo realizado à margem da estrutura institucional da Fifa e reiterou confiança na liderança de Infantino para dar continuidade ao desenvolvimento do futebol mundial por meio do fortalecimento institucional. O posicionamento mexicano ganha peso por vir de um dos países que organizaram a Copa do Mundo de 2026 ao lado de Estados Unidos e Canadá.",
-      "source_category": "mainstream",
-      "sentiment_per_candidate": {},
-      "edit_history": [],
-      "disclaimer_pt": "Análise algorítmica. Não representa pesquisa de opinião.",
-      "disclaimer_en": "Algorithmic analysis. Does not represent polling data.",
-      "sentiment_score": 0.0,
-      "confidence_score": 0.0,
-      "_sentiment_scores": {},
-      "prominence_score": 0.0
-    },
-    {
-      "id": "5604db55cebfe6ef",
-      "url": "https://oglobo.globo.com/blogs/lauro-jardim/post/2026/08/pl-ja-registrou-15-candidatos-com-bolsonaro-no-nome-de-urna-pt-tem-dois-de-lula.ghtml",
-      "title": "PL já registrou 15 candidatos com Bolsonaro no nome de urna; PT tem dois 'de Lula'",
-      "source": "O Globo",
-      "published_at": "2026-08-07T08:54:08Z",
-      "collected_at": "2026-08-07T09:15:08Z",
-      "status": "raw",
-      "relevance_score": 0.0,
-      "relevance_signals": null,
-      "candidates_mentioned": [],
-      "topics": [],
-      "narrative_cluster_id": null,
-      "duplicate_of": null,
-      "summaries": {
-        "pt-BR": "",
-        "en-US": ""
-      },
-      "content": "Após o fim do prazo para a realização das convenções para as eleições deste ano, anteontem, os partidos já apresentaram mais de 8,2 mil pedidos de registros de candidatura até a noite desta quinta-feira. As legendas terão até o próximo dia 15 para entregarem as fichas de todos os candidatos. Em 2022, por exemplo, foram realizadas cerca de 29,2 mil solicitações de registros. Beleza. Matéria exclusiva para assinantes. Para ter acesso completo, acesse o link da matéria e faça o seu cadastro.",
-      "source_category": "mainstream",
-      "sentiment_per_candidate": {},
-      "edit_history": [],
-      "disclaimer_pt": "Análise algorítmica. Não representa pesquisa de opinião.",
-      "disclaimer_en": "Algorithmic analysis. Does not represent polling data.",
-      "sentiment_score": 0.0,
-      "confidence_score": 0.0,
-      "_sentiment_scores": {},
-      "prominence_score": 0.0
-    },
-    {
-      "id": "e23f2494405e52eb",
-      "url": "https://www.metropoles.com/brasil/petrobras-dobra-o-lucro-e-vai-pagar-r-174-bilhoes-em-dividendos",
-      "title": "Petrobras dobra o lucro e vai pagar R$ 17,4 bilhões em dividendos",
-      "source": "Metropoles",
-      "published_at": "2026-08-07T08:48:26Z",
-      "collected_at": "2026-08-07T09:15:15Z",
-      "status": "raw",
-      "relevance_score": 0.0,
-      "relevance_signals": null,
-      "candidates_mentioned": [],
-      "topics": [],
-      "narrative_cluster_id": null,
-      "duplicate_of": null,
-      "summaries": {
-        "pt-BR": "",
-        "en-US": ""
-      },
-      "content": "A Petrobras teve lucro de R$ 52,4 bilhões no segundo trimestre deste ano, o valor representa o dobro do que o mesmo período de 2025. Com o resultado, divulgado nesta quinta-feira (6/8), a estatal vai distribuir R$ 17,4 bilhões em dividendos aos acionistas. A empresa destaca que o resultado foi impulsionado por recordes na produção própria de óleo no Brasil, que atingiu 2,7 milhões de barris por dia, volume 15% superior ao segundo trimestre de 2025, e a utilização do parque de refino, com Fator de Utilização (FUT) de 101%, ampliando a oferta de derivados no mercado nacional. “Os recordes operacionais que alcançamos neste segundo trimestre nos levaram a um dos maiores resultados financeiros trimestrais da série histórica da Petrobras. O aumento do volume de produção de óleo e de derivados, combinado ao Brent mais alto, fortaleceu nossa geração de caixa”, destaca Fernando Melgarejo, diretor Financeiro e de Relacionamento com Investidores. O lucro também foi impulsionado pela alta do petróleo brent, que passou de US$ 67,82, no segundo trimestre de 2025, para US$ 104,52 no mesmo período de 2026. A alta se deu em meio à guerra dos Estados Unidos contra o Irã. Leia também Negócios Petrobras descobre gás natural em águas profundas da Colômbia Grande Angular Caiado defende Petrobras estatal e expansão de refinarias Milena Teixeira Lula escala ex-Petrobras para apresentar plano de governo a partidos Negócios Dólar fica estável, mas Bolsa afunda com Petrobras, Vale e bancos Dividendos A Petrobras informou que os dividendos serão pagos em duas parcelas nos meses de novembro e dezembro. O valor será de R$ 1,34814262 por ação ordinária. A política vigente prevê que a estatal deverá distribuir aos seus acionistas 45% do fluxo de caixa livre.",
-      "source_category": "mainstream",
-      "sentiment_per_candidate": {},
-      "edit_history": [],
-      "disclaimer_pt": "Análise algorítmica. Não representa pesquisa de opinião.",
-      "disclaimer_en": "Algorithmic analysis. Does not represent polling data.",
-      "sentiment_score": 0.0,
-      "confidence_score": 0.0,
-      "_sentiment_scores": {},
-      "prominence_score": 0.0
+      "prominence_score": 0.0,
+      "_ai_provider": "nvidia",
+      "_ai_model": "nvidia/nemotron-3-super-120b-a12b",
+      "ai_provider_editor": "nvidia/nemotron-3-super-120b-a12b",
+      "editor_note": null
     },
     {
       "id": "c29ce4b3af8fb21a",
@@ -674,143 +724,59 @@
       "source": "Metropoles",
       "published_at": "2026-08-07T08:30:26Z",
       "collected_at": "2026-08-07T09:15:15Z",
-      "status": "raw",
-      "relevance_score": 0.0,
-      "relevance_signals": null,
-      "candidates_mentioned": [],
-      "topics": [],
+      "status": "validated",
+      "relevance_score": 0.9,
+      "relevance_signals": {
+        "candidate_signal": 0.5,
+        "topic_signal": 0.25,
+        "keyword_signal": 0.15,
+        "source_signal": 0.0
+      },
+      "candidates_mentioned": [
+        "flavio-bolsonaro"
+      ],
+      "topics": [
+        "economia",
+        "seguranca",
+        "politica_externa",
+        "eleicoes",
+        "midia"
+      ],
       "narrative_cluster_id": null,
       "duplicate_of": null,
       "summaries": {
-        "pt-BR": "",
-        "en-US": ""
+        "pt-BR": "A escolha de Alfredo Gaspar (PL-AL) como vice de Flávio Bolsonaro (PL-RJ) na eleição presidencial de 2026 surpreendeu o agronegócio, que esperava um candidato com maior proximidade ao setor, como a senadora Tereza Cristina. Lideranças do agro afirmam que Gaspar tem pouca atuação em pautas rurais, focando principalmente em segurança pública, e consideram a escolha uma oportunidade perdida para ampliar o apoio eleitoral da chapa.",
+        "en-US": "The selection of Alfredo Gaspar (PL-AL) as Flávio Bolsonaro's (PL-RJ) running mate in the 2026 presidential election surprised the agribusiness sector, which had expected a candidate with stronger ties to rural interests, such as Senator Tereza Cristina. Agribusiness leaders say Gaspar has limited engagement with agricultural policies, focusing instead on public security, and view the pick as a missed opportunity to broaden the ticket's electoral appeal."
       },
       "content": "Integrantes de setores do agronegócio e parlamentares ligados ao segmento foram pegos de surpresa com a escolha do deputado federal Alfredo Gaspar (PL-AL) para compor como vice a chapa de Flávio Bolsonaro (PL-RJ) na disputa pela Presidência da República. Nos bastidores, a avaliação é de que o nome não anima o setor . Lideranças do agro afirmam que Gaspar tem pouca proximidade com as pautas do segmento e avaliam que sua principal interlocução tende a ocorrer na área de segurança pública , onde construiu sua trajetória como promotor de Justiça e ex-secretário de Segurança de Alagoas. 3 imagens Fechar modal. 1 de 3 Flávio Bolsonaro definiu Alfredo Gaspar como seu vice HUGO BARRETO / METRÓPOLES @hugobarretophoto 2 de 3 Alfredo Gaspar e Flávio Bolsonaro na filiação de Gaspar ao PL Divulgação 3 de 3 Alfredo Gaspar, pré-candidato ao Senado de Alagoas Metrópoles Antes da definição, o agronegócio via na senadora Tereza Cristina (PP-MS) um nome do setor para a vaga de vice. Além de ter comandado o Ministério da Agricultura, ela mantém interlocução consolidada com entidades e lideranças do segmento. Como mostrou o Metrópoles , na coluna de Igor Gadelha, não animou integrantes da Faria Lima. A avaliação predominante é de que o parlamentar alagoano agrega pouco à candidatura de Flávio e representa uma oportunidade perdida de ampliar o alcance eleitoral da chapa. Gestores do mercado financeiro ouvidos pela coluna sob reserva esperavam que o primogênito de Jair Bolsonaro anunciasse como vice uma mulher e, de preferência, filiada a outro partido político.",
       "source_category": "mainstream",
-      "sentiment_per_candidate": {},
-      "edit_history": [],
-      "disclaimer_pt": "Análise algorítmica. Não representa pesquisa de opinião.",
-      "disclaimer_en": "Algorithmic analysis. Does not represent polling data.",
-      "sentiment_score": 0.0,
-      "confidence_score": 0.0,
-      "_sentiment_scores": {},
-      "prominence_score": 0.0
-    },
-    {
-      "id": "6d03dcf941ccbad9",
-      "url": "https://www.estadao.com.br/politica/cadeira-de-buzzi-esta-em-disputa-desde-antes-da-punicao-do-stj/",
-      "title": "Cadeira de Buzzi está em disputa desde antes da punição do STJ",
-      "source": "Estadao Politica",
-      "published_at": "2026-08-07T08:30:00Z",
-      "collected_at": "2026-08-07T09:15:13Z",
-      "status": "raw",
-      "relevance_score": 0.0,
-      "relevance_signals": null,
-      "candidates_mentioned": [],
-      "topics": [],
-      "narrative_cluster_id": null,
-      "duplicate_of": null,
-      "summaries": {
-        "pt-BR": "",
-        "en-US": ""
+      "sentiment_per_candidate": {
+        "flavio-bolsonaro": "negativo"
       },
-      "content": "BRASÍLIA — Antes mesmo de Marco Buzzi ser punido com aposentadoria compulsória pelo Superior Tribunal de Justiça (STJ) , a cadeira dele já estava em disputa. Nos bastidores, candidatos a substituir o ministro já circulavam por eventos do Judiciário e conversavam com integrantes da Corte sobre a vaga. Em caráter reservado, ministros do STJ relataram constrangimento com a aproximação de alguns aspirantes ao cargo. Buzzi foi condenado em processo administrativo em decorrência da acusação de importunação e assédio sexual contra duas mulheres - uma delas, durante uma viagem de férias e a outra, dentro do gabinete do ministro, no STJ. Além da vaga de Buzzi, também está vazia a cadeira deixada por Antonio Saldanha Palheiro, que se aposentou em abril. Em novembro, também vai se aposentar Og Fernandes. As três vagas devem ser preenchidas somente a partir de 2027. As cadeiras do STJ são reservadas para membros da Justiça Estadual, da Justiça Federal, do Ministério Público e da advocacia. Coincidentemente, os três postos que estarão vagos até o fim do ano são de desembargadores da Justiça Estadual. Por isso, há expectativa de nomeações conjuntas. O processo de escolha de ministros do STJ funciona a partir da inscrição dos interessados nos tribunais onde atuam. Os nomes são enviadas para o STJ, e os ministros votam em sessão uma lista tríplice. Como são três vagas, a ideia é votar uma lista quíntupla, para o presidente da República tirar três nomes dela. O mais provável é que o processo se inicie apenas em novembro, depois que Og Fernandes se aposentar. Portanto, as escolhas devem ser feitas somente no próximo ano, pelo presidente que for eleito em outubro. Ou seja, quem vencer nas urnas já vai começar o mandato com a chance de escolher três ministros para o tribunal que é a terceira instância para a Justiça Federal e também o foro especial para julgar governadores. Candidatos em campanha De acordo com fontes do Judiciário ouvidas em caráter reservado pelo Estadão , mais de dez candidatos são tidos como certos na disputa. Entre eles, não foi mencionado o nome de nenhuma desembargadora. No Tribunal de Justiça do Rio de Janeiro, ao menos três desembargadores devem concorrer. Ricardo Couto é presidente do TJ do Rio e atua como governador interino no estado. O presidente Luiz Inácio Lula da Silva nutre simpatia por ele. Mauro Martins é ligado a Luís Felipe Salomão, que assume a presidência do STJ no dia 19. Elton Leme é apontado como um nome ligado a políticos de direita. O TJ de São Paulo deve ter ao menos cinco concorrentes. Carlos Adamek foi juiz instrutor nas investigações do caso Banco Master quando a relatoria estava com Dias Toffoli, do Supremo Tribunal Federal (STF) . Silmar Fernandes é ligado ao prefeito e ao governador de São Paulo, Ricardo Nunes e Tarcísio de Freitas. Ricardo Anafe é ligado à ministra do STJ Maria Thereza de Assis Moura. Também devem se inscrever na disputa pelo TJ-SP os desembargadores Marcelo Semes e Costa Wagner. De outros estados, são esperados nas listas dos tribunais estaduais Mauricio Kertzman, da Bahia; Paulo Velten, do Maranhão; Sandro José Neis, de Santa Catarina; Stenio José de Souza Neiva Coelho, de Pernambuco; e Onório Gomes do Rego Filho, também de Pernambuco. Quem dá início ao processo de inscrição dos candidatos e à votação da lista tríplice é o presidente do STJ. Salomão deve fazer isso em novembro não apenas para aguardar a aposentadoria de Og Fernandes, mas também para aguardar o fim das eleições para para presidente, em outubro.",
-      "source_category": "mainstream",
-      "sentiment_per_candidate": {},
-      "edit_history": [],
+      "edit_history": [
+        {
+          "tier": "editor",
+          "at": "2026-08-07T09:35:39Z",
+          "provider": "nvidia",
+          "action": "validated",
+          "changes": [
+            "summary_pt",
+            "summary_en"
+          ]
+        }
+      ],
       "disclaimer_pt": "Análise algorítmica. Não representa pesquisa de opinião.",
       "disclaimer_en": "Algorithmic analysis. Does not represent polling data.",
-      "sentiment_score": 0.0,
-      "confidence_score": 0.0,
-      "_sentiment_scores": {},
-      "prominence_score": 0.0
-    },
-    {
-      "id": "16d3d73a30146894",
-      "url": "https://www.metropoles.com/brasil/rio-retoma-parceria-com-cacique-cobra-coral-apos-alerta-de-vendavais",
-      "title": "Rio retoma parceria com Cacique Cobra Coral após alerta de vendavais",
-      "source": "Metropoles",
-      "published_at": "2026-08-07T08:10:18Z",
-      "collected_at": "2026-08-07T09:15:16Z",
-      "status": "raw",
-      "relevance_score": 0.0,
-      "relevance_signals": null,
-      "candidates_mentioned": [],
-      "topics": [],
-      "narrative_cluster_id": null,
-      "duplicate_of": null,
-      "summaries": {
-        "pt-BR": "",
-        "en-US": ""
+      "sentiment_score": -0.2,
+      "confidence_score": 1.0,
+      "_sentiment_scores": {
+        "flavio-bolsonaro": -0.2
       },
-      "content": "A prefeitura do Rio de Janeiro retomou a parceria com a Fundação Cacique Cobra Coral depois de não ter renovado o contrato . A organização oferece serviços de “ajuda climática” para países, governos, organizações públicas e privadas. O novo contrato foi publicado no Diário Oficial do município nesta sexta-feira (7/8) e terá duração de 25 anos, com validade até 2051. A parceria não tem custo para os cofres públicos. A cidade se prepara para novos vendavais que podem ultrapassar 90 km/h ao longo do dia . O município do Rio entrou no Estágio 2 de risco na noite desta quinta devido à previsão de intensificação dos ventos na cidade a partir desta noite até o próximo domingo (9/8). Na semana passada, a fundação alertou que o contrato não tinha sido renovado. “Vem chegando o verão de extremos 2026 no Rio, nos dando uma amostra em pleno inverno de como será o verão de extremos 2026. [O] Convênio da Prefeitura do Rio com a FCCC, que é totalmente isento de ônus financeiro, ainda não foi renovado com o novo prefeito do Rio”, disse a fundação. De acordo com a Cacique Cobra Coral, a instituição “foi criada para intervir nos desequilíbrios provocados pelo homem na natureza“. Embora não tenha comprovação científica, a organização já firmou acordos com diversos países e organizações estatais e privadas. Leia também São Paulo Especialistas veem cidades despreparadas para crise climática Ciência Mudanças climáticas estão fazendo borboletas migrarem para novas áreas Brasil Ciclone-bomba: Rio suspende aulas por risco de ventos acima de 90 km/h São Paulo Rajadas de vento atingem 97 km/h no litoral sul, diz Defesa Civil Alertas para todo o país Em meio ao “ciclone-bomba” que se formou na quinta-feira (6/8), o Instituto Nacional de Meteorologia (Inmet) emitiu alerta de tempestades e vendavais para 11 estados nesta sexta-feira (7/8). A região mais afetada é o litoral da região Sul, onde há previsão de ventos de 60 km/h a 100 km/h para 482 municípios. O alerta de perigo vale até as 23h59 desta sexta. Há risco de queda de árvores, destelhamento de casas e danos gerais em edificações e plantações. Nesta quinta, o Rio Grande do Sul já foi atingido por um tornado. Também há alerta de ventos costeiros para 23 municípios em uma área que vai do Espírito Santo ao Rio de Janeiro. As aulas foram canceladas no Rio devido ao risco de ventos acima de 90 km/h. Vendavais são esperados, ainda, na região central do país. O alerta é válido para Paraná, Minas Gerais, Goiás, São Paulo, Mato Grosso, Mato Grosso do Sul e Bahia. No Sul, também há riscos de tempestades entre 30 e 60 mm/h ou 50 e 100 mm/dia, ventos intensos e queda de granizo para 793 municípios de Santa Catarina, Rio Grande do Sul, Paraná e Mato Grosso do Sul.",
-      "source_category": "mainstream",
-      "sentiment_per_candidate": {},
-      "edit_history": [],
-      "disclaimer_pt": "Análise algorítmica. Não representa pesquisa de opinião.",
-      "disclaimer_en": "Algorithmic analysis. Does not represent polling data.",
-      "sentiment_score": 0.0,
-      "confidence_score": 0.0,
-      "_sentiment_scores": {},
-      "prominence_score": 0.0
-    },
-    {
-      "id": "f7c8e77f59602f87",
-      "url": "https://oglobo.globo.com/rio/noticia/2026/08/07/novo-alerta-defesa-civil.ghtml",
-      "title": "Defesa Civil dispara novos alertas de celular por risco de chuva e ventos fortes no Rio: 'Busque local seguro'",
-      "source": "O Globo",
-      "published_at": "2026-08-07T08:07:51Z",
-      "collected_at": "2026-08-07T09:15:08Z",
-      "status": "raw",
-      "relevance_score": 0.0,
-      "relevance_signals": null,
-      "candidates_mentioned": [],
-      "topics": [],
-      "narrative_cluster_id": null,
-      "duplicate_of": null,
-      "summaries": {
-        "pt-BR": "",
-        "en-US": ""
-      },
-      "content": "A Defesa Civil do Rio enviou dois novos alertas severos para celulares na madrugada desta sexta-feira, devido ao risco de ventos fortes nas próximas horas. No primeiro aviso, o órgão alertou para chuva e ventania e orientou a população a buscar um local seguro. Pouco depois, um segundo alerta reforçou a previsão de ventos intensos, informou a suspensão das aulas nas escolas da rede pública e recomendou que os moradores evitassem deslocamentos. A primeira mensagem dizia: \"Defesa Civil: Alerta de chuva e vento forte na cidade do Rio nas próximas horas. Cidade no Estágio 2. Busque local seguro - 6/8. Emergências 199, 193\". Em seguida, um novo alerta foi enviado com o texto: \"Defesa Civil: Vento forte na cidade do Rio nas próximas horas. Cidade no Estágio 2. Aulas nas escolas da rede pública suspensas. Evite deslocamento - 7/8\". Defesa Civil dispara novos alertas de celular por risco de chuva e ventos fortes no Rio Reprodução A cidade está em Estágio 2, o segundo nível em uma escala de cinco. Segundo o Centro de Operações e Resiliência (COR), a classificação indica risco de ocorrências de alto impacto e poderá ser alterada de acordo com a evolução da chuva e de outros fatores meteorológicos. Frente fria pode provocar rajadas acima de 76 km/h Segundo o sistema Alerta Rio, a aproximação de uma frente fria deve intensificar os ventos ao longo desta sexta-feira. A previsão é de rajadas fortes, entre 52 km/h e 76 km/h, e muito fortes, acima de 76 km/h, a partir da manhã. O céu deve variar entre parcialmente nublado e nublado, com previsão de pancadas isoladas de chuva a partir do fim da tarde. A Defesa Civil orienta que a população acompanhe as atualizações da previsão do tempo emitidas pelo Alerta Rio e pelos canais oficiais do COR. O órgão também recomenda que os moradores se cadastrem gratuitamente para receber alertas por SMS, enviando o CEP da residência para o número 40199. Outra orientação é baixar o aplicativo COR.Rio, disponível para dispositivos Android e iOS, para acompanhar informações em tempo real sobre as condições na cidade. Em caso de emergência, a população deve acionar o Corpo de Bombeiros (193) ou a Defesa Civil (199).",
-      "source_category": "mainstream",
-      "sentiment_per_candidate": {},
-      "edit_history": [],
-      "disclaimer_pt": "Análise algorítmica. Não representa pesquisa de opinião.",
-      "disclaimer_en": "Algorithmic analysis. Does not represent polling data.",
-      "sentiment_score": 0.0,
-      "confidence_score": 0.0,
-      "_sentiment_scores": {},
-      "prominence_score": 0.0
-    },
-    {
-      "id": "90f5bd9f388625a6",
-      "url": "https://oglobo.globo.com/rio/noticia/2026/08/07/veja-como-receber-alertas-da-defesa-civil-e-acionar-light-e-enel-em-caso-de-falta-de-luz.ghtml",
-      "title": "Veja como receber alertas da Defesa Civil e acionar Light e Enel em caso de falta de luz",
-      "source": "O Globo",
-      "published_at": "2026-08-07T08:01:38Z",
-      "collected_at": "2026-08-07T09:15:08Z",
-      "status": "raw",
-      "relevance_score": 0.0,
-      "relevance_signals": null,
-      "candidates_mentioned": [],
-      "topics": [],
-      "narrative_cluster_id": null,
-      "duplicate_of": null,
-      "summaries": {
-        "pt-BR": "",
-        "en-US": ""
-      },
-      "content": "Com a previsão de ventos fortes no estado do Rio, órgãos de segurança e concessionárias reforçam orientações para reduzir riscos e agilizar o atendimento à população. Moradores devem evitar áreas com possibilidade de queda de estruturas e ficar atentos aos canais oficiais de alerta. Contenção: Prefeitura e Governo do Estado suspendem as aulas da rede pública nesta sexta-feira; previsão é de ventos de até 90 km/h na capital Vendaval: prefeitura do Rio apela ao Cacique Coral e fecha consultoria climática com médium até 2051 A recomendação é evitar áreas próximas a árvores, postes, placas, coberturas, andaimes e estruturas metálicas que possam cair com a força do vento. Também é indicado não estacionar veículos debaixo de árvores, manter portas e janelas fechadas, retirar objetos que possam ser carregados pelas rajadas de áreas externas e evitar deslocamentos desnecessários durante os períodos de maior intensidade. Em caso de fios elétricos rompidos ou caídos, a orientação é não se aproximar e manter distância do local. A população deve acionar as equipes responsáveis para evitar acidentes. Como receber alertas da Defesa Civil Moradores podem se cadastrar para receber avisos da Defesa Civil por SMS, enviando o CEP da residência para o número 40199. Também é possível receber alertas pelo WhatsApp da Defesa Civil Nacional, no número (61) 2034-4611. Além desses canais, o órgão utiliza o sistema Cell Broadcast, que envia mensagens emergenciais diretamente para celulares compatíveis localizados em áreas de risco, sem necessidade de cadastro prévio. Os alertas também são divulgados pelos canais oficiais da Defesa Civil. Telefones de emergência e contato com as concessionárias Em caso de ocorrências provocadas pelos ventos fortes, a população pode acionar o Corpo de Bombeiros pelo 193 e a Defesa Civil pelo 199. Para problemas no fornecimento de energia, clientes da Light podem solicitar atendimento pelo WhatsApp (21) 99981-6059 ou pelo telefone 0800-021-0196. Na área atendida pela Enel Rio, os consumidores podem entrar em contato pelo WhatsApp (21) 99601-9608 e pelos canais digitais da concessionária. Indicadores de risco, horário previsto dos ventos e temperaturas máximas para hoje, sexta-feira Editoria de Arte O Globo Initial plugin text",
-      "source_category": "mainstream",
-      "sentiment_per_candidate": {},
-      "edit_history": [],
-      "disclaimer_pt": "Análise algorítmica. Não representa pesquisa de opinião.",
-      "disclaimer_en": "Algorithmic analysis. Does not represent polling data.",
-      "sentiment_score": 0.0,
-      "confidence_score": 0.0,
-      "_sentiment_scores": {},
-      "prominence_score": 0.0
+      "prominence_score": 0.0,
+      "_ai_provider": "nvidia",
+      "_ai_model": "nvidia/nemotron-3-super-120b-a12b",
+      "ai_provider_editor": "nvidia/nemotron-3-super-120b-a12b",
+      "editor_note": null
     },
     {
       "id": "0274780a9532cb0d",
@@ -1114,35 +1080,6 @@
       "editor_note": null
     },
     {
-      "id": "958891dd3d506e5c",
-      "url": "https://oglobo.globo.com/rio/bairros/barra/noticia/2026/08/07/votacao-termina-hoje-o-que-e-mais-urgente-na-barra-da-tijuca.ghtml",
-      "title": "Votação termina hoje: O que é mais urgente na Barra da Tijuca?",
-      "source": "O Globo",
-      "published_at": "2026-08-07T07:30:15Z",
-      "collected_at": "2026-08-07T09:15:09Z",
-      "status": "raw",
-      "relevance_score": 0.0,
-      "relevance_signals": null,
-      "candidates_mentioned": [],
-      "topics": [],
-      "narrative_cluster_id": null,
-      "duplicate_of": null,
-      "summaries": {
-        "pt-BR": "",
-        "en-US": ""
-      },
-      "content": "Um dos bairros mais valorizados da cidade, a Barra da Tijuca, ainda assim, enfrenta uma série de problemas que perturbam a paz de seus moradores, frequentadores e visitantes e têm impacto na vida de todos os cariocas. Caos no trânsito, casos de extrema violência, desordem e desrespeito às normas ambientais, de acordo com as queixas ouvidas pelas equipes de reportagem do GLOBO, costumam figurar no topo da lista de preocupações. Mas qual é a medida mais urgente? Uma enquete iniciada na quarta-feira e que terminará nesta sexta (7), às 18h, quer saber a opinião dos leitores. O resultado dará origem a uma reportagem do GLOBO-Barra. A enquete conta com as seguintes alternativas: despoluir o sistema lagunar; recuperar a vegetação suprimida irregularmente; impedir novas ações de supressão de vegetação em grande escala; investir em obras para melhorar o trânsito; expandir o metrô; aumentar o número de linhas de ônibus; reduzir a violência; encontrar solução para a população de rua; combater a desordem na praia; combater a desordem em torno de pontos como o metrô; impedir novas ocupações irregulares; e acabar com o lançamento irregular de esgoto. Até o momento, o maior número de votos está indo para questões relacionadas à mobilidade, como a necessidade de expandir a Linha 4 do metrô e investir em obras de engenharia de trânsito que aliviem a circulação no bairro e nos arredores. Mas, no segundo dia da enquete, a alternativa impedir novas ações de supressão de vegetação em grande escala chegou a ficar em primeiro lugar. Qual é a sua opinião? O que é mais urgente na Barra da Tijuca? Para votar, basta clicar no botão abaixo, onde também é possível verificar o resultado parcial da enquete. Initial plugin text Initial plugin text",
-      "source_category": "mainstream",
-      "sentiment_per_candidate": {},
-      "edit_history": [],
-      "disclaimer_pt": "Análise algorítmica. Não representa pesquisa de opinião.",
-      "disclaimer_en": "Algorithmic analysis. Does not represent polling data.",
-      "sentiment_score": 0.0,
-      "confidence_score": 0.0,
-      "_sentiment_scores": {},
-      "prominence_score": 0.0
-    },
-    {
       "id": "7fa926581bdbdbe1",
       "url": "https://www.metropoles.com/brasil/prefeito-servidores-flavio",
       "title": "Prefeito ameaça demitir servidores que não votarem em Flávio Bolsonaro",
@@ -1262,64 +1199,6 @@
       "editor_note": null
     },
     {
-      "id": "7e3bd82843060a12",
-      "url": "https://oglobo.globo.com/brasil/noticia/2026/08/07/ventos-extremos-e-previsao-de-el-nino-ampliam-debate-sobre-agroecologia-diante-da-crise-climatica.ghtml",
-      "title": "Ventos extremos e previsão de El Niño ampliam debate sobre agroecologia diante da crise climática",
-      "source": "O Globo",
-      "published_at": "2026-08-07T07:01:53Z",
-      "collected_at": "2026-08-07T09:15:09Z",
-      "status": "raw",
-      "relevance_score": 0.0,
-      "relevance_signals": null,
-      "candidates_mentioned": [],
-      "topics": [],
-      "narrative_cluster_id": null,
-      "duplicate_of": null,
-      "summaries": {
-        "pt-BR": "",
-        "en-US": ""
-      },
-      "content": "Os ventos intensos registrados em diferentes regiões do Brasil nas últimas semanas, somados à previsão de um novo episódio de El Niño e ao aumento da frequência de secas prolongadas, enchentes e ondas de calor, reforçam os desafios impostos pelas mudanças climáticas à produção de alimentos. Em meio ao avanço dos eventos extremos, cresce o debate sobre modelos agrícolas capazes de reduzir perdas e tornar a produção mais resistente às variações do clima. Kawahiva: demarcação física de terra indígena é concluída após três décadas Republicanos diz em ata de convenção que terá candidato ao governo em Minas mesmo após desistência de Cleitinho Entre as alternativas apontadas por organismos internacionais está a agroecologia, sistema que prioriza a diversificação de cultivos, a conservação do solo e a recuperação dos ecossistemas. Em seu relatório sobre impactos das mudanças climáticas, o Painel Intergovernamental sobre Mudanças Climáticas (IPCC) cita abordagens agroecológicas entre as estratégias que podem aumentar a resiliência dos sistemas alimentares. A Organização das Nações Unidas para Alimentação e Agricultura (FAO) também relaciona essas práticas à conservação da biodiversidade e à adaptação da agricultura aos eventos extremos. Diferentemente da monocultura, que concentra poucas espécies e tende a aumentar a vulnerabilidade das lavouras a pragas, doenças e oscilações climáticas, os sistemas agroecológicos combinam diferentes plantas e árvores em um mesmo ambiente produtivo. Segundo Carla Guindani, CEO da Raízes do Campo, a agroecologia vai além da produção orgânica porque considera o funcionamento de todo o ecossistema onde os alimentos são produzidos. O modelo combina práticas como a diversificação de cultivos, a conservação do solo, a recuperação da biodiversidade e a proteção de nascentes e matas ciliares para reduzir a necessidade de intervenções externas e aumentar a capacidade de adaptação das lavouras. — Não se trata apenas do produto final ou da ausência de determinados insumos. A proposta é organizar todo o ecossistema, promovendo a diversificação de culturas, a conservação do solo e a proteção da biodiversidade — diz. Ela afirma que sistemas equilibrados exigem menos intervenções externas e, por isso, conseguem responder melhor às mudanças climáticas. — Quando o ecossistema está equilibrado, a necessidade de intervenções é muito menor, tornando a produção mais resiliente e sustentável. Mitigação e adaptação Os efeitos da agroecologia costumam ser divididos em duas frentes: mitigação e adaptação. Na mitigação, práticas como o aumento da matéria orgânica no solo, a diversificação dos cultivos e a preservação da vegetação nativa favorecem o armazenamento de carbono e reduzem a dependência de fertilizantes e defensivos químicos. Segundo a FAO, esses sistemas também contribuem para conservar a biodiversidade e restaurar serviços ecossistêmicos essenciais para a produção agrícola. Já na adaptação, os benefícios aparecem na capacidade de resposta aos eventos extremos. Solos ricos em matéria orgânica conseguem absorver e armazenar mais água do que áreas degradadas, reduzindo os impactos tanto das secas quanto das chuvas intensas. Guindani avalia que os efeitos positivos também se refletem na ocupação do território. Segundo ela, o fortalecimento da agricultura familiar pode reduzir o êxodo rural e favorecer um desenvolvimento mais equilibrado entre áreas urbanas e rurais. — A concentração de terras e o êxodo rural estimulam o crescimento acelerado das cidades, ampliando áreas impermeabilizadas e a vulnerabilidade às enchentes e às ondas de calor. Quando fortalecemos a agricultura familiar, também contribuímos para um desenvolvimento territorial mais equilibrado. A perspectiva de um novo episódio de El Niño reforça esse debate. O fenômeno costuma alterar o regime de chuvas em diferentes partes do planeta e aumentar o risco de secas e precipitações intensas em parte do território brasileiro. Embora a agroecologia não impeça a ocorrência desses fenômenos, sistemas agrícolas com maior diversidade tendem a apresentar maior capacidade de conservar água, proteger o solo e reduzir perdas durante eventos extremos. — Não existe uma solução única para a crise climática. Mas sistemas produtivos biodiversos, com solo vivo, água protegida e florestas conservadas, são muito mais resistentes aos extremos climáticos. A agroecologia não impede que esses fenômenos aconteçam, mas ajuda a reduzir seus impactos sobre a produção de alimentos. Essa capacidade de adaptação passa a ser uma necessidade — explica.",
-      "source_category": "mainstream",
-      "sentiment_per_candidate": {},
-      "edit_history": [],
-      "disclaimer_pt": "Análise algorítmica. Não representa pesquisa de opinião.",
-      "disclaimer_en": "Algorithmic analysis. Does not represent polling data.",
-      "sentiment_score": 0.0,
-      "confidence_score": 0.0,
-      "_sentiment_scores": {},
-      "prominence_score": 0.0
-    },
-    {
-      "id": "b628ab230f8181d4",
-      "url": "https://oglobo.globo.com/saude/ciencia/noticia/2026/08/07/estudo-da-ufrj-avalia-como-homens-e-mulheres-lidam-com-o-estresse.ghtml",
-      "title": "Estudo da UFRJ avalia como homens e mulheres lidam com o estresse",
-      "source": "O Globo",
-      "published_at": "2026-08-07T07:01:18Z",
-      "collected_at": "2026-08-07T09:15:09Z",
-      "status": "raw",
-      "relevance_score": 0.0,
-      "relevance_signals": null,
-      "candidates_mentioned": [],
-      "topics": [],
-      "narrative_cluster_id": null,
-      "duplicate_of": null,
-      "summaries": {
-        "pt-BR": "",
-        "en-US": ""
-      },
-      "content": "Trânsito parado há quarenta minutos. O e-mail do chefe cobrando aquele relatório que já devia estar pronto. A conta que venceu e ninguém lembrou de pagar. Para quem mora em uma cidade grande, esse cardápio de pequenas, e nem tão pequenas crises, já virou rotina. Aprendemos a conviver com o estresse como quem convive com o barulho da rua: incomoda e muito, mas é “normal”. Até que idade o ser humano consegue viver? Ciência revela limite da longevidade, e resultado surpreende 'Ilha dos Coelhos': Alimentar coelhos em ilha turística do Japão pode afetar todo o ecossistema — e envolver até javalis, conclui estudo Não é à toa que o estresse crônico já é tratado pela medicina quase como uma doença silenciosa. Ele eleva o risco cardiovascular, encolhe regiões do cérebro ligadas à memória e acelera o envelhecimento das células do sistema imunológico. Além disso, é um importante fator de risco para diversos transtornos mentais, incluindo aqueles ligados ao humor e à ansiedade. O papel do estresse crônico no surgimento e na progressão da depressão e da ansiedade é parcialmente explicado pelas diversas alterações cerebrais que pode desencadear. Atualmente, o transtorno depressivo maior afeta mais de 320 milhões de pessoas em todo o mundo. É a 13ª principal causa de incapacidade. Expectativas apontam que se tornará a principal causa até 2030. Os sintomas podem incluir humor depressivo, perda de interesse em atividades prazerosas, alterações de peso e apetite, distúrbios do sono e redução do foco em atividades. O transtorno depressivo pode causar prejuízos emocionais, cognitivos e sociais nos indivíduos afetados. A complexidade da doença torna a prática médica desafiadora, pois aproximadamente um terço dos pacientes não responde bem aos tratamentos. Pergunta que não quer calar Mas se o efeito nocivo do estresse prolongado já é bem documentado, uma pergunta mais recente e menos óbvia vem ganhando espaço nos laboratórios: será que esse processo acontece do mesmo jeito, no mesmo ritmo, em homens e mulheres? Foi essa lacuna que nós, pesquisadoras do Laboratório de Farmacologia Molecular do Instituto de Ciências Biomédicas, da Universidade Federal do Rio de Janeiro (UFRJ), decidimos investigar. O artigo acaba de sair publicado no periódico European Journal of Neuroscience. Para a pesquisa, utilizamos um modelo de experimento com camundongos Swiss que vivenciaram semana após semana uma série de estressores ambientais, de forma acumulada, que podem imitar o estresse da vida moderna. A ideia era tentar entender se machos e fêmeas reagem de forma diferente ao estresse prolongado, e em que momento essa diferença aparece. Em uma espécie de simulação da pressão constante que vivemos no dia a dia, os camundongos machos e fêmeas passaram por semanas de estresse crônico e imprevisível. Para alcançar nossos objetivos, aplicamos o modelo já conhecido de estresse crônico moderado imprevisível, conhecido pela sigla CUMS, do inglês chronic unpredictable mild stress, aos camundongos. Machos e fêmeas adultos foram expostos a quatro, seis ou oito semanas de estresse crônico moderado, seguidas de avaliação comportamental e quantificação da corticosterona sérica. A corticosterona é o principal hormônio do estresse em roedores e equivalente ao cortisol em humanos. Elas sentem mais O resultado foi positivo. Existe sim uma diferença, e ela é uma questão de tempo. Machos e fêmeas desenvolveram sinais de ansiedade logo nas primeiras semanas. Porém, as respostas em machos e fêmeas seguiram caminhos diferentes. Além de apresentarem uma estratégia diferente de enfrentamento ao estresse, as fêmeas mostraram alterações comportamentais relacionadas à ansiedade e à depressão de forma mais evidente. Os sinais de comportamento depressivo, que incluem menos disposição para reagir diante de uma situação difícil, só surgiram após dois meses de estresse contínuo. Sobre a corticosterona, só as fêmeas apresentaram um aumento desse hormônio do estresse no sangue. Assim, os resultados de nosso estudo mostraram que as fêmeas parecem ser mais sensíveis aos efeitos nocivos do estresse crônico do que os machos. É este padrão que se assemelha aos dados clínicos em humanos. Mulheres são mais propensas a desfechos adversos induzidos pelo estresse do que homens, como ansiedade e depressão . Importante ressaltar que todos os experimentos com animais foram aprovados na Comissão de Ética no Uso de Animais de Laboratório da UFRJ sob as diretrizes éticas do Conselho Nacional de Controle de Experimentação Animal (Concea). Diferencial da pesquisa A importância do nosso trabalho é que, até então, apenas alguns estudos realizaram uma comparação direta e abrangente das diferenças entre os sexos nas respostas comportamentais induzidas pelo estresse. E a maioria concentrou os experimentos em linhagens de camundongos geneticamente idênticos, as chamadas linhagens isogênicas. Tal escolha negligencia a variabilidade genética inerente a população humana e seu impacto no desenvolvimento de transtornos relacionados ao estresse. Camundongos Swiss, por outro lado, possuem variação genética mais abrangente, mimetizando de forma mais fidedigna a variabilidade humana. Estudos abrangentes e bem conduzidos sobre os efeitos a longo prazo do estresse, comparando machos e fêmeas diretamente, contribuem não só para a compreensão dos malefícios do estresse, mas também para entendermos os mecanismos de resiliência, ou seja, de resistência ao estresse. E entendendo esses mecanismos, poderemos encontrar novas formas de tratar as doenças psiquiátricas relacionadas ao estresse. *Gilda Angela Neves é professora associada no Instituto do Ciências Biomédicas, Universidade Federal do Rio de Janeiro (UFRJ). Ana Clara Fernandes da Silva é mestranda no Programa de Pós-Graduação em Farmacologia e Química Medicinal, Universidade Federal do Rio de Janeiro (UFRJ). Isis Nem de Oliveira Souza é professora Adjunta do Instituto de Ciências Biomédicas, Universidade Federal do Rio de Janeiro (UFRJ). Rachel de Barros Telles é doutora pelo Laboratório de Farmacologia Molecular, do Instituto de Ciências Biomédicas, Universidade Federal do Rio de Janeiro (UFRJ). *Este artigo foi republicado de The Conversation sob licença Creative Commons. Leia o artigo original.",
-      "source_category": "mainstream",
-      "sentiment_per_candidate": {},
-      "edit_history": [],
-      "disclaimer_pt": "Análise algorítmica. Não representa pesquisa de opinião.",
-      "disclaimer_en": "Algorithmic analysis. Does not represent polling data.",
-      "sentiment_score": 0.0,
-      "confidence_score": 0.0,
-      "_sentiment_scores": {},
-      "prominence_score": 0.0
-    },
-    {
       "id": "5ee11bb12fa6b28a",
       "url": "https://www.metropoles.com/colunas/andreza-matais/audios-de-luchsinger-para-ex-empregada-mostram-convivio-com-lulinha",
       "title": "Áudios de Luchsinger para ex-empregada mostram convívio com Lulinha",
@@ -1384,27 +1263,57 @@
       "source": "O Globo",
       "published_at": "2026-08-07T06:30:09Z",
       "collected_at": "2026-08-07T09:15:11Z",
-      "status": "raw",
-      "relevance_score": 0.0,
-      "relevance_signals": null,
-      "candidates_mentioned": [],
-      "topics": [],
+      "status": "validated",
+      "relevance_score": 0.65,
+      "relevance_signals": {
+        "candidate_signal": 0.5,
+        "topic_signal": 0.1,
+        "keyword_signal": 0.05,
+        "source_signal": 0.0
+      },
+      "candidates_mentioned": [
+        "lula"
+      ],
+      "topics": [
+        "corrupcao",
+        "politica_externa",
+        "previdencia"
+      ],
       "narrative_cluster_id": null,
       "duplicate_of": null,
       "summaries": {
-        "pt-BR": "",
-        "en-US": ""
+        "pt-BR": "O ministro André Mendonça, relator do STF nas investigações sobre fraudes no INSS e no Banco Master, expressou preocupação com a independência da Polícia Federal ao afirmar que as apurações podem atingir a campanha do presidente Lula. O encontro com o ministro da Justiça ocorreu no mesmo dia em que 27 superintendentes da PF divulgaram nota em defesa do diretor-geral Andrei Rodrigues, indicando desgaste institucional.",
+        "en-US": "Supreme Court Justice André Mendonça, rapporteur of investigations into fraud at INSS and Banco Master, expressed concern about the Federal Police's independence, stating the probes could affect President Lula’s campaign. The meeting with the Justice Minister occurred the same day 27 PF superintendents issued a public note defending Director-General Andrei Rodrigues, revealing institutional strain."
       },
       "content": "Relator no Supremo Tribunal Federal (STF) das investigações sobre fraudes no INSS e do Banco Master, o ministro André Mendonça manifestou na quinta-feira, em reunião com o ministro da Justiça, Wellington Lima e Silva, preocupação com a independência da Polícia Federal na condução de casos com potencial de atingir a campanha do presidente Luiz Inácio Lula da Silva. O encontro ocorreu no mesmo dia em que os 27 superintendentes da corporação divulgaram nota pública em defesa do diretor-geral, Andrei Rodrigues, em meio ao desgaste com o magistrado. Matéria exclusiva para assinantes. Para ter acesso completo, acesse o link da matéria e faça o seu cadastro.",
       "source_category": "mainstream",
-      "sentiment_per_candidate": {},
-      "edit_history": [],
+      "sentiment_per_candidate": {
+        "lula": "negativo"
+      },
+      "edit_history": [
+        {
+          "tier": "editor",
+          "at": "2026-08-07T09:37:00Z",
+          "provider": "nvidia",
+          "action": "validated",
+          "changes": [
+            "summary_pt",
+            "summary_en"
+          ]
+        }
+      ],
       "disclaimer_pt": "Análise algorítmica. Não representa pesquisa de opinião.",
       "disclaimer_en": "Algorithmic analysis. Does not represent polling data.",
-      "sentiment_score": 0.0,
-      "confidence_score": 0.0,
-      "_sentiment_scores": {},
-      "prominence_score": 0.0
+      "sentiment_score": -0.3,
+      "confidence_score": 1.0,
+      "_sentiment_scores": {
+        "lula": -0.3
+      },
+      "prominence_score": 0.0,
+      "_ai_provider": "nvidia",
+      "_ai_model": "nvidia/nemotron-3-super-120b-a12b",
+      "ai_provider_editor": "nvidia/nemotron-3-super-120b-a12b",
+      "editor_note": null
     },
     {
       "id": "1ca25ed5ef18ab1c",
@@ -29083,6 +28992,6 @@
       "prominence_score": 0.0
     }
   ],
-  "last_updated": "2026-08-07T09:25:33Z",
-  "total_count": 500
+  "last_updated": "2026-08-07T09:37:57Z",
+  "total_count": 482
 }
