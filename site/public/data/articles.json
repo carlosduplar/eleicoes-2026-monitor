@@ -2,90 +2,67 @@
   "$schema": "../docs/schemas/articles.schema.json",
   "articles": [
     {
-      "id": "a002156576d48b8d",
-      "url": "https://www1.folha.uol.com.br/colunas/painel/2026/08/lula-discute-ajudar-candidato-ao-governo-do-amapa-aliado-de-alcolumbre.shtml",
-      "title": "Lula discute ajudar candidato ao governo do Amapá aliado de Alcolumbre",
-      "source": "UOL Noticias",
-      "published_at": "2026-08-13T17:18:25Z",
-      "collected_at": "2026-08-13T17:18:25Z",
-      "status": "raw",
-      "relevance_score": 0.0,
-      "relevance_signals": null,
-      "candidates_mentioned": [],
-      "topics": [],
-      "narrative_cluster_id": null,
-      "duplicate_of": null,
-      "summaries": {
-        "pt-BR": "",
-        "en-US": ""
-      },
-      "source_category": "mainstream",
-      "sentiment_per_candidate": {},
-      "edit_history": [],
-      "disclaimer_pt": "Análise algorítmica. Não representa pesquisa de opinião.",
-      "disclaimer_en": "Algorithmic analysis. Does not represent polling data.",
-      "sentiment_score": 0.0,
-      "confidence_score": 0.0,
-      "_sentiment_scores": {},
-      "prominence_score": 0.0
-    },
-    {
-      "id": "782d5fac42f1780c",
-      "url": "https://noticias.uol.com.br/eleicoes/2026/08/13/missao-filiacao-flavio-bolsonaro.ghtm",
-      "title": "Missão diz ser vítima de filiação fraudulenta de Flávio e que avisou TSE",
-      "source": "UOL Noticias",
-      "published_at": "2026-08-13T17:18:25Z",
-      "collected_at": "2026-08-13T17:18:25Z",
-      "status": "raw",
-      "relevance_score": 0.0,
-      "relevance_signals": null,
-      "candidates_mentioned": [],
-      "topics": [],
-      "narrative_cluster_id": null,
-      "duplicate_of": null,
-      "summaries": {
-        "pt-BR": "",
-        "en-US": ""
-      },
-      "source_category": "mainstream",
-      "content": "Access Denied You don't have permission to access \"http://noticias.uol.com.br/eleicoes/2026/08/13/missao-filiacao-flavio-bolsonaro.ghtm\" on this server. Reference #18.8c422417.1786641629.27ab9fba https://errors.edgesuite.net/18.8c422417.1786641629.27ab9fba",
-      "sentiment_per_candidate": {},
-      "edit_history": [],
-      "disclaimer_pt": "Análise algorítmica. Não representa pesquisa de opinião.",
-      "disclaimer_en": "Algorithmic analysis. Does not represent polling data.",
-      "sentiment_score": 0.0,
-      "confidence_score": 0.0,
-      "_sentiment_scores": {},
-      "prominence_score": 0.0
-    },
-    {
       "id": "cc04aa21a3c5b6b9",
       "url": "https://noticias.uol.com.br/eleicoes/2026/08/13/renan-santos-critica-flavio-brasil-se-ilude-com-farsa-bolsonarista.htm",
       "title": "Renan Santos critica Flávio: 'Brasil se ilude com farsa bolsonarista'",
       "source": "UOL Noticias",
       "published_at": "2026-08-13T17:18:25Z",
       "collected_at": "2026-08-13T17:18:25Z",
-      "status": "raw",
-      "relevance_score": 0.0,
-      "relevance_signals": null,
-      "candidates_mentioned": [],
-      "topics": [],
+      "status": "validated",
+      "relevance_score": 1.0,
+      "relevance_signals": {
+        "candidate_signal": 0.6,
+        "topic_signal": 0.3,
+        "keyword_signal": 0.15,
+        "source_signal": 0.0
+      },
+      "candidates_mentioned": [
+        "renan-santos",
+        "flavio-bolsonaro"
+      ],
+      "topics": [
+        "politica_externa",
+        "corrupcao",
+        "midia",
+        "eleicoes"
+      ],
       "narrative_cluster_id": null,
       "duplicate_of": null,
       "summaries": {
-        "pt-BR": "",
-        "en-US": ""
+        "pt-BR": "Renan Santos, candidato à Presidência pelo partido Missão, criticou o senador Flávio Bolsonaro (PL-RJ), chamando de 'farsa bolsonarista' a ilusão do Brasil com a direita. Ele também fez críticas ao governo federal durante evento na zona sul de São Paulo.",
+        "en-US": "Renan Santos, presidential candidate from the Missão party, criticized Senator Flávio Bolsonaro (PL-RJ), calling Brazil's belief in the Bolsonarist narrative a 'farce'. He also criticized the federal government during an event in São Paulo's southern zone."
       },
       "content": "Candidato à Presidência pelo Missão, Renan Santos criticou hoje o adversário do campo da direita, o senador Flávio Bolsonaro (PL-RJ). Santos também alfinetou o governo federal em um evento que participou na zona sul de São Paulo.",
       "source_category": "mainstream",
-      "sentiment_per_candidate": {},
-      "edit_history": [],
+      "sentiment_per_candidate": {
+        "renan-santos": "positivo",
+        "flavio-bolsonaro": "negativo"
+      },
+      "edit_history": [
+        {
+          "tier": "editor",
+          "at": "2026-08-13T17:35:57Z",
+          "provider": "nvidia",
+          "action": "validated",
+          "changes": [
+            "summary_pt",
+            "summary_en"
+          ]
+        }
+      ],
       "disclaimer_pt": "Análise algorítmica. Não representa pesquisa de opinião.",
       "disclaimer_en": "Algorithmic analysis. Does not represent polling data.",
-      "sentiment_score": 0.0,
-      "confidence_score": 0.0,
-      "_sentiment_scores": {},
-      "prominence_score": 0.0
+      "sentiment_score": -0.15,
+      "confidence_score": 1.0,
+      "_sentiment_scores": {
+        "renan-santos": 0.3,
+        "flavio-bolsonaro": -0.6
+      },
+      "prominence_score": 0.0,
+      "_ai_provider": "nvidia",
+      "_ai_model": "nvidia/nemotron-3-super-120b-a12b",
+      "ai_provider_editor": "nvidia/nemotron-3-super-120b-a12b",
+      "editor_note": null
     },
     {
       "id": "eb55d05a89645587",
@@ -94,27 +71,57 @@
       "source": "Veja",
       "published_at": "2026-08-13T17:18:12Z",
       "collected_at": "2026-08-13T17:18:45Z",
-      "status": "raw",
-      "relevance_score": 0.0,
-      "relevance_signals": null,
-      "candidates_mentioned": [],
-      "topics": [],
+      "status": "validated",
+      "relevance_score": 0.95,
+      "relevance_signals": {
+        "candidate_signal": 0.5,
+        "topic_signal": 0.3,
+        "keyword_signal": 0.15,
+        "source_signal": 0.0
+      },
+      "candidates_mentioned": [
+        "flavio-bolsonaro"
+      ],
+      "topics": [
+        "corrupcao",
+        "eleicoes",
+        "midia"
+      ],
       "narrative_cluster_id": null,
       "duplicate_of": null,
       "summaries": {
-        "pt-BR": "",
-        "en-US": ""
+        "pt-BR": "O Tribunal Superior Eleitoral (TSE) esclareceu que a filiação do senador Flávio Bolsonaro ao partido Missão não foi resultado de um hackeamento, mas do uso indevido das credenciais do partido por pessoa com acesso autorizado. O ministro Nunes Marques determinou a abertura de inquérito policial e encaminhou representação à Procuradoria-Geral Eleitoral. O PL pediu a desfiliação de Flávio, e o pedido está em análise.",
+        "en-US": "The Superior Electoral Court (TSE) stated that Senator Flávio Bolsonaro's affiliation with the Mission party was not due to a hack, but to the improper use of the party's credentials by someone with authorized access. President Nunes Marques ordered a police investigation and referred the matter to the Electoral General Prosecutor's Office. The PL has requested Flávio's disaffiliation, and the request is under review."
       },
       "content": "O TSE informou nesta quinta-feira que a filiação do senador Flávio Bolsonaro ao partido Missão não ocorreu por um hackeamento do sistema de filiação partidária, mas sim pelo “uso indevido da ferramenta por parte de alguém que possuía as credenciais da legenda para efetivar filiações”. O presidente da Corte, ministro Nunes Marques, enviou uma representação à Procuradoria-Geral Eleitoral para a tomada de providências e determinou a abertura de um inquérito por parte da Polícia Judiciária. Enquanto isso, o PL pediu a desfiliação de Flávio do Missão, e o pedido já está sob análise. Publicidade",
       "source_category": "magazine",
-      "sentiment_per_candidate": {},
-      "edit_history": [],
+      "sentiment_per_candidate": {
+        "flavio-bolsonaro": "negativo"
+      },
+      "edit_history": [
+        {
+          "tier": "editor",
+          "at": "2026-08-13T17:36:34Z",
+          "provider": "nvidia",
+          "action": "validated",
+          "changes": [
+            "summary_pt",
+            "summary_en"
+          ]
+        }
+      ],
       "disclaimer_pt": "Análise algorítmica. Não representa pesquisa de opinião.",
       "disclaimer_en": "Algorithmic analysis. Does not represent polling data.",
-      "sentiment_score": 0.0,
-      "confidence_score": 0.0,
-      "_sentiment_scores": {},
-      "prominence_score": 0.0
+      "sentiment_score": -0.5,
+      "confidence_score": 1.0,
+      "_sentiment_scores": {
+        "flavio-bolsonaro": -0.5
+      },
+      "prominence_score": 0.0,
+      "_ai_provider": "nvidia",
+      "_ai_model": "nvidia/nemotron-3-super-120b-a12b",
+      "ai_provider_editor": "nvidia/nemotron-3-super-120b-a12b",
+      "editor_note": null
     },
     {
       "id": "3cb659823667f594",
@@ -123,85 +130,58 @@
       "source": "Metropoles",
       "published_at": "2026-08-13T17:17:22Z",
       "collected_at": "2026-08-13T17:18:35Z",
-      "status": "raw",
-      "relevance_score": 0.0,
-      "relevance_signals": null,
-      "candidates_mentioned": [],
-      "topics": [],
+      "status": "validated",
+      "relevance_score": 0.95,
+      "relevance_signals": {
+        "candidate_signal": 0.5,
+        "topic_signal": 0.3,
+        "keyword_signal": 0.15,
+        "source_signal": 0.0
+      },
+      "candidates_mentioned": [
+        "flavio-bolsonaro"
+      ],
+      "topics": [
+        "eleicoes",
+        "corrupcao",
+        "midia",
+        "politica_externa"
+      ],
       "narrative_cluster_id": null,
       "duplicate_of": null,
       "summaries": {
-        "pt-BR": "",
-        "en-US": ""
+        "pt-BR": "Flávio Bolsonaro, senador e candidato à Presidência, denunciou suposta fraude em sua filiação ao partido Missão, afirmando que o sistema tenta impedí-lo de concorrer. Em postagem nas redes sociais, declarou que aqueles que 'só sabem jogar sujo' não conseguirão detê-lo, pois Deus está ao seu lado e o Brasil vencerá. O vídeo anexo reforça sua narrativa de perseguição institucional e confiança divina.",
+        "en-US": "Flávio Bolsonaro, senator and presidential candidate, denounced alleged fraud in his affiliation with the Missão party, claiming the system is trying to block his candidacy. In a social media post, he stated that those who 'only know how to play dirty' will fail to stop him, as God is on his side and Brazil will prevail. The accompanying video reinforces his narrative of institutional persecution and divine confidence."
       },
       "content": "Após aparecer como filiado ao partido Missão , o senador e candidato à Presidência da República, Flávio Bolsonaro (PL), falou em “ fraude ” no registro e usou as redes sociais para enviar um recado àqueles que “ só sabem jogar sujo “. “Mais uma vez o sistema armou para tentar me derrubar. Tenho uma má notícia para vocês que só sabem jogar sujo: não funcionou e nem vai funcionar. O Brasil vai vencer!”, escreveu Flávio em uma postagem no X nesta quinta-feira (13/8). Veja o vídeo : NÃO VÃO CONSEGUIR! Mais uma vez o sistema armou para tentar me derrubar. Tenho uma má notícia para vocês que só sabem jogar sujo: não funcionou e nem vai funcionar. O Brasil vai vencer! pic.twitter.com/Ru6p9uil2j — Flávio Bolsonaro (@FlavioBolsonaro) August 13, 2026 No vídeo, o senador afirmou que sua filiação partidária foi fraudada e declarou: “O sistema vai tentar de tudo para me parar, mas não vai conseguir, não, porque Deus está no comando e a gente junto vai resgatar o nosso Brasil” .",
       "source_category": "mainstream",
-      "sentiment_per_candidate": {},
-      "edit_history": [],
-      "disclaimer_pt": "Análise algorítmica. Não representa pesquisa de opinião.",
-      "disclaimer_en": "Algorithmic analysis. Does not represent polling data.",
-      "sentiment_score": 0.0,
-      "confidence_score": 0.0,
-      "_sentiment_scores": {},
-      "prominence_score": 0.0
-    },
-    {
-      "id": "6f8780d0eee087a8",
-      "url": "https://veja.abril.com.br/ciencia/chuva-de-meteoros-perseidas-atinge-pico-em-2026-veja-imagens/",
-      "title": "Chuva de meteoros Perseidas atinge pico em 2026; veja imagens",
-      "source": "Veja",
-      "published_at": "2026-08-13T17:14:34Z",
-      "collected_at": "2026-08-13T17:18:45Z",
-      "status": "raw",
-      "relevance_score": 0.0,
-      "relevance_signals": null,
-      "candidates_mentioned": [],
-      "topics": [],
-      "narrative_cluster_id": null,
-      "duplicate_of": null,
-      "summaries": {
-        "pt-BR": "",
-        "en-US": ""
+      "sentiment_per_candidate": {
+        "flavio-bolsonaro": "positivo"
       },
-      "content": "Em 1862, os astrônomos Lewis Swift e Horace Tuttle identificaram no céu estrelado um cometa, que nomearam de Swift-Tuttle. A partir dos detritos do cometa, nasce uma chuva de meteoros batizada de Perseidas, que visita a Terra com o passar das décadas. O ano de 1992 foi o último em que a chuva foi avistada. Agora, em 2026, o período entre o fim de julho e início de agosto marca sua nova passagem, e a madrugada desta quinta-feira, 13, tornou-se o melhor dia para observá-la no Brasil. A chuva de meteoros Perseidas acontece, em 2026, de 17 de julho até 24 de agosto. No Brasil, a melhor janela para observação dos detritos do cometa começou a partir de ontem, quarta-feira, 12, e se estendeu até o início da madrugada desta quinta-feira, 13. Apesar disso, observadores interessados pelo show de luzes puderam ver os rastros dos meteoros até por volta das 5h30 de hoje. Fotografia da chuva de meteoros observada a partir do Parque Nacional Yosemite, na Califórnia, EUA Tayfun Coskun/Anadolu/Getty Images Continua após a publicidade Chuva observada a partir da ilha Evia, na Grécia Nick Paleologos/Bloomberg/Getty Images Entusiastas observando a chuva de Uzhhorod, na Ucrânia Denysenko/Global Images Ukraine/Getty Images Continua após a publicidade Quem estivesse no Hemisfério Norte pôde observar uma chuva de meteoros bem mais iluminada do que o caso do Brasil. Ainda assim, foi possível ver também por toda a extensão do país os detritos do cometa Swift-Tuttle, mas com menor quantidade de “meteoros por hora”, medida baseada no Zenithal Hourly Rate (ZHR), número técnico utilizado por especialistas para medir os meteoros que vem de um ponto específico do céu e passam por uma região sem poluição. A região Norte teve as melhores condições para visualização da chuva de meteoros, com uma taxa esperada de até 20 meteoros por hora, segundo dados do Observatório Nacional. Em sequência, o Nordeste e Centro-Oeste ficaram com até 10 meteoros por hora, e o Sudeste e Sul com apenas 5 meteoros por hora, no máximo. Vale destacar que esses números serviam para ambientes de escuridão máxima (garantida por causa da Lua Nova) e sem poluição nos céus. Continua após a publicidade Por causa da dinâmica da chuva, a quantidade de meteoros passíveis de serem avistados aumentava com o passar da noite. O melhor horário, ainda de acordo com o Observatório Nacional, estava por volta das 3h, mas variava de região para região. A janela ideal completa começava às 3h e seguia até cerca das 5h30. Publicidade",
-      "source_category": "magazine",
-      "sentiment_per_candidate": {},
-      "edit_history": [],
+      "edit_history": [
+        {
+          "tier": "editor",
+          "at": "2026-08-13T17:37:11Z",
+          "provider": "nvidia",
+          "action": "validated",
+          "changes": [
+            "summary_pt",
+            "summary_en"
+          ]
+        }
+      ],
       "disclaimer_pt": "Análise algorítmica. Não representa pesquisa de opinião.",
       "disclaimer_en": "Algorithmic analysis. Does not represent polling data.",
-      "sentiment_score": 0.0,
-      "confidence_score": 0.0,
-      "_sentiment_scores": {},
-      "prominence_score": 0.0
-    },
-    {
-      "id": "b2d805d731b4e6a7",
-      "url": "https://oantagonista.com.br/brasil/crusoe-ex-ministra-de-lula-liga-terremotos-a-extrema-direita/",
-      "title": "Crusoé: Ex-ministra de Lula liga terremotos à “extrema-direita”",
-      "source": "O Antagonista",
-      "published_at": "2026-08-13T17:02:23Z",
-      "collected_at": "2026-08-13T17:18:44Z",
-      "status": "raw",
-      "relevance_score": 0.0,
-      "relevance_signals": null,
-      "candidates_mentioned": [],
-      "topics": [],
-      "narrative_cluster_id": null,
-      "duplicate_of": null,
-      "summaries": {
-        "pt-BR": "",
-        "en-US": ""
+      "sentiment_score": 0.4,
+      "confidence_score": 1.0,
+      "_sentiment_scores": {
+        "flavio-bolsonaro": 0.4
       },
-      "content": "Candidata a deputada federal por São Paulo, a ex-ministra dos Povos Indígenas Sônia Guajajara (foto) relacionou os terremotos registrados na Venezuela, em julho, e na Colômbia, na segunda-feira, 10, à “extrema-direita”, referindo-se à posse de Abelardo de la Espriella na Colômbia. “Diante dos nossos olhos e dentro dos nossos territórios, mas também já nas grandes... The post Crusoé: Ex-ministra de Lula liga terremotos à “extrema-direita” appeared first on O Antagonista .",
-      "source_category": "politics",
-      "sentiment_per_candidate": {},
-      "edit_history": [],
-      "disclaimer_pt": "Análise algorítmica. Não representa pesquisa de opinião.",
-      "disclaimer_en": "Algorithmic analysis. Does not represent polling data.",
-      "sentiment_score": 0.0,
-      "confidence_score": 0.0,
-      "_sentiment_scores": {},
-      "prominence_score": 0.0
+      "prominence_score": 0.0,
+      "_ai_provider": "nvidia",
+      "_ai_model": "nvidia/nemotron-3-super-120b-a12b",
+      "ai_provider_editor": "nvidia/nemotron-3-super-120b-a12b",
+      "editor_note": null
     },
     {
       "id": "4a2b59d1e59b45be",
@@ -210,27 +190,56 @@
       "source": "Metropoles",
       "published_at": "2026-08-13T17:01:07Z",
       "collected_at": "2026-08-13T17:18:36Z",
-      "status": "raw",
-      "relevance_score": 0.0,
-      "relevance_signals": null,
-      "candidates_mentioned": [],
-      "topics": [],
+      "status": "validated",
+      "relevance_score": 0.95,
+      "relevance_signals": {
+        "candidate_signal": 0.5,
+        "topic_signal": 0.3,
+        "keyword_signal": 0.15,
+        "source_signal": 0.0
+      },
+      "candidates_mentioned": [
+        "flavio-bolsonaro"
+      ],
+      "topics": [
+        "corrupcao",
+        "eleicoes"
+      ],
       "narrative_cluster_id": null,
       "duplicate_of": null,
       "summaries": {
-        "pt-BR": "",
-        "en-US": ""
+        "pt-BR": "O partido Missão denunciou que a filiação do senador Flávio Bolsonaro (PL) ao seu quadro foi fraudulenta, afirmando que o gabinete do senador foi informado da tentativa desde 2 de agosto sem resposta. O TSE descartou ataque hacker e confirmou que a inclusão foi feita por um representante do próprio partido, que agora busca desfazer o registro e acionou a PF e a Justiça Eleitoral para identificar os responsáveis.",
+        "en-US": "The Missão party denounced that Senator Flávio Bolsonaro’s (PL) affiliation with the party was fraudulent, stating the senator’s office was informed of the attempt since August 2 without responding. The TSE ruled out a hacker attack and confirmed the registration was made by a party representative, which is now seeking to reverse the filing and has contacted the PF and Electoral Justice to identify those responsible."
       },
       "content": "O partido Missão se pronunciou, nesta quinta-feira (13/8), sobre a inclusão do senador Flávio Bolsonaro (PL) em sua lista de filiados no sistema da Justiça Eleitoral. Em nota, a legenda informou ter sido “alvo de uma tentativa de filiação fraudulenta” do pré-candidato à Presidência da República. Leia também Brasil Renan Santos e Kim brincam com Flávio no Missão: “Não façam isso” Brasil Campanha de Flávio prepara ato na Paulista no 7 de Setembro Brasil TSE descarta ataque hacker e diz que Missão filiou Flávio Brasil Flávio pede correção de filiação ao TSE e campanha deve acionar PF A nota acusa o gabinete do senador de ter sido informado da tentativa de filiação desde 2 de agosto. “Consta em nosso sistema que os e-mails enviados foram abertos, mas não foram respondidos”, destacou. O partido afirmou já estar adotando as devidas providências junto à Polícia Federal e ao TSE para que os responsáveis sejam identificados e punidos. A sigla também usou da nota para alfinetar o candidato, afirmando que a filiação não é do interesse do partido. “Ressaltamos, ainda, que não é do interesse do partido acolher em seus quadros um parlamentar que, para além do desalinhamento ideológico, figura em acusações e suspeitas de envolvimento em esquemas de corrupção”, informou. 2 imagens Fechar modal. 1 de 2 A nota acusa o gabinete do senador de ter sido informado da tentativa de filiação desde 2 de agosto Reprodução Missão 2 de 2 O partido afirmou já estar adotando as devidas providências Reprodução Missão Filiação de Flávio O senador aparece como filiado ao Missão no sistema da Justiça Eleitoral. A mudança impede, neste momento, segundo membros da campanha, que o PL registre a candidatura do parlamentar no Tribunal Superior Eleitoral (TSE). Certidão emitida pelo TSE às 11h13 desta quinta-feira aponta que Flávio está com a filiação regular ao Missão desde quarta-feira (12/8). O mesmo documento registra que ele o senador desfiliado do PL também na quarta. O comitê do candidato já acionou o TSE para restabelecer a filiação do senador ao PL. Uma das suspeitas é de que o sistema de filiação partidária tenha sido alvo de ataque hacker. TSE se pronuncia O órgão descartou a possibilidade de invasão ao sistema e atribuiu a inclusão do senador no partido foi feita por um representante da própria legenda. “O TSE informa que não houve hackeamento do sistema e, sim, o cadastro da filiação por parte de um representante do Missão”, informou o tribunal ao Metrópoles.",
       "source_category": "mainstream",
-      "sentiment_per_candidate": {},
-      "edit_history": [],
+      "sentiment_per_candidate": {
+        "flavio-bolsonaro": "negativo"
+      },
+      "edit_history": [
+        {
+          "tier": "editor",
+          "at": "2026-08-13T17:38:41Z",
+          "provider": "nvidia",
+          "action": "validated",
+          "changes": [
+            "summary_pt",
+            "summary_en"
+          ]
+        }
+      ],
       "disclaimer_pt": "Análise algorítmica. Não representa pesquisa de opinião.",
       "disclaimer_en": "Algorithmic analysis. Does not represent polling data.",
-      "sentiment_score": 0.0,
-      "confidence_score": 0.0,
-      "_sentiment_scores": {},
-      "prominence_score": 0.0
+      "sentiment_score": -0.7,
+      "confidence_score": 1.0,
+      "_sentiment_scores": {
+        "flavio-bolsonaro": -0.7
+      },
+      "prominence_score": 0.0,
+      "_ai_provider": "nvidia",
+      "_ai_model": "nvidia/nemotron-3-super-120b-a12b",
+      "ai_provider_editor": "nvidia/nemotron-3-super-120b-a12b",
+      "editor_note": null
     },
     {
       "id": "77d42318696e4c93",
@@ -239,85 +248,58 @@
       "source": "Metropoles",
       "published_at": "2026-08-13T16:59:13Z",
       "collected_at": "2026-08-13T17:18:36Z",
-      "status": "raw",
-      "relevance_score": 0.0,
-      "relevance_signals": null,
-      "candidates_mentioned": [],
-      "topics": [],
+      "status": "validated",
+      "relevance_score": 0.95,
+      "relevance_signals": {
+        "candidate_signal": 0.5,
+        "topic_signal": 0.3,
+        "keyword_signal": 0.15,
+        "source_signal": 0.0
+      },
+      "candidates_mentioned": [
+        "lula"
+      ],
+      "topics": [
+        "politica_externa",
+        "eleicoes",
+        "seguranca",
+        "impostos"
+      ],
       "narrative_cluster_id": null,
       "duplicate_of": null,
       "summaries": {
-        "pt-BR": "",
-        "en-US": ""
+        "pt-BR": "O presidente Luiz Inácio Lula da Silva (PT) voltará a se reunir com o presidente do Senado, Davi Alcolumbre (União-AP), na quinta-feira (13/8), após encontro na véspera no Palácio da Alvorada. A reunião, restrita aos dois, faz parte de um esforço de reaproximação para destravar três pautas prioritárias do governo: a PEC do fim da escala 6×1, a PEC da Segurança Pública e o PL das Terras Raras. Segundo os líderes do governo, Camilo Santana e Randolfe Rodrigues, o objetivo é avançar nas votações antes das eleições municipais de 2026.",
+        "en-US": "President Luiz Inácio Lula da Silva (PT) will meet again with Senate President Davi Alcolumbre (União-AP) on Thursday, August 13, following a meeting the previous day at the Alvorada Palace. The restricted meeting aims to rebuild relations and advance three key government priorities: the PEC to end the 6×1 work scale, the Public Security PEC, and the Rare Lands Bill. Government leaders Camilo Santana and Randolfe Rodrigues emphasized the goal is to accelerate votes before the 2026 municipal elections."
       },
       "content": "O presidente Luiz Inácio Lula da Silva (PT) vai se reunir novamente com o presidente do Senado, Davi Alcolumbre (União-AP) , nesta quinta-feira (13/8). A informação foi dada pelos líderes do governo no Senado, Camilo Santana (PT-CE), e no Congresso, Randolfe Rodrigues (PT-AP). Os líderes dos poderes se reuniram na quarta-feira (12/8), no Palácio da Alvorada , residência oficial da Presidência. Os encontros acontecem no esforço de reaproximação entre os presidentes após meses de distanciamento. A reunião desta quinta deve ser restrita aos dois. Segundo Santana, a relação entre os líderes está distensionada e, com isso, o governo espera destravar as três pautas prioritárias: a PEC do fim da escala 6×1, a PEC da Segurança Pública e o PL das Terras Raras. Leia também Brasil Lula e Alcolumbre retomam relação na véspera da eleição e de olho em 2027 Brasil Reaproximação com Alcolumbre ainda não destravou pautas de Lula Brasil Alcolumbre elogia reunião com Lula: “Importante para a democracia” Brasil Lula e Alcolumbre se reúnem, e ministro fala em retomada de diálogo “A gente quer que pelo menos essas três pautas sejam viabilizadas o mais rápido possível, antes das eleições”, destacou o senador. O líder do governo no Congresso, Randolfe Rodrigues, alegou que o encontro servirá para dialogar sobre as pautas de interesse do governo. “Essa reunião, agora, é basicamente para discussão da agenda de votações. TEmos mais uma semana de esforço concentrado e o governo está muito determinado a, nessa semana, procurar avançar, sobretudo na PEC do fim da escala 6×1”, disse.",
       "source_category": "mainstream",
-      "sentiment_per_candidate": {},
-      "edit_history": [],
-      "disclaimer_pt": "Análise algorítmica. Não representa pesquisa de opinião.",
-      "disclaimer_en": "Algorithmic analysis. Does not represent polling data.",
-      "sentiment_score": 0.0,
-      "confidence_score": 0.0,
-      "_sentiment_scores": {},
-      "prominence_score": 0.0
-    },
-    {
-      "id": "769bf48780ea6dc2",
-      "url": "https://www.bbc.com/portuguese/articles/c36d27g1d62o?at_medium=RSS&at_campaign=rss",
-      "title": "Como nova onda de ataques às vacinas gerou efeito reverso nas redes sociais, segundo levantamento",
-      "source": "BBC Brasil",
-      "published_at": "2026-08-13T16:55:14Z",
-      "collected_at": "2026-08-13T17:18:48Z",
-      "status": "raw",
-      "relevance_score": 0.0,
-      "relevance_signals": null,
-      "candidates_mentioned": [],
-      "topics": [],
-      "narrative_cluster_id": null,
-      "duplicate_of": null,
-      "summaries": {
-        "pt-BR": "",
-        "en-US": ""
+      "sentiment_per_candidate": {
+        "lula": "positivo"
       },
-      "content": "Ofensivas de Nikolas Ferreira e Eduardo Bolsonaro ampliaram a discussão sobre vacinação, mas foram seguidas por aumento das manifestações favoráveis à imunização; reação perdeu força por cerca de 48 horas antes de voltar a crescer",
-      "source_category": "international",
-      "sentiment_per_candidate": {},
-      "edit_history": [],
+      "edit_history": [
+        {
+          "tier": "editor",
+          "at": "2026-08-13T17:39:16Z",
+          "provider": "nvidia",
+          "action": "validated",
+          "changes": [
+            "summary_pt",
+            "summary_en"
+          ]
+        }
+      ],
       "disclaimer_pt": "Análise algorítmica. Não representa pesquisa de opinião.",
       "disclaimer_en": "Algorithmic analysis. Does not represent polling data.",
-      "sentiment_score": 0.0,
-      "confidence_score": 0.0,
-      "_sentiment_scores": {},
-      "prominence_score": 0.0
-    },
-    {
-      "id": "7687a8f4e2b15985",
-      "url": "https://www.metropoles.com/colunas/demetrio-vecchioli/andre-do-prado-tem-nova-vitoria-contra-salles-no-tre-sp",
-      "title": "André do Prado tem nova vitória contra Salles no TRE-SP",
-      "source": "Metropoles",
-      "published_at": "2026-08-13T16:51:51Z",
-      "collected_at": "2026-08-13T17:18:36Z",
-      "status": "raw",
-      "relevance_score": 0.0,
-      "relevance_signals": null,
-      "candidates_mentioned": [],
-      "topics": [],
-      "narrative_cluster_id": null,
-      "duplicate_of": null,
-      "summaries": {
-        "pt-BR": "",
-        "en-US": ""
+      "sentiment_score": 0.5,
+      "confidence_score": 1.0,
+      "_sentiment_scores": {
+        "lula": 0.5
       },
-      "content": "A Justiça Eleitoral de São Paulo determinou a remoção de mais um post relacionado ao ex-ministro Ricardo Salles (Novo) com críticas ao deputado estadual André do Prado (PL). Os dois são concorrentes ao Senado e tendem a dividir espaço entre o eleitorado de direita. A decisão, desta quarta-feira (12), intima a Meta, dona do Instagram , a excluir a postagem dentro de 24 horas, com multa diária de R$ 1 mil, limitada a R$ 50 mil, no caso de descumprimento. A representação foi proposta por André do Prado contra Ricardo Salles e o responsável, não identificado, pelo perfil “Ricardo Salles Senador SP” no Instagram. A conta, que se apresenta como “perfil oficial de apoio ao Ricardo Salles candidato ao Senado por São Paulo” e tem cerca de 15 mil seguidores, fez post afirmando que “não pode o maior colégio eleitoral votar no André do Prado”, o que o Tribunal Regional Eleitoral (TRE) entendeu como sendo um pedido de não-voto , tão irregular quanto o pedido de voto nesta fase de pré-campanha. Leia também São Paulo Campanha de Haddad pede ao MPE investigação sobre suposta abordagem São Paulo “Vaza daqui”, teriam dito policiais a motorista de Haddad em abordagem São Paulo Abordagem da PM acirra ânimos entre Haddad e Tarcísio “A composição gráfica, com a sobreposição de fotografias de agentes políticos e o destaque conferido aos nomes de figuras públicas, confere à mensagem feição eleitoral e constitui elemento contextual relevante para a compreensão da finalidade persuasiva da publicação. A permanência do conteúdo em rede social permite a continuidade de sua circulação e a ampliação de seu alcance perante o eleitorado durante período no qual a propaganda eleitoral ainda não é permitida”, escreveu a relatora Domitila Manssur. Na semana passada, o TRE-SP já havia aplicado duas multas no valor de R$ 5 mil a Salles por propaganda eleitoral antecipada e por impulsionamento de conteúdo negativo contra o adversário André do Prado. A decisão judicial ocorreu após representação do diretório estadual do PL contra um vídeo publicado por Salles em seu perfil no Instagram no qual ele se apresenta como pré-candidato ao Senado por São Paulo e afirma que o oponente não possui legitimidade para representar o eleitorado de direita. O vídeo intercala trechos de entrevistas com imagens criadas por inteligência artificial, entre as quais, está uma em que Prado aparece como uma marionete controlada por um dirigente partidário.",
-      "source_category": "mainstream",
-      "sentiment_per_candidate": {},
-      "edit_history": [],
-      "disclaimer_pt": "Análise algorítmica. Não representa pesquisa de opinião.",
-      "disclaimer_en": "Algorithmic analysis. Does not represent polling data.",
-      "sentiment_score": 0.0,
-      "confidence_score": 0.0,
-      "_sentiment_scores": {},
-      "prominence_score": 0.0
+      "prominence_score": 0.0,
+      "_ai_provider": "nvidia",
+      "_ai_model": "nvidia/nemotron-3-super-120b-a12b",
+      "ai_provider_editor": "nvidia/nemotron-3-super-120b-a12b",
+      "editor_note": null
     },
     {
       "id": "e1247aa03b2250e5",
@@ -326,27 +308,59 @@
       "source": "Veja",
       "published_at": "2026-08-13T16:47:57Z",
       "collected_at": "2026-08-13T17:18:45Z",
-      "status": "raw",
-      "relevance_score": 0.0,
-      "relevance_signals": null,
-      "candidates_mentioned": [],
-      "topics": [],
+      "status": "validated",
+      "relevance_score": 1.0,
+      "relevance_signals": {
+        "candidate_signal": 0.6,
+        "topic_signal": 0.3,
+        "keyword_signal": 0.15,
+        "source_signal": 0.0
+      },
+      "candidates_mentioned": [
+        "flavio-bolsonaro",
+        "renan-santos"
+      ],
+      "topics": [
+        "corrupcao",
+        "eleicoes"
+      ],
       "narrative_cluster_id": null,
       "duplicate_of": null,
       "summaries": {
-        "pt-BR": "",
-        "en-US": ""
+        "pt-BR": "O Partido Missão denunciou uma filiação fraudulenta envolvendo o nome de Flávio Bolsonaro, afirmando que seu sistema detectou a tentativa e tentou cancelá-la, mas o TSE rejeitou o pedido. O partido informou que o gabinete de Flávio foi notificado desde 2 de maio, mas não respondeu aos e-mails. Flávio Bolsonaro não conseguiu registrar sua candidatura por aparecer filiado ao Missão, e ambas as partes pediram investigação à PF.",
+        "en-US": "The Missão Party denounced a fraudulent affiliation involving Flávio Bolsonaro, stating its system detected the attempt and tried to cancel it, but the TSE rejected the request. The party said Flávio’s office was notified since May 2 but did not respond to emails. Bolsonaro could not register his candidacy due to appearing affiliated with Missão, and both parties requested a PF investigation."
       },
       "content": "O partido Missão , do candidato a presidente da República Renan Santos , soltou uma nota na tarde desta quinta-feira, 13, para afirmar ter sido vítima de uma “filiação fraudulenta” envolvendo o nome do também presidenciável Flávio Bolsonaro (PL). A legenda afirma que o gabinete do senador foi avisado sobre a ação. “Nosso sistema, ao notar a fraude, tentou realizar no mesmo dia o cancelamento da filiação, ação que foi rejeitada pelo TSE . O gabinete de Flávio foi informado dessa tentativa de filiação desde o dia 2 deste mês. Consta em nosso sistema que os e-mails enviados foram abertos, mas não foram respondidos”, disse trecho da nota (leia íntegra abaixo). Nesta quinta, ao tentar registrar a candidatura junto à Justiça Eleitoral, Flávio Bolsonaro não conseguiu realizar o ato, porque apareceu filiado ao Missão e não mais ao PL. A campanha do senador carioca pedirá abertura de investigação junto à Polícia Federal (PF) para apurar o caso, o que também foi solicitado pelo Missão. Lula x Flávio: surpresas e reviravoltas da corrida eleitoral Continua após a publicidade O que diz o Missão O Partido Missão vem a público informar que foi vítima de uma tentativa de filiação fraudulenta de Flávio Bolsonaro. Nosso sistema, ao notar a fraude, tentou realizar no mesmo dia o cancelamento da filiação, ação que foi rejeitada pelo TSE. O gabinete de Flávio foi informado dessa tentativa de filiação desde o dia 2 deste mês. Consta em nosso sistema que os e-mails enviados foram abertos, mas não foram respondidos. Continua após a publicidade A Missão já está adotando todas as providências cabíveis junto à Polícia Federal e ao TSE, a fim de que os responsáveis pelo crime e pela fraude sejam identificados e exemplarmente punidos. Um relatório com todos os logs, e-mails e IPs será disponibilizado para a imprensa e autoridades. Ressaltamos, ainda, que não é do interesse do partido acolher em seus quadros um parlamentar que, para além do desalinhamento ideológico, figura em acusações e suspeitas de envolvimento em esquemas de corrupção. Continua após a publicidade O Partido Missão reafirma que não compactua com filiações de natureza fraudulenta e repudia veementemente episódios dessa natureza. Colocamo-nos à disposição das autoridades competentes para a completa apuração dos fatos . Publicidade",
       "source_category": "magazine",
-      "sentiment_per_candidate": {},
-      "edit_history": [],
+      "sentiment_per_candidate": {
+        "flavio-bolsonaro": "negativo",
+        "renan-santos": "neutro"
+      },
+      "edit_history": [
+        {
+          "tier": "editor",
+          "at": "2026-08-13T17:40:28Z",
+          "provider": "nvidia",
+          "action": "validated",
+          "changes": [
+            "summary_pt",
+            "summary_en"
+          ]
+        }
+      ],
       "disclaimer_pt": "Análise algorítmica. Não representa pesquisa de opinião.",
       "disclaimer_en": "Algorithmic analysis. Does not represent polling data.",
-      "sentiment_score": 0.0,
-      "confidence_score": 0.0,
-      "_sentiment_scores": {},
-      "prominence_score": 0.0
+      "sentiment_score": -0.15,
+      "confidence_score": 1.0,
+      "_sentiment_scores": {
+        "flavio-bolsonaro": -0.4,
+        "renan-santos": 0.1
+      },
+      "prominence_score": 0.0,
+      "_ai_provider": "nvidia",
+      "_ai_model": "nvidia/nemotron-3-super-120b-a12b",
+      "ai_provider_editor": "nvidia/nemotron-3-super-120b-a12b",
+      "editor_note": null
     },
     {
       "id": "32d0337099617f1e",
@@ -355,56 +369,57 @@
       "source": "O Antagonista",
       "published_at": "2026-08-13T16:46:51Z",
       "collected_at": "2026-08-13T17:18:44Z",
-      "status": "raw",
-      "relevance_score": 0.0,
-      "relevance_signals": null,
-      "candidates_mentioned": [],
-      "topics": [],
+      "status": "validated",
+      "relevance_score": 1.0,
+      "relevance_signals": {
+        "candidate_signal": 0.5,
+        "topic_signal": 0.3,
+        "keyword_signal": 0.15,
+        "source_signal": 0.05
+      },
+      "candidates_mentioned": [
+        "flavio-bolsonaro"
+      ],
+      "topics": [
+        "eleicoes",
+        "corrupcao",
+        "midia"
+      ],
       "narrative_cluster_id": null,
       "duplicate_of": null,
       "summaries": {
-        "pt-BR": "",
-        "en-US": ""
+        "pt-BR": "O senador Flávio Bolsonaro (PL-RJ), pré-candidato a presidente, teve seu nome erroneamente vinculado ao partido Missão nos sistemas do TSE, apesar de estar filiado ao Partido Liberal. A Missão alegou fraude e informou estar adotando medidas junto à Polícia Federal e à Corte Eleitoral para corrigir o registro. O caso levanta suspeitas de manipulação de dados eleitorais em ano eleitoral.",
+        "en-US": "Senator Flávio Bolsonaro (PL-RJ), a pre-candidate for president, was erroneously linked to the Mission party in TSE systems despite being affiliated with the Liberal Party. The Mission party stated on Thursday that it was a case of fraud and said it is taking all appropriate actions with the Federal Police and the Electoral Court. The incident raises suspicions of electoral data manipulation in an election year."
       },
       "content": "O senador e pré-candidato a presidente, Flávio Bolsonaro (PL-RJ), apareceu como filiado à Missão nos sistemas do Tribunal Superior Eleitoral (TSE), apesar de ser integrante do Partido Liberal. A Missão afirmou nesta quinta-feira, 13, em nota, que houve uma fraude e que está adotando “todas as providências cabíveis junto à Polícia Federal” e à Corte... The post Flávio Bolsonaro aparece filiado ao partido Missão appeared first on O Antagonista .",
       "source_category": "politics",
-      "sentiment_per_candidate": {},
-      "edit_history": [],
-      "disclaimer_pt": "Análise algorítmica. Não representa pesquisa de opinião.",
-      "disclaimer_en": "Algorithmic analysis. Does not represent polling data.",
-      "sentiment_score": 0.0,
-      "confidence_score": 0.0,
-      "_sentiment_scores": {},
-      "prominence_score": 0.0
-    },
-    {
-      "id": "78f2f9728f4ed2bc",
-      "url": "https://oantagonista.com.br/brasil/haddad-aciona-justica-eleitoral-apos-motorista-ser-seguido-pela-pm/",
-      "title": "Haddad aciona Justiça Eleitoral após motorista ser seguido pela PM",
-      "source": "O Antagonista",
-      "published_at": "2026-08-13T16:44:22Z",
-      "collected_at": "2026-08-13T17:18:44Z",
-      "status": "raw",
-      "relevance_score": 0.0,
-      "relevance_signals": null,
-      "candidates_mentioned": [],
-      "topics": [],
-      "narrative_cluster_id": null,
-      "duplicate_of": null,
-      "summaries": {
-        "pt-BR": "",
-        "en-US": ""
+      "sentiment_per_candidate": {
+        "flavio-bolsonaro": "negativo"
       },
-      "content": "A coligação que apoia Fernando Haddad (PT) acionou a Procuradoria Regional Eleitoral de São Paulo para pedir a apuração da abordagem feita pela Polícia Militar ao motorista do candidato após deixá-lo em casa, na noite de terça-feira, 11. A Coligação Desperta São Paulo apresentou uma Notícia de Fato e pediu a abertura de um Procedimento... The post Haddad aciona Justiça Eleitoral após motorista ser seguido pela PM appeared first on O Antagonista .",
-      "source_category": "politics",
-      "sentiment_per_candidate": {},
-      "edit_history": [],
+      "edit_history": [
+        {
+          "tier": "editor",
+          "at": "2026-08-13T17:41:11Z",
+          "provider": "nvidia",
+          "action": "validated",
+          "changes": [
+            "summary_pt",
+            "summary_en"
+          ]
+        }
+      ],
       "disclaimer_pt": "Análise algorítmica. Não representa pesquisa de opinião.",
       "disclaimer_en": "Algorithmic analysis. Does not represent polling data.",
-      "sentiment_score": 0.0,
-      "confidence_score": 0.0,
-      "_sentiment_scores": {},
-      "prominence_score": 0.0
+      "sentiment_score": -0.2,
+      "confidence_score": 1.0,
+      "_sentiment_scores": {
+        "flavio-bolsonaro": -0.2
+      },
+      "prominence_score": 0.0,
+      "_ai_provider": "nvidia",
+      "_ai_model": "nvidia/nemotron-3-super-120b-a12b",
+      "ai_provider_editor": "nvidia/nemotron-3-super-120b-a12b",
+      "editor_note": null
     },
     {
       "id": "543551e00d0e4dcd",
@@ -413,27 +428,60 @@
       "source": "Metropoles",
       "published_at": "2026-08-13T16:43:33Z",
       "collected_at": "2026-08-13T17:18:36Z",
-      "status": "raw",
-      "relevance_score": 0.0,
-      "relevance_signals": null,
-      "candidates_mentioned": [],
-      "topics": [],
+      "status": "validated",
+      "relevance_score": 1.0,
+      "relevance_signals": {
+        "candidate_signal": 0.6,
+        "topic_signal": 0.3,
+        "keyword_signal": 0.15,
+        "source_signal": 0.0
+      },
+      "candidates_mentioned": [
+        "renan-santos",
+        "flavio-bolsonaro"
+      ],
+      "topics": [
+        "eleicoes",
+        "corrupcao",
+        "midia"
+      ],
       "narrative_cluster_id": null,
       "duplicate_of": null,
       "summaries": {
-        "pt-BR": "",
-        "en-US": ""
+        "pt-BR": "Renan Santos e Kim Kataguiri brincaram com a filiação não autorizada de Flávio Bolsonaro ao partido Missão, que impediu o registro de sua candidatura presidencial no sistema do TSE. Ambos afirmaram que a situação foi resultado de um cadastro feito por um representante do partido, não de um ataque hacker, e Flávio pretende corrigir o registro com possível acionamento da PF.",
+        "en-US": "Renan Santos and Kim Kataguiri joked about the unauthorized registration of Flávio Bolsonaro into the Missão party, which blocked his presidential candidacy in the TSE system. They stated the filings were made by a party representative, not due to a hacker attack, and Flávio plans to correct the record, possibly involving the Federal Police."
       },
       "content": "O candidato à Presidência, Renan Santos (Missão) e o deputado federal Kim Kataguiri (Missão) brincaram com a filiação de Flávio Bolsonaro ao partido Missão , que constou nos sistemas da Justiça eleitoral a partir da noite de quarta-feira (12/8), e impediu o filho do ex-presdiente Jair Bolsonaro de registrar oficialmente a candidatura à Presidência. Leia também Brasil TSE descarta ataque hacker e diz que Missão filiou Flávio Brasil Lula no PL e Bolsonaro no PT: filiações fake além de Flávio no Missão Igor Gadelha “Rua dos Bandidos, bairro Miliciano”: o endereço de Flávio no Missão Brasil Flávio pede correção de filiação ao TSE e campanha deve acionar PF Ambos estavam em uma transmissão ao vivo quando souberam da notícia de que a candidatura de Flávio foi barrada devido à filiação à legenda criada por Renan Santos em 2025. “No sistema do TSE, o Flávio não conseguiu registrar a candidatura dele porque filiaram ele na Missão”, diz Kim, rindo da situação. “É engraçado, mas não façam isso”, complementa o parlamentar. Renan olha para a câmera e pede que “não façam isso”. “A gente ganha do Flávio de outro jeito”, diz o candidato à Presidência. TSE nega ataque hacker O Tribunal Superior Eleitoral (TSE) negou que tenha havido um ataque hacker ao sistema da Justiça eleitoral , e afirmou que um representante do Missão foi o responsável por filiar Flávio à legenda. “O TSE informa que não houve hackeamento do sistema e, sim, o cadastro da filiação por parte de um representante do Missão”, informou o TSE ao Metrópoles . O jurídico do candidato avalia levar o caso à Polícia Federal e já acionou o TSE para pedir a correção do registro.",
       "source_category": "mainstream",
-      "sentiment_per_candidate": {},
-      "edit_history": [],
+      "sentiment_per_candidate": {
+        "renan-santos": "neutro",
+        "flavio-bolsonaro": "negativo"
+      },
+      "edit_history": [
+        {
+          "tier": "editor",
+          "at": "2026-08-13T17:42:09Z",
+          "provider": "nvidia",
+          "action": "validated",
+          "changes": [
+            "summary_pt",
+            "summary_en"
+          ]
+        }
+      ],
       "disclaimer_pt": "Análise algorítmica. Não representa pesquisa de opinião.",
       "disclaimer_en": "Algorithmic analysis. Does not represent polling data.",
-      "sentiment_score": 0.0,
-      "confidence_score": 0.0,
-      "_sentiment_scores": {},
-      "prominence_score": 0.0
+      "sentiment_score": -0.3,
+      "confidence_score": 1.0,
+      "_sentiment_scores": {
+        "renan-santos": -0.1,
+        "flavio-bolsonaro": -0.5
+      },
+      "prominence_score": 0.0,
+      "_ai_provider": "nvidia",
+      "_ai_model": "nvidia/nemotron-3-super-120b-a12b",
+      "ai_provider_editor": "nvidia/nemotron-3-super-120b-a12b",
+      "editor_note": null
     },
     {
       "id": "a323905345377afa",
@@ -442,56 +490,56 @@
       "source": "Estadao Politica",
       "published_at": "2026-08-13T16:42:56Z",
       "collected_at": "2026-08-13T17:18:34Z",
-      "status": "raw",
-      "relevance_score": 0.0,
-      "relevance_signals": null,
-      "candidates_mentioned": [],
-      "topics": [],
+      "status": "validated",
+      "relevance_score": 0.95,
+      "relevance_signals": {
+        "candidate_signal": 0.5,
+        "topic_signal": 0.3,
+        "keyword_signal": 0.15,
+        "source_signal": 0.0
+      },
+      "candidates_mentioned": [
+        "flavio-bolsonaro"
+      ],
+      "topics": [
+        "eleicoes",
+        "corrupcao"
+      ],
       "narrative_cluster_id": null,
       "duplicate_of": null,
       "summaries": {
-        "pt-BR": "",
-        "en-US": ""
+        "pt-BR": "A candidatura de Flávio Bolsonaro (PL-RJ) à Presidência sofreu atraso no registro devido a uma fraude em seu cadastro eleitoral, que o mostra como filiado ao partido Missão em vez do PL. A campanha afirma tratar-se de uma 'molecagem' e diz que a situação será resolvida ainda nesta quinta-feira. O partido Missão alega ser vítima de uma tentativa de filiação fraudulenta e afirma já ter notificado a campanha desde o dia 2 do mês.",
+        "en-US": "Flávio Bolsonaro's (PL-RJ) presidential candidacy registration was delayed due to a fraud in his electoral registration, which incorrectly shows him as affiliated with the Missão party instead of the PL. His campaign claims it was a prank and says the issue will be resolved by the end of the day. Missão party states it was the victim of a fraudulent affiliation attempt and says it notified Bolsonaro's team as early as the 2nd of the month."
       },
       "content": "BRASÍLIA – Uma fraude atrasou o registro da candidatura do senador Flávio Bolsonaro (PL-RJ) à Presidência da República nesta quinta-feira, 13. A equipe dele notou que o candidato aparecia filiado à legenda Missão , e não ao Partido Liberal (PL) . Dados da Justiça Eleitoral consultados pelo Estadão mostram a desfiliação de Flávio do PL no dia anterior, quarta-feira, 12, e agora seu nome consta como filiado ao Missão. O registro dele no PL é de novembro de 2021. Missão é o partido de um dos adversário de Flávio na corrida eleitoral, Renan Santos . A legenda foi criada pelos integrantes do Movimento Brasil Livre (MBL), que se popularizou ao organizar protestos de rua pelo impeachment de Dilma Rousseff. Um integrante da campanha de Flávio afirma ter se tratado de uma “molecagem que alguém fez” e que a situação cadastral do presidenciável será resolvida logo, para que a candidatura seja formalizada ainda nesta quinta. Os advogados da campanha, Maria Cláudia Bucchianeri e Tracy Reinaldet, estão incumbidos de esclarecer a questão junto ao Tribunal Superior Eleitoral (TSE). A equipe quer saber se alguém invadiu o sistema, de onde e por qual login, para pregar a peça no candidato. Em nota, o Missão informou que foi “vítima de uma tentativa de filiação fraudulenta de Flávio Bolsonaro”. “Nosso sistema, ao notar a fraude, tentou realizar no mesmo dia o cancelamento da filiação, ação que foi rejeitada pelo TSE”, diz a nota. “O gabinete de Flávio foi informado dessa tentativa de filiação desde o dia 2 deste mês. Consta em nosso sistema que os e-mails enviados foram abertos, mas não foram respondidos”, escreve o partido. “A Missão já está adotando todas as providências cabíveis junto à Polícia Federal e ao TSE, a fim de que os responsáveis pelo crime e pela fraude sejam identificados e exemplarmente punidos. Um relatório com todos os logs, e-mails e IPs será disponibilizado para a imprensa e autoridades.” O partido aproveitou a nota para fazer críticas a Flávio, adversário de Renan Santos na disputa ao Planalto. “Ressaltamos, ainda, que não é do interesse do partido acolher em seus quadros um parlamentar que, para além do desalinhamento ideológico, figura em acusações e suspeitas de envolvimento em esquemas de corrupção.”",
       "source_category": "mainstream",
-      "sentiment_per_candidate": {},
-      "edit_history": [],
-      "disclaimer_pt": "Análise algorítmica. Não representa pesquisa de opinião.",
-      "disclaimer_en": "Algorithmic analysis. Does not represent polling data.",
-      "sentiment_score": 0.0,
-      "confidence_score": 0.0,
-      "_sentiment_scores": {},
-      "prominence_score": 0.0
-    },
-    {
-      "id": "478827f3e8f587a2",
-      "url": "https://www.metropoles.com/colunas/mirelle-pinheiro/pf-desmonta-esquema-que-levava-brasileiros-ilegalmente-aos-eua",
-      "title": "PF desmonta esquema que levava brasileiros ilegalmente aos EUA",
-      "source": "Metropoles",
-      "published_at": "2026-08-13T16:42:16Z",
-      "collected_at": "2026-08-13T17:18:36Z",
-      "status": "raw",
-      "relevance_score": 0.0,
-      "relevance_signals": null,
-      "candidates_mentioned": [],
-      "topics": [],
-      "narrative_cluster_id": null,
-      "duplicate_of": null,
-      "summaries": {
-        "pt-BR": "",
-        "en-US": ""
+      "sentiment_per_candidate": {
+        "flavio-bolsonaro": "negativo"
       },
-      "content": "A Polícia Federal (PF) deflagrou, nesta quinta-feira (13/8), a Operação Broken Road para desarticular um grupo suspeito de promover a migração irregular de brasileiros para os Estados Unidos . De acordo com as investigações, os integrantes utilizavam dados e cartões de terceiros para comprar passagens aéreas de forma fraudulenta. Os bilhetes eram adquiridos separadamente, com o objetivo de dificultar o rastreamento das viagens. Entre os migrantes estavam menores de idade. Leia também Mirelle Pinheiro Adolescente é flagrada pela PF com droga escondida em estepe de carro Mirelle Pinheiro PF investiga ataque hacker a banco com prejuízo de R$ 180 milhões Mirelle Pinheiro PF investiga servidores por fraudes e corrupção em prefeitura da BA Nesta quinta, foram cumpridos cinco mandados de busca e apreensão e um de prisão preventiva, além do bloqueio e sequestro de bens no valor de R$ 2,7 milhões. As medidas foram realizadas em Alto Rio Novo (ES), Mantena (MG), Vila Velha (ES) e Aracruz (ES). Durante a operação, os policiais apreenderam celulares, três armas de fogo e cerca de R$ 34 mil em espécie. O principal investigado foi preso por determinação da Justiça Federal. Os investigados poderão responder pelos crimes de promoção de migração irregular, envio irregular de menor ao exterior e associação criminosa.",
-      "source_category": "mainstream",
-      "sentiment_per_candidate": {},
-      "edit_history": [],
+      "edit_history": [
+        {
+          "tier": "editor",
+          "at": "2026-08-13T17:42:39Z",
+          "provider": "nvidia",
+          "action": "validated",
+          "changes": [
+            "summary_pt",
+            "summary_en"
+          ]
+        }
+      ],
       "disclaimer_pt": "Análise algorítmica. Não representa pesquisa de opinião.",
       "disclaimer_en": "Algorithmic analysis. Does not represent polling data.",
-      "sentiment_score": 0.0,
-      "confidence_score": 0.0,
-      "_sentiment_scores": {},
-      "prominence_score": 0.0
+      "sentiment_score": -0.6,
+      "confidence_score": 1.0,
+      "_sentiment_scores": {
+        "flavio-bolsonaro": -0.6
+      },
+      "prominence_score": 0.0,
+      "_ai_provider": "nvidia",
+      "_ai_model": "nvidia/nemotron-3-super-120b-a12b",
+      "ai_provider_editor": "nvidia/nemotron-3-super-120b-a12b",
+      "editor_note": null
     },
     {
       "id": "ed6a44cf5ca8aac8",
@@ -500,27 +548,56 @@
       "source": "Veja",
       "published_at": "2026-08-13T16:40:20Z",
       "collected_at": "2026-08-13T17:18:45Z",
-      "status": "raw",
-      "relevance_score": 0.0,
-      "relevance_signals": null,
-      "candidates_mentioned": [],
-      "topics": [],
+      "status": "validated",
+      "relevance_score": 0.9,
+      "relevance_signals": {
+        "candidate_signal": 0.5,
+        "topic_signal": 0.25,
+        "keyword_signal": 0.15,
+        "source_signal": 0.0
+      },
+      "candidates_mentioned": [
+        "flavio-bolsonaro"
+      ],
+      "topics": [
+        "midia",
+        "eleicoes"
+      ],
       "narrative_cluster_id": null,
       "duplicate_of": null,
       "summaries": {
-        "pt-BR": "",
-        "en-US": ""
+        "pt-BR": "O TSE adiou a reunião prevista para quinta-feira para discutir os limites do uso da inteligência artificial nas campanhas eleitorais, após a sessão plenária se prolongar além do esperado. Uma das principais questões em debate será se deepfakes serão proibidos em todas as situações ou apenas quando houver potencial de enganar o eleitor. O entendimento afetará a análise de um vídeo gerado por IA do ex-presidente Jair Bolsonaro, divulgado na convenção que confirmou a candidatura de seu filho, Flávio Bolsonaro.",
+        "en-US": "The TSE postponed Thursday's meeting to discuss the limits of AI use in electoral campaigns after the morning plenary session ran longer than expected. A key issue under debate is whether deepfakes should be banned in all cases or only when they risk misleading voters. The decision will influence the evaluation of an AI-generated video of former President Jair Bolsonaro, shared during the convention that confirmed his son Flávio Bolsonaro's candidacy."
       },
       "content": "O TSE adiou a reunião que estava prevista para ocorrer nesta quinta-feira para discutir os limites da utilização da inteligência artificial na campanha eleitoral. A ideia era realizar o encontro após a sessão plenária, realizada de manhã, mas os julgamentos demoraram mais do que o previsto inicialmente. Uma nova data ainda será definida. Uma das principais definições será se conteúdos criados artificialmente (chamados de deepfakes) são proibidos em todas as situações ou apenas quando há o potencial de enganar o eleitor. Continua após a publicidade O entendimento deve afetar a análise de um vídeo do ex-presidente Jair Bolsonaro, criado por IA e divulgado na convenção que confirmou a candidatura à Presidência do senador Flávio Bolsonaro (PL-RJ). Publicidade",
       "source_category": "magazine",
-      "sentiment_per_candidate": {},
-      "edit_history": [],
+      "sentiment_per_candidate": {
+        "flavio-bolsonaro": "neutro"
+      },
+      "edit_history": [
+        {
+          "tier": "editor",
+          "at": "2026-08-13T17:43:40Z",
+          "provider": "nvidia",
+          "action": "validated",
+          "changes": [
+            "summary_pt",
+            "summary_en"
+          ]
+        }
+      ],
       "disclaimer_pt": "Análise algorítmica. Não representa pesquisa de opinião.",
       "disclaimer_en": "Algorithmic analysis. Does not represent polling data.",
       "sentiment_score": 0.0,
-      "confidence_score": 0.0,
-      "_sentiment_scores": {},
-      "prominence_score": 0.0
+      "confidence_score": 1.0,
+      "_sentiment_scores": {
+        "flavio-bolsonaro": 0.0
+      },
+      "prominence_score": 0.0,
+      "_ai_provider": "nvidia",
+      "_ai_model": "nvidia/nemotron-3-super-120b-a12b",
+      "ai_provider_editor": "nvidia/nemotron-3-super-120b-a12b",
+      "editor_note": null
     },
     {
       "id": "564c03e094a37180",
@@ -529,27 +606,56 @@
       "source": "Veja",
       "published_at": "2026-08-13T16:40:19Z",
       "collected_at": "2026-08-13T17:18:45Z",
-      "status": "raw",
-      "relevance_score": 0.0,
-      "relevance_signals": null,
-      "candidates_mentioned": [],
-      "topics": [],
+      "status": "validated",
+      "relevance_score": 0.9,
+      "relevance_signals": {
+        "candidate_signal": 0.5,
+        "topic_signal": 0.25,
+        "keyword_signal": 0.15,
+        "source_signal": 0.0
+      },
+      "candidates_mentioned": [
+        "tarcisio"
+      ],
+      "topics": [
+        "economia",
+        "eleicoes"
+      ],
       "narrative_cluster_id": null,
       "duplicate_of": null,
       "summaries": {
-        "pt-BR": "",
-        "en-US": ""
+        "pt-BR": "Fernando Haddad (PT) declarou patrimônio de R$ 861.217,25 nas eleições de 2026 para governador de São Paulo, com destaque para aplicação financeira de R$ 359.328,43 e participação em empresa. Seu patrimônio cresceu 44% desde 2022, quando declarou R$ 595.059,29. Tarcísio de Freitas (Republicanos), seu principal oponente, declarou quase R$ 2,7 milhões em bens, com crescimento de cerca de R$ 400.000 desde 2022.",
+        "en-US": "Fernando Haddad (PT) declared a total wealth of R$ 861,217.25 in the 2026 São Paulo gubernatorial election, with his largest asset being a financial investment of R$ 359,328.43. His patrimony increased by 44% compared to 2022, when he declared R$ 595,059.29. His main opponent, Tarcísio de Freitas (Republicans), declared nearly R$ 2.7 million in assets, representing a growth of approximately R$ 400,000 since 2022."
       },
       "content": "Principal opositor de Tarcísio de Freitas (Republicanos) na disputa pelo governo de São Paulo nas eleições deste ano, o ex-ministro da Fazenda Fernando Haddad (PT) declarou patrimônio total de 861.217,25 reais à Justiça Eleitoral. Os dados estão disponíveis no sistema “Divulgacand”. De acordo com os dados, uma aplicação financeira no valor de 359.328,43 reais é o bem mais valioso do político. Na sequência, Haddad tem participações na empresa Khlap Administração Participações Ltda no valor de 140.446,26 reais. Na declaração, há ainda citação a 26,37% da casa situada no bairro Planalto Paulista, na cidade de São Paulo, que representa 183.000 reais. O restante do patrimônio de Haddad gira em torno de aplicação, caderneta de poupança e uma conta corrente no Banco do Brasil. Esta, representa pouco mais de 100.000 reais. A empresa “Haddad e Haddad Consultoria Empresarial Ltda” aparece no sistema da Justiça Eleitoral com valor de 1o reais. Ao comparar com 2022, quando também disputou o Palácio dos Bandeirantes, os bens de Haddad têm diferença positiva em 44%. Na ocasião, ele declarou 595.059,29 reais. Tarcísio também teve aumento patrimonial Já Tarcísio registrou sua candidatura na sexta-feira, 7. Ele declarou ter quase 2,7 milhões de reais em bens, sendo 525,6 mil reais em uma caderneta de poupança, pouco mais de 33 mil reais em aplicação de renda fixa, outra caderneta de poupança com 500 reais e um imóvel em Brasília avaliado em pouco mais de 2,1 milhões de reais. Continua após a publicidade Em relação a 2022, ano em que foi eleito governador de São Paulo, o patrimônio do ex-ministro de Jair Bolsonaro cresceu cerca de 400.000 reais, uma vez que ele declarou à época ter 2,3 milhões de reais em bens. Como mudou o patrimônio dos deputados mais votados de 2022 Publicidade",
       "source_category": "magazine",
-      "sentiment_per_candidate": {},
-      "edit_history": [],
+      "sentiment_per_candidate": {
+        "tarcisio": "negativo"
+      },
+      "edit_history": [
+        {
+          "tier": "editor",
+          "at": "2026-08-13T17:44:36Z",
+          "provider": "nvidia",
+          "action": "validated",
+          "changes": [
+            "summary_pt",
+            "summary_en"
+          ]
+        }
+      ],
       "disclaimer_pt": "Análise algorítmica. Não representa pesquisa de opinião.",
       "disclaimer_en": "Algorithmic analysis. Does not represent polling data.",
-      "sentiment_score": 0.0,
-      "confidence_score": 0.0,
-      "_sentiment_scores": {},
-      "prominence_score": 0.0
+      "sentiment_score": -0.3,
+      "confidence_score": 1.0,
+      "_sentiment_scores": {
+        "tarcisio": -0.3
+      },
+      "prominence_score": 0.0,
+      "_ai_provider": "nvidia",
+      "_ai_model": "nvidia/nemotron-3-super-120b-a12b",
+      "ai_provider_editor": "nvidia/nemotron-3-super-120b-a12b",
+      "editor_note": null
     },
     {
       "id": "f630b9698b71b834",
@@ -619,27 +725,56 @@
       "source": "Estadao Politica",
       "published_at": "2026-08-13T16:38:24Z",
       "collected_at": "2026-08-13T17:18:34Z",
-      "status": "raw",
-      "relevance_score": 0.0,
-      "relevance_signals": null,
-      "candidates_mentioned": [],
-      "topics": [],
+      "status": "validated",
+      "relevance_score": 0.9,
+      "relevance_signals": {
+        "candidate_signal": 0.5,
+        "topic_signal": 0.3,
+        "keyword_signal": 0.1,
+        "source_signal": 0.0
+      },
+      "candidates_mentioned": [
+        "lula"
+      ],
+      "topics": [
+        "corrupcao",
+        "eleicoes"
+      ],
       "narrative_cluster_id": null,
       "duplicate_of": null,
       "summaries": {
-        "pt-BR": "",
-        "en-US": ""
+        "pt-BR": "O presidente Lula gravou vídeos de campanha para apoiar três petistas da Bahia envolvidos no caso Banco Master: o senador Jaques Wagner, o ex-ministro Rui Costa e o governador Jerônimo Rodrigues. Wagner teve R$ 400 mil apreendidos em operação da PF ligada ao banqueiro Daniel Vorcaro, enquanto Costa e Rodrigues enfrentam questionamentos sobre o CredCesta, mecanismo de desconto em salário operado pelo Banco Master. Lula defende o apoio com base na presunção da inocência, citando o histórico político do PT na Bahia e a importância do estado para suas vitórias presidenciais desde 2002.",
+        "en-US": "President Lula recorded campaign videos to support three Bahia-based PT politicians implicated in the Banco Master case: Senator Jaques Wagner, former Minister Rui Costa, and Governor Jerônimo Rodrigues. Wagner had over R$ 400,000 seized in a PF raid linked to banker Daniel Vorcaro, while Costa and Rodrigues face scrutiny over the CredCesta payroll-deduction card scheme operated by Banco Master. Lula defends his support by invoking the presumption of innocence, citing the PT’s electoral dominance in Bahia since 2006 and the state’s strategic importance in his presidential victories since 2002."
       },
       "content": "BRASÍLIA – O presidente Luiz Inácio Lula da Silva gravou nesta quinta-feira, 13, vídeos que poderão ser usados por seus aliados na campanha eleitoral. Entre os políticos estão três petistas envolvidos no caso do Banco Master. O ex-líder do PT, o senador Jaques Wagner , o ex-ministro da Casa Civil Rui Costa e o governador baiano Jerônimo Rodrigues. Jaques Wagner foi alvo de uma operação da Polícia Federal que apura irregularidades no caso do Banco Master. Na operação foram apreendidos mais de R$ 400 mil na residência do senador. Quando veio a público sua ligação com pessoas próximas ao banqueiro Daniel Vorcaro , Wagner foi obrigado a deixar a liderança do PT. Já Rui Costa e Jerônimo Rodrigues têm ainda explicações maiores a dar sobre o caso do CredCesta, um mecanismo de cartão de crédito que fazia descontos no salário de funcionários públicos e aposentados do governo do Estado da Bahia. Esse CredCesta era operado pelo próprio Banco Master. Lula conhece o senador Jaques Wagner há muito tempo. Eles são parceiros e amigos há anos. Lula inclusive cogitou que Wagner fosse o candidato do PT à Presidência da República em 2018 depois que ele acabou sendo preso. Wagner acabou rejeitando e Fernando Haddad acabou sendo o candidato petista. O envolvimento pessoal de Lula dando apoio explícito aos políticos de seu partido na Bahia tem relação com a importância do estado na disputa presidencial. O Estado é o que proporcionalmente está entre os que Lula recebe mais votos desde 2002, ano da sua primeira vitória na disputa presidencial. Outro fator tem relação com a política estadual. O PT vence a eleição para o governo local desde 2006 e pode chegar à sua quinta vitória consecutiva caso triunfe em outubro deste ano. O terceiro fator, essa geralmente pelo menos é a justificativa que o Lula dá em público, tem a ver com a presunção da inocência. Esse argumento ele usa, por exemplo, ao falar de Lulinha, o seu filho, no escândalo do INSS, que ele usou também nos escândalos ministeriais como o que envolveu o ex-ministro das Comunicações Juscelino Filho, e até mesmo para falar de adversários políticos como Ciro Nogueira. Ele costumeiramente fala que é preciso que as investigações se transcorram para então se tirar uma conclusão sobre a culpabilidade ou a inocência do investigado. Até o momento, as investigações sobre os três não estão concluídas e é isso que dá essa salvaguarda para que ele tenham ido nesta quinta-feira gravar vídeos de campanha com Lula.",
       "source_category": "mainstream",
-      "sentiment_per_candidate": {},
-      "edit_history": [],
+      "sentiment_per_candidate": {
+        "lula": "neutro"
+      },
+      "edit_history": [
+        {
+          "tier": "editor",
+          "at": "2026-08-13T17:45:18Z",
+          "provider": "nvidia",
+          "action": "validated",
+          "changes": [
+            "summary_pt",
+            "summary_en"
+          ]
+        }
+      ],
       "disclaimer_pt": "Análise algorítmica. Não representa pesquisa de opinião.",
       "disclaimer_en": "Algorithmic analysis. Does not represent polling data.",
-      "sentiment_score": 0.0,
-      "confidence_score": 0.0,
-      "_sentiment_scores": {},
-      "prominence_score": 0.0
+      "sentiment_score": 0.1,
+      "confidence_score": 1.0,
+      "_sentiment_scores": {
+        "lula": 0.1
+      },
+      "prominence_score": 0.0,
+      "_ai_provider": "nvidia",
+      "_ai_model": "nvidia/nemotron-3-super-120b-a12b",
+      "ai_provider_editor": "nvidia/nemotron-3-super-120b-a12b",
+      "editor_note": null
     },
     {
       "id": "999d1790ccdcb814",
@@ -648,85 +783,55 @@
       "source": "Metropoles",
       "published_at": "2026-08-13T16:37:23Z",
       "collected_at": "2026-08-13T17:18:36Z",
-      "status": "raw",
-      "relevance_score": 0.0,
-      "relevance_signals": null,
-      "candidates_mentioned": [],
-      "topics": [],
+      "status": "validated",
+      "relevance_score": 0.9,
+      "relevance_signals": {
+        "candidate_signal": 0.5,
+        "topic_signal": 0.25,
+        "keyword_signal": 0.15,
+        "source_signal": 0.0
+      },
+      "candidates_mentioned": [
+        "flavio-bolsonaro"
+      ],
+      "topics": [
+        "eleicoes"
+      ],
       "narrative_cluster_id": null,
       "duplicate_of": null,
       "summaries": {
-        "pt-BR": "",
-        "en-US": ""
+        "pt-BR": "A campanha de Flávio Bolsonaro (PL) planeja um ato na Avenida Paulista no 7 de Setembro, simbolicamente ligado aos eventos bolsonaristas do passado, como parte da estratégia eleitoral. A campanha inicia oficialmente no domingo (16/8) com um ato na Praia de Copacabana, seguido de uma motociata em Juiz de Fora, Minas Gerais, locais de forte simbolismo para o bolsonarismo. A escolha desses locais reforça a tentativa de replicar o formato e os símbolos usados por Jair Bolsonaro.",
+        "en-US": "Flávio Bolsonaro's (PL) campaign is planning an event on Avenida Paulista on September 7th, symbolically tied to past Bolsonarist gatherings, as part of its electoral strategy. The campaign officially launches on Sunday (August 16th) with an act at Copacabana Beach, followed by a motorcycle rally in Juiz de Fora, Minas Gerais—both locations of strong symbolic value for Bolsonarism. These choices aim to replicate the format and symbols used by Jair Bolsonaro."
       },
       "content": "A campanha de Flávio Bolsonaro (PL) avalia realizar um ato na Avenida Paulista , em São Paulo, no 7 de Setembro . Integrantes da equipe tratam a manifestação como parte da agenda eleitoral do senador e já trabalham com a data no planejamento da campanha. A escolha da Paulista reforça uma estratégia de Flávio de repetir formatos e símbolos usados pelo pai, o ex-presidente Jair Bolsonaro (PL) . O local virou um dos principais palcos de atos bolsonaristas nos últimos anos e também recebeu manifestações convocadas pelo ex-presidente no Dia da Independência. A campanha pretende adotar essa linha já na largada oficial da disputa eleitoral. Flávio deve iniciar a campanha neste domingo (16/8), primeiro dia permitido para a propaganda eleitoral, com um ato na Praia de Copacabana, no Rio de Janeiro . A organização trabalha com um formato parecido com o das manifestações realizadas por Jair Bolsonaro no local, que reuniam apoiadores na orla carioca. Leia também Brasil TSE descarta ataque hacker e diz que Missão filiou Flávio Brasil Flávio pede correção de filiação ao TSE e campanha deve acionar PF Brasil Flávio aparece filiado ao Missão e não consegue registrar candidatura No dia seguinte, Flávio deve participar de uma motociata em Juiz de Fora, em Minas Gerais. A cidade também tem peso simbólico para o bolsonarismo: foi lá que Jair Bolsonaro sofreu uma facada durante a campanha presidencial de 2018. Segundo organizadores, a concentração deve ocorrer, pela manhã, no aeroporto de Juiz de Fora. O passeio deve terminar próximo à Câmara Municipal.",
       "source_category": "mainstream",
-      "sentiment_per_candidate": {},
-      "edit_history": [],
-      "disclaimer_pt": "Análise algorítmica. Não representa pesquisa de opinião.",
-      "disclaimer_en": "Algorithmic analysis. Does not represent polling data.",
-      "sentiment_score": 0.0,
-      "confidence_score": 0.0,
-      "_sentiment_scores": {},
-      "prominence_score": 0.0
-    },
-    {
-      "id": "829dc60b7da77b70",
-      "url": "https://redir.folha.com.br/redir/online/poder/rss091/*https://www1.folha.uol.com.br/colunas/dora-kramer/2026/08/as-contas-fechadas-dos-partidos.shtml",
-      "title": "As contas fechadas dos partidos",
-      "source": "Folha Poder",
-      "published_at": "2026-08-13T16:34:00Z",
-      "collected_at": "2026-08-13T17:18:27Z",
-      "status": "raw",
-      "relevance_score": 0.0,
-      "relevance_signals": null,
-      "candidates_mentioned": [],
-      "topics": [],
-      "narrative_cluster_id": null,
-      "duplicate_of": null,
-      "summaries": {
-        "pt-BR": "",
-        "en-US": ""
+      "sentiment_per_candidate": {
+        "flavio-bolsonaro": "positivo"
       },
-      "content": "O nanico Partido da Causa Operária (PCO) caiu na rede da Polícia Federal . O presidente e figura constante em eleições presidenciais, Rui Costa Pimenta, foi alvo de busca e apreensão na operação Causa Própria, cujo nome não poderia ser mais adequado. Leia mais (08/13/2026 - 13h34)",
-      "source_category": "mainstream",
-      "sentiment_per_candidate": {},
-      "edit_history": [],
+      "edit_history": [
+        {
+          "tier": "editor",
+          "at": "2026-08-13T17:45:58Z",
+          "provider": "nvidia",
+          "action": "validated",
+          "changes": [
+            "summary_pt",
+            "summary_en"
+          ]
+        }
+      ],
       "disclaimer_pt": "Análise algorítmica. Não representa pesquisa de opinião.",
       "disclaimer_en": "Algorithmic analysis. Does not represent polling data.",
-      "sentiment_score": 0.0,
-      "confidence_score": 0.0,
-      "_sentiment_scores": {},
-      "prominence_score": 0.0
-    },
-    {
-      "id": "d8da6b16912615c0",
-      "url": "https://veja.abril.com.br/brasil/policia-investiga-fraude-em-contratos-de-obras-de-escolas-publicas-no-rj-e-sp/",
-      "title": "Polícia investiga fraude em contratos de obras de escolas públicas no RJ e SP",
-      "source": "Veja",
-      "published_at": "2026-08-13T16:32:54Z",
-      "collected_at": "2026-08-13T17:18:46Z",
-      "status": "raw",
-      "relevance_score": 0.0,
-      "relevance_signals": null,
-      "candidates_mentioned": [],
-      "topics": [],
-      "narrative_cluster_id": null,
-      "duplicate_of": null,
-      "summaries": {
-        "pt-BR": "",
-        "en-US": ""
+      "sentiment_score": 0.4,
+      "confidence_score": 1.0,
+      "_sentiment_scores": {
+        "flavio-bolsonaro": 0.4
       },
-      "content": "A Polícia Civil realiza nesta quinta-feira, 13, a primeira fase da Operação Sarasvati, que investiga um possível esquema de fraude na contratação de empresas para obras em escolas públicas. Ao todo, são cumpridos 20 mandados de busca e apreensão pela Delegacia Fazendária (Delfaz), com apoio do Departamento-Geral de Polícia Especializada (DGPE). A ação ocorre em Maricá, Campos dos Goytacazes, Cabo Frio, Angra dos Reis, Mangaratiba, São Gonçalo e nos bairros do Andaraí e Centro, na capital fluminense, além de São Paulo. Segundo as investigações, existem indícios de que contratos para reformas e intervenções em unidades de ensino teriam sido direcionados para determinadas empresas. A polícia apura ainda a participação de um ex-diretor regional, que teria indicado empresas beneficiadas nos processos de contratação. Entre as irregularidades investigadas estão obras executadas sem pedido dos responsáveis pelas escolas e intervenções maiores do que as originalmente solicitadas pelos diretores. Os mandados são cumpridos em endereços ligados às empresas investigadas e nas residências de sócios relacionados aos contratos sob suspeita. Os agentes procuram documentos, computadores, celulares e outros materiais que possam ajudar a esclarecer o funcionamento do suposto esquema. A operação está em andamento, e a Polícia Civil ainda deve analisar o material apreendido para avançar na identificação de eventuais responsáveis e de outras irregularidades. Publicidade",
-      "source_category": "magazine",
-      "sentiment_per_candidate": {},
-      "edit_history": [],
-      "disclaimer_pt": "Análise algorítmica. Não representa pesquisa de opinião.",
-      "disclaimer_en": "Algorithmic analysis. Does not represent polling data.",
-      "sentiment_score": 0.0,
-      "confidence_score": 0.0,
-      "_sentiment_scores": {},
-      "prominence_score": 0.0
+      "prominence_score": 0.0,
+      "_ai_provider": "nvidia",
+      "_ai_model": "nvidia/nemotron-3-super-120b-a12b",
+      "ai_provider_editor": "nvidia/nemotron-3-super-120b-a12b",
+      "editor_note": null
     },
     {
       "id": "b06b09aa7cc9ee85",
@@ -735,56 +840,57 @@
       "source": "O Antagonista",
       "published_at": "2026-08-13T16:32:10Z",
       "collected_at": "2026-08-13T17:18:44Z",
-      "status": "raw",
-      "relevance_score": 0.0,
-      "relevance_signals": null,
-      "candidates_mentioned": [],
-      "topics": [],
+      "status": "validated",
+      "relevance_score": 1.0,
+      "relevance_signals": {
+        "candidate_signal": 0.5,
+        "topic_signal": 0.3,
+        "keyword_signal": 0.15,
+        "source_signal": 0.05
+      },
+      "candidates_mentioned": [
+        "flavio-bolsonaro"
+      ],
+      "topics": [
+        "eleicoes",
+        "politica_externa",
+        "corrupcao"
+      ],
       "narrative_cluster_id": null,
       "duplicate_of": null,
       "summaries": {
-        "pt-BR": "",
-        "en-US": ""
+        "pt-BR": "O deputado Alfredo Gaspar (PL-AL) negou ter feito qualquer acordo com Arthur Lira (PP-AL) para ser escolhido como candidato a vice-presidente na chapa de Flávio Bolsonaro (PL-RJ). Ele afirmou que não procurou Flávio Bolsonaro para integrar a chapa e que sua indicação ocorreu de forma independente. A declaração foi dada em entrevista ao programa Meio-Dia em Brasília, da O Antagonista.",
+        "en-US": "Deputy Alfredo Gaspar (PL-AL) denied having any agreement with Arthur Lira (PP-AL) to be chosen as vice-presidential candidate on Flávio Bolsonaro's (PL-RJ) ticket. He stated he did not approach Bolsonaro to join the ticket and that his nomination was independent. The comment was made in an interview with Meio-Dia em Brasília, from O Antagonista."
       },
       "content": "O deputado Alfredo Gaspar (PL-AL) negou nesta quinta-feira, 13, que sua escolha para ser candidato a vice-presidente na chapa de Flávio Bolsonaro (PL-RJ) tenha sido resultado de um acordo político com o deputado Arthur Lira (PP-AL). Em entrevista ao Meio-Dia em Brasília, de O Antagonista, Gaspar afirmou que não procurou Flávio Bolsonaro para integrar a... The post Gaspar nega acordo com Lira para ser vice de Flávio appeared first on O Antagonista .",
       "source_category": "politics",
-      "sentiment_per_candidate": {},
-      "edit_history": [],
-      "disclaimer_pt": "Análise algorítmica. Não representa pesquisa de opinião.",
-      "disclaimer_en": "Algorithmic analysis. Does not represent polling data.",
-      "sentiment_score": 0.0,
-      "confidence_score": 0.0,
-      "_sentiment_scores": {},
-      "prominence_score": 0.0
-    },
-    {
-      "id": "1998bbc9a5f31825",
-      "url": "https://redir.folha.com.br/redir/online/poder/rss091/*https://www1.folha.uol.com.br/colunas/painel/2026/08/secretaria-de-seguranca-de-sp-descarta-intimidacao-de-policiais-a-haddad.shtml",
-      "title": "Secretaria de Segurança de SP descarta intimidação de policiais a Haddad",
-      "source": "Folha Poder",
-      "published_at": "2026-08-13T16:25:00Z",
-      "collected_at": "2026-08-13T17:18:27Z",
-      "status": "raw",
-      "relevance_score": 0.0,
-      "relevance_signals": null,
-      "candidates_mentioned": [],
-      "topics": [],
-      "narrative_cluster_id": null,
-      "duplicate_of": null,
-      "summaries": {
-        "pt-BR": "",
-        "en-US": ""
+      "sentiment_per_candidate": {
+        "flavio-bolsonaro": "positivo"
       },
-      "content": "A cúpula da Secretaria de Segurança Pública (SSP) de São Paulo , subordinada à gestão Tarcísio de Freitas (Republicanos), descarta que tenha havido tentativa de intimidação ao candidato ao governo do estado Fernando Haddad ( PT ) e sua equipe. Leia mais (08/13/2026 - 13h25)",
-      "source_category": "mainstream",
-      "sentiment_per_candidate": {},
-      "edit_history": [],
+      "edit_history": [
+        {
+          "tier": "editor",
+          "at": "2026-08-13T17:47:44Z",
+          "provider": "nvidia",
+          "action": "validated",
+          "changes": [
+            "summary_pt",
+            "summary_en"
+          ]
+        }
+      ],
       "disclaimer_pt": "Análise algorítmica. Não representa pesquisa de opinião.",
       "disclaimer_en": "Algorithmic analysis. Does not represent polling data.",
-      "sentiment_score": 0.0,
-      "confidence_score": 0.0,
-      "_sentiment_scores": {},
-      "prominence_score": 0.0
+      "sentiment_score": 0.2,
+      "confidence_score": 1.0,
+      "_sentiment_scores": {
+        "flavio-bolsonaro": 0.2
+      },
+      "prominence_score": 0.0,
+      "_ai_provider": "nvidia",
+      "_ai_model": "nvidia/nemotron-3-super-120b-a12b",
+      "ai_provider_editor": "nvidia/nemotron-3-super-120b-a12b",
+      "editor_note": null
     },
     {
       "id": "0c88a9a901bfacd1",
@@ -1139,27 +1245,49 @@
       "source": "TSE",
       "published_at": "2026-08-13T16:00:57Z",
       "collected_at": "2026-08-13T17:18:58Z",
-      "status": "raw",
-      "relevance_score": 0.0,
-      "relevance_signals": null,
+      "status": "validated",
+      "relevance_score": 0.5,
+      "relevance_signals": {
+        "candidate_signal": 0.0,
+        "topic_signal": 0.25,
+        "keyword_signal": 0.15,
+        "source_signal": 0.1
+      },
       "candidates_mentioned": [],
-      "topics": [],
+      "topics": [
+        "eleicoes"
+      ],
       "narrative_cluster_id": null,
       "duplicate_of": null,
       "summaries": {
-        "pt-BR": "",
-        "en-US": ""
+        "pt-BR": "O TSE reafirmou que vice-prefeitos que substituem o titular nos seis meses anteriores à eleição, mesmo por período curto, têm esse tempo computado como mandato integral, impedindo a reeleição subsequente sob risco de terceiro mandato consecutivo. A corte não conheceu a consulta da Rede Sustentabilidade por já existir jurisprudência consolidada sobre o tema. A decisão foi unânime, com o ministro Antonio Carlos Ferreira como relator.",
+        "en-US": "The TSE reaffirmed that vice-mayors who substitute the mayor in the six months preceding an election, even for a short period, have that time counted as a full term, barring them from running for re-election afterward due to the risk of a third consecutive term. The court declined to hear the Rede Sustentabilidade consultation, citing established jurisprudence. The decision was unanimous, with Minister Antonio Carlos Ferreira as rapporteur."
       },
       "content": "Plenário não conhece consulta da Rede Sustentabilidade por se tratar de tema com jurisprudência consolidada O Tribunal Superior Eleitoral (TSE) reafirmou, n a sessão d esta quinta-feira (13), que o vice-prefeito que substitui r o titular da prefeitura nos seis meses anteriores à eleição, ainda que por curto período, pode rá concorrer ao cargo de prefeito no pleito s eguinte. Se eleito, não poderá disputar a reeleição s ubsequente , sob pena de configuração de terceiro mandato consecutivo. Por unanimidade, o Plenário não conheceu d a consulta apresentada pelo Diretório Nacional da Rede Sustentabilidade (Rede). Relator do caso, o ministro Antonio Carlos Ferreira destacou que o tema já possui entendimento consolidado na jurisprudência do Tribunal. A consulta questionava se um vice-prefeito que assumisse provisoriamente a chefia do Executivo municipal por menos de 15 dias, nos seis meses anteriores à eleição, em razão de férias do prefeito ou de outra circunstância não decorrente de decisão judicial, poderia disputar a reeleição após ser eleito e cumprir integralmente o mandato como prefeito . Ao votar, o ministro Antonio Carlos Ferreira ressaltou que a substituição ou sucessão do chefe do Executivo nos seis meses anteriores ao pleito configura exercício do mandato, mesmo quando ocorre por período curto e de forma provisória. Veja mais",
       "source_category": "institutional",
       "sentiment_per_candidate": {},
-      "edit_history": [],
+      "edit_history": [
+        {
+          "tier": "editor",
+          "at": "2026-08-13T17:48:52Z",
+          "provider": "nvidia",
+          "action": "validated",
+          "changes": [
+            "summary_pt",
+            "summary_en"
+          ]
+        }
+      ],
       "disclaimer_pt": "Análise algorítmica. Não representa pesquisa de opinião.",
       "disclaimer_en": "Algorithmic analysis. Does not represent polling data.",
       "sentiment_score": 0.0,
-      "confidence_score": 0.0,
+      "confidence_score": 1.0,
       "_sentiment_scores": {},
-      "prominence_score": 0.0
+      "prominence_score": 0.0,
+      "_ai_provider": "nvidia",
+      "_ai_model": "nvidia/nemotron-3-super-120b-a12b",
+      "ai_provider_editor": "nvidia/nemotron-3-super-120b-a12b",
+      "editor_note": null
     },
     {
       "id": "77dc64d274aa4c77",
@@ -2877,7 +3005,9 @@
       },
       "content": "O presidente do TSE (Tribunal Superior Eleitoral), Kássio Nunes Marques, votou para negar ação do PT que pede que o partido receba um volume maior de recursos do fundo eleitoral. O julgamento, no entanto, foi suspenso por um pedido de vista da ministra Estela Aranha.",
       "source_category": "mainstream",
-      "sentiment_per_candidate": {},
+      "sentiment_per_candidate": {
+        "lula": "negativo"
+      },
       "edit_history": [
         {
           "tier": "editor",
@@ -2892,13 +3022,15 @@
       ],
       "disclaimer_pt": "Análise algorítmica. Não representa pesquisa de opinião.",
       "disclaimer_en": "Algorithmic analysis. Does not represent polling data.",
-      "sentiment_score": 0.0,
+      "sentiment_score": -0.3,
       "confidence_score": 1.0,
       "_ai_provider": "nvidia",
       "_ai_model": "nvidia/nemotron-3-super-120b-a12b",
       "ai_provider_editor": "nvidia/nemotron-3-super-120b-a12b",
       "editor_note": null,
-      "_sentiment_scores": {},
+      "_sentiment_scores": {
+        "lula": -0.3
+      },
       "prominence_score": 0.7391
     },
     {
@@ -3127,7 +3259,9 @@
       },
       "content": "Os investidores estrangeiros retiraram R$ 4,7 bilhões em ações da Bolsa brasileira ( B3 ) no pregão de terça-feira (11/8). Com a saída, o Ibovespa desabou 2,50%. Essa foi a maior fuga de capital do exterior da B3, registrada desde 22 de abril de 2021, quando os saques somaram R$ 6,6 bilhões. Na terça-feira, a saída de estrangeiros foi motivada pela divulgação de um relatório do JPMorgan , que rebaixou as ações brasileiras de “overweight” (o equivalente a compra) para neutra. Para o banco americano, com a proximidade das eleições, o mercado de capitais passará por um aumento da volatilidade. Leia também Negócios JPMorgan rebaixa recomendação do Brasil: dólar dispara e Bolsa afunda Economia Dólar vai a R$ 5,17 na ressaca do rebaixamento do Brasil pelo JPMorgan Economia Dólar mantém tendência de alta mesmo com recuo do preço do petróleo Negócios Dólar e petróleo sobem com reação de Trump a novas exigências do Irã Uma análise da consultoria Elos Ayta também mostra que, depois de sete pregões consecutivos de queda, houve uma redução de R$ 279 bilhões no valor de mercado das empresas listadas na B3, entre os dias 3 e 12 de agosto. A quantia corresponde a cerca de 90% do atual valor de mercado da Vale, de R$ 311 bilhões. “Em apenas sete sessões, portanto, a Bolsa brasileira perdeu em valor de mercado o equivalente à terceira maior companhia do país”, diz Einar Rivero, sócio da consultoria. Para Rivero, a sequência de perdas ocorreu em um ambiente de maior cautela com os ativos brasileiros, marcado por preocupações com o cenário doméstico, incertezas relacionadas ao processo eleitoral e redução da exposição de investidores estrangeiros à Bolsa.",
       "source_category": "mainstream",
-      "sentiment_per_candidate": {},
+      "sentiment_per_candidate": {
+        "lula": "negativo"
+      },
       "edit_history": [
         {
           "tier": "editor",
@@ -3142,9 +3276,11 @@
       ],
       "disclaimer_pt": "Análise algorítmica. Não representa pesquisa de opinião.",
       "disclaimer_en": "Algorithmic analysis. Does not represent polling data.",
-      "sentiment_score": 0.0,
+      "sentiment_score": -0.6,
       "confidence_score": 1.0,
-      "_sentiment_scores": {},
+      "_sentiment_scores": {
+        "lula": -0.6
+      },
       "prominence_score": 0.7257,
       "_ai_provider": "nvidia",
       "_ai_model": "nvidia/nemotron-3-super-120b-a12b",
@@ -3541,35 +3677,6 @@
         "flavio-bolsonaro": -1.0
       },
       "prominence_score": 0.9101
-    },
-    {
-      "id": "959684da86d4609c",
-      "url": "https://english.elpais.com/culture/2026-08-13/from-aristocratic-vault-to-cafe-buenos-aires-tenders-old-tombs-at-la-recoleta-cemetery.html",
-      "title": "From aristocratic vault to café: Buenos Aires tenders old tombs at La Recoleta cemetery",
-      "source": "El Pais Brasil",
-      "published_at": "2026-08-13T12:54:43Z",
-      "collected_at": "2026-08-13T17:18:55Z",
-      "status": "raw",
-      "relevance_score": 0.0,
-      "relevance_signals": null,
-      "candidates_mentioned": [],
-      "topics": [],
-      "narrative_cluster_id": null,
-      "duplicate_of": null,
-      "summaries": {
-        "pt-BR": "",
-        "en-US": ""
-      },
-      "source_category": "international",
-      "content": "Delfina Torres Cabreros AUG 13, 2026 - 08:54 EDT Share on Whatsapp Share on Facebook Share on Twitter Desplegar Redes Sociales Prefer EL PAÍS on Google Compartir: Whatsapp Facebook Twitter Bluesky Linkedin Copy link —It’s behind that pine, a little further on. Past Evita’s grave . The man giving directions is sweeping the white marble floor on a cloudy Wednesday morning at La Recoleta Cemetery, the most aristocratic neighborhood in Buenos Aires. The directions take one to the vault that once belonged to the Girado family, a surname on the very small list of Argentina’s landed bourgeoisie in the 19th and 20th centuries, and which will soon be repurposed as a grab-and-go gift shop and café. The Government of the City of Buenos Aires has published a tender for the concession of use and “commercial operation” of that space, originally designed to house 12 tombs. Built in 1822 as Buenos Aires’ first public cemetery, La Recoleta Cemetery is a reminder of an era when the country was an emerging economic power and the city’s leading families competed with each other to build lavish mausoleums. Many of these are now in ruins, with broken glass, mold and exposed coffins. That is the case with the Girado vault, which borders the wall facing Junín Street and is neighbors with the Álzaga family pantheon —another patrician surname— where the remains of the famed Felicitas Guerrero de Alzaga rest: she the country’s youngest, richest and most beautiful widow, murdered in 1872 by a suitor. An AI-generated rendering of the restored building included in the tender document promoted by the City of Buenos Aires. Gobierno de Buenos Aires A little further on is the tomb where Eva Perón’s body was finally laid to rest after a long journey, and also —with its obelisk and the bronze condor that crowns it— that of former president Domingo Faustino Sarmiento, author of one of the foundational works of Argentine literature, Facundo . Nearby are the remains of writer Adolfo Bioy Casares, but not those of his friend and colleague Jorge Luis Borges , who died in Switzerland, even though he had expressed a wish to be buried in his family pantheon in La Recoleta, in the same grounds as the “fathers of the nation.” According to the public tender, the concession for the vault —which covers roughly 25 square meters— will be granted for a five-year term and may host a gift shop, a food and beverage outlet and a “rest and support area” for visitors who book the new nighttime tour service. In exchange, a monthly fee of 1.6 million pesos (just over $1,070) will be charged, plus 20% of gross revenues from operating the nighttime tours. The café will operate only as takeout, with no tables or chairs allowed and no on-site food preparation. Although the tender explicitly allows that possibility, city government sources say “there is no chance that the space will be considered a café.” “As in other cities around the world, the City tendered a space to establish a gift shop in La Recoleta Cemetery, and it will join the trend of expanding cultural and service offerings as seen in the cemeteries of Vienna, Dublin, Berlin and London,” they said. The site currently receives an average of 1,816 visits per day. Coffins moved inside La Recoleta Cemetery, in Buenos Aires’s most aristocratic neighborhood. CEDIDA Gabriel Levinas More than 90 vaults have been declared National Historic Monuments and the cemetery’s architecture is legally protected, so only restoration work is permitted. An annex to the tender includes two images: one of the vault’s current condition, labeled the “before,” and another generated with artificial intelligence showing a possible “after.” There are no structural changes, but a fresh coat of paint and the removal of commemorative plaques that still survive on the pantheon’s eroded walls are shown: the plaque reading “To engineer Francisco J. Girado from his colleagues and friends of the Pelota Club of Chascomús,” dated 1934, and the one remembering Federico M. Girado, signed “from his classmates at the National College” in 1913. The vault was recently returned to the city government after an administrative procedure. City government sources said it had been available for 10 years and that all steps required by burial laws were followed (the same legislation that prohibits “any commercial activity, in its different forms” within cemeteries), a procedure that provides for notifying rights holders and giving them the opportunity to file legal challenges in advance. Although they did not specify the fate of the human remains, the law states that if relatives do not remove them, they should be sent to the common ossuary or communal crematorium. Coffins inside the vault put up for tender within La Recoleta Cemetery, photographed by journalist Gabriel Levinas. Gabriel Levinas This past Wednesday the vault was cordoned off with yellow fences put up by the City Government and guarded by four security guards who not only refused to confirm the identity of the vault behind them, but who also tried to mislead approaching journalists. “You can’t take photos and you must leave, we are in the middle of a conflict right now,” one of them said. On Tuesday, when local media published news of the tender, a journalist named Gabriel Levinas went inside the vault and recorded at least a dozen coffins still inside. He later wrote that a cemetery employee told him some had been moved and showed a photo of a wheelbarrow loaded with coffins. The man sweeping the white marble floor of one of the vaults that still receives care from its lineage says the uproar started because “the owners are against” the tender. They are upset by the idea of people wandering around during a funeral with a coffee in their hand. “They are going to file a complaint. And these are important people,” he warns. Asked by EL PAÍS, the city government did not specify whether it had received any formal complaints so far. Sign up for our weekly newsletter to get more English-language news coverage from EL PAÍS USA Edition Archived In Buenos Aires Argentina Javier Milei Eva Perón Jorge Luis Borges",
-      "sentiment_per_candidate": {},
-      "edit_history": [],
-      "disclaimer_pt": "Análise algorítmica. Não representa pesquisa de opinião.",
-      "disclaimer_en": "Algorithmic analysis. Does not represent polling data.",
-      "sentiment_score": 0.0,
-      "confidence_score": 0.0,
-      "_sentiment_scores": {},
-      "prominence_score": 0.0
     },
     {
       "id": "2ee95464169b0b11",
@@ -31814,6 +31921,6 @@
       "editor_note": null
     }
   ],
-  "last_updated": "2026-08-13T17:33:41Z",
-  "total_count": 500
+  "last_updated": "2026-08-13T17:52:03Z",
+  "total_count": 488
 }
