@@ -2,61 +2,66 @@
   "$schema": "../docs/schemas/articles.schema.json",
   "articles": [
     {
-      "id": "fd904f52327ab6bd",
-      "url": "https://www1.folha.uol.com.br/colunas/painel/2026/08/morador-de-juiz-de-fora-e-alvo-de-busca-e-apreensao-por-suposta-ameaca-a-flavio-bolsonaro.shtml",
-      "title": "Morador de Juiz de Fora é alvo de busca e apreensão por suposta ameaça a Flávio Bolsonaro",
-      "source": "UOL Noticias",
-      "published_at": "2026-08-15T18:47:21Z",
-      "collected_at": "2026-08-15T18:47:21Z",
-      "status": "raw",
-      "relevance_score": 0.0,
-      "relevance_signals": null,
-      "candidates_mentioned": [],
-      "topics": [],
-      "narrative_cluster_id": null,
-      "duplicate_of": null,
-      "summaries": {
-        "pt-BR": "",
-        "en-US": ""
-      },
-      "source_category": "mainstream",
-      "sentiment_per_candidate": {},
-      "edit_history": [],
-      "disclaimer_pt": "Análise algorítmica. Não representa pesquisa de opinião.",
-      "disclaimer_en": "Algorithmic analysis. Does not represent polling data.",
-      "sentiment_score": 0.0,
-      "confidence_score": 0.0,
-      "_sentiment_scores": {},
-      "prominence_score": 0.0
-    },
-    {
       "id": "c8f4f33258a1d003",
       "url": "https://www1.folha.uol.com.br/mercado/2026/08/programas-de-lula-e-flavio-fazem-promessas-sem-dizer-como-vao-bancar-gastos.shtml",
       "title": "Programas de Lula e Flávio fazem promessas sem dizer como vão bancar gastos",
       "source": "UOL Noticias",
       "published_at": "2026-08-15T18:47:21Z",
       "collected_at": "2026-08-15T18:47:21Z",
-      "status": "raw",
-      "relevance_score": 0.0,
-      "relevance_signals": null,
-      "candidates_mentioned": [],
-      "topics": [],
+      "status": "validated",
+      "relevance_score": 0.8,
+      "relevance_signals": {
+        "candidate_signal": 0.6,
+        "topic_signal": 0.05,
+        "keyword_signal": 0.15,
+        "source_signal": 0.0
+      },
+      "candidates_mentioned": [
+        "lula",
+        "flavio-bolsonaro"
+      ],
+      "topics": [
+        "economia",
+        "politica_externa",
+        "impostos"
+      ],
       "narrative_cluster_id": null,
       "duplicate_of": null,
       "summaries": {
-        "pt-BR": "",
-        "en-US": ""
+        "pt-BR": "Os programas de governo de Lula (PT) e Flávio Bolsonaro (PL) contêm diversas promessas, mas não esclarecem como financiarão os gastos, segundo economistas consultados pela Folha.",
+        "en-US": "The government programs of Lula (PT) and Flávio Bolsonaro (PL) contain numerous promises but fail to explain how they will finance the expenditures, according to economists analyzed by Folha."
       },
       "content": "Tanto o programa de governo de Luiz Inácio Lula da Silva (PT) como o de Flávio Bolsonaro (PL) fazem inúmeras promessas, mas evitam detalhar como o país vai equilibrar as contas públicas, afirmam à Folha economistas que analisaram os textos.",
       "source_category": "mainstream",
-      "sentiment_per_candidate": {},
-      "edit_history": [],
+      "sentiment_per_candidate": {
+        "lula": "neutro",
+        "flavio-bolsonaro": "negativo"
+      },
+      "edit_history": [
+        {
+          "tier": "editor",
+          "at": "2026-08-15T18:55:18Z",
+          "provider": "nvidia",
+          "action": "validated",
+          "changes": [
+            "summary_pt",
+            "summary_en"
+          ]
+        }
+      ],
       "disclaimer_pt": "Análise algorítmica. Não representa pesquisa de opinião.",
       "disclaimer_en": "Algorithmic analysis. Does not represent polling data.",
-      "sentiment_score": 0.0,
-      "confidence_score": 0.0,
-      "_sentiment_scores": {},
-      "prominence_score": 0.0
+      "sentiment_score": -0.05,
+      "confidence_score": 1.0,
+      "_sentiment_scores": {
+        "lula": 0.1,
+        "flavio-bolsonaro": -0.2
+      },
+      "prominence_score": 0.0,
+      "_ai_provider": "nvidia",
+      "_ai_model": "nvidia/nemotron-3-super-120b-a12b",
+      "ai_provider_editor": "nvidia/nemotron-3-super-120b-a12b",
+      "editor_note": null
     },
     {
       "id": "bc799ac355a16c04",
@@ -65,114 +70,57 @@
       "source": "Metropoles",
       "published_at": "2026-08-15T18:15:32Z",
       "collected_at": "2026-08-15T18:47:35Z",
-      "status": "raw",
-      "relevance_score": 0.0,
-      "relevance_signals": null,
-      "candidates_mentioned": [],
-      "topics": [],
+      "status": "validated",
+      "relevance_score": 0.9,
+      "relevance_signals": {
+        "candidate_signal": 0.5,
+        "topic_signal": 0.25,
+        "keyword_signal": 0.15,
+        "source_signal": 0.0
+      },
+      "candidates_mentioned": [
+        "lula"
+      ],
+      "topics": [
+        "economia",
+        "eleicoes",
+        "politica_externa"
+      ],
       "narrative_cluster_id": null,
       "duplicate_of": null,
       "summaries": {
-        "pt-BR": "",
-        "en-US": ""
+        "pt-BR": "O governo Lula intensificou a articulação para aprovar antes das eleições de outubro a PEC que acaba com a escala de trabalho 6×1, após três reuniões entre o presidente e o presidente do Senado, Davi Alcolumbre. A proposta, já aprovada pela Câmara, estava travada no Senado, mas teve sua tramitação destravada na sexta-feira (14/8) e agora seguirá pelas comissões da Casa. Alcolumbre, que anteriormente resistia à pressão política-eleitoral, sinalizou mudança de postura diante da reaproximação com o Palácio do Planalto.",
+        "en-US": "The Lula government intensified efforts to approve before the October elections a constitutional amendment ending the 6×1 work schedule, following three meetings between the president and Senate President Davi Alcolumbre. The PEC, already passed by the Chamber of Deputies, had been stalled in the Senate but had its unblocking announced on Friday (Aug 14) after a meeting at the Alvorada Palace. Alcolumbre, who previously resisted political-electoral pressure, signaled a shift in stance amid rapprochement with the Planalto Palace."
       },
       "content": "O governo do presidente Luiz Inácio Lula da Silva (PT) intensificou a articulação para tentar aprovar, antes das eleições de outubro, a Proposta de Emenda à Constituição (PEC) que acaba com a escala de trabalho 6×1. A pressão aumentou após uma série de encontros entre Lula e o presidente do Senado, Davi Alcolumbre (União-AP), e resultou no destravamento da tramitação da proposta na sexta-feira (14/8). Leia também Brasil Após reunião com Lula, Alcolumbre libera PEC da Segurança e fim da 6×1 Brasil Lula e Alcolumbre se reúnem em meio a esforços de reaproximação Brasil Lula e Alcolumbre retomam relação na véspera da eleição e de olho em 2027 A PEC nº 221/2019 foi aprovada pela Câmara dos Deputados em maio e chegou ao Senado no dia seguinte . Desde então, porém, estava parada na Casa, sem avanço para uma comissão ou definição de um calendário de votação. Alcolumbre já havia sinalizado que a proposta não iria diretamente ao plenário e precisaria passar pelas comissões. O texto estabelece jornada máxima de 40 horas semanais e prevê dois dias de descanso por semana, em substituição à atual escala de seis dias de trabalho por um de folga. A proposta também determina que a redução da jornada não poderá resultar em diminuição salarial. Idas e vindas Governo tenta acelerar a PEC da 6×1 para aprovar o fim da escala antes das eleições de outubro , em meio à reaproximação entre Lula e Alcolumbre; PEC foi aprovada pela Câmara em maio e chegou ao Senado no dia seguinte , mas permaneceu parada desde então, sem calendário de votação; Alcolumbre destravou a tramitação após três encontros com Lula e encaminhou a proposta para análise das comissões do Senado; Votação antes das eleições ainda é incerta: a PEC precisa passar pelas comissões e ser aprovada em dois turnos no plenário, com 3/5 dos senadores. Reaproximação entre Lula e Alcolumbre A tentativa de acelerar a PEC ocorre em meio a uma reaproximação entre Lula e Alcolumbre. Os dois se reuniram três vezes nos últimos dez dias, em conversas que trataram de pautas consideradas prioritárias pelo governo. A PEC da 6×1 esteve entre os assuntos discutidos nos encontros. Nesta sexta-feira (14), após reunião com Lula no Palácio da Alvorada, Alcolumbre anunciou que a proposta começará a tramitar pelas comissões do Senado, seguindo o rito ordinário da Casa. O movimento representa uma mudança em relação aos meses anteriores. Em julho, Alcolumbre havia reagido às cobranças do governo e afirmado que não aceitaria pressão político-eleitoral para acelerar a análise da proposta. Calendário apertado Apesar do avanço, a aprovação antes das eleições ainda é considerada instável. Como se trata de uma PEC, o texto precisa ser aprovado em dois turnos no Senado, com o apoio de pelo menos três quintos dos senadores em cada votação. Antes de chegar ao plenário, a proposta terá de passar Comissão de Constituição e Justiça (CCJ) para atestar a admissibilidade e conquistar um acordo entre os líderes partidários. O calendário também é afetado pelo período eleitoral, que deve reduzir o ritmo de funcionamento do Congresso. O governo tenta aproveitar as semanas de esforço concentrado previstas para agosto e setembro para acelerar a tramitação. A avaliação, porém, é de que o prazo é curto para concluir todas as etapas antes do primeiro turno das eleições. Com o encaminhamento às comissões, o governo conseguiu retirar a PEC da paralisia. A votação, no entanto, ainda está distante e dependerá de uma tramitação acelerada e de um acordo político no Senado.",
       "source_category": "mainstream",
-      "sentiment_per_candidate": {},
-      "edit_history": [],
-      "disclaimer_pt": "Análise algorítmica. Não representa pesquisa de opinião.",
-      "disclaimer_en": "Algorithmic analysis. Does not represent polling data.",
-      "sentiment_score": 0.0,
-      "confidence_score": 0.0,
-      "_sentiment_scores": {},
-      "prominence_score": 0.0
-    },
-    {
-      "id": "83b2d9f189c78949",
-      "url": "https://veja.abril.com.br/politica/nova-pesquisa-datafolha-mostra-disputa-haddad-x-tarcisio-para-o-governo-de-sao-paulo/",
-      "title": "Nova pesquisa Datafolha mostra disputa Tarcísio x Haddad para o governo de São Paulo",
-      "source": "Veja",
-      "published_at": "2026-08-15T18:14:53Z",
-      "collected_at": "2026-08-15T18:47:45Z",
-      "status": "raw",
-      "relevance_score": 0.0,
-      "relevance_signals": null,
-      "candidates_mentioned": [],
-      "topics": [],
-      "narrative_cluster_id": null,
-      "duplicate_of": null,
-      "summaries": {
-        "pt-BR": "",
-        "en-US": ""
+      "sentiment_per_candidate": {
+        "lula": "positivo"
       },
-      "content": "O Datafolha registrou uma nova pesquisa eleitoral para o governo de São Paulo, com divulgação prevista para a próxima sexta-feira, 21 de agosto. O levantamento, com 1.610 entrevistas, será o primeiro a testar um embate direto entre Fernando Haddad (PT) e o atual governador do Estado, Tarcísio de Freitas (Republicanos) , após o início oficial da campanha eleitoral. Além da corrida pelo Palácio dos Bandeirantes, o questionário também mede as disputas pelas duas vagas de senador por São Paulo e pela Presidência da República. O levantamento foi registrado no Tribunal Superior Eleitoral em 15 de agosto, sob o número BR-02037/2026. A coleta está prevista para ocorrer de 18 a 20 de agosto de 2026. A margem de erro máxima prevista é de 2 pontos percentuais para mais ou para menos, considerando nível de confiança de 95% e uma amostra aleatória simples. A empresa responsável é a Datafolha Instituto de Pesquisas Ltda., contratada pela Globo Comunicação e Participações S.A.. Continua após a publicidade Como mudou o patrimônio dos deputados mais votados de 2022 A pesquisa Intenção de voto para governador: o eleitor paulista será questionado espontaneamente sobre em quem pretende votar para governador de São Paulo. Os nomes apresentados no questionário são Carlos Machado (PCB), Fernando Haddad (PT), Izadora Dias (PCO), Policial Edjane (Agir), Tarcísio (Republicanos), Vera Lúcia (PSTU) e Vivian Mendes (UP) . A pesquisa também testa um embate direto entre Haddad e Tarcísio no segundo turno. Intenção de voto para o Senado: o levantamento também mede a corrida pelas duas vagas de senador por São Paulo. O eleitor responde primeiro em quem pretende votar para a primeira vaga e, depois, em quem pretende votar para a segunda. Os nomes relacionados no questionário são André do Prado (PL), Dra. Eliana Ferreira (PSTU), Ednelson Cesaretti (PCO), Geraldo Rufino (Podemos), Guilherme Derrite (PP), Maíra de Souza (UP), Marcio Alves (UP), Marina Silva (Rede), Petter Maahs (PCB), Salles (Novo), Simone Tebet (PSB), Soninha Francine (Cidadania) e Weller Gonçalves (PSTU) . Continua após a publicidade Intenção de voto para presidente: a pesquisa pergunta inicialmente, de forma espontânea, em quem o eleitor pretende votar para presidente. Depois, apresenta uma lista estimulada com 13 nomes: Clariana Barão (DC), Edmilson Costa (PCB), Augusto Cury (Avante), Flavio Bolsonaro (PL), Hertz Dias (PSTU), Leonardo Avalanche (PRTB), Lula (PT), Renan Santos (Missão), Ronaldo Caiado (PSD), Rui Costa Pimenta (PCO), Samara (UP), Wilson Grassi (Democrata) e Zema (Novo) .Também são testados quatro cenários de segundo turno: Lula contra Flavio Bolsonaro, Lula contra Ronaldo Caiado, Lula contra Zema e Lula contra Renan Santos. Avaliação do governo federal: o questionário mede a avaliação do governo Lula, classificando a administração como ótima, boa, regular, ruim ou péssima, e pergunta se o eleitor aprova ou desaprova o trabalho do presidente. Continua após a publicidade Como estava a disputa no Estado na última pesquisa? Na última pesquisa Datafolha, Tarcísio de Freitas (Republicanos) tinha 53% das intenções de voto para governador no segundo turno, contra 37% de Fernando Haddad (PT). Tarcísio era rejeitado por 29%, enquanto Haddad tinha 47% de rejeição. Para o Senado , Marina Silva (Rede) liderava com 18%, seguida por Simone Tebet (PSB), com 16%, e Ricardo Salles (Novo), com 13%. André do Prado (PL) tinha 11%, Guilherme Derrite (PP), 10%, e Paulinho da Força (Solidariedade), 8%. VEJA+IA: Conteúdo produzido com auxílio de inteligência artificial e supervisão humana. Publicidade",
-      "source_category": "magazine",
-      "sentiment_per_candidate": {},
-      "edit_history": [],
+      "edit_history": [
+        {
+          "tier": "editor",
+          "at": "2026-08-15T18:55:22Z",
+          "provider": "nvidia",
+          "action": "validated",
+          "changes": [
+            "summary_pt",
+            "summary_en"
+          ]
+        }
+      ],
       "disclaimer_pt": "Análise algorítmica. Não representa pesquisa de opinião.",
       "disclaimer_en": "Algorithmic analysis. Does not represent polling data.",
-      "sentiment_score": 0.0,
-      "confidence_score": 0.0,
-      "_sentiment_scores": {},
-      "prominence_score": 0.0
-    },
-    {
-      "id": "5af82b6f9aade998",
-      "url": "https://www.metropoles.com/celebridades/candidato-datena-declara-perda-ao-tse",
-      "title": "Candidato, Datena declara perda de R$ 2 milhões em 2 anos ao TSE",
-      "source": "Metropoles",
-      "published_at": "2026-08-15T18:12:56Z",
-      "collected_at": "2026-08-15T18:47:35Z",
-      "status": "raw",
-      "relevance_score": 0.0,
-      "relevance_signals": null,
-      "candidates_mentioned": [],
-      "topics": [],
-      "narrative_cluster_id": null,
-      "duplicate_of": null,
-      "summaries": {
-        "pt-BR": "",
-        "en-US": ""
+      "sentiment_score": 0.4,
+      "confidence_score": 1.0,
+      "_sentiment_scores": {
+        "lula": 0.4
       },
-      "content": "O apresentador José Luiz Datena , candidato a deputado federal por São Paulo, declarou ao Superior Tribunal Eleitoral um patrimônio de R$ 35,9 milhões – uma queda de R$ 2 milhões em comparação ao valor declarado em 2024. Há dois anos, o apresentador foi candidato à Prefeitura da capital paulista e, durante a campanha, protagonizou o episódio da “cadeirada”, em que agrediu um concorrente durante um debate. Entre os bens declarados pelo apresentador Datena se destacam um apartamento em Florianópolis (SC), avaliado em R$ 3,28 milhões, e mais de R$ 15 milhões aplicados em um plano de previdência privada, além de outros imóveis e aplicações bancárias. A principal discrepância no patrimônio do candidato está em um imóvel em Itajá (GO), avaliado em R$ 6 milhões na declaração de 2024 e que não consta na relação apresentada à Justiça Eleitoral em 2026. 9 imagens Fechar modal. 1 de 9 Datena declara patrimônio de R$ 35 milhões ao TSE Reprodução 2 de 9 José Luiz Datena Reprodução/ SBT 3 de 9 Lula e Datena se encontram para definir detalhes da contratação do apresentador para EBC Ricardo Stuckert/ Presidência da República 4 de 9 Datena é jornalista e apresentador Reprodução 5 de 9 José Luiz Datena Reprodução 6 de 9 Datena Band/Reprodução 7 de 9 José Luiz Datena chora e é amparado por Catia Fonseca no Brasil Urgente - Metrópoles Band/Reprodução 8 de 9 Joel Datena é filho do apresentador José Luiz Datena Reprodução 9 de 9 Datena na Rádio Nacional Divulgação/ redes sociais Leia também Televisão Joel Datena detalha cirurgia que o tirou da TV: “Uma coisa absurda” Igor Gadelha Aliados de Lula querem usar Datena para atacar Flávio na TV Milena Teixeira Datena adota “cadeirada” como slogan de campanha Igor Gadelha Com Datena e Tabata, PSB mira triplicar bancada em São Paulo Datena quer usar “cadeirada” como slogan José Luiz Datena (PSB), que já passou por 10 partidos diferentes desde 1990, mais uma vez aparece entre os candidatos na corrida eleitoral após o episódio da “cadeirada” em Pablo Marçal durante as eleições para a Prefeitura de São Paulo, em 2024. O episódio ocorreu em setembro de 2024, durante o debate da TV Cultura. Ao longo da transmissão, o ex-coach chamou o oponente de “arregão” e o provocou ao relembrar uma denúncia de assédio arquivada contra o apresentador. Irritado, Datena deixou o púlpito, pegou uma cadeira do estúdio e atingiu o adversário. E vamos de atualização deste site com a cadeirada do Datena pic.twitter.com/FYA0a0Twfx — psicóloga de postinho (@topiranath) October 9, 2024 Marçal deixou o debate e foi levado a um hospital, onde recebeu atendimento médico. Após o episódio, Datena afirmou que perdeu o controle diante das provocações. A cadeirada ganhou repercussão nacional e se tornou um dos episódios mais marcantes da campanha eleitoral de 2024 na capital paulista. Segundo a colunista Milena Texeira, do Metrópoles , a campanha de Datena planeja “fazer do limão uma limonada” e transformar a “cadeirada” no slogan político do apresentador. Segundo a colunista, a estratégia seria usar a palavra em sentido figurado, com expressões como “cadeirada na corrupção”, “cadeirada no entreguismo” e “cadeirada nos privilégios”.",
-      "source_category": "mainstream",
-      "sentiment_per_candidate": {},
-      "edit_history": [],
-      "disclaimer_pt": "Análise algorítmica. Não representa pesquisa de opinião.",
-      "disclaimer_en": "Algorithmic analysis. Does not represent polling data.",
-      "sentiment_score": 0.0,
-      "confidence_score": 0.0,
-      "_sentiment_scores": {},
-      "prominence_score": 0.0
-    },
-    {
-      "id": "1a447b7c82c0f6a4",
-      "url": "https://www.metropoles.com/colunas/grande-angular/marcelinho-luis-fabiano-e-edmundo-lideram-patrimonio-entre-boleiros",
-      "title": "Marcelinho, Luís Fabiano e Edmundo lideram patrimônio entre boleiros",
-      "source": "Metropoles",
-      "published_at": "2026-08-15T18:10:16Z",
-      "collected_at": "2026-08-15T18:47:35Z",
-      "status": "raw",
-      "relevance_score": 0.0,
-      "relevance_signals": null,
-      "candidates_mentioned": [],
-      "topics": [],
-      "narrative_cluster_id": null,
-      "duplicate_of": null,
-      "summaries": {
-        "pt-BR": "",
-        "en-US": ""
-      },
-      "content": "Os ex-jogadores Marcelinho Carioca (Republicanos), Luís Fabiano (MDB) e Edmundo (PSDB) são os três candidatos a cargos eletivos com os maiores patrimônios declarados à Justiça Eleitoral entre os oito nomes ligados ao futebol . Candidato a deputado distrital, Marcelinho Carioca lidera a lista, com R$ 45,4 milhões em bens. Na sequência aparecem os candidatos a deputado federal Luís Fabiano , com R$ 20,1 milhões, e Edmundo , com R$ 16 milhões. 6 imagens Fechar modal. 1 de 6 Marcelinho Carioca Instagram/Reprodução 2 de 6 Edmundo Phil Noble - PA Images/PA Images via Getty Images 3 de 6 Luis Fabiano Alexandre Schneider/Getty Images 4 de 6 Washington Coração Valente Instagram / Washington “Coração Valente” 5 de 6 Ex-prefeito de BH e ex-presidente do Atlético-MG, Alexandre Kalil (PDT) Reprodução/Redes sociais 6 de 6 Vanderlei Luxemburgo, o \"Pofexô Luis Nova/Especial Metrópoles @LuisGustavoNova O candidato a deputado federal Washington Coração Valente (MDB) vem em seguida, com R$ 7,3 milhões, seguido por Alexandre Kalil (PDT), que disputa o governo de Minas Gerais, com R$ 5,9 milhões. Candidato ao Senado por Tocantins, Wanderley Luxemburgo (Podemos) declarou R$ 3,8 milhões em bens. Leia também Grande Angular TRE nega pedido de deputado do PL para usar número do irmão de Michelle Grande Angular Deputado do Missão pede ao MPF para barrar suspensão do Discord Grande Angular Ex-ministra de Lula, Simone Tebet quadruplicou patrimônio em 4 anos Grande Angular Suplente de Derrite foi demitido por Bolsonaro por usar avião da FAB Na outra ponta, o ex-atacante Finazzi (MDB) declarou R$ 897 mil em bens. Marcos Braz, ex-dirigente do Flamengo, apresentou o menor patrimônio entre os oito, de R$ 367,5 mil. Ambos são candidatos a deputado federal.",
-      "source_category": "mainstream",
-      "sentiment_per_candidate": {},
-      "edit_history": [],
-      "disclaimer_pt": "Análise algorítmica. Não representa pesquisa de opinião.",
-      "disclaimer_en": "Algorithmic analysis. Does not represent polling data.",
-      "sentiment_score": 0.0,
-      "confidence_score": 0.0,
-      "_sentiment_scores": {},
-      "prominence_score": 0.0
+      "prominence_score": 0.0,
+      "_ai_provider": "nvidia",
+      "_ai_model": "nvidia/nemotron-3-super-120b-a12b",
+      "ai_provider_editor": "nvidia/nemotron-3-super-120b-a12b",
+      "editor_note": null
     },
     {
       "id": "35363b02d780b57c",
@@ -181,27 +129,58 @@
       "source": "O Antagonista",
       "published_at": "2026-08-15T18:08:42Z",
       "collected_at": "2026-08-15T18:47:42Z",
-      "status": "raw",
-      "relevance_score": 0.0,
-      "relevance_signals": null,
-      "candidates_mentioned": [],
-      "topics": [],
+      "status": "validated",
+      "relevance_score": 1.0,
+      "relevance_signals": {
+        "candidate_signal": 0.5,
+        "topic_signal": 0.35,
+        "keyword_signal": 0.15,
+        "source_signal": 0.05
+      },
+      "candidates_mentioned": [
+        "zema"
+      ],
+      "topics": [
+        "eleicoes",
+        "corrupcao",
+        "politica_externa",
+        "impostos"
+      ],
       "narrative_cluster_id": null,
       "duplicate_of": null,
       "summaries": {
-        "pt-BR": "",
-        "en-US": ""
+        "pt-BR": "Romeu Zema, ex-governador de Minas Gerais e pré-candidato do Novo, declarou que votará em qualquer candidato que enfrentar o PT no segundo turno da eleição presidencial de 2026. Ele espera receber apoio dos demais candidatos de direita caso avance ao segundo turno. A fala reforça sua posição de enfrentamento ideológico ao PT, mesmo que com apoio a alternativas não ideais.",
+        "en-US": "Former Minas Gerais governor Romeu Zema (Novo) stated he would vote for any candidate facing the PT in a potential 2026 presidential runoff. He hopes to receive support from other right-wing candidates if he advances to the second round. His remarks emphasize his ideological opposition to the PT, even if it means backing less-than-ideal alternatives."
       },
       "content": "O ex-governador de Minas Gerais Romeu Zema (Novo) afirmou neste sábado, 15, que votará em qualquer candidato que enfrentar o PT em um eventual segundo turno da eleição presidencial de 2026. Zema disse que espera receber o apoio dos demais candidatos de direita caso avance ao segundo turno. “Eu já disse que contra o PT... The post Zema: “Contra o PT voto até num copo” appeared first on O Antagonista .",
       "source_category": "politics",
-      "sentiment_per_candidate": {},
-      "edit_history": [],
+      "sentiment_per_candidate": {
+        "zema": "negativo"
+      },
+      "edit_history": [
+        {
+          "tier": "editor",
+          "at": "2026-08-15T18:55:55Z",
+          "provider": "nvidia",
+          "action": "validated",
+          "changes": [
+            "summary_pt",
+            "summary_en"
+          ]
+        }
+      ],
       "disclaimer_pt": "Análise algorítmica. Não representa pesquisa de opinião.",
       "disclaimer_en": "Algorithmic analysis. Does not represent polling data.",
-      "sentiment_score": 0.0,
-      "confidence_score": 0.0,
-      "_sentiment_scores": {},
-      "prominence_score": 0.0
+      "sentiment_score": -0.7,
+      "confidence_score": 1.0,
+      "_sentiment_scores": {
+        "zema": -0.7
+      },
+      "prominence_score": 0.0,
+      "_ai_provider": "nvidia",
+      "_ai_model": "nvidia/nemotron-3-super-120b-a12b",
+      "ai_provider_editor": "nvidia/nemotron-3-super-120b-a12b",
+      "editor_note": null
     },
     {
       "id": "304f1c204e0ca6cb",
@@ -33272,6 +33251,6 @@
       "editor_note": null
     }
   ],
-  "last_updated": "2026-08-15T18:52:56Z",
-  "total_count": 500
+  "last_updated": "2026-08-15T18:56:36Z",
+  "total_count": 496
 }
