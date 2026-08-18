@@ -2,62 +2,64 @@
   "$schema": "../docs/schemas/articles.schema.json",
   "articles": [
     {
-      "id": "d742bac9f841f164",
-      "url": "https://noticias.uol.com.br/eleicoes/2026/08/18/pesquisa-para-governo-do-parana-veja-levantamento-da-realtime-big-data.ghtm",
-      "title": "Pesquisa para governo do Paraná: veja levantamento da RealTime Big Data",
-      "source": "UOL Noticias",
-      "published_at": "2026-08-18T19:39:56Z",
-      "collected_at": "2026-08-18T19:39:56Z",
-      "status": "raw",
-      "relevance_score": 0.0,
-      "relevance_signals": null,
-      "candidates_mentioned": [],
-      "topics": [],
-      "narrative_cluster_id": null,
-      "duplicate_of": null,
-      "summaries": {
-        "pt-BR": "",
-        "en-US": ""
-      },
-      "source_category": "mainstream",
-      "content": "Access Denied You don't have permission to access \"http://noticias.uol.com.br/eleicoes/2026/08/18/pesquisa-para-governo-do-parana-veja-levantamento-da-realtime-big-data.ghtm\" on this server. Reference #18.a9f6d517.1787082068.ace3ffe1 https://errors.edgesuite.net/18.a9f6d517.1787082068.ace3ffe1",
-      "sentiment_per_candidate": {},
-      "edit_history": [],
-      "disclaimer_pt": "Análise algorítmica. Não representa pesquisa de opinião.",
-      "disclaimer_en": "Algorithmic analysis. Does not represent polling data.",
-      "sentiment_score": 0.0,
-      "confidence_score": 0.0,
-      "_sentiment_scores": {},
-      "prominence_score": 0.0
-    },
-    {
       "id": "94f2605b329bd7ff",
       "url": "https://noticias.uol.com.br/eleicoes/2026/08/18/pesquisa-de-intencao-de-voto-para-presidente-veja-ultimos-levantamentos.ghtm",
       "title": "Pesquisa de intenção de voto para presidente: veja últimos levantamentos",
       "source": "UOL Noticias",
       "published_at": "2026-08-18T19:39:56Z",
       "collected_at": "2026-08-18T19:39:56Z",
-      "status": "raw",
-      "relevance_score": 0.0,
-      "relevance_signals": null,
-      "candidates_mentioned": [],
-      "topics": [],
+      "status": "validated",
+      "relevance_score": 1.0,
+      "relevance_signals": {
+        "candidate_signal": 0.6,
+        "topic_signal": 0.25,
+        "keyword_signal": 0.15,
+        "source_signal": 0.0
+      },
+      "candidates_mentioned": [
+        "lula",
+        "flavio-bolsonaro"
+      ],
+      "topics": [
+        "eleicoes"
+      ],
       "narrative_cluster_id": null,
       "duplicate_of": null,
       "summaries": {
-        "pt-BR": "",
-        "en-US": ""
+        "pt-BR": "Pesquisas divulgadas em agosto mostram o presidente Luiz Inácio Lula da Silva (PT) à frente no primeiro turno das eleições presidenciais de 2026. Em cenários de segundo turno, Lula enfrenta disputas apertadas contra o senador Flávio Bolsonaro (PL), com margens de vitória variando conforme o instituto e a metodologia employed.",
+        "en-US": "August polls show President Luiz Inácio Lula da Silva (PT) leading in the first round of the 2026 Brazilian presidential election. In potential runoff scenarios, Lula faces tight races against Senator Flávio Bolsonaro (PL), with margins varying by polling institute and methodology."
       },
       "content": "Pesquisas divulgadas em agosto mostram o presidente Lula (PT) à frente no primeiro turno e, em diferentes cenários, disputas apertadas contra o senador Flávio Bolsonaro (PL) em um eventual segundo turno.",
       "source_category": "mainstream",
-      "sentiment_per_candidate": {},
-      "edit_history": [],
+      "sentiment_per_candidate": {
+        "lula": "positivo",
+        "flavio-bolsonaro": "neutro"
+      },
+      "edit_history": [
+        {
+          "tier": "editor",
+          "at": "2026-08-18T19:48:42Z",
+          "provider": "nvidia",
+          "action": "validated",
+          "changes": [
+            "summary_pt",
+            "summary_en"
+          ]
+        }
+      ],
       "disclaimer_pt": "Análise algorítmica. Não representa pesquisa de opinião.",
       "disclaimer_en": "Algorithmic analysis. Does not represent polling data.",
-      "sentiment_score": 0.0,
-      "confidence_score": 0.0,
-      "_sentiment_scores": {},
-      "prominence_score": 0.0
+      "sentiment_score": 0.05,
+      "confidence_score": 1.0,
+      "_sentiment_scores": {
+        "lula": 0.2,
+        "flavio-bolsonaro": -0.1
+      },
+      "prominence_score": 0.0,
+      "_ai_provider": "nvidia",
+      "_ai_model": "nvidia/nemotron-3-super-120b-a12b",
+      "ai_provider_editor": "nvidia/nemotron-3-super-120b-a12b",
+      "editor_note": null
     },
     {
       "id": "0c0556ca08ef2fcc",
@@ -66,27 +68,58 @@
       "source": "UOL Noticias",
       "published_at": "2026-08-18T19:39:56Z",
       "collected_at": "2026-08-18T19:39:56Z",
-      "status": "raw",
-      "relevance_score": 0.0,
-      "relevance_signals": null,
-      "candidates_mentioned": [],
-      "topics": [],
+      "status": "validated",
+      "relevance_score": 0.9,
+      "relevance_signals": {
+        "candidate_signal": 0.5,
+        "topic_signal": 0.25,
+        "keyword_signal": 0.15,
+        "source_signal": 0.0
+      },
+      "candidates_mentioned": [
+        "renan-santos"
+      ],
+      "topics": [
+        "indigenas",
+        "politica_externa",
+        "eleicoes",
+        "meio_ambiente"
+      ],
       "narrative_cluster_id": null,
       "duplicate_of": null,
       "summaries": {
-        "pt-BR": "",
-        "en-US": ""
+        "pt-BR": "O Ministério Público Federal no Pará ajuizou ação civil pública contra Renan Santos, candidato à Presidência pela Missão, e o Movimento Renovação Liberal (MBL), por discurso de ódio e discriminação contra povos indígenas do Baixo Tapajós. A denúncia aponta que os acusados promoveram falas que incitam ódio e estereotipam comunidades tradicionais, violando direitos constitucionais.",
+        "en-US": "The Federal Public Prosecutor’s Office in Pará filed a civil public action against Renan Santos, presidential candidate of the Missão party, and the Liberal Renewal Movement (MBL), for hate speech and discrimination against indigenous peoples of the Lower Tapajós. The complaint alleges that the defendants made statements inciting hatred and stereotyping traditional communities, violating constitutional rights."
       },
       "content": "O MPF (Ministério Público Federal) no Pará ingressou com uma ação civil pública contra o candidato à Presidência Renan Santos (Missão) e contra o MBL (Movimento Renovação Liberal) por discurso de ódio e discriminação contra povos indígenas do Baixo Tapajós.",
       "source_category": "mainstream",
-      "sentiment_per_candidate": {},
-      "edit_history": [],
+      "sentiment_per_candidate": {
+        "renan-santos": "negativo"
+      },
+      "edit_history": [
+        {
+          "tier": "editor",
+          "at": "2026-08-18T19:48:43Z",
+          "provider": "nvidia",
+          "action": "validated",
+          "changes": [
+            "summary_pt",
+            "summary_en"
+          ]
+        }
+      ],
       "disclaimer_pt": "Análise algorítmica. Não representa pesquisa de opinião.",
       "disclaimer_en": "Algorithmic analysis. Does not represent polling data.",
-      "sentiment_score": 0.0,
-      "confidence_score": 0.0,
-      "_sentiment_scores": {},
-      "prominence_score": 0.0
+      "sentiment_score": -0.7,
+      "confidence_score": 1.0,
+      "_sentiment_scores": {
+        "renan-santos": -0.7
+      },
+      "prominence_score": 0.0,
+      "_ai_provider": "nvidia",
+      "_ai_model": "nvidia/nemotron-3-super-120b-a12b",
+      "ai_provider_editor": "nvidia/nemotron-3-super-120b-a12b",
+      "editor_note": null
     },
     {
       "id": "a49a76269ab500a0",
@@ -95,27 +128,57 @@
       "source": "UOL Noticias",
       "published_at": "2026-08-18T19:39:56Z",
       "collected_at": "2026-08-18T19:39:56Z",
-      "status": "raw",
-      "relevance_score": 0.0,
-      "relevance_signals": null,
-      "candidates_mentioned": [],
-      "topics": [],
+      "status": "validated",
+      "relevance_score": 0.6,
+      "relevance_signals": {
+        "candidate_signal": 0.5,
+        "topic_signal": 0.05,
+        "keyword_signal": 0.05,
+        "source_signal": 0.0
+      },
+      "candidates_mentioned": [
+        "lula"
+      ],
+      "topics": [
+        "saude",
+        "corrupcao",
+        "politica_externa"
+      ],
       "narrative_cluster_id": null,
       "duplicate_of": null,
       "summaries": {
-        "pt-BR": "",
-        "en-US": ""
+        "pt-BR": "A Polícia Federal encontrou uma mensagem de WhatsApp indicando que Marcola, ex-chefe de gabinete do presidente Lula, recebeu um modelo de contrato para venda de medicamentos à base de canabidiol ao Ministério da Saúde, segundo o jornal O Globo. A mensagem teria sido enviada por uma amiga de Lulinha, filho do presidente Lula. O caso levanta suspeitas de possível influência indevida em processos de compra pública.",
+        "en-US": "The Federal Police found a WhatsApp message indicating that Marcola, former chief of staff to President Lula, received a contract model for the sale of cannabidiol-based medicines to the Ministry of Health, according to O Globo. The message was allegedly sent by a friend of Lulinha, President Lula's son. The case raises suspicions of undue influence in public procurement processes."
       },
       "content": "Uma mensagem de WhatsApp encontrada pela Polícia Federal mostra que o ex-chefe de gabinete do presidente Lula, Marco Aurélio Santana Ribeiro, o Marcola, recebeu um modelo de contrato para venda de medicamentos à base de canabidiol ao Ministério da Saúde. As informações são do jornal O Globo.",
       "source_category": "mainstream",
-      "sentiment_per_candidate": {},
-      "edit_history": [],
+      "sentiment_per_candidate": {
+        "lula": "negativo"
+      },
+      "edit_history": [
+        {
+          "tier": "editor",
+          "at": "2026-08-18T19:48:50Z",
+          "provider": "nvidia",
+          "action": "validated",
+          "changes": [
+            "summary_pt",
+            "summary_en"
+          ]
+        }
+      ],
       "disclaimer_pt": "Análise algorítmica. Não representa pesquisa de opinião.",
       "disclaimer_en": "Algorithmic analysis. Does not represent polling data.",
-      "sentiment_score": 0.0,
-      "confidence_score": 0.0,
-      "_sentiment_scores": {},
-      "prominence_score": 0.0
+      "sentiment_score": -0.3,
+      "confidence_score": 1.0,
+      "_sentiment_scores": {
+        "lula": -0.3
+      },
+      "prominence_score": 0.0,
+      "_ai_provider": "nvidia",
+      "_ai_model": "nvidia/nemotron-3-super-120b-a12b",
+      "ai_provider_editor": "nvidia/nemotron-3-super-120b-a12b",
+      "editor_note": null
     },
     {
       "id": "299334cbfb45903a",
@@ -124,27 +187,57 @@
       "source": "Poder360",
       "published_at": "2026-08-18T19:37:51Z",
       "collected_at": "2026-08-18T19:40:16Z",
-      "status": "raw",
-      "relevance_score": 0.0,
-      "relevance_signals": null,
-      "candidates_mentioned": [],
-      "topics": [],
+      "status": "validated",
+      "relevance_score": 1.0,
+      "relevance_signals": {
+        "candidate_signal": 0.5,
+        "topic_signal": 0.3,
+        "keyword_signal": 0.15,
+        "source_signal": 0.05
+      },
+      "candidates_mentioned": [
+        "flavio-bolsonaro"
+      ],
+      "topics": [
+        "eleicoes",
+        "midia",
+        "corrupcao"
+      ],
       "narrative_cluster_id": null,
       "duplicate_of": null,
       "summaries": {
-        "pt-BR": "",
-        "en-US": ""
+        "pt-BR": "O pastor Silas Malafaia declarou apoio à candidatura do senador Flávio Bolsonaro (PL-RJ), mas disse que não organizará ou coordenará atos de campanha, incluindo o evento do PL em 7 de Setembro na avenida Paulista. Ele afirmou que sua atuação será limitada à opinião e às redes sociais, alegando que não deseja se envolver na logística partidária e que eventos políticos devem ser responsabilidade exclusiva das legendas.",
+        "en-US": "Pastor Silas Malafaia said he supports Flávio Bolsonaro’s Senate candidacy but will not organize or coordinate any campaign events, including the PL’s September 7 gathering on Paulista Avenue. He stated his support will be limited to opinion and social media, emphasizing he does not wish to involve himself in party logistics and that political events are the sole responsibility of the parties."
       },
       "content": "O pastor Silas Malafaia, líder da Assembleia de Deus Vitória em Cristo, disse ao Poder360 nesta 3ª feira (18.ago.2026) que apoia a candidatura do senador Flávio Bolsonaro (PL-RJ), mas que não irá organizar, nem coordenar nenhum ato de campanha ou evento político para o congressista ou para o Partido Liberal. A declaração se deu depois de o diretório paulista do PL reservar a avenida Paulista para um ato político em 7 de Setembro. Será a 1ª vez desde 2021 que Malafaia não estará à frente da coordenação do evento. Segundo o pastor, ele só coordenava as manifestações por serem pedidos diretos do ex-presidente Jair Bolsonaro (PL) e que não pretende se envolver na logística partidária. “Como o Bolsonaro sabia que eu sou um cara organizado, botava ordem na questão e não deixava qualquer um falar, ele me pedia. Agora, a questão do 7 de Setembro é campanha política do PL de São Paulo. Não vou organizar nada, isso não é comigo, é com eles. Eu não vou organizar manifestação política partidária” , afirmou Malafaia ao Poder360 . Malafaia disse não ter vínculo com nenhum partido e afirmou que a responsabilidade jurídica e operacional de eventos de campanha pertence exclusivamente às legendas. Segundo o pastor, os trâmites exigidos para solicitar o uso do espaço público na Paulista partiram do PL. O religioso disse que jamais participou de atos estritamente partidários, e que os eventos organizados por ele tinham temas humanitários, como os que pediam anistia aos envolvidos no 8 de Janeiro. Citou, por exemplo, a ausência em lançamentos de campanha de Jair Bolsonaro, como a oficialização do nome em 2018 e a convenção no Maracanãzinho em 2022. Malafaia disse que sua contribuição à candidatura de Flávio se dará pela via da opinião e pelas redes sociais. O pastor não compareceu ao 1º ato de campanha do senador no domingo (16.ago), no Rio de Janeiro. “Eu prefiro apoiar usando minhas redes, usando minha influência. Eu não sou candidato” , disse. Questionado sobre o alcance do evento promovido por Flávio no Rio e as comparações com o poder de convocação do pai , Malafaia minimizou as análises de que a pré-candidatura do senador demonstraria menor tração nas ruas . O pastor disse que o ato na praia de Copacabana reuniu entre 25.000 e 30.000 pessoas e aproveitou para rebater comparações ao comício do presidente Luiz Inácio Lula da Silva (PT) no ABC Paulista, em São Paulo. “Claro que o Bolsonaro tem a maior capilaridade de manifestação, é imbatível. Vocês querem que o Flávio tenha a mesma capacidade de capilaridade do Bolsonaro? Isso é brincadeira. Ninguém da direita e nem o Lula levam o mesmo número que o Bolsonaro. O Lula precisa arrumar um monte de ônibus para lotar lugar fechado “, afirmou.",
       "source_category": "politics",
-      "sentiment_per_candidate": {},
-      "edit_history": [],
+      "sentiment_per_candidate": {
+        "flavio-bolsonaro": "positivo"
+      },
+      "edit_history": [
+        {
+          "tier": "editor",
+          "at": "2026-08-18T19:48:52Z",
+          "provider": "nvidia",
+          "action": "validated",
+          "changes": [
+            "summary_pt",
+            "summary_en"
+          ]
+        }
+      ],
       "disclaimer_pt": "Análise algorítmica. Não representa pesquisa de opinião.",
       "disclaimer_en": "Algorithmic analysis. Does not represent polling data.",
-      "sentiment_score": 0.0,
-      "confidence_score": 0.0,
-      "_sentiment_scores": {},
-      "prominence_score": 0.0
+      "sentiment_score": 0.4,
+      "confidence_score": 1.0,
+      "_sentiment_scores": {
+        "flavio-bolsonaro": 0.4
+      },
+      "prominence_score": 0.0,
+      "_ai_provider": "nvidia",
+      "_ai_model": "nvidia/nemotron-3-super-120b-a12b",
+      "ai_provider_editor": "nvidia/nemotron-3-super-120b-a12b",
+      "editor_note": null
     },
     {
       "id": "c40ece6e3a90304a",
@@ -153,143 +246,59 @@
       "source": "O Antagonista",
       "published_at": "2026-08-18T19:37:08Z",
       "collected_at": "2026-08-18T19:40:20Z",
-      "status": "raw",
-      "relevance_score": 0.0,
-      "relevance_signals": null,
-      "candidates_mentioned": [],
-      "topics": [],
+      "status": "validated",
+      "relevance_score": 0.95,
+      "relevance_signals": {
+        "candidate_signal": 0.5,
+        "topic_signal": 0.3,
+        "keyword_signal": 0.1,
+        "source_signal": 0.05
+      },
+      "candidates_mentioned": [
+        "lula"
+      ],
+      "topics": [
+        "seguranca",
+        "politica_externa",
+        "corrupcao",
+        "midia",
+        "eleicoes"
+      ],
       "narrative_cluster_id": null,
       "duplicate_of": null,
       "summaries": {
-        "pt-BR": "",
-        "en-US": ""
+        "pt-BR": "O STF tornou o deputado federal Gilvan da Federal (PL-ES) réu por injúria majorada após ele ter desejado a morte do presidente Lula durante reunião da Comissão de Segurança Pública da Câmara. A decisão foi tomada pela Primeira Turma, com os ministros Alexandre de Moraes e Flávio Dino acompanhando o voto da relatora, ministra Cármen Lúcia.",
+        "en-US": "The Brazilian Supreme Court (STF) has made federal deputy Gilvan da Federal (PL-ES) a defendant for aggravated insult after he wished for the death of President Lula during a Public Security Committee meeting. The decision was made by the First Chamber, with Justices Alexandre de Moraes and Flávio Dino following the rapporteur Justice Cármen Lúcia's vote."
       },
       "content": "A Primeira Turma do Supremo Tribunal Federal (STF), tornou nesta terça-feira, 18, o deputado federal Gilvan da Federal (PL-ES) réu por injúria majorada, por ter desejado a morte do presidente Lula (PT) durante reunião da Comissão de Segurança Pública da Câmara. Os ministros Alexandre de Moraes e Flávio Dino acompanharam o voto da relatora, Cármen Lúcia,... The post STF torna Gilvan da Federal réu por desejar a morte de Lula appeared first on O Antagonista .",
       "source_category": "politics",
-      "sentiment_per_candidate": {},
-      "edit_history": [],
-      "disclaimer_pt": "Análise algorítmica. Não representa pesquisa de opinião.",
-      "disclaimer_en": "Algorithmic analysis. Does not represent polling data.",
-      "sentiment_score": 0.0,
-      "confidence_score": 0.0,
-      "_sentiment_scores": {},
-      "prominence_score": 0.0
-    },
-    {
-      "id": "d217afe8f0a44a34",
-      "url": "https://www.poder360.com.br/poder-sportsmkt/sinafut-critica-poder-de-fundos-de-investimento-no-futebol/",
-      "title": "Sinafut critica poder de fundos de investimento no futebol",
-      "source": "Poder360",
-      "published_at": "2026-08-18T19:34:35Z",
-      "collected_at": "2026-08-18T19:40:16Z",
-      "status": "raw",
-      "relevance_score": 0.0,
-      "relevance_signals": null,
-      "candidates_mentioned": [],
-      "topics": [],
-      "narrative_cluster_id": null,
-      "duplicate_of": null,
-      "summaries": {
-        "pt-BR": "",
-        "en-US": ""
+      "sentiment_per_candidate": {
+        "lula": "negativo"
       },
-      "content": "O Sinafut (Sindicato Nacional das Associações de Futebol Profissional) e suas entidades estaduais de administração e ligas divulgaram, na 6ª feira (14.ago.2026), um vídeo-manifesto em que criticam contratos como os firmados no âmbito da FFU (Futebol Forte União), por transferirem a agentes financeiros externos o controle sobre receitas, decisões estratégicas e ativos de clubes brasileiros por prazos de até 50 anos. Em nota, a entidade afirmou que não é contra a entrada de capital privado no futebol, mas contra a transferência de poder de decisão para investidores externos. Em julho, o sindicato acionou o TJDFT (Tribunal de Justiça do Distrito Federal e dos Territórios) contra a Sports Media Entertainment , sócia da FFU, e a Opea Securitizadora , empresa que fez a emissão dos títulos das dívidas. Assista ao vídeo (1min31s): Na ação civil pública, o Sinafut afirma que o acordo viola a Lei Geral do Esporte , que permite a negociação desses direitos só para organizações esportivas, e não para investidores fora do Sistema Nacional do Esporte. Para o Sinafut, investidores podem oferecer recursos, crédito e soluções comerciais, desde que isso não implique a cessão de poder decisório sobre questões que pertencem às instituições esportivas. O ponto central da crítica é uma cláusula contratual que exige 90% de aprovação para determinadas deliberações. Na prática, segundo o Sinafut, o mecanismo permite ao investidor, que detém só 20% dos direitos, bloquear qualquer mudança relevante no contrato, mantendo os clubes vinculados a seus termos enquanto os direitos comerciais são explorados por 5 décadas. Direitos da Copa do Mundo O sindicato traçou um paralelo com a polêmica proposta da Fifa para criar uma empresa que comercializaria os direitos da Copa do Mundo , com possibilidade de venda de até 20% das cotas a investidores privados. A iniciativa foi abandonada dias depois de causar forte reação de entidades como a Uefa (União das Associações Europeias de Futebol) e a Concacaf (Confederação de Futebol da América do Norte, Central e Caribe), e também levou à renúncia de Carlos Cordeiro , assessor sênior e homem de confiança do presidente da Fifa, Gianni Infantino. Para o Sinafut, a diferença é que, ao menos naquele modelo, a Fifa manteria o controle, ao passo que os contratos criticados no Brasil fazem o inverso. No vídeo divulgado, a entidade recorre a uma analogia direta: “Quando você pede um empréstimo para comprar uma casa, o banco exige garantias. Os almoços de domingo não entram na negociação. As histórias da família não viram garantia. O futebol deveria ser igual, mas esses contratos estão entregando nossos clubes aos bancos por meio século”. O manifesto encerra com um apelo à autonomia do esporte: “O banco pode exigir garantias, mas jamais o controle. O futebol brasileiro é grande demais para ser decidido por letras miúdas.” OUTRO LADO Procurada pelo Poder360 , a Sports Media Entertainment afirmou que o prazo de 50 anos se refere à sociedade formada pelos clubes e pelo investidor e que a estrutura foi constituída em formato de condomínio, conforme proposta apresentada pelos próprios clubes, com assessoramento jurídico especializado. Segundo a empresa, o período dá sustentação a uma parceria e a um investimento de longo prazo no futebol brasileiro. A SME também disse que os direitos de transmissão são comercializados em ciclos. No atual, de 2025 a 2029, os direitos dos clubes da FFU na Série A foram negociados com Globo , Record , YouTube e Amazon . Leia a nota da Sports Media Entertainment na íntegra: “A SME (Sports Media Entertainment) esclarece 2 pontos importantes sobre o modelo construído com os clubes da FFU (Futebol Forte União): O prazo contratual de 50 anos se refere à sociedade formada pelos clubes e pelo investidor. A estrutura foi constituída em formato de condomínio e seu prazo foi definido na proposta apresentada pelos próprios clubes, com assessoramento jurídico especializado. O horizonte de 50 anos dá sustentação a uma parceria e a um investimento de longo prazo no futebol brasileiro. Os direitos de transmissão são comercializados em ciclos próprios. No ciclo atual, de 2025 a 2029, os direitos dos clubes da FFU na Série A foram negociados com Globo, Record, YouTube e Amazon. Encerrado esse período, começa um novo ciclo de comercialização dos direitos. “A organização coletiva dos clubes permite ampliar o valor do produto futebol, atrair investimento de longo prazo e fortalecer a capacidade de negociação das equipes. “Os resultados já observados mostram essa evolução. De 2024 a 2025, a receita média dos clubes que integram o CFU (Condomínio Forte União) passou de R$ 95 milhões para R$ 140 milhões. A diferença entre o maior e o menor valor recebido caiu de 6,25 vezes para 1,98 vez. No mesmo período, o número de transmissões abertas e gratuitas passou de 92 para 178. “A Sports Media Entertainment informa que não fez empréstimo aos clubes nem recebeu garantias nas operações. O risco é todo dos investidores. “A SME participa da estrutura como investidora minoritária. O prazo de 50 anos oferece horizonte ao capital investido e convive com ciclos periódicos de comercialização dos direitos de transmissão e com a governança exercida pelos clubes” .",
-      "source_category": "politics",
-      "sentiment_per_candidate": {},
-      "edit_history": [],
+      "edit_history": [
+        {
+          "tier": "editor",
+          "at": "2026-08-18T19:48:54Z",
+          "provider": "nvidia",
+          "action": "validated",
+          "changes": [
+            "summary_pt",
+            "summary_en"
+          ]
+        }
+      ],
       "disclaimer_pt": "Análise algorítmica. Não representa pesquisa de opinião.",
       "disclaimer_en": "Algorithmic analysis. Does not represent polling data.",
-      "sentiment_score": 0.0,
-      "confidence_score": 0.0,
-      "_sentiment_scores": {},
-      "prominence_score": 0.0
-    },
-    {
-      "id": "6f1bdb5d2ff45880",
-      "url": "https://www.metropoles.com/esportes/basquete-brasil-e-convocado-para-eliminatorias-da-copa-mundo",
-      "title": "Basquete: Brasil é convocado para eliminatórias da Copa Mundo",
-      "source": "Metropoles",
-      "published_at": "2026-08-18T19:33:08Z",
-      "collected_at": "2026-08-18T19:40:14Z",
-      "status": "raw",
-      "relevance_score": 0.0,
-      "relevance_signals": null,
-      "candidates_mentioned": [],
-      "topics": [],
-      "narrative_cluster_id": null,
-      "duplicate_of": null,
-      "summaries": {
-        "pt-BR": "",
-        "en-US": ""
+      "sentiment_score": -0.5,
+      "confidence_score": 1.0,
+      "_sentiment_scores": {
+        "lula": -0.5
       },
-      "content": "A Seleção Brasileira de basquete foi convocada nesta terça-feira (18/8) para os jogos da segunda fase das Eliminatórias da Copa do Mundo, que acontecerá em 2027. Destaque para a ausência de Gui Santos , único brasileiro na NBA , que seguirá a preparação da pré-temporada com o Golden State Warriors. Veja os convocados: A Seleção Brasileira masculina está convocada para os próximos compromissos pelas Eliminatórias da Copa do Mundo FIBA 2027! 🇧🇷 O técnico Aleksandar Petrovic chamou 17 atletas para os confrontos diante da República Dominicana e do México, que marcam o início da segunda fase da… pic.twitter.com/hLaBl0U6he — Basquete Brasil – CBB (@basquetebrasil) August 18, 2026 Leia também Esportes Basquete: Brasil encara a República Dominicana pelas Eliminatórias Esportes Ronaldinho Gaúcho faz oferta para comprar time de basquete do Monaco Esportes Carlos Massoni, campeão mundial de basquete pelo Brasil, morre aos 87 Comandado pelo croata Aleksandar Petrovic, o Brasil terá dois jogos em agosto. Na Arena Nilson Nelson, em Brasília, a equipe enfrentará a República Dominicana, na quinta-feira (27/8). Quatro dias depois, a Seleção jogará contra o México, em Zacatecas, casa do adversário. Na primeira fase das Eliminatórias os brasileiros terminaram com 100% de aproveitamento após vencerem as seis partidas contra Chile, Venezuela e Colômbia, duas vezes contra cada adversário. Na segunda etapa, o Brasil terá mais seis jogos, desta vez contra México, República Dominicana e Estados Unidos. Vale destacar que os confrontos serão divididos em três janelas, com dois embates em cada uma: a primeira em agosto, a segunda em novembro e a terceira apenas em fevereiro de 2027. Veja os jogadores convocados: Yago Mateus – Flamengo Caio Pacheco – Basquet Coruña Raulzinho Neto – Free Agent Alexey Borges – Flamengo George de Paula – Mogi Basquete Reynan Gabriel – SESI Franca Daniel Von Haydin – Mogi Basquete Gui Deodato – Soles de Mexicali Didi Louzada – Flamengo Léo Meindl – Obradoiro Léo Beath – UC San Diego Gabriel Jaú – Kaohsiung Aquas Bruno Caboclo – Free Agent Tim Soares – Ibaraki Robots Márcio Santos – Maccabi Tel Aviv Wini Braga – Minas Tênis Clube Ruan Miranda – Flamengo",
-      "source_category": "mainstream",
-      "sentiment_per_candidate": {},
-      "edit_history": [],
-      "disclaimer_pt": "Análise algorítmica. Não representa pesquisa de opinião.",
-      "disclaimer_en": "Algorithmic analysis. Does not represent polling data.",
-      "sentiment_score": 0.0,
-      "confidence_score": 0.0,
-      "_sentiment_scores": {},
-      "prominence_score": 0.0
-    },
-    {
-      "id": "3be13510df3421cb",
-      "url": "https://veja.abril.com.br/coluna/o-mundo-de-sofia/icone-em-paris-galeries-lafayette-ganha-novo-bistro-e-farmacia-renomada/",
-      "title": "Ícone em Paris, Galeries Lafayette ganha novo bistrô e farmácia renomada",
-      "source": "Veja",
-      "published_at": "2026-08-18T19:30:25Z",
-      "collected_at": "2026-08-18T19:40:23Z",
-      "status": "raw",
-      "relevance_score": 0.0,
-      "relevance_signals": null,
-      "candidates_mentioned": [],
-      "topics": [],
-      "narrative_cluster_id": null,
-      "duplicate_of": null,
-      "summaries": {
-        "pt-BR": "",
-        "en-US": ""
-      },
-      "content": "Derivada do termo latino innovatio, a palavra “ inovação ” tem como significado criar algo novo, modificar algo existente com ideias novas, melhorar processos e introduzir novos produtos e serviços. Uma descrição que se encaixa perfeitamente à história e pontua a trajetória da Galeries Lafayette , a primeira loja de departamentos da Europa, que se transformou em uma referência mundial de compras e entretenimento. Com 130 anos, a icônica maison francesa reúne hoje mais de 3 500 renomadas marcas, que vão do acessível ao luxo, passando pelo premium, incluindo moda, beleza, casa e objetos em geral. Convertido a um concorrido destino turístico, o complexo da Boulevard Haussmann – a loja central da marca na capital francesa – ainda mistura espaços dedicados à gastronomia e a eventos culturais sazonais. https://veja.abril.com.br/wp-content/uploads/2026/08/WhatsApp-Video-2026-08-17-at-23.20.13.mp4 Neste verão europeu , seguindo à tradição, a Galeries Lafayette voltou a inovar. Entre as novidades do magazine está a abertura de um novo restaurante em seu rooftop, o bistrô Balcon. Este ano, a loja de departamentos também acrescentou a sua área Beauté et Soins uma unidade da prestigiada Parapharmacie, uma referência mundial em dermocosmética e muito procurada na França pelos brasileiros. Dois espaços que eu tive a chance de conhecer pessoalmente durante uma viagem em julho a Paris, a convite da Nomad – plataforma global aceita em mais de 180 países que oferece conta internacional, cartão de débito, chip e seguro viagem. Balcon: o novo restaurante da Galeries Lafayette fica no rooftop e serve clássicos dos bistrôs parisienses repaginados Sofia Cerqueira/VEJA Voltando à gastronomia, o Balcon apresenta um cardápio que revisita os clássicos dos bistrôs parisienses com uma abordagem moderna, leve e autoral. Neste novo espaço, com uma vista panorâmica da cidade, incluindo a Torre Eiffel, o público é brindado com pratos tradicionais neste tipo de restaurante, mas com releituras criativas e ingredientes da estação. Entre os destaques do menu, por exemplo, está o alho-poró ao vinagrete com onglet (corte nobre de carne bovina) com molho de pimenta. Continua após a publicidade Vista à mesa: o Bistrô Balcon é emoldurado pela visão panorâmica de vários pontos turísticos de Paris Sofia Cerqueira/VEJA No bistrô Balcon , as caçarolas são comandadas por Julien Sebbag, um chef autodidata, que construiu sua carreira a partir de experiências pessoais e viagens, criando uma cozinha marcada pela sensibilidade e pelo compartilhamento. Antes de assumir o novo espaço gastronômico da Galeries Lafayette, Sebbag ficou cinco anos à frente do Créatures, conhecido por sua proposta vegetariana e que também ficava no terraço da loja de departamentos. Nesta nova casa, o chef investiu em receitas de apelo emocional que dialogam com a memória afetiva dos franceses e também do público internacional. Nesta seleção de pratos entram receitas como a massa tipo coquillettes com trufa e parmesão e o profiteroles com chocolate e pistache. Emoldurado pela vista de Paris, a proposta do Balcon é ainda oferecer uma experiência que vai além da gastronomia, explorando também o cenário urbano e o estilo de vida parisiense. Neste conceito, o espaço combina referências clássicas dos bistrôs da cidade, como as cadeiras trançadas e elementos de metal. O espaço tem opções especiais para cada dia da semana e serve café da manhã, almoço e jantar, com tíquete médio no almoço ou jantar, entre 30 e 40 euros. Parapharmacie: novidade na Galeries Lafayette que reúne mais de 6000 produtos de 200 laboratórios diferentes, incluindo inúmeras marcas de dermocosméticos Sofia Cerqueira/VEJA Continua após a publicidade Após experimentar as delícias servidas no rooftop, uma boa pedida é visitar outra novidade da Galeries Lafayette, em seu primeiro pavimento. Ali foi aberta uma filial da famosa Parapharmacie , viabilizada por meio de uma parceria com o grupo Carré Opéra e que ocupa uma área de 250 metros quadrados. De produtos dermocosméticos a artigos de higiene e suplementos alimentares, os consumidores têm acesso a itens de mais de 200 laboratórios, totalizando mais de 6 000 artigos disponíveis. Novidades constantes: com 130 anos de história, a Galeries Lafayette tem como marca a inovação, trazendo sempre novas grifes e conceitos para seus visitantes Sofia Cerqueira/VEJA Muito conhecida pelos consumidores brasileiros que visitam a capital francesa, a Parapharmacie foi criada por cinco farmacêuticos no início dos anos 1990 e se desenvolveu com uma rede de lojas estrategicamente posicionadas no coração de Paris. Assim como acontece na unidade da Galeries Lafayette, a farmácia contempla os universos da saúde, beleza e bem-estar. Como um espaço de inovação, recebe regularmente novas marcas e exclusividades oferecidas em primeira mão. Entre os laboratórios e marcas vendidas pela Parapharmacie estão La Roche-Posay, Pierre Fabre, Bioderma, SVR, Caudalie, Vichy, entre muitos outros. Continua após a publicidade Complexo Boulevard Hausmann: maior loja de uma rede com 57 lojas na França e 11 internacionais Sofia Cerqueira/VEJA Criada por dois primos da Alsácia (Théophile Bader e Alphonse Kahn), a Galeries Lafayette abriu suas portas inicialmente no número 1 da Rue Lafayette, em Paris, com apenas 70 metros quadrados. Hoje, o complexo do Boulevard Hausmann ocupa 70 000 metros quadrados divididos em três prédios. A pequena loja de artigos de moda do século XIX se tornou ainda um dos grandes símbolos do estilo parisiense e de elegância à francesa, e, junto com um destino de compras, se transformou em uma verdadeira atração turística. Sua loja central recebe atualmente mais visitantes do que muitos monumentos franceses – são 100 000 visitantes por dia –, só perdendo para o Museu do Louvre, que contabiliza, anualmente, 9,7 milhões de visitantes por ano. Além da loja principal da Boulevard Hausmann, a Galeries Lafayette conta hoje com 57 lojas na França e 11 internacionais. A inovação, claro, é a sua marca em todas elas. Continua após a publicidade A colunista viajou para Paris a convite da Nomad , uma plataforma conhecida por tornar os serviços financeiros globais mais democráticos e acessíveis. O cartão Nomad é aceito em mais de 180 países para compras virtuais e presenciais e permite saques em caixas eletrônicos (ATMs). Além do cartão de débito, a fintech oferece opções de conta internacional (sem taxa de abertura nem taxa mensal de manutenção), chip e seguro viagem. Possui mais de 3,5 milhões de clientes ativos. Siga também no Instagram o perfil @omundodesofia_cerqueira Com o olhar cultivado em redações por mais de 30 anos, convido você a viajar pelo mundo, por aqui. Nesse amplo e diversificado roteiro, cabem um destino encantador, uma suíte especial, uma experiência única, uma curiosidade do setor e tudo mais que possa instigar quem está de malas prontas ou sonha em pôr o pé na estrada. Publicidade",
-      "source_category": "magazine",
-      "sentiment_per_candidate": {},
-      "edit_history": [],
-      "disclaimer_pt": "Análise algorítmica. Não representa pesquisa de opinião.",
-      "disclaimer_en": "Algorithmic analysis. Does not represent polling data.",
-      "sentiment_score": 0.0,
-      "confidence_score": 0.0,
-      "_sentiment_scores": {},
-      "prominence_score": 0.0
-    },
-    {
-      "id": "1dee8417ec5de502",
-      "url": "https://veja.abril.com.br/brasil/a-guinada-do-stf-sobre-a-lei-da-reurb-e-o-alerta-de-inseguranca-juridica-nas-cidades/",
-      "title": "A guinada do STF sobre a Lei da Reurb e o alerta de insegurança jurídica nas cidades",
-      "source": "Veja",
-      "published_at": "2026-08-18T19:30:17Z",
-      "collected_at": "2026-08-18T19:40:23Z",
-      "status": "raw",
-      "relevance_score": 0.0,
-      "relevance_signals": null,
-      "candidates_mentioned": [],
-      "topics": [],
-      "narrative_cluster_id": null,
-      "duplicate_of": null,
-      "summaries": {
-        "pt-BR": "",
-        "en-US": ""
-      },
-      "content": "A Suprema Corte retomou o julgamento de quatro Ações Diretas de Inconstitucionalidade, as chamadas ADIs, que questionam a validade da Lei da Reurb ( nº 13.465/2017 ). A normativa trata da regularização fundiária rural e urbana, da liquidação de créditos concedidos aos assentados da reforma agrária e da regulamentação fundiária no âmbito da Amazônia Legal. O STF retomou a apreciação da matéria na semana passada e, até o momento, o placar registra três votos pela inconstitucionalidade parcial da lei . O ministro Flávio Dino abriu a divergência para declarar incompatíveis com a Constituição dispositivos específicos. Entre eles, a dispensa de habite-se na Regularização Fundiária de Interesse Social e o instituto da Legitimação Fundiária — mecanismo que permite a aquisição do direito de propriedade por quem ocupa áreas informais consolidadas há décadas. A ministra Cármen Lúcia acompanhou o voto divergente, e o relator do caso, ministro Dias Toffoli , reajustou seu posicionamento inicial (que reconhecia a constitucionalidade integral da lei) para aderir à tese de Dino. O Radar consultou o advogado Renato Guilherme Góes para entender a retomada do julgamento e a inclinação recente da Suprema Corte. Especialista no tema, ele defende a manutenção e a máxima aplicação da lei como ferramenta essencial para garantir o direito à moradia e a função social da propriedade para a população de baixa renda. Continua após a publicidade Góes avalia que anular registros já realizados traria enorme prejuízo econômico e social, além de comprometer negócios como compras, vendas e financiamentos imobiliários. “A título de exemplo, somente nos estados de São Paulo, Minas Gerais e Santa Catarina, até 14/8/2026, já foram regularizadas 706.160 unidades, das quais 88% decorrentes de Reurb-S. Atualmente, há nos cartórios milhares de títulos em fase de registro, e milhões de famílias aguardando a titulação de seu imóvel”, pontua. Continua após a publicidade Na avaliação do jurista, o STF deve buscar uma solução de equilíbrio: criar limites contra a especulação imobiliária e a apropriação indevida de terras públicas, mas preservar a Legitimação Fundiária para garantir a propriedade formal às famílias que vivem na informalidade. Publicidade",
-      "source_category": "magazine",
-      "sentiment_per_candidate": {},
-      "edit_history": [],
-      "disclaimer_pt": "Análise algorítmica. Não representa pesquisa de opinião.",
-      "disclaimer_en": "Algorithmic analysis. Does not represent polling data.",
-      "sentiment_score": 0.0,
-      "confidence_score": 0.0,
-      "_sentiment_scores": {},
-      "prominence_score": 0.0
+      "prominence_score": 0.0,
+      "_ai_provider": "nvidia",
+      "_ai_model": "nvidia/nemotron-3-super-120b-a12b",
+      "ai_provider_editor": "nvidia/nemotron-3-super-120b-a12b",
+      "editor_note": null
     },
     {
       "id": "c2e9fe82b0c45d3f",
@@ -298,27 +307,58 @@
       "source": "Veja",
       "published_at": "2026-08-18T19:29:36Z",
       "collected_at": "2026-08-18T19:40:23Z",
-      "status": "raw",
-      "relevance_score": 0.0,
-      "relevance_signals": null,
-      "candidates_mentioned": [],
-      "topics": [],
+      "status": "validated",
+      "relevance_score": 0.85,
+      "relevance_signals": {
+        "candidate_signal": 0.5,
+        "topic_signal": 0.3,
+        "keyword_signal": 0.05,
+        "source_signal": 0.0
+      },
+      "candidates_mentioned": [
+        "lula"
+      ],
+      "topics": [
+        "politica_externa",
+        "corrupcao",
+        "midia",
+        "eleicoes"
+      ],
       "narrative_cluster_id": null,
       "duplicate_of": null,
       "summaries": {
-        "pt-BR": "",
-        "en-US": ""
+        "pt-BR": "O STF recebeu denúncia da PGR contra o deputado federal Gilvan da Federal (PL-ES) por injúria contra o presidente Lula, após ele chamá-lo de 'ex-presidiário', 'ex-condenado', 'parceiro de crime' e 'desgraça', além de dizer que torceria pela sua morte. A decisão foi unânime, rejeitando a alegação de imunidade parlamentar, pois as ofensas não tiveram relação com atividade legislativa. O parlamentar agora é réu e enfrentará ação penal.",
+        "en-US": "The STF unanimously accepted a PGR indictment against federal deputy Gilvan da Federal (PL-ES) for insulting President Lula, after he called him an 'ex-convict', 'ex-convicted', 'criminal partner', and 'disgrace', and said he hoped for his death. The Court rejected his parliamentary immunity claim, stating the remarks were unrelated to legislative activity. Gilvan is now a defendant and will face criminal prosecution."
       },
       "content": "A Primeira Turma do STF decidiu, por unanimidade, receber uma denúncia da PGR contra o deputado federal Gilvan da Federal (PL-ES) por injúria contra o presidente Luiz Inácio Lula da Silva. Com essa decisão, o parlamentar vira réu e será aberta uma ação penal. A acusação ocorreu após Gilvan chamar Lula de “ex-presidiário”, “ex-condenado”, “parceiro de crime” e “desgraça” e dizer que torceria pela sua morte. A fala ocorreu na Câmara dos Deputados e foi replicada pelo deputado em suas redes sociais. O voto da relatora, Cármen Lúcia, foi seguido pelos ministros Alexandre de Moraes e Flávio Dino. Continua após a publicidade Cristiano Zanin, que era advogado de Lula antes de ir para o STF , declarou-se impedido. Gilvan da Federal alegou que a declaração estava protegida pela imunidade parlamentar, mas a tese não foi aceita pelos ministros. Continua após a publicidade “A fala do parlamentar, com as diversas ofensas que fez ao presidente, não tinha estreita relação com a atividade legislativa, não foi uma crítica política e não se inseriu no contexto de fiscalização da administração pública. Então, tratou-se apenas de ofensa”, afirmou a subprocuradora-geral da República Cláudia Sampaio Marques na sessão. Lula x Flávio: surpresas e reviravoltas da corrida eleitoral Publicidade",
       "source_category": "magazine",
-      "sentiment_per_candidate": {},
-      "edit_history": [],
+      "sentiment_per_candidate": {
+        "lula": "positivo"
+      },
+      "edit_history": [
+        {
+          "tier": "editor",
+          "at": "2026-08-18T19:49:23Z",
+          "provider": "nvidia",
+          "action": "validated",
+          "changes": [
+            "summary_pt",
+            "summary_en"
+          ]
+        }
+      ],
       "disclaimer_pt": "Análise algorítmica. Não representa pesquisa de opinião.",
       "disclaimer_en": "Algorithmic analysis. Does not represent polling data.",
-      "sentiment_score": 0.0,
-      "confidence_score": 0.0,
-      "_sentiment_scores": {},
-      "prominence_score": 0.0
+      "sentiment_score": 0.2,
+      "confidence_score": 1.0,
+      "_sentiment_scores": {
+        "lula": 0.2
+      },
+      "prominence_score": 0.0,
+      "_ai_provider": "nvidia",
+      "_ai_model": "nvidia/nemotron-3-super-120b-a12b",
+      "ai_provider_editor": "nvidia/nemotron-3-super-120b-a12b",
+      "editor_note": null
     },
     {
       "id": "d884f4c26497a66c",
@@ -327,27 +367,53 @@
       "source": "Poder360",
       "published_at": "2026-08-18T19:28:48Z",
       "collected_at": "2026-08-18T19:40:16Z",
-      "status": "raw",
-      "relevance_score": 0.0,
-      "relevance_signals": null,
+      "status": "validated",
+      "relevance_score": 0.3,
+      "relevance_signals": {
+        "candidate_signal": 0.0,
+        "topic_signal": 0.1,
+        "keyword_signal": 0.15,
+        "source_signal": 0.05
+      },
       "candidates_mentioned": [],
-      "topics": [],
+      "topics": [
+        "economia",
+        "meio_ambiente",
+        "politica_externa",
+        "impostos",
+        "privatizacao"
+      ],
       "narrative_cluster_id": null,
       "duplicate_of": null,
       "summaries": {
-        "pt-BR": "",
-        "en-US": ""
+        "pt-BR": "A Vale S.A. apresentou uma agenda regulatória para 'destravar' a mineração no Brasil, argumentando que o setor está estagnado e perde competitividade frente a outros países. O documento, elaborado com a Accenture e enviado aos candidatos à Presidência, propõe 15 iniciativas em licenciamento, ambiente de negócios, segurança institucional e valor compartilhado, incluindo padronização de processos ambientais, fortalecimento de órgãos como Ibama e ANM, e incentivos à transformação mineral.",
+        "en-US": "Vale S.A. presented a regulatory agenda to 'unlock' mining in Brazil, arguing the sector is stagnant and losing competitiveness. The document, developed with Accenture and sent to presidential candidates, proposes 15 initiatives covering environmental licensing, business environment, institutional security, and shared value, including standardization of permitting, strengthening agencies like Ibama and ANM, and incentives for mineral transformation."
       },
       "content": "A Vale S.A apresentou nesta 3ª feira (18.ago.2026) uma agenda regulatória que, segundo a companhia, é necessária para “ destravar ” a mineração no Brasil. O documento será enviado aos candidatos à Presidência da República. A mineradora argumenta que o setor está estagnado. Cresce em ritmo mais lento do que em outros países e perde competitividade. O estudo foi elaborado em parceria com a consultoria Accenture e divulgado em cerimônia em Brasília que contou com a participação do presidente da Vale, Gustavo Pimenta. Eis a íntegra do documento (PDF – 2 MB). A agenda reúne 15 iniciativas que abordam licenciamento, ambiente de negócios e segurança institucional, cadeia produtiva e valor compartilhado com a sociedade. Na área de licenciamento, a Vale propõe padronizar os processos de licenciamento ambiental. A companhia fala em fortalecimento de órgãos como Ibama (Instituto Brasileiro do Meio Ambiente e dos Recursos Naturais Renováveis), Iphan (Instituto do Patrimônio Histórico e Artístico Nacional), ICMBio (Instituto Chico Mendes de Conservação da Biodiversidade), Funai (Fundação Nacional dos Povos Indígenas) para que deem conta com celeridade da alta demanda por licenças ambientais. Para a Vale, também é necessário “ padronizar ” a análise de títulos minerários e ampliar o mapeamento geológico por meio de parcerias entre o SGB (Serviço Geológico do Brasil) e empresas do setor privado. O documento cita, ainda, incentivos à transformação mineral, melhores condições de fornecimento de energia e um plano diretor de infraestrutura para o setor. Entre as demais propostas estão: fortalecimento da ANM (Agência Nacional de Mineração); a implementação de uma política nacional de minerais críticos, que já está em discussão no Legislativo; a atualização das normas sobre cavernas; a avaliação dos impactos da reforma tributária; criação de um programa de “ qualificação ” do uso da CFEM (Compensação Financeira pela Exploração Mineral), regime de royalties pago pelas mineradoras; DEMANDA CRESCENTE, OFERTA LENTA O diagnóstico da Vale é que o Brasil tem recursos minerais capazes de atender a uma demanda global que deverá crescer de forma acelerada. Carros elétricos, data centers, inteligência artificial, robótica, armazenamento de energia, geração renovável e obras de infraestrutura exigem minerais encontrados no território brasileiro. O relatório estima que, de 2024 a 2035, a demanda mundial crescerá 493% para o lítio, 245% para a grafita, 89% para as terras-raras, 44% para o cobre e 36% para o minério de ferro de alta qualidade. O Brasil concentra parcelas relevantes das reservas globais desses minérios. Tem 66% de todo o nióbio do mundo. A 2ª maior reserva de terras-raras e de grafita, e a 3ª maior para ferro, manganês, estanho e níquel. Os dados são do USGS (Serviço Geológico dos Estados Unidos). Apesar desse potencial, ressalta a Vale, só 28% do território brasileiro foi devidamente mapeado, segundo o SGB (Serviço Geológico do Brasil). A Vale afirma que a produção brasileira avançou menos do que a de concorrentes nos últimos 15 anos. O país caiu do 4º para o 7º lugar no ranking mundial do valor da produção mineral de 2014 a 2023. Nesse período, foi ultrapassado por Rússia, Indonésia e Índia, enquanto o ranking continuou sendo liderado por China (1ª colocada), Austrália (2ª) e África do Sul (3ª). O valor atribuído à produção brasileira aumentou 8,6%, de R$ 273 bilhões para R$ 296 bilhões. Em 2023, a Rússia somava R$ 364 bilhões, a Indonésia, R$ 306 bilhões, e a Índia, R$ 302 bilhões, segundo o levantamento World Mining Data 2025 , elaborado pelo WMC (Congresso Mundial de Mineração).",
       "source_category": "politics",
       "sentiment_per_candidate": {},
-      "edit_history": [],
+      "edit_history": [
+        {
+          "tier": "editor",
+          "at": "2026-08-18T19:49:28Z",
+          "provider": "nvidia",
+          "action": "validated",
+          "changes": [
+            "summary_pt",
+            "summary_en"
+          ]
+        }
+      ],
       "disclaimer_pt": "Análise algorítmica. Não representa pesquisa de opinião.",
       "disclaimer_en": "Algorithmic analysis. Does not represent polling data.",
       "sentiment_score": 0.0,
-      "confidence_score": 0.0,
+      "confidence_score": 1.0,
       "_sentiment_scores": {},
-      "prominence_score": 0.0
+      "prominence_score": 0.0,
+      "_ai_provider": "nvidia",
+      "_ai_model": "nvidia/nemotron-3-super-120b-a12b",
+      "ai_provider_editor": "nvidia/nemotron-3-super-120b-a12b",
+      "editor_note": null
     },
     {
       "id": "46241058a0f81167",
@@ -356,114 +422,51 @@
       "source": "Metropoles",
       "published_at": "2026-08-18T19:27:32Z",
       "collected_at": "2026-08-18T19:40:14Z",
-      "status": "raw",
-      "relevance_score": 0.0,
-      "relevance_signals": null,
+      "status": "validated",
+      "relevance_score": 0.4,
+      "relevance_signals": {
+        "candidate_signal": 0.0,
+        "topic_signal": 0.3,
+        "keyword_signal": 0.1,
+        "source_signal": 0.0
+      },
       "candidates_mentioned": [],
-      "topics": [],
+      "topics": [
+        "politica_externa",
+        "corrupcao",
+        "eleicoes"
+      ],
       "narrative_cluster_id": null,
       "duplicate_of": null,
       "summaries": {
-        "pt-BR": "",
-        "en-US": ""
+        "pt-BR": "A ministra Cármen Lúcia foi eleita presidente da Primeira Turma do STF em votação unânime e simbólica na terça-feira (18/8). Ela assumirá o cargo em 30 de setembro, sucedendo o ministro Flávio Dino, após cumprir o rodízio previsto pelo Regimento Interno, que estabelece mandato anual sem recondução até que todos os membros tenham exercido a presidência.",
+        "en-US": "Minister Cármen Lúcia was elected president of the First Chamber of the STF in a unanimous and symbolic vote on Tuesday, August 18. She will assume the position on September 30, succeeding Minister Flávio Dino, following the Court’s internal rule of one-year non-renewable presidency rotated by seniority after all members have served."
       },
       "content": "A ministra Cármen Lúcia, do Supremo Tribunal Federal (STF) , foi eleita, na tarde desta terça-feira (18/8), presidente da Primeira Turma. A escolha ocorreu por unanimidade, em votação simbólica. Cármen assumirá o comando do colegiado em 30 de setembro, quando sucederá o ministro Flávio Dino, que está à frente da Turma há um ano. Pelo Regimento Interno do STF, a presidência de cada Turma é exercida por um ano, sem possibilidade de recondução até que todos os integrantes tenham ocupado o posto, seguindo a ordem decrescente de antiguidade. Como todos os atuais ministros da Primeira Turma já exerceram a função, o rodízio recomeça com Cármen, a integrante mais antiga do colegiado. Leia também Minas Gerais Ministra Cármen Lúcia lançará dois livros em BH nesta sexta (31/7) Brasil Cármen Lúcia alerta sobre abuso tecnológico e risco da IA às eleições Grande Angular Fux vota com Cármen Lúcia para derrubar flexibilização da Lei da Ficha Limpa 4 imagens Fechar modal. 1 de 4 Ministra Cármen Lúcia VINÍCIUS SCHMIDT/METRÓPOLES @vinicius.foto 2 de 4 Ministra Cármen Lúcia Reprodução/TSE 3 de 4 Ministra Cármen Lúcia Luis Nova/Especial Metrópoles @LuisGustavoNova 4 de 4 Ministra Cármen Lúcia STF",
       "source_category": "mainstream",
       "sentiment_per_candidate": {},
-      "edit_history": [],
+      "edit_history": [
+        {
+          "tier": "editor",
+          "at": "2026-08-18T19:49:31Z",
+          "provider": "nvidia",
+          "action": "validated",
+          "changes": [
+            "summary_pt",
+            "summary_en"
+          ]
+        }
+      ],
       "disclaimer_pt": "Análise algorítmica. Não representa pesquisa de opinião.",
       "disclaimer_en": "Algorithmic analysis. Does not represent polling data.",
       "sentiment_score": 0.0,
-      "confidence_score": 0.0,
+      "confidence_score": 1.0,
       "_sentiment_scores": {},
-      "prominence_score": 0.0
-    },
-    {
-      "id": "9dabbeb77d1b6336",
-      "url": "https://www.metropoles.com/minas-gerais/setor-de-servicos-em-minas-perde-ritmo-frente-aos-dados-nacional",
-      "title": "Setor de serviços em Minas perde ritmo frente aos dados nacional",
-      "source": "Metropoles",
-      "published_at": "2026-08-18T19:26:17Z",
-      "collected_at": "2026-08-18T19:40:14Z",
-      "status": "raw",
-      "relevance_score": 0.0,
-      "relevance_signals": null,
-      "candidates_mentioned": [],
-      "topics": [],
-      "narrative_cluster_id": null,
-      "duplicate_of": null,
-      "summaries": {
-        "pt-BR": "",
-        "en-US": ""
-      },
-      "content": "Belo Horizonte – O setor de serviços de Minas Gerais perdeu força no primeiro semestre de 2026 e apresentou desempenho inferior ao registrado no país. Entre janeiro e junho, a atividade acumulou queda de 0,9% no estado, enquanto o Brasil registrou crescimento de 2%, segundo dados da Pesquisa Mensal de Serviços (PMS), do Instituto Brasileiro de Geografia e Estatística (IBGE), analisados pelo Núcleo de Estudos Econômicos da Fecomércio MG. O resultado de junho reforçou a perda de ritmo. Na comparação com maio, o volume de serviços em Minas Gerais caiu 0,6%, depois de dois meses consecutivos de alta . No cenário nacional, o indicador ficou estável no período. A diferença também aparece na comparação anual. Em relação a junho de 2025, o setor cresceu 0,7% em Minas, enquanto o avanço nacional chegou a 2%. Para a economista da Fecomércio MG, Fernanda Gonçalves, o desempenho indica que a recuperação do setor ocorre de maneira desigual entre as atividades que compõem a economia mineira . “Minas Gerais apresenta uma recuperação mais lenta dos serviços. O recuo observado em junho, depois de dois meses de avanço, mostra que o setor ainda enfrenta dificuldades para sustentar uma trajetória contínua de crescimento”, avalia. Resultado em 12 meses também é negativo O desempenho acumulado em 12 meses amplia a distância entre Minas Gerais e o restante do país. De julho de 2025 a junho de 2026, o setor de serviços brasileiro registrou crescimento de 2,6%. Em Minas Gerais, houve retração de 0,7%, uma diferença de 3,3 pontos percentuais. Os números mostram que a dificuldade do estado não está restrita ao resultado de junho. A atividade mineira vem apresentando uma recuperação mais lenta ao longo do período analisado. Transportes puxam queda em Minas A composição da economia de serviços ajuda a explicar parte do resultado negativo. O segmento de transportes, serviços auxiliares aos transportes e correio, que representa 39,67% do peso das atividades de serviços no estado, apresentou retração de 4,6% na comparação com junho de 2025. No acumulado de janeiro a junho, a queda do segmento foi de 3,4%. Em 12 meses, a retração chegou a 3%. Outro setor que apresentou resultados negativos foi o de serviços prestados às famílias. A atividade recuou 1,1% na comparação anual, 1% no acumulado do ano e 1,2% em 12 meses. O segmento representa 6,73% da estrutura estadual de serviços. Segundo Fernanda Gonçalves, o resultado mineiro está relacionado não apenas ao ritmo geral da economia, mas também à composição da atividade no estado. “Atividades com peso significativo na economia de serviços do Estado estão apresentando resultados negativos e acabam limitando o desempenho agregado. A forte retração dos transportes e a fraqueza dos serviços prestados às famílias limitaram o crescimento do setor”, explica. Setor recuou 0,9% no primeiro semestre, enquanto atividade nacional avançou 2% Informação e comunicação se destacam Apesar do cenário negativo, alguns segmentos apresentaram crescimento e ajudaram a sustentar a atividade em Minas Gerais. O setor de informação e comunicação foi um dos principais destaques . Na comparação com junho de 2025, a atividade cresceu 6,7%. No acumulado de 2026, a alta foi de 3,3% , enquanto em 12 meses chegou a 2,9%. O segmento de outros serviços também apresentou avanço. A atividade cresceu 1,8% na comparação anual, 7% no acumulado do ano e 7,8% em 12 meses. Ainda assim, os resultados positivos desses setores não foram suficientes para compensar as perdas registradas por atividades de maior peso na economia mineira. Minas fica atrás do desempenho nacional A diferença entre Minas Gerais e o Brasil também aparece na análise dos principais segmentos. No país, o setor de informação e comunicação cresceu 9,4% na comparação anual. Os serviços profissionais, administrativos e complementares avançaram 2,8%, enquanto os serviços prestados às famílias tiveram alta de 1,7%. Em Minas, embora o setor de informação e comunicação também tenha apresentado crescimento, o desempenho negativo dos transportes e dos serviços destinados às famílias reduziu a capacidade de recuperação do setor. Leia também Minas Gerais Fiemg defende volta da “taxa das blusinhas” para proteger indústria Minas Gerais Com tarifaço, Brasil perde mercado para concorrentes, analisa Fiemg Minas Gerais Geração de emprego tem saldo positivo, mas perde ritmo em MG Minas Gerais Tarifa dos EUA ameaça setor que gera mais de 60 mil empregos em MG Para a economista da Fecomércio MG, uma retomada mais consistente dependerá do comportamento de atividades ligadas à mobilidade, logística, turismo e aos serviços destinados às famílias. “Esses setores têm impacto direto sobre a circulação de renda e sobre a atividade econômica”, destaca Fernanda. Os dados analisados pela Fecomércio MG apontam, portanto, para um cenário de recuperação mais lenta e menos disseminada dos serviços em Minas Gerais em comparação com o desempenho nacional. A combinação entre a retração de segmentos relevantes e o crescimento concentrado em algumas atividades mantém o setor mineiro abaixo do ritmo observado no país.",
-      "source_category": "mainstream",
-      "sentiment_per_candidate": {},
-      "edit_history": [],
-      "disclaimer_pt": "Análise algorítmica. Não representa pesquisa de opinião.",
-      "disclaimer_en": "Algorithmic analysis. Does not represent polling data.",
-      "sentiment_score": 0.0,
-      "confidence_score": 0.0,
-      "_sentiment_scores": {},
-      "prominence_score": 0.0
-    },
-    {
-      "id": "7cbfccdf60712280",
-      "url": "https://oglobo.globo.com/blogs/lauro-jardim/post/2026/08/carlos-bolsonaro-e-carol-de-toni-nao-vao-a-segundo-debate-em-sc.ghtml",
-      "title": "Carlos Bolsonaro e Carol de Toni não vão a segundo debate em SC",
-      "source": "O Globo",
-      "published_at": "2026-08-18T19:26:08Z",
-      "collected_at": "2026-08-18T19:40:06Z",
-      "status": "raw",
-      "relevance_score": 0.0,
-      "relevance_signals": null,
-      "candidates_mentioned": [],
-      "topics": [],
-      "narrative_cluster_id": null,
-      "duplicate_of": null,
-      "summaries": {
-        "pt-BR": "",
-        "en-US": ""
-      },
-      "content": "Carlos Bolsonaro e Carol de Toni, candidatos do PL ao Senado em Santa Catarina, avisaram que não vão ao debate promovido pela CBN em Florianópolis, na sede da NSC, no domingo. Matéria exclusiva para assinantes. Para ter acesso completo, acesse o link da matéria e faça o seu cadastro.",
-      "source_category": "mainstream",
-      "sentiment_per_candidate": {},
-      "edit_history": [],
-      "disclaimer_pt": "Análise algorítmica. Não representa pesquisa de opinião.",
-      "disclaimer_en": "Algorithmic analysis. Does not represent polling data.",
-      "sentiment_score": 0.0,
-      "confidence_score": 0.0,
-      "_sentiment_scores": {},
-      "prominence_score": 0.0
-    },
-    {
-      "id": "754a7981a37f6e94",
-      "url": "https://www.metropoles.com/sao-paulo/mulher-presa-com-bolsas-de-luxo",
-      "title": "Mulher é presa com 113 bolsas de luxo furtadas que somam R$ 260 mil",
-      "source": "Metropoles",
-      "published_at": "2026-08-18T19:25:21Z",
-      "collected_at": "2026-08-18T19:40:14Z",
-      "status": "raw",
-      "relevance_score": 0.0,
-      "relevance_signals": null,
-      "candidates_mentioned": [],
-      "topics": [],
-      "narrative_cluster_id": null,
-      "duplicate_of": null,
-      "summaries": {
-        "pt-BR": "",
-        "en-US": ""
-      },
-      "content": "Uma mulher identificada como Jéssica de Joani Ribeiro, de 34 anos, foi presa em flagrante por receptação depois de ser encontrada com uma carga avaliada em R$ 260 mil furtada da marca de luxo Serpui . A Polícia Civil cumpriu mandados de busca e apreensão na casa de Jéssica, no Lajeado, zona leste de São Paulo , no último dia 13. A ação faz parte de uma investigação sobre furto qualificado ocorrido no Aeroporto Internacional de Guarulhos, em 5 de setembro de 2025, envolvendo a mulher e o marido da presa, Thiago de Joani Fernandes. Na residência do casal, foram encontradas 113 bolsas da grife, embaladas e etiquetadas, que pertenciam a um lote com 844 unidades furtadas naquela data. Além das bolsas, também foram encontrados dois celulares e R$ 8.015 em espécie. Thiago conseguiu fugir pelos fundos durante a operação e é procurado pela Justiça. Jéssica inicialmente negou conhecimento das bolsas e dos celulares, afirmou que era a dona do dinheiro e disse não reconhecer o marido nas imagens registradas pelas câmeras de segurança do aeroporto. No interrogatório, porém, ela permaneceu em silêncio. Um representante da Serpui reconheceu o material apreendido na casa de Jéssica de Joani Ribeiro como parte da carga furtada no ano passado. A mulher passou por audiência de custódia e teve a prisão mantida pela Justiça. Leia também São Paulo Operação prende suspeito de roubar canetas emagrecedoras em farmácia São Paulo Operação da PF mira grupo acusado de lavagem de dinheiro e contrabando São Paulo Polícia usa câmera térmica para achar pai e filho presos por 4 mortes São Paulo Operação Strozzino mira lavagem de dinheiro de grupo ligado ao PCC Em nota divulgada à imprensa, os advogados da Serpui afirmaram que as mercadorias estavam sendo transferidas entre estabelecimentos da própria empresa, quando foram furtadas. A grife agradeceu o trabalho da equipe de polícia, mas ressaltou que a “recuperação ocorreu apenas de forma parcial, permanecendo desaparecida a maior parte da carga subtraída”. “A empresa continuará colaborando com as autoridades e espera que o avanço das investigações possibilite a localização do restante das mercadorias, bem como a identificação e a responsabilização de todos os envolvidos”, dizia o comunicado. Criada pela estilista brasileira Serpui Marie, a marca homônima produz peças artesanais usando materiais como vime, palha, madrepérola, cristais e bordados. Com valores que custam entre R$ 999 e R$ 3,4 mil, as bolsas da grife já foram usadas por celebridades como Ana Hickmann, Larissa Manoela, Taís Araújo, Monique Alfradique e Anitta. A etiqueta ganhou projeção internacional depois de aparecer no seriado “Emily in Paris” (Netflix). Antes disso, também foi exibido na série “And Just Like That…” (HBO).",
-      "source_category": "mainstream",
-      "sentiment_per_candidate": {},
-      "edit_history": [],
-      "disclaimer_pt": "Análise algorítmica. Não representa pesquisa de opinião.",
-      "disclaimer_en": "Algorithmic analysis. Does not represent polling data.",
-      "sentiment_score": 0.0,
-      "confidence_score": 0.0,
-      "_sentiment_scores": {},
-      "prominence_score": 0.0
+      "prominence_score": 0.0,
+      "_ai_provider": "nvidia",
+      "_ai_model": "nvidia/nemotron-3-super-120b-a12b",
+      "ai_provider_editor": "nvidia/nemotron-3-super-120b-a12b",
+      "editor_note": null
     },
     {
       "id": "b6649e478f645847",
@@ -472,27 +475,57 @@
       "source": "O Antagonista",
       "published_at": "2026-08-18T19:22:18Z",
       "collected_at": "2026-08-18T19:40:20Z",
-      "status": "raw",
-      "relevance_score": 0.0,
-      "relevance_signals": null,
-      "candidates_mentioned": [],
-      "topics": [],
+      "status": "validated",
+      "relevance_score": 0.65,
+      "relevance_signals": {
+        "candidate_signal": 0.5,
+        "topic_signal": 0.05,
+        "keyword_signal": 0.05,
+        "source_signal": 0.05
+      },
+      "candidates_mentioned": [
+        "lula"
+      ],
+      "topics": [
+        "saude",
+        "corrupcao",
+        "politica_externa"
+      ],
       "narrative_cluster_id": null,
       "duplicate_of": null,
       "summaries": {
-        "pt-BR": "",
-        "en-US": ""
+        "pt-BR": "Mensagens de WhatsApp obtidas pela Polícia Federal mostram que a lobista Roberta Luchsinger enviou ao ex-chefe de gabinete do presidente Lula, Marco Aurélio Santana (Marcola), um modelo de contrato para venda de medicamentos à base de canabidiol ao Ministério da Saúde, com dispensa de licitação. Roberta Luchsinger é descrita como amiga do empresário Fábio, cujo nome completo não é especificado no conteúdo fornecido. O caso levanta suspeitas de possível favorecimento indevido em contratações públicas.",
+        "en-US": "WhatsApp messages obtained by the Federal Police show that lobbyist Roberta Luchsinger sent a contract model for the sale of cannabidiol-based medicines to the Ministry of Health, without bidding, to former Chief of Staff of President Lula, Marco Aurélio Santana (Marcola). Roberta Luchsinger is described as a friend of businessman Fábio, whose full name is not specified in the provided content. The case raises suspicions of undue favoritism in public procurement."
       },
       "content": "Mensagens de WhatsApp encontradas pela Polícia Federal (PF) mostram que o ex-chefe de gabinete do presidente Lula (PT), Marco Aurélio Santana, o Marcola, recebeu da lobista Roberta Luchsinger um modelo de contrato para venda de medicamentos à base de canabidiol ao Ministério da Saúde, com dispensa de licitação, segundo O Globo. Roberta é amiga do empresário Fábio... The post Amiga de Lulinha enviou contrato de canabidiol a ex-chefe de gabinete de Lula? appeared first on O Antagonista .",
       "source_category": "politics",
-      "sentiment_per_candidate": {},
-      "edit_history": [],
+      "sentiment_per_candidate": {
+        "lula": "negativo"
+      },
+      "edit_history": [
+        {
+          "tier": "editor",
+          "at": "2026-08-18T19:49:48Z",
+          "provider": "nvidia",
+          "action": "validated",
+          "changes": [
+            "summary_pt",
+            "summary_en"
+          ]
+        }
+      ],
       "disclaimer_pt": "Análise algorítmica. Não representa pesquisa de opinião.",
       "disclaimer_en": "Algorithmic analysis. Does not represent polling data.",
-      "sentiment_score": 0.0,
-      "confidence_score": 0.0,
-      "_sentiment_scores": {},
-      "prominence_score": 0.0
+      "sentiment_score": -0.5,
+      "confidence_score": 1.0,
+      "_sentiment_scores": {
+        "lula": -0.5
+      },
+      "prominence_score": 0.0,
+      "_ai_provider": "nvidia",
+      "_ai_model": "nvidia/nemotron-3-super-120b-a12b",
+      "ai_provider_editor": "nvidia/nemotron-3-super-120b-a12b",
+      "editor_note": null
     },
     {
       "id": "5cdbdd0de896cd6a",
@@ -501,27 +534,57 @@
       "source": "Poder360",
       "published_at": "2026-08-18T19:21:26Z",
       "collected_at": "2026-08-18T19:40:16Z",
-      "status": "raw",
-      "relevance_score": 0.0,
-      "relevance_signals": null,
-      "candidates_mentioned": [],
-      "topics": [],
+      "status": "validated",
+      "relevance_score": 0.95,
+      "relevance_signals": {
+        "candidate_signal": 0.5,
+        "topic_signal": 0.25,
+        "keyword_signal": 0.15,
+        "source_signal": 0.05
+      },
+      "candidates_mentioned": [
+        "lula"
+      ],
+      "topics": [
+        "eleicoes",
+        "politica_externa",
+        "midia"
+      ],
       "narrative_cluster_id": null,
       "duplicate_of": null,
       "summaries": {
-        "pt-BR": "",
-        "en-US": ""
+        "pt-BR": "O presidente Luiz Inácio Lula da Silva (PT) iniciou a gravação de materiais para sua campanha de reeleição nesta terça-feira (18.ago.2026) no QG da campanha localizado no Lago Sul, em Brasília. Ele grava sozinho, marcando o primeiro registro oficial de produção de conteúdo após o início da campanha, que teve início no domingo (16.ago). A propaganda eleitoral gratuita no rádio e na TV começará em 28 de agosto.",
+        "en-US": "President Luiz Inácio Lula da Silva (PT) began recording campaign materials for his re-election bid on Tuesday, August 18, 2026, at his campaign headquarters in Lago Sul, Brasília. He is recording alone, marking the first official content production since the campaign officially started on Sunday, August 16. Free electoral advertising on radio and TV will begin on August 28."
       },
       "content": "O presidente Luiz Inácio Lula da Silva (PT) grava nesta 3ª feira (18.ago.2026) conteúdos para a campanha eleitoral no QG de sua campanha no Lago Sul, em Brasília. Ele grava sozinho. É o 1º registro do candidato à reeleição produzindo material depois do início oficial da campanha. O período de campanha começou no domingo (16.ago), quando os candidatos passaram a poder pedir votos para as eleições de outubro. Lula lançou sua campanha na mesma data. A propaganda eleitoral gratuita no rádio e na TV começa em 28 de agosto. O presidente já gravou com os seus candidatos aos governos dos Estados e ao Senado .",
       "source_category": "politics",
-      "sentiment_per_candidate": {},
-      "edit_history": [],
+      "sentiment_per_candidate": {
+        "lula": "positivo"
+      },
+      "edit_history": [
+        {
+          "tier": "editor",
+          "at": "2026-08-18T19:49:50Z",
+          "provider": "nvidia",
+          "action": "validated",
+          "changes": [
+            "summary_pt",
+            "summary_en"
+          ]
+        }
+      ],
       "disclaimer_pt": "Análise algorítmica. Não representa pesquisa de opinião.",
       "disclaimer_en": "Algorithmic analysis. Does not represent polling data.",
-      "sentiment_score": 0.0,
-      "confidence_score": 0.0,
-      "_sentiment_scores": {},
-      "prominence_score": 0.0
+      "sentiment_score": 0.3,
+      "confidence_score": 1.0,
+      "_sentiment_scores": {
+        "lula": 0.3
+      },
+      "prominence_score": 0.0,
+      "_ai_provider": "nvidia",
+      "_ai_model": "nvidia/nemotron-3-super-120b-a12b",
+      "ai_provider_editor": "nvidia/nemotron-3-super-120b-a12b",
+      "editor_note": null
     },
     {
       "id": "5b8f7fb84d69fbc7",
@@ -530,56 +593,57 @@
       "source": "Poder360",
       "published_at": "2026-08-18T19:19:39Z",
       "collected_at": "2026-08-18T19:40:16Z",
-      "status": "raw",
-      "relevance_score": 0.0,
-      "relevance_signals": null,
-      "candidates_mentioned": [],
-      "topics": [],
+      "status": "validated",
+      "relevance_score": 0.65,
+      "relevance_signals": {
+        "candidate_signal": 0.5,
+        "topic_signal": 0.05,
+        "keyword_signal": 0.05,
+        "source_signal": 0.05
+      },
+      "candidates_mentioned": [
+        "tarcisio"
+      ],
+      "topics": [
+        "privatizacao",
+        "economia",
+        "midia"
+      ],
       "narrative_cluster_id": null,
       "duplicate_of": null,
       "summaries": {
-        "pt-BR": "",
-        "en-US": ""
+        "pt-BR": "O governador Tarcísio de Freitas afirmou que o reajuste da tarifa da Sabesp privatizada será sempre menor do que o da versão pública, destacando que a tarifa privada é atualmente 15% menor. Ele garantiu que 100% dos dividendos recebidos pelo Estado são reinvestidos para amortecer os preços e que a regulação será fortalecida para evitar aumentos sem melhoria nos serviços.",
+        "en-US": "Governor Tarcísio de Freitas stated that the tariff adjustment for privatized Sabesp will always be lower than it would be under public ownership, noting that private Sabesp tariffs are currently 15% lower. He said 100% of dividends received by the state are reinvested to cushion prices and that regulation will be strengthened to prevent increases without service improvements."
       },
       "content": "O governador de São Paulo, Tarcísio de Freitas (Republicanos), afirmou nesta 3ª feira (18.ago.2026) que o reajuste na tarifa da Sabesp (Companhia de Saneamento Básico do Estado de São Paulo) privatizada será “sempre menor” do que seria na versão estatal da empresa. A declaração foi feita durante sabatina ao vivo no programa Balanço Gera l, da emissora Record . “ Significa que a tarifa não vai subir? Ela vai. Sempre menos do que subiria na Sabesp pública, isso é que tem que ficar claro ”, declarou. Questionado sobre como o governo garantiria que privatizações não criassem aumentos sem contrapartida de melhoria nos serviços, Tarcísio defendeu o fortalecimento da regulação, para garantir o cumprimento dos contratos das concessões, e o uso integral dos dividendos para conter os preços. “ A tarifa da Sabesp privada é 15% menor do que a tarifa da Sabesp pública . Por mais que ela tenha sido privatizada, o principal acionista da Sabesp continua sendo o Estado de São Paulo ”, declarou. Segundo ele, 100% dos dividendos recebidos pelo governo estadual são reinvestidos para amortecer a tarifa. “ Isso está sendo feito ”, disse. O processo de privatização da Sabesp foi concluído em julho de 2024. O governo de São Paulo vendeu 32% das ações da empresa, dos 50,3% que detinha, por R$ 14,8 bilhões.",
       "source_category": "politics",
-      "sentiment_per_candidate": {},
-      "edit_history": [],
-      "disclaimer_pt": "Análise algorítmica. Não representa pesquisa de opinião.",
-      "disclaimer_en": "Algorithmic analysis. Does not represent polling data.",
-      "sentiment_score": 0.0,
-      "confidence_score": 0.0,
-      "_sentiment_scores": {},
-      "prominence_score": 0.0
-    },
-    {
-      "id": "7594f0277128f167",
-      "url": "https://www.metropoles.com/esportes/hortencia-e-indicada-a-premio-de-melhor-atleta-da-historia-em-mundiais",
-      "title": "Hortência é indicada a prêmio de melhor atleta da história em Mundiais",
-      "source": "Metropoles",
-      "published_at": "2026-08-18T19:19:28Z",
-      "collected_at": "2026-08-18T19:40:15Z",
-      "status": "raw",
-      "relevance_score": 0.0,
-      "relevance_signals": null,
-      "candidates_mentioned": [],
-      "topics": [],
-      "narrative_cluster_id": null,
-      "duplicate_of": null,
-      "summaries": {
-        "pt-BR": "",
-        "en-US": ""
+      "sentiment_per_candidate": {
+        "tarcisio": "neutro"
       },
-      "content": "Mesmo aposentada, Hortência segue fazendo história pelo basquete brasileiro. A ex-jogadora foi indicada a um prêmio da Federação Internacional de Basquete (Fiba) que elegerá a maior atleta de todos os tempos em Copas do Mundo feminina. A premiação acontece por meio de voto popular e Hortência é a única brasileira entre as nove indicadas. A Fiba abriu a enquete como maneira de promover a Copa do Mundo, que acontece de 3 a 14 de setembro, em Berlim. Ver essa foto no Instagram Um post compartilhado por FIBA Women’s Basketball World Cup (@fibawwc) Também estão na disputa pelo prêmio: Lauren Jackson (AUS) Uljana Semjonova (LET) Sue Bird (EUA) Penny Taylor (AUS) Diana Taurasi (EUA) Lisa Leslie (EUA) Maya Moore (EUA) Breanna Stewart (EUA) Leia também Esportes Ronaldinho Gaúcho faz oferta para comprar time de basquete do Monaco Esportes Carlos Massoni, campeão mundial de basquete pelo Brasil, morre aos 87 Esportes Basquete: Brasil é convocado para eliminatórias do Pré-Olímpico A federação realizou a mesma enquete em 2018, antes da Copa do Mundo na Espanha. Na ocasião, Hortência venceu com 85% dos votos. Hortência é uma das protagonistas do basquete brasileiro. A paulista levou a Seleção à primeira conquista deaCopa do Mundo, em 1994, na Austrália. As brasileiras conseguiram uma vitória histórica sobre a tradicional equipe dos Estados Unidos por 110 x 107, na semifinal. Na disputa, Hortência marcou 32 pontos e foi a cestinha.",
-      "source_category": "mainstream",
-      "sentiment_per_candidate": {},
-      "edit_history": [],
+      "edit_history": [
+        {
+          "tier": "editor",
+          "at": "2026-08-18T19:49:54Z",
+          "provider": "nvidia",
+          "action": "validated",
+          "changes": [
+            "summary_pt",
+            "summary_en"
+          ]
+        }
+      ],
       "disclaimer_pt": "Análise algorítmica. Não representa pesquisa de opinião.",
       "disclaimer_en": "Algorithmic analysis. Does not represent polling data.",
-      "sentiment_score": 0.0,
-      "confidence_score": 0.0,
-      "_sentiment_scores": {},
-      "prominence_score": 0.0
+      "sentiment_score": 0.1,
+      "confidence_score": 1.0,
+      "_sentiment_scores": {
+        "tarcisio": 0.1
+      },
+      "prominence_score": 0.0,
+      "_ai_provider": "nvidia",
+      "_ai_model": "nvidia/nemotron-3-super-120b-a12b",
+      "ai_provider_editor": "nvidia/nemotron-3-super-120b-a12b",
+      "editor_note": null
     },
     {
       "id": "5cb14f5b6c131d6b",
@@ -588,56 +652,57 @@
       "source": "Metropoles",
       "published_at": "2026-08-18T19:18:22Z",
       "collected_at": "2026-08-18T19:40:15Z",
-      "status": "raw",
-      "relevance_score": 0.0,
-      "relevance_signals": null,
-      "candidates_mentioned": [],
-      "topics": [],
+      "status": "validated",
+      "relevance_score": 0.9,
+      "relevance_signals": {
+        "candidate_signal": 0.5,
+        "topic_signal": 0.25,
+        "keyword_signal": 0.15,
+        "source_signal": 0.0
+      },
+      "candidates_mentioned": [
+        "lula"
+      ],
+      "topics": [
+        "politica_externa",
+        "eleicoes",
+        "midia"
+      ],
       "narrative_cluster_id": null,
       "duplicate_of": null,
       "summaries": {
-        "pt-BR": "",
-        "en-US": ""
+        "pt-BR": "Um anúncio do show de Zezé Di Camargo em Rio Verde (GO) usou a expressão '12+1 de novembro' em vez de '13 de novembro', gerando especulações sobre possível relação com política, dado o simbolismo do número 13 com o PT e Lula. A produtora Aê Eventos, responsável pelo evento, confirmou que o material foi criado por ela e não pela equipe do cantor, e não explicou a escolha. Apesar do contexto eleitoral e da postura política anterior do cantor, não há evidências de que a mudança tenha intencionalidade política.",
+        "en-US": "An advertisement for Zezé Di Camargo's concert in Rio Verde (GO) used '12+1 of November' instead of '13 of November', sparking speculation about political motives due to the number 13's association with the PT and Lula. The event promoter, Aê Eventos, confirmed it created the material and has not explained the choice, denying any link to Zezé's team. Despite the singer's prior political controversies and the region's strong Bolsonaro leanings, there is no evidence the change was politically motivated."
       },
       "content": "Um anúncio de um show do cantor sertanejo Zezé Di Camargo em Rio Verde (GO) chamou atenção nas redes sociais pela forma como a data da apresentação foi divulgada. No material publicitário do evento, a apresentação, marcada para 13 de novembro, aparece como “12+1 de novembro”. A escolha da grafia em forma de soma chamou a atenção dos internautas, principalmente por ocorrer em um ano eleitoral e pelo número 13 ser associado ao Partido dos Trabalhadores (PT) e ao presidente Luiz Inácio Lula da Silva. Confira: Cartaz de evento em Rio Verde substituiu o número 13 por “12+1” Quem fez o anúncio A arte não foi criada pela equipe de Zezé Di Camargo. Segundo a organização, o material foi produzido e divulgado pela Aê Eventos, responsável pelo show na cidade. Até a publicação desta matéria, a produtora não explicou publicamente por que optou por escrever “12+1” em vez de “13”. Também não há confirmação de que a escolha tenha relação com política ou com a intenção de evitar a associação com o número. Rio Verde é um dos principais polos do agronegócio em Goiás e também se destaca pela forte presença do bolsonarismo. Nas eleições de 2022, o ex-presidente Jair Bolsonaro ( PL ) recebeu 61,90% dos votos válidos no segundo turno no município. A forma como o evento foi divulgado reforçou a influência do ex-presidente entre produtores rurais e lideranças políticas da região. Leia também Fábia Oliveira Zezé Di Camargo chama sósia de “ridículo”: “Tenha personalidade” Celebridades Nasce Florença, 5ª neta de Zezé Di Camargo, filha de Igor Camargo Celebridades Saiba o motivo de cirurgia de caçula de Zezé e Graciele Lacerda Celebridades Qual a relação entre Denilson e Zezé Di Camargo? Entenda Por que chamou atenção A repercussão aumentou por causa do histórico recente de Zezé Di Camargo com o tema política. No fim de 2025, o cantor se envolveu em uma discussão pública com a emissora SBT. Ele criticou a emissora por receber o presidente Lula e o ministro Alexandre de Moraes, do Supremo Tribunal Federal (STF) em um evento institucional e chegou a pedir o cancelamento do especial de Natal que faria no canal. As declarações tiveram desdobramento também em shows. Algumas prefeituras suspenderam apresentações contratadas com dinheiro público. Um dos casos foi durante a Festa de Reis, em São José do Egito, em Pernambuco. Apesar disso, não é possível atribuir a Zezé a escolha de “12+1” no anúncio de Rio Verde. A divulgação partiu da produtora do evento. O show segue marcado para o dia 13 de novembro em Rio Verde.",
       "source_category": "mainstream",
-      "sentiment_per_candidate": {},
-      "edit_history": [],
-      "disclaimer_pt": "Análise algorítmica. Não representa pesquisa de opinião.",
-      "disclaimer_en": "Algorithmic analysis. Does not represent polling data.",
-      "sentiment_score": 0.0,
-      "confidence_score": 0.0,
-      "_sentiment_scores": {},
-      "prominence_score": 0.0
-    },
-    {
-      "id": "811aed3ec6ee16e7",
-      "url": "https://www.metropoles.com/mundo/ativista-fingiu-morta-sobreviver-ataque-ex-assessor-milei",
-      "title": "Ativista fingiu estar morta para sobreviver a ataque de ex-assessor de Milei",
-      "source": "Metropoles",
-      "published_at": "2026-08-18T19:18:08Z",
-      "collected_at": "2026-08-18T19:40:15Z",
-      "status": "raw",
-      "relevance_score": 0.0,
-      "relevance_signals": null,
-      "candidates_mentioned": [],
-      "topics": [],
-      "narrative_cluster_id": null,
-      "duplicate_of": null,
-      "summaries": {
-        "pt-BR": "",
-        "en-US": ""
+      "sentiment_per_candidate": {
+        "lula": "negativo"
       },
-      "content": "A advogada e ativista boliviana Nadia Beller , ex-companheira do consultor político argentino Fernando Cerimedo, afirmou nesta terça-feira (18/8) que precisou fingir estar morta para sobreviver ao ataque a tiros que sofreu em um hotel de Santa Cruz de la Sierra, na Bolívia. Beller foi baleada três vezes na noite de segunda-feira (17/8) e permanece internada. Em entrevista concedida no hospital, ela acusou Cerimedo de ter participação no ataque e afirmou que os responsáveis pelo crime chegaram a hesitar antes de decidir se a executariam. “Eles tentaram me silenciar. Se eu não falar com o povo boliviano, eles tentarão terminar o que começaram”, afirmou. Cerimedo é ex-assessor do presidente argentino Javier Milei e atualmente é ligado ao governo do presidente boliviano Rodrigo Paz . Segundo a advogada, ela se jogou no chão depois dos disparos e permaneceu imóvel por cerca de meia hora. Um dos homens, de acordo com o relato, teria se aproximado para verificar se ela ainda estava viva, mas recuou antes de atirar novamente. “Me joguei no chão e fiquei ali por cerca de meia hora, sem me mexer. Um dos sicários hesitou sobre se deveria se aproximar e me dar o tiro de misericórdia, não? E o outro disse: “Já está, vamos””, relatou. A ativista afirmou ainda que os criminosos roubaram seu celular, onde estariam registros de episódios de violência que ela atribui a Cerimedo e outras informações que poderiam ser relevantes para a investigação. 3 imagens Fechar modal. 1 de 3 Reprodução/Redes Sociais 2 de 3 Fernando Cerimedo, indiciado pela PF por disseminar informações falsas sobre o processo eleitoral brasileiro Reprodução 3 de 3 PF indiciou Fernando Cerimedo, autor de live com dados falsos sobre eleições no Brasil, na foto ao lado de Eduardo Bolsonaro Reprodução Investigação Fernando Cerimedo foi detido nesta terça-feira no aeroporto internacional de Viru Viru, em Santa Cruz de la Sierra, quando tentava viajar para Buenos Aires. O argentino é investigado por possível envolvimento no ataque contra Beller. A polícia boliviana trabalha com diferentes hipóteses para o crime, incluindo a possibilidade de uma motivação relacionada ao relacionamento entre os dois. Ele foi preso por agentes da unidade anticrime da polícia boliviana e aguarda os próximos passos da investigação. Ao falar sobre o episódio, Beller afirmou que havia conversado com Cerimedo pouco antes de deixar o hotel. Segundo ela, o consultor havia dito que o local era seguro e que ela contaria com escolta policial. A proteção, porém, não teria existido. “Ele me passou confiança para que eu fosse e mentiu para mim dizendo que havia me enviado com escoltas”, declarou. Leia também Mundo Ataques de Milei contra Lula devem parar “imediatamente”, diz Vieira Igor Gadelha Consultor aliado ao clã Bolsonaro é preso após atentado contra esposa Durante o depoimento, Beller também fez acusações contra Cerimedo relacionadas ao relacionamento entre os dois. Ela disse ter descoberto, meses atrás, conversas românticas do consultor com outra mulher e afirmou que, após confrontá-lo, teria sofrido agressões físicas. A advogada afirmou ainda ter encontrado gavetas com dinheiro e disse que Cerimedo teria ameaçado tirar a própria vida caso fosse preso. Beller também declarou que, durante o período em que manteve relacionamento com o consultor, teve contato com assuntos ligados ao governo boliviano e afirma ter presenciado o que classificou como “negócios obscuros” envolvendo autoridades e familiares do presidente Rodrigo Paz.",
-      "source_category": "mainstream",
-      "sentiment_per_candidate": {},
-      "edit_history": [],
+      "edit_history": [
+        {
+          "tier": "editor",
+          "at": "2026-08-18T19:50:00Z",
+          "provider": "nvidia",
+          "action": "validated",
+          "changes": [
+            "summary_pt",
+            "summary_en"
+          ]
+        }
+      ],
       "disclaimer_pt": "Análise algorítmica. Não representa pesquisa de opinião.",
       "disclaimer_en": "Algorithmic analysis. Does not represent polling data.",
-      "sentiment_score": 0.0,
-      "confidence_score": 0.0,
-      "_sentiment_scores": {},
-      "prominence_score": 0.0
+      "sentiment_score": -0.3,
+      "confidence_score": 1.0,
+      "_sentiment_scores": {
+        "lula": -0.3
+      },
+      "prominence_score": 0.0,
+      "_ai_provider": "nvidia",
+      "_ai_model": "nvidia/nemotron-3-super-120b-a12b",
+      "ai_provider_editor": "nvidia/nemotron-3-super-120b-a12b",
+      "editor_note": null
     },
     {
       "id": "2ad6a2433cba8ea1",
@@ -646,114 +711,58 @@
       "source": "Poder360",
       "published_at": "2026-08-18T19:17:13Z",
       "collected_at": "2026-08-18T19:40:16Z",
-      "status": "raw",
-      "relevance_score": 0.0,
-      "relevance_signals": null,
-      "candidates_mentioned": [],
-      "topics": [],
+      "status": "validated",
+      "relevance_score": 0.75,
+      "relevance_signals": {
+        "candidate_signal": 0.5,
+        "topic_signal": 0.05,
+        "keyword_signal": 0.15,
+        "source_signal": 0.05
+      },
+      "candidates_mentioned": [
+        "flavio-bolsonaro"
+      ],
+      "topics": [
+        "economia",
+        "seguranca",
+        "saude",
+        "privatizacao"
+      ],
       "narrative_cluster_id": null,
       "duplicate_of": null,
       "summaries": {
-        "pt-BR": "",
-        "en-US": ""
+        "pt-BR": "O candidato do PL à Presidência, Flávio Bolsonaro, montou um grupo de técnicos e executivos para elaborar e divulgar seu plano de governo, estruturado em 9 eixos temáticos, com foco em aproximar a candidatura das demandas do mercado. A coordenação da agenda econômica ficou a cargo de Adolfo Sachsida, ex-ministro de Minas e Energia, com participação de especialistas em energia, infraestrutura, políticas sociais e captação de recursos financeiros. A iniciativa busca reforçar a viabilidade técnica do projeto político por meio da integração entre setor público e privado.",
+        "en-US": "PL presidential candidate Flávio Bolsonaro assembled a group of technocrats and executives to develop and promote his government plan, structured into nine thematic axes aimed at aligning the candidacy with market demands. Economic coordination is led by Adolfo Sachsida, former Minister of Mines and Energy, with experts in energy, infrastructure, social policies, and financial resource mobilization. The initiative seeks to strengthen the technical viability of the political project through public-private integration."
       },
       "content": "O candidato do PL à Presidência da República, Flávio Bolsonaro , montou um grupo de consultores e executivos do mercado para apresentar as diretrizes do seu programa às lideranças empresariais. Batizado de “Para o Brasil Vencer o Atraso”, o plano foi estruturado em 9 eixos temáticos que abrangem áreas como economia, segurança, saúde, gestão pública e energia. Para dialogar com o setor produtivo e detalhar as propostas de reformas, o senador convocou nomes com passagens pela administração pública e pela iniciativa privada. A estratégia busca aproximar a candidatura das demandas do mercado e reforçar a viabilidade técnica do projeto político. A coordenação geral da agenda econômica está sob a responsabilidade do economista e advogado Adolfo Sachsida , ex-ministro de Minas e Energia e ex-secretário de Política Econômica na gestão Bolsonaro. Sachsida atuou na formulação de medidas de crédito e na revisão tributária do setor de combustíveis e telecomunicações. No segmento de energia e infraestrutura, a equipe conta com o economista Adriano Pires , sócio-fundador do Centro Brasileiro de Infraestrutura e ex-assessor da ANP (Agência Nacional do Petróleo). Também integra o time o advogado Alexandre Chequer, especialista em contratos de petróleo e gás que atuou na assessoria técnica de privatizações e capitalizações do setor elétrico conduzidas via BNDES. O eixo voltado para políticas sociais e causas de impacto, batizado no programa de “Brasil por Elas”, terá por trás a executiva Lyvia Montezano, fundadora de projetos voltados à proteção da infância na região do Marajó. Já a interlocução com investidores e captação de recursos no setor financeiro é acompanhada pela empreendedora Carolina Ragazzi, ex-vice-presidente do Goldman Sachs.",
       "source_category": "politics",
-      "sentiment_per_candidate": {},
-      "edit_history": [],
-      "disclaimer_pt": "Análise algorítmica. Não representa pesquisa de opinião.",
-      "disclaimer_en": "Algorithmic analysis. Does not represent polling data.",
-      "sentiment_score": 0.0,
-      "confidence_score": 0.0,
-      "_sentiment_scores": {},
-      "prominence_score": 0.0
-    },
-    {
-      "id": "5159a0e07e633b34",
-      "url": "https://www.metropoles.com/brasil/fazenda-suspende-14-sites-de-apostas-por-falhas-no-envio-de-dados",
-      "title": "Fazenda suspende 14 sites de apostas por falhas no envio de dados",
-      "source": "Metropoles",
-      "published_at": "2026-08-18T19:15:36Z",
-      "collected_at": "2026-08-18T19:40:15Z",
-      "status": "raw",
-      "relevance_score": 0.0,
-      "relevance_signals": null,
-      "candidates_mentioned": [],
-      "topics": [],
-      "narrative_cluster_id": null,
-      "duplicate_of": null,
-      "summaries": {
-        "pt-BR": "",
-        "en-US": ""
+      "sentiment_per_candidate": {
+        "flavio-bolsonaro": "positivo"
       },
-      "content": "O Ministério da Fazenda suspendeu a operação de 14 sites de apostas esportivas após identificar falhas no envio de dados obrigatórios à fiscalização. A medida atinge seis empresas autorizadas a operar no país e foi adotada como ação cautelar da Secretaria de Prêmios e Apostas (SPA), responsável pela regulação do setor. A decisão determina a interrupção imediata das atividades de apostas nas plataformas. Os sites, no entanto, devem permanecer acessíveis exclusivamente para que usuários realizem o saque de valores mantidos em conta, além de exibir aviso sobre a suspensão. “As medidas cautelares determinam a suspensão imediata da oferta de novas apostas pelas empresas. O acesso dos apostadores às plataformas continua liberado, para que possam sacar os valores já disponíveis em suas contas”, afirmou a SPA. A medida atinge seis operadoras: Pixbet Soluções Tecnológicas, Zeroumbet Plataforma Digital, Enseada Serviços e Tecnologia, Select Operations, Nexus International e RR Participações e Intermediações de Negócios. Leia também São Paulo “Meu 1° ato como presidente vai ser acabar com as bets”, diz Zema Brasil Lula reúne ministros para discutir bets e MP da “taxa das blusinhas” Brasil Número de contas excluídas de bets chegou a 5 milhões, diz Durigan Entre as empresas atingidas estão grupos que operam múltiplas marcas, já que cada autorização permite o funcionamento de até três plataformas distintas. Segundo a pasta, a suspensão foi motivada pelo descumprimento de exigências regulatórias , especialmente relacionadas ao envio de informações operacionais e cadastrais ao sistema de monitoramento do governo. Casos específicos incluem falhas técnicas na transmissão de dados à SPA e ausência de documentação obrigatória. A ação ocorre em meio ao esforço do governo para ampliar a fiscalização do mercado de apostas online, que passou a operar sob regras mais rígidas após a regulamentação do setor. Nos últimos meses, a Fazenda tem intensificado o controle sobre as plataformas, com medidas que incluem bloqueio de sites irregulares, suspensão de licenças e exigência de mecanismos de proteção aos usuários. Apenas empresas autorizadas podem operar no país, e o descumprimento das regras pode levar a sanções como multas e suspensão das atividades. A fiscalização ocorre em um momento de crescimento do setor no Brasil, que movimentou cerca de R$ 37 bilhões em 2025. Além disso, segundo o ministro da pasta, Dario Durigan , mais de 5 milhões de contas foram excluídas dos sistemas das plataformas de apostas, seja pelo mecanismo de autoexclusão, pela adesão ao Desenrola ou por beneficiários de programas sociais. A suspensão dos 14 sites, segundo a SPA, tem caráter temporário e poderá ser revertida caso as empresas comprovem o cumprimento das exigências legais e regularizem o envio das informações obrigatórias ao sistema de controle do governo.",
-      "source_category": "mainstream",
-      "sentiment_per_candidate": {},
-      "edit_history": [],
+      "edit_history": [
+        {
+          "tier": "editor",
+          "at": "2026-08-18T19:50:06Z",
+          "provider": "nvidia",
+          "action": "validated",
+          "changes": [
+            "summary_pt",
+            "summary_en"
+          ]
+        }
+      ],
       "disclaimer_pt": "Análise algorítmica. Não representa pesquisa de opinião.",
       "disclaimer_en": "Algorithmic analysis. Does not represent polling data.",
-      "sentiment_score": 0.0,
-      "confidence_score": 0.0,
-      "_sentiment_scores": {},
-      "prominence_score": 0.0
-    },
-    {
-      "id": "d40e77f28711c07f",
-      "url": "https://veja.abril.com.br/cultura/anitta-concorre-ao-vma-2026-confira-a-lista-completa-de-indicados/",
-      "title": "Anitta concorre ao VMA 2026: confira a lista completa de indicados",
-      "source": "Veja",
-      "published_at": "2026-08-18T19:15:30Z",
-      "collected_at": "2026-08-18T19:40:23Z",
-      "status": "raw",
-      "relevance_score": 0.0,
-      "relevance_signals": null,
-      "candidates_mentioned": [],
-      "topics": [],
-      "narrative_cluster_id": null,
-      "duplicate_of": null,
-      "summaries": {
-        "pt-BR": "",
-        "en-US": ""
+      "sentiment_score": 0.2,
+      "confidence_score": 1.0,
+      "_sentiment_scores": {
+        "flavio-bolsonaro": 0.2
       },
-      "content": "Os indicados à premiação musical MTV Video Music Awards 2026 (VMA) foram anunciados nesta terça-feira, 18 . Entre a lista de indicados, está o nome de Anitta , que concorre na categoria de Melhor Música Latina por uma parceria com Shakira . A música que pode levar à vitória da brasileira é Choka Choka , faixa de seu último álbum Equilibrivm , lançado em abril deste ano. Junto a ela, grandes nomes da música latina como Bad Bunny , Fuerza Regida , KAROL G , Rosalía e Ryan Castro brigam pelo prêmio. O nome de Shakira ainda aparece em mais de uma indicação nessa mesma categoria. Além de estar na disputa pela colaboração com Anitta, a cantora também concorre ao prêmio com Dai Dai , Continua após a publicidade colaboração com Burna Boy e música oficial da Copa do Mundo FIFA de 2026. Entre os principais destaques dessa edição está Madonna , que lidera a lista com 11 nomeações. Taylor Swift aparece logo atrás, disputando a premiação em nove categorias, enquanto Ariana Grande e Sabrina Carpenter também se destacam, com sete nomeações cada . Continua após a publicidade Os vencedores serão anunciados durante a cerimônia, que acontece no dia 27 de setembro, a partir das 20h30. No Brasil, a transmissão fica a cargo do canal fechado MTV e do streaming Paramount+. Veja todos os indicados aos VMA 2026: Vídeo do Ano Continua após a publicidade Ariana Grande — hate that i made you love me Bruno Mars — I Just Might GENER8ION — STORM starring Yung Lean Madonna — Confessions II – The Film Sabrina Carpenter — Tears Continua após a publicidade Taylor Swift — The Fate of Ophelia Artista do Ano Ariana Grande Bruno Mars Madonna Morgan Wallen Continua após a publicidade Sabrina Carpenter Taylor Swift Música do Ano BTS — SWIM Ella Langley — Choosin’ Texas HUNTR/X: EJAE, Audrey Nuna e REI AMI — Golden Madonna & Sabrina Carpenter — Bring Your Love Olivia Dean — Man I Need PinkPantheress — Stateside + Zara Larsson RAYE — Where Is My Husband! Melhor Artista Revelação Bella Kay CORTIS Magnus Ferrell Malcolm Todd Myles Smith Sienna Spiro Stella Lefty Melhor Colaboração Clipse, Kendrick Lamar, Pusha T & Malice — Chains & Whips French Montana x Max B — Ever Since U Left Me Madonna & Sabrina Carpenter — Bring Your Love PinkPantheress — Stateside + Zara Larsson Shakira & Burna Boy — Dai Dai Teyana Taylor & Lucky Daye — Hard Part Melhor Pop Ariana Grande — hate that i made you love me Charli xcx — SS26 LISA — Dream feat. Kentaro Sakaguchi Olivia Rodrigo — drop dead Sabrina Carpenter — House Tour Tate McRae — Nobody’s Girl Taylor Swift — The Fate of Ophelia Melhor Hip-Hop Cardi B feat. Kehlani — Safe Don Toliver — E85 Drake — Janice STFU Megan Thee Stallion — LOVER GIRL Travis Scott — DUMBO Tyler, The Creator — SUGAR ON MY TONGUE Melhor R&B Bruno Mars — I Just Might Chris Brown — It Depends/Obvious Dave & Tems — Raindance Justin Bieber — YUKON Kehlani — Folded Mariah the Scientist & Kali Uchis — Is It a Crime Melhor Alternativo Geese — Taxes mgk & Fred Durst — FIX UR FACE Noah Kahan — The Great Divide Olivia Rodrigo — the cure SOMBR — Homewrecker Tame Impala — Dracula twenty one pilots — Drag Path Melhor Dance Bebe Rexha & Faithless — New Religion Harry Styles — Aperture Lady Gaga & Doechii — RUNAWAY Madonna — Confessions II – The Film PinkPantheress — Stateside + Zara Larsson Slayyyter — DANCE… Tate McRae — Nobody’s Girl Melhor Latino Anitta & Shakira — Choka Choka Bad Bunny — NUEVAYoL Fuerza Regida — TU SANCHO KAROL G — Papasito Rosalía feat. Yahritza Y Su Esencia — La Perla Ryan Castro, Kapo & GANGSTA — LA VILLA Shakira & Burna Boy — Dai Dai Melhor K-Pop BLACKPINK — JUMP BTS — SWIM CORTIS — REDRED KATSEYE — PINKY UP LE SSERAFIM feat. j-hope — SPAGHETTI LISA — Dream feat. Kentaro Sakaguchi Melhor Country Ella Langley — Choosin’ Texas Kacey Musgraves — Dry Spell Lainey Wilson — Somewhere Over Laredo Luke Combs — Back in the Saddle Shaboozey — Cowgirl Stella Lefty — Boston Tucker Wetmore — Brunette Melhor Direção Ariana Grande — hate that i made you love me Bruno Mars — I Just Might GENER8ION — STORM starring Yung Lean Madonna — Confessions II – The Film Sabrina Carpenter — House Tour Taylor Swift — Opalite Melhor Direção de Arte Charli xcx — SS26 Lady Gaga & Doechii — RUNAWAY Madonna — Confessions II – The Film PinkPantheress — Stateside + Zara Larsson SOMBR — My Body Isn’t Ready Taylor Swift — The Fate of Ophelia Melhor Fotografia A$AP Rocky — PUNK ROCKY Ariana Grande — hate that i made you love me LISA — Dream feat. Kentaro Sakaguchi Madonna — Confessions II – The Film Shaboozey — Cowgirl Taylor Swift — The Fate of Ophelia Melhor Edição Ariana Grande — hate that i made you love me Bruno Mars — I Just Might LISA — Dream feat. Kentaro Sakaguchi Madonna — Confessions II – The Film Sabrina Carpenter — House Tour Taylor Swift — The Fate of Ophelia Melhor Coreografia GENER8ION — STORM starring Yung Lean Harry Styles — Dance No More KATSEYE — PINKY UP Madonna — Confessions II – The Film Tate McRae — Nobody’s Girl Taylor Swift — The Fate of Ophelia Melhores Efeitos Visuais Ariana Grande — hate that i made you love me JISOO X ZAYN — Eyes Closed Madonna — Confessions II – The Film PinkPantheress — Stateside + Zara Larsson RAYE feat. Hans Zimmer — Click Clack Symphony Taylor Swift — The Fate of Ophelia Acompanhe notícias e dicas culturais nos blogs a seguir: Tela Plana para novidades da TV e do streaming O Som e a Fúria sobre artistas e lançamentos musicais Em Cartaz traz dicas de filmes no cinema e no streaming Livros para notícias sobre literatura e mercado editorial Publicidade",
-      "source_category": "magazine",
-      "sentiment_per_candidate": {},
-      "edit_history": [],
-      "disclaimer_pt": "Análise algorítmica. Não representa pesquisa de opinião.",
-      "disclaimer_en": "Algorithmic analysis. Does not represent polling data.",
-      "sentiment_score": 0.0,
-      "confidence_score": 0.0,
-      "_sentiment_scores": {},
-      "prominence_score": 0.0
-    },
-    {
-      "id": "eaf6f4754f2f5381",
-      "url": "https://www.metropoles.com/esportes/sem-neymar-e-gabigol-santos-divulga-relacionados-para-sul-americana",
-      "title": "Sem Neymar e Gabigol, Santos divulga relacionados para Sul-Americana",
-      "source": "Metropoles",
-      "published_at": "2026-08-18T19:14:41Z",
-      "collected_at": "2026-08-18T19:40:15Z",
-      "status": "raw",
-      "relevance_score": 0.0,
-      "relevance_signals": null,
-      "candidates_mentioned": [],
-      "topics": [],
-      "narrative_cluster_id": null,
-      "duplicate_of": null,
-      "summaries": {
-        "pt-BR": "",
-        "en-US": ""
-      },
-      "content": "O Santos divulgou na tarde desta terça-feira (18/8) os relacionados para a partida de volta das oitavas de final da Copa Sul-Americana . Para este duelo, que acontecerá nesta quinta-feira (20/8), diante do Macará , do Equador, o Peixe não contará com alguns titulares, entre eles Neymar e Gabigol . Relacionados do Peixão para o jogo decisivo no Equador! 📋⚪️⚫️ pic.twitter.com/ePc82FVA9l — Santos FC (@SantosFC) August 18, 2026 Leia também Esportes Imprensa internacional repercute ignorada de Thiago Mendes em Neymar Esportes Neymar nega rivalidade com Thiago Mendes e alfineta rival após derrota Esportes Gabriel Brazão, goleiro do Santos, provoca torcida e comissão do Vasco Esportes Santos vence Vasco por 3 x 0, e Cruzmaltino cai para a 19ª posição Em relação aos titulares da vitória contra o Vasco, cinco jogadores não foram relacionados. São eles: Igor Vinícius, Escobar, Neymar, Barreal e Gabigol. O Santos disputa as oitavas de final da Copa Sul-Americana contra o Macará. No primeiro jogo, na Vila Belmiro, o Peixe venceu por 2 x 1. A partida de volta acontece nesta quinta-feira (20/8), no Estádio Bellavista, em Ambato, no Equador. Para este duelo, a equipe brasileira pode empatar e ainda assim avançará de fase. Quem se classificar para as quartas irá enfrentar o vencedor de Atlético-MG x Bragantino.",
-      "source_category": "mainstream",
-      "sentiment_per_candidate": {},
-      "edit_history": [],
-      "disclaimer_pt": "Análise algorítmica. Não representa pesquisa de opinião.",
-      "disclaimer_en": "Algorithmic analysis. Does not represent polling data.",
-      "sentiment_score": 0.0,
-      "confidence_score": 0.0,
-      "_sentiment_scores": {},
-      "prominence_score": 0.0
+      "prominence_score": 0.0,
+      "_ai_provider": "nvidia",
+      "_ai_model": "nvidia/nemotron-3-super-120b-a12b",
+      "ai_provider_editor": "nvidia/nemotron-3-super-120b-a12b",
+      "editor_note": null
     },
     {
       "id": "6bfcbc413455f577",
@@ -762,56 +771,62 @@
       "source": "Poder360",
       "published_at": "2026-08-18T19:13:18Z",
       "collected_at": "2026-08-18T19:40:16Z",
-      "status": "raw",
-      "relevance_score": 0.0,
-      "relevance_signals": null,
-      "candidates_mentioned": [],
-      "topics": [],
+      "status": "validated",
+      "relevance_score": 1.0,
+      "relevance_signals": {
+        "candidate_signal": 0.6,
+        "topic_signal": 0.25,
+        "keyword_signal": 0.15,
+        "source_signal": 0.05
+      },
+      "candidates_mentioned": [
+        "flavio-bolsonaro",
+        "lula"
+      ],
+      "topics": [
+        "economia",
+        "educacao",
+        "politica_externa",
+        "midia",
+        "eleicoes"
+      ],
       "narrative_cluster_id": null,
       "duplicate_of": null,
       "summaries": {
-        "pt-BR": "",
-        "en-US": ""
+        "pt-BR": "Flávio Bolsonaro (PL-RJ) defendeu que jovens devem aspirar a empreender como Elon Musk, em vez de envolver-se com o tráfico, durante ato em Belo Horizonte com Nikolas Ferreira. Ele apresentou o programa 'Minha Primeira Empresa', parte de seu plano de governo, que oferece capacitação pelo Sistema S, crédito da Caixa e apoio à internacionalização via BNDES e Apex-Brasil. Criticou as políticas de Lula, afirmando que elas mantêm os pobres na dependência e empurram a classe média para a pobreza, enquanto seu objetivo é enriquecer os pobres, estimular o empreendedorismo da classe média e proteger as mulheres com microcrédito.",
+        "en-US": "Flávio Bolsonaro (PL-RJ) argued that young people should aspire to become entrepreneurs like Elon Musk rather than engage in drug trafficking, speaking at an event in Belo Horizonte with Nikolas Ferreira. He introduced his 'Minha Primeira Empresa' program, part of his government plan, which includes training via Sistema S, credit from Caixa, and support for internationalization through BNDES and Apex-Brasil. He criticized Lula's policies for keeping the poor dependent and pushing the middle class into poverty, stating his goal is to make the poor rich, encourage middle-class entrepreneurship, and protect women through microcredit."
       },
       "content": "O senador e candidato à Presidência, Flávio Bolsonaro (PL-RJ), disse nesta 3ª feira (18.ago.2026) que “o jovem tem que sonhar em ser o Elon Musk e não ser o dono da boca de fumo da sua rua” . O congressista citou o programa Minha Primeira Empresa, que está em seu plano de governo . Flávio participou de ato com o deputado federal Nikolas Ferreira (PL-MG) em Belo Horizonte (MG). O plano de governo do senador diz que o programa vai “ abrir e formalizar o negócio, capacitação e orientação pelo Sistema S, para que o empreendedor aprenda a gerir o que criou, e uma esteira de crédito e serviços da Caixa ao seu alcance, que o acompanhe do primeiro balcão ao primeiro faturamento” . O programa também promete “apoiar o pequeno negócio com crédito para empreender e orientação, pela rede da Caixa, e apoiar a internacionalização de pequenas e médias empresas via BNDES e Apex-Brasil” . Em discurso ao lado de Nikolas, Flávio afirmou que o projeto do presidente Luiz Inácio Lula da Silva (PT) “é deixar o pobre na pobreza dependente do governo” e, para a classe média, é “puxar para a pobreza” . “Eu quero que o pobre seja rico. Eu quero que a classe média empreenda. Eu quero proteger as mulheres de verdade. Eu quero dar microcrédito para você abrir a sua própria empresa” , declarou o candidato.",
       "source_category": "politics",
-      "sentiment_per_candidate": {},
-      "edit_history": [],
-      "disclaimer_pt": "Análise algorítmica. Não representa pesquisa de opinião.",
-      "disclaimer_en": "Algorithmic analysis. Does not represent polling data.",
-      "sentiment_score": 0.0,
-      "confidence_score": 0.0,
-      "_sentiment_scores": {},
-      "prominence_score": 0.0
-    },
-    {
-      "id": "d66a4bc7996bfc4e",
-      "url": "https://veja.abril.com.br/esporte/apos-idas-e-vindas-corinthians-renova-contrato-com-atacante-holandes/",
-      "title": "Após idas e vindas, Corinthians renova contrato com Memphis Depay",
-      "source": "Veja",
-      "published_at": "2026-08-18T19:11:34Z",
-      "collected_at": "2026-08-18T19:40:24Z",
-      "status": "raw",
-      "relevance_score": 0.0,
-      "relevance_signals": null,
-      "candidates_mentioned": [],
-      "topics": [],
-      "narrative_cluster_id": null,
-      "duplicate_of": null,
-      "summaries": {
-        "pt-BR": "",
-        "en-US": ""
+      "sentiment_per_candidate": {
+        "flavio-bolsonaro": "positivo",
+        "lula": "negativo"
       },
-      "content": "O Corinthians acertou a renovação de contrato do atacante Memphis Depay até 31 de julho de 2028. O holandês de 31 anos chegou ao clube em setembro de 2024 e, de lá para cá, atuou em 79 partidas, anotou 20 gols e foi peça fundamental nos últimos três troféus conquistados pela equipe: o Paulistão e a Copa do Brasil de 2025 – quando anotou o gol do título, diante do Vasco, no Maracanã –, e a Supercopa Rei de 2026. Enquanto jogador do Corinthians, Memphis se tornou o maior artilheiro e o maior assistente da história da seleção da Holanda: são 55 gols marcados e 37 passes para gols. “Estou muito, muito feliz. Não vejo a hora de voltar ao trabalho. Temos muitas coisas pelas quais lutaremos”, disse o camisa 10 em entrevista à Corinthians TV. “Foi uma negociação longa, mas que terminou da melhor forma possível para o Corinthians e para o Memphis, a quem agradeço muito por todo esforço para permanecer. Estamos muito contentes com a renovação e prontos para esta sequência”, afirmou o presidente Osmar Stabile. O atleta já treinou no CT Dr. Joaquim Grava e estará à disposição do técnico Fernando Diniz para o restante da temporada. Publicidade",
-      "source_category": "magazine",
-      "sentiment_per_candidate": {},
-      "edit_history": [],
+      "edit_history": [
+        {
+          "tier": "editor",
+          "at": "2026-08-18T19:50:24Z",
+          "provider": "nvidia",
+          "action": "validated",
+          "changes": [
+            "summary_pt",
+            "summary_en"
+          ]
+        }
+      ],
       "disclaimer_pt": "Análise algorítmica. Não representa pesquisa de opinião.",
       "disclaimer_en": "Algorithmic analysis. Does not represent polling data.",
-      "sentiment_score": 0.0,
-      "confidence_score": 0.0,
-      "_sentiment_scores": {},
-      "prominence_score": 0.0
+      "sentiment_score": 0.05,
+      "confidence_score": 1.0,
+      "_sentiment_scores": {
+        "flavio-bolsonaro": 0.3,
+        "lula": -0.2
+      },
+      "prominence_score": 0.0,
+      "_ai_provider": "nvidia",
+      "_ai_model": "nvidia/nemotron-3-super-120b-a12b",
+      "ai_provider_editor": "nvidia/nemotron-3-super-120b-a12b",
+      "editor_note": null
     },
     {
       "id": "2424cd972589f178",
@@ -1028,27 +1043,58 @@
       "source": "O Globo",
       "published_at": "2026-08-18T18:52:53Z",
       "collected_at": "2026-08-18T19:40:06Z",
-      "status": "raw",
-      "relevance_score": 0.0,
-      "relevance_signals": null,
-      "candidates_mentioned": [],
-      "topics": [],
+      "status": "validated",
+      "relevance_score": 0.8,
+      "relevance_signals": {
+        "candidate_signal": 0.5,
+        "topic_signal": 0.25,
+        "keyword_signal": 0.05,
+        "source_signal": 0.0
+      },
+      "candidates_mentioned": [
+        "lula"
+      ],
+      "topics": [
+        "seguranca",
+        "politica_externa",
+        "midia",
+        "eleicoes"
+      ],
       "narrative_cluster_id": null,
       "duplicate_of": null,
       "summaries": {
-        "pt-BR": "",
-        "en-US": ""
+        "pt-BR": "O Supremo Tribunal Federal decidiu tornar réu o deputado federal Gilvan da Federal (PL-ES) por unanimidade, após ele ter declarado publicamente que deseja a morte do presidente Luiz Inácio Lula da Silva. A Primeira Turma do STF rejeitou a alegação de imunidade parlamentar e determinou a abertura de uma ação penal por suposto crime de injúria majorada, apesar do arquivamento da representação na Comissão de Ética da Câmara.",
+        "en-US": "The Supreme Federal Court unanimously ruled to make federal deputy Gilvan da Federal (PL-ES) a defendant after he publicly stated he wished for the death of President Luiz Inácio Lula da Silva. The First Chamber rejected his claim of parliamentary immunity and ordered the opening of a criminal action for alleged aggravated insult, despite the Ethics Committee of the Chamber having archived the case."
       },
       "content": "Por unanimidade, a Primeira Turma do Supremo Tribunal Federal decidiu nesta terça-feira tornar réu o deputado federal Gilvan da Federal (PL-ES) por desejar que o presidente Luiz Inácio Lula da Silva morra. Com a decisão, será aberta uma ação penal contra o parlamentar por suposto crime de injúria majorada. A decisão foi proferida em julgamento na tarde desta terça, com participação dos ministros Flávio Dino, Cármen Lúcia e Alexandre de Moraes. O ministro Cristiano Zanin se declarou impedido para analisar o caso. Em abril do ano passado, parlamentar disse desejar a morte do presidente. A fala ocorreu em ume sessão da Comissão de Segurança Pública da Câmara que discutira um projeto de lei que proíbe o uso de armas de fogo pelas equipes que protegem o presidente e seus ministros. As declarações foram posteriormente publicadas nas redes sociais do parlamentar. — Eu quero mais que o Lula morra, quero que ele vá para o quinto dos infernos, é um direito meu. Não vou dizer que eu vou matar o cara, mas eu quero que ele morra — disse o parlamentar ao microfone. — Nem o diabo quer o Lula, por isso que ele está vivendo aí. Superou o câncer. Tomara que ele tenha uma taquicardia, porque nem o diabo quer a desgraça desse presidente que está afundando o país. Quero mais que ele morra mesmo. Ao analisar o caso, a ministra Cármen Lúcia, relatora, afastou a alegação do deputado de que a declaração seria coberta pela imunidade parlamentar e defendeu que o caso siga tramitando no STF apesar de a Comissão de ética da Câmara ter arquivado representação contra Gilvan pelos mesmos fatos. Segundo a ministra, tratou-se de um excesso que teria levado a ofensas diretas, alheias ao exercício do mandato. Para Cármen, as informações da denúncia, com indícios veementes da autoria e materialidade do suposto crime, são suficientes para a abertura da ação penal e, durante a instrução do caso, serão produzidas as provas definitivas sobre o caso.",
       "source_category": "mainstream",
-      "sentiment_per_candidate": {},
-      "edit_history": [],
+      "sentiment_per_candidate": {
+        "lula": "negativo"
+      },
+      "edit_history": [
+        {
+          "tier": "editor",
+          "at": "2026-08-18T19:50:33Z",
+          "provider": "nvidia",
+          "action": "validated",
+          "changes": [
+            "summary_pt",
+            "summary_en"
+          ]
+        }
+      ],
       "disclaimer_pt": "Análise algorítmica. Não representa pesquisa de opinião.",
       "disclaimer_en": "Algorithmic analysis. Does not represent polling data.",
-      "sentiment_score": 0.0,
-      "confidence_score": 0.0,
-      "_sentiment_scores": {},
-      "prominence_score": 0.0
+      "sentiment_score": -0.6,
+      "confidence_score": 1.0,
+      "_sentiment_scores": {
+        "lula": -0.6
+      },
+      "prominence_score": 0.0,
+      "_ai_provider": "nvidia",
+      "_ai_model": "nvidia/nemotron-3-super-120b-a12b",
+      "ai_provider_editor": "nvidia/nemotron-3-super-120b-a12b",
+      "editor_note": null
     },
     {
       "id": "87415a920c3c9b29",
@@ -1190,35 +1236,6 @@
       "_ai_model": "nvidia/nemotron-3-super-120b-a12b",
       "ai_provider_editor": "nvidia/nemotron-3-super-120b-a12b",
       "editor_note": null
-    },
-    {
-      "id": "954accff3749fb76",
-      "url": "https://oglobo.globo.com/economia/noticia/2026/08/18/stf-proibe-prefeituras-de-cobrarem-aliquotas-maiores-de-iptu-por-tamanho-do-imovel.ghtml",
-      "title": "STF proíbe prefeituras de cobrarem alíquotas maiores de IPTU por tamanho do imóvel",
-      "source": "O Globo",
-      "published_at": "2026-08-18T18:47:16Z",
-      "collected_at": "2026-08-18T19:40:06Z",
-      "status": "raw",
-      "relevance_score": 0.0,
-      "relevance_signals": null,
-      "candidates_mentioned": [],
-      "topics": [],
-      "narrative_cluster_id": null,
-      "duplicate_of": null,
-      "summaries": {
-        "pt-BR": "",
-        "en-US": ""
-      },
-      "content": "O Supremo Tribunal Federal declarou inconstitucional a fixação, por leis municipais, de alíquotas de IPTU com base na área de imóveis. A Corte confirmou a derrubada de uma lei de Chapecó (SC) que estabelecia 1% de IPTU para imóveis com área construída maior que 400 metros quadrados. A decisão foi tomada após o município questionar, no STF, decisão do Tribunal de Justiça de Catarina que já havia invalidado a norma, determinando a correção da alíquota para 0,5% assim como a devolução de valores pagos pelos proprietários a mais. A cidade sustentou que uma área construída maior significaria uma tributação mais elevada, em razão de um suposto uso mais intenso do solo. Ao analisar o caso, o relator, Dias Toffoli, argumentou que a Constituição permite a progressividade do IPTU em razão do valor do imóvel, com a adoção de alíquotas diferentes conforme localização e uso, mas não em razão da área do imóvel. Ainda segundo o ministro, o STF já decidiu que a fixação da alíquota de IPTU com base na área caracteriza progressividade do tributo. Por unanimidade, o STF seguiu o voto de Toffoli, no sentido de que as cidades não podem criar outros critérios de progressividade além dos previstos na Constituição. O julgamento ocorreu em sessão virtual e o acórdão foi publicado na sexta-feira. \"É incompatível com a intenção do constituinte reformador permitir que os municípios criem IPTU progressivo com base em critérios diversos daqueles previstos no texto constitucional. Nesse contexto, é certo que a área do imóvel não se confunde com o tempo ou com o valor do imóvel, únicos critérios que podem ser utilizados para a instituição de IPTU progressivo\", frisou o ministro.",
-      "source_category": "mainstream",
-      "sentiment_per_candidate": {},
-      "edit_history": [],
-      "disclaimer_pt": "Análise algorítmica. Não representa pesquisa de opinião.",
-      "disclaimer_en": "Algorithmic analysis. Does not represent polling data.",
-      "sentiment_score": 0.0,
-      "confidence_score": 0.0,
-      "_sentiment_scores": {},
-      "prominence_score": 0.0
     },
     {
       "id": "c5c26183306e34f6",
@@ -1683,27 +1700,56 @@
       "source": "O Globo",
       "published_at": "2026-08-18T18:29:14Z",
       "collected_at": "2026-08-18T19:40:07Z",
-      "status": "raw",
-      "relevance_score": 0.0,
-      "relevance_signals": null,
-      "candidates_mentioned": [],
-      "topics": [],
+      "status": "validated",
+      "relevance_score": 0.6,
+      "relevance_signals": {
+        "candidate_signal": 0.5,
+        "topic_signal": 0.05,
+        "keyword_signal": 0.05,
+        "source_signal": 0.0
+      },
+      "candidates_mentioned": [
+        "lula"
+      ],
+      "topics": [
+        "saude",
+        "corrupcao"
+      ],
       "narrative_cluster_id": null,
       "duplicate_of": null,
       "summaries": {
-        "pt-BR": "",
-        "en-US": ""
+        "pt-BR": "A Polícia Federal encontrou uma mensagem de WhatsApp mostrando que Marco Aurélio Santana Ribeiro, conhecido como Marcola e ex-chefe de gabinete do presidente Lula, recebeu um modelo de contrato para venda de canabidiol ao Ministério da Saúde, sem licitação. O documento foi enviado por Roberta Luchsinger, amiga de Lulinha (filho do presidente), que tentava vender o produto à pasta. Marcola confirmou o recebimento, mas negou ter encaminhado o material; o negócio não se concretizou devido ao escândalo de descontos indevidos no INSS.",
+        "en-US": "The Federal Police found a WhatsApp message showing that Marco Aurélio Santana Ribeiro, known as Marcola and former chief of staff to President Lula, received a draft contract for the sale of cannabidiol-based medicines to the Ministry of Health without a bidding process. The document was sent by Roberta Luchsinger, a friend of Lulinha (Lula’s son), who was attempting to sell the product to the ministry. Marcola confirmed receiving the message but denied forwarding it; the deal did not proceed due to the uncovering of improper discounts in the INSS scandal."
       },
       "content": "Uma mensagem de WhatsApp encontrada pela Polícia Federal mostra que Marco Aurélio Santana Ribeiro, o Marcola, ex-chefe de gabinete do presidente Luiz Inácio Lula da Silva, recebeu um modelo de contrato para venda de medicamentos à base de canabidiol ao Ministério da Saúde, com dispensa de licitação. O documento foi enviado pela empresária Roberta Luchsinger, amiga do empresário Fábio Luís Lula da Silva, o Lulinha, filho do presidente. Naquela época, ela tentava fazer negócio com a pasta, o que não ocorreu, devido à eclosão do escândalo dos descontos indevidos no INSS. Marcola confirmou a interlocutores que recebeu o material, mas disse que não o encaminhou. A defesa da empresária afirmou que o processo está sob sigilo e não vai se manifestar. Matéria exclusiva para assinantes. Para ter acesso completo, acesse o link da matéria e faça o seu cadastro.",
       "source_category": "mainstream",
-      "sentiment_per_candidate": {},
-      "edit_history": [],
+      "sentiment_per_candidate": {
+        "lula": "negativo"
+      },
+      "edit_history": [
+        {
+          "tier": "editor",
+          "at": "2026-08-18T19:50:56Z",
+          "provider": "nvidia",
+          "action": "validated",
+          "changes": [
+            "summary_pt",
+            "summary_en"
+          ]
+        }
+      ],
       "disclaimer_pt": "Análise algorítmica. Não representa pesquisa de opinião.",
       "disclaimer_en": "Algorithmic analysis. Does not represent polling data.",
-      "sentiment_score": 0.0,
-      "confidence_score": 0.0,
-      "_sentiment_scores": {},
-      "prominence_score": 0.0
+      "sentiment_score": -0.2,
+      "confidence_score": 1.0,
+      "_sentiment_scores": {
+        "lula": -0.2
+      },
+      "prominence_score": 0.0,
+      "_ai_provider": "nvidia",
+      "_ai_model": "nvidia/nemotron-3-super-120b-a12b",
+      "ai_provider_editor": "nvidia/nemotron-3-super-120b-a12b",
+      "editor_note": null
     },
     {
       "id": "36448d76ebfebd54",
@@ -31428,6 +31474,6 @@
       "editor_note": null
     }
   ],
-  "last_updated": "2026-08-18T19:46:45Z",
-  "total_count": 500
+  "last_updated": "2026-08-18T19:51:35Z",
+  "total_count": 485
 }
