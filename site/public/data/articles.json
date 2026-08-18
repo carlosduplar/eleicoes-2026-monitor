@@ -2,62 +2,62 @@
   "$schema": "../docs/schemas/articles.schema.json",
   "articles": [
     {
-      "id": "40e8efaf8c5631b8",
-      "url": "https://noticias.uol.com.br/colunas/daniela-lima/2026/08/18/pesquisa-jovens-lideram-consumo-de-noticia-sobre-eleicao-pela-internet.htm",
-      "title": "Pesquisa: Jovens lideram consumo de notícia sobre eleição pela internet",
-      "source": "UOL Noticias",
-      "published_at": "2026-08-18T08:40:39Z",
-      "collected_at": "2026-08-18T08:40:39Z",
-      "status": "raw",
-      "relevance_score": 0.0,
-      "relevance_signals": null,
-      "candidates_mentioned": [],
-      "topics": [],
-      "narrative_cluster_id": null,
-      "duplicate_of": null,
-      "summaries": {
-        "pt-BR": "",
-        "en-US": ""
-      },
-      "content": "Recorte exclusivo da última pesquisa BTG-Nexus obtido pela coluna mostra que os jovens lideram o consumo de notícias sobre a corrida eleitoral por portais e páginas de notícias na internet. Enquanto 61% do total de eleitores ouvidos dizem se informar online sobre a campanha, entre os que tem de 16 a 24 anos esse índice chefa a 82%.",
-      "source_category": "mainstream",
-      "sentiment_per_candidate": {},
-      "edit_history": [],
-      "disclaimer_pt": "Análise algorítmica. Não representa pesquisa de opinião.",
-      "disclaimer_en": "Algorithmic analysis. Does not represent polling data.",
-      "sentiment_score": 0.0,
-      "confidence_score": 0.0,
-      "_sentiment_scores": {},
-      "prominence_score": 0.0
-    },
-    {
       "id": "c3e3e2d833fdb223",
       "url": "https://noticias.uol.com.br/eleicoes/2026/08/18/veja-o-patrimonio-que-os-membros-da-familia-bolsonaro-declararam-no-tse.htm",
       "title": "Candidatos da família Bolsonaro declaram de R$ 158 mil a R$ 8 milhões",
       "source": "UOL Noticias",
       "published_at": "2026-08-18T08:40:38Z",
       "collected_at": "2026-08-18T08:40:38Z",
-      "status": "raw",
-      "relevance_score": 0.0,
-      "relevance_signals": null,
+      "status": "validated",
+      "relevance_score": 0.45,
+      "relevance_signals": {
+        "candidate_signal": 0.0,
+        "topic_signal": 0.3,
+        "keyword_signal": 0.15,
+        "source_signal": 0.0
+      },
       "candidates_mentioned": [],
-      "topics": [],
+      "topics": [
+        "eleicoes",
+        "corrupcao"
+      ],
       "narrative_cluster_id": null,
       "duplicate_of": null,
       "summaries": {
-        "pt-BR": "",
-        "en-US": ""
+        "pt-BR": "Oito membros da família Bolsonaro vão disputar cargos nas eleições de 2026, tendo declarado bens que variam entre R$ 158 mil e R$ 8 milhões ao TSE. Essa ampla faixa patrimonial reflete diferentes níveis de acumulação de riqueza entre os parentes do ex-presidente. As declarações foram feitas no registro oficial de candidatura.",
+        "en-US": "Eight members of the Bolsonaro family are set to run for office in the 2026 elections, having declared assets ranging from R$ 158,000 to R$ 8 million to the TSE. This wide wealth range reflects varying levels of financial accumulation among the former president’s relatives. The declarations were submitted as part of their official candidate registration."
       },
       "content": "Oito membros da família do ex-presidente Jair Bolsonaro vão disputar cargos nas eleições de 2026. Os parentes declararam ao TSE (Tribunal Superior Eleitoral), no registro de candidatura, bens que variam de R$ 158 mil a R$ 8 milhões.",
       "source_category": "mainstream",
-      "sentiment_per_candidate": {},
-      "edit_history": [],
+      "sentiment_per_candidate": {
+        "lula": "neutro",
+        "flavio-bolsonaro": "neutro"
+      },
+      "edit_history": [
+        {
+          "tier": "editor",
+          "at": "2026-08-18T09:04:52Z",
+          "provider": "nvidia",
+          "action": "validated",
+          "changes": [
+            "summary_pt",
+            "summary_en"
+          ]
+        }
+      ],
       "disclaimer_pt": "Análise algorítmica. Não representa pesquisa de opinião.",
       "disclaimer_en": "Algorithmic analysis. Does not represent polling data.",
-      "sentiment_score": 0.0,
-      "confidence_score": 0.0,
-      "_sentiment_scores": {},
-      "prominence_score": 0.0
+      "sentiment_score": -0.05,
+      "confidence_score": 1.0,
+      "_sentiment_scores": {
+        "lula": 0.0,
+        "flavio-bolsonaro": -0.1
+      },
+      "prominence_score": 0.0,
+      "_ai_provider": "nvidia",
+      "_ai_model": "nvidia/nemotron-3-super-120b-a12b",
+      "ai_provider_editor": "nvidia/nemotron-3-super-120b-a12b",
+      "editor_note": null
     },
     {
       "id": "d0e86902a2c030f4",
@@ -66,114 +66,59 @@
       "source": "UOL Noticias",
       "published_at": "2026-08-18T08:40:38Z",
       "collected_at": "2026-08-18T08:40:38Z",
-      "status": "raw",
-      "relevance_score": 0.0,
-      "relevance_signals": null,
-      "candidates_mentioned": [],
-      "topics": [],
+      "status": "validated",
+      "relevance_score": 1.0,
+      "relevance_signals": {
+        "candidate_signal": 0.6,
+        "topic_signal": 0.25,
+        "keyword_signal": 0.15,
+        "source_signal": 0.0
+      },
+      "candidates_mentioned": [
+        "lula",
+        "flavio-bolsonaro"
+      ],
+      "topics": [
+        "eleicoes",
+        "midia"
+      ],
       "narrative_cluster_id": null,
       "duplicate_of": null,
       "summaries": {
-        "pt-BR": "",
-        "en-US": ""
+        "pt-BR": "As equipes de Lula (PT) e Flávio Bolsonaro (PL) consideram evitar debates e sabatinas na fase inicial da campanha de 2026 para reduzir a exposição a ataques e impedir que adversários produzam conteúdo viral nas redes sociais. O primeiro debate, organizado pela Rede Bandeirantes, está agendado para domingo, 23 de março.",
+        "en-US": "The teams of Lula (PT) and Flávio Bolsonaro (PL) are considering skipping debates and interviews in the early phase of the 2026 campaign to avoid becoming primary targets of attacks and to prevent opponents from creating viral social media content. The first debate, hosted by Rede Bandeirantes, is scheduled for Sunday, March 23."
       },
       "content": "As equipes de Lula (PT) e Flávio Bolsonaro (PL) consideram não ir a debates e sabatinas na reta inicial da campanha. O objetivo é evitar com que ele sejam os principais alvos dos ataques e que os adversários não tenham espaço para produzir material com objetivo de viralizar nas redes sociais. O primeiro debate, da Rede Bandeirantes, está marcado para domingo (23).",
       "source_category": "mainstream",
-      "sentiment_per_candidate": {},
-      "edit_history": [],
-      "disclaimer_pt": "Análise algorítmica. Não representa pesquisa de opinião.",
-      "disclaimer_en": "Algorithmic analysis. Does not represent polling data.",
-      "sentiment_score": 0.0,
-      "confidence_score": 0.0,
-      "_sentiment_scores": {},
-      "prominence_score": 0.0
-    },
-    {
-      "id": "403510aa747388b3",
-      "url": "https://noticias.uol.com.br/colunas/carlos-madeiro/2026/08/18/brasil-vai-mapear-areas-para-eolicas-no-mar-e-gera-temor-de-impacto-a-pesca.htm",
-      "title": "Brasil avança para destinar mar a eólicas e gera temor de impactos na pesca",
-      "source": "UOL Noticias",
-      "published_at": "2026-08-18T08:40:38Z",
-      "collected_at": "2026-08-18T08:40:38Z",
-      "status": "raw",
-      "relevance_score": 0.0,
-      "relevance_signals": null,
-      "candidates_mentioned": [],
-      "topics": [],
-      "narrative_cluster_id": null,
-      "duplicate_of": null,
-      "summaries": {
-        "pt-BR": "",
-        "en-US": ""
+      "sentiment_per_candidate": {
+        "lula": "negativo",
+        "flavio-bolsonaro": "negativo"
       },
-      "content": "O governo Lula avançou na regulamentação para o Brasil ter suas primeiras torres eólicas de geração de energia instaladas no mar, as chamadas offshore. No último dia 28 de julho, a EPE (Empresa de Pesquisa Energética), ligada ao MME (Ministério de Minas e Energia), publicou as regras para seleção das áreas onde os projetos poderão ser instalados.",
-      "source_category": "mainstream",
-      "sentiment_per_candidate": {},
-      "edit_history": [],
+      "edit_history": [
+        {
+          "tier": "editor",
+          "at": "2026-08-18T09:04:54Z",
+          "provider": "nvidia",
+          "action": "validated",
+          "changes": [
+            "summary_pt",
+            "summary_en"
+          ]
+        }
+      ],
       "disclaimer_pt": "Análise algorítmica. Não representa pesquisa de opinião.",
       "disclaimer_en": "Algorithmic analysis. Does not represent polling data.",
-      "sentiment_score": 0.0,
-      "confidence_score": 0.0,
-      "_sentiment_scores": {},
-      "prominence_score": 0.0
-    },
-    {
-      "id": "061f64acba721838",
-      "url": "https://oantagonista.com.br/economia/homem-usa-forno-eletrico-com-wi-fi-para-assar-carne-enquanto-volta-do-trabalho-conexao-5g-do-celular-cai-no-meio-do-trajeto-comando-de-desligar-nao-e-recebido-e-cozinha-e-tomada-por-fumaca-densa/",
-      "title": "Homem usa forno elétrico com Wi-Fi para assar carne enquanto volta do trabalho, conexão 5G do celular cai no meio do trajeto, comando de desligar não é recebido e cozinha é tomada por fumaça densa",
-      "source": "O Antagonista",
-      "published_at": "2026-08-18T08:33:00Z",
-      "collected_at": "2026-08-18T08:41:00Z",
-      "status": "raw",
-      "relevance_score": 0.0,
-      "relevance_signals": null,
-      "candidates_mentioned": [],
-      "topics": [],
-      "narrative_cluster_id": null,
-      "duplicate_of": null,
-      "summaries": {
-        "pt-BR": "",
-        "en-US": ""
+      "sentiment_score": -0.25,
+      "confidence_score": 1.0,
+      "_sentiment_scores": {
+        "lula": -0.3,
+        "flavio-bolsonaro": -0.2
       },
-      "content": "O uso de um forno elétrico com Wi-Fi levanta debates sobre a segurança da automação residencial quando operada remotamente sem supervisão humana. Episódios envolvendo excesso de fumaça ocorrem por falha na configuração do temporizador local, e não por instabilidade de rede. Como os protocolos de comunicação respondem à queda de sinal? A engenharia de software... The post Homem usa forno elétrico com Wi-Fi para assar carne enquanto volta do trabalho, conexão 5G do celular cai no meio do trajeto, comando de desligar não é recebido e cozinha é tomada por fumaça densa appeared first on O Antagonista .",
-      "source_category": "politics",
-      "sentiment_per_candidate": {},
-      "edit_history": [],
-      "disclaimer_pt": "Análise algorítmica. Não representa pesquisa de opinião.",
-      "disclaimer_en": "Algorithmic analysis. Does not represent polling data.",
-      "sentiment_score": 0.0,
-      "confidence_score": 0.0,
-      "_sentiment_scores": {},
-      "prominence_score": 0.0
-    },
-    {
-      "id": "b387fdf5c2f17134",
-      "url": "https://www.jota.info/opiniao-e-analise/colunas/mulheres-na-regulacao/a-mesa-de-dialogos-do-ppi-e-a-oportunidade-de-fortalecer-a-verificacao-independente",
-      "title": "A Mesa de Diálogos do PPI e a oportunidade de fortalecer a Verificação Independente",
-      "source": "JOTA",
-      "published_at": "2026-08-18T08:30:58Z",
-      "collected_at": "2026-08-18T08:40:59Z",
-      "status": "raw",
-      "relevance_score": 0.0,
-      "relevance_signals": null,
-      "candidates_mentioned": [],
-      "topics": [],
-      "narrative_cluster_id": null,
-      "duplicate_of": null,
-      "summaries": {
-        "pt-BR": "",
-        "en-US": ""
-      },
-      "content": "A publicação da Portaria SEPPI/CC/PR 1, de 26 de maio de 2026 , pela Secretaria Especial do Programa de Parcerias de Investimentos da Casa Civil da Presidência da República (SEPPI), representa um importante avanço na discussão sobre mecanismos de governança aplicáveis aos contratos de concessão e parcerias público-privadas (PPPs). Ao instituir a Mesa de Diálogos sobre Verificação Independente (MD-VI), o governo federal reconhece a crescente relevância da Verificação Independente como instrumento de apoio à gestão contratual, à mitigação de riscos e ao fortalecimento da segurança jurídica dos investimentos em infraestrutura. Conheça o JOTA PRO Poder, plataforma de monitoramento que oferece transparência e previsibilidade para empresas A iniciativa surge em um momento particularmente oportuno. O Brasil atravessa um ciclo de ampliação de investimentos em infraestrutura e discute, simultaneamente, o aperfeiçoamento de seu marco regulatório por meio do Projeto de Lei 2.373/2025 , em tramitação no Senado (aprovado na Câmara como PL 2.892/2011 ) que consolida e moderniza o regime jurídico das concessões e PPPs. Em empreendimentos cada vez mais complexos, de longa duração e elevada intensidade de capital, torna-se indispensável a adoção de mecanismos capazes de conferir maior previsibilidade técnica, transparência e confiabilidade aos processos de tomada de decisão. Nesse contexto, a Verificação Independente vem se consolidando como ferramenta estratégica para apoiar o acompanhamento da execução contratual, a avaliação de desempenho, o monitoramento de riscos, a análise de conformidade técnica e o suporte à tomada de decisões por parte da Administração Pública , concessionárias, financiadores e investidores. Mais do que uma tendência regulatória, trata-se de uma prática alinhada às melhores experiências internacionais de governança da infraestrutura, especialmente em projetos que exigem monitoramento contínuo da qualidade dos investimentos, dos níveis de serviço e do cumprimento das obrigações contratuais. Entretanto, para que a Verificação Independente alcance plenamente seus objetivos, é fundamental que seja realizada por organismos tecnicamente competentes, imparciais e submetidos a mecanismos robustos de supervisão e controle. É nesse ponto que a Inspeção Acreditada assume papel de destaque, ao contar com a acreditação e governança do Inmetro. A Inspeção Acreditada de empreendimentos de infraestrutura se enquadra plenamente no conceito de Verificação Independente, além de possuir base normativa consolidada no Brasil por meio da Portaria Inmetro 367/2017 , que estabeleceu os requisitos para acreditação de Organismos de Inspeção destinados à avaliação de projetos, obras, operação e desempenho de empreendimentos de infraestrutura. O modelo foi desenvolvido a partir da colaboração entre órgãos governamentais, agências reguladoras, instituições financeiras e especialistas do setor, com o objetivo de disponibilizar ao país um mecanismo moderno de avaliação da conformidade voltado às demandas específicas da infraestrutura. O Programa de Inspeção Acreditada da Operação e Desempenho de Empreendimentos de Infraestrutura estabelece procedimentos, escopos e requisitos para a execução das atividades de avaliação da conformidade, bem como parâmetros de qualificação dos Organismos de Avaliação da Conformidade para fins de acreditação pela Coordenação-Geral de Acreditação (Cgcre) do Inmetro⁵. A principal contribuição desse modelo reside na criação de uma estrutura institucional capaz de assegurar que a Verificação Independente seja realizada com competência técnica, imparcialidade, objetividade, confidencialidade e gestão adequada de conflitos de interesse, tendo sua confiabilidade assegurada pela acreditação do Inmetro. Esses requisitos não decorrem apenas de disposições contratuais, mas do sistema formal de acreditação baseado na norma ABNT NBR ISO/IEC 17020 , referência internacional para organismos de inspeção. Os Organismos de Inspeção Acreditados (OIA) são submetidos a rigorosos processos de avaliação conduzidos pela Cgcre/Inmetro, incluindo auditorias periódicas, avaliações testemunha em campo, análises documentais e mecanismos permanentes de supervisão. Dessa forma, a confiança depositada nos resultados da Verificação Independente realizada por um OIA não se apoia exclusivamente na reputação da empresa contratada, mas em um sistema estruturado de avaliação da conformidade reconhecido nacional e internacionalmente. A acreditação possui papel central nesse processo. Conforme definido pelo próprio Instituto, a acreditação consiste no reconhecimento formal da competência de organismos para realizar atividades específicas de avaliação da conformidade com confiança e credibilidade . Trata-se de ferramenta amplamente adotada em âmbito internacional e que proporciona segurança adicional aos diversos agentes envolvidos em empreendimentos de infraestrutura. Ao assegurar que organismos atuem segundo critérios uniformes de competência técnica e imparcialidade, a acreditação fortalece a confiança entre poder concedente, concessionárias, investidores, financiadores, seguradoras, órgãos de controle e usuários dos serviços públicos. Cabe observar que o processo de acreditação não configura reserva de mercado, pois é aberto a qualquer empresa que, submetendo-se e sendo aprovada em auditorias do Inmetro, passa a se tornar um OIA. Um OIA é, portanto, um Verificador Independente acreditado pelo Inmetro. Por esta ótica, não faria sentido o Poder Público operar fora da governança proporcionada pelo Inmetro. A relevância desse modelo vem sendo progressivamente reconhecida pela Administração Pública brasileira. A Lei 14.133/2021 já prevê expressamente a possibilidade de utilização de certificações e avaliações da conformidade como instrumentos de apoio aos processos decisórios relacionados a projetos e obras públicas⁸. A Nova Lei de Concessões e PPPs, aprovada recentemente na Câmara e que seguiu para o Senado, já define expressamente que o Verificador Independente deve ser preferencialmente (e não apenas facultativo) um organismo acreditado por entidade nacional de acreditação (no caso brasileiro, o Inmetro/Cgcre). Da mesma forma, diversos normativos setoriais passaram a incorporar mecanismos de certificação e inspeção acreditada em empreendimentos de infraestrutura. Paralelamente, o Tribunal de Contas da União ( TCU ) tem apresentado sinalizações positivas sobre o uso da inspeção, como é o caso do Acórdão 614/2025 . Concomitantemente, a Inspeção Acreditada de empreendimentos de infraestrutura já está sendo requerida pela Administração Pública, incluindo órgãos como a Agência Nacional de Transportes Terrestres (ANTT) , a Agência de Transporte do Estado de São Paulo (ARTESP), o Departamento de Estradas de Rodagem do Estado de São Paulo (DER-SP), a Companhia de Desenvolvimento Habitacional e Urbano do Estado de São Paulo (CDHU), entre outros, em diversos contratos de infraestrutura. Esse movimento demonstra que a utilização de Organismos de Inspeção Acreditados deixou de ser uma discussão exclusivamente conceitual para se tornar uma realidade prática em importantes projetos brasileiros. Os benefícios são múltiplos. A Verificação Independente conduzida por OIAs contribui para a identificação antecipada de não conformidades, o monitoramento sistemático de riscos, a melhoria da qualidade dos projetos e obras, a redução de assimetrias de informação entre as partes e o fortalecimento da rastreabilidade das decisões técnicas. Como consequência, amplia-se a segurança jurídica dos contratos e reduzem-se potenciais controvérsias relacionadas à execução dos empreendimentos. Em um setor caracterizado por contratos complexos, de alto valor agregado e de longa duração, a existência de avaliações técnicas imparciais e reconhecidas institucionalmente contribui para a construção de ambientes mais previsíveis e confiáveis, favorecendo tanto a proteção do interesse público quanto a atração de investimentos privados. Assine gratuitamente a newsletter Últimas Notícias do JOTA e receba as principais notícias jurídicas e políticas do dia no seu email A Mesa de Diálogos instituída pela Portaria SEPPI/CC/PR 1/2026 oferece, portanto, uma oportunidade singular para aprofundar o debate sobre os mecanismos mais adequados para estruturar a Verificação Independente no Brasil. Trata-se de uma agenda que transcende questões procedimentais e alcança temas centrais para a governança da infraestrutura nacional. Ao promover a discussão sobre modelos de Verificação Independente, o PPI contribui para o fortalecimento de instrumentos capazes de ampliar a transparência, a confiança institucional e a qualidade das decisões relacionadas a concessões e PPPs. Nesse cenário, a experiência acumulada pela Inspeção Acreditada e pelos Organismos de Inspeção Acreditados, submetidos aos requisitos da acreditação do Inmetro e alinhados às melhores práticas internacionais, oferece importantes contribuições para a construção de um ambiente regulatório mais seguro, eficiente e preparado para os desafios da infraestrutura brasileira.",
-      "source_category": "politics",
-      "sentiment_per_candidate": {},
-      "edit_history": [],
-      "disclaimer_pt": "Análise algorítmica. Não representa pesquisa de opinião.",
-      "disclaimer_en": "Algorithmic analysis. Does not represent polling data.",
-      "sentiment_score": 0.0,
-      "confidence_score": 0.0,
-      "_sentiment_scores": {},
-      "prominence_score": 0.0
+      "prominence_score": 0.0,
+      "_ai_provider": "nvidia",
+      "_ai_model": "nvidia/nemotron-3-super-120b-a12b",
+      "ai_provider_editor": "nvidia/nemotron-3-super-120b-a12b",
+      "editor_note": null
     },
     {
       "id": "8a4af9c0cec8b4a6",
@@ -182,27 +127,59 @@
       "source": "Metropoles",
       "published_at": "2026-08-18T08:30:23Z",
       "collected_at": "2026-08-18T08:40:55Z",
-      "status": "raw",
-      "relevance_score": 0.0,
-      "relevance_signals": null,
-      "candidates_mentioned": [],
-      "topics": [],
+      "status": "validated",
+      "relevance_score": 1.0,
+      "relevance_signals": {
+        "candidate_signal": 0.6,
+        "topic_signal": 0.25,
+        "keyword_signal": 0.15,
+        "source_signal": 0.0
+      },
+      "candidates_mentioned": [
+        "lula",
+        "flavio-bolsonaro"
+      ],
+      "topics": [
+        "eleicoes",
+        "midia"
+      ],
       "narrative_cluster_id": null,
       "duplicate_of": null,
       "summaries": {
-        "pt-BR": "",
-        "en-US": ""
+        "pt-BR": "No primeiro dia de campanha eleitoral de 2026, Lula superou Flávio Bolsonaro em engajamento nas redes sociais, com 3,6 milhões de interações e 22 milhões de visualizações contra 2,4 milhões e 15,9 milhões, respectivamente. Lula também teve mais menções positivas (70% contra 57%) e um público estimado muito maior no ato de lançamento (40 mil segundo o PT vs 8,9 mil segundo a USP para Flávio).",
+        "en-US": "On the first day of the 2026 presidential campaign, Lula outperformed Flávio Bolsonaro in social media engagement, recording 3.6 million interactions and 22 million views compared to 2.4 million and 15.9 million, respectively. Lula also received a higher share of positive mentions (70% vs 57%) and drew a significantly larger crowd at his campaign launch (40,000 according to the PT vs 8,900 estimated by USP for Flávio)."
       },
       "content": "O presidente Lula teve desempenho superior ao do senador Flávio Bolsonaro (PL-RJ), principal adversário na disputa presidencial, nas redes sociais no primeiro dia de campanha , no último domingo (16/8). O petista realizou o lançamento oficial de sua campanha, em São Bernardo do Campo (SP), enquanto Flávio promoveu o mesmo ato em Copacabana, no Rio de Janeiro. 3 imagens Fechar modal. 1 de 3 Partido de Lula quer superar PL nas eleições de outubro Arte/Metrópoles 2 de 3 Arte Metrópoles 3 de 3 Lula e Flávio montam propostas em defesa da mulher para campanha Arte Metrópoles Segundo levantamentos do PT, os perfis oficiais de Lula registraram 3,6 milhões de interações, entre reações, comentários e compartilhamentos, e 22 milhões de visualizações nos vídeos publicados no domingo . Os perfis de Flávio somaram 2,4 milhões de interações e 15,9 milhões de visualizações. O levantamento do PT considera a soma dos resultados dos perfis oficiais dos dois candidatos no Instagram, Facebook, TikTok e YouTube. Na análise de menções nas redes, Lula também aparece à frente: foi citado 401 mil vezes, contra 348 mil menções a Flávio Bolsonaro. De acordo com os dados, a repercussão de Lula também foi mais favorável. Quase 70% das menções ao presidente foram classificadas como positivas, ante 57% das menções a Flávio. Aliados na rua De acordo com estimativa da USP, o ato de lançamento da campanha de Flávio Bolsonaro (PL-RJ), em Copacabana, reuniu cerca de 8,9 mil pessoas. O tamanho do público foi alvo de críticas, como mostrou a coluna de Igor Gadelha, no Metrópoles. À coluna, o presidente nacional do PL, Valdemar Costa Neto, atribuiu o baixo comparecimento principalmente ao tempo nublado. “Normal, o tempo não estava bom, e o próprio Flávio falou que igual ao Bolsonaro não existe”, afirmou. No caso de Lula, o PT informou que cerca de 40 mil pessoas participaram do ato de lançamento da campanha do presidente, realizado no Estádio 1º de Maio, em São Bernardo do Campo (SP). A USP, no entanto, não fez uma estimativa de público para o evento do petista. Assim, os números de público divulgados para os dois atos têm origens diferentes: a estimativa para o evento de Flávio é atribuída à USP, enquanto a cifra de 40 mil para Lula foi informada pelo próprio PT.",
       "source_category": "mainstream",
-      "sentiment_per_candidate": {},
-      "edit_history": [],
+      "sentiment_per_candidate": {
+        "lula": "positivo",
+        "flavio-bolsonaro": "negativo"
+      },
+      "edit_history": [
+        {
+          "tier": "editor",
+          "at": "2026-08-18T09:05:04Z",
+          "provider": "nvidia",
+          "action": "validated",
+          "changes": [
+            "summary_pt",
+            "summary_en"
+          ]
+        }
+      ],
       "disclaimer_pt": "Análise algorítmica. Não representa pesquisa de opinião.",
       "disclaimer_en": "Algorithmic analysis. Does not represent polling data.",
-      "sentiment_score": 0.0,
-      "confidence_score": 0.0,
-      "_sentiment_scores": {},
-      "prominence_score": 0.0
+      "sentiment_score": 0.05,
+      "confidence_score": 1.0,
+      "_sentiment_scores": {
+        "lula": 0.4,
+        "flavio-bolsonaro": -0.3
+      },
+      "prominence_score": 0.0,
+      "_ai_provider": "nvidia",
+      "_ai_model": "nvidia/nemotron-3-super-120b-a12b",
+      "ai_provider_editor": "nvidia/nemotron-3-super-120b-a12b",
+      "editor_note": null
     },
     {
       "id": "5fa11ef11ed0e71e",
@@ -211,27 +188,61 @@
       "source": "Poder360",
       "published_at": "2026-08-18T08:30:14Z",
       "collected_at": "2026-08-18T08:40:57Z",
-      "status": "raw",
-      "relevance_score": 0.0,
-      "relevance_signals": null,
-      "candidates_mentioned": [],
-      "topics": [],
+      "status": "validated",
+      "relevance_score": 0.95,
+      "relevance_signals": {
+        "candidate_signal": 0.6,
+        "topic_signal": 0.25,
+        "keyword_signal": 0.05,
+        "source_signal": 0.05
+      },
+      "candidates_mentioned": [
+        "lula",
+        "flavio-bolsonaro"
+      ],
+      "topics": [
+        "politica_externa",
+        "economia",
+        "meio_ambiente",
+        "eleicoes"
+      ],
       "narrative_cluster_id": null,
       "duplicate_of": null,
       "summaries": {
-        "pt-BR": "",
-        "en-US": ""
+        "pt-BR": "O presidente do Senado, Davi Alcolumbre (União Brasil-AP), aderiu ao discurso de soberania nacional do governo Lula ao celebrar a descoberta de petróleo na Margem Equatorial pela Petrobras, em evento no Amapá. Ele elogiou Lula pelo avanço da exploração na costa do estado e pela defesa de pautas prioritárias no Senado, marcando o primeiro encontro público entre os dois após a retomada do diálogo. Lula, por sua vez, destacou a descoberta como um 'passaporte para o futuro' e reforçou a narrativa de controle brasileiro sobre riquezas estratégicas, em oposição a influências externas.",
+        "en-US": "Senate President Davi Alcolumbre (União Brasil-AP) aligned with President Lula’s national sovereignty rhetoric by celebrating Petrobras’ oil discovery in the Equatorial Margin during an event in Amapá. He credited Lula for advancing exploration in Amapá’s coast and for supporting key government agendas in the Senate, marking their first public meeting since renewing dialogue. Lula framed the discovery as a 'passport to the future' and reinforced the government’s narrative of asserting Brazilian control over strategic resources amid tensions with foreign powers, particularly the U.S."
       },
       "content": "De volta ao entorno do presidente Luiz Inácio Lula da Silva (PT), o presidente do Senado, Davi Alcolumbre (União Brasil-AP), aderiu ao slogan do Planalto e defendeu a soberania nacional na 2ª feira (17.ago.2026), ao comemorar a descoberta de petróleo pela Petrobras na Margem Equatorial. No Amapá, ele discursou em uma plataforma marítima da estatal antes de o petista tomar a palavra. Alcolumbre atribuiu ao atual presidente o avanço da exploração na costa do Amapá e disse ser necessário reconhecer quem “ enfrentou ” as resistências internas e externas ao projeto. Falou que a exploração da Margem Equatorial contribui para a “ soberania energética ”. Segundo o senador, outros países tentam “ tutelar ” o futuro brasileiro “ de uma forma ou de outra ”. “ Sob a sua liderança, como presidente da República e a trincheira de defesa do Congresso Nacional, nós dizemos de uma vez por todas: deixem que nós, brasileiros, que lutamos pela defesa do nosso Brasil, que nós decidamos o que nós queremos do Brasil ”, declarou. Durante o evento, Lula afirmou que a descoberta é um “passaporte para o futuro” e uma oportunidade para o país decidir sobre o uso de seus próprios recursos. O presidente tem adotado esse tom ao tratar de riquezas naturais e tecnologia. O petista associa soberania ao controle brasileiro sobre riquezas estratégicas e à capacidade de transformá-las em desenvolvimento. O discurso serve para defender que decisões sobre o Brasil não sejam submetidas a interesses externos. A soberania tem sido o mote do governo, que tem tido atritos com os Estados Unidos em temas como big techs , Pix e minerais críticos. Para a disputa eleitoral, o Planalto busca colar no candidato do PL à Presidência, Flávio Bolsonaro (PL), a pecha de “entreguista” e “traidor da pátria” pelo alinhamento com o chefe de Estado norte-americano, Donald Trump (Partido Republicano). APROXIMAÇÃO DE LULA E ALCOLUMBRE A cerimônia marcou o 1º encontro público dos 2 após a retomada do diálogo entre eles. Alcolumbre atribuiu ao atual presidente o avanço da exploração na costa do Amapá e agradeceu a Lula pela defesa do projeto ao longo dos últimos anos. Lula, por sua vez, agradeceu a Alcolumbre pelo encaminhamento de 3 pautas prioritárias do governo no Senado: a PEC da Segurança Pública, a proposta que trata do fim da escala 6 X 1 e o marco sobre minerais críticos. Os 2 voltaram a conversar em 4 de agosto, pela 1ª vez desde que o Senado barrou a indicação de Jorge Messias ao STF (Supremo Tribunal Federal). Os encontros a partir de então tem sido positivos para os 2 lados. Para o PT, Alcolumbre precisará do apoio de Lula para tentar continuar na Presidência do Senado a partir de fevereiro de 2027. O senador se afastou do grupo de Flávio Bolsonaro, que escolheu Rogério Marinho (PL-RN) como candidato ao comando da Casa, o que tornou uma aproximação com o Planalto mais importante para sua articulação. Em troca, os petistas esperam que Alcolumbre ajude a avançar pautas prioritárias do governo citadas por Lula no evento. MARGEM EQUATORIAL O petróleo foi encontrado no poço Morpho, no bloco FZA-M-59, na Margem Equatorial. A estrutura está localizada a cerca de 175 km da costa do Amapá e a quase 500 km da foz do rio Amazonas. A perfuração começa após 2.886 metros de água. A Petrobras está explorando o poço desde 20 de outubro de 2025. A presença de petróleo na região não significa que a área já está pronta para ser explorada. A descoberta ainda está na fase exploratória, período em que a companhia perfura poços e envia sondas para debaixo do solo para verificar a presença, o volume, a qualidade e a viabilidade econômica de um determinado reservatório.",
       "source_category": "politics",
-      "sentiment_per_candidate": {},
-      "edit_history": [],
+      "sentiment_per_candidate": {
+        "lula": "positivo",
+        "flavio-bolsonaro": "neutro"
+      },
+      "edit_history": [
+        {
+          "tier": "editor",
+          "at": "2026-08-18T09:05:29Z",
+          "provider": "nvidia",
+          "action": "validated",
+          "changes": [
+            "summary_pt",
+            "summary_en"
+          ]
+        }
+      ],
       "disclaimer_pt": "Análise algorítmica. Não representa pesquisa de opinião.",
       "disclaimer_en": "Algorithmic analysis. Does not represent polling data.",
-      "sentiment_score": 0.0,
-      "confidence_score": 0.0,
-      "_sentiment_scores": {},
-      "prominence_score": 0.0
+      "sentiment_score": 0.1,
+      "confidence_score": 1.0,
+      "_sentiment_scores": {
+        "lula": 0.3,
+        "flavio-bolsonaro": -0.1
+      },
+      "prominence_score": 0.0,
+      "_ai_provider": "nvidia",
+      "_ai_model": "nvidia/nemotron-3-super-120b-a12b",
+      "ai_provider_editor": "nvidia/nemotron-3-super-120b-a12b",
+      "editor_note": null
     },
     {
       "id": "d71cca01af3434ab",
@@ -240,56 +251,62 @@
       "source": "BBC Brasil",
       "published_at": "2026-08-18T08:03:49Z",
       "collected_at": "2026-08-18T08:41:04Z",
-      "status": "raw",
-      "relevance_score": 0.0,
-      "relevance_signals": null,
-      "candidates_mentioned": [],
-      "topics": [],
+      "status": "validated",
+      "relevance_score": 1.0,
+      "relevance_signals": {
+        "candidate_signal": 0.6,
+        "topic_signal": 0.35,
+        "keyword_signal": 0.15,
+        "source_signal": 0.0
+      },
+      "candidates_mentioned": [
+        "lula",
+        "flavio-bolsonaro"
+      ],
+      "topics": [
+        "eleicoes",
+        "corrupcao",
+        "previdencia",
+        "economia",
+        "politica_externa"
+      ],
       "narrative_cluster_id": null,
       "duplicate_of": null,
       "summaries": {
-        "pt-BR": "",
-        "en-US": ""
+        "pt-BR": "A diretora do Datafolha, Luciana Chong, destacou que o eleitorado de idosos (60+ anos) é agora o maior da história e demonstra forte apoio a Lula, com 55% de preferência em segundo turno contra 37% para Flávio Bolsonaro, funcionando como um 'novo Nordeste' para o PT. Já a 'geração Lava Jato' (35 a 44 anos) representa a maior dificuldade para Lula, devido à associação da operação com a luta contra a corrupção no governo petista.",
+        "en-US": "Datafolha director Luciana Chong highlighted that voters aged 60+ are now the largest electoral bloc in history and show strong support for Lula, with 55% favoring him in a potential runoff against 37% for Flávio Bolsonaro, acting as a 'new Northeast' for the PT. Meanwhile, the 'Lava Jato generation' (ages 35–44) presents Lula’s greatest challenge, due to the operation’s association with fighting corruption during PT administrations."
       },
       "source_category": "international",
       "content": "'Geração Lava Jato' prefere Flávio, e idosos podem ser 'novo Nordeste' de Lula, diz diretora do Datafolha Crédito, Getty Images Legenda da foto, Detalhes da pesquisa Datafolha mostram entre quais públicos Lula e Flávio aparecem com vantagem Article Information Author, Mariana Schreiber Role, Da BBC News Brasil em Brasília Published Há 38 minutos Tempo de leitura: 15 min As pesquisas eleitorais têm mostrado uma certa estabilidade na disputa presidencial , sinalizando, no momento, para um segundo turno apertado entre o presidente Luiz Inácio Lula da Silva (PT) e o senador Flávio Bolsonaro (PL-RJ) , com pequena vantagem para o petista. O detalhamento das sondagens, porém, revela dados interessantes sobre a corrida eleitoral, ressalta a diretora do instituto Datafolha, Luciana Chong, em entrevista à BBC News Brasil. Ela nota que o crescente eleitorado de idosos , com 60 anos ou mais, desponta como um possível \"novo Nordeste\" para o PT, em referência à região que tem dado larga vantagem de votos para o partido de Lula desde 2002. Segundo a última pesquisa Datafolha, em eventual segundo turno, 55% desse grupo declaram apoio ao petista, contra 37% que preferem Flávio, uma diferença de quase vinte pontos percentuais. Os idosos também chamam atenção por seu engajamento maior na eleição em relação a outros grupos, nota Chong. Na pesquisa espontânea para o primeiro turno, ou seja, quando os entrevistados são perguntados sobre em quem vão votar sem que lhes sejam apresentados os nomes dos candidatos, apenas 34% do eleitorado mais velho responde que ainda não sabe seu candidato, contra 46% dos mais jovens (16 a 24 anos). \"Os idosos são agora 23% dos eleitores. Nunca houve um percentual tão alto de pessoas com 60 anos ou mais dentro do eleitorado. E hoje, porque há a questão da longevidade, uma pessoa de 60 anos, 70 anos, está muito ativa, diferente do que era há algumas décadas. Hoje, as pessoas estão trabalhando, são ativas e querem ir votar\", analisa. \"É um segmento importante que está bem engajado com o Lula nesse momento. Acho que também muito por conta de todas as políticas econômicas que acabam acenando para esse grupo, como a valorização do salário mínimo [que aumenta também o valor de benefícios do INSS]\", nota Chong. Por outro lado, a maior dificuldade de Lula está entre a população adulta, na faixa de 35 a 44 anos, que a diretora do Datafolha chama de \"geração Lava Jato\", em referência à operação que desmantelou um grande esquema de corrupção envolvendo a Petrobras e diferentes partidos políticos durante os governos de Dilma Rousseff (2010 a 2016). Pule Mais lidas e continue lendo Mais lidas Hayden Panettiere: o que se sabe sobre a morte da atriz de 'Heroes' aos 36 anos Se Pablo Marçal está inelegível por 8 anos, por que foi anunciado como candidato à Presidência? Os casos de puberdade precoce que intrigam os médicos em todo o mundo (incluindo no Brasil) Brasil pode se tornar 2º país do mundo mais tarifado pelos EUA se Trump confirmar novo tarifaço Fim do Mais lidas Pule Promoção Agregador de pesquisas e continue lendo Veja Agregador de Pesquisas da BBC News Brasil Clique aqui Fim do Promoção Agregador de pesquisas É um grupo que passou boa parte de sua vida governada por governos petistas e acompanhou a grande repercussão do escândalo. Nessa faixa etária, Flávio aparece com 53% das intenções de voto em eventual segundo turno, contra 38% de Lula. \"Quando a gente pergunta qual o principal problema do país, eles citam a corrupção mais do que os outros grupos\", destaca. Para Chong, o período eleitoral de campanha, que começou em 16 de agosto, e a propaganda eleitoral gratuita em rádio e TV (a partir do dia 28) ainda são capazes de influenciar o voto do eleitor, apesar da importância das redes sociais como meio de informação hoje. Até o momento, porém, ela vê pouco espaço para algum candidato romper a forte polarização entre Flávio e Lula, como os ex-governadores Ronaldo Caiado (PSD), Romeu Zema (Novo) ou o novato Renan Santos (Missão). Na sua visão, essa é mais uma eleição movida pela rejeição, em que o eleitor escolhe o seu candidato não tanto pelas propostas , mas em contraponto ao que mais rejeita, seja o presidente ou o filho de Jair Bolsonaro (PL). Isso, diz Chong, contribui para o cenário de segundo turno apertado que vem sendo apontado nas pesquisas eleitorais, apesar da ampla vantagem de Lula nos levantamentos de primeiro turno. \"A gente vê que Lula vence todos os outros com percentuais parecidos, porque, para esse eleitor [anti-Lula], tanto faz se é Flávio, se é Caiado, se é Zema; ele é contra Lula. É mais um voto anti-Lula do que naqueles candidatos que estão ali apresentados. Então, quando houver realmente um segundo turno definido, toda essa direita vai se unir. Não vai ser uma eleição fácil\", avalia. Confira a seguir os principais destaques da entrevista, em que Chong rebate críticas de que o Datafolha \"errou o resultado da disputa presidencial de 2022\" e conta sobre como ferramentas de inteligência artificial estão sendo usadas para aprimorar instrumentos de checagem das pesquisas do instituto, que são realizadas de forma presencial, nos chamados pontos de fluxo (áreas de grande circulação de pessoas) das cidades onde ocorre o levantamento. Crédito, Divulgação Legenda da foto, Luciana Chong é diretora do Datafolha desde março de 2022 BBC News Brasil – Quais tendências do eleitorado chamam sua atenção nesta eleição? Luciana Chong - O voto feminino, que em 2022 foi superimportante para a eleição do Lula, se mantém. As mulheres têm uma resistência maior ao candidato Flávio, assim como tinham em relação ao Jair Bolsonaro. Vemos também o voto dos mais jovens um pouco mais com o Lula, e os evangélicos sempre mais alinhados à família Bolsonaro. Esse ano, estamos fazendo essa pergunta aos entrevistados: \"Numa escala de bolsonarista a petista, de 1 a 5, em que grau você se coloca?\". É para entendermos se a pessoa é um bolsonarista raiz, se é um bolsonarista moderado, se é um petista raiz, um petista moderado. E, no meio, aparecem os não alinhados, que é um grupo superimportante, que pode decidir a eleição. A intenção de voto desse grupo é um pouco mais para Lula do que para Flávio, mas isso pode mudar. É um grupo mais suscetível a mudanças. BBC News Brasil - E como é o perfil social dos não alinhados? Chong - Eles são mais jovens, têm escolaridade média, principalmente, e são mais de cidades grandes. Não têm partido político de preferência. E existe um índice alto de eleitores sem religião. É um perfil que não está tão engajado ainda com a eleição, algo que vemos com os jovens, por exemplo, pois eles têm um índice alto que responde que não sabe em quem vai votar na pesquisa espontânea. Esperamos agora, com o início da propaganda eleitoral, que esse grupo se engaje também. Vamos conseguir entender um pouco para que lado eles vão. BBC News Brasil – As mulheres são a maioria do eleitorado, representam quase 53% dos eleitores. Com a vantagem que Lula tem entre elas, é possível dizer que o eleitorado feminino se tornou um novo Nordeste para o PT? Chong - Acho que não, porque o Nordeste ainda tem uma força maior. Quando a gente vê o eleitorado feminino por faixa etária, por exemplo, as mais jovens são mais Lula e as mais velhas também, mas essa faixa intermediária já não é tanto, que é justamente uma faixa de idade que chamamos aqui de \"geração Lava Jato\", porque é a geração que cresceu vendo a Lava Jato. Então, é mais crítica em relação ao governo do PT, ao Lula, principalmente na questão da corrupção. Talvez um segmento que esteja mais perto do que seria o Nordeste para o Lula sejam os mais velhos. Se você vê na faixa de 60 anos ou mais, aí sim ele tem uma vantagem muito maior. E aí parece um voto mais consolidado, pois os mais velhos também são os que estão mais engajados [na eleição]. O índice de eleitores que dizem que não sabe em que vai votar é menor [entre os idosos]. A vontade de votar é maior do que a dos mais jovens. Então, é um segmento importante e que está bem engajado com o Lula nesse momento. Acho que também muito por conta de todas as políticas econômicas que o Lula vem fazendo, que acabam acenando para esse grupo, como a valorização do salário mínimo [que aumenta também o valor de benefícios do INSS] e a isenção do IR para quem ganha até R$ 5 mil. BBC News Brasil – Então, o grupo que viveu a maior parte da sua vida política sob os governos do PT é o que menos vota em Lula? Chong – Sim, no total da amostra, nessa faixa etária, de 35 a 44 anos, o Flávio fica na frente. E, quando perguntamos qual é o principal problema do país, eles citam a corrupção mais do que os outros grupos. BBC News Brasil – Com o envelhecimento da população, os eleitores idosos estão ganhando peso na eleição, mas eles não são obrigados a votar a partir de 70 anos. Qual a importância desse grupo? Chong – Os idosos são agora 23% dos eleitores. Nunca houve um percentual tão alto de pessoas com 60 anos ou mais dentro do eleitorado. É um grupo que, de fato, só vai crescer. E hoje, porque há a questão da longevidade, uma pessoa de 60 anos, 70 anos, está muito ativa, diferente do que era há algumas décadas. Hoje, as pessoas estão trabalhando, são ativas e querem ir votar. Então, é um segmento importante. Vamos ter que ver como vai ser a abstenção, mas, pela intenção de voto, a gente vê que eles têm um engajamento maior. BBC News Brasil – A campanha eleitoral e a propaganda gratuita em televisão e rádio ainda têm relevância para mexer nas intenções de voto? Chong – Eu acho que sim, porque, quando a gente faz pesquisas para medir o grau de confiabilidade nos meios de informação, as redes sociais são as em que as pessoas menos confiam, apesar de serem as mais utilizadas. Claro, atinge as pessoas muito mais rápido e tem muito mais conteúdo rodando, mas as pessoas ainda confiam mais nos meios tradicionais, como TV, rádio, jornais. Crédito, Getty Images Legenda da foto, Maioria da geração que acompanhou escândalos de corrupção dos governos do PT vota em Flávio BBC News Brasil – O Renan Santos, que disputa pela primeira vez uma eleição, tem aparecido na frente de nomes tradicionais, como Ronaldo Caiado e Romeu Zema. De onde vem esse apoio? Tem espaço para ele crescer mais, nesse cenário tão polarizado entre Lula e Flávio Bolsonaro? Chong – Ele tem apoio em um segmento muito nichado, entre os mais jovens, que é onde consegue ter algum destaque. O conhecimento dele ainda é muito baixo, então ele não consegue ainda chegar nas outras faixas de idade. Ele pode ter um crescimento, porque agora, que começa a campanha mesmo, ele vai começar a aparecer nos debates, nas entrevistas e vai se tornar mais conhecido. Mas eu acho que ainda não ameaça essa polarização. É a primeira eleição, ele está construindo o nome dele, na verdade, não para esse ano, mas para daqui a quatro anos, oito anos. BBC News Brasil – Por que Caiado não consegue decolar, mesmo concorrendo por um grande partido? Chong – Ele foi governador por dois mandatos. Lá em Goiás, ele é super conhecido, mas no Brasil ainda não. Então, eu acho que, conforme ele for se tornando mais conhecido agora, pode ser que ele também tenha crescimento. Assim, essa eleição está sendo marcada por várias denúncias de todos os lados, então tem denúncia contra o Flávio, tem denúncia contra o Lula. Então, a gente não sabe, daqui para frente, como isso vai seguir. E aí, talvez, seja uma chance do Caiado conquistar um eleitor mais à direita. BBC News Brasil – Durante a redemocratização, nunca ocorreu de um candidato a presidente que ficou em segundo lugar no primeiro turno conseguir virar e ganhar a eleição no segundo turno. Este ano, porém, há alguns candidatos na direita que tendem a transferir votos para Flávio Bolsonaro no segundo turno, segundo o atual cenário das pesquisas eleitorais. É um cenário mais desafiador para Lula? Chong – Sem dúvida, é o que a gente viu em 2022. Na última eleição, o Lula ainda tinha uma vantagem maior em relação ao Bolsonaro no primeiro turno. Só que, quando começou o segundo turno, essa vantagem desapareceu e eles foram seguindo muito empatados até o final. A diferença foi mínima. Então, eu acho que isso pode se repetir, sim. Hoje, as simulações de segundo turno não servem para muita coisa, porque estamos falando para o eleitor se posicionar em relação a algo que ainda está distante. Mas hoje, quando a gente faz essas simulações, a gente vê que o Lula vence todos os outros com percentuais parecidos, porque, para esse eleitor [anti-Lula], tanto faz se é o Flávio, se é o Caiado, se é o Zema, ele é contra o Lula. É mais um voto anti-Lula do que naqueles candidatos que estão ali apresentados. Então, quando tiver realmente um segundo turno definido, toda essa direita vai se unir. Não vai ser uma eleição fácil. Crédito, Paulo Pinto/Agência Brasil Legenda da foto, Idosos representam 23% do eleitorado brasileiro hoje, segundo a diretora do Datafolha BBC News Brasil – O TSE deve julgar em breve a ação da campanha do Flávio Bolsonaro que questiona a pesquisa eleitoral da Atlas Intel, que, ao final do questionário sobre intenção de voto, reproduzia um áudio entre o candidato e o banqueiro Daniel Vorcaro e questionava o entrevistado sobre essa gravação. Essa pesquisa está suspensa por uma decisão do ministro Kássio Nunes Marques, presidente do TSE. Como o Datafolha está acompanhando esse julgamento? Isso gera alguma preocupação? Chong – Sim, e ainda tiveram outras ações do Kássio nesses meses: ele propôs a criação daquele selo de acurácia, em que a gente se colocou contra. O objetivo da pesquisa não é acertar o resultado final. Não faz sentido você premiar as empresas que estão acertando. Por que a pesquisa é importante? Justamente para contar a história da eleição, entender quais segmentos são mais importantes para cada candidato, como as pessoas estão se posicionando e entendendo a eleição. Então, esse selo vai contra tudo o que a gente entende por pesquisa. Depois, ele veio também dizendo que queria que a gente registrasse os bairros onde vai ser realizada a pesquisa antes de a pesquisa acontecer. Isso seria gravíssimo, inviabilizaria a pesquisa. Todo ano de eleição, a gente sabe que os políticos querem, de alguma forma, tentar proibir as pesquisas. Eles consomem muita pesquisa, acreditam nas pesquisas, porque contratam e usam mesmo para as campanhas, mas são contra as pesquisas divulgadas, que é o mais importante para o eleitor ter acesso. Então, eu acho que essa decisão do ministro contra a Atlas é muito ruim, porque realmente o áudio estava no final do questionário. De forma alguma interferiu na hora de dar a resposta dos entrevistados. E os institutos já têm que ser muito transparentes. Já têm que registrar a metodologia, registrar o questionário, entregar os bairros em que é realizado. As ferramentas de controle já são suficientes. Então, acho que não precisaria de outras coisas, ainda mais agora, faltando pouquíssimo tempo para a eleição. Crédito, Reuters Legenda da foto, Líder nas pesquisas de primeiro turno, Lula deve ter cenário desafiador no segundo, ressalta Chong BBC News Brasil – Como você disse, questionamentos aos institutos não são novidade. Surpreende essa movimentação vindo do TSE? Chong – Sim, porque acho que nunca foi assim, tão perto da eleição. A resolução [do TSE com regras para as pesquisas] já foi publicada no início do ano. BBC News Brasil – Outros institutos apoiaram o selo proposto por Kássio Nunes Marques, como o Atlas Intel e o Paraná Pesquisas. Um argumento a favor é que ajudaria a tornar institutos menores mais conhecidos. Por que você discorda? Chong – Porque vai contra o objetivo e a função da pesquisa. Se eu concordar com essa ideia, estou dizendo que a pesquisa tem que acertar o número final do TSE. E não é isso. A pesquisa tem que contar a história da eleição. A pesquisa é feita ao longo do período eleitoral para contar essa história e vai até a véspera da votação. A pesquisa de véspera é a última e, então, ela não pode ser comparada com a urna do TSE. Tem sempre essas críticas de que \"o instituto errou\". Não acho certo falar que o instituto errou ou acertou. Tem alguns institutos que falam: \"Ah, eu sou o que mais acerta\". Não é por aí, porque a pesquisa de véspera termina no sábado à tarde, ela não pode ser comparada com o resultado do TSE da votação de domingo. Porque as pessoas deixam para decidir depois, ou pode ser que o eleitor mude de ideia. Pode ser que, quando sair o resultado da pesquisa de véspera, por exemplo, sábado à tarde, a pessoa queira fazer um voto útil em algum sentido para tentar resolver a eleição em primeiro turno. A única pesquisa que poderia ser comparada com o resultado do TSE seria a pesquisa de boca de urna realizada no dia da eleição. O Datafolha fazia isso quando ainda não tinha a urna eletrônica. Agora, a apuração é tão rápida que não justifica mais uma pesquisa cara. Mas seria a única que poderia confirmar: \"Esse instituto acertou, esse instituto errou\". Do jeito que é hoje, não dá para criar um selo para premiar institutos, que é uma ideia que vai contra a razão de ser da pesquisa. BBC News Brasil – Em 2022, os institutos foram acusados de errar porque subestimaram os votos no Bolsonaro no primeiro turno. O resultado do TSE ficou acima da margem de erro do Datafolha. Isso não poderia indicar alguma necessidade de melhoria da metodologia, por exemplo? Chong – O TSE não tem capacidade técnica de avaliar as metodologias dos institutos. Cada instituto vai adotar a metodologia que considera melhor. Não tem uma regra: \"Essa é a melhor ou a outra pior\". Cada um vai utilizar aquela em que acredita mais. De fato, a gente ficou distante do número final [no primeiro turno de 2022], mas o que é importante? A pesquisa, durante o período eleitoral, apontou, durante todo o caminho, que era uma eleição polarizada, que os dois candidatos [Lula e Jair Bolsonaro] iriam para o segundo turno, que não teria uma chance da terceira via com Simone Tebet ou Ciro Gomes, que aquela polarização ia ser até o final. Então, as pesquisas apontaram tudo isso, né? Apontaram o voto dos evangélicos, apontaram o voto das mulheres. É isso que é importante. E, quando chega no final, teve uma mudança de última hora dos eleitores do Ciro e da Tebet, que optaram pelo voto útil: \"Ah, não tem chance mesmo, vou votar no Bolsonaro\". Essas mudanças acontecem cada vez com mais frequência. Acho que isso não é um sinalizador de que as pesquisas erraram, é um sinalizador de que tem mudança e cada vez mais rápido. Crédito, Luiz Roberto/TSE Legenda da foto, Datafolha é contra a proposta do ministro Kássio Nunes Marques de criar selo para institutos que \"acertam pesquisa\" BBC News Brasil – Como o Datafolha está usando inteligência artificial (IA) nas pesquisas? Chong – Nós usamos como ferramenta para os nossos processos, fazer a checagem do material. O pesquisador vai com o tablet e as entrevistas são gravadas, a gente recebe esse áudio aqui na nossa sede, do Brasil inteiro. Aí, a IA transcreve essas entrevistas, e a gente consegue comparar com o que o pesquisador anotou no questionário. Então, eu sei, por exemplo, se você respondeu que vai votar no Renan Santos, mas um pesquisador colocou que você não sabe. E, se está incoerente, a gente já consegue identificar isso rapidamente e ouvir as outras entrevistas desse pesquisador e identificar alguns problemas de forma bem rápida. Usamos as ferramentas da IA para esse auxílio, em várias etapas, mas não para criar questionário. BBC News Brasil – Essa checagem é feita em uma amostra da pesquisa. Chong – Temos que checar pelo menos 20% do material de cada pesquisador. Se a gente identifica algum problema, aí a gente checa 100%, e, se for necessário, a gente faz a reposição desse material. Mas tudo tem que ser muito rápido, porque fazemos o [trabalho de] campo em dois, três dias. A gente também consegue saber, pelo GPS do tablet, se o pesquisador realmente está no lugar determinado. O pesquisador vai para uma cidade, por exemplo, e tem dois pontos onde tem que fazer a pesquisa. Então, são todos controles de qualidade que a gente vai, a cada eleição, aprimorando justamente para garantir que essa coleta seja bem feita, porque tudo começa ali. Se tem algum problema de coleta, você não consegue resolver depois. BBC News Brasil – Com os avanços tecnológicos, a pesquisa online é cada vez mais comum. Por que o Datafolha mantém a pesquisa presencial? Chong – Porque ainda é a melhor forma de garantir a melhor representatividade do universo. A gente está falando do Brasil, que é muito desigual. O que a gente vê na Região Sudeste e Região Sul é um cenário. Você vai para o Norte, o Nordeste, é outro completamente diferente. A pesquisa eleitoral tem que ser representativa. Então, eu tenho que ter eleitores de cidades de pequeno, médio e grande porte. Eu tenho que ter eleitores com nível fundamental, que hoje, na nossa amostra, são mais de 30%. No online, eu não consigo ter essa representatividade, eu vou ter um percentual muito baixo de pessoas com baixa escolaridade. Eu não vou ter pessoas que moram em municípios pequenos do Norte, do Nordeste, mesmo do Sudeste. A gente faz pesquisas online para outras coisas, como pesquisa de mercado, com outros públicos, outros segmentos. Funciona super bem, mas, para isso, ainda não dá. Numa pesquisa online, você tem que fazer uma ponderação muito maior dos resultados [na etapa de processamento dos dados] para conseguir representar o universo de eleitores. Na nossa pesquisa presencial, as nossas ponderações são mínimas, são só ajustes. BBC News Brasil – Você comentou sobre a importância da liberdade metodológica. É positivo ter diferentes metodologias no mercado e ferramentas de agregação de pesquisas, que mostram a tendência predominante das sondagens eleitorais? Chong – Sim, acho super válido, porque se torna uma pauta. A gente está falando da pesquisa online porque tem instituto que faz pesquisa online. Quanto mais a gente discute pesquisa, metodologias e tudo mais, melhor é para o mercado de pesquisa, e vamos aprimorando cada vez mais.",
-      "sentiment_per_candidate": {},
-      "edit_history": [],
-      "disclaimer_pt": "Análise algorítmica. Não representa pesquisa de opinião.",
-      "disclaimer_en": "Algorithmic analysis. Does not represent polling data.",
-      "sentiment_score": 0.0,
-      "confidence_score": 0.0,
-      "_sentiment_scores": {},
-      "prominence_score": 0.0
-    },
-    {
-      "id": "7badd81f87f3a5d2",
-      "url": "https://oglobo.globo.com/politica/eleicoes-2026/noticia/2026/08/18/lula-de-chapeu-aliados-imitam-presidente-e-passam-a-usar-adereco-para-demonstrar-alinhamento.ghtml",
-      "title": "Lula de chapéu: aliados imitam presidente e passam a usar adereço para demonstrar alinhamento",
-      "source": "O Globo",
-      "published_at": "2026-08-18T08:02:08Z",
-      "collected_at": "2026-08-18T08:40:48Z",
-      "status": "raw",
-      "relevance_score": 0.0,
-      "relevance_signals": null,
-      "candidates_mentioned": [],
-      "topics": [],
-      "narrative_cluster_id": null,
-      "duplicate_of": null,
-      "summaries": {
-        "pt-BR": "",
-        "en-US": ""
+      "sentiment_per_candidate": {
+        "lula": "positivo",
+        "flavio-bolsonaro": "negativo"
       },
-      "content": "Aliados do presidente Luiz Inácio Lula da Silva decidiram aderir ao hábito de usar chapéu panamá, que o petista tenta tornar um símbolo da sua campanha deste ano. Mas enquanto o chefe do Palácio do Planalto admite que passou a utilizar o adereço, presente até mesmo na foto de urna, por motivos de saúde, pessoas próximas a ele aderiram ao item como forma de demonstrar estar alinhado à imagem do presidente. Lula tem usado chapéu panamá desde que retirou um câncer de pele, em abril, por recomendação médica. Após o procedimento, ficou com um curativo e fez 15 sessões de radioterapia. O presidente adotou o adereço para evitar sol no local do procedimento. O mandatário tem uma coleção de chapéus e tem usado no Palácio do Planalto, em eventos externos e já gravou peças de campanha com o acessório. O ex-ministro da Agricultura, Carlos Fávaro, que busca uma vaga ao Senado pelo PSD do Mato Grosso, foi um dos que usaram um chapéu de modelo semelhante no lançamento da sua candidatura no domingo. — Vou usar em ocasiões especiais, grandes eventos — disse Fávaro. Tentando uma vaga ao Senado pelo Rio Grande do Sul, Paulo Pimenta (PT-RS) também foi de chapéu a um almoço com ex-prefeitos de Porto Alegre na última semana. — Usei em homenagem ao presidente — afirmou Pimenta. Já o ex-ministro da Secretaria-Geral da Presidência Marcio Macêdo fez uma montagem nas redes sociais para lançar sua candidatura a deputado federal pelo Sergipe com uma série de fotos em que destaca o acessório. Na publicação, ele escreveu: \"Com Lula na cabeça e no coração\". No evento de lançamento da campanha de Lula, na Vila Euclides, em São Bernardo do Campo, os ministros de Indústria e Comércio, Márcio Elias Rosa, e o Secretário de Assuntos Jurídicos, Marcelo Weick, estavam de chapéu. Amigo de Lula e candidato a deputado estadual por São Paulo, Emídio de Souza (PT-SP) também foi ao ato de chapéu. O Prerrogativas, grupo de juristas que apoiam Lula e é coordenado pelo advogado Marco Aurélio de Carvalho, produziu uma leva do acessório com uma inscrição personalizada 'Juristas com Lula', que tem distribuído a apoiadores. Ao discursar, Lula afirmou que estava usando o chapéu por recomendações médicas, mas que tiraria rapidamente no ato em referência ao público. — Eu quero dizer que estou de chapéu, primeiro porque eu gosto de chapéu, mas hoje é porque eu fiz radioterapia na cabeça para cuidar de um câncer de pele e não posso tomar sol na cabeça. Mas eu quero dizer para vocês que eu vou ousar (arriscar) a minha saúde e vou tirar o chapéu para todos vocês — afirmou o presidente. Pela primeira vez em sua carreira política, Lula decidiu posar para a foto que aparece na urna eletrônica para o eleitor de chapéu panamá. O GLOBO mostrou que aliados temem questionamentos no Tribunal Superior Eleitoral (TSE). Até esta segunda-feira, a campanha não havia recebido pedidos de contestações. Na foto de urna e no evento de lançamento da campanha, Lula usou o adereço da marca Marcatto, de estilo shantung social, indicado para sol e ocasiões diurnas. O adereço é feito de um material conhecido como palha shantung, produto sintético feito de fibra de celulose, considerado leve e macio. No site da marca, a peça é vendida a R$ 289. É incomum candidatos registrarem fotos de urna com o adereço, mas a campanha levantou outros casos, na hipótese de questionamentos jurídicos. Em 2022, o TSE considerou que boné é adereço cultural de uma pessoa e autorizou que o candidato a deputado federal Douglas Belchior (PT-SP) utilize o item em sua foto de urna. Na época, o caso chegou ao TSE por meio de um recurso apresentado pela defesa do então candidato. Quando apresentou o seu registro de candidatura, Belchior juntou ao processo uma foto em que aparece ostentando um boné de aba reta. O Tribunal Regional Eleitoral de São Paulo, no entanto, barrou o uso do chapéu, por entender que se tratava de um mero \"elemento cênico\". Ao analisar o caso, o TSE apontou que em que pese a avaliação feita pelo tribunal regional entre \"adorno e indumentária\", o uso do boné pelo candidato, \"neste caso específico, não atrapalha a visualização do seu rosto nem dificulta o seu reconhecimento pelo eleitor\", o que atende aos requisitos previstos nas regras das fotografias dos candidatos prevista pela Justiça Eleitoral.",
-      "source_category": "mainstream",
-      "sentiment_per_candidate": {},
-      "edit_history": [],
+      "edit_history": [
+        {
+          "tier": "editor",
+          "at": "2026-08-18T09:05:31Z",
+          "provider": "nvidia",
+          "action": "validated",
+          "changes": [
+            "summary_pt",
+            "summary_en"
+          ]
+        }
+      ],
       "disclaimer_pt": "Análise algorítmica. Não representa pesquisa de opinião.",
       "disclaimer_en": "Algorithmic analysis. Does not represent polling data.",
       "sentiment_score": 0.0,
-      "confidence_score": 0.0,
-      "_sentiment_scores": {},
-      "prominence_score": 0.0
+      "confidence_score": 1.0,
+      "_sentiment_scores": {
+        "lula": 0.2,
+        "flavio-bolsonaro": -0.2
+      },
+      "prominence_score": 0.0,
+      "_ai_provider": "nvidia",
+      "_ai_model": "nvidia/nemotron-3-super-120b-a12b",
+      "ai_provider_editor": "nvidia/nemotron-3-super-120b-a12b",
+      "editor_note": null
     },
     {
       "id": "4db99813ce11c989",
@@ -350,114 +367,51 @@
       "source": "O Globo",
       "published_at": "2026-08-18T08:01:49Z",
       "collected_at": "2026-08-18T08:40:48Z",
-      "status": "raw",
-      "relevance_score": 0.0,
-      "relevance_signals": null,
+      "status": "validated",
+      "relevance_score": 0.35,
+      "relevance_signals": {
+        "candidate_signal": 0.0,
+        "topic_signal": 0.3,
+        "keyword_signal": 0.05,
+        "source_signal": 0.0
+      },
       "candidates_mentioned": [],
-      "topics": [],
+      "topics": [
+        "corrupcao",
+        "politica_externa",
+        "eleicoes"
+      ],
       "narrative_cluster_id": null,
       "duplicate_of": null,
       "summaries": {
-        "pt-BR": "",
-        "en-US": ""
+        "pt-BR": "O ministro Flávio Dino, do STF, afastou Daniel Brandão da presidência do TCE-MA, sobrinho do governador Carlos Brandão, resultando em três vagas travadas na corte de contas maranhense. A decisão faz parte de ações envolvendo conflitos políticos entre Dino e Brandão, agora adversários. Com o afastamento, apenas quatro das sete cadeiras do TCE-MA estão ocupadas por membros titulares.",
+        "en-US": "Supreme Court Minister Flávio Dino removed Daniel Brandão from the presidency of the Maranhão Court of Accounts (TCE-MA), Brandão’s nephew and political ally of Governor Carlos Brandão. The move is part of legal actions stemming from Dino’s political rift with Brandão, now an adversary. As a result, only four of the seven seats on the TCE-MA are currently filled by titular members."
       },
       "content": "O Tribunal de Contas do Maranhão (TCE-MA) está com duas vagas sem preenchimento definitivo devido a decisões do ministro Flávio Dino, relator de ações em tramitação no Supremo Tribunal Federal (STF) que envolvem decisões de seu ex-vice e hoje adversário político, o governador Carlos Brandão (MDB). Nesta segunda-feira, Dino afastou Daniel Brandão da presidência da Corte de Contas. Com o afastamento dele, que é sobrinho de Brandão, só quatro das sete cadeiras estão ocupadas por membros titulares. Matéria exclusiva para assinantes. Para ter acesso completo, acesse o link da matéria e faça o seu cadastro.",
       "source_category": "mainstream",
       "sentiment_per_candidate": {},
-      "edit_history": [],
+      "edit_history": [
+        {
+          "tier": "editor",
+          "at": "2026-08-18T09:05:36Z",
+          "provider": "nvidia",
+          "action": "validated",
+          "changes": [
+            "summary_pt",
+            "summary_en"
+          ]
+        }
+      ],
       "disclaimer_pt": "Análise algorítmica. Não representa pesquisa de opinião.",
       "disclaimer_en": "Algorithmic analysis. Does not represent polling data.",
       "sentiment_score": 0.0,
-      "confidence_score": 0.0,
+      "confidence_score": 1.0,
       "_sentiment_scores": {},
-      "prominence_score": 0.0
-    },
-    {
-      "id": "8cb44148b4d6ce8e",
-      "url": "https://www.metropoles.com/blog-do-noblat/charges/charge-do-aroeira-891",
-      "title": "Charge do Aroeira",
-      "source": "Metropoles",
-      "published_at": "2026-08-18T08:00:54Z",
-      "collected_at": "2026-08-18T08:40:55Z",
-      "status": "raw",
-      "relevance_score": 0.0,
-      "relevance_signals": null,
-      "candidates_mentioned": [],
-      "topics": [],
-      "narrative_cluster_id": null,
-      "duplicate_of": null,
-      "summaries": {
-        "pt-BR": "",
-        "en-US": ""
-      },
-      "source_category": "mainstream",
-      "content": "Charge do Aroeira Últimas do Blog Charges Charge do Aroeira Blog do Noblat O vazio de um tempo nublado, sem Bolsonaro Artigos Tendência é de baixa renovação no Congresso Artigos Conseguiu emprego? E dinheiro barato? (por Roberto Caminha Filho) Artigos O adorador do profeta e o homem de mão (por Pedro Costa)",
-      "sentiment_per_candidate": {},
-      "edit_history": [],
-      "disclaimer_pt": "Análise algorítmica. Não representa pesquisa de opinião.",
-      "disclaimer_en": "Algorithmic analysis. Does not represent polling data.",
-      "sentiment_score": 0.0,
-      "confidence_score": 0.0,
-      "_sentiment_scores": {},
-      "prominence_score": 0.0
-    },
-    {
-      "id": "6c005999647ddc44",
-      "url": "https://www.metropoles.com/colunas/igor-gadelha/garotinho-forcou-saida-de-pm-de-sua-vice-apos-alerta-de-inteligencia",
-      "title": "Garotinho forçou saída de PM de sua vice após alerta de inteligência",
-      "source": "Metropoles",
-      "published_at": "2026-08-18T08:00:52Z",
-      "collected_at": "2026-08-18T08:40:55Z",
-      "status": "raw",
-      "relevance_score": 0.0,
-      "relevance_signals": null,
-      "candidates_mentioned": [],
-      "topics": [],
-      "narrative_cluster_id": null,
-      "duplicate_of": null,
-      "summaries": {
-        "pt-BR": "",
-        "en-US": ""
-      },
-      "content": "Candidato ao governo do Rio em 2026, o ex-governador Anthony Garotinho (Republicanos) forçou a saída da major da PM Elaine Gonçalves (Democrata) de sua vice, nos últimos dias, após alertas de sua equipe de inteligência. Segundo apurou a coluna, Garotinho foi alertado sobre ligações da policial militar com o deputado estadual Rodrigo Bacellar (União Brasil) , que está preso por ordem do STF por suposta ligação com facções criminosas. 3 imagens Fechar modal. 1 de 3 O ex-governador do Rio Anthony Garotinho Reprodução/Internet. 2 de 3 Anthony Garotinho Divulgação/Facebook Anthony Garotinho 3 de 3 O ex-governador do Rio de Janeiro Anthony Garotinho Divulgação Auxiliares de Garotinho descobriram que a major é sócia do advogado Fabio Picanço na empresa “Cromus Segurança e Vigilância Patrimonial LTDA”. Picanço, segundo aliados do ex-governador, seria ligado a Bacellar . O próprio Garotinho também tem uma relação conflituosa com o advogado. Em depoimento à CPI do Crime Organizado do Senado em 2025, ele citou Picanço como integrante de um esquema de corrupção no Rio. O esquema, segundo o ex-governador, previa o desvio de verbas públicas por meio da concessão de incentivos fiscais e envolveria a Secretaria de Fazenda, a AgeRio e a Companhia de Desenvolvimento Industrial (Codin). À época do depoimento, a Codin era presidida por Picanço. A coluna tentou contato com o advogado, mas não conseguiu. O espaço segue aberto para eventuais manifestações dele sobre o assunto. A conversa de Garotinho com a vice A coluna apurou que Garotinho confrontou a major da PM sobre a informação da sociedade com Picanço e a relação com Bacellar durante uma conversa no fim de semana em um hotel na cidade do Rio de Janeiro . Na conversa, de acordo com aliados do ex-governador, ele afirmou a Elaine que, diante dos fatos, restava a militar pedia para deixar a chapa. Do contrário, o próprio Garotinho anunciaria a saída dela . A major, então, escolheu a primeira opção e gravou um vídeo anunciando que estava deixando a disputa por motivos pessoais. Ela informou ainda que retornaria às atividades na Polícia Militar do Rio de Janeiro. Leia também Igor Gadelha Garotinho envia a ministério denúncia contra pré-candidato ao Senado Igor Gadelha Marqueteiro deixa campanha de Caiado após divergências Igor Gadelha Filhos de Lula faltaram a evento em que Janja homenageou Marisa Igor Gadelha Com 2% nas pesquisas, Augusto Cury prepara cartas para Lula e Flávio Em nota, a equipe da major afirmou que a empresa de segurança da qual é sócia com Fabio Picanço “nunca recebeu qualquer incentivo fiscal, participou de licitações ou prestou serviços ao poder público”. A policial militar afirmou ainda, na nota, que atividades particulares de seus sócios na empresa não têm relação com a empresa, nem geraram benefícios ou favorecimentos. Para o lugar da major, Garotinho escolheu como novo companheiro de chapa o ex-integrante do Batalhão de Operações Policiais Especiais (Bope) André Monteiro (Democrata).",
-      "source_category": "mainstream",
-      "sentiment_per_candidate": {},
-      "edit_history": [],
-      "disclaimer_pt": "Análise algorítmica. Não representa pesquisa de opinião.",
-      "disclaimer_en": "Algorithmic analysis. Does not represent polling data.",
-      "sentiment_score": 0.0,
-      "confidence_score": 0.0,
-      "_sentiment_scores": {},
-      "prominence_score": 0.0
-    },
-    {
-      "id": "f34401800776873c",
-      "url": "https://www.jota.info/opiniao-e-analise/colunas/coluna-transparencia-internacional/coaf-sob-pressao-os-desafios-enfrentados-pela-unidade-de-inteligencia-financeira",
-      "title": "Coaf sob pressão: os desafios enfrentados pela unidade de inteligência financeira",
-      "source": "JOTA",
-      "published_at": "2026-08-18T08:00:30Z",
-      "collected_at": "2026-08-18T08:40:59Z",
-      "status": "raw",
-      "relevance_score": 0.0,
-      "relevance_signals": null,
-      "candidates_mentioned": [],
-      "topics": [],
-      "narrative_cluster_id": null,
-      "duplicate_of": null,
-      "summaries": {
-        "pt-BR": "",
-        "en-US": ""
-      },
-      "content": "Um relatório global publicado pela Transparência Internacional em junho de 2026, “ Connecting the Dots: How financial intelligence units expose corrupt money flows and how they could do more” , examinou unidades de inteligência financeira (UIFs) em 20 países, incluindo o Brasil. O estudo avalia as condições necessárias para a produção de relatórios de inteligência financeira, como acesso e qualidade dos dados, capacidade analítica, cooperação nacional e internacional, recursos, independência operacional, transparência e salvaguardas contra abusos e interferências. Conheça o JOTA PRO Poder, plataforma de monitoramento que oferece transparência e previsibilidade para empresas A conclusão é preocupante. Muitas UIFs operam sem acesso pleno às informações, com capacidade insuficiente e sob pressões institucionais. O Conselho de Controle de Atividades Financeiras ( Coaf ), a UIF brasileira, ilustra esse cenário porque as condições em que opera limitam seu potencial. Advocacia como brecha no sistema antilavagem brasileiro Dinheiro ilícito não circula apenas por setores financeiros. O relatório mostra que, em quase metade dos países analisados, as obrigações de reporte não abrangem adequadamente setores não financeiros. As lacunas são relevantes em setores como a advocacia, o mercado imobiliário e os prestadores de serviços corporativos. No Brasil, existe uma lacuna estrutural: advogados não estão sujeitos a obrigações abrangentes de prevenção à lavagem nem ao dever de comunicar operações suspeitas ao Coaf. Na prática, ficam fora do grupo de “entidades obrigadas”. O Brasil se aproxima de países como o Canadá, onde uma decisão da Suprema Corte de 2015 isentou a advocacia de reportar à UIF, lacuna classificada pelo Grupo de Ação Financeira Internacional (GAFI) como vulnerabilidade séria. Na França, advogados reportam-se ao presidente da ordem profissional, que filtra e encaminha casos à UIF em até oito dias. O relatório alerta para conflitos de interesse, limitações analíticas e atrasos nessa intermediação. No Brasil, tal debate se arrasta há anos entre argumentos de sigilo profissional e resistências corporativas. O objetivo, porém, não é submeter a defesa ou o aconselhamento jurídico à vigilância indevida, mas impedir que o sigilo blinde operações econômicas de alto risco capazes de ocultar patrimônio ilícito. Projetos de lei no Congresso Nacional já buscaram incluir advogados, sociedades de advocacia ou prestadores de serviços jurídicos entre os sujeitos obrigados pela Lei de Lavagem de Dinheiro , prevendo deveres de identificação de clientes, manutenção de registros, diligência e comunicação de operações suspeitas. Entretanto, pouco avançaram, e várias permanecem apensadas a outras proposições ou sem deliberação conclusiva. A proposta mais recente é o PL 3.019/2026 , que submete determinados serviços advocatícios e de consultoria jurídica ao regime antilavagem, destacando que busca fortalecer, não criminalizar, a profissão. O projeto aguarda despacho no Senado. Inteligência financeira sob contestação Relatórios de inteligência financeira não são prova nem substituem investigações. As UIFs identificam padrões e conexões e encaminham informações às autoridades. O problema surge quando essa inteligência é recebida de forma imprevisível pelo sistema de justiça. Em 2018, relatórios do Coaf contribuíram para investigações sobre corrupção e lavagem de dinheiro, ainda que posteriormente arquivadas. A legalidade de seu compartilhamento, porém, passou a ser questionada judicialmente. Em 2019, o Supremo Tribunal Federal ( STF ) suspendeu temporariamente mais de 900 investigações baseadas em dados do Coaf, gerando críticas do GAFI e do Grupo de Trabalho Antissuborno da Organização para a Cooperação e Desenvolvimento Econômico (WGB/OCDE). Embora o STF depois tenha reafirmado a legalidade do compartilhamento sem autorização judicial prévia, a controvérsia manteve a inteligência financeira sob contestação. Em 2026, uma decisão do STF reafirmou a legalidade desses poderes. O caminho, contudo, foi marcado por decisões de tribunais inferiores (e.g., aqui e aqui ) e decisões individuais no STF (e.g., aqui e aqui ) que alimentaram dúvidas sobre os parâmetros de uso dos relatórios do Coaf. Essa sucessão de (in)decisões criou uma zona de incerteza jurídica que desestimula o uso da inteligência financeira. Se essas informações podem ser contestadas a qualquer momento, qual é o incentivo para investir em casos que dependam delas? O relatório da Transparência Internacional identifica essa dinâmica como um dos principais riscos às UIFs. Ao investigar pessoas politicamente expostas ou interesses poderosos, elas podem sofrer pressões jurídicas, políticas e orçamentárias. O Brasil tornou-se exemplo quase didático desse processo. Recursos insuficientes para avançar Muitas UIFs dispõem de orçamentos e equipes suficientes apenas para funções básicas, sem recursos para acompanhar riscos emergentes, aprofundar análises, lidar com o aumento das comunicações ou ampliar a cooperação internacional via Grupo de Egmont – rede de mais de 180 UIFs voltada ao intercâmbio seguro de informações e à colaboração contra lavagem de dinheiro e financiamento do terrorismo. No Brasil, o Coaf enfrenta crescimento acelerado das comunicações suspeitas, impulsionado por fintechs, ativos digitais, estruturas complexas e transações transfronteiriças. Acompanhar esse ritmo exige capacidade analítica, tecnológica e humana incompatível com orçamento estagnado. Entre os países com dados disponíveis, o Brasil registrou em 2024 o maior volume de comunicações suspeitas por integrante da UIF: mais de 24 mil por servidor. O desafio se agrava diante do crescimento de mais de 700% dessas comunicações entre 2015 e 2024, elevando o risco de o Coaf se tornar apenas um repositório de informações. Há também um problema de continuidade institucional. O Coaf não possui carreira própria e depende de servidores cedidos por outros órgãos, o que pode gerar instabilidade e dificultar a retenção de conhecimento e capacidades de longo prazo. Recomendações do relatório O relatório da Transparência Internacional conclui com recomendações para governos, as próprias UIFs e organismos internacionais. Para o Brasil, uma prioridade seria o fechamento de lacunas no sistema antilavagem, especialmente com a regulação da advocacia e maior atenção a prestadores de serviços corporativos e fiduciários. Segundo, é preciso resolver a incerteza jurídica sobre o uso da inteligência financeira em processos criminais. O problema não está no desenho do Coaf, mas na falta de coerência do sistema de justiça. São necessários parâmetros claros, previsíveis e compatíveis com garantias processuais. Terceiro, reforçar recursos e capacidade operacional, investindo em pessoal, carreira própria, tecnologia, análise estratégica e cooperação internacional. Também cabe avaliar, com cautela e salvaguardas, instrumentos preventivos adicionais quando a movimentação financeira supera a velocidade da resposta institucional. Quarto, garantir que o Coaf funcione com independência em relação a quem ocupa o governo. Uma UIF que produz inteligência sobre atores capazes de constrangê-la precisa de proteções institucionais proporcionais a esse risco. Assine gratuitamente a newsletter Últimas Notícias do JOTA e receba as principais notícias jurídicas e políticas do dia no seu email Fortalecer o Coaf não significa eliminar controles. Sem salvaguardas, a inteligência financeira pode ser usada seletivamente ou para fins políticos. A agenda deve combinar autonomia operacional, regras claras de compartilhamento, confidencialidade, transparência e responsabilização por abusos. As UIFs reúnem informações fragmentadas e revelam conexões que outras autoridades dificilmente identificariam isoladamente. O Brasil já dispõe de uma instituição com capacidade real. Resta decidir se vamos fortalecê-la ou continuar desperdiçando seu potencial.",
-      "source_category": "politics",
-      "sentiment_per_candidate": {},
-      "edit_history": [],
-      "disclaimer_pt": "Análise algorítmica. Não representa pesquisa de opinião.",
-      "disclaimer_en": "Algorithmic analysis. Does not represent polling data.",
-      "sentiment_score": 0.0,
-      "confidence_score": 0.0,
-      "_sentiment_scores": {},
-      "prominence_score": 0.0
+      "prominence_score": 0.0,
+      "_ai_provider": "nvidia",
+      "_ai_model": "nvidia/nemotron-3-super-120b-a12b",
+      "ai_provider_editor": "nvidia/nemotron-3-super-120b-a12b",
+      "editor_note": null
     },
     {
       "id": "df8fd95e6efcd3ef",
@@ -1210,7 +1164,10 @@
       },
       "content": "Com a confirmação de sua candidatura ao Senado pelo Distrito Federal nas eleições de 2026, Michelle Bolsonaro (PL), mulher do ex-presidente Jair Bolsonaro, tornou-se a segunda ex-primeira-dama da República a concorrer a um cargo eletivo. Antes dela, apenas Rosane Malta, conhecida anteriormente como Rosane Collor e ex-mulher do ex-presidente Fernando Collor de Mello, havia disputado uma eleição. Esquerda, direita ou centro? Teste indica sua posição política Quaest presidencial: Lula lidera cenários de 2º turno, mas tem empate técnico com Flávio Bolsonaro Em 2018, Rosane candidatou-se a deputada estadual por Alagoas pelo Partido Humanista da Solidariedade (PHS), mas não foi eleita. Na ocasião, após anos usando apenas Malta, seu sobrenome de solteira, optou por adotar o nome Rosane Collor durante a campanha. Em entrevistas concedidas à época, explicou que tomou a decisão por ser “mais conhecida como Rosane Collor do que Rosane Malta”. Ela recebeu 463 votos, 359 deles em Maceió, capital alagoana. À época do pleito, já estava separada de Collor havia cerca de 13 anos, desde o divórcio do casal, em 2005. Santinho da campanha da ex-primeira-dama Rosane Malta nas eleições de 2018. Divulgação Michelle pode, portanto, ser considerada a primeira ex-primeira-dama do Brasil a disputar uma eleição ainda casada com um ex-presidente da República. No sábado, dia 15, último dia do prazo legal para o registro de candidaturas, a mulher de Jair Bolsonaro declarou à Justiça Eleitoral patrimônio de R$ 4,49 milhões. Segundo dados disponíveis no site do Tribunal Superior Eleitoral (TSE), Michelle informou possuir R$ 4,15 milhões em uma aplicação financeira, R$ 301,6 mil em um fundo de investimento e um Volkswagen Fusca avaliado em R$ 30 mil. O patrimônio declarado totaliza R$ 4.486.170,75.",
       "source_category": "mainstream",
-      "sentiment_per_candidate": {},
+      "sentiment_per_candidate": {
+        "lula": "positivo",
+        "flavio-bolsonaro": "neutro"
+      },
       "edit_history": [
         {
           "tier": "editor",
@@ -1225,9 +1182,12 @@
       ],
       "disclaimer_pt": "Análise algorítmica. Não representa pesquisa de opinião.",
       "disclaimer_en": "Algorithmic analysis. Does not represent polling data.",
-      "sentiment_score": 0.0,
+      "sentiment_score": 0.05,
       "confidence_score": 1.0,
-      "_sentiment_scores": {},
+      "_sentiment_scores": {
+        "lula": 0.2,
+        "flavio-bolsonaro": -0.1
+      },
       "prominence_score": 0.0,
       "_ai_provider": "nvidia",
       "_ai_model": "nvidia/nemotron-3-super-120b-a12b",
@@ -32392,6 +32352,6 @@
       "editor_note": null
     }
   ],
-  "last_updated": "2026-08-18T08:45:29Z",
-  "total_count": 500
+  "last_updated": "2026-08-18T09:06:28Z",
+  "total_count": 492
 }
