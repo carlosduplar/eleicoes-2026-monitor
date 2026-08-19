@@ -24,11 +24,15 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 
 ### Changed
 
+- AI provider chain updated with 2026 releases based on Artificial Analysis live benchmarks:
+  - Quiz & position extraction (`positions_extract`, `quiz_generate`, `quiz_extract`, `quiz_validate`): `z-ai/glm-5.2` (NVIDIA NIM) -> `minimax-m3:cloud` (Ollama) -> `minimaxai/minimax-m3` (NVIDIA NIM) -> `gemini-3.7-flash` (Vertex AI).
+  - Ingestion & sentiment (`summarization`, `sentiment`, `multilingual`): `nvidia/nemotron-3-ultra-550b-a55b` (NVIDIA NIM) -> `nvidia/nemotron-3-super-120b-a12b` (NVIDIA NIM) -> `nemotron-3-ultra:cloud` (Ollama) -> `minimax-m3:cloud` (Ollama) -> `gemini-3.7-flash` (Google AI Studio) -> `gemini-3.7-flash` (Vertex AI) -> `mimo-v2.5` (Xiaomi MiMo).
+  - High Reasoning enabled natively on flagship models with `thinkingBudget: 2048` and `maxOutputTokens: 4096` on Vertex AI.
+  - Purged all deprecated Moonshot Kimi endpoints (`moonshotai/kimi-k2.6`, `kimi-k2.5`).
+  - Expanded `max_tokens` budgets across all task callers to ensure chain-of-thought tokens never starve structured JSON outputs.
 - `scripts/curate.py` now implements full Editor-chefe curation flow: prominence scoring, `validated` -> `curated` promotion, `curated_feed.json` + `weekly_briefing.json` generation, quiz refresh trigger, and 90-minute cadence gate.
 - `.github/workflows/curate.yml` now stages `data/articles.json` so curation promotions persist across runs.
 - `.github/workflows/collect.yml` now executes `summarize.py` and `analyze_sentiment.py` directly (without legacy stub fallbacks), matching Phase 06 behavior.
-- AI provider chain restructured: high-quality tasks (positions_extract, quiz_generate, quiz_extract, quiz_validate) now use Ollama Cloud (Kimi K2.5) -> NVIDIA NIM (MiniMax M2.5) -> Vertex AI. Default tasks use NVIDIA NIM (Nemotron 3 Super) -> Ollama Cloud -> Gemini 3.1 Flash Lite (free tier) -> Vertex AI -> MiMo. Gemini removed from high-quality chains; Vertex remains as paid fallback across all tasks.
-- `scripts/ai_client.py`: default Gemini model updated to `gemini-3.1-flash-lite-preview` for higher free-tier limits.
 - `site/package.json`: updated `vite-ssg` and `@unhead/dom` to resolve dependabot XSS vulnerability alerts.
 - Candidate-position topic taxonomy now removes `eleicoes` and renames foreign policy from `politica_ext` to `politica_externa` across scripts, schemas, and public data.
 

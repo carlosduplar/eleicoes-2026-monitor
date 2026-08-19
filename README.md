@@ -57,8 +57,8 @@ Publication states are explicit in the data: `raw -> validated -> curated`, plus
 
 - Independent project with no party affiliation or electoral funding; methodology, limitations, and error reporting are part of the product surface.
 - Newsroom-style pipeline with three automated roles: `Foca` (collection), `Editor` (validation/summarization), and `Editor-chefe` (curation/prominence).
-- AI fallback chain (default tasks): NVIDIA NIM (Nemotron 3 Super) -> Ollama Cloud (Nemotron 3 Super) -> Gemini 3.1 Flash Lite (free tier) -> Vertex AI (Gemini 3 Flash Preview) -> MiMo V2 Flash.
-- AI fallback chain (high-quality tasks — quiz/positions): Ollama Cloud (Kimi K2.5) -> NVIDIA NIM (MiniMax M2.5) -> Vertex AI (Gemini 3 Flash Preview).
+- AI fallback chain (default tasks): NVIDIA NIM (Nemotron 3 Ultra 550B, High Reasoning) -> NVIDIA NIM (Nemotron 3 Super 120B) -> Ollama Cloud (Nemotron 3 Ultra) -> Ollama Cloud (MiniMax M3) -> Gemini 3.7 Flash (free tier) -> Vertex AI (Gemini 3.7 Flash) -> MiMo V2.5.
+- AI fallback chain (high-quality tasks — quiz/positions): NVIDIA NIM (GLM-5.2, High Reasoning) -> Ollama Cloud (MiniMax M3) -> NVIDIA NIM (MiniMax M3) -> Vertex AI (Gemini 3.7 Flash).
 - Circuit breaker and per-run AI call limits keep the pipeline running when providers degrade instead of failing closed.
 - Editorial feedback is self-healing: blocked keywords, URLs, sources, and `irrelevant` article IDs are accumulated in `data/editor_feedback.json`.
 - The public quiz only reveals sources in the result view, never during the questions.
