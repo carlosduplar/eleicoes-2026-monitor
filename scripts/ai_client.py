@@ -84,31 +84,29 @@ MARKDOWN_JSON_SEARCH_RE = re.compile(
 )
 
 # These NVIDIA models run in "thinking" mode by default and surface the chain-of-thought
-# in `reasoning_content` while leaving `content` empty. For JSON tasks we MUST disable
-# thinking so the final answer arrives in `content`.
+# in `reasoning_content` while leaving `content` empty. For JSON tasks where thinking is
+# explicitly suppressed, add them here. Flagship models use native high reasoning.
 _THINKING_DISABLE_EXTRA_BODY: dict[str, dict[str, object]] = {
     "qwen/qwen3-235b-a22b-thinking-2507": {
         "chat_template_kwargs": {"enable_thinking": False}
     },
     "qwen/qwen3.5-397b-a17b": {"chat_template_kwargs": {"enable_thinking": False}},
-    "nvidia/nemotron-3-super-120b-a12b": {
-        "chat_template_kwargs": {"enable_thinking": False}
-    },
-    "moonshotai/kimi-k2.6": {"thinking": {"type": "disabled"}},
-    "minimaxai/minimax-m2.7": {"thinking": {"type": "disabled"}},
 }
 
 NVIDIA_MODELS: dict[str, str] = {
-    "summarization": "nvidia/nemotron-3-super-120b-a12b",
-    "sentiment": "nvidia/nemotron-3-super-120b-a12b",
-    "multilingual": "nvidia/nemotron-3-super-120b-a12b",
-    "quiz_extract": "minimaxai/minimax-m2.7",
+    "summarization": "nvidia/nemotron-3-ultra-550b-a55b",
+    "sentiment": "nvidia/nemotron-3-ultra-550b-a55b",
+    "multilingual": "nvidia/nemotron-3-ultra-550b-a55b",
+    "quiz_extract": "z-ai/glm-5.2",
 }
 
-NVIDIA_FALLBACKS: list[str] = []
+NVIDIA_FALLBACKS: list[str] = [
+    "nvidia/nemotron-3-super-120b-a12b",
+]
 
 OLLAMA_MODELS: list[str] = [
-    "nemotron-3-super:cloud",
+    "nemotron-3-ultra:cloud",
+    "minimax-m3:cloud",
 ]
 
 
@@ -141,14 +139,14 @@ def _get_gemini_model(task: str) -> str:
     override = os.environ.get("GEMINI_MODEL_OVERRIDE")
     if override:
         return override
-    return "gemini-3.1-flash-lite-preview"
+    return "gemini-3.7-flash"
 
 
 def _get_vertex_model(task: str) -> str:
     override = os.environ.get("VERTEX_MODEL_OVERRIDE")
     if override:
         return override
-    return "gemini-3-flash-preview"
+    return "gemini-3.7-flash"
 
 
 def _provider_chain_for_task(task: str) -> list[ProviderConfig]:
@@ -158,21 +156,21 @@ def _provider_chain_for_task(task: str) -> list[ProviderConfig]:
                 "name": "nvidia",
                 "base_url": "https://integrate.api.nvidia.com/v1",
                 "key_env": "NVIDIA_API_KEY",
-                "model": "moonshotai/kimi-k2.6",
+                "model": "z-ai/glm-5.2",
                 "paid": False,
             },
             {
                 "name": "ollama",
                 "base_url": "https://ollama.com/v1",
                 "key_env": "OLLAMA_API_KEY",
-                "model": "minimax-m2.7:cloud",
+                "model": "minimax-m3:cloud",
                 "paid": False,
             },
             {
                 "name": "nvidia",
                 "base_url": "https://integrate.api.nvidia.com/v1",
                 "key_env": "NVIDIA_API_KEY",
-                "model": "minimaxai/minimax-m2.7",
+                "model": "minimaxai/minimax-m3",
                 "paid": False,
             },
             {
@@ -190,21 +188,21 @@ def _provider_chain_for_task(task: str) -> list[ProviderConfig]:
                 "name": "nvidia",
                 "base_url": "https://integrate.api.nvidia.com/v1",
                 "key_env": "NVIDIA_API_KEY",
-                "model": "moonshotai/kimi-k2.6",
+                "model": "z-ai/glm-5.2",
                 "paid": False,
             },
             {
                 "name": "ollama",
                 "base_url": "https://ollama.com/v1",
                 "key_env": "OLLAMA_API_KEY",
-                "model": "minimax-m2.7:cloud",
+                "model": "minimax-m3:cloud",
                 "paid": False,
             },
             {
                 "name": "nvidia",
                 "base_url": "https://integrate.api.nvidia.com/v1",
                 "key_env": "NVIDIA_API_KEY",
-                "model": "minimaxai/minimax-m2.7",
+                "model": "minimaxai/minimax-m3",
                 "paid": False,
             },
             {
@@ -259,7 +257,7 @@ def _provider_chain_for_task(task: str) -> list[ProviderConfig]:
             "name": "mimo",
             "base_url": "https://api.xiaomimimo.com/v1",
             "key_env": "XIAOMI_MIMO_API_KEY",
-            "model": "mimo-v2-flash",
+            "model": "mimo-v2.5",
             "paid": True,
         },
     ]
@@ -410,8 +408,8 @@ def _request_completion(
         data = {
             "contents": [{"role": "user", "parts": [{"text": f"{system}\n\n{user}"}]}],
             "generationConfig": {
-                "maxOutputTokens": max_tokens,
-                "thinkingConfig": {"thinkingBudget": 0},
+                "maxOutputTokens": max(max_tokens, 4096),
+                "thinkingConfig": {"thinkingBudget": 2048},
                 "responseMimeType": "application/json",
             },
         }
@@ -493,14 +491,10 @@ def _request_completion(
     }
     # Web evidence is supplied upstream via Source F (Brave Search) in
     # seed_candidates_positions.py.
-    # Disable thinking mode for NVIDIA thinking models so the answer lands in
-    # `content` as clean JSON rather than being buried in `reasoning_content`.
     if provider.get("name") == "nvidia":
         disable_body = _THINKING_DISABLE_EXTRA_BODY.get(provider.get("model", ""))
         if disable_body:
             kwargs["extra_body"] = disable_body
-    elif provider.get("name") == "ollama":
-        kwargs["extra_body"] = {"think": False}
     elif provider.get("name") == "mimo":
         kwargs["extra_body"] = {"thinking": {"type": "disabled"}}
 
@@ -934,7 +928,7 @@ Retorne JSON:
     response = _call_with_fallback_for_task(
         system=system,
         user=user,
-        max_tokens=450,
+        max_tokens=1500,
         task="multilingual",
     )
 
@@ -1038,7 +1032,7 @@ Retorne JSON:
     response = _call_with_fallback_for_task(
         system=system,
         user=user,
-        max_tokens=350,
+        max_tokens=1200,
         task="quiz_extract",
     )
 
@@ -1061,7 +1055,7 @@ Retorne JSON:
                 response = _call_with_fallback_for_task(
                     system=system,
                     user=retry_user,
-                    max_tokens=350,
+                    max_tokens=1200,
                     task="quiz_extract",
                 )
                 continue
@@ -1153,7 +1147,7 @@ Return JSON:
     response = _call_with_fallback_for_task(
         system=system,
         user=user,
-        max_tokens=900,
+        max_tokens=2500,
         task="positions_extract",
     )
 
@@ -1173,7 +1167,7 @@ Return JSON:
         response = _call_with_fallback_for_task(
             system=system,
             user=retry_user,
-            max_tokens=900,
+            max_tokens=2500,
             task="positions_extract",
         )
         try:
@@ -1323,7 +1317,7 @@ Return JSON array:
     response = _call_with_fallback_for_task(
         system=system,
         user=user,
-        max_tokens=900,
+        max_tokens=2500,
         task="quiz_generate",
     )
 
@@ -1426,7 +1420,7 @@ Return JSON:
     response = _call_with_fallback_for_task(
         system=system,
         user=user,
-        max_tokens=250,
+        max_tokens=1000,
         task="quiz_validate",
     )
     try:
