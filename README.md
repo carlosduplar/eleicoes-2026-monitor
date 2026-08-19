@@ -53,6 +53,19 @@ Sources (21 RSS, 8 party sites, 10 polling institutes, YouTube)
 
 Publication states are explicit in the data: `raw -> validated -> curated`, plus `irrelevant` for items automatically filtered out of the public feed.
 
+## CI execution and scraping fallbacks
+
+The scheduled `collect.yml` and `validate.yml` jobs are tuned for GitHub-hosted runners:
+
+- Both workflows use a shallow checkout (`fetch-depth: 1`) because they only need the current tree and the latest remote state before publishing.
+- Bright Data Web Unlocker is the primary HTML fetcher for article and poll collection. The workflow probe uses the same REST endpoint and zone as production and is informational only, so a transient probe failure cannot trigger a long browser-install step.
+- Playwright is a fallback only. Article and poll collectors launch the runner's preinstalled Google Chrome (`channel: "chrome"`) lazily, only after Bright Data fails. GitHub Actions no longer downloads a Playwright browser bundle on every run.
+- AI requests have a 45-second client timeout with SDK retries disabled; the provider fallback chain can take over instead of waiting through repeated long-tail retries.
+
+The workflows still share the `repo-write-${{ github.ref }}` concurrency group with the other data-writing jobs. This protects commits but can queue an entire job; moving the lock to a short commit-only job would require a separate artifact/merge design.
+
+For local browser tests, install the Python Playwright browser explicitly with `python -m playwright install chromium`. The CI fallback uses system Chrome and does not depend on that download.
+
 ## Methodology and use case highlights / Metodologia e caso de uso
 
 - Independent project with no party affiliation or electoral funding; methodology, limitations, and error reporting are part of the product surface.

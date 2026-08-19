@@ -108,7 +108,10 @@ def test_idempotent_double_run(isolated_workspace: dict[str, Path], monkeypatch:
             return None
 
     class FakeChromium:
-        async def launch(self, headless: bool = True) -> FakeBrowser:
+        async def launch(
+            self, headless: bool = True, channel: str | None = None
+        ) -> FakeBrowser:
+            del channel
             return FakeBrowser()
 
     class FakePlaywright:
@@ -158,7 +161,10 @@ def test_institute_failure_does_not_crash(isolated_workspace: dict[str, Path], m
             return None
 
     class FakeChromium:
-        async def launch(self, headless: bool = True) -> FakeBrowser:
+        async def launch(
+            self, headless: bool = True, channel: str | None = None
+        ) -> FakeBrowser:
+            del channel
             return FakeBrowser()
 
     class FakePlaywright:

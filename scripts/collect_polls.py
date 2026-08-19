@@ -13,6 +13,7 @@ from hashlib import sha256
 from pathlib import Path
 from typing import Any, Literal, NotRequired, TypedDict
 
+import requests
 from playwright.async_api import Browser, Page, async_playwright
 
 BRIGHTDATA_ZONE = os.environ.get("BRIGHTDATA_ZONE", "web_unlocker1")
@@ -523,41 +524,27 @@ async def extract_poll_payload(page: Page, source: PollSource) -> PollItem | Non
 
 
 def _fetch_url_brightdata(url: str, api_key: str = "") -> str:
-    """Fetch URL via Bright Data CLI. Returns raw HTML."""
-    import subprocess
-    import tempfile
-    import os
-
-    brightdata_cmd = os.path.expandvars(r"%APPDATA%\npm\brightdata.cmd")
-
+    """Fetch URL through Bright Data's Web Unlocker API."""
+    response = requests.post(
+        "https://api.brightdata.com/request",
+        headers={
+            "Authorization": f"Bearer {api_key.strip()}",
+            "Content-Type": "application/json",
+        },
+        json={"zone": BRIGHTDATA_ZONE.strip(), "url": url, "format": "raw"},
+        timeout=REQUEST_TIMEOUT_SECONDS,
+    )
+    if response.status_code != 200:
+        raise RuntimeError(
+            f"BrightData API error: {response.status_code} - {response.text[:500]}"
+        )
     try:
-        with tempfile.NamedTemporaryFile(
-            mode="w+", suffix=".html", delete=False
-        ) as tmp:
-            tmp_path = tmp.name
-
-        result = subprocess.run(
-            [brightdata_cmd, "scrape", url, "--format", "raw", "-o", tmp_path],
-            capture_output=True,
-            text=True,
-            timeout=60,
-            shell=True,
-        )
-
-        if result.returncode != 0:
-            os.unlink(tmp_path)
-            raise Exception(f"BrightData CLI error: {result.stderr}")
-
-        with open(tmp_path, "r", encoding="utf-8") as f:
-            html = f.read()
-
-        os.unlink(tmp_path)
-        return html
-
-    except FileNotFoundError:
-        raise Exception(
-            "Bright Data CLI not installed. Run: npm install -g @brightdata/cli"
-        )
+        payload = response.json()
+        if isinstance(payload, dict) and payload.get("error"):
+            raise RuntimeError(f"BrightData API error: {payload['error']}")
+    except ValueError:
+        pass
+    return response.text
 
 
 async def scrape_source(
@@ -570,20 +557,6 @@ async def scrape_source(
             source["url"], timeout=timeout_ms, wait_until="domcontentloaded"
         )
         return await extract_poll_payload(page, source)
-    except Exception as exc:
-        brightdata_key = os.environ.get("BRIGHTDATA_API_KEY", "").strip()
-        if brightdata_key:
-            logger.info("Playwright failed for %s, trying Bright Data", source["name"])
-            try:
-                html = _fetch_url_brightdata(source["url"], brightdata_key)
-                logger.info(
-                    "Bright Data returned %d chars for %s", len(html), source["name"]
-                )
-                return await extract_poll_payload_from_html(html, source)
-            except Exception as bd_exc:
-                logger.warning("Bright Data also failed: %s", bd_exc)
-                raise exc
-        raise
     finally:
         await page.close()
 
@@ -687,42 +660,6 @@ async def extract_candidates_from_tables_html(soup) -> list[PollResultItem]:
             "percentage": percentage,
         }
     return list(found.values())
-
-
-async def collect_polls_async() -> tuple[int, int, int]:
-    sources = load_active_poll_sources()
-    document = load_polls_document()
-    incoming: list[PollItem] = []
-    errors = 0
-
-    async with async_playwright() as playwright:
-        browser = await playwright.chromium.launch(headless=True)
-        try:
-            for source in sources:
-                try:
-                    poll = await scrape_source(browser, source, timeout_ms=30000)
-                except Exception as exc:
-                    errors += 1
-                    append_pipeline_error(
-                        institute=source["name"],
-                        source_url=source["url"],
-                        message=str(exc),
-                    )
-                    continue
-                if poll is not None:
-                    incoming.append(poll)
-        finally:
-            await browser.close()
-
-    merged, new_count = deduplicate_by_id(document.polls, incoming)
-    document.polls = merged
-    if new_count > 0 or not POLLS_FILE.exists():
-        save_polls_document(document)
-    return new_count, len(sources), errors
-
-
-def collect_polls() -> tuple[int, int, int]:
-    return asyncio.run(collect_polls_async())
 
 
 ARTICLES_FILE = ROOT_DIR / "site" / "public" / "data" / "articles.json"
@@ -838,12 +775,30 @@ async def collect_polls_async() -> tuple[int, int, int]:
     incoming: list[PollItem] = []
     errors = 0
 
+    brightdata_key = os.environ.get("BRIGHTDATA_API_KEY", "").strip()
+    browser: Browser | None = None
+
     async with async_playwright() as playwright:
-        browser = await playwright.chromium.launch(headless=True)
         try:
             for source in sources:
                 try:
-                    poll = await scrape_source(browser, source, timeout_ms=30000)
+                    poll: PollItem | None = None
+                    if brightdata_key:
+                        try:
+                            html = _fetch_url_brightdata(source["url"], brightdata_key)
+                            poll = await extract_poll_payload_from_html(html, source)
+                        except Exception as exc:
+                            logger.warning(
+                                "Bright Data failed for %s: %s", source["name"], exc
+                            )
+
+                    if poll is None:
+                        if browser is None:
+                            browser = await playwright.chromium.launch(
+                                channel="chrome", headless=True
+                            )
+                            logger.info("System Chrome ready as poll fallback")
+                        poll = await scrape_source(browser, source, timeout_ms=30000)
                 except Exception as exc:
                     errors += 1
                     append_pipeline_error(
@@ -855,7 +810,8 @@ async def collect_polls_async() -> tuple[int, int, int]:
                 if poll is not None:
                     incoming.append(poll)
         finally:
-            await browser.close()
+            if browser is not None:
+                await browser.close()
 
     merged, new_count = deduplicate_by_id(document.polls, incoming)
     document.polls = merged

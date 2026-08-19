@@ -208,6 +208,19 @@ Esta seção documenta o que não funcionou como esperado após a entrega inicia
 
 **Lição:** A evolução dos LLMs exige reavaliação periódica baseada em benchmarks independentes de inteligência, velocidade e custo por milhão de tokens, ajustando orçamentos de raciocínio para payloads JSON.
 
+### 2026-08-19 -- CI/CD: coleta prioritária via Bright Data e fallback de navegador
+
+**O que aconteceu:** Nas execuções recentes de `collect.yml`, a maior parte do tempo e das falhas ficava em `Install Playwright Chromium (fallback only)`. A checagem de disponibilidade não reproduzia o caminho de produção: uma falha do `curl` podia virar `200000`, o arquivo de resposta não existia e um resultado transitório acionava uma instalação de navegador de mais de 20 minutos mesmo quando o Bright Data estava funcionando. A coleta de pesquisas também tinha a ordem de fallback invertida e usava um caminho de CLI exclusivo do Windows.
+
+**O que fizemos:**
+- Substituímos o probe em shell por `requests.post` direto para o endpoint Web Unlocker do Bright Data, usando a zona configurada e uma URL de teste. O probe informa saúde, mas nunca bloqueia o pipeline.
+- Removemos `playwright install chromium --with-deps` de cada execução. A coleta de artigos e pesquisas agora inicia preguiçosamente o Chrome já instalado no runner Ubuntu (`channel="chrome"`) apenas quando o Bright Data falha.
+- Tornamos Bright Data o caminho primário para pesquisas e removemos o fallback de CLI exclusivo do Windows.
+- Alteramos os checkouts de collect e validate para `fetch-depth: 1` e limitamos chamadas OpenAI-compatíveis a 45 segundos, desativando retries automáticos do SDK.
+- Atualizamos os doubles dos testes do coletor de pesquisas para aceitar o canal opcional do Chrome.
+
+**Lição:** Um fallback só é útil quando sua checagem de saúde, formato de requisição e caminho de execução são equivalentes à produção. Probes devem ser observacionais; browsers fornecidos pelo runner devem ser preferidos quando disponíveis; e a latência de APIs externas precisa de limite para que um provedor não consuma todo o orçamento do CI.
+
 ---
 
 ## Números do projeto

@@ -36,7 +36,7 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v6
         with:
-          fetch-depth: 0
+          fetch-depth: 1
 
       - name: Setup Python
         uses: actions/setup-python@v6
@@ -54,29 +54,47 @@ jobs:
           git pull --rebase --autostash origin master || (git rebase --abort && echo "Pull failed, continuing with current state")
 
       - name: Check Bright Data availability
-        id: brightdata-check
         run: |
-          response=$(curl -s -w "%{http_code}" -o /tmp/bd_check.json -X POST "https://api.brightdata.com/request" \
-            -H "Authorization: Bearer ${BRIGHTDATA_API_KEY}" \
-            -H "Content-Type: application/json" \
-            -d '{"zone": "'${BRIGHTDATA_ZONE}'", "url": "https://example.com", "format": "raw"}' \
-            --max-time 30 || echo "000")
-          
-          if [[ "$response" == "200" ]]; then
-            echo "available=true" >> $GITHUB_OUTPUT
-            echo "Bright Data is available"
-          elif [[ "$response" == "429" ]]; then
-            echo "available=false" >> $GITHUB_OUTPUT
-            echo "Bright Data is rate-limited"
-          else
-            code=$(cat /tmp/bd_check.json | python -c "import sys,json; d=json.load(sys.stdin); print(d.get('error','unknown'))" 2>/dev/null || echo "unknown")
-            echo "available=false" >> $GITHUB_OUTPUT
-            echo "Bright Data unavailable: HTTP $response, error: $code"
-          fi
+          python - <<'PY'
+          import os
+          import requests
 
-      - name: Install Playwright Chromium (fallback only)
-        if: steps.brightdata-check.outputs.available != 'true'
-        run: playwright install chromium --with-deps
+          api_key = os.environ.get("BRIGHTDATA_API_KEY", "").strip()
+          zone = os.environ.get("BRIGHTDATA_ZONE", "").strip()
+          if not api_key or not zone:
+              print("Bright Data probe skipped: credentials are not configured")
+              raise SystemExit(0)
+
+          try:
+              response = requests.post(
+                  "https://api.brightdata.com/request",
+                  headers={
+                      "Authorization": f"Bearer {api_key}",
+                      "Content-Type": "application/json",
+                  },
+                  json={
+                      "zone": zone,
+                      "url": "https://geo.brdtest.com/welcome.txt",
+                      "format": "raw",
+                  },
+                  timeout=30,
+              )
+              status = response.status_code
+              if status == 200:
+                  message = "Bright Data is available"
+              elif status == 429:
+                  message = "Bright Data is rate-limited"
+              else:
+                  try:
+                      detail = response.json().get("error", "unknown")
+                  except (ValueError, AttributeError):
+                      detail = "unknown"
+                  message = f"Bright Data unavailable: HTTP {status}, error: {detail}"
+          except requests.RequestException as exc:
+              message = f"Bright Data probe failed: {type(exc).__name__}"
+
+          print(message)
+          PY
 
       - name: Sync editorial feedback
         run: python scripts/sync_editor_feedback.py

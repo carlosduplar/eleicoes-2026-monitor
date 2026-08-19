@@ -31,6 +31,7 @@ USAGE_FILE = ROOT_DIR / "site" / "public" / "data" / "ai_usage.json"
 _CIRCUIT_BREAKER_THRESHOLD = 3
 _provider_failure_counts: dict[str, int] = {}
 _circuit_breaker_lock = threading.Lock()
+_AI_REQUEST_TIMEOUT_SECONDS = 45.0
 
 # Seconds to sleep before retrying a 429 response from any provider.
 _RATE_LIMIT_RETRY_SLEEP = 12
@@ -466,6 +467,8 @@ def _request_completion(
     client_kwargs: dict[str, object] = {
         "api_key": api_key,
         "base_url": provider["base_url"],
+        "timeout": _AI_REQUEST_TIMEOUT_SECONDS,
+        "max_retries": 0,
     }
 
     default_headers: dict[str, str] = {}
