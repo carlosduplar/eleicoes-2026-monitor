@@ -145,12 +145,19 @@ def _make_playwright_fetcher() -> tuple[Any, Any]:
         from playwright.sync_api import sync_playwright  # type: ignore[import]
 
         pw = sync_playwright().start()
-        browser = pw.chromium.launch(headless=True)
-        context = browser.new_context(user_agent=USER_AGENT)
-        logger.info("Playwright browser ready as fallback")
+        browser: Any = None
+        context: Any = None
+
+        def ensure_context() -> Any:
+            nonlocal browser, context
+            if context is None:
+                browser = pw.chromium.launch(channel="chrome", headless=True)
+                context = browser.new_context(user_agent=USER_AGENT)
+                logger.info("System Chrome ready as fallback")
+            return context
 
         def fetch(url: str) -> str:
-            page = context.new_page()
+            page = ensure_context().new_page()
             try:
                 page.goto(
                     url,
@@ -162,9 +169,13 @@ def _make_playwright_fetcher() -> tuple[Any, Any]:
                 page.close()
 
         def close() -> None:
-            context.close()
-            browser.close()
-            pw.stop()
+            try:
+                if context is not None:
+                    context.close()
+                if browser is not None:
+                    browser.close()
+            finally:
+                pw.stop()
 
         return fetch, close
     except Exception as exc:

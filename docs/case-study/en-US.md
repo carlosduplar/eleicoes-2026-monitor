@@ -208,6 +208,19 @@ This section documents what did not work as expected after the initial 1.0 deliv
 
 **Lesson:** Fast-moving AI models demand regular auditing against independent benchmarks for intelligence, speed, and cost per million tokens, carefully tuning token reasoning budgets for structured tasks.
 
+### 2026-08-19 -- CI/CD: Bright Data-first collection and browser fallback hardening
+
+**What happened:** Recent `collect.yml` runs spent most of their failure budget in `Install Playwright Chromium (fallback only)`. The availability check was not equivalent to the production fetch path: a shell `curl` failure could be rendered as `200000`, the response file was absent, and a transient probe result enabled a 20+ minute browser installation even when Bright Data itself was working. Poll collection also had its fallback order reversed and used a Windows-only Bright Data CLI path.
+
+**What we did:**
+- Replaced the shell probe with a direct Python `requests.post` to Bright Data's Web Unlocker endpoint, using the configured zone and a test URL. The probe reports health but never gates the pipeline.
+- Removed the per-run `playwright install chromium --with-deps` step. Article and poll scraping now launch the Ubuntu runner's preinstalled Chrome lazily (`channel="chrome"`) only when Bright Data fails.
+- Made poll collection Bright Data-first and removed the Windows-only CLI fallback.
+- Changed both collect and validate checkouts to `fetch-depth: 1` and capped OpenAI-compatible client requests at 45 seconds with automatic SDK retries disabled.
+- Updated poll collector test doubles for the optional Chrome channel.
+
+**Lesson:** A fallback is only useful when its health check, request format, and runtime path are identical to production. Keep probes observational, prefer runner-provided browsers when available, and bound external API latency so one provider cannot consume the whole CI budget.
+
 ---
 
 ## Project numbers
@@ -230,4 +243,3 @@ These numbers are not marketing decoration; they demonstrate that the system was
 The portal is live and operating continuously. The AI provider chain has been reordered based on empirical reliability data. Content quality has improved through the editorial feedback loop. CI/CD race conditions are managed but not fully eliminated. The system processes hundreds of articles daily across 21 RSS sources, 8 party websites, 10 polling institutes, and YouTube, with automated bilingual summarization, sentiment analysis, and quiz position extraction.
 
 The next focus areas are monitoring long-term provider stability, expanding editorial feedback rules, and evaluating whether the Vertex AI Search integration (Phase 17) delivers measurable user value.
-
