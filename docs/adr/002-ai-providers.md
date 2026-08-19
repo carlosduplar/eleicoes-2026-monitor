@@ -3,7 +3,7 @@
 **Status:** Aceito  
 **Data:** 2026-03-06  
 **Decisor:** Opus 4.6 (Arquiteto)  
-**Atualizado:** 2026-03-21 - Gemini removido de tarefas de alta qualidade; Gemini 3.1 Flash Lite como fallback gratuito na cadeia padrao; seed de candidatos adicionado
+**Atualizado:** 2026-08-19 - Modelos atualizados com benchmarks do Artificial Analysis; GLM-5.2 primário para Quiz/Posições no NVIDIA NIM; MiniMax-M3 no Ollama e NVIDIA; Gemini 3.7 Flash no Google/Vertex; Nemotron 3 Ultra 550B no Ingestion; Kimi removido; Alto Raciocínio (High Reasoning) habilitado.
 
 ## Contexto
 
@@ -11,60 +11,38 @@ O pipeline precisa de modelos de linguagem para sumarizacao, analise de sentimen
 
 ## Decisao
 
-Cadeia de fallback hierarquica: gratuitos primeiro, pagos como ultimo recurso.
+Cadeia de fallback hierarquica com Alto Raciocinio (High Reasoning) habilitado para maxima fidelidade ideologica e precisao em JSON estruturado: gratuitos primeiro, pagos como ultimo recurso.
 
-## Cadeia de Providers
+## Cadeia de Providers por Tarefa
 
-| Prioridade | Provider | base_url | Modelo | Custo | Limite |
-|-----------|----------|----------|--------|-------|--------|
-| 1a | NVIDIA NIM (primary) | `https://integrate.api.nvidia.com/v1` | `moonshotai/kimi-k2.5` | Gratuito | Creditos dev |
-| 1b | NVIDIA NIM (fallback 1) | `https://integrate.api.nvidia.com/v1` | `minimaxai/minimax-m2.5` | Gratuito | Creditos dev |
-| 1c | NVIDIA NIM (fallback 2) | `https://integrate.api.nvidia.com/v1` | `nvidia/nemotron-3-super-120b-a12b` | Gratuito | Creditos dev |
-| 2a | Ollama Cloud (primary) | `https://ollama.com/v1` | `kimi-k2.5:cloud` | Gratuito | Limites horarios |
-| 2b | Ollama Cloud (fallback 1) | `https://ollama.com/v1` | `minimax-m2.5:cloud` | Gratuito | Limites horarios |
-| 2c | Ollama Cloud (fallback 2) | `https://ollama.com/v1` | `nemotron-3-super:cloud` | Gratuito | Limites horarios |
-| 3 | OpenRouter | `https://openrouter.ai/api/v1` | `nvidia/nemotron-3-super-120b-a12b:free` | Gratuito | 200 req/dia |
-| 4 | Vertex AI | env `VERTEX_BASE_URL` | `gemini-3-flash-preview` (override via `VERTEX_MODEL_OVERRIDE`) | $10/mes (AI Pro) | Budget cap |
-| 5 | MiMo | `https://api.xiaomimimo.com/v1` | `mimo-v2-flash` | Pago | Sem limite fixo |
+### Quiz, Posições e Validação (`positions_extract`, `quiz_generate`, `quiz_validate`)
 
-## Selecao de Modelo por Tarefa (NVIDIA NIM)
+| Prioridade | Provider | base_url | Modelo | Modo Raciocínio | AA Intel Index | Custo |
+|---|---|---|---|---|---|---|
+| 1 | NVIDIA NIM | `https://integrate.api.nvidia.com/v1` | `z-ai/glm-5.2` | High Reasoning | **52.6** | Gratuito (Créditos dev) |
+| 2 | Ollama Cloud | `https://ollama.com/v1` | `minimax-m3:cloud` | High Reasoning | **45.4** | Gratuito |
+| 3 | NVIDIA NIM | `https://integrate.api.nvidia.com/v1` | `minimaxai/minimax-m3` | High Reasoning | **45.4** | Gratuito (Créditos dev) |
+| 4 | Vertex AI | env `VERTEX_BASE_URL` | `gemini-3.7-flash` | High (`thinkingBudget: 2048`) | **56.0** | $10/mês (AI Pro) |
 
-| Tarefa | Modelo (NIM) | Modelo (Ollama) | Justificativa |
-|--------|-------------|----------------|--------------|
-| Sumarizacao | `nvidia/nemotron-3-super-120b-a12b` | `nemotron-3-super:cloud` | Qualidade geral, multilingue |
-| Sentimento | `nvidia/nemotron-3-super-120b-a12b` | `nemotron-3-super:cloud` | Analise contextual |
-| Extracao posicoes | `minimaxai/minimax-m2.5` | `kimi-k2.5:cloud` | Raciocinio para posicoes |
-| Geracao quiz | `minimaxai/minimax-m2.5` | `kimi-k2.5:cloud` | Geracao de JSON estruturado |
-| Validacao quiz | `minimaxai/minimax-m2.5` | `kimi-k2.5:cloud` | Validacao estruturada |
+### Ingestion, Sumarização e Sentimento (`summarization`, `sentiment`, `multilingual`)
 
-## Modelos por Provider (2026-03-21)
-
-### NVIDIA NIM
-- **Sumarizacao/Sentimento**: `nvidia/nemotron-3-super-120b-a12b`
-- **Quiz/Posicoes**: `minimaxai/minimax-m2.5`
-
-### Ollama Cloud
-- **Sumarizacao/Sentimento**: `nemotron-3-super:cloud`
-- **Quiz/Posicoes (primario)**: `kimi-k2.5:cloud`
-
-### Gemini (Google AI — gratuito)
-- **Fallback padrao**: `gemini-3.1-flash-lite-preview` (via `https://generativelanguage.googleapis.com/v1beta/openai/`)
-- Nao usado em tarefas de alta qualidade
-
-### Vertex AI (pago)
-- **Modelo**: `gemini-3-flash-preview` (override via `VERTEX_MODEL_OVERRIDE`)
-- Fallback final para todas as tarefas
-
-### OpenRouter
-- Removido da cadeia (rate-limiting 200 req/dia insuficiente para pipeline automatizado)
+| Prioridade | Provider | base_url | Modelo | Modo Raciocínio | AA Intel Index | Custo |
+|---|---|---|---|---|---|---|
+| 1 | NVIDIA NIM (primary) | `https://integrate.api.nvidia.com/v1` | `nvidia/nemotron-3-ultra-550b-a55b` | High Reasoning | **38.3** | Gratuito (Créditos dev) |
+| 2 | NVIDIA NIM (fallback) | `https://integrate.api.nvidia.com/v1` | `nvidia/nemotron-3-super-120b-a12b` | High Reasoning | **25.7** | Gratuito (Créditos dev) |
+| 3 | Ollama Cloud | `https://ollama.com/v1` | `nemotron-3-ultra:cloud` | High Reasoning | **38.3** | Gratuito |
+| 4 | Ollama Cloud | `https://ollama.com/v1` | `minimax-m3:cloud` | High Reasoning | **45.4** | Gratuito |
+| 5 | Google AI Studio | `https://generativelanguage.googleapis.com/v1beta/openai/` | `gemini-3.7-flash` | High Reasoning | **56.0** | Gratuito (Free tier) |
+| 6 | Vertex AI | env `VERTEX_BASE_URL` | `gemini-3.7-flash` | High (`thinkingBudget: 2048`) | **56.0** | $10/mês (AI Pro) |
+| 7 | Xiaomi MiMo | `https://api.xiaomimimo.com/v1` | `mimo-v2.5` | Standard | **38.0** | Pago (Emergency fallback) |
 
 ## Hierarquia da Redacao (Newsroom)
 
-| Papel | Frequencia | Modelo Primario | Fallback |
-|-------|-----------|----------------|---------|
-| Foca (coletor) | 10 min | Nemotron 3 Super (NVIDIA NIM) | Nemotron 3 Super (Ollama Cloud) |
-| Editor (validador) | 30 min | Nemotron 3 Super (NVIDIA NIM) | Gemini 3.1 Flash Lite (Google AI) |
-| Editor-chefe (curador) | ~90 min | Kimi K2.5 (Ollama Cloud) | MiniMax M2.5 (NVIDIA NIM) |
+| Papel | Frequencia | Modelo Primario | Fallbacks |
+|---|---|---|---|
+| Foca (coletor) | 10 min | Nemotron 3 Ultra 550B (NVIDIA NIM) | Nemotron 3 Super (NVIDIA NIM) $\rightarrow$ Nemotron 3 Ultra (Ollama) |
+| Editor (validador) | 30 min | Nemotron 3 Ultra 550B (NVIDIA NIM) | Gemini 3.7 Flash (Google AI) $\rightarrow$ Vertex AI |
+| Editor-chefe (curador) | ~90 min | GLM-5.2 (NVIDIA NIM) | MiniMax-M3 (Ollama / NIM) $\rightarrow$ Gemini 3.7 Flash |
 
 ## Rastreador de Uso
 

@@ -41,22 +41,22 @@ def test_provider_chain_nvidia_primary_ollama_fallback(
 
     # NVIDIA must come first
     assert provider_names[0] == "nvidia"
-    assert provider_models[0] == ("nvidia", "nvidia/nemotron-3-super-120b-a12b")
+    assert provider_models[0] == ("nvidia", "nvidia/nemotron-3-ultra-550b-a55b")
 
-    # Ollama Nemotron must be the first Ollama entry (1st fallback)
+    # Ollama Nemotron Ultra must be the first Ollama entry (1st fallback)
     ollama_models = [model for name, model in provider_models if name == "ollama"]
-    assert ollama_models[0] == "nemotron-3-super:cloud"
+    assert ollama_models[0] == "nemotron-3-ultra:cloud"
 
     # OpenRouter must not appear in the chain
     assert "openrouter" not in provider_names
 
     # Vertex should be in the chain
     vertex_models = [model for name, model in provider_models if name == "vertex"]
-    assert vertex_models[0] == "gemini-3-flash-preview"
+    assert vertex_models[0] == "gemini-3.7-flash"
 
     # Mimo should be in the chain
     mimo_models = [model for name, model in provider_models if name == "mimo"]
-    assert mimo_models[0] == "mimo-v2-flash"
+    assert mimo_models[0] == "mimo-v2.5"
 
 
 def test_request_completion_openrouter_uses_optional_headers(
@@ -212,7 +212,7 @@ def test_request_completion_vertex_does_not_add_grounding_tools(
     assert result == '{"ok":true}'
     assert "tools" not in request_payloads[0]
     generation_config = request_payloads[0]["generationConfig"]
-    assert generation_config["thinkingConfig"] == {"thinkingBudget": 0}
+    assert generation_config["thinkingConfig"] == {"thinkingBudget": 2048}
     assert generation_config["responseMimeType"] == "application/json"
 
 
@@ -303,7 +303,7 @@ def test_generate_quiz_topic_options_recovers_truncated_array(
         lambda **_kwargs: {
             "content": truncated,
             "provider": "nvidia",
-            "model": "moonshotai/kimi-k2.6",
+            "model": "z-ai/glm-5.2",
             "paid": False,
         },
     )
@@ -495,7 +495,7 @@ def test_summarize_article_parses_json(monkeypatch: pytest.MonkeyPatch) -> None:
         lambda **_kwargs: {
             "content": payload,
             "provider": "nvidia",
-            "model": "moonshotai/kimi-k2.6",
+            "model": "nvidia/nemotron-3-ultra-550b-a55b",
             "paid": False,
         },
     )
@@ -520,7 +520,7 @@ def test_summarize_article_parse_error_fallback(
         lambda **_kwargs: {
             "content": "not-json",
             "provider": "nvidia",
-            "model": "moonshotai/kimi-k2.6",
+            "model": "nvidia/nemotron-3-ultra-550b-a55b",
             "paid": False,
         },
     )
@@ -575,7 +575,7 @@ def test_extract_candidate_topic_position_retries_on_parse_failure(
         {
             "content": "not-json",
             "provider": "nvidia",
-            "model": "moonshotai/kimi-k2.6",
+            "model": "z-ai/glm-5.2",
             "paid": False,
         },
         {
@@ -591,7 +591,7 @@ def test_extract_candidate_topic_position_retries_on_parse_failure(
                 }
             ),
             "provider": "nvidia",
-            "model": "moonshotai/kimi-k2.6",
+            "model": "z-ai/glm-5.2",
             "paid": False,
         },
     ]
@@ -631,7 +631,7 @@ def test_extract_candidate_topic_position_recovers_partial_json(
         return {
             "content": truncated,
             "provider": "nvidia",
-            "model": "moonshotai/kimi-k2.6",
+            "model": "z-ai/glm-5.2",
             "paid": False,
         }
 
