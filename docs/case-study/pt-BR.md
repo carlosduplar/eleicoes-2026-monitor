@@ -24,7 +24,7 @@ O pipeline editorial segue a metáfora de redação com três papéis. O Foca (c
 
 As etapas de publicação são explícitas no dado: `raw`, `validated`, `curated` e `irrelevant`. No estado `raw`, o portal privilegia velocidade e transparência sobre acabamento: título, fonte e horário já podem aparecer, com sinalização de que a análise ainda está em andamento. No estado `validated`, entram sumários em dois idiomas e metadados enriquecidos. No estado `curated`, o conteúdo recebe camada adicional de priorização editorial automatizada. Artigos marcados como `irrelevant` são removidos do feed público por um mecanismo automatizado de feedback editorial. Esse funil evita bloqueios desnecessários e entrega valor incremental para o usuário.
 
-A cadeia de IA foi redesenhada para resiliência e custo controlado com base em dados reais de produção. Para tarefas padrao (sumarizacao, sentimento), a cadeia e: NVIDIA NIM (Nemotron 3 Super) -> Ollama Cloud (Nemotron 3 Super) -> Gemini 3.1 Flash Lite (Google AI, gratuito) -> Vertex AI (Gemini 3 Flash Preview, pago) -> MiMo V2 Flash. Para tarefas de alta qualidade (extracao de posicoes, geracao/validacao de quiz), a cadeia prioriza modelos mais capazes: Ollama Cloud (Kimi K2.5) -> NVIDIA NIM (MiniMax M2.5) -> Vertex AI (Gemini 3 Flash Preview). Um circuit breaker detecta falhas cedo e um limite por execução controla o total de chamadas de IA. A regra principal é não interromper pipeline por erro de IA. Se uma chamada falha, o sistema registra, tenta o próximo provedor e segue. Se todos falham, o artigo continua no fluxo com estado coerente, em vez de ser descartado silenciosamente. Essa postura privilegia continuidade operacional e reduz risco de indisponibilidade por dependência única.
+A cadeia de IA foi redesenhada para resiliência e custo controlado com base em benchmarks do Artificial Analysis e dados reais de produção. Para tarefas padrão (sumarização, sentimento), a cadeia é: NVIDIA NIM (Nemotron 3 Ultra 550B, High Reasoning) -> NVIDIA NIM (Nemotron 3 Super 120B) -> Ollama Cloud (Nemotron 3 Ultra) -> Ollama Cloud (MiniMax M3) -> Gemini 3.7 Flash (Google AI, gratuito) -> Vertex AI (Gemini 3.7 Flash, pago) -> MiMo V2.5. Para tarefas de alta qualidade (extração de posições, geração/validação de quiz), a cadeia prioriza modelos de alto raciocínio: NVIDIA NIM (GLM-5.2) -> Ollama Cloud (MiniMax M3) -> NVIDIA NIM (MiniMax M3) -> Vertex AI (Gemini 3.7 Flash). Um circuit breaker detecta falhas cedo e um limite por execução controla o total de chamadas de IA. A regra principal é não interromper pipeline por erro de IA. Se uma chamada falha, o sistema registra, tenta o próximo provedor e segue. Se todos falham, o artigo continua no fluxo com estado coerente, em vez de ser descartado silenciosamente. Essa postura privilegia continuidade operacional e reduz risco de indisponibilidade por dependência única.
 
 ## Decisões técnicas registradas
 As ADRs 000 a 006 formam a espinha dorsal de decisão deste produto. O ADR 000 formalizou wireframes como fonte de verdade visual, com mapeamento tela-componente e tokens de design consistentes. Isso reduziu retrabalho de UI porque cada fase implementa sobre referência concreta, não sobre memória subjetiva de layout.
@@ -196,13 +196,25 @@ Esta seção documenta o que não funcionou como esperado após a entrega inicia
 
 **Lição:** Posicoes de candidatos para eleicoes presidenciais sao, em grande parte, dados publicos ja documentados em fontes institucionais. Depender exclusivamente de noticias para esse dado e subutilizar informacao disponivel. O seed como baseline acelera o tempo de cobertura do portal.
 
+### 2026-08-19 -- Modelos de IA: Upgrade geral com benchmarks Artificial Analysis e High Reasoning
+
+**O que aconteceu:** Avaliação detalhada de 610 modelos via API do Artificial Analysis (`ARTIFICIALANALYSIS_API_KEY`) revelou lançamentos superiores em 2026 com melhor índice de inteligência (AA Intel Index) e codificação JSON. Os endpoints legados Kimi (`moonshotai/kimi-k2.6`, `kimi-k2.5`) foram descontinuados na infraestrutura NVIDIA NIM.
+
+**O que fizemos:**
+- Tarefas de Quiz e Posições: Promovemos `z-ai/glm-5.2` (Intel: 52.6) como primário na NVIDIA NIM, seguido por `minimax-m3:cloud` no Ollama, `minimaxai/minimax-m3` na NVIDIA NIM e `gemini-3.7-flash` no Vertex AI (Intel: 56.0).
+- Tarefas de Ingestion e Sentimento: Atualizamos para `nvidia/nemotron-3-ultra-550b-a55b` (Intel: 38.3) com fallback em `nvidia/nemotron-3-super-120b-a12b`, `nemotron-3-ultra:cloud` no Ollama e Gemini 3.7 Flash.
+- Purga de Kimi: Removemos todos os endpoints Moonshot Kimi descontinuados.
+- High Reasoning: Habilitamos raciocínio nativo nos modelos de ponta e expandimos o orçamento de tokens (`thinkingBudget: 2048`, `maxOutputTokens: 4096`) para evitar truncamento em JSON estruturado.
+
+**Lição:** A evolução dos LLMs exige reavaliação periódica baseada em benchmarks independentes de inteligência, velocidade e custo por milhão de tokens, ajustando orçamentos de raciocínio para payloads JSON.
+
 ---
 
 ## Números do projeto
-No recorte atual (2026-03-21), os números consolidados são:
+No recorte atual (2026-08-19), os números consolidados são:
 
 - 17 fases completas (16 principais + Phase 17 extensão Vertex AI Search).
-- 622 commits no histórico do repositório.
+- 620+ commits no histórico do repositório.
 - 21 fontes RSS ativas em `data/sources.json`, além de 8 fontes partidárias e 10 institutos de pesquisa.
 - 9 candidatos modelados em `data/candidates.json`.
 - 6 workflows no GitHub Actions: collect (10min), validate (30min), curate (horário), deploy, update-quiz, watchdog.
@@ -210,7 +222,7 @@ No recorte atual (2026-03-21), os números consolidados são:
 - Mecanismo automatizado de feedback editorial filtrando conteúdo irrelevante.
 - Circuit breaker e limites por execução de chamadas de IA para resiliência do pipeline.
 - Script de seed (`seed_candidates_positions.py`) para populacao baseline de posicoes de candidatos a partir de Wikipedia, Camara/Senado e sintese IA.
-- Cadeia de IA separada por nivel de qualidade: padrao (Nemotron 3 Super -> Gemini Flash Lite -> Vertex) e alta qualidade (Kimi K2.5 -> MiniMax M2.5 -> Vertex).
+- Cadeia de IA com High Reasoning separada por nível de qualidade: padrão (`nemotron-3-ultra-550b` -> `nemotron-3-super` -> `nemotron-3-ultra:cloud` -> `gemini-3.7-flash` -> `mimo-v2.5`) e alta qualidade (`glm-5.2` -> `minimax-m3:cloud` -> `minimaxai/minimax-m3` -> `gemini-3.7-flash`).
 
 Esses números importam menos como marketing e mais como prova de que o sistema foi publicado, operou sob condições reais e foi corrigido iterativamente com base em feedback de produção.
 

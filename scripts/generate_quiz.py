@@ -878,7 +878,7 @@ def main() -> None:
                 "validator_model": (
                     "local:heuristic-fallback"
                     if validation_degraded
-                    else "nvidia:moonshotai/kimi-k2.6"
+                    else "nvidia:z-ai/glm-5.2"
                 ),
                 "validation_date": datetime.now(timezone.utc)
                 .replace(microsecond=0)
