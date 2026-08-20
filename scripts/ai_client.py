@@ -4,6 +4,10 @@ Task routing follows quiz architecture requirements:
 - High-quality extraction/generation tasks prefer Gemini (Vertex) first.
 - Structured validation tasks prefer free NVIDIA providers first.
 - Legacy summarization tasks keep free-first routing.
+
+The quiz runner can perform a short streaming preflight before its first model
+call. The preflight measures time-to-first-token (TTFT) and total latency for
+available free models, then keeps the fastest healthy candidate for the run.
 """
 
 from __future__ import annotations
@@ -14,6 +18,7 @@ import os
 import re
 import threading
 import time
+import urllib.request
 from datetime import datetime, timezone
 from hashlib import sha256
 from pathlib import Path
@@ -27,13 +32,17 @@ ROOT_DIR = Path(__file__).resolve().parents[1]
 USAGE_FILE = ROOT_DIR / "site" / "public" / "data" / "ai_usage.json"
 
 # In-process circuit breaker: skip providers after this many consecutive failures per run.
-# 429/rate-limit errors are handled with backoff+retry and do NOT immediately trip the breaker.
+# Preflight requests fail fast on 429s; normal requests also fail fast by default so
+# a saturated provider does not consume the whole CI job before fallback can run.
 _CIRCUIT_BREAKER_THRESHOLD = 3
 _provider_failure_counts: dict[str, int] = {}
 _circuit_breaker_lock = threading.Lock()
 _AI_REQUEST_TIMEOUT_SECONDS = 45.0
+_PREFLIGHT_TIMEOUT_SECONDS = 8.0
+_PREFLIGHT_MAX_TOKENS = 32
+_RATE_LIMIT_MAX_RETRIES = 0
 
-# Seconds to sleep before retrying a 429 response from any provider.
+# Seconds to sleep before retrying a 429 response when retries are explicitly enabled.
 _RATE_LIMIT_RETRY_SLEEP = 12
 _usage_file_invalid_warned = False
 
@@ -110,6 +119,9 @@ OLLAMA_MODELS: list[str] = [
     "minimax-m3:cloud",
 ]
 
+OPENCODE_BASE_URL = "https://opencode.ai/zen/v1"
+OPENCODE_FREE_ALIAS = "free"
+
 
 class ProviderConfig(TypedDict, total=False):
     name: str
@@ -118,6 +130,7 @@ class ProviderConfig(TypedDict, total=False):
     model: str
     paid: bool
     daily_max: int
+    optional_key: bool
 
 
 class ProviderResult(TypedDict):
@@ -125,6 +138,17 @@ class ProviderResult(TypedDict):
     provider: str
     model: str
     paid: bool
+
+
+_run_selected_providers: dict[str, ProviderConfig] = {}
+_run_preflight_signatures: dict[
+    tuple[tuple[str, str, str], ...], ProviderConfig | None
+] = {}
+_PREFLIGHT_CACHE_MISS = object()
+_run_preflight_lock = threading.Lock()
+_opencode_free_model: str | None = None
+_opencode_free_model_lookup_done = False
+_opencode_model_lock = threading.Lock()
 
 
 def build_article_id(url: str) -> str:
@@ -148,6 +172,25 @@ def _get_vertex_model(task: str) -> str:
     if override:
         return override
     return "gemini-3.7-flash"
+
+
+def _get_opencode_model() -> str:
+    return (
+        os.environ.get("OPENCODE_MODEL", OPENCODE_FREE_ALIAS).strip()
+        or OPENCODE_FREE_ALIAS
+    )
+
+
+def _opencode_provider() -> ProviderConfig:
+    return {
+        "name": "opencode",
+        "base_url": OPENCODE_BASE_URL,
+        "key_env": "OPENCODE_API_KEY",
+        "model": _get_opencode_model(),
+        "paid": False,
+        # OpenCode's free Zen models can be called without a key.
+        "optional_key": True,
+    }
 
 
 def _provider_chain_for_task(task: str) -> list[ProviderConfig]:
@@ -177,10 +220,11 @@ def _provider_chain_for_task(task: str) -> list[ProviderConfig]:
             {
                 "name": "vertex",
                 "base_url": "VERTEX_BASE_URL",
-                "key_env": "VERTEX_ACCESS_TOKEN",
+                "key_env": "VERTEX_API_KEY",
                 "model": _get_vertex_model(task),
                 "paid": True,
             },
+            _opencode_provider(),
         ]
 
     if task == "quiz_validate":
@@ -209,10 +253,11 @@ def _provider_chain_for_task(task: str) -> list[ProviderConfig]:
             {
                 "name": "vertex",
                 "base_url": "VERTEX_BASE_URL",
-                "key_env": "VERTEX_ACCESS_TOKEN",
+                "key_env": "VERTEX_API_KEY",
                 "model": _get_vertex_model(task),
                 "paid": True,
             },
+            _opencode_provider(),
         ]
 
     nvidia_primary = NVIDIA_MODELS.get(task, NVIDIA_MODELS["summarization"])
@@ -250,7 +295,7 @@ def _provider_chain_for_task(task: str) -> list[ProviderConfig]:
         {
             "name": "vertex",
             "base_url": "VERTEX_BASE_URL",
-            "key_env": "VERTEX_ACCESS_TOKEN",
+            "key_env": "VERTEX_API_KEY",
             "model": _get_vertex_model(task),
             "paid": True,
         },
@@ -261,6 +306,7 @@ def _provider_chain_for_task(task: str) -> list[ProviderConfig]:
             "model": "mimo-v2.5",
             "paid": True,
         },
+        _opencode_provider(),
     ]
 
 
@@ -301,6 +347,367 @@ def _load_usage() -> dict[str, int]:
 def _save_usage(usage: dict[str, int]) -> None:
     USAGE_FILE.parent.mkdir(parents=True, exist_ok=True)
     USAGE_FILE.write_text(json.dumps(usage, indent=2, sort_keys=True), encoding="utf-8")
+
+
+def _resolve_provider_model(provider: ProviderConfig) -> ProviderConfig:
+    """Resolve the user-facing ``opencode/free`` alias to a live free model.
+
+    OpenCode's model roster changes over time and its current endpoint exposes
+    named ``*-free`` models rather than a literal ``free`` id. Keep ``free`` as
+    the stable route in the provider chain, but resolve it once through the
+    public model list. ``OPENCODE_MODEL`` can pin a specific model instead.
+    """
+    if (
+        provider.get("name") != "opencode"
+        or provider.get("model") != OPENCODE_FREE_ALIAS
+    ):
+        return provider
+
+    global _opencode_free_model, _opencode_free_model_lookup_done
+    with _opencode_model_lock:
+        if not _opencode_free_model_lookup_done:
+            _opencode_free_model_lookup_done = True
+            try:
+                request = urllib.request.Request(
+                    f"{provider['base_url'].rstrip('/')}/models",
+                    headers={"Accept": "application/json"},
+                    method="GET",
+                )
+                with urllib.request.urlopen(
+                    request, timeout=_PREFLIGHT_TIMEOUT_SECONDS
+                ) as response:
+                    payload = json.loads(response.read().decode("utf-8"))
+                raw_models = payload.get("data") if isinstance(payload, dict) else None
+                model_ids = [
+                    item.get("id")
+                    for item in raw_models or []
+                    if isinstance(item, dict) and isinstance(item.get("id"), str)
+                ]
+                free_models = [
+                    model_id for model_id in model_ids if model_id.endswith("-free")
+                ]
+                preferred = os.environ.get("OPENCODE_FREE_MODEL", "").strip()
+                if preferred and preferred in model_ids:
+                    _opencode_free_model = preferred
+                elif free_models:
+                    _opencode_free_model = free_models[0]
+                else:
+                    logger.warning(
+                        "[AI] OpenCode model roster contains no *-free model; "
+                        "leaving the free alias unresolved."
+                    )
+            except Exception as exc:  # noqa: BLE001 - alias resolution is optional
+                logger.warning("[AI] Could not resolve opencode/free alias: %s", exc)
+
+        if not _opencode_free_model:
+            return provider
+        resolved = dict(provider)
+        resolved["model"] = _opencode_free_model
+        return resolved
+
+
+def _openai_client_kwargs(
+    provider: ProviderConfig, api_key: str, *, timeout: float | None = None
+) -> dict[str, object]:
+    # The OpenAI SDK requires a key even when OpenCode's free endpoint does not.
+    # The placeholder is never a project secret and is accepted by the public
+    # free endpoint; a real OPENCODE_API_KEY is used whenever one is configured.
+    client_key = api_key or (
+        "opencode-free-placeholder"
+        if provider.get("name") == "opencode"
+        else ""
+    )
+    return {
+        "api_key": client_key,
+        "base_url": provider["base_url"],
+        "timeout": timeout or _AI_REQUEST_TIMEOUT_SECONDS,
+        "max_retries": 0,
+    }
+
+
+def _chat_completion_kwargs(
+    provider: ProviderConfig,
+    system: str,
+    user: str,
+    max_tokens: int,
+    *,
+    stream: bool = False,
+) -> dict[str, object]:
+    kwargs: dict[str, object] = {
+        "model": provider["model"],
+        "max_tokens": max_tokens,
+        "messages": [
+            {"role": "system", "content": system},
+            {"role": "user", "content": user},
+        ],
+    }
+    if stream:
+        kwargs["stream"] = True
+
+    # Web evidence is supplied upstream via Source F (Brave Search) in
+    # seed_candidates_positions.py.
+    if provider.get("name") == "nvidia":
+        disable_body = _THINKING_DISABLE_EXTRA_BODY.get(provider.get("model", ""))
+        if disable_body:
+            kwargs["extra_body"] = disable_body
+    elif provider.get("name") == "ollama":
+        # Ollama MiniMax can otherwise put all of a short structured response in
+        # its thinking channel, yielding HTTP 200 with no usable content.
+        kwargs["extra_body"] = {"think": False}
+    elif provider.get("name") == "mimo":
+        kwargs["extra_body"] = {"thinking": {"type": "disabled"}}
+    return kwargs
+
+
+def _env_bool(name: str, default: bool) -> bool:
+    raw = os.environ.get(name)
+    if raw is None:
+        return default
+    return raw.strip().lower() not in {"0", "false", "no", "off"}
+
+
+def _provider_signature(provider: ProviderConfig) -> tuple[str, str, str]:
+    return (
+        str(provider.get("name", "")),
+        str(provider.get("base_url", "")),
+        str(provider.get("model", "")),
+    )
+
+
+def _provider_is_preflight_eligible(
+    provider: ProviderConfig, usage: dict[str, int], today: str
+) -> bool:
+    name = provider.get("name", "unknown")
+    key_env = provider.get("key_env", "")
+    api_key = os.environ.get(key_env, "").strip() if key_env else ""
+    if not api_key and not provider.get("optional_key", False):
+        logger.info("[AI] preflight %s skipped: missing %s.", name, key_env)
+        return False
+
+    base_url = provider.get("base_url", "").strip()
+    if base_url == "VERTEX_BASE_URL":
+        if not os.environ.get("VERTEX_BASE_URL", "").strip():
+            logger.info("[AI] preflight %s skipped: missing VERTEX_BASE_URL.", name)
+            return False
+    elif not base_url:
+        logger.info("[AI] preflight %s skipped: missing base URL.", name)
+        return False
+
+    daily_max_raw = provider.get("daily_max")
+    if daily_max_raw is not None:
+        usage_key = f"{name}_{today}"
+        if usage.get(usage_key, 0) >= int(daily_max_raw):
+            logger.info("[AI] preflight %s skipped: daily limit reached.", name)
+            return False
+    return True
+
+
+def _stream_chunk_parts(chunk: object) -> tuple[str, str]:
+    choices = getattr(chunk, "choices", None)
+    if isinstance(chunk, dict):
+        choices = chunk.get("choices")
+    if not isinstance(choices, (list, tuple)) or not choices:
+        return "", ""
+    choice = choices[0]
+    delta = getattr(choice, "delta", None)
+    if isinstance(choice, dict):
+        delta = choice.get("delta")
+    if delta is None:
+        return "", ""
+
+    def value_for(field: str) -> str:
+        value = (
+            delta.get(field)
+            if isinstance(delta, dict)
+            else getattr(delta, field, None)
+        )
+        return value if isinstance(value, str) else ""
+
+    return value_for("content"), value_for("reasoning_content")
+
+
+def _probe_provider(provider: ProviderConfig) -> dict[str, float | str]:
+    """Run one bounded streaming probe and return TTFT/latency measurements."""
+    provider = _resolve_provider_model(provider)
+    api_key = os.environ.get(provider.get("key_env", ""), "").strip()
+    system = "Return only the JSON object {\"ok\":true}. Do not explain."
+    user = "Return the probe JSON now."
+    started = time.perf_counter()
+    first_token_at: float | None = None
+
+    if provider.get("name") == "vertex":
+        # Vertex currently uses the non-OpenAI REST path in this client. It has no
+        # streaming measurement here, so use total latency as a conservative TTFT.
+        _request_completion(provider, api_key, system, user, _PREFLIGHT_MAX_TOKENS)
+        elapsed = time.perf_counter() - started
+        return {
+            "provider": str(provider["name"]),
+            "model": str(provider["model"]),
+            "ttft_ms": elapsed * 1000.0,
+            "latency_ms": elapsed * 1000.0,
+        }
+
+    client_kwargs = _openai_client_kwargs(
+        provider, api_key, timeout=_PREFLIGHT_TIMEOUT_SECONDS
+    )
+    default_headers: dict[str, str] = {}
+    if provider.get("name") == "openrouter":
+        http_referer = os.environ.get("OPENROUTER_HTTP_REFERER", "").strip()
+        app_title = os.environ.get("OPENROUTER_APP_TITLE", "").strip()
+        if http_referer:
+            default_headers["HTTP-Referer"] = http_referer
+        if app_title:
+            default_headers["X-Title"] = app_title
+    if default_headers:
+        client_kwargs["default_headers"] = default_headers
+
+    client = openai.OpenAI(**client_kwargs)
+    stream = client.chat.completions.create(
+        **_chat_completion_kwargs(
+            provider,
+            system,
+            user,
+            _PREFLIGHT_MAX_TOKENS,
+            stream=True,
+        )
+    )
+    saw_content = False
+    for chunk in stream:
+        content, reasoning = _stream_chunk_parts(chunk)
+        text = content or reasoning
+        if text:
+            if first_token_at is None:
+                first_token_at = time.perf_counter()
+        if content:
+            saw_content = True
+
+    elapsed = time.perf_counter() - started
+    if not saw_content or first_token_at is None:
+        raise ValueError("streaming probe returned no final text tokens")
+    return {
+        "provider": str(provider["name"]),
+        "model": str(provider["model"]),
+        "ttft_ms": (first_token_at - started) * 1000.0,
+        "latency_ms": elapsed * 1000.0,
+    }
+
+
+def _preflight_select_provider(
+    task: str, chain: list[ProviderConfig]
+) -> ProviderConfig | None:
+    usage = _load_usage()
+    today = _today_key()
+    include_paid = _env_bool("AI_PREFLIGHT_INCLUDE_PAID", False)
+    candidates: list[tuple[float, int, ProviderConfig, dict[str, float | str]]] = []
+
+    for index, configured_provider in enumerate(chain):
+        if configured_provider.get("paid") and not include_paid:
+            logger.info(
+                "[AI] preflight %s/%s skipped: paid provider selection disabled.",
+                configured_provider.get("name"),
+                configured_provider.get("model"),
+            )
+            continue
+        if not _provider_is_preflight_eligible(configured_provider, usage, today):
+            continue
+        try:
+            result = _probe_provider(configured_provider)
+            ttft_ms = float(result["ttft_ms"])
+            latency_ms = float(result["latency_ms"])
+            score = ttft_ms + latency_ms
+            candidates.append((score, index, configured_provider, result))
+            logger.info(
+                "[AI] preflight task=%s provider=%s model=%s ttft=%.0fms latency=%.0fms",
+                task,
+                result["provider"],
+                result["model"],
+                ttft_ms,
+                latency_ms,
+            )
+        except Exception as exc:  # noqa: BLE001 - one bad provider must not block the run
+            logger.warning(
+                "[AI] preflight task=%s provider=%s model=%s failed: %s",
+                task,
+                configured_provider.get("name"),
+                configured_provider.get("model"),
+                exc,
+            )
+
+    if not candidates:
+        logger.warning("[AI] preflight task=%s found no healthy candidate.", task)
+        return None
+
+    _, _, selected, result = min(candidates, key=lambda item: (item[0], item[1]))
+    selected = _resolve_provider_model(selected)
+    logger.info(
+        "[AI] preflight selected task=%s provider=%s model=%s (ttft=%.0fms latency=%.0fms)",
+        task,
+        result["provider"],
+        result["model"],
+        float(result["ttft_ms"]),
+        float(result["latency_ms"]),
+    )
+    return selected
+
+
+def preflight_for_run(tasks: tuple[str, ...] = ("quiz_generate", "quiz_validate")) -> dict[
+    str, ProviderConfig | None
+]:
+    """Select one healthy, low-latency provider per task for the current run.
+
+    Set ``AI_PREFLIGHT_ENABLED=1`` to enable the probe. Paid providers are
+    excluded from automatic selection unless
+    ``AI_PREFLIGHT_INCLUDE_PAID=1`` is set.
+    """
+    if not _env_bool("AI_PREFLIGHT_ENABLED", False):
+        logger.info("[AI] preflight disabled by AI_PREFLIGHT_ENABLED.")
+        return {}
+
+    selections: dict[str, ProviderConfig | None] = {}
+    for task in tasks:
+        with _run_preflight_lock:
+            if task in _run_selected_providers:
+                selections[task] = _run_selected_providers[task]
+                continue
+
+        chain = _provider_chain_for_task(task)
+        signature = tuple(_provider_signature(provider) for provider in chain)
+        with _run_preflight_lock:
+            cached = _run_preflight_signatures.get(signature, _PREFLIGHT_CACHE_MISS)
+        if cached is _PREFLIGHT_CACHE_MISS:
+            selected = _preflight_select_provider(task, chain)
+            with _run_preflight_lock:
+                _run_preflight_signatures[signature] = selected
+        else:
+            selected = cached
+
+        with _run_preflight_lock:
+            if selected is not None:
+                _run_selected_providers[task] = selected
+            selections[task] = selected
+    return selections
+
+
+def _ordered_provider_chain_for_task(task: str) -> list[ProviderConfig]:
+    chain = _provider_chain_for_task(task)
+    selected = _run_selected_providers.get(task)
+    if selected is None:
+        return chain
+
+    selected_name = selected.get("name")
+    selected_base_url = selected.get("base_url")
+    remaining: list[ProviderConfig] = []
+    for provider in chain:
+        # The resolved OpenCode model is represented by the stable free alias in
+        # the static chain; avoid probing/calling that alias a second time.
+        if (
+            selected_name == "opencode"
+            and provider.get("name") == selected_name
+            and provider.get("base_url") == selected_base_url
+        ):
+            continue
+        remaining.append(provider)
+    return [selected, *remaining]
 
 
 def _extract_content_from_response(response: object) -> str:
@@ -397,6 +804,7 @@ def _request_completion(
     user: str,
     max_tokens: int,
 ) -> str:
+    provider = _resolve_provider_model(provider)
     if provider.get("name") == "vertex":
         import json
         import urllib.request
@@ -464,12 +872,7 @@ def _request_completion(
             )
         raise ValueError(f"Unexpected Vertex response format: {resp_data}")
 
-    client_kwargs: dict[str, object] = {
-        "api_key": api_key,
-        "base_url": provider["base_url"],
-        "timeout": _AI_REQUEST_TIMEOUT_SECONDS,
-        "max_retries": 0,
-    }
+    client_kwargs = _openai_client_kwargs(provider, api_key)
 
     default_headers: dict[str, str] = {}
     if provider.get("name") == "openrouter":
@@ -484,22 +887,7 @@ def _request_completion(
         client_kwargs["default_headers"] = default_headers
 
     client = openai.OpenAI(**client_kwargs)
-    kwargs: dict[str, object] = {
-        "model": provider["model"],
-        "max_tokens": max_tokens,
-        "messages": [
-            {"role": "system", "content": system},
-            {"role": "user", "content": user},
-        ],
-    }
-    # Web evidence is supplied upstream via Source F (Brave Search) in
-    # seed_candidates_positions.py.
-    if provider.get("name") == "nvidia":
-        disable_body = _THINKING_DISABLE_EXTRA_BODY.get(provider.get("model", ""))
-        if disable_body:
-            kwargs["extra_body"] = disable_body
-    elif provider.get("name") == "mimo":
-        kwargs["extra_body"] = {"thinking": {"type": "disabled"}}
+    kwargs = _chat_completion_kwargs(provider, system, user, max_tokens)
 
     try:
         response = client.chat.completions.create(**kwargs)  # type: ignore[arg-type]
@@ -521,7 +909,7 @@ def _request_completion_with_retry(
     user: str,
     max_tokens: int,
     *,
-    max_retries: int = 2,
+    max_retries: int | None = None,
 ) -> str:
     """Call _request_completion with exponential backoff on 429 errors.
 
@@ -529,6 +917,8 @@ def _request_completion_with_retry(
     increasing sleep intervals before re-raising.  All other errors are
     propagated immediately.
     """
+    if max_retries is None:
+        max_retries = _RATE_LIMIT_MAX_RETRIES
     delay = _RATE_LIMIT_RETRY_SLEEP
     for attempt in range(max_retries + 1):
         try:
@@ -564,13 +954,14 @@ def _call_with_fallback_for_task(
     today = _today_key()
     error_messages: list[str] = []
 
-    for provider in _provider_chain_for_task(task):
+    for configured_provider in _ordered_provider_chain_for_task(task):
+        provider = _resolve_provider_model(configured_provider)
         name = provider["name"]
         key_env = provider["key_env"]
         api_key = os.environ.get(key_env, "").strip()
         base_url = provider.get("base_url", "").strip()
 
-        if not api_key:
+        if not api_key and not provider.get("optional_key", False):
             logger.info("[AI] %s skipped: missing %s.", name, key_env)
             continue
 
