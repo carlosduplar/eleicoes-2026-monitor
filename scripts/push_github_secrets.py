@@ -26,11 +26,10 @@ import subprocess
 import shutil
 
 DEFAULT_SECRETS = [
+    'POOLSIDE_API_KEY',
     'NVIDIA_API_KEY',
     'OPENROUTER_API_KEY',
     'OLLAMA_API_KEY',
-    'VERTEX_ACCESS_TOKEN',
-    'XIAOMI_MIMO_API_KEY',
 ]
 
 

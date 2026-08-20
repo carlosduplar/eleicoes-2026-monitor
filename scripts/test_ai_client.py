@@ -1,5 +1,4 @@
 import json
-import urllib.request
 
 import pytest
 
@@ -34,34 +33,15 @@ def isolate_usage_file(tmp_path, monkeypatch: pytest.MonkeyPatch) -> None:
     ai_client._provider_failure_counts.clear()
 
 
-def test_provider_chain_nvidia_primary_ollama_fallback(
-    monkeypatch: pytest.MonkeyPatch,
-) -> None:
-    monkeypatch.delenv("VERTEX_MODEL_OVERRIDE", raising=False)
+def test_provider_chain_is_poolside_first_with_minimax_fallbacks() -> None:
     chain = ai_client._provider_chain_for_task("multilingual")
-    provider_names = [str(item["name"]) for item in chain]
     provider_models = [(str(item["name"]), str(item["model"])) for item in chain]
-
-    # NVIDIA must come first
-    assert provider_names[0] == "nvidia"
-    assert provider_models[0] == ("nvidia", "nvidia/nemotron-3-ultra-550b-a55b")
-
-    # Ollama Nemotron Ultra must be the first Ollama entry (1st fallback)
-    ollama_models = [model for name, model in provider_models if name == "ollama"]
-    assert ollama_models[0] == "nemotron-3-ultra:cloud"
-
-    # OpenRouter must not appear in the chain
-    assert "openrouter" not in provider_names
-
-    # Vertex should be in the chain
-    vertex_models = [model for name, model in provider_models if name == "vertex"]
-    assert vertex_models[0] == "gemini-3.7-flash"
-
-    # Mimo should be in the chain
-    mimo_models = [model for name, model in provider_models if name == "mimo"]
-    assert mimo_models[0] == "mimo-v2.5"
-
-    assert provider_models[-1] == ("opencode", "free")
+    assert provider_models == [
+        ("poolside", "poolside/laguna-s-2.1"),
+        ("ollama", "minimax-m3:cloud"),
+        ("nvidia", "minimaxai/minimax-m3"),
+        ("openrouter", "openrouter/free"),
+    ]
 
 
 def test_ollama_structured_requests_disable_thinking() -> None:
@@ -145,7 +125,7 @@ def test_request_completion_openrouter_uses_optional_headers(
         "openrouter",
         "OPENROUTER_API_KEY",
         "https://openrouter.ai/api/v1",
-        "meta-llama/llama-3.3-70b-instruct:free",
+        "openrouter/free",
     )
     monkeypatch.setenv("OPENROUTER_HTTP_REFERER", "https://example.org/app")
     monkeypatch.setenv("OPENROUTER_APP_TITLE", "eleicoes-2026-monitor")
@@ -192,149 +172,11 @@ def test_request_completion_openrouter_uses_optional_headers(
         "HTTP-Referer": "https://example.org/app",
         "X-Title": "eleicoes-2026-monitor",
     }
-    assert completion_calls[0]["model"] == "meta-llama/llama-3.3-70b-instruct:free"
+    assert completion_calls[0]["model"] == "openrouter/free"
     assert completion_calls[0]["max_tokens"] == 123
-
-
-def test_request_completion_gemini_does_not_add_grounding_tools(
-    monkeypatch: pytest.MonkeyPatch,
-) -> None:
-    provider = _provider(
-        "gemini",
-        "GEMINI_API_KEY",
-        "https://generativelanguage.googleapis.com/v1beta/openai/",
-        "gemini-2.5-pro",
-    )
-    monkeypatch.setenv("".join(["GEMINI", "_GROUNDING_ENABLED"]), "true")
-
-    completion_calls: list[dict[str, object]] = []
-
-    class _Message:
-        content = '{"ok":true}'
-
-    class _Choice:
-        message = _Message()
-
-    class _Response:
-        choices = [_Choice()]
-
-    class _Completions:
-        def create(self, **kwargs: object) -> _Response:
-            completion_calls.append(dict(kwargs))
-            return _Response()
-
-    class _Chat:
-        completions = _Completions()
-
-    class _Client:
-        chat = _Chat()
-
-    monkeypatch.setattr(ai_client.openai, "OpenAI", lambda **kwargs: _Client())
-
-    result = ai_client._request_completion(
-        provider=provider,
-        api_key="gemini-key",
-        system="system",
-        user="user",
-        max_tokens=200,
-    )
-
-    assert result == '{"ok":true}'
-    assert "tools" not in completion_calls[0]
-
-
-def test_request_completion_vertex_does_not_add_grounding_tools(
-    monkeypatch: pytest.MonkeyPatch,
-) -> None:
-    provider = _provider(
-        "vertex",
-        "VERTEX_API_KEY",
-        "https://aiplatform.googleapis.com",
-        "gemini-3-flash-preview",
-    )
-    monkeypatch.setenv("VERTEX_API_KEY", "vertex-key")
-    monkeypatch.setenv("".join(["VERTEX", "_GROUNDING_ENABLED"]), "true")
-
-    request_payloads: list[dict[str, object]] = []
-
-    class _Response:
-        def __enter__(self) -> "_Response":
-            return self
-
-        def __exit__(self, exc_type, exc, tb) -> None:
-            return None
-
-        def read(self) -> bytes:
-            return json.dumps(
-                {"candidates": [{"content": {"parts": [{"text": '{"ok":true}'}]}}]}
-            ).encode("utf-8")
-
-    def fake_request(
-        url: str, data: bytes, headers: dict[str, str], method: str
-    ) -> object:
-        request_payloads.append(json.loads(data.decode("utf-8")))
-        return object()
-
-    monkeypatch.setattr(urllib.request, "Request", fake_request)
-    monkeypatch.setattr(
-        urllib.request, "urlopen", lambda req, timeout=None: _Response()
-    )
-
-    result = ai_client._request_completion(
-        provider=provider,
-        api_key="ignored",
-        system="system",
-        user="user",
-        max_tokens=200,
-    )
-
-    assert result == '{"ok":true}'
-    assert "tools" not in request_payloads[0]
-    generation_config = request_payloads[0]["generationConfig"]
-    assert generation_config["thinkingConfig"] == {"thinkingBudget": 2048}
-    assert generation_config["responseMimeType"] == "application/json"
-
-
-def test_request_completion_vertex_raises_with_finish_reason_when_no_text(
-    monkeypatch: pytest.MonkeyPatch,
-) -> None:
-    provider = _provider(
-        "vertex",
-        "VERTEX_API_KEY",
-        "https://aiplatform.googleapis.com",
-        "gemini-3-flash-preview",
-    )
-    monkeypatch.setenv("VERTEX_API_KEY", "vertex-key")
-
-    class _Response:
-        def __enter__(self) -> "_Response":
-            return self
-
-        def __exit__(self, exc_type, exc, tb) -> None:
-            return None
-
-        def read(self) -> bytes:
-            return json.dumps(
-                {
-                    "candidates": [
-                        {"content": {"role": "model"}, "finishReason": "MAX_TOKENS"}
-                    ]
-                }
-            ).encode("utf-8")
-
-    monkeypatch.setattr(urllib.request, "Request", lambda *args, **kwargs: object())
-    monkeypatch.setattr(
-        urllib.request, "urlopen", lambda req, timeout=None: _Response()
-    )
-
-    with pytest.raises(ValueError, match="finishReason=MAX_TOKENS"):
-        ai_client._request_completion(
-            provider=provider,
-            api_key="ignored",
-            system="system",
-            user="user",
-            max_tokens=200,
-        )
+    assert completion_calls[0]["extra_body"] == {
+        "reasoning": {"effort": "none"}
+    }
 
 
 def test_extract_content_from_object_content_parts() -> None:
@@ -353,6 +195,20 @@ def test_extract_content_from_object_content_parts() -> None:
         choices = [_Choice()]
 
     assert ai_client._extract_content_from_response(_Response()) == "ok"
+
+
+def test_extract_content_from_reasoning_extra_field() -> None:
+    class _Message:
+        content = None
+        model_extra = {"reasoning": 'I will return {"ok":true}'}
+
+    class _Choice:
+        message = _Message()
+
+    class _Response:
+        choices = [_Choice()]
+
+    assert ai_client._extract_content_from_response(_Response()) == '{"ok":true}'
 
 
 def test_parse_json_list_from_prose_with_fenced_json() -> None:

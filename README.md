@@ -71,8 +71,7 @@ For local browser tests, install the Python Playwright browser explicitly with `
 
 - Independent project with no party affiliation or electoral funding; methodology, limitations, and error reporting are part of the product surface.
 - Newsroom-style pipeline with three automated roles: `Foca` (collection), `Editor` (validation/summarization), and `Editor-chefe` (curation/prominence).
-- AI fallback chain (default tasks): NVIDIA NIM (Nemotron 3 Ultra 550B, High Reasoning) -> NVIDIA NIM (Nemotron 3 Super 120B) -> Ollama Cloud (Nemotron 3 Ultra) -> Ollama Cloud (MiniMax M3) -> Gemini 3.7 Flash (free tier) -> Vertex AI (Gemini 3.7 Flash) -> MiMo V2.5 -> OpenCode/free.
-- AI fallback chain (high-quality tasks — quiz/positions): NVIDIA NIM (GLM-5.2, High Reasoning) -> Ollama Cloud (MiniMax M3) -> NVIDIA NIM (MiniMax M3) -> Vertex AI (Gemini 3.7 Flash) -> OpenCode/free.
+- AI fallback chain (all tasks): Poolside (Laguna S 2.1, reasoning enabled) -> Ollama Cloud (MiniMax M3) -> NVIDIA NIM (MiniMax M3) -> OpenRouter/free.
 - Circuit breaker and per-run AI call limits keep the pipeline running when providers degrade instead of failing closed.
 - Editorial feedback is self-healing: blocked keywords, URLs, sources, and `irrelevant` article IDs are accumulated in `data/editor_feedback.json`.
 - The public quiz only reveals sources in the result view, never during the questions.
@@ -154,18 +153,14 @@ Archive files in `data/archives/` follow the same schema as `articles.json` and 
 |---|---|---|
 | `BRIGHTDATA_API_KEY` | `collect.yml` | Bright Data API key for fallback scraping |
 | `BRIGHTDATA_ZONE` | `collect.yml` | Bright Data zone identifier |
-| `NVIDIA_API_KEY` | `collect.yml`, `validate.yml`, `curate.yml`, `update-quiz.yml` | NVIDIA NIM provider |
-| `OPENROUTER_API_KEY` | `collect.yml`, `validate.yml`, `curate.yml`, `update-quiz.yml` | OpenRouter provider |
-| `OLLAMA_API_KEY` | `collect.yml`, `validate.yml`, `curate.yml`, `update-quiz.yml` | Ollama Cloud provider |
-| `VERTEX_API_KEY` | `curate.yml`, `update-quiz.yml` | Vertex AI API key |
-| `VERTEX_ACCESS_TOKEN` | `collect.yml`, `validate.yml`, `curate.yml`, `update-quiz.yml` | Vertex/Gemini access token |
-| `VERTEX_BASE_URL` | `collect.yml`, `validate.yml`, `curate.yml`, `update-quiz.yml` | Vertex/Gemini endpoint base URL |
-| `OPENCODE_API_KEY` | optional | OpenCode paid models; free models do not require a key |
-| `XIAOMI_MIMO_API_KEY` | `collect.yml`, `validate.yml`, `curate.yml` | MiMo fallback provider |
+| `POOLSIDE_API_KEY` | `collect.yml`, `validate.yml`, `curate.yml`, `update-quiz.yml`, `update-candidates-positions.yml` | Poolside provider (Laguna S 2.1, primary) |
+| `NVIDIA_API_KEY` | `collect.yml`, `validate.yml`, `curate.yml`, `update-quiz.yml`, `update-candidates-positions.yml` | NVIDIA NIM provider |
+| `OPENROUTER_API_KEY` | `collect.yml`, `validate.yml`, `curate.yml`, `update-quiz.yml`, `update-candidates-positions.yml` | OpenRouter provider |
+| `OLLAMA_API_KEY` | `collect.yml`, `validate.yml`, `curate.yml`, `update-quiz.yml`, `update-candidates-positions.yml` | Ollama Cloud provider |
 | `TWITTER_BEARER_TOKEN` | `collect.yml` | Social collection token |
 | `YOUTUBE_API_KEY` | `collect.yml` | YouTube collection key |
 
-The methodology page and case study document the current preferred AI provider order for public transparency. The table above lists the secrets still referenced by workflows in this repository, including legacy compatibility variables while provider migrations are cleaned up.
+The methodology page and case study document the current preferred AI provider order for public transparency. The table above lists the secrets referenced by workflows in this repository.
 
 ## Pre-candidates (March 2026)
 

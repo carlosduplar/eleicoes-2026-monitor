@@ -517,10 +517,10 @@ def summarize_articles(limit: int = 30) -> tuple[int, int, int]:
         content = raw_content.strip() if isinstance(raw_content, str) else ""
         if not content:
             logger.warning(
-                "Article %s has no content; falling back to title for summarization.",
+                "Article %s has no content; deferring (status stays raw, retry after scrape).",
                 article_id or "<missing-id>",
             )
-            content = title
+            continue
 
         # Validate content integrity before calling LLMs.
         is_valid, reason = _validate_content_integrity(str(content), str(title))

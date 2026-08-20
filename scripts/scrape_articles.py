@@ -25,6 +25,7 @@ ARTICLES_FILE = DATA_DIR / "articles.json"
 
 BRIGHTDATA_API_URL = "https://api.brightdata.com/request"
 BRIGHTDATA_ZONE = os.environ.get("BRIGHTDATA_ZONE", "web_unlocker1")
+BRIGHTDATA_ENABLE_SCRAPE = os.environ.get("BRIGHTDATA_ENABLE_SCRAPE", "").strip() == "1"
 REQUEST_TIMEOUT_SECONDS = 30
 USER_AGENT = (
     "Mozilla/5.0 (compatible; eleicoes-2026-monitor/1.0; "
@@ -199,7 +200,11 @@ def scrape_articles(limit: int = 100) -> tuple[int, int]:
         f"{sum(1 for a in articles if not a.get('content') and a.get('status') == 'raw')} needing content)"
     )
 
-    brightdata_key = os.environ.get("BRIGHTDATA_API_KEY", "").strip()
+    brightdata_key = (
+        os.environ.get("BRIGHTDATA_API_KEY", "").strip()
+        if BRIGHTDATA_ENABLE_SCRAPE
+        else ""
+    )
     if brightdata_key:
         logger.info("Using Bright Data Web Unlocker (zone: %s)", BRIGHTDATA_ZONE)
     else:

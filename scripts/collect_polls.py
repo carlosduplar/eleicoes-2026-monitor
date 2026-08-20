@@ -17,6 +17,7 @@ import requests
 from playwright.async_api import Browser, Page, async_playwright
 
 BRIGHTDATA_ZONE = os.environ.get("BRIGHTDATA_ZONE", "web_unlocker1")
+BRIGHTDATA_ENABLE_POLLS = os.environ.get("BRIGHTDATA_ENABLE_POLLS", "").strip() == "1"
 REQUEST_TIMEOUT_SECONDS = 30
 
 PollType = Literal["estimulada", "espontanea"]
@@ -775,7 +776,11 @@ async def collect_polls_async() -> tuple[int, int, int]:
     incoming: list[PollItem] = []
     errors = 0
 
-    brightdata_key = os.environ.get("BRIGHTDATA_API_KEY", "").strip()
+    brightdata_key = (
+        os.environ.get("BRIGHTDATA_API_KEY", "").strip()
+        if BRIGHTDATA_ENABLE_POLLS
+        else ""
+    )
     browser: Browser | None = None
 
     async with async_playwright() as playwright:

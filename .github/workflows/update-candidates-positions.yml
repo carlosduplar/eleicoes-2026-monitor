@@ -3,7 +3,7 @@ name: Update Candidate Positions Draft
 on:
   workflow_dispatch:
   schedule:
-    - cron: "0 6 * * 1"
+    - cron: "0 9 * * *"
 
 permissions:
   contents: write
@@ -18,12 +18,10 @@ jobs:
     timeout-minutes: 30
     env:
       FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: true
+      POOLSIDE_API_KEY: ${{ secrets.POOLSIDE_API_KEY }}
       NVIDIA_API_KEY: ${{ secrets.NVIDIA_API_KEY }}
       OLLAMA_API_KEY: ${{ secrets.OLLAMA_API_KEY }}
-      VERTEX_BASE_URL: ${{ secrets.VERTEX_BASE_URL }}
-      VERTEX_API_KEY: ${{ secrets.VERTEX_API_KEY }}
-      XIAOMI_MIMO_API_KEY: ${{ secrets.XIAOMI_MIMO_API_KEY }}
-      GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }} 
+      OPENROUTER_API_KEY: ${{ secrets.OPENROUTER_API_KEY }}
       BRAVE_SEARCH_API_KEY: ${{ secrets.BRAVE_SEARCH_API_KEY }}
     steps:
       - name: Checkout

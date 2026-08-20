@@ -13,7 +13,7 @@
     },
     "summarization": {
       "label": "Sumarização",
-      "body": "Modelos de linguagem com fallback hierárquico e alto raciocínio (High Reasoning) por tipo de tarefa. Sumarização e sentimento: NVIDIA NIM (Nemotron 3 Ultra 550B, gratuito) → NVIDIA NIM (Nemotron 3 Super 120B) → Ollama Cloud (Nemotron 3 Ultra, gratuito) → Ollama Cloud (MiniMax M3, gratuito) → Gemini 3.7 Flash (Google AI, gratuito) → Vertex AI (Gemini 3.7 Flash, pago) → MiMo V2.5 (pago). Quiz e posições de candidatos: NVIDIA NIM (GLM-5.2, gratuito) → Ollama Cloud (MiniMax M3, gratuito) → NVIDIA NIM (MiniMax M3, gratuito) → Vertex AI (Gemini 3.7 Flash, pago). Um circuit breaker e limite por execução evitam desperdício de chamadas quando provedores estão indisponíveis."
+      "body": "Modelos de linguagem com fallback hierárquico unificado para todas as tarefas (sumarização, sentimento, quiz e posições de candidatos): Poolside (Laguna S 2.1, reasoning habilitado, gratuito) → Ollama Cloud (MiniMax M3, gratuito) → NVIDIA NIM (MiniMax M3, gratuito) → OpenRouter/free (gratuito). Um circuit breaker e limite por execução evitam desperdício de chamadas quando provedores estão indisponíveis."
     },
     "sentiment": {
       "label": "Sentimento",

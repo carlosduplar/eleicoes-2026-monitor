@@ -1,9 +1,8 @@
 """AI client with multi-provider fallback and usage tracking.
 
-Task routing follows quiz architecture requirements:
-- High-quality extraction/generation tasks prefer Gemini (Vertex) first.
-- Structured validation tasks prefer free NVIDIA providers first.
-- Legacy summarization tasks keep free-first routing.
+Tasks route through a single free-first fallback chain:
+Poolside (Laguna S 2.1) -> Ollama Cloud (MiniMax M3) -> NVIDIA NIM (MiniMax M3)
+-> OpenRouter/free.
 
 The quiz runner can perform a short streaming preflight before its first model
 call. The preflight measures time-to-first-token (TTFT) and total latency for
@@ -18,7 +17,6 @@ import os
 import re
 import threading
 import time
-import urllib.request
 from datetime import datetime, timezone
 from hashlib import sha256
 from pathlib import Path
@@ -93,34 +91,11 @@ MARKDOWN_JSON_SEARCH_RE = re.compile(
     r"```(?:json)?\s*(.*?)\s*```", re.IGNORECASE | re.DOTALL
 )
 
-# These NVIDIA models run in "thinking" mode by default and surface the chain-of-thought
-# in `reasoning_content` while leaving `content` empty. For JSON tasks where thinking is
-# explicitly suppressed, add them here. Flagship models use native high reasoning.
-_THINKING_DISABLE_EXTRA_BODY: dict[str, dict[str, object]] = {
-    "qwen/qwen3-235b-a22b-thinking-2507": {
-        "chat_template_kwargs": {"enable_thinking": False}
-    },
-    "qwen/qwen3.5-397b-a17b": {"chat_template_kwargs": {"enable_thinking": False}},
-}
+POOLSIDE_BASE_URL = "https://inference.poolside.ai/v1"
+POOLSIDE_MODEL = "poolside/laguna-s-2.1"
 
-NVIDIA_MODELS: dict[str, str] = {
-    "summarization": "nvidia/nemotron-3-ultra-550b-a55b",
-    "sentiment": "nvidia/nemotron-3-ultra-550b-a55b",
-    "multilingual": "nvidia/nemotron-3-ultra-550b-a55b",
-    "quiz_extract": "z-ai/glm-5.2",
-}
-
-NVIDIA_FALLBACKS: list[str] = [
-    "nvidia/nemotron-3-super-120b-a12b",
-]
-
-OLLAMA_MODELS: list[str] = [
-    "nemotron-3-ultra:cloud",
-    "minimax-m3:cloud",
-]
-
-OPENCODE_BASE_URL = "https://opencode.ai/zen/v1"
-OPENCODE_FREE_ALIAS = "free"
+OPENROUTER_BASE_URL = "https://openrouter.ai/api/v1"
+OPENROUTER_MODEL = "openrouter/free"
 
 
 class ProviderConfig(TypedDict, total=False):
@@ -131,6 +106,7 @@ class ProviderConfig(TypedDict, total=False):
     paid: bool
     daily_max: int
     optional_key: bool
+    preflight: bool
 
 
 class ProviderResult(TypedDict):
@@ -146,9 +122,6 @@ _run_preflight_signatures: dict[
 ] = {}
 _PREFLIGHT_CACHE_MISS = object()
 _run_preflight_lock = threading.Lock()
-_opencode_free_model: str | None = None
-_opencode_free_model_lookup_done = False
-_opencode_model_lock = threading.Lock()
 
 
 def build_article_id(url: str) -> str:
@@ -160,153 +133,43 @@ def _today_key() -> str:
     return datetime.now(timezone.utc).date().isoformat()
 
 
-def _get_gemini_model(task: str) -> str:
-    override = os.environ.get("GEMINI_MODEL_OVERRIDE")
-    if override:
-        return override
-    return "gemini-3.7-flash"
-
-
-def _get_vertex_model(task: str) -> str:
-    override = os.environ.get("VERTEX_MODEL_OVERRIDE")
-    if override:
-        return override
-    return "gemini-3.7-flash"
-
-
-def _get_opencode_model() -> str:
-    return (
-        os.environ.get("OPENCODE_MODEL", OPENCODE_FREE_ALIAS).strip()
-        or OPENCODE_FREE_ALIAS
-    )
-
-
-def _opencode_provider() -> ProviderConfig:
+def _openrouter_provider() -> ProviderConfig:
     return {
-        "name": "opencode",
-        "base_url": OPENCODE_BASE_URL,
-        "key_env": "OPENCODE_API_KEY",
-        "model": _get_opencode_model(),
+        "name": "openrouter",
+        "base_url": OPENROUTER_BASE_URL,
+        "key_env": "OPENROUTER_API_KEY",
+        "model": OPENROUTER_MODEL,
         "paid": False,
-        # OpenCode's free Zen models can be called without a key.
-        "optional_key": True,
+        "preflight": False,
     }
 
 
 def _provider_chain_for_task(task: str) -> list[ProviderConfig]:
-    if task in {"positions_extract", "quiz_generate", "quiz_extract"}:
-        return [
-            {
-                "name": "nvidia",
-                "base_url": "https://integrate.api.nvidia.com/v1",
-                "key_env": "NVIDIA_API_KEY",
-                "model": "z-ai/glm-5.2",
-                "paid": False,
-            },
-            {
-                "name": "ollama",
-                "base_url": "https://ollama.com/v1",
-                "key_env": "OLLAMA_API_KEY",
-                "model": "minimax-m3:cloud",
-                "paid": False,
-            },
-            {
-                "name": "nvidia",
-                "base_url": "https://integrate.api.nvidia.com/v1",
-                "key_env": "NVIDIA_API_KEY",
-                "model": "minimaxai/minimax-m3",
-                "paid": False,
-            },
-            {
-                "name": "vertex",
-                "base_url": "VERTEX_BASE_URL",
-                "key_env": "VERTEX_API_KEY",
-                "model": _get_vertex_model(task),
-                "paid": True,
-            },
-            _opencode_provider(),
-        ]
-
-    if task == "quiz_validate":
-        return [
-            {
-                "name": "nvidia",
-                "base_url": "https://integrate.api.nvidia.com/v1",
-                "key_env": "NVIDIA_API_KEY",
-                "model": "z-ai/glm-5.2",
-                "paid": False,
-            },
-            {
-                "name": "ollama",
-                "base_url": "https://ollama.com/v1",
-                "key_env": "OLLAMA_API_KEY",
-                "model": "minimax-m3:cloud",
-                "paid": False,
-            },
-            {
-                "name": "nvidia",
-                "base_url": "https://integrate.api.nvidia.com/v1",
-                "key_env": "NVIDIA_API_KEY",
-                "model": "minimaxai/minimax-m3",
-                "paid": False,
-            },
-            {
-                "name": "vertex",
-                "base_url": "VERTEX_BASE_URL",
-                "key_env": "VERTEX_API_KEY",
-                "model": _get_vertex_model(task),
-                "paid": True,
-            },
-            _opencode_provider(),
-        ]
-
-    nvidia_primary = NVIDIA_MODELS.get(task, NVIDIA_MODELS["summarization"])
-    nvidia_all = list(dict.fromkeys([nvidia_primary, *NVIDIA_FALLBACKS]))
+    # All tasks share the same free-first chain: Poolside Laguna S 2.1
+    # (reasoning enabled) with MiniMax M3 and OpenRouter free as fallbacks.
     return [
-        *[
-            {
-                "name": "nvidia",
-                "base_url": "https://integrate.api.nvidia.com/v1",
-                "key_env": "NVIDIA_API_KEY",
-                "model": model,
-                "paid": False,
-            }
-            for model in nvidia_all
-        ],
-        *[
-            {
-                "name": "ollama",
-                "base_url": "https://ollama.com/v1",
-                "key_env": "OLLAMA_API_KEY",
-                "model": model,
-                "paid": False,
-            }
-            for model in OLLAMA_MODELS
-        ],
-        *[
-            {
-                "name": "gemini",
-                "base_url": "https://generativelanguage.googleapis.com/v1beta/openai/",
-                "key_env": "GEMINI_API_KEY",
-                "model": _get_gemini_model(task),
-                "paid": False,
-            }
-        ],
         {
-            "name": "vertex",
-            "base_url": "VERTEX_BASE_URL",
-            "key_env": "VERTEX_API_KEY",
-            "model": _get_vertex_model(task),
-            "paid": True,
+            "name": "poolside",
+            "base_url": POOLSIDE_BASE_URL,
+            "key_env": "POOLSIDE_API_KEY",
+            "model": POOLSIDE_MODEL,
+            "paid": False,
         },
         {
-            "name": "mimo",
-            "base_url": "https://api.xiaomimimo.com/v1",
-            "key_env": "XIAOMI_MIMO_API_KEY",
-            "model": "mimo-v2.5",
-            "paid": True,
+            "name": "ollama",
+            "base_url": "https://ollama.com/v1",
+            "key_env": "OLLAMA_API_KEY",
+            "model": "minimax-m3:cloud",
+            "paid": False,
         },
-        _opencode_provider(),
+        {
+            "name": "nvidia",
+            "base_url": "https://integrate.api.nvidia.com/v1",
+            "key_env": "NVIDIA_API_KEY",
+            "model": "minimaxai/minimax-m3",
+            "paid": False,
+        },
+        _openrouter_provider(),
     ]
 
 
@@ -349,76 +212,11 @@ def _save_usage(usage: dict[str, int]) -> None:
     USAGE_FILE.write_text(json.dumps(usage, indent=2, sort_keys=True), encoding="utf-8")
 
 
-def _resolve_provider_model(provider: ProviderConfig) -> ProviderConfig:
-    """Resolve the user-facing ``opencode/free`` alias to a live free model.
-
-    OpenCode's model roster changes over time and its current endpoint exposes
-    named ``*-free`` models rather than a literal ``free`` id. Keep ``free`` as
-    the stable route in the provider chain, but resolve it once through the
-    public model list. ``OPENCODE_MODEL`` can pin a specific model instead.
-    """
-    if (
-        provider.get("name") != "opencode"
-        or provider.get("model") != OPENCODE_FREE_ALIAS
-    ):
-        return provider
-
-    global _opencode_free_model, _opencode_free_model_lookup_done
-    with _opencode_model_lock:
-        if not _opencode_free_model_lookup_done:
-            _opencode_free_model_lookup_done = True
-            try:
-                request = urllib.request.Request(
-                    f"{provider['base_url'].rstrip('/')}/models",
-                    headers={"Accept": "application/json"},
-                    method="GET",
-                )
-                with urllib.request.urlopen(
-                    request, timeout=_PREFLIGHT_TIMEOUT_SECONDS
-                ) as response:
-                    payload = json.loads(response.read().decode("utf-8"))
-                raw_models = payload.get("data") if isinstance(payload, dict) else None
-                model_ids = [
-                    item.get("id")
-                    for item in raw_models or []
-                    if isinstance(item, dict) and isinstance(item.get("id"), str)
-                ]
-                free_models = [
-                    model_id for model_id in model_ids if model_id.endswith("-free")
-                ]
-                preferred = os.environ.get("OPENCODE_FREE_MODEL", "").strip()
-                if preferred and preferred in model_ids:
-                    _opencode_free_model = preferred
-                elif free_models:
-                    _opencode_free_model = free_models[0]
-                else:
-                    logger.warning(
-                        "[AI] OpenCode model roster contains no *-free model; "
-                        "leaving the free alias unresolved."
-                    )
-            except Exception as exc:  # noqa: BLE001 - alias resolution is optional
-                logger.warning("[AI] Could not resolve opencode/free alias: %s", exc)
-
-        if not _opencode_free_model:
-            return provider
-        resolved = dict(provider)
-        resolved["model"] = _opencode_free_model
-        return resolved
-
-
 def _openai_client_kwargs(
     provider: ProviderConfig, api_key: str, *, timeout: float | None = None
 ) -> dict[str, object]:
-    # The OpenAI SDK requires a key even when OpenCode's free endpoint does not.
-    # The placeholder is never a project secret and is accepted by the public
-    # free endpoint; a real OPENCODE_API_KEY is used whenever one is configured.
-    client_key = api_key or (
-        "opencode-free-placeholder"
-        if provider.get("name") == "opencode"
-        else ""
-    )
     return {
-        "api_key": client_key,
+        "api_key": api_key,
         "base_url": provider["base_url"],
         "timeout": timeout or _AI_REQUEST_TIMEOUT_SECONDS,
         "max_retries": 0,
@@ -444,18 +242,16 @@ def _chat_completion_kwargs(
     if stream:
         kwargs["stream"] = True
 
-    # Web evidence is supplied upstream via Source F (Brave Search) in
+# Web evidence is supplied upstream via Source F (Brave Search) in
     # seed_candidates_positions.py.
-    if provider.get("name") == "nvidia":
-        disable_body = _THINKING_DISABLE_EXTRA_BODY.get(provider.get("model", ""))
-        if disable_body:
-            kwargs["extra_body"] = disable_body
-    elif provider.get("name") == "ollama":
+    if provider.get("name") == "ollama":
         # Ollama MiniMax can otherwise put all of a short structured response in
         # its thinking channel, yielding HTTP 200 with no usable content.
         kwargs["extra_body"] = {"think": False}
-    elif provider.get("name") == "mimo":
-        kwargs["extra_body"] = {"thinking": {"type": "disabled"}}
+    elif provider.get("name") == "openrouter":
+        # openrouter/free can route to reasoning models. Disable reasoning for
+        # structured JSON work so the output is emitted in message.content.
+        kwargs["extra_body"] = {"reasoning": {"effort": "none"}}
     return kwargs
 
 
@@ -474,10 +270,17 @@ def _provider_signature(provider: ProviderConfig) -> tuple[str, str, str]:
     )
 
 
+def _usage_key(provider: ProviderConfig, today: str) -> str:
+    name = str(provider.get("name", "unknown"))
+    return f"{name}_{today}"
+
+
 def _provider_is_preflight_eligible(
     provider: ProviderConfig, usage: dict[str, int], today: str
 ) -> bool:
     name = provider.get("name", "unknown")
+    if provider.get("preflight", True) is False:
+        return False
     key_env = provider.get("key_env", "")
     api_key = os.environ.get(key_env, "").strip() if key_env else ""
     if not api_key and not provider.get("optional_key", False):
@@ -485,17 +288,13 @@ def _provider_is_preflight_eligible(
         return False
 
     base_url = provider.get("base_url", "").strip()
-    if base_url == "VERTEX_BASE_URL":
-        if not os.environ.get("VERTEX_BASE_URL", "").strip():
-            logger.info("[AI] preflight %s skipped: missing VERTEX_BASE_URL.", name)
-            return False
-    elif not base_url:
+    if not base_url:
         logger.info("[AI] preflight %s skipped: missing base URL.", name)
         return False
 
     daily_max_raw = provider.get("daily_max")
     if daily_max_raw is not None:
-        usage_key = f"{name}_{today}"
+        usage_key = _usage_key(provider, today)
         if usage.get(usage_key, 0) >= int(daily_max_raw):
             logger.info("[AI] preflight %s skipped: daily limit reached.", name)
             return False
@@ -528,24 +327,11 @@ def _stream_chunk_parts(chunk: object) -> tuple[str, str]:
 
 def _probe_provider(provider: ProviderConfig) -> dict[str, float | str]:
     """Run one bounded streaming probe and return TTFT/latency measurements."""
-    provider = _resolve_provider_model(provider)
     api_key = os.environ.get(provider.get("key_env", ""), "").strip()
     system = "Return only the JSON object {\"ok\":true}. Do not explain."
     user = "Return the probe JSON now."
     started = time.perf_counter()
     first_token_at: float | None = None
-
-    if provider.get("name") == "vertex":
-        # Vertex currently uses the non-OpenAI REST path in this client. It has no
-        # streaming measurement here, so use total latency as a conservative TTFT.
-        _request_completion(provider, api_key, system, user, _PREFLIGHT_MAX_TOKENS)
-        elapsed = time.perf_counter() - started
-        return {
-            "provider": str(provider["name"]),
-            "model": str(provider["model"]),
-            "ttft_ms": elapsed * 1000.0,
-            "latency_ms": elapsed * 1000.0,
-        }
 
     client_kwargs = _openai_client_kwargs(
         provider, api_key, timeout=_PREFLIGHT_TIMEOUT_SECONDS
@@ -638,7 +424,6 @@ def _preflight_select_provider(
         return None
 
     _, _, selected, result = min(candidates, key=lambda item: (item[0], item[1]))
-    selected = _resolve_provider_model(selected)
     logger.info(
         "[AI] preflight selected task=%s provider=%s model=%s (ttft=%.0fms latency=%.0fms)",
         task,
@@ -694,17 +479,10 @@ def _ordered_provider_chain_for_task(task: str) -> list[ProviderConfig]:
     if selected is None:
         return chain
 
-    selected_name = selected.get("name")
-    selected_base_url = selected.get("base_url")
     remaining: list[ProviderConfig] = []
+    selected_signature = _provider_signature(selected)
     for provider in chain:
-        # The resolved OpenCode model is represented by the stable free alias in
-        # the static chain; avoid probing/calling that alias a second time.
-        if (
-            selected_name == "opencode"
-            and provider.get("name") == selected_name
-            and provider.get("base_url") == selected_base_url
-        ):
+        if _provider_signature(provider) == selected_signature:
             continue
         remaining.append(provider)
     return [selected, *remaining]
@@ -772,10 +550,20 @@ def _extract_content_from_response(response: object) -> str:
         if cleaned_content_text:
             return cleaned_content_text
 
-    # Some NVIDIA thinking models surface the final answer in reasoning_content when
-    # the content field is empty. Try to extract a JSON block first; if that fails
-    # we raise rather than returning raw prose that would break every JSON parser.
+    # Some reasoning-enabled providers surface the final answer in a reasoning field
+    # when the content field is empty. Try both known SDK fields and extra fields
+    # before rejecting the response.
     reasoning = getattr(message, "reasoning_content", None)
+    if not isinstance(reasoning, str) or not reasoning.strip():
+        reasoning = getattr(message, "reasoning", None)
+    if not isinstance(reasoning, str) or not reasoning.strip():
+        model_extra = getattr(message, "model_extra", None)
+        if isinstance(model_extra, dict):
+            for field in ("reasoning_content", "reasoning"):
+                extra_reasoning = model_extra.get(field)
+                if isinstance(extra_reasoning, str) and extra_reasoning.strip():
+                    reasoning = extra_reasoning
+                    break
     if isinstance(reasoning, str) and reasoning.strip():
         json_block = _extract_last_json_block(reasoning.strip())
         if json_block:
@@ -784,8 +572,7 @@ def _extract_content_from_response(response: object) -> str:
             )
             return json_block
         logger.warning(
-            "[AI] reasoning_content has no parseable JSON block; skipping provider. "
-            "Tip: add this model to _THINKING_DISABLE_EXTRA_BODY to suppress thinking mode."
+            "[AI] reasoning_content has no parseable JSON block; skipping provider."
         )
         raise ValueError("Provider returned only prose reasoning_content with no JSON.")
 
@@ -802,76 +589,8 @@ def _request_completion(
     api_key: str,
     system: str,
     user: str,
-    max_tokens: int,
+max_tokens: int,
 ) -> str:
-    provider = _resolve_provider_model(provider)
-    if provider.get("name") == "vertex":
-        import json
-        import urllib.request
-
-        api_key = os.environ.get("VERTEX_API_KEY", "").strip()
-        if not api_key:
-            raise ValueError("VERTEX_API_KEY environment variable is missing.")
-
-        url = f"https://aiplatform.googleapis.com/v1/publishers/google/models/{provider['model']}:generateContent"
-        data = {
-            "contents": [{"role": "user", "parts": [{"text": f"{system}\n\n{user}"}]}],
-            "generationConfig": {
-                "maxOutputTokens": max(max_tokens, 4096),
-                "thinkingConfig": {"thinkingBudget": 2048},
-                "responseMimeType": "application/json",
-            },
-        }
-        req = urllib.request.Request(
-            f"{url}?key={api_key}",
-            data=json.dumps(data).encode("utf-8"),
-            headers={"Content-Type": "application/json"},
-            method="POST",
-        )
-        logger.info(
-            "[AI] vertex request: model=%s, prompt_len=%d, max_tokens=%d",
-            provider["model"],
-            len(f"{system}\n\n{user}"),
-            max_tokens,
-        )
-        try:
-            with urllib.request.urlopen(req, timeout=60) as response:
-                resp_data = json.loads(response.read().decode("utf-8"))
-        except Exception as exc:
-            logger.warning("[AI] vertex HTTP error: %s", exc)
-            raise
-        if isinstance(resp_data, list):
-            resp_data = resp_data[0]
-        candidates = resp_data.get("candidates")
-        if not isinstance(candidates, list) or not candidates:
-            raise ValueError(f"Unexpected Vertex response format: {resp_data}")
-        first_candidate = candidates[0]
-        if not isinstance(first_candidate, dict):
-            raise ValueError(f"Unexpected Vertex response format: {resp_data}")
-        content = first_candidate.get("content")
-        chunks: list[str] = []
-        if isinstance(content, dict):
-            parts = content.get("parts")
-            if isinstance(parts, list):
-                for part in parts:
-                    if not isinstance(part, dict):
-                        continue
-                    text = part.get("text")
-                    if isinstance(text, str) and text:
-                        chunks.append(text)
-            content_text = content.get("text")
-            if isinstance(content_text, str) and content_text.strip():
-                chunks.append(content_text.strip())
-        if chunks:
-            return "".join(chunks).strip()
-        finish_reason = first_candidate.get("finishReason")
-        if isinstance(finish_reason, str) and finish_reason:
-            raise ValueError(
-                "Vertex returned no text content "
-                f"(finishReason={finish_reason}, model={provider['model']})."
-            )
-        raise ValueError(f"Unexpected Vertex response format: {resp_data}")
-
     client_kwargs = _openai_client_kwargs(provider, api_key)
 
     default_headers: dict[str, str] = {}
@@ -891,13 +610,7 @@ def _request_completion(
 
     try:
         response = client.chat.completions.create(**kwargs)  # type: ignore[arg-type]
-    except Exception as e:
-        if provider.get("name") == "mimo":
-            logger.warning(
-                "[AI] MiMo request failed. API key length: %d, base_url: %s",
-                len(api_key),
-                provider.get("base_url", "missing"),
-            )
+    except Exception:
         raise
     return _extract_content_from_response(response)
 
@@ -955,7 +668,7 @@ def _call_with_fallback_for_task(
     error_messages: list[str] = []
 
     for configured_provider in _ordered_provider_chain_for_task(task):
-        provider = _resolve_provider_model(configured_provider)
+        provider = configured_provider
         name = provider["name"]
         key_env = provider["key_env"]
         api_key = os.environ.get(key_env, "").strip()
@@ -965,11 +678,7 @@ def _call_with_fallback_for_task(
             logger.info("[AI] %s skipped: missing %s.", name, key_env)
             continue
 
-        if base_url == "VERTEX_BASE_URL":
-            if not os.environ.get("VERTEX_BASE_URL", "").strip():
-                logger.info("[AI] %s skipped: missing VERTEX_BASE_URL in env.", name)
-                continue
-        elif not base_url:
+        if not base_url:
             logger.info("[AI] %s skipped: missing base URL.", name)
             continue
 
@@ -987,7 +696,7 @@ def _call_with_fallback_for_task(
         daily_max_raw = provider.get("daily_max")
         if daily_max_raw is not None:
             daily_max = int(daily_max_raw)
-            usage_key = f"{name}_{today}"
+            usage_key = _usage_key(provider, today)
             if usage.get(usage_key, 0) >= daily_max:
                 logger.warning(
                     "[AI] %s skipped: daily limit reached (%s).", name, daily_max
@@ -1005,7 +714,7 @@ def _call_with_fallback_for_task(
             # Success — reset failure counter for this provider.
             with _circuit_breaker_lock:
                 _provider_failure_counts[name] = 0
-            usage_key = f"{name}_{today}"
+            usage_key = _usage_key(provider, today)
             usage[usage_key] = usage.get(usage_key, 0) + 1
             _save_usage(usage)
             return {
@@ -1031,10 +740,6 @@ def _call_with_fallback_for_task(
                         _provider_failure_counts.get(name, 0) + 1
                     )
                 logger.warning("[AI] %s failed: %s", name, exc)
-                if name == "mimo":
-                    logger.warning(
-                        "[AI] MiMo API key status: %s", "set" if api_key else "missing"
-                    )
 
     error_details = (
         "; ".join(error_messages) if error_messages else "no providers configured"
@@ -1846,7 +1551,8 @@ Return JSON:
 
 
 __all__ = [
-    "NVIDIA_MODELS",
+    "POOLSIDE_BASE_URL",
+    "POOLSIDE_MODEL",
     "USAGE_FILE",
     "build_article_id",
     "call_with_fallback",

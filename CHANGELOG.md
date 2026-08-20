@@ -7,6 +7,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 
 ### Added
 
+- Poolside (Laguna S 2.1) wired as the primary AI provider in `scripts/ai_client.py` (`POOLSIDE_API_KEY`, base URL `https://inference.poolside.ai/v1`, model `poolside/laguna-s-2.1`, reasoning enabled).
 - Phase 18: Government data integration (TSE + Portal da Transparência).
   - `scripts/collect_tse.py`: collects 2022 presidential results from TSE CDN and DivulgaCandContas REST API for all 9 tracked candidates.
   - `scripts/collect_transparencia.py`: collects PEP status and emendas parlamentares from Portal da Transparência API for all 9 candidates.
@@ -24,6 +25,9 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 
 ### Changed
 
+- AI provider chain unified on a single free-first fallback for all tasks: `poolside/laguna-s-2.1` (Poolside, reasoning enabled) -> `minimax-m3:cloud` (Ollama Cloud) -> `minimaxai/minimax-m3` (NVIDIA NIM) -> `openrouter/free` (OpenRouter).
+- Removed Google AI Studio (Gemini), Vertex AI, and Xiaomi MiMo provider code from `scripts/ai_client.py`; dropped `GEMINI_API_KEY`, `VERTEX_API_KEY`, `VERTEX_BASE_URL`, `VERTEX_ACCESS_TOKEN`, and `XIAOMI_MIMO_API_KEY` from all workflows and docs. Vertex AI Search article indexing (`collect.yml` -> `index_to_vertex_search.py`) is unchanged.
+- Purged deprecated NVIDIA Nemotron/Qwen thinking-suppression map (`_THINKING_DISABLE_EXTRA_BODY`) and the per-model Gemini usage keys.
 - AI provider chain updated with 2026 releases based on Artificial Analysis live benchmarks:
   - Quiz & position extraction (`positions_extract`, `quiz_generate`, `quiz_extract`, `quiz_validate`): `z-ai/glm-5.2` (NVIDIA NIM) -> `minimax-m3:cloud` (Ollama) -> `minimaxai/minimax-m3` (NVIDIA NIM) -> `gemini-3.7-flash` (Vertex AI).
   - Ingestion & sentiment (`summarization`, `sentiment`, `multilingual`): `nvidia/nemotron-3-ultra-550b-a55b` (NVIDIA NIM) -> `nvidia/nemotron-3-super-120b-a12b` (NVIDIA NIM) -> `nemotron-3-ultra:cloud` (Ollama) -> `minimax-m3:cloud` (Ollama) -> `gemini-3.7-flash` (Google AI Studio) -> `gemini-3.7-flash` (Vertex AI) -> `mimo-v2.5` (Xiaomi MiMo).

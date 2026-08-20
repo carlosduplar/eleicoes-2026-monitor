@@ -39,11 +39,11 @@ knowledge base for candidate policy positions.
 | **Update frequency** | Updated daily with legislative proceedings |
 | **Data provided** | Senatorial votes on bills and amendments |
 
-## Source D — AI Synthesis (Gemini / fallback providers)
+## Source D — AI Synthesis (Poolside / fallback providers)
 
 | Attribute | Value |
 |---|---|
-| **Provider** | Google (Gemini), with NVIDIA and MiMo fallbacks |
+| **Provider** | Poolside (Laguna S 2.1), with Ollama MiniMax-M3, NVIDIA MiniMax-M3, and OpenRouter/free fallbacks |
 | **Auth required** | API key via environment variable |
 | **Data provided** | Synthesized position summaries from provided snippets or training knowledge |
 | **Evidence flow** | Web evidence is supplied upstream via Source F (Brave Search) and remains auditable in `sources_used` / `editor_notes` |
