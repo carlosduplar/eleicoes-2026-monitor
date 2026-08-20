@@ -144,6 +144,154 @@ BANNED_OPTION_OPENINGS_EN = (
     "the government should adopt a clear and stable public policy in which",
 )
 
+CORE_SIMILARITY_THRESHOLD = 0.85
+MAX_FALLBACK_SHARE = 1.0 / 3.0
+
+# Intro phrases stripped from option texts before deduplication so that
+# same-stance fallback templates differing only by the seed-chosen intro are
+# still recognized as near-duplicates.
+_CORE_INTROS_PT = (
+    "defendo que",
+    "acredito que",
+    "eu acredito que",
+    "entendo que",
+    "na minha visão,",
+    "na minha visão",
+    "na minha visao,",
+    "na minha visao",
+    "considero que",
+    "prefiro que",
+    "quero que",
+    "sou favorável a que",
+    "sou contra",
+    "o governo",
+    "o estado",
+)
+_CORE_INTROS_EN = (
+    "i believe the government should",
+    "i argue the government should",
+    "in my view, the government should",
+    "i support the government choosing to",
+    "i understand that the government should",
+    "i consider that the government should",
+    "the government should",
+    "the state should",
+)
+_CORE_TAILS = (
+    "com metas transparentes e revisão periódica",
+    "com metas transparentes e avaliação periódica",
+    "com metas objetivas e revisão periódica",
+    "with transparent goals and periodic review",
+    "with transparent targets and periodic review",
+    "with objective targets and periodic review",
+)
+
+_THIRD_PERSON_LEAK_PATTERNS = (
+    r"\bo\s+candidato\b",
+    r"\bseu\s+partido\b",
+    r"\bsua\s+legenda\b",
+    r"\bo\s+partido\b",
+    r"\bfiliad[oa]\b",
+    r"\bcomo\s+membro\b",
+    r"\bintegrante\b",
+    r"\bn[aã]o\s+h[aá]\s+men[cç][aã]o\b",
+    r"\bpode\s+ser\s+inferid",
+    r"\bprovavelmente\b",
+    r"\bthe\s+candidate\b",
+    r"\bhis\s+party\b",
+    r"\bher\s+party\b",
+    r"\bthe\s+party\b",
+    r"\bthere\s+is\s+no\s+direct\s+mention\b",
+    r"\bcan\s+be\s+inferred\b",
+    r"\bprobably\b",
+    r"\baccording\s+to\s+wikipedia\b",
+    r"\bdados\s+da\s+wikipedia\b",
+    r"\bdata\s+from\s+wikipedia\b",
+)
+
+# Hint fragments (summary/action excerpts) that cannot compose grammatically
+# into a first-person fallback sentence are dropped instead of appended raw.
+_PT_HINT_REJECT_STARTS = (
+    "embora",
+    "que",
+    "porque",
+    "porem",
+    "porém",
+    "mas",
+    "se",
+    "como",
+    "quando",
+    "apesar",
+    "ele",
+    "ela",
+    "eles",
+    "elas",
+    "seu",
+    "sua",
+    "seus",
+    "suas",
+    "eu",
+    "voce",
+    "você",
+    "e",
+    "é",
+    "ha",
+    "há",
+    "foi",
+    "tem",
+    "reduz",
+    "propoe",
+    "propõe",
+    "quer",
+    "deve",
+    "vai",
+    "afirma",
+    "garante",
+)
+_EN_HINT_REJECT_STARTS = (
+    "although",
+    "because",
+    "but",
+    "however",
+    "if",
+    "as",
+    "when",
+    "he",
+    "she",
+    "they",
+    "his",
+    "her",
+    "their",
+    "i",
+    "you",
+    "is",
+    "are",
+    "was",
+    "were",
+    "has",
+    "had",
+    "does",
+    "did",
+    "will",
+    "would",
+    "can",
+    "could",
+    "should",
+    "must",
+)
+_PT_VERB_START_REJECT = re.compile(
+    r"^[a-záéíóúâêôãõç]{2,}(?:ou|eu|iu|ava|era|ei|ia|emos|amos|em|am|e|a)\b",
+    re.IGNORECASE,
+)
+_EN_VERB_SUFFIX_REJECT = re.compile(r"^[a-z]{2,}(?:s|ed|ing)\b", re.IGNORECASE)
+
+_JUNK_SOURCE_PATTERNS = (
+    r"dados\s+da\s+wikipedia",
+    r"data\s+from\s+wikipedia",
+    r"^\s*(n/?a|sem\s+fontes?|source\s+not\s+found|wikipedia)\s*$",
+    r"^\s*para\s+[a-z-]+\s*$",
+)
+
 QUESTION_TEMPLATES = {
     "economia": (
         "Qual deve ser a prioridade na política econômica do governo federal?",
@@ -385,6 +533,36 @@ def _normalize_option_fingerprint(text: str) -> str:
     return re.sub(r"[^\w\s]", "", normalized, flags=re.UNICODE)
 
 
+def _content_core(text: str) -> str:
+    """Return the option text with intro phrase and fixed tail stripped.
+
+    Two options sharing a content core are near-duplicates even when a
+    different seed-chosen intro masks an exact fingerprint match.
+    """
+    normalized = re.sub(r"\s+", " ", text.strip().lower())
+    changed = True
+    while changed:
+        changed = False
+        for intro in _CORE_INTROS_PT + _CORE_INTROS_EN:
+            if normalized.startswith(intro):
+                normalized = normalized[len(intro) :].lstrip()
+                if normalized.startswith(","):
+                    normalized = normalized[1:].lstrip()
+                changed = True
+                break
+    for tail in _CORE_TAILS:
+        normalized = normalized.replace(tail, " ")
+    return re.sub(r"\s+", " ", normalized).strip()
+
+
+def _core_similarity(core_a: str, core_b: str) -> float:
+    tokens_a = set(re.findall(r"\w+", core_a))
+    tokens_b = set(re.findall(r"\w+", core_b))
+    if not tokens_a or not tokens_b:
+        return 0.0
+    return len(tokens_a & tokens_b) / len(tokens_a | tokens_b)
+
+
 def _local_quality_check(text_pt: str, text_en: str) -> tuple[bool, list[str]]:
     failures: list[str] = []
     word_count = _normalize_word_count(text_pt)
@@ -406,6 +584,12 @@ def _local_quality_check(text_pt: str, text_en: str) -> tuple[bool, list[str]]:
         failures.append("boilerplate")
     if any(normalized_en.startswith(prefix) for prefix in BANNED_OPTION_OPENINGS_EN):
         failures.append("boilerplate")
+    for leak_pattern in _THIRD_PERSON_LEAK_PATTERNS:
+        if re.search(leak_pattern, normalized_pt) or re.search(
+            leak_pattern, normalized_en
+        ):
+            failures.append("third_person_leak")
+            break
     broken_continuation_patterns = (
         r"\b(isso\s+inclui\s+[a-zéêãõ]{1,4}\s)",  # "Isso inclui é", "Isso inclui o"
         r"\b(tamb[eé]m\s+[eé]\s+essencial\s+[a-zéêãõ]{1,4}\s)",  # "Também é essencial apoiou"
@@ -476,6 +660,34 @@ def _extract_action_hint(key_actions: list[object]) -> str | None:
     return None
 
 
+def _hint_fragment_ok(fragment: str, language: str) -> bool:
+    """Return True when a summary/action fragment can compose grammatically
+    into the first-person fallback sentence.
+
+    Rejects fragments starting with a conjugated verb (e.g. "reativou",
+    "defende"), conjunctions or pronouns, and any third-person leak such as
+    "o candidato" / "the candidate" or party references.
+    """
+    first_word = fragment.split(None, 1)[0].lower() if fragment else ""
+    if not first_word:
+        return False
+    if language == "pt":
+        if first_word in _PT_HINT_REJECT_STARTS or _PT_VERB_START_REJECT.match(
+            first_word
+        ):
+            return False
+    else:
+        if first_word in _EN_HINT_REJECT_STARTS or _EN_VERB_SUFFIX_REJECT.match(
+            first_word
+        ):
+            return False
+    normalized = fragment.lower()
+    for pattern in _THIRD_PERSON_LEAK_PATTERNS:
+        if re.search(pattern, normalized):
+            return False
+    return True
+
+
 def _truncate_words(text: str, max_words: int = 80) -> str:
     chunks = [chunk for chunk in re.split(r"\s+", text.strip()) if chunk]
     if len(chunks) <= max_words:
@@ -531,12 +743,16 @@ def _fallback_option_text(
         f"{en_intros[intro_index]} {en_desc} on {topic_en}, "
         "with transparent goals and periodic review."
     )
-    if summary_hint_pt:
-        text_pt += f" Também considero importante {summary_hint_pt.lower()}."
-    if action_hint_pt and summary_hint_pt != action_hint_pt:
+    if summary_hint_pt and _hint_fragment_ok(summary_hint_pt, "pt"):
+        text_pt += f" E um ponto central: {summary_hint_pt}."
+    if (
+        action_hint_pt
+        and summary_hint_pt != action_hint_pt
+        and _hint_fragment_ok(action_hint_pt, "pt")
+    ):
         text_pt += f" Além disso, proponho {action_hint_pt.lower()}."
-    if summary_hint_en:
-        text_en += f" I also consider it important to {summary_hint_en.lower()}."
+    if summary_hint_en and _hint_fragment_ok(summary_hint_en, "en"):
+        text_en += f" Additionally, a central point: {summary_hint_en}."
     text_pt = _truncate_words(text_pt, max_words=80)
     text_en = _truncate_words(text_en, max_words=80)
 
@@ -569,6 +785,19 @@ def _best_source(
     return source_pt, source_en, source_url, source_date
 
 
+def _clean_source_text(value: str | None) -> str | None:
+    """Drop template-leakage placeholder sources such as "Dados da Wikipedia
+    para flavio-bolsonaro". Attribution may legitimately mention the
+    candidate, so only junk-filler patterns are rejected here."""
+    text = _normalize_text(value)
+    if text is None:
+        return None
+    for pattern in _JUNK_SOURCE_PATTERNS:
+        if re.search(pattern, text, re.IGNORECASE):
+            return None
+    return text
+
+
 def build_topic_options(
     topic_id: str,
     topic_label_pt: str,
@@ -576,7 +805,13 @@ def build_topic_options(
     question_pt: str,
     question_en: str,
     known_positions: list[dict[str, object]],
-) -> tuple[list[dict[str, object]], str | None, str | None, bool]:
+) -> tuple[list[dict[str, object]], str | None, str | None, bool, int]:
+    """Build the options array for one topic.
+
+    Returns (options, generator_provider, generator_model, validation_degraded,
+    fallback_count) where fallback_count is how many options came from the
+    deterministic `_fallback_option_text` template.
+    """
     mapped_positions = {
         index + 1: position for index, position in enumerate(known_positions)
     }
@@ -584,6 +819,8 @@ def build_topic_options(
     used_candidates: set[str] = set()
     used_text_pt: set[str] = set()
     used_text_en: set[str] = set()
+    accepted_cores: list[tuple[str, str]] = []
+    fallback_count = 0
     validation_degraded = False
     ai_validation_enabled = True
     generated_options: list[object] = []
@@ -660,9 +897,19 @@ def build_topic_options(
         if fingerprint_pt in used_text_pt or fingerprint_en in used_text_en:
             return False
 
+        core_pt = _content_core(text_pt)
+        core_en = _content_core(text_en)
+        for existing_pt, existing_en in accepted_cores:
+            if _core_similarity(core_pt, existing_pt) >= CORE_SIMILARITY_THRESHOLD:
+                return False
+            if _core_similarity(core_en, existing_en) >= CORE_SIMILARITY_THRESHOLD:
+                return False
+
         _run_optional_ai_validation(text_pt=text_pt, text_en=text_en, weight=weight)
 
         source_pt, source_en, source_url, source_date = _best_source(mapped_position)
+        source_pt = _clean_source_text(source_pt)
+        source_en = _clean_source_text(source_en)
         position_type = str(mapped_position["position_type"])
         confidence = "high" if position_type == "confirmed" else "medium"
         options.append(
@@ -683,6 +930,7 @@ def build_topic_options(
         used_candidates.add(str(mapped_position["candidate_slug"]))
         used_text_pt.add(fingerprint_pt)
         used_text_en.add(fingerprint_en)
+        accepted_cores.append((core_pt, core_en))
         return True
 
     for generated in generated_options:
@@ -754,6 +1002,7 @@ def build_topic_options(
                 weight=weight,
             ):
                 fallback_selected = True
+                fallback_count += 1
                 break
         if not fallback_selected:
             logger.warning(
@@ -800,6 +1049,7 @@ def build_topic_options(
                 weight=weight,
             ):
                 appended = True
+                fallback_count += 1
                 break
         if not appended:
             logger.warning(
@@ -816,7 +1066,16 @@ def build_topic_options(
         _normalize_text(generator_provider),
         _normalize_text(generator_model),
         validation_degraded,
+        fallback_count,
     )
+
+
+def _should_drop_topic(
+    validation_degraded: bool, fallback_count: int, option_count: int
+) -> bool:
+    if option_count <= 0:
+        return True
+    return validation_degraded and fallback_count / option_count > MAX_FALLBACK_SHARE
 
 
 def main() -> None:
@@ -852,6 +1111,7 @@ def main() -> None:
             generator_provider,
             generator_model,
             validation_degraded,
+            fallback_count,
         ) = build_topic_options(
             topic_id=topic_id,
             topic_label_pt=topic_label_pt,
@@ -861,6 +1121,14 @@ def main() -> None:
             known_positions=known_positions,
         )
         if len(options) < MIN_OPTIONS_PER_TOPIC:
+            continue
+        if _should_drop_topic(validation_degraded, fallback_count, len(options)):
+            logger.warning(
+                "Dropping topic=%s: degraded run with %d/%d fallback options.",
+                topic_id,
+                fallback_count,
+                len(options),
+            )
             continue
 
         if generator_model and not generator_model_used:
@@ -922,9 +1190,12 @@ def main() -> None:
 
     jsonschema.validate(quiz_payload, schema)
     _write_atomic(QUIZ_FILE, quiz_payload)
-    print(
-        f"Quiz generated: {len(ordered_topics)} topics, {sum(len(topic['options']) for topic in quiz_topics.values())} options."
+    total_options = sum(
+        len(options)
+        for options in (topic.get("options") for topic in quiz_topics.values())
+        if isinstance(options, list)
     )
+    print(f"Quiz generated: {len(ordered_topics)} topics, {total_options} options.")
 
 
 if __name__ == "__main__":

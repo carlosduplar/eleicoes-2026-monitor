@@ -59,7 +59,7 @@ def curate_dir(tmp_path: Path, monkeypatch: pytest.MonkeyPatch) -> Path:
     monkeypatch.setattr(curate, "WEEKLY_BRIEFING_FILE", data_dir / "weekly_briefing.json")
     monkeypatch.setattr(curate, "PIPELINE_ERRORS_FILE", data_dir / "pipeline_errors.json")
     monkeypatch.setattr(curate, "LAST_RUN_FILE", data_dir / ".curate_last_run")
-    monkeypatch.setattr(curate.extract_quiz_positions, "main", lambda: None)
+    monkeypatch.setattr(curate.generate_quiz, "main", lambda: None)
     return data_dir
 
 
@@ -174,7 +174,7 @@ def test_quiz_failure_is_logged_and_outputs_still_written(curate_dir: Path, monk
     def _boom() -> None:
         raise RuntimeError("quiz refresh boom")
 
-    monkeypatch.setattr(curate.extract_quiz_positions, "main", _boom)
+    monkeypatch.setattr(curate.generate_quiz, "main", _boom)
     monkeypatch.setattr(curate, "_compute_prominence", lambda _article, _now: 0.7)
 
     curate.main()

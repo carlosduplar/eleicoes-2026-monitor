@@ -12,9 +12,9 @@ from pathlib import Path
 from typing import Any
 
 try:
-    from scripts import generate_quiz as extract_quiz_positions
+    from scripts import generate_quiz
 except ImportError:  # pragma: no cover - direct script execution path
-    import generate_quiz as extract_quiz_positions  # type: ignore[no-redef]
+    import generate_quiz  # type: ignore[no-redef]
 
 try:
     from scripts.sanitize.constants import SOURCE_CATEGORY_WEIGHTS
@@ -525,7 +525,7 @@ def _build_weekly_briefing(
 
 def _run_quiz_refresh() -> bool:
     try:
-        extract_quiz_positions.main()
+        generate_quiz.main()
         return True
     except SystemExit as exc:
         code = exc.code if isinstance(exc.code, int) else 1
