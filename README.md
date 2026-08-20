@@ -61,6 +61,7 @@ The scheduled `collect.yml` and `validate.yml` jobs are tuned for GitHub-hosted 
 - Bright Data Web Unlocker is the primary HTML fetcher for article and poll collection. The workflow probe uses the same REST endpoint and zone as production and is informational only, so a transient probe failure cannot trigger a long browser-install step.
 - Playwright is a fallback only. Article and poll collectors launch the runner's preinstalled Google Chrome (`channel: "chrome"`) lazily, only after Bright Data fails. GitHub Actions no longer downloads a Playwright browser bundle on every run.
 - AI requests have a 45-second client timeout with SDK retries disabled; the provider fallback chain can take over instead of waiting through repeated long-tail retries.
+- Quiz workflows set `AI_PREFLIGHT_ENABLED=1` to run an 8-second streaming preflight that measures TTFT and total latency, then reuse the fastest healthy free model for the run. Leave it unset or set it to `0` to keep static chain order; set `AI_PREFLIGHT_INCLUDE_PAID=1` to include paid providers in selection.
 
 The workflows still share the `repo-write-${{ github.ref }}` concurrency group with the other data-writing jobs. This protects commits but can queue an entire job; moving the lock to a short commit-only job would require a separate artifact/merge design.
 
@@ -70,8 +71,8 @@ For local browser tests, install the Python Playwright browser explicitly with `
 
 - Independent project with no party affiliation or electoral funding; methodology, limitations, and error reporting are part of the product surface.
 - Newsroom-style pipeline with three automated roles: `Foca` (collection), `Editor` (validation/summarization), and `Editor-chefe` (curation/prominence).
-- AI fallback chain (default tasks): NVIDIA NIM (Nemotron 3 Ultra 550B, High Reasoning) -> NVIDIA NIM (Nemotron 3 Super 120B) -> Ollama Cloud (Nemotron 3 Ultra) -> Ollama Cloud (MiniMax M3) -> Gemini 3.7 Flash (free tier) -> Vertex AI (Gemini 3.7 Flash) -> MiMo V2.5.
-- AI fallback chain (high-quality tasks — quiz/positions): NVIDIA NIM (GLM-5.2, High Reasoning) -> Ollama Cloud (MiniMax M3) -> NVIDIA NIM (MiniMax M3) -> Vertex AI (Gemini 3.7 Flash).
+- AI fallback chain (default tasks): NVIDIA NIM (Nemotron 3 Ultra 550B, High Reasoning) -> NVIDIA NIM (Nemotron 3 Super 120B) -> Ollama Cloud (Nemotron 3 Ultra) -> Ollama Cloud (MiniMax M3) -> Gemini 3.7 Flash (free tier) -> Vertex AI (Gemini 3.7 Flash) -> MiMo V2.5 -> OpenCode/free.
+- AI fallback chain (high-quality tasks — quiz/positions): NVIDIA NIM (GLM-5.2, High Reasoning) -> Ollama Cloud (MiniMax M3) -> NVIDIA NIM (MiniMax M3) -> Vertex AI (Gemini 3.7 Flash) -> OpenCode/free.
 - Circuit breaker and per-run AI call limits keep the pipeline running when providers degrade instead of failing closed.
 - Editorial feedback is self-healing: blocked keywords, URLs, sources, and `irrelevant` article IDs are accumulated in `data/editor_feedback.json`.
 - The public quiz only reveals sources in the result view, never during the questions.
@@ -156,8 +157,10 @@ Archive files in `data/archives/` follow the same schema as `articles.json` and 
 | `NVIDIA_API_KEY` | `collect.yml`, `validate.yml`, `curate.yml`, `update-quiz.yml` | NVIDIA NIM provider |
 | `OPENROUTER_API_KEY` | `collect.yml`, `validate.yml`, `curate.yml`, `update-quiz.yml` | OpenRouter provider |
 | `OLLAMA_API_KEY` | `collect.yml`, `validate.yml`, `curate.yml`, `update-quiz.yml` | Ollama Cloud provider |
+| `VERTEX_API_KEY` | `curate.yml`, `update-quiz.yml` | Vertex AI API key |
 | `VERTEX_ACCESS_TOKEN` | `collect.yml`, `validate.yml`, `curate.yml`, `update-quiz.yml` | Vertex/Gemini access token |
 | `VERTEX_BASE_URL` | `collect.yml`, `validate.yml`, `curate.yml`, `update-quiz.yml` | Vertex/Gemini endpoint base URL |
+| `OPENCODE_API_KEY` | optional | OpenCode paid models; free models do not require a key |
 | `XIAOMI_MIMO_API_KEY` | `collect.yml`, `validate.yml`, `curate.yml` | MiMo fallback provider |
 | `TWITTER_BEARER_TOKEN` | `collect.yml` | Social collection token |
 | `YOUTUBE_API_KEY` | `collect.yml` | YouTube collection key |

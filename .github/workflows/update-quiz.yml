@@ -33,6 +33,7 @@ jobs:
           OLLAMA_API_KEY: ${{ secrets.OLLAMA_API_KEY }}
           VERTEX_API_KEY: ${{ secrets.VERTEX_API_KEY }}
           GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
+          AI_PREFLIGHT_ENABLED: "true"
         run: python -m scripts.generate_quiz
       - name: Commit quiz data
         run: |
