@@ -204,6 +204,124 @@ def test_institute_failure_does_not_crash(isolated_workspace: dict[str, Path], m
     assert len(error_payload["errors"]) == 1
 
 
+def test_polls_skipped_on_weekend(isolated_workspace: dict[str, Path], monkeypatch: pytest.MonkeyPatch) -> None:
+    _seed_sources(
+        isolated_workspace["sources"],
+        [{"name": "Datafolha", "url": "https://example.com/datafolha", "active": True}],
+    )
+    monkeypatch.setattr(collect_polls, "_is_weekend", lambda: True)
+
+    new_count, source_count, error_count = collect_polls.collect_polls()
+
+    assert new_count == 0
+    assert source_count == 1
+    assert error_count == 0
+
+
+def test_polls_throttled_when_recently_fetched(
+    isolated_workspace: dict[str, Path], monkeypatch: pytest.MonkeyPatch
+) -> None:
+    source_url = "https://example.com/datafolha"
+    _seed_sources(
+        isolated_workspace["sources"],
+        [{"name": "Datafolha", "url": source_url, "active": True}],
+    )
+    _write_json(
+        isolated_workspace["data"] / "fetch_state.json",
+        {source_url: collect_polls.utc_now_iso()},
+    )
+    monkeypatch.setattr(collect_polls, "_is_weekend", lambda: False)
+
+    class FakeBrowser:
+        async def close(self) -> None:
+            return None
+
+    class FakeChromium:
+        async def launch(
+            self, headless: bool = True, channel: str | None = None
+        ) -> FakeBrowser:
+            del channel
+            return FakeBrowser()
+
+    class FakePlaywright:
+        chromium = FakeChromium()
+
+        async def __aenter__(self) -> "FakePlaywright":
+            return self
+
+        async def __aexit__(self, exc_type, exc, tb) -> None:
+            return None
+
+    scrape_called = False
+
+    async def fake_scrape_source(browser: Any, source: dict[str, Any], timeout_ms: int = 30000) -> dict[str, Any]:
+        del browser, source, timeout_ms
+        nonlocal scrape_called
+        scrape_called = True
+        return {}
+
+    monkeypatch.setattr(collect_polls, "async_playwright", lambda: FakePlaywright())
+    monkeypatch.setattr(collect_polls, "scrape_source", fake_scrape_source)
+
+    new_count, source_count, error_count = collect_polls.collect_polls()
+
+    assert new_count == 0
+    assert source_count == 1
+    assert error_count == 0
+    assert scrape_called is False
+
+
+def test_polls_record_fetch_state_on_success(
+    isolated_workspace: dict[str, Path], monkeypatch: pytest.MonkeyPatch
+) -> None:
+    source_url = "https://example.com/datafolha"
+    _seed_sources(
+        isolated_workspace["sources"],
+        [{"name": "Datafolha", "url": source_url, "active": True}],
+    )
+    monkeypatch.setattr(collect_polls, "_is_weekend", lambda: False)
+
+    class FakeBrowser:
+        async def close(self) -> None:
+            return None
+
+    class FakeChromium:
+        async def launch(
+            self, headless: bool = True, channel: str | None = None
+        ) -> FakeBrowser:
+            del channel
+            return FakeBrowser()
+
+    class FakePlaywright:
+        chromium = FakeChromium()
+
+        async def __aenter__(self) -> "FakePlaywright":
+            return self
+
+        async def __aexit__(self, exc_type, exc, tb) -> None:
+            return None
+
+    async def fake_scrape_source(browser: Any, source: dict[str, Any], timeout_ms: int = 30000) -> dict[str, Any]:
+        return {
+            "id": collect_polls.build_poll_id("Datafolha", "2026-03-01"),
+            "institute": "Datafolha",
+            "published_at": "2026-03-01T00:00:00Z",
+            "collected_at": "2026-03-10T10:00:00Z",
+            "type": "estimulada",
+            "source_url": source["url"],
+            "results": [{"candidate_slug": "lula", "candidate_name": "Lula", "percentage": 35.0}],
+        }
+
+    monkeypatch.setattr(collect_polls, "async_playwright", lambda: FakePlaywright())
+    monkeypatch.setattr(collect_polls, "scrape_source", fake_scrape_source)
+
+    new_count, _, _ = collect_polls.collect_polls()
+
+    state = json.loads((isolated_workspace["data"] / "fetch_state.json").read_text(encoding="utf-8"))
+    assert new_count == 1
+    assert source_url in state
+
+
 def test_polls_schema_valid(isolated_workspace: dict[str, Path]) -> None:
     polls_payload = {
         "$schema": "../docs/schemas/polls.schema.json",

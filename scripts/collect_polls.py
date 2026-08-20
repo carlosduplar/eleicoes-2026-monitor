@@ -8,7 +8,7 @@ import logging
 import os
 import re
 from dataclasses import dataclass
-from datetime import datetime, timezone
+from datetime import datetime, timedelta, timezone
 from hashlib import sha256
 from pathlib import Path
 from typing import Any, Literal, NotRequired, TypedDict
@@ -18,6 +18,7 @@ from playwright.async_api import Browser, Page, async_playwright
 
 BRIGHTDATA_ZONE = os.environ.get("BRIGHTDATA_ZONE", "web_unlocker1")
 BRIGHTDATA_ENABLE_POLLS = os.environ.get("BRIGHTDATA_ENABLE_POLLS", "").strip() == "1"
+POLL_FETCH_INTERVAL_MINUTES = 1440
 REQUEST_TIMEOUT_SECONDS = 30
 
 PollType = Literal["estimulada", "espontanea"]
@@ -170,6 +171,54 @@ def load_active_poll_sources() -> list[PollSource]:
             continue
         active.append({"name": name.strip(), "url": url.strip(), "active": True})
     return active
+
+
+def _fetch_state_path() -> Path:
+    return DATA_DIR / "fetch_state.json"
+
+
+def _load_fetch_state() -> dict[str, str]:
+    state_path = _fetch_state_path()
+    if not state_path.exists():
+        return {}
+    try:
+        payload = _load_json(state_path)
+    except (OSError, ValueError):
+        return {}
+    if not isinstance(payload, dict):
+        return {}
+    return {str(url): str(ts) for url, ts in payload.items() if isinstance(ts, str)}
+
+
+def _save_fetch_state(state: dict[str, str]) -> None:
+    state_path = _fetch_state_path()
+    state_path.parent.mkdir(parents=True, exist_ok=True)
+    state_path.write_text(
+        json.dumps(state, indent=2, ensure_ascii=False) + "\n", encoding="utf-8"
+    )
+
+
+def _is_fetch_due(last_fetch_iso: str | None, interval_minutes: int) -> bool:
+    if not last_fetch_iso:
+        return True
+    try:
+        last = datetime.fromisoformat(last_fetch_iso.replace("Z", "+00:00"))
+    except (TypeError, ValueError):
+        return True
+    if last.tzinfo is None:
+        last = last.replace(tzinfo=timezone.utc)
+    elapsed = datetime.now(timezone.utc) - last
+    return elapsed >= timedelta(minutes=interval_minutes)
+
+
+def _brasilia_now() -> datetime:
+    from zoneinfo import ZoneInfo
+
+    return datetime.now(ZoneInfo("America/Sao_Paulo"))
+
+
+def _is_weekend() -> bool:
+    return _brasilia_now().weekday() >= 5
 
 
 def load_polls_document() -> PollsDocument:
@@ -772,9 +821,15 @@ def extract_polls_from_articles() -> list[PollItem]:
 
 async def collect_polls_async() -> tuple[int, int, int]:
     sources = load_active_poll_sources()
+    if _is_weekend():
+        logger.info("Weekend: skipping poll collection until next weekday")
+        return 0, len(sources), 0
+
     document = load_polls_document()
     incoming: list[PollItem] = []
     errors = 0
+    fetch_state = _load_fetch_state()
+    state_changed = False
 
     brightdata_key = (
         os.environ.get("BRIGHTDATA_API_KEY", "").strip()
@@ -786,11 +841,23 @@ async def collect_polls_async() -> tuple[int, int, int]:
     async with async_playwright() as playwright:
         try:
             for source in sources:
+                source_url = source["url"]
+                last_fetch = fetch_state.get(source_url)
+                if last_fetch and not _is_fetch_due(
+                    last_fetch, POLL_FETCH_INTERVAL_MINUTES
+                ):
+                    logger.info(
+                        "Throttled: %s (%s) skipped (last fetch %s)",
+                        source["name"],
+                        source_url,
+                        last_fetch,
+                    )
+                    continue
                 try:
                     poll: PollItem | None = None
                     if brightdata_key:
                         try:
-                            html = _fetch_url_brightdata(source["url"], brightdata_key)
+                            html = _fetch_url_brightdata(source_url, brightdata_key)
                             poll = await extract_poll_payload_from_html(html, source)
                         except Exception as exc:
                             logger.warning(
@@ -808,15 +875,20 @@ async def collect_polls_async() -> tuple[int, int, int]:
                     errors += 1
                     append_pipeline_error(
                         institute=source["name"],
-                        source_url=source["url"],
+                        source_url=source_url,
                         message=str(exc),
                     )
                     continue
                 if poll is not None:
                     incoming.append(poll)
+                    fetch_state[source_url] = utc_now_iso()
+                    state_changed = True
         finally:
             if browser is not None:
                 await browser.close()
+
+    if state_changed:
+        _save_fetch_state(fetch_state)
 
     merged, new_count = deduplicate_by_id(document.polls, incoming)
     document.polls = merged
