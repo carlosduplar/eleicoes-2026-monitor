@@ -29,6 +29,9 @@ def _provider(
 @pytest.fixture(autouse=True)
 def isolate_usage_file(tmp_path, monkeypatch: pytest.MonkeyPatch) -> None:
     monkeypatch.setattr(ai_client, "USAGE_FILE", tmp_path / "ai_usage.json")
+    ai_client._run_selected_providers.clear()
+    ai_client._run_preflight_signatures.clear()
+    ai_client._provider_failure_counts.clear()
 
 
 def test_provider_chain_nvidia_primary_ollama_fallback(
@@ -57,6 +60,82 @@ def test_provider_chain_nvidia_primary_ollama_fallback(
     # Mimo should be in the chain
     mimo_models = [model for name, model in provider_models if name == "mimo"]
     assert mimo_models[0] == "mimo-v2.5"
+
+    assert provider_models[-1] == ("opencode", "free")
+
+
+def test_ollama_structured_requests_disable_thinking() -> None:
+    provider = _provider(
+        "ollama", "OLLAMA_API_KEY", "https://ollama.example/v1", "minimax-m3:cloud"
+    )
+    kwargs = ai_client._chat_completion_kwargs(
+        provider, "system", "user", 100
+    )
+    assert kwargs["extra_body"] == {"think": False}
+
+
+def test_streaming_probe_measures_ttft_and_latency(
+    monkeypatch: pytest.MonkeyPatch,
+) -> None:
+    provider = _provider(
+        "nvidia", "NVIDIA_API_KEY", "https://nvidia.example/v1", "model-1"
+    )
+    monkeypatch.setenv("NVIDIA_API_KEY", "nvidia-key")
+    completion_calls: list[dict[str, object]] = []
+
+    class _Delta:
+        content = "{\"ok\":"
+        reasoning_content = None
+
+    class _Choice:
+        delta = _Delta()
+
+    class _Chunk:
+        choices = [_Choice()]
+
+    class _Completions:
+        def create(self, **kwargs: object) -> list[_Chunk]:
+            completion_calls.append(kwargs)
+            return [_Chunk()]
+
+    class _Client:
+        chat = type("_Chat", (), {"completions": _Completions()})()
+
+    monkeypatch.setattr(ai_client.openai, "OpenAI", lambda **_kwargs: _Client())
+
+    result = ai_client._probe_provider(provider)
+
+    assert result["provider"] == "nvidia"
+    assert result["model"] == "model-1"
+    assert float(result["ttft_ms"]) >= 0
+    assert float(result["latency_ms"]) >= float(result["ttft_ms"])
+    assert completion_calls[0]["stream"] is True
+
+
+def test_preflight_selects_fastest_candidate_and_reuses_it(
+    monkeypatch: pytest.MonkeyPatch,
+) -> None:
+    chain = [
+        _provider("first", "FIRST_KEY", "https://first.example/v1", "slow"),
+        _provider("second", "SECOND_KEY", "https://second.example/v1", "fast"),
+    ]
+    monkeypatch.setattr(ai_client, "_provider_chain_for_task", lambda _task: chain)
+    monkeypatch.setenv("FIRST_KEY", "first-key")
+    monkeypatch.setenv("SECOND_KEY", "second-key")
+    monkeypatch.setenv("AI_PREFLIGHT_ENABLED", "1")
+    monkeypatch.setattr(ai_client, "_load_usage", lambda: {})
+
+    def fake_probe(provider: dict[str, object]) -> dict[str, float | str]:
+        if provider["model"] == "slow":
+            return {"provider": "first", "model": "slow", "ttft_ms": 100, "latency_ms": 300}
+        return {"provider": "second", "model": "fast", "ttft_ms": 20, "latency_ms": 30}
+
+    monkeypatch.setattr(ai_client, "_probe_provider", fake_probe)
+
+    selections = ai_client.preflight_for_run(("test_task",))
+
+    assert selections["test_task"]["model"] == "fast"
+    assert ai_client._ordered_provider_chain_for_task("test_task")[0]["model"] == "fast"
 
 
 def test_request_completion_openrouter_uses_optional_headers(

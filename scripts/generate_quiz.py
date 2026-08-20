@@ -11,6 +11,7 @@ from pathlib import Path
 
 import jsonschema
 
+from . import ai_client
 from .ai_client import generate_quiz_topic_options, validate_quiz_option_quality
 
 logger = logging.getLogger(__name__)
@@ -820,6 +821,7 @@ def build_topic_options(
 
 def main() -> None:
     logging.basicConfig(level=logging.INFO, format="%(levelname)s: %(message)s")
+    ai_client.preflight_for_run(("quiz_generate", "quiz_validate"))
     positions_payload = _load_positions_payload()
     schema = json.loads(SCHEMA_FILE.read_text(encoding="utf-8"))
     topics_payload = positions_payload.get("topics")
