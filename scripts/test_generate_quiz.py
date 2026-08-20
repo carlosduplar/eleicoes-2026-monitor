@@ -353,7 +353,7 @@ def test_build_topic_options_replaces_duplicate_generated_texts(
         lambda **kwargs: {"passes_all": True, "failures": [], "details": ""},
     )
 
-    options, _, _, _ = generate_quiz.build_topic_options(
+    options, _, _, _, _ = generate_quiz.build_topic_options(
         topic_id="educacao",
         topic_label_pt="Educação",
         topic_label_en="Education",
@@ -414,7 +414,7 @@ def test_build_topic_options_parse_error_switches_to_local_only(
 
     monkeypatch.setattr(generate_quiz, "validate_quiz_option_quality", fake_validate)
 
-    options, _, _, validation_degraded = generate_quiz.build_topic_options(
+    options, _, _, validation_degraded, _ = generate_quiz.build_topic_options(
         topic_id="educacao",
         topic_label_pt="Educação",
         topic_label_en="Education",
@@ -466,7 +466,7 @@ def test_build_topic_options_local_first_ignores_ai_non_parse_failures(
         lambda **kwargs: {"passes_all": False, "failures": ["4"], "details": "strict"},
     )
 
-    options, _, _, validation_degraded = generate_quiz.build_topic_options(
+    options, _, _, validation_degraded, _ = generate_quiz.build_topic_options(
         topic_id="educacao",
         topic_label_pt="Educação",
         topic_label_en="Education",
@@ -533,7 +533,7 @@ def test_build_topic_options_degrades_when_validator_unavailable(
         lambda **kwargs: (_ for _ in ()).throw(RuntimeError("providers down")),
     )
 
-    options, _, _, validation_degraded = generate_quiz.build_topic_options(
+    options, _, _, validation_degraded, _ = generate_quiz.build_topic_options(
         topic_id="educacao",
         topic_label_pt="Educação",
         topic_label_en="Education",
@@ -589,7 +589,7 @@ def test_build_topic_options_handles_generation_provider_failure(
         lambda **kwargs: (_ for _ in ()).throw(RuntimeError("validator offline")),
     )
 
-    options, _, _, validation_degraded = generate_quiz.build_topic_options(
+    options, _, _, validation_degraded, _ = generate_quiz.build_topic_options(
         topic_id="educacao",
         topic_label_pt="Educação",
         topic_label_en="Education",
@@ -713,3 +713,274 @@ def test_fallback_does_not_append_raw_party_summary() -> None:
     assert "ronaldo" not in text_pt.lower()
     assert "conservadora" not in text_pt.lower()
     assert "lgbtq" in text_pt.lower() or "identidade" in text_pt.lower()
+
+
+@pytest.mark.parametrize(
+    ("a", "b"),
+    [
+        (
+            "Defendo que o governo mantenha estabilidade institucional e evite mudanças bruscas sem consenso em meio ambiente, com metas transparentes e revisão periódica.",
+            "Acredito que o governo mantenha estabilidade institucional e evite mudanças bruscas sem consenso em meio ambiente, com metas transparentes e revisão periódica.",
+        ),
+        (
+            "Na minha visão, o governo avance com reformas graduais e metas públicas verificáveis em impostos, com metas transparentes e revisão periódica.",
+            "Defendo que o governo avance com reformas graduais e metas públicas verificáveis em impostos, com metas transparentes e revisão periódica.",
+        ),
+        (
+            "I believe the government should maintain institutional stability and avoid abrupt changes without consensus on environment, with transparent goals and periodic review.",
+            "I argue the government should maintain institutional stability and avoid abrupt changes without consensus on environment, with transparent goals and periodic review.",
+        ),
+    ],
+)
+def test_content_core_matches_intro_variants(a: str, b: str) -> None:
+    """Intro-seeded fallback variants must collapse to the same content core."""
+    assert generate_quiz._content_core(a) == generate_quiz._content_core(b)
+
+
+def test_core_similarity_high_for_near_duplicates() -> None:
+    core_a = generate_quiz._content_core(
+        "Defendo que o governo avance com reformas graduais e metas em educação, "
+        "com metas transparentes e revisão periódica."
+    )
+    core_b = generate_quiz._content_core(
+        "Acredito que o governo avance com reformas graduais e metas em, "
+        "com metas transparentes e revisão periódica."
+    )
+    assert generate_quiz._core_similarity(core_a, core_b) >= 0.85
+
+
+def test_build_topic_options_rejects_same_stance_fallback_duplicates(
+    monkeypatch: pytest.MonkeyPatch,
+) -> None:
+    """Two same-stance candidates without differentiating hints must not both
+    be emitted as near-identical fallback templates."""
+    known_positions = [
+        {
+            "candidate_slug": "lula",
+            "position_type": "confirmed",
+            "stance": "favor",
+            "summary_pt": "",
+            "summary_en": "",
+            "key_actions": [],
+            "sources": [],
+        },
+        {
+            "candidate_slug": "zema",
+            "position_type": "inferred",
+            "stance": "favor",
+            "summary_pt": "",
+            "summary_en": "",
+            "key_actions": [],
+            "sources": [],
+        },
+    ]
+    monkeypatch.setattr(
+        generate_quiz,
+        "generate_quiz_topic_options",
+        lambda **kwargs: (_ for _ in ()).throw(RuntimeError("provider down")),
+    )
+    monkeypatch.setattr(
+        generate_quiz,
+        "validate_quiz_option_quality",
+        lambda **kwargs: (_ for _ in ()).throw(RuntimeError("validator offline")),
+    )
+
+    options, _, _, validation_degraded, fallback_count = (
+        generate_quiz.build_topic_options(
+            topic_id="educacao",
+            topic_label_pt="Educação",
+            topic_label_en="Education",
+            question_pt="Qual caminho deve orientar os investimentos em educação no país?",
+            question_en="Which path should guide education investments in the country?",
+            known_positions=known_positions,
+        )
+    )
+
+    assert len(options) == 1
+    assert options[0]["candidate_slug"] == "lula"
+    assert fallback_count == 1
+    assert validation_degraded is True
+
+
+@pytest.mark.parametrize(
+    ("fragment", "language", "expected"),
+    [
+        ("Reativou o fundo amazônia e o Ibama.", "pt", False),
+        ("reativar o fundo amazônia e o ibama", "pt", True),
+        ("Defende um equilíbrio entre preservação e desenvolvimento.", "pt", False),
+        ("Criar indicadores públicos de aprendizagem.", "pt", True),
+        ("Embora o candidato tenha formação na área tributária.", "pt", False),
+        ("Prioritizes expanding technical education.", "en", False),
+        ("Expand technical education.", "en", True),
+        ("The candidate supports the reform.", "en", False),
+    ],
+)
+def test_hint_fragment_ok_rejects_conjugated_and_leaks(
+    fragment: str, language: str, expected: bool
+) -> None:
+    assert generate_quiz._hint_fragment_ok(fragment, language) is expected
+
+
+def test_local_quality_rejects_third_person_leak() -> None:
+    text_pt = (
+        "Embora o candidato tenha formação na área tributária, defendo reformas "
+        "graduais com metas transparentes e revisão periódica."
+    )
+    text_en = (
+        "Although the candidate has tax background, I support gradual reforms "
+        "with transparent targets and periodic review."
+    )
+    passes, failures = generate_quiz._local_quality_check(text_pt, text_en)
+    assert not passes
+    assert "third_person_leak" in failures
+
+
+@pytest.mark.parametrize(
+    ("source", "expected"),
+    [
+        ("Dados da Wikipedia para flavio-bolsonaro", None),
+        ("para flavio-bolsonaro", None),
+        (
+            "Declaração sobre investimento público.",
+            "Declaração sobre investimento público.",
+        ),
+        (
+            "Lula defende o meio ambiente através do fortalecimento de órgãos fiscalizadores.",
+            "Lula defende o meio ambiente através do fortalecimento de órgãos fiscalizadores.",
+        ),
+        (None, None),
+    ],
+)
+def test_clean_source_text_drops_template_leakage(
+    source: str | None, expected: str | None
+) -> None:
+    assert generate_quiz._clean_source_text(source) == expected
+
+
+@pytest.mark.parametrize(
+    ("degraded", "fallback", "total", "expected"),
+    [
+        (True, 6, 6, True),
+        (True, 4, 6, True),
+        (True, 3, 6, True),
+        (True, 2, 6, False),
+        (True, 0, 3, False),
+        (False, 6, 6, False),
+    ],
+)
+def test_should_drop_topic_gate(
+    degraded: bool, fallback: int, total: int, expected: bool
+) -> None:
+    assert generate_quiz._should_drop_topic(degraded, fallback, total) is expected
+
+
+def test_main_drops_degraded_fallback_heavy_topic(
+    tmp_path: Path, monkeypatch: pytest.MonkeyPatch
+) -> None:
+    data_dir = tmp_path / "data"
+    docs_dir = tmp_path / "docs" / "schemas"
+    data_dir.mkdir(parents=True, exist_ok=True)
+    docs_dir.mkdir(parents=True, exist_ok=True)
+
+    positions_file = data_dir / "candidates_positions.json"
+    quiz_file = data_dir / "quiz.json"
+    schema_file = docs_dir / "quiz.schema.json"
+
+    positions_payload = builder._build_payload(["lula", "flavio-bolsonaro", "zema"])
+    topics_payload = positions_payload["topics"]
+    assert isinstance(topics_payload, dict)
+    for topic_id in ("economia", "saude"):
+        topic_payload = topics_payload[topic_id]
+        assert isinstance(topic_payload, dict)
+        candidates = topic_payload["candidates"]
+        assert isinstance(candidates, dict)
+        candidates["lula"].update(
+            {
+                "position_type": "confirmed",
+                "stance": "favor",
+                "summary_pt": "Defende investimento público com metas.",
+                "summary_en": "Supports public investment with targets.",
+                "key_actions": ["Ampliar escolas técnicas."],
+                "sources": [],
+            }
+        )
+        candidates["flavio-bolsonaro"].update(
+            {
+                "position_type": "confirmed",
+                "stance": "against",
+                "summary_pt": "Defende redução de gastos e ajuste fiscal.",
+                "summary_en": "Supports spending cuts and fiscal adjustment.",
+                "key_actions": ["Reduzir subsídios setoriais."],
+                "sources": [],
+            }
+        )
+        candidates["zema"].update(
+            {
+                "position_type": "inferred",
+                "stance": "neutral",
+                "summary_pt": "Defende equilíbrio fiscal com ajustes graduais.",
+                "summary_en": "Supports fiscal balance with gradual adjustments.",
+                "key_actions": ["Publicar metas trimestrais de desempenho."],
+                "sources": [],
+            }
+        )
+    positions_file.write_text(
+        json.dumps(positions_payload, ensure_ascii=False, indent=2) + "\n",
+        encoding="utf-8",
+    )
+    schema_file.write_text(
+        Path("docs/schemas/quiz.schema.json").read_text(encoding="utf-8"),
+        encoding="utf-8",
+    )
+
+    monkeypatch.setattr(generate_quiz, "POSITIONS_FILE", positions_file)
+    monkeypatch.setattr(generate_quiz, "QUIZ_FILE", quiz_file)
+    monkeypatch.setattr(generate_quiz, "SCHEMA_FILE", schema_file)
+
+    def fake_generate_quiz_topic_options(**kwargs: object) -> dict[str, object]:
+        topic_id = str(kwargs["topic_id"])
+        if topic_id == "economia":
+            raise RuntimeError("provider down")
+        return {
+            "options": [
+                {
+                    "text_pt": f"Defendo que o governo amplie investimentos em {topic_id} com metas claras e avaliação periódica de resultados.",
+                    "text_en": f"I support the government expanding investment in {topic_id} with clear targets and periodic evaluation of results.",
+                    "mapped_position": 1,
+                    "stance": "favor",
+                    "weight": 2,
+                },
+                {
+                    "text_pt": f"Acredito que o governo priorize controle de gastos em {topic_id} para preservar estabilidade econômica no médio prazo.",
+                    "text_en": f"I believe the government should prioritize spending control in {topic_id} to preserve medium-term economic stability.",
+                    "mapped_position": 2,
+                    "stance": "against",
+                    "weight": -2,
+                },
+                {
+                    "text_pt": f"Entendo que o governo combine disciplina fiscal e investimento seletivo em {topic_id} para manter crescimento gradual sustentável.",
+                    "text_en": f"I believe the government should combine fiscal discipline and selective investment in {topic_id} to sustain gradual growth.",
+                    "mapped_position": 3,
+                    "stance": "neutral",
+                    "weight": 0,
+                },
+            ],
+            "_ai_provider": "vertex",
+            "_ai_model": "gemini-3.1-pro",
+            "_parse_error": False,
+        }
+
+    monkeypatch.setattr(
+        generate_quiz, "generate_quiz_topic_options", fake_generate_quiz_topic_options
+    )
+    monkeypatch.setattr(
+        generate_quiz,
+        "validate_quiz_option_quality",
+        lambda **kwargs: (_ for _ in ()).throw(RuntimeError("validator offline")),
+    )
+
+    generate_quiz.main()
+
+    payload = json.loads(quiz_file.read_text(encoding="utf-8"))
+    assert "economia" not in payload["ordered_topics"]
+    assert "saude" in payload["ordered_topics"]
