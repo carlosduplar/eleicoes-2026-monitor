@@ -1,0 +1,79 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://example.com/schemas/markets.json",
+  "title": "Markets",
+  "description": "Prediction market odds from Polymarket for Brazilian presidential elections.",
+  "type": "object",
+  "required": ["markets"],
+  "properties": {
+    "$schema": {
+      "type": "string"
+    },
+    "markets": {
+      "type": "array",
+      "items": {
+        "$ref": "#/definitions/Market"
+      }
+    },
+    "last_updated": {
+      "type": ["string", "null"],
+      "format": "date-time"
+    },
+    "total_count": {
+      "type": "integer",
+      "minimum": 0
+    }
+  },
+  "additionalProperties": false,
+  "definitions": {
+    "Market": {
+      "type": "object",
+      "required": ["id", "slug", "question", "yes_price", "no_price", "volume", "collected_at"],
+      "properties": {
+        "id": {
+          "type": "string",
+          "description": "Market token ID from Polymarket."
+        },
+        "slug": {
+          "type": "string",
+          "description": "Market slug/condition identifier."
+        },
+        "question": {
+          "type": "string",
+          "description": "Market question text."
+        },
+        "yes_price": {
+          "type": "number",
+          "minimum": 0,
+          "maximum": 1,
+          "description": "Yes share price (implies probability)."
+        },
+        "no_price": {
+          "type": "number",
+          "minimum": 0,
+          "maximum": 1,
+          "description": "No share price."
+        },
+        "volume": {
+          "type": "number",
+          "minimum": 0,
+          "description": "Trading volume in USD."
+        },
+        "liquidity": {
+          "type": "number",
+          "minimum": 0,
+          "description": "Available liquidity in USD."
+        },
+        "market_url": {
+          "type": "string",
+          "format": "uri",
+          "description": "Direct link to the market on Polymarket."
+        },
+        "collected_at": {
+          "type": "string",
+          "format": "date-time"
+        }
+      }
+    }
+  }
+}

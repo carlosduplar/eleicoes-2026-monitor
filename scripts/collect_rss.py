@@ -4,6 +4,7 @@ from __future__ import annotations
 
 import json
 import logging
+import os
 from dataclasses import dataclass
 from datetime import datetime, timezone
 from email.utils import parsedate_to_datetime
@@ -13,6 +14,7 @@ from typing import Any
 from urllib.request import Request, urlopen
 
 import feedparser
+import requests
 
 try:
     from scripts import editor_feedback
@@ -38,8 +40,10 @@ ARTICLES_FILE = DATA_DIR / "articles.json"
 EDITOR_FEEDBACK_FILE = DATA_DIR / "editor_feedback.json"
 
 REQUEST_TIMEOUT_SECONDS = 15
+BRIGHTDATA_ZONE = os.environ.get("BRIGHTDATA_ZONE", "web_unlocker1")
 USER_AGENT = (
-    "eleicoes-2026-monitor/1.0 (+https://github.com/carlosduplar/eleicoes-2026-monitor)"
+    "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 "
+    "(KHTML, like Gecko) Chrome/126.0.0.0 Safari/537.36"
 )
 DEFAULT_SCHEMA_PATH = "../docs/schemas/articles.schema.json"
 RSS_BODY_MIN_CHARS = 200
@@ -116,7 +120,7 @@ def _save_articles_document(document: ArticlesDocument) -> None:
     )
 
 
-def load_active_rss_sources() -> list[dict[str, str]]:
+def load_active_rss_sources() -> list[dict[str, Any]]:
     """Read active RSS sources from data/sources.json."""
     payload = _load_json(SOURCES_FILE)
     if not isinstance(payload, dict):
@@ -126,7 +130,7 @@ def load_active_rss_sources() -> list[dict[str, str]]:
     if not isinstance(rss_sources, list):
         raise ValueError(f"Expected 'rss' array in {SOURCES_FILE}")
 
-    active_sources: list[dict[str, str]] = []
+    active_sources: list[dict[str, Any]] = []
     for source in rss_sources:
         if not isinstance(source, dict) or not source.get("active", False):
             continue
@@ -140,9 +144,11 @@ def load_active_rss_sources() -> list[dict[str, str]]:
         if not isinstance(url, str) or not url.strip():
             continue
 
-        item: dict[str, str] = {"name": name.strip(), "url": url.strip()}
+        item: dict[str, Any] = {"name": name.strip(), "url": url.strip()}
         if isinstance(category, str) and category.strip():
             item["category"] = category.strip()
+        if source.get("unlocker") is True:
+            item["unlocker"] = True
         active_sources.append(item)
 
     return active_sources
@@ -153,13 +159,9 @@ def _is_known_encoding_mismatch_warning(exception: object) -> bool:
     return "document declared as utf-8, but parsed as windows-1252" in message
 
 
-def fetch_feed_entries(feed_url: str) -> list[dict[str, Any]]:
-    """Fetch and parse RSS feed entries with a per-feed timeout."""
-    request = Request(feed_url, headers={"User-Agent": USER_AGENT})
-    with urlopen(request, timeout=REQUEST_TIMEOUT_SECONDS) as response:
-        raw_bytes = response.read()
-
-    parsed = feedparser.parse(raw_bytes)
+def _parse_feed_text(raw_text: str | bytes, feed_url: str) -> list[dict[str, Any]]:
+    """Parse RSS/Atom text or bytes into entry dicts, logging parse warnings."""
+    parsed = feedparser.parse(raw_text)
     if getattr(parsed, "bozo", False):
         bozo_exception = getattr(parsed, "bozo_exception", None)
         if bozo_exception is not None:
@@ -183,6 +185,47 @@ def fetch_feed_entries(feed_url: str) -> list[dict[str, Any]]:
         if hasattr(entry, "get"):
             entries.append(dict(entry))
     return entries
+
+
+def fetch_feed_entries(feed_url: str) -> list[dict[str, Any]]:
+    """Fetch and parse RSS feed entries with a per-feed timeout."""
+    request = Request(feed_url, headers={"User-Agent": USER_AGENT})
+    with urlopen(request, timeout=REQUEST_TIMEOUT_SECONDS) as response:
+        raw_bytes = response.read()
+    return _parse_feed_text(raw_bytes, feed_url)
+
+
+def _fetch_url_brightdata(feed_url: str) -> str:
+    """Fetch a feed through Bright Data's Web Unlocker API."""
+    api_key = os.environ.get("BRIGHTDATA_API_KEY", "").strip()
+    if not api_key:
+        raise RuntimeError("BRIGHTDATA_API_KEY is not configured")
+    response = requests.post(
+        "https://api.brightdata.com/request",
+        headers={
+            "Authorization": f"Bearer {api_key}",
+            "Content-Type": "application/json",
+        },
+        json={"zone": BRIGHTDATA_ZONE.strip(), "url": feed_url, "format": "raw"},
+        timeout=REQUEST_TIMEOUT_SECONDS,
+    )
+    if response.status_code != 200:
+        raise RuntimeError(
+            f"BrightData API error: {response.status_code} - {response.text[:500]}"
+        )
+    try:
+        payload = response.json()
+        if isinstance(payload, dict) and payload.get("error"):
+            raise RuntimeError(f"BrightData API error: {payload['error']}")
+    except ValueError:
+        pass
+    return response.text
+
+
+def fetch_feed_entries_via_unlocker(feed_url: str) -> list[dict[str, Any]]:
+    """Fetch and parse a feed through Bright Data's Web Unlocker."""
+    raw_text = _fetch_url_brightdata(feed_url)
+    return _parse_feed_text(raw_text, feed_url)
 
 
 def _extract_entry_url(entry: dict[str, Any]) -> str | None:
@@ -300,8 +343,23 @@ def collect_articles() -> tuple[int, int, int]:
         source_name = source["name"]
         source_url = source["url"]
         source_category = source.get("category")
+        use_unlocker = bool(source.get("unlocker")) and bool(
+            os.environ.get("BRIGHTDATA_API_KEY", "").strip()
+        )
         try:
-            entries = fetch_feed_entries(source_url)
+            if use_unlocker:
+                try:
+                    entries = fetch_feed_entries_via_unlocker(source_url)
+                except Exception as exc:
+                    logger.warning(
+                        "Bright Data fetch failed for %s (%s): %s",
+                        source_name,
+                        source_url,
+                        exc,
+                    )
+                    entries = fetch_feed_entries(source_url)
+            else:
+                entries = fetch_feed_entries(source_url)
         except Exception as exc:
             errors += 1
             logger.warning(

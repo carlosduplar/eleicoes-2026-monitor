@@ -29,10 +29,10 @@ jobs:
           git pull --rebase --autostash origin master || (git rebase --abort && echo "Pull failed, continuing with current state")
       - name: Extract positions
         env:
+          POOLSIDE_API_KEY: ${{ secrets.POOLSIDE_API_KEY }}
           NVIDIA_API_KEY: ${{ secrets.NVIDIA_API_KEY }}
           OLLAMA_API_KEY: ${{ secrets.OLLAMA_API_KEY }}
-          VERTEX_API_KEY: ${{ secrets.VERTEX_API_KEY }}
-          GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
+          OPENROUTER_API_KEY: ${{ secrets.OPENROUTER_API_KEY }}
           AI_PREFLIGHT_ENABLED: "true"
         run: python -m scripts.generate_quiz
       - name: Commit quiz data

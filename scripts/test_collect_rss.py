@@ -338,3 +338,58 @@ def test_collect_marks_near_duplicate_at_ingestion(
     assert added["status"] == "irrelevant"
     assert isinstance(added.get("narrative_cluster_id"), str)
     assert added.get("editor_note") == "near-duplicate detected at ingestion"
+
+
+def test_fetch_feed_entries_via_unlocker_parses(
+    monkeypatch: pytest.MonkeyPatch,
+) -> None:
+    xml = (
+        '<?xml version="1.0"?><rss version="2.0"><channel>'
+        "<item><link>https://news.example/1</link><title>One</title></item>"
+        "<item><link>https://news.example/2</link><title>Two</title></item>"
+        "</channel></rss>"
+    )
+    monkeypatch.setattr(collect_rss, "_fetch_url_brightdata", lambda _url: xml)
+
+    entries = collect_rss.fetch_feed_entries_via_unlocker("https://feed.example/u.xml")
+
+    assert len(entries) == 2
+    assert entries[0]["title"] == "One"
+    assert entries[1]["title"] == "Two"
+
+
+def test_unlocker_feed_collected_with_brightdata(
+    isolated_files: tuple[Path, Path, Path],
+    monkeypatch: pytest.MonkeyPatch,
+) -> None:
+    sources_path, articles_path, feedback_path = isolated_files
+    _seed_sources(
+        sources_path,
+        [
+            {
+                "name": "Unlocker Feed",
+                "url": "https://feed.example/u.xml",
+                "category": "institutional",
+                "active": True,
+                "unlocker": True,
+            }
+        ],
+    )
+    _seed_editor_feedback(feedback_path)
+    _seed_articles(articles_path, [])
+
+    xml = (
+        '<?xml version="1.0"?><rss version="2.0"><channel>'
+        "<item><link>https://news.example/from-unlocker</link><title>Via BD</title></item>"
+        "</channel></rss>"
+    )
+    monkeypatch.setenv("BRIGHTDATA_API_KEY", "test-key")
+    monkeypatch.setattr(collect_rss, "_fetch_url_brightdata", lambda _url: xml)
+
+    new_count, source_count, error_count = collect_rss.collect_articles()
+
+    articles = _read_articles(articles_path)
+    assert new_count == 1
+    assert source_count == 1
+    assert error_count == 0
+    assert articles[0]["url"] == "https://news.example/from-unlocker"

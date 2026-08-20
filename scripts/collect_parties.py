@@ -4,9 +4,10 @@ from __future__ import annotations
 
 import json
 import logging
+import os
 import re
 from dataclasses import dataclass
-from datetime import datetime, timezone
+from datetime import datetime, timedelta, timezone
 from hashlib import sha256
 from pathlib import Path
 from typing import Any
@@ -25,8 +26,10 @@ ARTICLES_FILE = DATA_DIR / "articles.json"
 PIPELINE_ERRORS_FILE = DATA_DIR / "pipeline_errors.json"
 
 REQUEST_TIMEOUT_SECONDS = 20
+BRIGHTDATA_ZONE = os.environ.get("BRIGHTDATA_ZONE", "web_unlocker1")
 USER_AGENT = (
-    "eleicoes-2026-monitor/1.0 (+https://github.com/carlosduplar/eleicoes-2026-monitor)"
+    "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 "
+    "(KHTML, like Gecko) Chrome/126.0.0.0 Safari/537.36"
 )
 DEFAULT_SCHEMA_PATH = "../docs/schemas/articles.schema.json"
 
@@ -144,6 +147,71 @@ def _append_pipeline_error(*, party_name: str, party_url: str, message: str) -> 
     )
 
 
+def _fetch_state_path() -> Path:
+    return DATA_DIR / "fetch_state.json"
+
+
+def _load_fetch_state() -> dict[str, str]:
+    """Load per-URL last Bright Data fetch timestamps from fetch_state.json."""
+    path = _fetch_state_path()
+    if not path.exists():
+        return {}
+    try:
+        payload = _load_json(path)
+    except (json.JSONDecodeError, ValueError):
+        return {}
+    if not isinstance(payload, dict):
+        return {}
+    return {str(key): value for key, value in payload.items() if isinstance(value, str)}
+
+
+def _save_fetch_state(state: dict[str, str]) -> None:
+    path = _fetch_state_path()
+    path.parent.mkdir(parents=True, exist_ok=True)
+    path.write_text(
+        json.dumps(state, indent=2, ensure_ascii=False) + "\n", encoding="utf-8"
+    )
+
+
+def _is_fetch_due(last_fetch_iso: str, interval_minutes: int) -> bool:
+    """Return True when enough time has elapsed since the last fetch."""
+    try:
+        last = datetime.fromisoformat(last_fetch_iso.replace("Z", "+00:00"))
+    except (TypeError, ValueError):
+        return True
+    if last.tzinfo is None:
+        last = last.replace(tzinfo=timezone.utc)
+    elapsed = datetime.now(timezone.utc) - last
+    return elapsed >= timedelta(minutes=interval_minutes)
+
+
+def _fetch_url_brightdata(url: str) -> str:
+    """Fetch a URL through Bright Data's Web Unlocker API."""
+    api_key = os.environ.get("BRIGHTDATA_API_KEY", "").strip()
+    if not api_key:
+        raise RuntimeError("BRIGHTDATA_API_KEY is not configured")
+    response = requests.post(
+        "https://api.brightdata.com/request",
+        headers={
+            "Authorization": f"Bearer {api_key}",
+            "Content-Type": "application/json",
+        },
+        json={"zone": BRIGHTDATA_ZONE.strip(), "url": url, "format": "raw"},
+        timeout=REQUEST_TIMEOUT_SECONDS,
+    )
+    if response.status_code != 200:
+        raise RuntimeError(
+            f"BrightData API error: {response.status_code} - {response.text[:500]}"
+        )
+    try:
+        payload = response.json()
+        if isinstance(payload, dict) and payload.get("error"):
+            raise RuntimeError(f"BrightData API error: {payload['error']}")
+    except ValueError:
+        pass
+    return response.text
+
+
 def load_active_party_sources() -> list[dict[str, Any]]:
     """Read active party sources from data/sources.json['parties']."""
     payload = _load_json(SOURCES_FILE)
@@ -190,6 +258,11 @@ def load_active_party_sources() -> list[dict[str, Any]]:
         robots_txt_url = source.get("robots_txt_url")
         if isinstance(robots_txt_url, str) and robots_txt_url.strip():
             party["robots_txt_url"] = robots_txt_url.strip()
+        if source.get("unlocker") is True:
+            party["unlocker"] = True
+        min_interval = source.get("min_fetch_interval_minutes")
+        if isinstance(min_interval, (int, float)) and min_interval > 0:
+            party["min_fetch_interval_minutes"] = int(min_interval)
         active_sources.append(party)
     return active_sources
 
@@ -436,7 +509,9 @@ def extract_articles_from_html(html: str, base_url: str) -> list[dict[str, str]]
     return []
 
 
-def scrape_party_site(party: dict[str, Any]) -> list[dict[str, str]]:
+def scrape_party_site(
+    party: dict[str, Any], use_unlocker: bool = False
+) -> list[dict[str, str]]:
     """Fetch a single party website and extract article URL+title pairs."""
     party_name = str(party.get("name", "")).strip()
     party_url = str(party.get("url", "")).strip()
@@ -452,14 +527,18 @@ def scrape_party_site(party: dict[str, Any]) -> list[dict[str, str]]:
         logger.warning("Robots.txt disallows crawling %s (%s)", party_name, party_url)
         return []
 
-    response = requests.get(
-        party_url,
-        timeout=REQUEST_TIMEOUT_SECONDS,
-        headers={"User-Agent": USER_AGENT},
-    )
-    response.raise_for_status()
+    if use_unlocker:
+        html = _fetch_url_brightdata(party_url)
+    else:
+        response = requests.get(
+            party_url,
+            timeout=REQUEST_TIMEOUT_SECONDS,
+            headers={"User-Agent": USER_AGENT},
+        )
+        response.raise_for_status()
+        html = response.text
 
-    articles = extract_articles_from_html(response.text, party_url)
+    articles = extract_articles_from_html(html, party_url)
     if not articles:
         logger.warning("No articles extracted from %s (%s)", party_name, party_url)
     return articles
@@ -478,12 +557,28 @@ def collect_articles() -> tuple[int, int, int]:
 
     new_articles: list[dict[str, Any]] = []
     error_count = 0
+    fetch_state = _load_fetch_state()
+    state_changed = False
 
     for party in sources:
         party_name = str(party.get("name", "")).strip()
         party_url = str(party.get("url", "")).strip()
+        use_unlocker = bool(party.get("unlocker")) and bool(
+            os.environ.get("BRIGHTDATA_API_KEY", "").strip()
+        )
+        if use_unlocker:
+            interval_minutes = int(party.get("min_fetch_interval_minutes", 60))
+            last_fetch = fetch_state.get(party_url)
+            if last_fetch and not _is_fetch_due(last_fetch, interval_minutes):
+                logger.info(
+                    "Throttled: %s (%s) skipped (last Bright Data fetch %s)",
+                    party_name,
+                    party_url,
+                    last_fetch,
+                )
+                continue
         try:
-            extracted = scrape_party_site(party)
+            extracted = scrape_party_site(party, use_unlocker=use_unlocker)
         except Exception as exc:
             error_count += 1
             _append_pipeline_error(
@@ -493,6 +588,10 @@ def collect_articles() -> tuple[int, int, int]:
                 "Failed to collect from %s (%s): %s", party_name, party_url, exc
             )
             continue
+
+        if use_unlocker:
+            fetch_state[party_url] = utc_now_iso()
+            state_changed = True
 
         for entry in extracted:
             article_url = entry.get("url")
@@ -521,6 +620,9 @@ def collect_articles() -> tuple[int, int, int]:
             }
             new_articles.append(article)
             existing_ids.add(article_id)
+
+    if state_changed:
+        _save_fetch_state(fetch_state)
 
     if new_articles:
         document.articles.extend(new_articles)

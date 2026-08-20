@@ -1,7 +1,7 @@
 """Benchmark script to test all AI providers and models locally.
 
 Run with: python scripts/benchmark_ai.py
-Requires API keys: NVIDIA_API_KEY, OLLAMA_API_KEY, OPENROUTER_API_KEY
+Requires API keys: POOLSIDE_API_KEY, OLLAMA_API_KEY, NVIDIA_API_KEY, OPENROUTER_API_KEY
 Optional: --iterations or -n (default 3, max 10)
 """
 
@@ -77,53 +77,10 @@ def get_raw_response(
 ) -> tuple[str | None, Any]:
     """Make direct API call and return raw response for inspection."""
     import openai
-    import json
-    import urllib.request
 
     api_key = os.environ.get(provider.get("key_env", ""), "").strip()
     if not api_key:
         return None, {"error": f"Missing API key for {provider.get('key_env')}"}
-
-    if provider.get("name") == "vertex":
-        url = f"https://aiplatform.googleapis.com/v1/publishers/google/models/{provider['model']}:generateContent?key={api_key}"
-        data = {
-            "contents": [{"role": "user", "parts": [{"text": f"{system}\n\n{user}"}]}],
-            "generationConfig": {"maxOutputTokens": 8192}
-        }
-        req = urllib.request.Request(
-            url,
-            data=json.dumps(data).encode("utf-8"),
-            headers={"Content-Type": "application/json"},
-            method="POST"
-        )
-        try:
-            with urllib.request.urlopen(req) as response:
-                resp_data = json.loads(response.read().decode("utf-8"))
-                try:
-                    content = resp_data["candidates"][0]["content"]["parts"][0]["text"]
-                except (KeyError, IndexError):
-                    content = ""
-                
-                usage_metadata = resp_data.get("usageMetadata", {})
-                usage_dict = {
-                    "prompt_tokens": usage_metadata.get("promptTokenCount", 0),
-                    "completion_tokens": usage_metadata.get("candidatesTokenCount", 0),
-                    "total_tokens": usage_metadata.get("totalTokenCount", 0),
-                }
-                
-                full_raw = json.dumps(
-                    {
-                        "content": content,
-                        "reasoning_content": "",
-                        "model": provider["model"],
-                        "usage": usage_dict,
-                    },
-                    ensure_ascii=False,
-                    indent=2,
-                )
-                return full_raw, None
-        except Exception as e:
-            return None, {"error": str(e), "type": type(e).__name__}
 
     client_kwargs = {
         "api_key": api_key,
@@ -152,14 +109,8 @@ def get_raw_response(
         ],
     }
 
-    if provider.get("name") == "nvidia":
-        from .ai_client import _THINKING_DISABLE_EXTRA_BODY
-
-        disable_body = _THINKING_DISABLE_EXTRA_BODY.get(provider.get("model", ""))
-        if disable_body:
-            kwargs["extra_body"] = disable_body
-    elif provider.get("name") == "mimo":
-        kwargs["extra_body"] = {"thinking": {"type": "disabled"}}
+    if provider.get("name") == "ollama":
+        kwargs["extra_body"] = {"think": False}
 
     try:
         response = client.chat.completions.create(**kwargs)

@@ -3,7 +3,7 @@
 **Status:** Aceito  
 **Data:** 2026-03-06  
 **Decisor:** Opus 4.6 (Arquiteto)  
-**Atualizado:** 2026-08-19 - Modelos atualizados com benchmarks do Artificial Analysis; GLM-5.2 primário para Quiz/Posições no NVIDIA NIM; MiniMax-M3 no Ollama e NVIDIA; Gemini 3.7 Flash no Google/Vertex; Nemotron 3 Ultra 550B no Ingestion; Kimi removido; Alto Raciocínio (High Reasoning) habilitado.
+**Atualizado:** 2026-08-20 - Poolside (Laguna S 2.1) e o provider primario para todas as tarefas; Google AI Studio (Gemini), Vertex AI e Xiaomi MiMo removidos do codigo e dos workflows.
 
 ## Contexto
 
@@ -15,53 +15,39 @@ Cadeia de fallback hierarquica com Alto Raciocinio (High Reasoning) habilitado p
 
 ## Cadeia de Providers por Tarefa
 
-### Quiz, Posições e Validação (`positions_extract`, `quiz_generate`, `quiz_validate`)
+### Todas as tarefas (`summarization`, `sentiment`, `multilingual`, `positions_extract`, `quiz_generate`, `quiz_extract`, `quiz_validate`)
 
-| Prioridade | Provider | base_url | Modelo | Modo Raciocínio | AA Intel Index | Custo |
+| Prioridade | Provider | base_url | Modelo | Modo Raciocínio | Referencia | Custo |
 |---|---|---|---|---|---|---|
-| 1 | NVIDIA NIM | `https://integrate.api.nvidia.com/v1` | `z-ai/glm-5.2` | High Reasoning | **52.6** | Gratuito (Créditos dev) |
-| 2 | Ollama Cloud | `https://ollama.com/v1` | `minimax-m3:cloud` | High Reasoning | **45.4** | Gratuito |
-| 3 | NVIDIA NIM | `https://integrate.api.nvidia.com/v1` | `minimaxai/minimax-m3` | High Reasoning | **45.4** | Gratuito (Créditos dev) |
-| 4 | Vertex AI | env `VERTEX_BASE_URL` | `gemini-3.7-flash` | High (`thinkingBudget: 2048`) | **56.0** | $10/mês (AI Pro) |
+| 1 | Poolside | `https://inference.poolside.ai/v1` | `poolside/laguna-s-2.1` | Reasoning (padrão) | Terminal-Bench 2.1: **70.2** | Gratuito |
+| 2 | Ollama Cloud | `https://ollama.com/v1` | `minimax-m3:cloud` | High Reasoning | AA Intel: **45.4** | Gratuito |
+| 3 | NVIDIA NIM | `https://integrate.api.nvidia.com/v1` | `minimaxai/minimax-m3` | High Reasoning | AA Intel: **45.4** | Gratuito (Créditos dev) |
+| 4 | OpenRouter | `https://openrouter.ai/api/v1` | `openrouter/free` | Provider-dependent | — | Gratuito |
 
-### Ingestion, Sumarização e Sentimento (`summarization`, `sentiment`, `multilingual`)
-
-| Prioridade | Provider | base_url | Modelo | Modo Raciocínio | AA Intel Index | Custo |
-|---|---|---|---|---|---|---|
-| 1 | NVIDIA NIM (primary) | `https://integrate.api.nvidia.com/v1` | `nvidia/nemotron-3-ultra-550b-a55b` | High Reasoning | **38.3** | Gratuito (Créditos dev) |
-| 2 | NVIDIA NIM (fallback) | `https://integrate.api.nvidia.com/v1` | `nvidia/nemotron-3-super-120b-a12b` | High Reasoning | **25.7** | Gratuito (Créditos dev) |
-| 3 | Ollama Cloud | `https://ollama.com/v1` | `nemotron-3-ultra:cloud` | High Reasoning | **38.3** | Gratuito |
-| 4 | Ollama Cloud | `https://ollama.com/v1` | `minimax-m3:cloud` | High Reasoning | **45.4** | Gratuito |
-| 5 | Google AI Studio | `https://generativelanguage.googleapis.com/v1beta/openai/` | `gemini-3.7-flash` | High Reasoning | **56.0** | Gratuito (Free tier) |
-| 6 | Vertex AI | env `VERTEX_BASE_URL` | `gemini-3.7-flash` | High (`thinkingBudget: 2048`) | **56.0** | $10/mês (AI Pro) |
-| 7 | Xiaomi MiMo | `https://api.xiaomimimo.com/v1` | `mimo-v2.5` | Standard | **38.0** | Pago (Emergency fallback) |
+> Poolside Laguna S 2.1 nao esta indexado no Artificial Analysis (agentic index); a posicao e ancorada pelo Terminal-Bench 2.1 oficial (70.2), que e um dos componentes do indice AA.
 
 ## Hierarquia da Redacao (Newsroom)
 
 | Papel | Frequencia | Modelo Primario | Fallbacks |
 |---|---|---|---|
-| Foca (coletor) | 10 min | Nemotron 3 Ultra 550B (NVIDIA NIM) | Nemotron 3 Super (NVIDIA NIM) $\rightarrow$ Nemotron 3 Ultra (Ollama) |
-| Editor (validador) | 30 min | Nemotron 3 Ultra 550B (NVIDIA NIM) | Gemini 3.7 Flash (Google AI) $\rightarrow$ Vertex AI |
-| Editor-chefe (curador) | ~90 min | GLM-5.2 (NVIDIA NIM) | MiniMax-M3 (Ollama / NIM) $\rightarrow$ Gemini 3.7 Flash |
+| Foca (coletor) | 10 min | Laguna S 2.1 (Poolside) | MiniMax-M3 (Ollama) $\rightarrow$ MiniMax-M3 (NIM) $\rightarrow$ OpenRouter/free |
+| Editor (validador) | 30 min | Laguna S 2.1 (Poolside) | MiniMax-M3 (Ollama) $\rightarrow$ MiniMax-M3 (NIM) $\rightarrow$ OpenRouter/free |
+| Editor-chefe (curador) | ~90 min | Laguna S 2.1 (Poolside) | MiniMax-M3 (Ollama) $\rightarrow$ MiniMax-M3 (NIM) $\rightarrow$ OpenRouter/free |
 
 ## Rastreador de Uso
 
 `data/ai_usage.json` — incrementado a cada chamada com chave `{provider}_{YYYY-MM-DD}`.
 Usado para:
-- Verificar limite diario do OpenRouter (200 req/dia)
-- Monitorar custo Vertex AI
 - Metricas no watchdog diario
 
 ## Secrets no GitHub
 
 | Secret | Provider | Obrigatorio |
 |--------|----------|------------|
+| `POOLSIDE_API_KEY` | Poolside | Sim |
 | `NVIDIA_API_KEY` | NVIDIA NIM | Sim (Fase 2) |
 | `OPENROUTER_API_KEY` | OpenRouter | Sim (Fase 2) |
 | `OLLAMA_API_KEY` | Ollama Cloud | Sim (Fase 2) |
-| `VERTEX_ACCESS_TOKEN` | Google Vertex AI | Sim (Fase 6) |
-| `VERTEX_BASE_URL` | Google Vertex AI | Sim (Fase 6) |
-| `XIAOMI_MIMO_API_KEY` | Xiaomi MiMo | Opcional |
 | `TWITTER_BEARER_TOKEN` | Twitter API v2 | Opcional (Fase 14) |
 | `YOUTUBE_API_KEY` | YouTube Data v3 | Opcional (Fase 14) |
 
@@ -77,12 +63,10 @@ Usado para:
 
 ### Variaveis de ambiente obrigatorias
 
+- `POOLSIDE_API_KEY`
 - `NVIDIA_API_KEY`
 - `OPENROUTER_API_KEY`
 - `OLLAMA_API_KEY`
-- `VERTEX_ACCESS_TOKEN`
-- `VERTEX_BASE_URL`
-- `XIAOMI_MIMO_API_KEY`
 
 ### Arquivo de uso
 
@@ -102,5 +86,5 @@ Usado para:
 
 - Pipeline funciona com qualquer combinacao de providers disponiveis
 - Se todos falharem, artigo permanece como `status: raw` (sem resumo, mas visivel no feed)
-- Custo mensal maximo estimado: $10 (Vertex AI Pro) + eventual MiMo se todos os gratuitos falharem
+- Custo mensal maximo estimado: $0 (todos os providers da cadeia sao gratuitos)
 - Transparencia: `_ai_provider` e `_ai_model` em cada artigo rastreiam qual modelo gerou o conteudo

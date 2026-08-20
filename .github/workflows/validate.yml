@@ -6,7 +6,7 @@ on:
     paths:
       - "site/public/data/**"
   schedule:
-    - cron: "*/30 * * * *"
+    - cron: "*/30 0-3,8-23 * * *"
 
 permissions:
   contents: write
@@ -21,13 +21,10 @@ jobs:
     timeout-minutes: 30
     env:
       FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: true
+      POOLSIDE_API_KEY: ${{ secrets.POOLSIDE_API_KEY }}
       NVIDIA_API_KEY: ${{ secrets.NVIDIA_API_KEY }}
       OPENROUTER_API_KEY: ${{ secrets.OPENROUTER_API_KEY }}
       OLLAMA_API_KEY: ${{ secrets.OLLAMA_API_KEY }}
-      VERTEX_ACCESS_TOKEN: ${{ secrets.VERTEX_ACCESS_TOKEN }}
-      VERTEX_BASE_URL: ${{ secrets.VERTEX_BASE_URL }}
-      XIAOMI_MIMO_API_KEY: ${{ secrets.XIAOMI_MIMO_API_KEY }}
-      GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
     steps:
       - name: Checkout
         uses: actions/checkout@v6

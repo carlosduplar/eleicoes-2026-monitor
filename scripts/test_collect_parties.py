@@ -229,3 +229,82 @@ def test_idempotent_double_run(
     assert second_new == 0
     assert len(after_first) == len(after_second) == 1
     assert len(ids) == len(set(ids))
+
+
+def _seed_unlocker_source(sources_file: Path) -> None:
+    _write_json(
+        sources_file,
+        {
+            "rss": [],
+            "parties": [
+                {
+                    "name": "PT",
+                    "url": "https://pt.org.br/noticias/",
+                    "candidate_slugs": ["lula"],
+                    "active": True,
+                    "category": "party",
+                    "unlocker": True,
+                    "min_fetch_interval_minutes": 60,
+                }
+            ],
+            "polls": [],
+        },
+    )
+
+
+def test_unlocker_source_throttled_when_recently_fetched(
+    isolated_workspace: dict[str, Path],
+    monkeypatch: pytest.MonkeyPatch,
+) -> None:
+    """A source fetched via Bright Data within the interval is skipped."""
+    _seed_unlocker_source(isolated_workspace["sources"])
+    _write_json(
+        isolated_workspace["data_dir"] / "fetch_state.json",
+        {"https://pt.org.br/noticias/": collect_parties.utc_now_iso()},
+    )
+    monkeypatch.setenv("BRIGHTDATA_API_KEY", "test-key")
+
+    called = False
+
+    def fake_brightdata(_url: str) -> str:
+        nonlocal called
+        called = True
+        return "<html></html>"
+
+    monkeypatch.setattr(collect_parties, "_fetch_url_brightdata", fake_brightdata)
+
+    new_count, _, error_count = collect_parties.collect_articles()
+
+    assert new_count == 0
+    assert error_count == 0
+    assert called is False
+
+
+def test_unlocker_source_fetches_via_brightdata_when_due(
+    isolated_workspace: dict[str, Path],
+    monkeypatch: pytest.MonkeyPatch,
+) -> None:
+    """A source without a recent fetch is fetched via Bright Data."""
+    _seed_unlocker_source(isolated_workspace["sources"])
+    monkeypatch.setenv("BRIGHTDATA_API_KEY", "test-key")
+
+    captured: dict[str, str] = {}
+
+    def fake_brightdata(url: str) -> str:
+        captured["url"] = url
+        return "<html><body><article><a href='/noticias/bd'>Via BD</a></article></body></html>"
+
+    monkeypatch.setattr(collect_parties, "_fetch_url_brightdata", fake_brightdata)
+    monkeypatch.setattr(collect_parties, "_is_allowed_by_robots", lambda _: True)
+
+    new_count, _, error_count = collect_parties.collect_articles()
+
+    articles = _read_articles(isolated_workspace["articles"])
+    state = json.loads(
+        (isolated_workspace["data_dir"] / "fetch_state.json").read_text(encoding="utf-8")
+    )
+    assert new_count == 1
+    assert error_count == 0
+    assert captured.get("url") == "https://pt.org.br/noticias/"
+    assert articles[0]["url"] == "https://pt.org.br/noticias/bd"
+    assert "https://pt.org.br/noticias/" in state
