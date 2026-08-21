@@ -1,156 +1,168 @@
 {
   "schema_version": "2.0.0",
-  "generated_at": "2026-08-21T18:57:15Z",
+  "generated_at": "2026-08-21T20:33:29Z",
   "knowledge_base_version": "2026-03-25T11:26:56Z",
   "generator_model": "openrouter:openrouter/free",
   "ordered_topics": [
-    "impostos",
-    "seguranca",
-    "aborto",
-    "corrupcao"
+    "meio_ambiente",
+    "armas",
+    "aborto"
   ],
   "topics": {
-    "impostos": {
-      "topic_label_pt": "Impostos",
-      "topic_label_en": "Taxes",
+    "meio_ambiente": {
+      "topic_label_pt": "Meio Ambiente",
+      "topic_label_en": "Environment",
       "divergence_score": 0.8333333333333334,
-      "question_pt": "Qual abordagem tributária deve orientar a política fiscal brasileira?",
-      "question_en": "Which tax approach should guide Brazilian fiscal policy?",
+      "question_pt": "Como o Brasil deve equilibrar desenvolvimento econômico e proteção ambiental?",
+      "question_en": "How should Brazil balance economic development and environmental protection?",
       "generation_quality": {
         "validated": true,
         "validator_model": "nvidia:z-ai/glm-5.2",
-        "validation_date": "2026-08-21T18:51:37Z"
+        "validation_date": "2026-08-21T20:29:00Z"
       },
       "options": [
         {
           "id": "opt_a",
-          "text_pt": "Defendo que o governo avance com reformas graduais e metas públicas verificáveis em impostos, com metas transparentes e revisão periódica.",
-          "text_en": "I believe the government should advance gradual reforms with transparent and measurable goals on taxes, with transparent goals and periodic review.",
+          "text_pt": "Acredito que é preciso fortalecer órgãos fiscalizadores, reativar o Fundo Amazônia e combater ativamente o desmatamento, reduzindo restrições burocráticas sem abrir mão da proteção ambiental.",
+          "text_en": "I believe we need to strengthen oversight agencies, reactivate the Amazon Fund, and actively combat deforestation, reducing bureaucratic restrictions without abandoning environmental protection.",
           "weight": 3,
           "candidate_slug": "lula",
-          "position_type": "inferred",
-          "confidence": "medium",
-          "source_pt": "O candidato, filiado ao PT, está associado à defesa da progressividade fiscal e da tributação de grandes fortunas.",
+          "position_type": "confirmed",
+          "confidence": "high",
+          "source_pt": "Lula defende o meio ambiente através do fortalecimento de órgãos fiscalizadores, da reativação do Fundo Amazônia e do combate ativo ao desmatamento. Durante seu governo, houve uma redução de mais de 50% no desmatamento na Amazônia e o país sediou a COP30.",
           "source_en": "",
           "source_url": "https://pt.wikipedia.org/wiki/Luiz_Inácio_Lula_da_Silva",
           "source_date": "2026-03-25"
         },
         {
           "id": "opt_b",
-          "text_pt": "Entendo que o governo mantenha estabilidade institucional e evite mudanças bruscas sem consenso em impostos, com metas transparentes e revisão periódica.",
-          "text_en": "In my view, the government should maintain institutional stability and avoid abrupt changes without consensus on taxes, with transparent goals and periodic review.",
-          "weight": -2,
+          "text_pt": "Na minha visão, o governo mantenha estabilidade institucional e evite mudanças bruscas sem consenso em meio ambiente, com metas transparentes e revisão periódica.",
+          "text_en": "I support the government choosing to maintain institutional stability and avoid abrupt changes without consensus on environment, with transparent goals and periodic review.",
+          "weight": -3,
           "candidate_slug": "flavio-bolsonaro",
           "position_type": "inferred",
           "confidence": "medium",
-          "source_pt": "",
+          "source_pt": "O candidato, de acordo com o posicionamento de seu partido (PL), é crítico de restrições ambientais e defende a flexibilização do licenciamento ambiental.",
           "source_en": "",
           "source_url": "https://pt.wikipedia.org/wiki/Flávio_Bolsonaro",
           "source_date": "2026-03-25"
         },
         {
           "id": "opt_c",
-          "text_pt": "Na minha visão, o governo preserve o modelo atual e rejeite reformas de ruptura sem justificativa sólida em impostos, com metas transparentes e revisão periódica.",
-          "text_en": "I support the government choosing to preserve the current framework and reject disruptive reforms without strong justification on taxes, with transparent goals and periodic review.",
-          "weight": -3,
-          "candidate_slug": "zema",
+          "text_pt": "Considero que o país precisa equilibrar crescimento econômico com conservação, mas acredito que leis como a do amianto, que autorizam extração controlada, podem impulsionar setores produtivos sem grandesimpactos ambientais.",
+          "text_en": "I consider that the country needs to balance economic growth with conservation, but I believe laws like the asbestos one, which authorize controlled extraction, can boost productive sectors without major environmental impacts.",
+          "weight": -2,
+          "candidate_slug": "caiado",
           "position_type": "inferred",
           "confidence": "medium",
-          "source_pt": "Alinhado à plataforma do Partido Novo, Zema defende uma redução drástica da carga tributária e do tamanho do Estado.",
+          "source_pt": "Como governador, Ronaldo Caiado promulgou uma lei que autoriza a extração e o beneficiamento de amianto para exportação, uma prática alvo de questionamentos judiciais devido aos impactos ambientais e de saúde. Além disso, seu partido mantém uma postura crítica a restrições ambientais que considera excessivas.",
           "source_en": "",
-          "source_url": "https://pt.wikipedia.org/wiki/Romeu_Zema",
+          "source_url": "https://pt.wikipedia.org/wiki/Ronaldo_Caiado",
           "source_date": "2026-03-25"
         },
         {
           "id": "opt_d",
-          "text_pt": "Acredito que a reforma tributária deve ser aprofundada, unificando tributos e eliminando distorções fiscais, com o objetivo de simplificar o sistema para contribuintes e empresas.",
-          "text_en": "I believe tax reform should be deepened, unifying taxes and eliminating fiscal distortions, aiming to simplify the system for taxpayers and businesses.",
-          "weight": 2,
-          "candidate_slug": "ratinho-jr",
+          "text_pt": "Entendo que tanto o desenvolvimento econômico quanto a preservação ambiental são importantes, mas penso que políticas ambientais não devem ser usadas para barrar investimentos em regiões carentes de infraestrutura.",
+          "text_en": "I understand that both economic development and environmental preservation are important, but I think environmental policies should not be used to block investments in underserved regions.",
+          "weight": 0,
+          "candidate_slug": "zema",
           "position_type": "inferred",
           "confidence": "medium",
-          "source_pt": "Embora o candidato tenha formação na área tributária, não há menção direta de sua posição. No entanto, o seu partido, o PSD, defende a reforma tributária e a redução de burocracia.",
+          "source_pt": "Defende um equilíbrio entre a preservação ambiental e o desenvolvimento econômico, criticando o excesso de regulações na área.",
           "source_en": "",
-          "source_url": "https://pt.wikipedia.org/wiki/Ratinho_Junior",
+          "source_url": "https://pt.wikipedia.org/wiki/Romeu_Zema",
           "source_date": "2026-03-25"
         },
         {
           "id": "opt_e",
-          "text_pt": "Entendo que é preciso modernizar o sistema tributário nacional, priorizando a racionalidade, a equilibrar as contas públicas e garantir transparência na arrecadação e aplicação dos recursos.",
-          "text_en": "I understand that it is necessary to modernize the national tax system, prioritizing fiscal balance and ensuring transparency in tax collection and application of resources.",
+          "text_pt": "Acredito que o Brasil deve perseguir uma agenda climática responsável, com metas nacionais de redução de emissões e incentivos fiscais para tecnologias limpas, mesmo que isso exija ajustes na matriz energética.",
+          "text_en": "I believe Brazil should pursue a responsible climate agenda, with national emission reduction targets and tax incentives for clean technologies, even if that requires adjustments to the energy matrix.",
           "weight": 2,
           "candidate_slug": "eduardo-leite",
           "position_type": "inferred",
           "confidence": "medium",
-          "source_pt": "Como membro do PSDB, Eduardo Leite provavelmente apoia a reforma tributária, com foco na simplificação e na racionalidade fiscal.",
+          "source_pt": "O partido de Eduardo Leite, o PSDB, defende a adoção de políticas ambientais responsáveis e de uma agenda climática.",
           "source_en": "",
           "source_url": null,
+          "source_date": "2026-03-25"
+        },
+        {
+          "id": "opt_f",
+          "text_pt": "Acredito que o governo busque equilíbrio pragmático antes de ampliar mudanças estruturais em meio ambiente, com metas transparentes e revisão periódica.",
+          "text_en": "I argue the government should seek pragmatic balance before expanding structural reforms on environment, with transparent goals and periodic review.",
+          "weight": 0,
+          "candidate_slug": "ratinho-jr",
+          "position_type": "inferred",
+          "confidence": "medium",
+          "source_pt": "Como filiado ao PSD, a posição de Ratinho Júnior sobre o meio ambiente pode ser inferida a partir da plataforma do partido, que defende um equilíbrio entre o desenvolvimento econômico e a preservação ambiental.",
+          "source_en": "",
+          "source_url": "https://pt.wikipedia.org/wiki/Ratinho_Junior",
           "source_date": "2026-03-25"
         }
       ]
     },
-    "seguranca": {
-      "topic_label_pt": "Segurança Pública",
-      "topic_label_en": "Public Security",
-      "divergence_score": 0.5,
-      "question_pt": "Qual estratégia deve guiar a política nacional de segurança pública?",
-      "question_en": "Which strategy should guide national public security policy?",
+    "armas": {
+      "topic_label_pt": "Armas",
+      "topic_label_en": "Firearms",
+      "divergence_score": 0.6666666666666666,
+      "question_pt": "Como deve ser a política de acesso e controle de armas no Brasil?",
+      "question_en": "How should Brazil regulate firearm access and control?",
       "generation_quality": {
         "validated": true,
         "validator_model": "nvidia:z-ai/glm-5.2",
-        "validation_date": "2026-08-21T18:55:46Z"
+        "validation_date": "2026-08-21T20:30:20Z"
       },
       "options": [
         {
           "id": "opt_a",
-          "text_pt": "Acredito que a segurança pública deve ser guiada pela prevenção social, com investimentos em educação, inclusão e geração de renda para reduzir as causas da criminalidade.",
-          "text_en": "I believe public security should be guided by social prevention, with investments in education, inclusion, and income generation to reduce the causes of crime.",
-          "weight": 0,
+          "text_pt": "Acredito que o governo mantenha estabilidade institucional e evite mudanças bruscas sem consenso em armas, com metas transparentes e revisão periódica.",
+          "text_en": "I argue the government should maintain institutional stability and avoid abrupt changes without consensus on firearms, with transparent goals and periodic review.",
+          "weight": -3,
           "candidate_slug": "lula",
-          "position_type": "inferred",
-          "confidence": "medium",
-          "source_pt": "O candidato Lula prioriza políticas sociais e prevenção em detrimento de abordagens puramente repressivas na área da segurança pública.",
+          "position_type": "confirmed",
+          "confidence": "high",
+          "source_pt": "O PT, partido de Lula, é contrário ao porte de armas pela população civil e possui um histórico de restrição ao acesso a armas de fogo.",
           "source_en": "",
           "source_url": "https://pt.wikipedia.org/wiki/Luiz_Inácio_Lula_da_Silva",
           "source_date": "2026-03-25"
         },
         {
           "id": "opt_b",
-          "text_pt": "Acredito que o governo priorize mudanças amplas com expansão de direitos e de políticas públicas em segurança pública, com metas transparentes e revisão periódica.",
-          "text_en": "I argue the government should prioritize broad reforms that expand rights and public policies on public security, with transparent goals and periodic review.",
-          "weight": 3,
-          "candidate_slug": "zema",
-          "position_type": "confirmed",
-          "confidence": "high",
-          "source_pt": "O candidato defende medidas rígidas de punição e menos entraves burocráticos para as forças policiais, demonstrando apoio por meio de propostas de aumento salarial e flexibilização de regras.",
-          "source_en": "",
-          "source_url": "https://pt.wikipedia.org/wiki/Romeu_Zema",
-          "source_date": "2026-03-25"
-        },
-        {
-          "id": "opt_c",
-          "text_pt": "Defendo que o governo priorize mudanças amplas com expansão de direitos e de políticas públicas em segurança pública, com metas transparentes e revisão periódica. E um ponto central: Flávio tem um histórico legislativo favorável a políticas punitivistas e ao endurecimento de leis penais.",
-          "text_en": "I believe the government should prioritize broad reforms that expand rights and public policies on public security, with transparent goals and periodic review. Additionally, a central point: Flávio has a legislative history favoring punitivist policies and the toughening of penal laws.",
+          "text_pt": "Acredito que o acesso a armas deve ser ampliado, permitindo que cidadãos responsáveis portem armas para defesa pessoal e profissional.",
+          "text_en": "I believe access to firearms should be expanded, allowing responsible citizens to carry weapons for personal and professional defense.",
           "weight": 3,
           "candidate_slug": "flavio-bolsonaro",
           "position_type": "confirmed",
           "confidence": "high",
-          "source_pt": "Flávio Bolsonaro tem um histórico legislativo favorável a políticas punitivistas e ao endurecimento de leis penais. Ele defendeu a excludente de ilicitude para policiais, a redução da maioridade penal e a adoção da pena de morte.",
+          "source_pt": "O político é favorável à flexibilização do acesso a armas de fogo e munições.",
           "source_en": "",
           "source_url": "https://pt.wikipedia.org/wiki/Flávio_Bolsonaro",
           "source_date": "2026-03-25"
         },
         {
-          "id": "opt_d",
-          "text_pt": "Acredito que o governo avance com reformas graduais e metas públicas verificáveis em segurança pública, com metas transparentes e revisão periódica.",
-          "text_en": "I argue the government should advance gradual reforms with transparent and measurable goals on public security, with transparent goals and periodic review.",
+          "id": "opt_c",
+          "text_pt": "Entendo que o governo avance com reformas graduais e metas públicas verificáveis em armas, com metas transparentes e revisão periódica. E um ponto central: Alinhado ao bolsonarismo, de Freitas é favorável à flexibilização do acesso a armas de fogo.",
+          "text_en": "In my view, the government should advance gradual reforms with transparent and measurable goals on firearms, with transparent goals and periodic review.",
           "weight": 2,
-          "candidate_slug": "eduardo-leite",
+          "candidate_slug": "tarcisio",
+          "position_type": "confirmed",
+          "confidence": "high",
+          "source_pt": "Alinhado ao bolsonarismo, Tarcísio de Freitas é favorável à flexibilização do acesso a armas de fogo.",
+          "source_en": "",
+          "source_url": "https://pt.wikipedia.org/wiki/Tarcísio_de_Freitas",
+          "source_date": "2026-03-25"
+        },
+        {
+          "id": "opt_d",
+          "text_pt": "Acredito que o governo busque equilíbrio pragmático antes de ampliar mudanças estruturais em armas, com metas transparentes e revisão periódica.",
+          "text_en": "I argue the government should seek pragmatic balance before expanding structural reforms on firearms, with transparent goals and periodic review.",
+          "weight": 0,
+          "candidate_slug": "aldo-rebelo",
           "position_type": "inferred",
           "confidence": "medium",
-          "source_pt": "Perfil partidário para eduardo-leite",
+          "source_pt": "É considerado moderado em relação ao tema, não sendo um defensor ativo da liberalização do porte e posse de armas.",
           "source_en": "",
-          "source_url": null,
+          "source_url": "https://pt.wikipedia.org/wiki/Aldo_Rebelo",
           "source_date": "2026-03-25"
         }
       ]
@@ -164,7 +176,7 @@
       "generation_quality": {
         "validated": true,
         "validator_model": "nvidia:z-ai/glm-5.2",
-        "validation_date": "2026-08-21T18:56:04Z"
+        "validation_date": "2026-08-21T20:33:14Z"
       },
       "options": [
         {
@@ -182,8 +194,8 @@
         },
         {
           "id": "opt_b",
-          "text_pt": "Acredito que o aborto não deve ser permitido em nenhuma circunstância, e o Estado tem o dever de proteger a vida desde a concepção por meio de leis rígidas, campanhas de conscientização e apoio integral a gestantes em situação de vulnerabilidade.",
-          "text_en": "I believe abortion should not be permitted under any circumstance, and the state has a duty to protect life from conception through strict laws, awareness campaigns, and comprehensive support for pregnant individuals in vulnerable situations.",
+          "text_pt": "Defendo que o aborto não deve ser permitido em nenhuma circunstância, e o Estado tem o dever de garantir proteção legal ao feto desde a concepção, com campanhas de informação sobre os riscos do aborto e apoio a gestantes em situações de vulnerabilidade.",
+          "text_en": "I argue that abortion should not be permitted under any circumstance, and the state has a duty to ensure legal protection for the fetus from conception, with public awareness campaigns about abortion risks and support for pregnant women in vulnerable situations.",
           "weight": -3,
           "candidate_slug": "flavio-bolsonaro",
           "position_type": "inferred",
@@ -208,92 +220,13 @@
         },
         {
           "id": "opt_d",
-          "text_pt": "Considero que o aborto é um tema que exige cautela, e defendo que o Estado garanta atendimento médico especializado em casos de emergência obstétrica, semexpandir os motivos legais de interrupção da gravidez além do que já está previsto em situações de risco comprovado.",
-          "text_en": "I consider that abortion requires caution, and I defend that the state ensure specialized medical care in obstetric emergencies, without expanding the legal grounds for pregnancy termination beyond what is already established in cases of proven risk.",
+          "text_pt": "O Estado deve manter a proibição do aborto, mas implementar um sistema de monitoramento nacional que colete dados sobre gestações de risco e encaminhe automaticamente mulheres em situações de extrema pobreza ou violência para programas de proteção social, evitando que a necessidade leve ao aborto clandestino.",
+          "text_en": "The state should maintain the abortion ban but implement a national monitoring system that tracks high-risk pregnancies and automatically refers women in extreme poverty or violence situations to social protection programs, preventing need from driving clandestine abortions.",
           "weight": -2,
           "candidate_slug": "ratinho-jr",
           "position_type": "inferred",
           "confidence": "medium",
           "source_pt": "Embora Ratinho Júnior não tenha um posicionamento público explícito sobre o aborto nos trechos fornecidos, seu partido, o PSD, é descrito como conservador no tema, seguindo a vertente evangélica e católica, o que sugere uma postura contrária à legalização.",
-          "source_en": "",
-          "source_url": "https://pt.wikipedia.org/wiki/Ratinho_Junior",
-          "source_date": "2026-03-25"
-        }
-      ]
-    },
-    "corrupcao": {
-      "topic_label_pt": "Combate à Corrupção",
-      "topic_label_en": "Anti-Corruption",
-      "divergence_score": 0.16666666666666666,
-      "question_pt": "Qual medida é mais efetiva para reduzir corrupção na administração pública?",
-      "question_en": "Which measure is most effective to reduce corruption in public administration?",
-      "generation_quality": {
-        "validated": true,
-        "validator_model": "nvidia:z-ai/glm-5.2",
-        "validation_date": "2026-08-21T18:57:15Z"
-      },
-      "options": [
-        {
-          "id": "opt_a",
-          "text_pt": "Acredito que a implementação de um sistema integrado de transparência fiscal, com dados abertos e auditorias independentes contínuas, é a medida mais eficaz para reduzir a corrupção.",
-          "text_en": "I believe that implementing an integrated fiscal transparency system with open data and continuous independent audits is the most effective measure to reduce corruption.",
-          "weight": 3,
-          "candidate_slug": "lula",
-          "position_type": "inferred",
-          "confidence": "medium",
-          "source_pt": "",
-          "source_en": "",
-          "source_url": "https://pt.wikipedia.org/wiki/Luiz_Inácio_Lula_da_Silva",
-          "source_date": "2026-03-25"
-        },
-        {
-          "id": "opt_b",
-          "text_pt": "Entendo que o governo avance com reformas graduais e metas públicas verificáveis em combate à corrupção, com metas transparentes e revisão periódica.",
-          "text_en": "In my view, the government should advance gradual reforms with transparent and measurable goals on anti-corruption, with transparent goals and periodic review. Additionally, a central point: Flávio supported the establishment of the Fiscal Transparency and Monitoring Program and the Fiscal Balance Promotion Plan in the Senate.",
-          "weight": 2,
-          "candidate_slug": "flavio-bolsonaro",
-          "position_type": "confirmed",
-          "confidence": "high",
-          "source_pt": "Flávio Bolsonaro apoiou o estabelecimento do Programa de Acompanhamento e Transparência Fiscal e o Plano de Promoção do Equilíbrio Fiscal no Senado.",
-          "source_en": "",
-          "source_url": "https://pt.wikipedia.org/wiki/Flávio_Bolsonaro",
-          "source_date": "2026-03-25"
-        },
-        {
-          "id": "opt_c",
-          "text_pt": "Considero que a digitalização integral dos processos públicos, com elimination do papel e do contato direto entre cidadão e servidor, reduz drasticamente as oportunidades de suborno e favorecimento.",
-          "text_en": "I consider that the full digitization of public processes, eliminating paper and direct contact between citizen and official, drastically reduces opportunities for bribery and favoritism.",
-          "weight": 2,
-          "candidate_slug": "tarcisio",
-          "position_type": "inferred",
-          "confidence": "medium",
-          "source_pt": "Tarcísio é afiliado ao partido Republicanos, cujo discurso enfatiza o combate à corrupção e apoio à Operação Lava Jato.",
-          "source_en": "",
-          "source_url": "https://pt.wikipedia.org/wiki/Tarcísio_de_Freitas",
-          "source_date": "2026-03-25"
-        },
-        {
-          "id": "opt_d",
-          "text_pt": "Acredito que o governo priorize mudanças amplas com expansão de direitos e de políticas públicas em combate à corrupção, com metas transparentes e revisão periódica.",
-          "text_en": "I argue the government should prioritize broad reforms that expand rights and public policies on anti-corruption, with transparent goals and periodic review.",
-          "weight": 3,
-          "candidate_slug": "zema",
-          "position_type": "inferred",
-          "confidence": "medium",
-          "source_pt": "Embora os trechos não tragam ações ou falas explícitas de Romeu Zema sobre o tema, a posição forte de seu partido (Novo) em prol do combate à corrupção e transparência sugere alinhamento a essas diretrizes.",
-          "source_en": "",
-          "source_url": "https://pt.wikipedia.org/wiki/Romeu_Zema",
-          "source_date": "2026-03-25"
-        },
-        {
-          "id": "opt_e",
-          "text_pt": "Acredito que a criminalização da corrupção ativa e passiva, com penas proporcionais e aplicação imediata das sanções, cria um efeito deterrent real e fortalece a cultura de integridade.",
-          "text_en": "I believe that criminalizing both active and passive corruption with proportional penalties and immediate enforcement creates a real deterrent effect and strengthens the culture of integrity.",
-          "weight": 3,
-          "candidate_slug": "ratinho-jr",
-          "position_type": "inferred",
-          "confidence": "medium",
-          "source_pt": "O PSD, partido de Ratinho Júnior, tem discurso anticorrupção e defende transparência. Durante seu mandato, a gestão focou em transparência pública.",
           "source_en": "",
           "source_url": "https://pt.wikipedia.org/wiki/Ratinho_Junior",
           "source_date": "2026-03-25"
