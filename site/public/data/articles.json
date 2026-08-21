@@ -2,35 +2,6 @@
   "$schema": "../docs/schemas/articles.schema.json",
   "articles": [
     {
-      "id": "1a7495b81dd8e313",
-      "url": "https://noticias.uol.com.br/eleicoes/2026/08/21/presidente-do-tre-sp-rejeita-recurso-e-mantem-marcal-inelegivel.ghtm",
-      "title": "Presidente do TRE-SP rejeita recurso e mantém Marçal inelegível",
-      "source": "UOL Noticias",
-      "published_at": "2026-08-21T22:00:14Z",
-      "collected_at": "2026-08-21T22:00:14Z",
-      "status": "raw",
-      "relevance_score": 0.0,
-      "relevance_signals": null,
-      "candidates_mentioned": [],
-      "topics": [],
-      "narrative_cluster_id": null,
-      "duplicate_of": null,
-      "summaries": {
-        "pt-BR": "",
-        "en-US": ""
-      },
-      "content": "O presidente do TRE-SP (Tribunal Regional Eleitoral de São Paulo), José Antonio Encinas Manfré, rejeitou hoje um recurso apresentado por Pablo Marçal (PRTB) e manteve a decisão que o tornou inelegível até 2032.",
-      "source_category": "mainstream",
-      "sentiment_per_candidate": {},
-      "edit_history": [],
-      "disclaimer_pt": "Análise algorítmica. Não representa pesquisa de opinião.",
-      "disclaimer_en": "Algorithmic analysis. Does not represent polling data.",
-      "sentiment_score": 0.0,
-      "confidence_score": 0.0,
-      "_sentiment_scores": {},
-      "prominence_score": 0.0
-    },
-    {
       "id": "20aa91be2b3cf534",
       "url": "https://www1.folha.uol.com.br/poder/2026/08/datafolha-lula-marca-39-no-1o-turno-e-flavio-bolsonaro-tem-33.shtml",
       "title": "Datafolha: Lula marca 39% no 1º turno, e Flávio Bolsonaro tem 33%",
@@ -65,27 +36,58 @@
       "source": "UOL Noticias",
       "published_at": "2026-08-21T22:00:13Z",
       "collected_at": "2026-08-21T22:00:13Z",
-      "status": "raw",
-      "relevance_score": 0.0,
-      "relevance_signals": null,
-      "candidates_mentioned": [],
-      "topics": [],
+      "status": "validated",
+      "relevance_score": 1.0,
+      "relevance_signals": {
+        "candidate_signal": 0.6,
+        "topic_signal": 0.25,
+        "keyword_signal": 0.15,
+        "source_signal": 0.0
+      },
+      "candidates_mentioned": [
+        "lula",
+        "flavio-bolsonaro"
+      ],
+      "topics": [
+        "eleicoes"
+      ],
       "narrative_cluster_id": null,
       "duplicate_of": null,
       "summaries": {
-        "pt-BR": "",
-        "en-US": ""
+        "pt-BR": "Pesquisa Datafolha indica que Lula tem 47% e Flávio Bolsonaro 43% em um segundo turno, colocando ambos no limite do empate técnico. O resultado aponta para uma disputa acirrada na eleição presidencial de outubro.",
+        "en-US": "A Datafolha poll shows Lula with 47% and Flávio Bolsonaro with 43% in a potential second round, placing both candidates at the threshold of a technical tie. The result indicates a highly competitive race for the October presidential election."
       },
       "content": "21 Ago (Reuters) - O presidente Luiz Inácio ?Lula da ?Silva (PT) e o senador Flávio Bolsonaro (PL) estão ?no ?limite ?do empate técnico ?em um ?eventual segundo turno da eleição presidencial ?de outubro, mostrou ?pesquisa ?Datafolha divulgada nesta sexta-feira.",
       "source_category": "mainstream",
-      "sentiment_per_candidate": {},
-      "edit_history": [],
+      "sentiment_per_candidate": {
+        "lula": "positivo",
+        "flavio-bolsonaro": "neutro"
+      },
+      "edit_history": [
+        {
+          "tier": "editor",
+          "at": "2026-08-21T22:15:56Z",
+          "provider": "openrouter",
+          "action": "validated",
+          "changes": [
+            "summary_pt",
+            "summary_en"
+          ]
+        }
+      ],
       "disclaimer_pt": "Análise algorítmica. Não representa pesquisa de opinião.",
       "disclaimer_en": "Algorithmic analysis. Does not represent polling data.",
-      "sentiment_score": 0.0,
-      "confidence_score": 0.0,
-      "_sentiment_scores": {},
-      "prominence_score": 0.0
+      "sentiment_score": 0.15,
+      "confidence_score": 1.0,
+      "_sentiment_scores": {
+        "lula": 0.2,
+        "flavio-bolsonaro": 0.1
+      },
+      "prominence_score": 0.0,
+      "_ai_provider": "nvidia",
+      "_ai_model": "minimaxai/minimax-m3",
+      "ai_provider_editor": "openrouter/free",
+      "editor_note": null
     },
     {
       "id": "f3f2b34b6de45ad7",
@@ -94,27 +96,55 @@
       "source": "CartaCapital",
       "published_at": "2026-08-21T21:58:24Z",
       "collected_at": "2026-08-21T22:00:45Z",
-      "status": "raw",
-      "relevance_score": 0.0,
-      "relevance_signals": null,
-      "candidates_mentioned": [],
-      "topics": [],
+      "status": "validated",
+      "relevance_score": 0.9,
+      "relevance_signals": {
+        "candidate_signal": 0.5,
+        "topic_signal": 0.25,
+        "keyword_signal": 0.15,
+        "source_signal": 0.0
+      },
+      "candidates_mentioned": [
+        "tarcisio"
+      ],
+      "topics": [
+        "eleicoes"
+      ],
       "narrative_cluster_id": null,
       "duplicate_of": null,
       "summaries": {
-        "pt-BR": "",
-        "en-US": ""
+        "pt-BR": "Uma pesquisa Datafolba divulgada em 21 de agosto de 2026 mostra que Tarcísio de Freitas (Republicanos) lidera a disputa pelo governo de São Paulo com 45% das intenções de voto, seguido de Fernando Haddad (PT) com 27%. Em um possível segundo turno, Tarcísio venceria Haddad por 54% a 35%. A pesquisa ouviu 1.610 eleitores em 65 cidades paulistas entre 18 e 19 de agosto, com margem de erro de 2 pontos percentuais.",
+        "en-US": "A Datafolha survey released on August 21, 2026 shows that Tarcísio de Freitas (Republicanos) leads the race for governor of São Paulo with 45% of voting intentions, followed by Fernando Haddad (PT) at 27%. In a hypothetical runoff, Tarcísio would defeat Haddad by 54% to 35%. The poll surveyed 1,610 voters in 65 São Paulo cities on August 18-19, with a margin of error of 2 percentage points."
       },
       "source_category": "magazine",
       "content": "Política Datafolha: Tarcísio lidera disputa para o governo de São Paulo com 45%; Haddad tem 27% O instituto ouviu 1.610 eleitores em 65 cidades paulistas de 18 a 19 de agosto Por CartaCapital 21.08.2026 18h58 | Atualizado há 1 hora Fernando Haddad e Tarcísio de Freitas. Fotos: Reprodução/Redes Sociais e Marcelo Camargo/Agência Brasil Apoie Siga-nos no Uma pesquisa Datafolha divulgada nesta sexta-feira 21 aponta que o governador de São Paulo Tarcísio de Freitas (Republicanos) lidera a disputa ao Palácio dos Bandeirantes com 45% das intenções de voto, enquanto seu principal adversário, o ex-ministro da Fazenda Fernando Haddad (PT) tem 27% . Veja os números: Tarcísio de Freitas (Republicanos): 45% Fernando Haddad (PT): 27% Vera Lúcia (PSTU): 4% Carlos Machado (PCB): 3% Policial Edjane (Agir): 3$ Vivian Mendes (UP): 2% Izadora Dias (PCO): 1% Brancos/Nulos/Nenhum : 11% Indecisos : 4% Ainda conforme a pesquisa, em um eventual segundo turno entre os dois, Tarcísio venceria Haddad por 54% a 35% . No último levantamento , de julho, o chefe do Executivo paulista aparecia com 46% ante 30% de Haddad. Este é o primeiro Datafolha divulgado após o registro das candidaturas e o começo oficial da campanha eleitoral. O Datafolha ouviu 1.610 eleitores em 65 cidades paulistas de 18 a 19 de agosto. A margem de erro é de 2 pontos percentuais. A pesquisa está registrada no TSE sob os números SP-01806/2026 e BR-07185/2026. Recomendadas Datafolha mostra Lula com 47% no 2º turno, contra 43% de Flávio Bolsonaro Datafolha: Lula lidera o 1º turno com 6 pontos de vantagem sobre Flávio Bolsonaro A pretensa ‘transição’ de Flávio Bolsonaro na Presidência e o aceno a Tarcísio Datafolha divulga nesta sexta nova pesquisa sobre a eleição presidencial; veja horário e detalhes Mais Lidas CartaCapital Há 32 anos, a maior referência progressista em jornalismo no Brasil. ENTENDA MAIS SOBRE: Datafolha , Fernando Haddad , São Paulo , Tarcísio de Freitas , Jornalismo crítico e inteligente. Todos os dias, no seu e-mail Assine nossa newsletter Assine nossa newsletter e receba um boletim matinal exclusivo Assinar Inscreva-se 2026 já começou Às vésperas das eleições de 2026 , o País volta a encarar um ponto de inflexão: o futuro democrático está novamente em jogo . A ameaça bolsonarista não foi derrotada, apenas recuou . No Congresso, forças conservadoras seguem ditando o ritmo . Lá fora, o avanço da extrema-direita e os conflitos em Gaza, no Irã e na Ucrânia agravam a instabilidade global. Se você valoriza o jornalismo crítico, independente e comprometido com a democracia, este é o momento de agir . Assine ou contribua com o quanto puder . Assine a CartaCapital Faça uma doação Leia também Política A estratégia do PT para tentar fazer Haddad avançar contra Tarcísio em SP Por Mariana Serafini Política Ouvidor da PM vê irregularidade na abordagem a Haddad em São Paulo Por Ana Luiza Basilio Economia Se não fosse a renegociação da dívida de São Paulo, Tarcísio não terminaria o mandato, diz Haddad Por CartaCapital Jornalismo crítico e inteligente. Todos os dias, no seu e-mail Assine nossa newsletter Assine nossa newsletter e receba um boletim matinal exclusivo Assinar Inscreva-se",
-      "sentiment_per_candidate": {},
-      "edit_history": [],
+      "sentiment_per_candidate": {
+        "tarcisio": "positivo"
+      },
+      "edit_history": [
+        {
+          "tier": "editor",
+          "at": "2026-08-21T22:16:09Z",
+          "provider": "openrouter",
+          "action": "validated",
+          "changes": [
+            "summary_pt",
+            "summary_en"
+          ]
+        }
+      ],
       "disclaimer_pt": "Análise algorítmica. Não representa pesquisa de opinião.",
       "disclaimer_en": "Algorithmic analysis. Does not represent polling data.",
-      "sentiment_score": 0.0,
-      "confidence_score": 0.0,
-      "_sentiment_scores": {},
-      "prominence_score": 0.0
+      "sentiment_score": 0.6,
+      "confidence_score": 1.0,
+      "_sentiment_scores": {
+        "tarcisio": 0.6
+      },
+      "prominence_score": 0.0,
+      "_ai_provider": "nvidia",
+      "_ai_model": "minimaxai/minimax-m3",
+      "ai_provider_editor": "openrouter/free",
+      "editor_note": null
     },
     {
       "id": "4e7a10674ca197d1",
@@ -123,56 +153,55 @@
       "source": "Poder360",
       "published_at": "2026-08-21T21:58:10Z",
       "collected_at": "2026-08-21T22:00:33Z",
-      "status": "raw",
-      "relevance_score": 0.0,
-      "relevance_signals": null,
-      "candidates_mentioned": [],
-      "topics": [],
+      "status": "validated",
+      "relevance_score": 0.9,
+      "relevance_signals": {
+        "candidate_signal": 0.5,
+        "topic_signal": 0.25,
+        "keyword_signal": 0.1,
+        "source_signal": 0.05
+      },
+      "candidates_mentioned": [
+        "lula"
+      ],
+      "topics": [
+        "eleicoes"
+      ],
       "narrative_cluster_id": null,
       "duplicate_of": null,
       "summaries": {
-        "pt-BR": "",
-        "en-US": ""
+        "pt-BR": "O presidente Lula participa do lançamento de Patrus Ananias ao governo de Minas, em evento na Praça da Estação. Antes, visita obras na ponte São Raimundo. É a primeira viagem de campanha de Lula a Minas desde a pré-candidatura de Patrus.",
+        "en-US": "President Lula attends the launch of Patrus Ananias for Minas Gerais governor at an event in Praça da Estação. Before the event, he visits the São Raimundo bridge. This marks his first campaign trip to Minas since Patrus's candidacy."
       },
       "content": "O presidente Luiz Inácio Lula da Silva (PT) participa nesta 6ª feira (21.ago.2026) de ato de campanha de Patrus Ananias (PT) ao governo de Minas Gerais, em Belo Horizonte . O evento será realizado na Praça da Estação, às 19h. Esta é a 1ª visita de Lula a Minas Gerais desde a confirmação de Patrus como candidato ao governo . Antes do ato, Lula visita obras de duplicação da ponte São Raimundo , em Governador Valadares (MG). A agenda faz parte da 1ª sequência de viagens do presidente durante a campanha à reeleição. Acompanhe ao vivo:",
       "source_category": "politics",
-      "sentiment_per_candidate": {},
-      "edit_history": [],
-      "disclaimer_pt": "Análise algorítmica. Não representa pesquisa de opinião.",
-      "disclaimer_en": "Algorithmic analysis. Does not represent polling data.",
-      "sentiment_score": 0.0,
-      "confidence_score": 0.0,
-      "_sentiment_scores": {},
-      "prominence_score": 0.0
-    },
-    {
-      "id": "ab7c056168a4e418",
-      "url": "https://www.poder360.com.br/poder-eleicoes-2026/raquel-lyra-tem-47-e-joao-campos-40-no-1o-turno-em-pernambuco/",
-      "title": "Raquel Lyra tem 47% e João Campos 40% no 1º turno em Pernambuco",
-      "source": "Poder360",
-      "published_at": "2026-08-21T21:57:32Z",
-      "collected_at": "2026-08-21T22:00:33Z",
-      "status": "raw",
-      "relevance_score": 0.0,
-      "relevance_signals": null,
-      "candidates_mentioned": [],
-      "topics": [],
-      "narrative_cluster_id": null,
-      "duplicate_of": null,
-      "summaries": {
-        "pt-BR": "",
-        "en-US": ""
+      "sentiment_per_candidate": {
+        "lula": "positivo"
       },
-      "content": "Levantamento do Datafolha, divulgado nesta 6ª feira (21.ago.2026), mostra que Raquel Lyra (PSD) tem 47% das intenções de voto, ante 40% registrados por João Campos (PSB) no 1º turno. Eis os resultados: Raquel Lyra (PSD): 47%; João Campos (PSB): 40%; Ivan Moraes (PSOL): 1%; Renan Hallais (Missão): 1%; Camila Falcão (UP): 1%; Guilherme Fonseca (PSTU): 1%; Victor Assis ( PCO ): 0%; Professor Jeremias do Banco (Democrata): 0%; Branco/nulo/nenhum: 5%; Indecisos: 4%. O Datafolha entrevistou 1.204 pessoas de 18 a 21 de agosto de 2026. A margem de erro é 3 pontos percentuais, para mais ou para menos. O grau de confiança do levantamento é de 95%. Está registrado no TSE (Tribunal Superior Eleitoral) sob o número PE-01528/2026. O estudo custou R$ 153.527. Foi pago pela Globo . REJEIÇÃO A pesquisa também mediu a rejeição de voto. Eis os resultados: João Campos (PSB): 32%; Raquel Lyra (PSD): 29%. Renan Hallais (Missão): 20%; Guilherme Fonseca (PSTU): 18%; Ivan Moraes (PSOL): 17%; Victor Assis (PCO): 16%; Professor Jeremias do Banco (Democrata): 12%; Professora Camila (UP): 12% Votaria em qualquer um/não rejeita nenhum: 3%; Rejeita todos/não votaria em nenhum: 2%; Não sabem: 9%. SENADO Na disputa pelo Senado no Estado, Marília Arraes (PDT) e Humberto Costa (PT) ficam numericamente à frente. Eis os resultados: Marília Arraes (PDT): 15%; Humberto Costa (PT): 14%; Mendonça Filho (PL): 12%; Eduardo da Fonte (PP): 11%; Túlio Gadêlha (PSD): 5%; Carlos Sant’anna (Novo): 2%; Pastor Gilvan Costa (Democrata): 2%; Samuel Timoteo (UP): 1%; Mariano Macedo (PSTU): 1%; Paulo Rubem Santiago (Rede): 1%; Mailson Neto (PCO): 0%; Goret Bitu (UP): 0%; Branco/nulo/nenhum: 23%; Indecisos: 14%. AGREGADOR DE PESQUISAS O Poder360 oferece aos assinantes do Drive o Agregador de Pesquisas , o mais antigo e mais completo da internet no Brasil. Reúne milhares de levantamentos de intenção de voto de todas as empresas desde o ano 2000. Os dados de 2026 estão disponíveis a todos os leitores durante o período eleitoral. Clique aqui para acessar o Agregador de Pesquisas e buscar os dados que desejar para as disputas de 2026. Leia aqui como assinar o Drive para acessar estudos de anos anteriores no Agregador de Pesquisas e outros produtos do Poder360 . Em anos eleitorais, só são publicados os estudos que têm registro na Justiça Eleitoral e metodologia completa conhecida. Tem alguma pesquisa para divulgar? Mande a íntegra por e-mail para o Poder360 : redacao@poder360.com.br . PODERDATACAST O PoderDataCast , podcast do Poder360 voltado ao debate de pesquisas eleitorais e de opinião pública, está no ar para mais uma temporada. O programa, comandado pelo editor de Pesquisas, Jonathan Karter , é transmitido ao vivo todas as quintas-feiras, às 18h30, no canal do Poder360 no YouTube. Assista ao último episódio (45min):",
-      "source_category": "politics",
-      "sentiment_per_candidate": {},
-      "edit_history": [],
+      "edit_history": [
+        {
+          "tier": "editor",
+          "at": "2026-08-21T22:16:15Z",
+          "provider": "openrouter",
+          "action": "validated",
+          "changes": [
+            "summary_pt",
+            "summary_en"
+          ]
+        }
+      ],
       "disclaimer_pt": "Análise algorítmica. Não representa pesquisa de opinião.",
       "disclaimer_en": "Algorithmic analysis. Does not represent polling data.",
-      "sentiment_score": 0.0,
-      "confidence_score": 0.0,
-      "_sentiment_scores": {},
-      "prominence_score": 0.0
+      "sentiment_score": 0.3,
+      "confidence_score": 1.0,
+      "_sentiment_scores": {
+        "lula": 0.3
+      },
+      "prominence_score": 0.0,
+      "_ai_provider": "nvidia",
+      "_ai_model": "minimaxai/minimax-m3",
+      "ai_provider_editor": "openrouter/free",
+      "editor_note": null
     },
     {
       "id": "3e6f8d731e1499ca",
@@ -210,27 +239,57 @@
       "source": "Metropoles",
       "published_at": "2026-08-21T21:50:43Z",
       "collected_at": "2026-08-21T22:00:31Z",
-      "status": "raw",
-      "relevance_score": 0.0,
-      "relevance_signals": null,
-      "candidates_mentioned": [],
-      "topics": [],
+      "status": "validated",
+      "relevance_score": 0.6,
+      "relevance_signals": {
+        "candidate_signal": 0.5,
+        "topic_signal": 0.05,
+        "keyword_signal": 0.05,
+        "source_signal": 0.0
+      },
+      "candidates_mentioned": [
+        "lula"
+      ],
+      "topics": [
+        "politica_externa",
+        "impostos",
+        "economia"
+      ],
       "narrative_cluster_id": null,
       "duplicate_of": null,
       "summaries": {
-        "pt-BR": "",
-        "en-US": ""
+        "pt-BR": "Brasil e EUA marcam reunião sobre tarifação de produtos brasileiros após ligação entre Lula e Trump, com proposta de videoconferência na próxima semana para retomar negociações técnicas.",
+        "en-US": "Brazil and the US scheduled a meeting over tariffs on Brazilian goods after a call between Lula and Trump, with plans for a videoconference next week to resume technical negotiations."
       },
       "content": "O representante comercial dos Estados Unidos, Jamieson Greer, entrou em contato com o ministro do Desenvolvimento, Indústria, Comércio e Serviços, Márcio Elias Rosa , nesta sexta-feira (21/8), após a ligação entre os presidentes Luiz Inácio Lula da Silva (PT) e Donald Trump. Os dois combinaram de realizar uma reunião por videoconferência na próxima semana para discutir o tarifaço norte-americano sobre produtos brasileiros. Segundo apurou o Metrópoles , foi Greer quem procurou o ministro brasileiro logo após o telefonema entre Lula e Trump. Elias Rosa e o representante dos Estados Unidos devem voltar a conversar em breve para definir a data e os detalhes do encontro. O contato representa o primeiro desdobramento concreto da conversa entre os presidentes e abre caminho para a retomada das negociações técnicas sobre as tarifas impostas por Washington ao Brasil. 3 imagens Fechar modal. 1 de 3 Lula e Trump em encontro na Casa Branca Ricardo Stuckert/Presidência da República 2 de 3 Jamieson Greer, chefe do USTR, pasta norte-americana que conduz a política tarifária de Donald Trump Tom Williams/CQ-Roll Call, Inc via Getty Images 3 de 3 O ministro do Desenvolvimento, Indústria, Comércio e Serviços, Márcio Fernando Elias Rosa Foto: Tomaz Silva/Agência Brasil Lula chama justificativas de “infundadas” Durante a conversa com Trump, que durou mais de uma hora, nesta sexta, o petista voltou a contestar as justificativas apresentadas pelo governo norte-americano para a imposição das tarifas. Segundo o Palácio do Planalto, o presidente classificou como “infundadas” as alegações relacionadas a desmatamento, acordos preferenciais, propriedade intelectual, combate à corrupção, funcionamento do Pix, mercado de etanol e importações de produtos associados a trabalho forçado. Lula também afirmou que as tarifas prejudicam as economias dos dois países e defendeu que a negociação seja retomada. O brasileiro ressaltou ainda a importância de manter os Estados Unidos entre os principais parceiros comerciais do Brasil. Trump, segundo o Planalto, concordou com a retomada das negociações e sugeriu que as equipes técnicas dos dois governos voltassem a se reunir. Leia também Brasil Lula diz a Trump que Brasil não precisa de classificação para PCC e CV Brasil A Trump, Lula diz que alegações que embasaram tarifas “são infundadas” Igor Gadelha Lula diz a Trump que eles se gostam e não precisam de intermediários Tarifas podem chegar a 37,5% Os Estados Unidos impuseram neste ano duas cobranças adicionais sobre produtos brasileiros. Uma delas, de 25%, foi estabelecida após investigação conduzida pelo Escritório do Representante Comercial dos Estados Unidos (USTR). A outra, de 12,5%, integra uma medida mais ampla aplicada a dezenas de países. Dependendo do produto, as duas alíquotas podem elevar a tarifa total incidente sobre mercadorias brasileiras para até 37,5%. A cobrança adicional de 25% começou a atingir uma série de produtos brasileiros em julho, incluindo setores como máquinas, móveis, etanol, açúcar e calçados. Alguns itens importantes da pauta de exportações, como café, carne bovina e aeronaves, ficaram fora da medida. Durante a investigação, o governo norte-americano alegou que o Brasil mantinha práticas consideradas comerciais desleais pelos Estados Unidos. O USTR apontou, entre outros temas, questões relacionadas ao comércio digital, ao Pix, ao acesso ao mercado de etanol, à propriedade intelectual e ao desmatamento. A investigação sob a Seção 301 permitiu ao governo de Trump adotar medidas comerciais de resposta.",
       "source_category": "mainstream",
-      "sentiment_per_candidate": {},
-      "edit_history": [],
+      "sentiment_per_candidate": {
+        "lula": "positivo"
+      },
+      "edit_history": [
+        {
+          "tier": "editor",
+          "at": "2026-08-21T22:16:36Z",
+          "provider": "openrouter",
+          "action": "validated",
+          "changes": [
+            "summary_pt",
+            "summary_en"
+          ]
+        }
+      ],
       "disclaimer_pt": "Análise algorítmica. Não representa pesquisa de opinião.",
       "disclaimer_en": "Algorithmic analysis. Does not represent polling data.",
-      "sentiment_score": 0.0,
-      "confidence_score": 0.0,
-      "_sentiment_scores": {},
-      "prominence_score": 0.0
+      "sentiment_score": 0.2,
+      "confidence_score": 1.0,
+      "_sentiment_scores": {
+        "lula": 0.2
+      },
+      "prominence_score": 0.0,
+      "_ai_provider": "nvidia",
+      "_ai_model": "minimaxai/minimax-m3",
+      "ai_provider_editor": "openrouter/free",
+      "editor_note": null
     },
     {
       "id": "c0735a430e5ba89b",
@@ -239,27 +298,55 @@
       "source": "Metropoles",
       "published_at": "2026-08-21T21:48:36Z",
       "collected_at": "2026-08-21T22:00:32Z",
-      "status": "raw",
-      "relevance_score": 0.0,
-      "relevance_signals": null,
-      "candidates_mentioned": [],
-      "topics": [],
+      "status": "validated",
+      "relevance_score": 0.9,
+      "relevance_signals": {
+        "candidate_signal": 0.5,
+        "topic_signal": 0.25,
+        "keyword_signal": 0.15,
+        "source_signal": 0.0
+      },
+      "candidates_mentioned": [
+        "tarcisio"
+      ],
+      "topics": [
+        "eleicoes"
+      ],
       "narrative_cluster_id": null,
       "duplicate_of": null,
       "summaries": {
-        "pt-BR": "",
-        "en-US": ""
+        "pt-BR": "Pesquisa Datafolha divulgada em 21 de agosto de 2026 mostra Tarcísio de Freitas (Republicanos) liderando com 45% contra 27% de Fernando Haddad (PT) no pleito por governador de São Paulo; em segundo turno, Tarcísio venceria por 54% a 35%.",
+        "en-US": "A Datafolba poll released August 21 2026 shows Tarcísio de Freitas (Republicanos) leading at 45% against Fernando Haddad (PT) at 27% in the São Paulo gubernatorial race; in a runoff, Tarcísio would win 54% to 35%."
       },
       "content": "A pesquisa Datafolha com foco nas eleições ao governo de São Paulo , divulgada nesta sexta-feira (21/8), aponta que o governador de São Paulo, Tarcísio de Freitas (Republicanos) , candidato à reeleição, tem 45% das intenções de voto em cenário de primeiro turno. Com isso, o atual chefe do Palácio dos Bandeirantes se mantém à frente na disputa contra Fernando Haddad (PT), com 27% . Em um eventual segundo turno entre os dois, segundo o levantamento, Tarcísio venceria Haddad por 54% a 35%. 4 imagens Fechar modal. 1 de 4 Tarcísio de Freitas lidera as pesquisas de intenção de voto contra Fernando Haddad Rebeca Ligabue/Metrópoles 2 de 4 Tarcísio e Haddad são adversário na disputa ao governo de São Paulo Diogo Zacarias/Ministério da Fazenda 3 de 4 Tarcísio de Freitas (Republicanos) Rebeca Ligabue/ Metrópoles 4 de 4 Fernando Haddad (PT) Rebeca Ligabue/Metrópoles Trata-se da primeira pesquisa Datafolha depois do registro de candidaturas e do início oficial das campanhas eleitorais. Na estimativa anterior do instituto, publicada em 5 de julho, Tarcísio tinha 46% enquanto Haddad marcava 30%, em cenário de primeiro turno. Leia também Brasil Datafolha: Eduardo Paes tem 41% e Douglas Ruas, 19% ao governo do Rio Minas Gerais Datafolha em MG: Cleitinho lidera com 32%; Patrus e Kalil têm 12% cada Grande Angular Datafolha: Celina tem 30% das intenções de voto e empata tecnicamente com Arruda, que soma 28% Brasil Datafolha: Lula tem 39% no 1º turno; Flávio, 33%; Caiado, 5%; Renan, 4%; Zema, 4% Na pesquisa desta sexta, Vera Lúcia (PSTU) obteve 4%, enquanto Carlos Machado (PCB) e Policial Edjane (Agir) marcaram 3%; Vivian Mendes (UP) ficou com 2%, e Izadora Dias (PCO), 1%. Brancos, nulos e os que afirmam que não votarão em ninguém somaram 11%, e 4% dos entrevistados se declararam indecisos. O Datafolha ouviu 1.610 eleitores em 65 cidades paulistas, de 18 a 19 de agosto . A margem de erro é de 2 pontos percentuais para mais ou para menos, e o índice de confiança, de 95%. A pesquisa está registrada no TSE sob os números SP-01806/2026 e BR-07185/2026.",
       "source_category": "mainstream",
-      "sentiment_per_candidate": {},
-      "edit_history": [],
+      "sentiment_per_candidate": {
+        "tarcisio": "positivo"
+      },
+      "edit_history": [
+        {
+          "tier": "editor",
+          "at": "2026-08-21T22:16:46Z",
+          "provider": "openrouter",
+          "action": "validated",
+          "changes": [
+            "summary_pt",
+            "summary_en"
+          ]
+        }
+      ],
       "disclaimer_pt": "Análise algorítmica. Não representa pesquisa de opinião.",
       "disclaimer_en": "Algorithmic analysis. Does not represent polling data.",
-      "sentiment_score": 0.0,
-      "confidence_score": 0.0,
-      "_sentiment_scores": {},
-      "prominence_score": 0.0
+      "sentiment_score": 0.6,
+      "confidence_score": 1.0,
+      "_sentiment_scores": {
+        "tarcisio": 0.6
+      },
+      "prominence_score": 0.0,
+      "_ai_provider": "nvidia",
+      "_ai_model": "minimaxai/minimax-m3",
+      "ai_provider_editor": "openrouter/free",
+      "editor_note": null
     },
     {
       "id": "1cae714f94238502",
@@ -268,27 +355,61 @@
       "source": "Veja",
       "published_at": "2026-08-21T21:47:20Z",
       "collected_at": "2026-08-21T22:00:43Z",
-      "status": "raw",
-      "relevance_score": 0.0,
-      "relevance_signals": null,
-      "candidates_mentioned": [],
-      "topics": [],
+      "status": "validated",
+      "relevance_score": 1.0,
+      "relevance_signals": {
+        "candidate_signal": 0.6,
+        "topic_signal": 0.25,
+        "keyword_signal": 0.15,
+        "source_signal": 0.0
+      },
+      "candidates_mentioned": [
+        "lula",
+        "flavio-bolsonaro",
+        "caiado",
+        "renan-santos",
+        "zema"
+      ],
+      "topics": [
+        "eleicoes"
+      ],
       "narrative_cluster_id": null,
       "duplicate_of": null,
       "summaries": {
-        "pt-BR": "",
-        "en-US": ""
+        "pt-BR": "Nova pesquisa Datafolha mostra Lula liderando com 39% no primeiro turno, enquanto Flávio Bolsonaro tem 33%. No segundo turno, ambos empatam dentro da margem de erro, com Lula em 47% e Flávio em 43%.",
+        "en-US": "A new Datafolha poll shows Lula leading with 39% in the first round, while Flávio Bolsonaro has 33%. In the runoff, both are tied within the margin of error, with Lula at 47% and Flávio at 43%."
       },
       "content": "O presidente Luiz Inácio Lula da Silva (PT) lidera a disputa ao Palácio do Planalto no primeiro turno, mas empata tecnicamente com Flávio Bolsonaro (PL) no segundo turno, de acordo com a nova pesquisa Datafolha , feita entre os dias 18 e 20 de agosto e divulgada nesta sexta-feira, 21. De acordo com o levantamento, no primeiro turno, o petista tem 39% das intenções de voto contra 33% do senador do PL. A margem de erro é de dois pontos percentuais para mais ou para menos. Em julho, Lula tinha 40% no primeiro turno, enquanto Flávio aparecia com 32%, mas os dois levantamentos não são comparáveis porque mudou o quadro de candidatos. No levantamento divulgado, hoje, aparecem na sequência o ex-governador de Goiás Ronaldo Caiado (PSD) , com 5%; o empresário Renan Santos (Missão) , com 4%; e o ex-governador de Minas Gerais, Romeu Zema (Novo) , com 3%. Continua após a publicidade Segundo turno Em um eventual segundo turno, Lula e Flávio estão empatados no limite da margem de erro de dois pontos percentuais para mais ou para menos — o petista tem 47% contra 43% do presidenciável do PL. Em julho, o presidente tinha 48% contra 43% do seu principal adversário. Continua após a publicidade Pesquisa O levantamento do Datafolha ouviu 2.058 eleitores em todos os estados e no Distrito Federal e foi registrado no Tribunal Superior Eleitoral ( TSE ) sob o nº BR-04496/2026. Publicidade",
       "source_category": "magazine",
-      "sentiment_per_candidate": {},
-      "edit_history": [],
+      "sentiment_per_candidate": {
+        "lula": "positivo",
+        "flavio-bolsonaro": "neutro"
+      },
+      "edit_history": [
+        {
+          "tier": "editor",
+          "at": "2026-08-21T22:16:48Z",
+          "provider": "openrouter",
+          "action": "validated",
+          "changes": [
+            "summary_pt",
+            "summary_en"
+          ]
+        }
+      ],
       "disclaimer_pt": "Análise algorítmica. Não representa pesquisa de opinião.",
       "disclaimer_en": "Algorithmic analysis. Does not represent polling data.",
-      "sentiment_score": 0.0,
-      "confidence_score": 0.0,
-      "_sentiment_scores": {},
-      "prominence_score": 0.0
+      "sentiment_score": 0.1,
+      "confidence_score": 1.0,
+      "_sentiment_scores": {
+        "lula": 0.25,
+        "flavio-bolsonaro": -0.05
+      },
+      "prominence_score": 0.0,
+      "_ai_provider": "nvidia",
+      "_ai_model": "minimaxai/minimax-m3",
+      "ai_provider_editor": "openrouter/free",
+      "editor_note": null
     },
     {
       "id": "43fcb8ed42da0669",
@@ -297,85 +418,61 @@
       "source": "Poder360",
       "published_at": "2026-08-21T21:47:15Z",
       "collected_at": "2026-08-21T22:00:34Z",
-      "status": "raw",
-      "relevance_score": 0.0,
-      "relevance_signals": null,
-      "candidates_mentioned": [],
-      "topics": [],
+      "status": "validated",
+      "relevance_score": 1.0,
+      "relevance_signals": {
+        "candidate_signal": 0.6,
+        "topic_signal": 0.25,
+        "keyword_signal": 0.15,
+        "source_signal": 0.05
+      },
+      "candidates_mentioned": [
+        "lula",
+        "flavio-bolsonaro",
+        "caiado",
+        "renan-santos",
+        "zema"
+      ],
+      "topics": [
+        "eleicoes"
+      ],
       "narrative_cluster_id": null,
       "duplicate_of": null,
       "summaries": {
-        "pt-BR": "",
-        "en-US": ""
+        "pt-BR": "Pesquisa Datafolha mostra Lula com 47% e Flávio Bolsonaro com 43% em segundo turno, dentro da margem de erro. No primeiro turno, Lula lidera com 39% contra 33% de Flávio. A pesquisa ouviu 2.058 eleitores com margem de erro de 2 pontos percentuais.",
+        "en-US": "Datafolha poll shows Lula at 47% and Flávio Bolsonaro at 43% in a potential runoff, within the margin of error. In the first round, Lula leads with 39% versus Flávio's 33%. The survey interviewed 2,058 voters with a 2-percentage-point margin of error."
       },
       "content": "Levantamento Datafolha divulgado nesta 6ª feira (21.ago.2026) mostra o presidente Luiz Inácio Lula da Silva (PT) numericamente à frente do senador Flávio Bolsonaro (PL) em um eventual 2º turno na disputa pela Presidência. O petista tem 47% das intenções de voto, ante 43 % do congressista. É um empate técnico no limite da margem de erro, de 2 pontos percentuais. Brancos e nulos somam 9%. Os que não souberam responder são 2%. A pesquisa Datafolha ouviu 2.058 eleitores em todo o território nacional, de 18 a 20 de agosto de 2026. A margem de erro é de 2 pontos percentuais, para mais ou para menos. O nível de confiança é de 95%. O estudo está registrado no Tribunal Superior Eleitoral sob o número BR-04496/2026. Custou R$ 307.641,60. Foi pago pela empresa Folha da Manhã e pela Globo. 1º TURNO A pesquisa também mediu as intenções de voto dos eleitores em um cenário de 1º turno. Lula (PT): 39% Flávio Bolsonaro (PL): 33% Ronaldo Caiado (PSD): 5% Renan Santos (Missão): 4% Romeu Zema (Novo): 3% Escritor Augusto Cury (Avante): 2% Samara Martins (UP): 1% Rui Costa Pimenta (PCO): 1% Veterinário Wilson Grassi (Democrata): 1% Edmilson Costa (PCB): 1% Clariana Barão (DC): 0 Hertz Dias (PSTU): 0 Em branco/nulo/nenhum: 6% Indecisos: 4% Cenário com Pablo Marçal: Lula (PT): 39% Flávio Bolsonaro (PL): 32% Ronaldo Caiado (PSD): 5% Renan Santos (Missão): 4% Romeu Zema (Novo): 3% Pablo Marçal (PRTB): 2% Escritor Augusto Cury (Avante): 2% Samara Martins (UP): 1% Rui Costa Pimenta (PCO): 1% Veterinário Wilson Grassi (Democrata): 1% Edmilson Costa (PCB): 1% Clariana Barão (DC): 0 Hertz Dias (PSTU): 0 Em branco/nulo/nenhum: 7% Indecisos: 4% AGREGADOR DE PESQUISAS O Poder360 oferece aos assinantes do Drive o Agregador de Pesquisas , o mais antigo e mais completo da internet no Brasil. Reúne milhares de levantamentos de intenção de voto de todas as empresas desde o ano 2000. Os dados de 2026 estão disponíveis a todos os leitores durante o período eleitoral. Clique aqui para acessar o Agregador de Pesquisas e buscar os dados que desejar para as disputas de 2026. Leia aqui como assinar o Drive para acessar estudos de anos anteriores no Agregador de Pesquisas e outros produtos do Poder360 . Em anos eleitorais, só são publicados os estudos que têm registro na Justiça Eleitoral e metodologia completa conhecida. Tem alguma pesquisa para divulgar? Mande a íntegra por e-mail para o Poder360 : redacao@poder360.com.br. 🎧 PODERDATACAST O PoderDataCast , podcast do Poder360 voltado ao debate de pesquisas eleitorais e de opinião pública, está no ar para mais uma temporada. O programa, comandado pelo editor de Pesquisas, Jonathan Karter , é transmitido ao vivo todas as quintas-feiras, às 18h30, no canal do Poder360 no YouTube. Assista ao último episódio (45min25s):",
       "source_category": "politics",
-      "sentiment_per_candidate": {},
-      "edit_history": [],
-      "disclaimer_pt": "Análise algorítmica. Não representa pesquisa de opinião.",
-      "disclaimer_en": "Algorithmic analysis. Does not represent polling data.",
-      "sentiment_score": 0.0,
-      "confidence_score": 0.0,
-      "_sentiment_scores": {},
-      "prominence_score": 0.0
-    },
-    {
-      "id": "1259f964d5708b30",
-      "url": "https://veja.abril.com.br/politica/datafolha-paes-lidera-no-rio-com-41-seguido-por-douglas-ruas-que-tem-19/",
-      "title": "Pesquisa Datafolha: Paes lidera no Rio com 41%, seguido por Douglas Ruas, que soma 19%",
-      "source": "Veja",
-      "published_at": "2026-08-21T21:46:09Z",
-      "collected_at": "2026-08-21T22:00:43Z",
-      "status": "raw",
-      "relevance_score": 0.0,
-      "relevance_signals": null,
-      "candidates_mentioned": [],
-      "topics": [],
-      "narrative_cluster_id": null,
-      "duplicate_of": null,
-      "summaries": {
-        "pt-BR": "",
-        "en-US": ""
+      "sentiment_per_candidate": {
+        "lula": "positivo",
+        "flavio-bolsonaro": "neutro"
       },
-      "content": "Pesquisa Datafolha divulgada nesta sexta-feira, 21, sobre a diputa ao governo do Rio mostra Eduardo Paes (PSD) com amplo favoritismo, totalizando 41% das intenções de voto. O ex-prefeito do Rio é seguido por Douglas Ruas (PL), com 19%. Anthony Garotinho (Republicanos) aparece em terceiro, totalizando 9%. A margem de erro é de 2 pontos percentuais para mais ou para menos. Esta é a primeira pesquisa Datafolha realizada após o início da campanha eleitoral, no último domingo. Foram ouvidos 1.204 eleitores entre os dias 18 e 21 deste mês. Confira os números: Eduardo Paes (PSD): 41% Douglas Ruas (PL): 19% Anthony Garotinho (Republicanos): 9% William Siri (PSOL): 2% André Marinho (Novo): 2% Coronel Busnello (Missão): 2% Cyro Garcia (PSTU): 2% Juliete Pantoja (UP): 2% Luan Monteiro (PCO): 1% Indecisos: 4% Branco/nulo/não vai votar: 16% Continua após a publicidade O nível de confiança do levantamento é de 95%. A pesquisa foi encomendada pela Globo e pelo jornal Folha de São Paulo e registrada no Tribunal Superior Eleitoral ( TSE ) sob o número RJ- 02945/2026. Continua após a publicidade Publicidade",
-      "source_category": "magazine",
-      "sentiment_per_candidate": {},
-      "edit_history": [],
+      "edit_history": [
+        {
+          "tier": "editor",
+          "at": "2026-08-21T22:16:52Z",
+          "provider": "openrouter",
+          "action": "validated",
+          "changes": [
+            "summary_pt",
+            "summary_en"
+          ]
+        }
+      ],
       "disclaimer_pt": "Análise algorítmica. Não representa pesquisa de opinião.",
       "disclaimer_en": "Algorithmic analysis. Does not represent polling data.",
-      "sentiment_score": 0.0,
-      "confidence_score": 0.0,
-      "_sentiment_scores": {},
-      "prominence_score": 0.0
-    },
-    {
-      "id": "387826917a2ea460",
-      "url": "https://www.metropoles.com/brasil/datafolha-eduardo-paes-tem-41-e-douglas-ruas-19-ao-governo-do-rio",
-      "title": "Datafolha: Eduardo Paes tem 41% e Douglas Ruas, 19% ao governo do Rio",
-      "source": "Metropoles",
-      "published_at": "2026-08-21T21:46:03Z",
-      "collected_at": "2026-08-21T22:00:32Z",
-      "status": "raw",
-      "relevance_score": 0.0,
-      "relevance_signals": null,
-      "candidates_mentioned": [],
-      "topics": [],
-      "narrative_cluster_id": null,
-      "duplicate_of": null,
-      "summaries": {
-        "pt-BR": "",
-        "en-US": ""
+      "sentiment_score": 0.075,
+      "confidence_score": 1.0,
+      "_sentiment_scores": {
+        "lula": 0.2,
+        "flavio-bolsonaro": -0.05
       },
-      "content": "Pesquisa Datafolha divulgada nesta sexta-feira (21/8) mostra que Eduardo Paes (PSD) lidera a corrida ao governo do Rio de Janeiro com 41% das intenções de votos no primeiro turno. Em seguida, aparece o presidente da Alerj, Douglas Ruas (PL) , com 19%. Em terceiro lugar, está Anthony Garotinho (Republicanos), com 9%. Entre os demais candidatos, João Jacques Busnello (Missão), Cyro Garcia (PSTU), Willian Siri (PSol), André Marinho (Novo) e Juliete Pantoja (UP) aparecem com 2%, cada. Já Luan Monteiro (PCO) tem 1%. Além disso, 4% dos entrevistados se disseram indecisos e 16% afirmaram que vão votar nulo ou em branco. Leia também Brasil Datafolha: Lula tem 39% no 1º turno; Flávio, 33%; Caiado, 5%; Renan, 4%; Zema, 4% Minas Gerais Datafolha em MG: Cleitinho lidera com 32%; Patrus e Kalil têm 12% cada Grande Angular Datafolha: Celina tem 30% das intenções de voto e empata tecnicamente com Arruda, que soma 28% A pesquisa Datafolha ouviu 1.204 eleitores em 35 municípios do Rio de Janeiro, entre os dias 18 e 21 de agosto. A margem de erro é de três pontos percentuais para mais ou menos. O levantamento está registrado no Tribunal Superior Eleitoral (TSE), sob o número RJ-02945/2026. Esta é a primeira pesquisa do Datafolha sobre as eleições no Rio.",
-      "source_category": "mainstream",
-      "sentiment_per_candidate": {},
-      "edit_history": [],
-      "disclaimer_pt": "Análise algorítmica. Não representa pesquisa de opinião.",
-      "disclaimer_en": "Algorithmic analysis. Does not represent polling data.",
-      "sentiment_score": 0.0,
-      "confidence_score": 0.0,
-      "_sentiment_scores": {},
-      "prominence_score": 0.0
+      "prominence_score": 0.0,
+      "_ai_provider": "nvidia",
+      "_ai_model": "minimaxai/minimax-m3",
+      "ai_provider_editor": "openrouter/free",
+      "editor_note": null
     },
     {
       "id": "d459b85524d37f29",
@@ -384,27 +481,61 @@
       "source": "CartaCapital",
       "published_at": "2026-08-21T21:45:49Z",
       "collected_at": "2026-08-21T22:00:45Z",
-      "status": "raw",
-      "relevance_score": 0.0,
-      "relevance_signals": null,
-      "candidates_mentioned": [],
-      "topics": [],
+      "status": "validated",
+      "relevance_score": 1.0,
+      "relevance_signals": {
+        "candidate_signal": 0.6,
+        "topic_signal": 0.25,
+        "keyword_signal": 0.15,
+        "source_signal": 0.0
+      },
+      "candidates_mentioned": [
+        "lula",
+        "flavio-bolsonaro",
+        "caiado",
+        "renan-santos",
+        "zema"
+      ],
+      "topics": [
+        "eleicoes"
+      ],
       "narrative_cluster_id": null,
       "duplicate_of": null,
       "summaries": {
-        "pt-BR": "",
-        "en-US": ""
+        "pt-BR": "Pesquisa Datafolha aponta Lula com 47% e Flávio Bolsonaro com 43% no segundo turno, dentro da margem de erro. O presidente mantém liderança numérica, mas o empate técnico persiste entre os candidatos.",
+        "en-US": "Datafolha poll shows Lula at 47% and Flávio Bolsonaro at 43% in a runoff, within the margin of error. The president maintains a numerical lead, but the race remains technically tied."
       },
       "source_category": "magazine",
       "content": "Política Datafolha mostra Lula com 47% no 2º turno, contra 43% de Flávio Bolsonaro No levantamento anterior, publicado em 24 de julho, o presidente estava cinco pontos à frente do senador Por CartaCapital 21.08.2026 18h45 | Atualizado há 1 hora O presidente Lula (PT) e o senador Flávio Bolsonaro (PL-RJ). Fotos: Ricardo Stuckert/PR e Nilson Almeida/AFP Apoie Siga-nos no Eleições 2026 Uma pesquisa Datafolha divulgada nesta sexta-feira 21 aponta empate técnico no limite da margem de erro entre Lula (PT) e Flávio Bolsonaro (PL) em uma simulação de segundo turno na disputa pela Presidência da República. O presidente, porém, desponta na liderança numérica com 47%, ante 43% do senador. No levantamento anterior , publicado em 24 de julho, Lula tinha 48%, contra 43% de Flávio. A movimentação, portanto, ocorreu na margem de erro. O instituto entrevistou 2.058 eleitores entre a terça-feira 18 e a quinta 20. A margem de erro é de dois pontos percentuais, com um nível de confiança de 95%. O registro no Tribunal Superior Eleitoral é BR-04496/2026. Siga a Carta no Discover e receba as notícias que realmente importam. Seguir no Google Veja os resultados: Cenário 1: Lula (PT): 47% Flávio Bolsonaro (PL): 43% Em branco/nulo/nenhum: 9% Indecisos: 2% Cenário 2: Lula (PT): 47% Ronaldo Caiado (PSD): 40% Em branco/nulo/nenhum: 11% Indecisos: 3% Cenário 3: Lula (PT): 47% Renan Santos (Missão): 37% Em branco/nulo/nenhum: 14% Indecisos: 2% Cenário 4: Lula (PT): 48% Romeu Zema (Novo): 38% Em branco/nulo/nenhum: 12% Indecisos: 2% Recomendadas Datafolha: Lula lidera o 1º turno com 6 pontos de vantagem sobre Flávio Bolsonaro Teresa Leitão pede à PGR e à PF informações sobre financiamento de ‘Dark Horse’ Pernambuco: Raquel Lyra é criticada após participar de culto em igreja de Clarissa Tércio A pretensa ‘transição’ de Flávio Bolsonaro na Presidência e o aceno a Tarcísio Mais Lidas CartaCapital Há 32 anos, a maior referência progressista em jornalismo no Brasil. ENTENDA MAIS SOBRE: Datafolha , Eleições 2026 , Flávio Bolsonaro , Lula , Jornalismo crítico e inteligente. Todos os dias, no seu e-mail Assine nossa newsletter Assine nossa newsletter e receba um boletim matinal exclusivo Assinar Inscreva-se 2026 já começou Às vésperas das eleições de 2026 , o País volta a encarar um ponto de inflexão: o futuro democrático está novamente em jogo . A ameaça bolsonarista não foi derrotada, apenas recuou . No Congresso, forças conservadoras seguem ditando o ritmo . Lá fora, o avanço da extrema-direita e os conflitos em Gaza, no Irã e na Ucrânia agravam a instabilidade global. Se você valoriza o jornalismo crítico, independente e comprometido com a democracia, este é o momento de agir . Assine ou contribua com o quanto puder . Assine a CartaCapital Faça uma doação Leia também Política A pretensa ‘transição’ de Flávio Bolsonaro na Presidência e o aceno a Tarcísio Por Vinícius Nunes Justiça Lulinha pede a derrubada de vídeos das campanhas de Zema e Flávio Bolsonaro Por Wendal Carmo CartaExpressa Flávio Bolsonaro diz que o inelegível Pablo Marçal é ‘um cara do bem’ Por Leonardo Miazzo Política Lula vence Flávio Bolsonaro de goleada no Ceará, mostra pesquisa Por CartaCapital Jornalismo crítico e inteligente. Todos os dias, no seu e-mail Assine nossa newsletter Assine nossa newsletter e receba um boletim matinal exclusivo Assinar Inscreva-se",
-      "sentiment_per_candidate": {},
-      "edit_history": [],
+      "sentiment_per_candidate": {
+        "lula": "positivo",
+        "flavio-bolsonaro": "neutro"
+      },
+      "edit_history": [
+        {
+          "tier": "editor",
+          "at": "2026-08-21T22:17:48Z",
+          "provider": "openrouter",
+          "action": "validated",
+          "changes": [
+            "summary_pt",
+            "summary_en"
+          ]
+        }
+      ],
       "disclaimer_pt": "Análise algorítmica. Não representa pesquisa de opinião.",
       "disclaimer_en": "Algorithmic analysis. Does not represent polling data.",
-      "sentiment_score": 0.0,
-      "confidence_score": 0.0,
-      "_sentiment_scores": {},
-      "prominence_score": 0.0
+      "sentiment_score": 0.075,
+      "confidence_score": 1.0,
+      "_sentiment_scores": {
+        "lula": 0.2,
+        "flavio-bolsonaro": -0.05
+      },
+      "prominence_score": 0.0,
+      "_ai_provider": "nvidia",
+      "_ai_model": "minimaxai/minimax-m3",
+      "ai_provider_editor": "openrouter/free",
+      "editor_note": null
     },
     {
       "id": "66e16519e8271262",
@@ -413,27 +544,59 @@
       "source": "O Globo",
       "published_at": "2026-08-21T21:43:32Z",
       "collected_at": "2026-08-21T22:00:23Z",
-      "status": "raw",
-      "relevance_score": 0.0,
-      "relevance_signals": null,
-      "candidates_mentioned": [],
-      "topics": [],
+      "status": "validated",
+      "relevance_score": 1.0,
+      "relevance_signals": {
+        "candidate_signal": 0.6,
+        "topic_signal": 0.3,
+        "keyword_signal": 0.15,
+        "source_signal": 0.0
+      },
+      "candidates_mentioned": [
+        "flavio-bolsonaro",
+        "lula"
+      ],
+      "topics": [
+        "eleicoes",
+        "corrupcao"
+      ],
       "narrative_cluster_id": null,
       "duplicate_of": null,
       "summaries": {
-        "pt-BR": "",
-        "en-US": ""
+        "pt-BR": "Pesquisa do Datafolha mostra Celina Leão e José Roberto Arruda empatados com 28% das intenções de voto para o governo do Distrito Federal. Leandro Grass, do PT, aparece em terceiro lugar com 11%, enquanto outros candidatos figuram com percentuais menores.",
+        "en-US": "A Datafolha poll shows Celina Leão and José Roberto Arruda tied at 28% in voter intentions for the Distrito Federal governorship. Leandro Grass (PT) ranks third with 11%, while other candidates trail with lower percentages."
       },
       "content": "A governadora do Distrito Federal e candidata à reeleição, Celina Leão (PP), e o ex-governador do DF José Roberto Arruda (PSD) empatam nas intenções de voto intenções de voto da corrida eleitoral deste ano, segundo levantamento do Datafolha divulgado nesta sexta-feira. É a primeira sondagem do instituto a medir o pulso dos eleitores do DF desde a oficialização das candidaturas. Celina pontua 28% e Arruda aparece com 28%. Em seguida, aparece o candidato do PT, Leandro Grass, com 11%. O Datafolha entrevistou 910 pessoas entre os dias 18 e 21 de agosto, com margem de erro de três pontos percentuais. A pesquisa foi encomendada pelo grupo Globo e pelo jornal Folha de São Paulo. O levantamento também apontou as intenções de votos dos candidatos Paula Belmonte (4%), do PSDB, Capelli 3%), do PSB, Kiko Caputo (2%), do Novo,, Professora Samara Mineiro (2%), da UP, Elisson (1%), do Agir, e Professor Robson (1%), do PSTU. Expedito Mendonça, do PCO, não pontuou. Celina foi eleita vice-governadora na chapa encabeçada por Ibaneis Rocha (MDB) em 2022. Ela chegou a romper com o aliado após trocas públicas de acusações envolvendo a crise de fraude financeira do banco Master e a tentativa do Banco de Brasília (BRB) de comprar o Master. Em meio às rusgas, Ibaneis desistiu de ser candidato a senador, mas o MDB, seu partido, continua na base de Celina e apoia a candidatura dela. A governadora também conta com o apoio do PL, que lançou Flávio Bolsonaro ao Planalto, e tem em sua chapa as candidatas ao Senado Michelle Bolsonaro (PL) e Bia Kicis (PL). Por sua vez, o presidente Luiz Inácio Lula da Silva está representado na disputa pelo petista Leandro Grass, que já comandou o Instituto do Patrimônio Histórico e Artístico Nacional (Iphan) e foi deputado distrital. Nome competitivo na disputa, Arruda tem a sua participação no pleito alvo de questionamentos na Justiça Eleitoral. Na quinta-feira, o Ministério Público Eleitoral pediu ao Tribunal Regional Eleitoral (TRE-DF) que negue o registro da candidatura do ex-governador. A Justiça Eleitoral ainda não tomou uma decisão sobre o pedido. Para a Procuradoria, Arruda continua inelegível por condenações por improbidade administrativa, algumas delas relacionadas a casos revelados pela Operação Caixa de Pandora, e permanece impedido de disputar eleições até 11 de dezembro de 2030. O ex-governador, por outro lado, diz que a punição já terminou e acusa adversários de tentarem tirá-lo da disputa “no tapetão”. Para considerar Arruda inelegível até 2030, o Ministério Público toma como ponto de partida uma condenação por improbidade relacionada a fatos ocorridos durante o governo Arruda. O processo envolveu pagamentos feitos pelo governo do DF a uma empresa por serviços prestados entre 2007 e 2009, sem cobertura contratual. Segundo a decisão reproduzida na manifestação, parte desses recursos foi desviada para o pagamento de propina. A Justiça afirmou que foi montado um esquema em que os valores pagos por meio de reconhecimento de dívida eram superfaturados para viabilizar os repasses ilegais. A discussão sobre a duração da inelegibilidade ganhou um novo capítulo com uma mudança feita na Lei de Inelegibilidades em 2025. A nova regra estabeleceu limites para a soma dos períodos de inelegibilidade quando uma pessoa acumula condenações por improbidade. No caso de Arruda, o Ministério Público considera que as diferentes condenações não tratam de fatos juridicamente conexos e, por isso, sustenta que o período de impedimento chega a 12 anos, contados desde dezembro de 2018.",
       "source_category": "mainstream",
-      "sentiment_per_candidate": {},
-      "edit_history": [],
+      "sentiment_per_candidate": {
+        "flavio-bolsonaro": "neutro",
+        "lula": "neutro"
+      },
+      "edit_history": [
+        {
+          "tier": "editor",
+          "at": "2026-08-21T22:17:51Z",
+          "provider": "openrouter",
+          "action": "validated",
+          "changes": [
+            "summary_pt",
+            "summary_en"
+          ]
+        }
+      ],
       "disclaimer_pt": "Análise algorítmica. Não representa pesquisa de opinião.",
       "disclaimer_en": "Algorithmic analysis. Does not represent polling data.",
-      "sentiment_score": 0.0,
-      "confidence_score": 0.0,
-      "_sentiment_scores": {},
-      "prominence_score": 0.0
+      "sentiment_score": -0.05,
+      "confidence_score": 1.0,
+      "_sentiment_scores": {
+        "flavio-bolsonaro": 0.0,
+        "lula": -0.1
+      },
+      "prominence_score": 0.0,
+      "_ai_provider": "nvidia",
+      "_ai_model": "minimaxai/minimax-m3",
+      "ai_provider_editor": "openrouter/free",
+      "editor_note": null
     },
     {
       "id": "ac84b720be746907",
@@ -442,56 +605,67 @@
       "source": "O Globo",
       "published_at": "2026-08-21T21:43:28Z",
       "collected_at": "2026-08-21T22:00:23Z",
-      "status": "raw",
-      "relevance_score": 0.0,
-      "relevance_signals": null,
-      "candidates_mentioned": [],
-      "topics": [],
+      "status": "validated",
+      "relevance_score": 1.0,
+      "relevance_signals": {
+        "candidate_signal": 0.6,
+        "topic_signal": 0.25,
+        "keyword_signal": 0.15,
+        "source_signal": 0.0
+      },
+      "candidates_mentioned": [
+        "lula",
+        "flavio-bolsonaro",
+        "caiado",
+        "renan-santos",
+        "zema"
+      ],
+      "topics": [
+        "eleicoes"
+      ],
       "narrative_cluster_id": null,
       "duplicate_of": null,
       "summaries": {
-        "pt-BR": "",
-        "en-US": ""
+        "pt-BR": "Pesquisa Datafolha mostra Lula (PT) com 39% e Flávio Bolsonaro (PL) com 33% no primeiro turno da eleição presidencial de 2026. Caiado (PSD), Renan Santos (Missão) e Romeu Zema (Novo) aparecem tecnicamente empatados em terceiro com 5%, 4% e 3%, respectivamente. Em simulação de segundo turno entre Lula e Flávio, o atual presidente lidera com 47% contra 43% do senador.",
+        "en-US": "Datafolha poll shows Lula (PT) at 39% and Flávio Bolsonaro (PL) at 33% in the first round of the 2026 presidential election. Caiado (PSD), Renan Santos (Missão), and Romeu Zema (Novo) are statistically tied for third with 5%, 4%, and 3%. In a simulated runoff between Lula and Flávio, the incumbent leads 47% to 43%."
       },
       "content": "Pesquisa Datafolha divulgada nesta sexta-feira mostra o presidente Luiz Inácio Lula da Silva (PT) na liderança do primeiro turno da corrida presidencial, seguido pelo senador Flávio Bolsonaro (PL) na segunda colocação. O levantamento mostra ainda que outros candidatos de partidos com representação no Congresso Nacional -- Ronaldo Caiado (PSD), Renan Santos (Missão), Romeu Zema (Novo) -- iniciam a campanha tecnicamente empatados em terceiro, mas distantes de Lula e Flávio. Segundo o levantamento, Lula está com 39% das intenções de voto, enquanto Flávio Bolsonaro aparece com 33%. Caiado marcou 5% no levantamento, Renan apareceu com 4%, e Zema tem 3% das intenções de voto. Como a margem de erro é de dois pontos percentuais, Caiado, Renan e Zema estão tecnicamente empatados. A pesquisa foi contratada pela TV Globo e pelo jornal Folha de S. Paulo, e está registrada no Tribunal Superior Eleitoral (TSE) sob o protocolo BR-04496/2026. Para este levantamento, o Datafolha entrevistou 2.058 pessoas com 16 anos ou mais, em todo o país, entre os dias 18 e 20 de agosto. A margem de erro é de dois pontos, e o índice de confiança é de 95%. O levantamento divulgado nesta sexta é o primeiro realizado pelo Datafolha desde o início da campanha eleitoral. Segundo turno O Datafolha também fez simulações de segundo turno. Na hipótese de um embate direto entre Lula e Flávio Bolsonaro, o atual presidente aparece com 47% das intenções de voto, enquanto o senador do PL tem 43%, segundo o levantamento. Matéria em atualização",
       "source_category": "mainstream",
-      "sentiment_per_candidate": {},
-      "edit_history": [],
-      "disclaimer_pt": "Análise algorítmica. Não representa pesquisa de opinião.",
-      "disclaimer_en": "Algorithmic analysis. Does not represent polling data.",
-      "sentiment_score": 0.0,
-      "confidence_score": 0.0,
-      "_sentiment_scores": {},
-      "prominence_score": 0.0
-    },
-    {
-      "id": "c139eace7f1c9cc8",
-      "url": "https://www.metropoles.com/minas-gerais/datafolha-em-minas-cleitinho-lidera-32-seguido-por-patrus-e-kalil-com-12-cada",
-      "title": "Datafolha em MG: Cleitinho lidera com 32%; Patrus e Kalil têm 12% cada",
-      "source": "Metropoles",
-      "published_at": "2026-08-21T21:43:28Z",
-      "collected_at": "2026-08-21T22:00:32Z",
-      "status": "raw",
-      "relevance_score": 0.0,
-      "relevance_signals": null,
-      "candidates_mentioned": [],
-      "topics": [],
-      "narrative_cluster_id": null,
-      "duplicate_of": null,
-      "summaries": {
-        "pt-BR": "",
-        "en-US": ""
+      "sentiment_per_candidate": {
+        "lula": "positivo",
+        "flavio-bolsonaro": "neutro",
+        "caiado": "negativo",
+        "renan-santos": "negativo",
+        "zema": "negativo"
       },
-      "content": "Belo Horizonte – O senador Cleitinho Azevedo (Republicanos) aparece em primeiro lugar em pesquisa Datafolha divulgada nesta sexta-feira (21/8) para o governo de Minas. Cleitinho tem 32% das intenções de voto no cenário de primeiro turno e é seguido por Patrus Ananias (PT) e Alexandre Kalil (PDT), ambos com 12% cada um. O atual governador Mateus Simões (PSD), o ex-presidente da Fiemg Flávio Roscoe (PL), e o ex-presidente da Câmara Municipal de Belo Horizonte Gabriel Azevedo (MDB), ficaram todos com 4%. Túlio Lopes (PCB) teve 2%. Rafael Duda (PSTU), Ben Mendes (Missão) e Indira Xavier (UP) tiveram 1%. Henrique Áreas (PCO) não pontuou. Votos em brancos e nulos somam 14%, e os indecisos, 13%. O levantamento do Datafolha, contratado pela Folha e pela Globo, foi feito de terça (18/8) até quinta (20/8) com 1.204 eleitores do estado. A margem de erro máxima é de 3 pontos percentuais, e o intervalo de confiança, de 95%. O levantamento está registrado sob o código MG-00446/2026. Leia também Minas Gerais “Vai acabar”: Cleitinho insiste em promessa sobre IPVA apesar do STF Minas Gerais Prefeita do PT ignora pressão e segue em campanha por Cleitinho em MG Minas Gerais Em MG, Lula culpa Temer por crise de Pimentel e ironiza Zema Patrus lidera rejeição O Datafolha também divulgou o índice de rejeição aos candidatos mineiros. O petista Patrus Ananias é o mais rejeitado. Veja a lista: Patrus Ananias (PT): 29% Alexandre Kalil (PDT): 23% Flávio Roscoe (PL): 17% Cleitinho Azevedo (Republicanos): 14% Mateus Simões (PSD): 14% Ben Mendes (Missão): 13% Rafael Duda (PSTU): 12% Gabriel (MDB): 12% Henrique Áreas (PCO): 11% Indira Xavier (UP): 11% Professor Túlio Lopes (PCB): 11% Votaria em qualquer um/não rejeita nenhum: 4% Rejeita todos/não votaria em nenhum: 7% Não sabe: 17%",
-      "source_category": "mainstream",
-      "sentiment_per_candidate": {},
-      "edit_history": [],
+      "edit_history": [
+        {
+          "tier": "editor",
+          "at": "2026-08-21T22:18:08Z",
+          "provider": "openrouter",
+          "action": "validated",
+          "changes": [
+            "summary_pt",
+            "summary_en"
+          ]
+        }
+      ],
       "disclaimer_pt": "Análise algorítmica. Não representa pesquisa de opinião.",
       "disclaimer_en": "Algorithmic analysis. Does not represent polling data.",
-      "sentiment_score": 0.0,
-      "confidence_score": 0.0,
-      "_sentiment_scores": {},
-      "prominence_score": 0.0
+      "sentiment_score": -0.11,
+      "confidence_score": 1.0,
+      "_sentiment_scores": {
+        "lula": 0.3,
+        "flavio-bolsonaro": 0.05,
+        "caiado": -0.3,
+        "renan-santos": -0.3,
+        "zema": -0.3
+      },
+      "prominence_score": 0.0,
+      "_ai_provider": "nvidia",
+      "_ai_model": "minimaxai/minimax-m3",
+      "ai_provider_editor": "openrouter/free",
+      "editor_note": null
     },
     {
       "id": "efee88f52a54ca04",
@@ -500,56 +674,57 @@
       "source": "Poder360",
       "published_at": "2026-08-21T21:42:57Z",
       "collected_at": "2026-08-21T22:00:34Z",
-      "status": "raw",
-      "relevance_score": 0.0,
-      "relevance_signals": null,
-      "candidates_mentioned": [],
-      "topics": [],
+      "status": "validated",
+      "relevance_score": 0.9,
+      "relevance_signals": {
+        "candidate_signal": 0.5,
+        "topic_signal": 0.25,
+        "keyword_signal": 0.1,
+        "source_signal": 0.05
+      },
+      "candidates_mentioned": [
+        "lula"
+      ],
+      "topics": [
+        "economia",
+        "saude",
+        "eleicoes"
+      ],
       "narrative_cluster_id": null,
       "duplicate_of": null,
       "summaries": {
-        "pt-BR": "",
-        "en-US": ""
+        "pt-BR": "O senador Omar Aziz (PSD-AM), relator da PEC que acaba com a escala 6x1 na CCJ do Senado, promete apresentar seu relatório no início de setembro. A proposta, já aprovada na Câmara, visa reduzir a jornada de trabalho para melhorar a saúde mental e o convívio familiar dos trabalhadores, embora o calendário eleitoral possa dificultar a tramitação.",
+        "en-US": "Senator Omar Aziz (PSD-AM), rapporteur of the PEC ending the 6x1 work scale in the Senate's CCJ, pledges to present his report in early September. The proposal, already approved by the Lower House, aims to reduce working hours to improve workers' mental health and family life, though the electoral calendar may hinder its progress."
       },
       "content": "O senador Omar Aziz (PSD-AM) afirmou ao Poder360 nesta 6ª feira (21.ago.2026) que pretende apresentar no início de setembro o relatório da PEC (Proposta de Emenda à Constituição) que estabelece o fim da escala 6 X 1 . O congressista será o relator da proposta na CCJ (Comissão de Constituição e Justiça) do Senado. Aziz disse que gostaria de aprovar o texto na comissão antes das eleições, mas ressaltou que o ritmo da tramitação não depende exclusivamente dele. A próxima semana de esforço concentrado no Senado será de 31 de agosto a 4 de setembro. O senador agradeceu ao presidente do Senado, Davi Alcolumbre (União Brasil-AP), e ao presidente da CCJ, Otto Alencar (PSD-BA), pela escolha de seu nome para a relatoria. Aziz ainda aguarda receber os documentos necessários para iniciar a análise da proposta. Para o senador, a medida é importante para melhorar a saúde mental dos trabalhadores e ampliar o tempo de convivência com a família. “O projeto ajuda a população na questão da saúde mental e vai ajudar as pessoas a passar mais tempo com a família. As pessoas trabalham 8 horas, mas, contando com transporte, são 12 a 15 horas fora de casa” , declarou. Tramitação A PEC estava parada havia quase 3 meses no Senado . A Câmara aprovou, em 27 de maio, a proposta que acaba com a escala 6 X 1 e reduz a jornada de trabalho. O texto aguardava despacho de Alcolumbre para iniciar a tramitação na CCJ. A comissão será responsável pela análise da constitucionalidade da proposta antes de eventual votação no plenário do Senado. Relação entre Lula e Alcolumbre A líder do governo no Senado, Teresa Leitão (PT-PE), afirmou em 14 de agosto que o diálogo institucional entre o presidente Luiz Inácio Lula da Silva (PT) e Alcolumbre permitiu o avanço de pautas de interesse do Executivo no Senado. A relação entre o Palácio do Planalto e o comando da Casa havia sido marcada por meses de desgaste. O episódio mais recente de maior tensão ocorreu em 29 de abril, quando o Senado rejeitou a indicação de Jorge Messias ao Supremo Tribunal Federal. Depois, Alcolumbre pautou projetos de impacto fiscal e não atendeu a pedidos da equipe econômica do governo para adiar algumas votações. Nas últimas semanas, porém, a relação melhorou. Alcolumbre apareceu publicamente com Lula em evento da Petrobras no Amapá e destravou as PECs da 6 X 1 e da Segurança Pública. Apesar da reaproximação, o calendário eleitoral pode dificultar a tramitação da PEC. Com o Congresso tradicionalmente esvaziado nos meses que antecedem as eleições, a conclusão da análise e votação do texto ainda em 2026 pode ficar mais difícil caso a proposta não avance no período de esforço concentrado.",
       "source_category": "politics",
-      "sentiment_per_candidate": {},
-      "edit_history": [],
-      "disclaimer_pt": "Análise algorítmica. Não representa pesquisa de opinião.",
-      "disclaimer_en": "Algorithmic analysis. Does not represent polling data.",
-      "sentiment_score": 0.0,
-      "confidence_score": 0.0,
-      "_sentiment_scores": {},
-      "prominence_score": 0.0
-    },
-    {
-      "id": "25b9ceb69a93f481",
-      "url": "https://oglobo.globo.com/blogs/pulso/post/2026/08/pesquisa-datafolha-cleitinho-larga-na-frente-em-disputa-pelo-governo-de-minas-com-empate-no-segundo-lugar.ghtml",
-      "title": "Datafolha: Cleitinho larga na frente em disputa pelo governo de Minas, com Patrus e Kalil em empate no segundo lugar",
-      "source": "O Globo",
-      "published_at": "2026-08-21T21:41:41Z",
-      "collected_at": "2026-08-21T22:00:23Z",
-      "status": "raw",
-      "relevance_score": 0.0,
-      "relevance_signals": null,
-      "candidates_mentioned": [],
-      "topics": [],
-      "narrative_cluster_id": null,
-      "duplicate_of": null,
-      "summaries": {
-        "pt-BR": "",
-        "en-US": ""
+      "sentiment_per_candidate": {
+        "lula": "neutro"
       },
-      "content": "Pesquisa Datafolha divulgada nesta sexta-feira, a primeira do instituto após a definição dos candidatos na corrida eleitoral em Minas Gerais, mostra o senador Cleitinho Azevedo (Republicanos) na liderança na disputa pelo governo estadual com 32% das intenções de voto. O ex-prefeito Alexandre Kalil (PDT) e o deputado federal Patrus Ananias (PT) aparecem em segundo com 12% cada. O atual governador, Mateus Simões (PSD), o empresário Flávio Roscoe (PL) e o ex-presidente da Câmara Municipal de Belo Horizonte Gabriel Azevedo (MDB) registram 4% cada. Abaixo deles, Túlio Lopes (PCB) é citado por 2%, enquanto Rafael Duda (PSTU), Ben Mendes (Missão) e Indira Xavier (UP) marcam 1% cada. Henrique Áreas (PCO) não pontuou. Votos em branco ou nulos somam 14%, e os indecisos, 13%. A pesquisa foi contratada pela TV Globo e pelo jornal Folha de S. Paulo, e está registrada no Tribunal Superior Eleitoral (TSE) sob o protocolo MG-00446/2026. Para este levantamento, o Datafolha entrevistou 1.204 pessoas com 16 anos ou mais, em todo o país, entre os dias 18 e 21 de agosto. A margem de erro é de três pontos, e o índice de confiança é de 95%.",
-      "source_category": "mainstream",
-      "sentiment_per_candidate": {},
-      "edit_history": [],
+      "edit_history": [
+        {
+          "tier": "editor",
+          "at": "2026-08-21T22:18:50Z",
+          "provider": "openrouter",
+          "action": "validated",
+          "changes": [
+            "summary_pt",
+            "summary_en"
+          ]
+        }
+      ],
       "disclaimer_pt": "Análise algorítmica. Não representa pesquisa de opinião.",
       "disclaimer_en": "Algorithmic analysis. Does not represent polling data.",
       "sentiment_score": 0.0,
-      "confidence_score": 0.0,
-      "_sentiment_scores": {},
-      "prominence_score": 0.0
+      "confidence_score": 1.0,
+      "_sentiment_scores": {
+        "lula": 0.0
+      },
+      "prominence_score": 0.0,
+      "_ai_provider": "nvidia",
+      "_ai_model": "minimaxai/minimax-m3",
+      "ai_provider_editor": "openrouter/free",
+      "editor_note": null
     },
     {
       "id": "4f13ab9b5ca9c5d3",
@@ -581,62 +756,61 @@
       "prominence_score": 0.0
     },
     {
-      "id": "21b15f32d795c48e",
-      "url": "https://www.metropoles.com/colunas/grande-angular/datafolha-celina-tem-30-das-intencoes-de-voto-e-empata-tecnicamente-com-arruda-que-soma-28",
-      "title": "Datafolha: Celina tem 30% das intenções de voto e empata tecnicamente com Arruda, que soma 28%",
-      "source": "Metropoles",
-      "published_at": "2026-08-21T21:41:02Z",
-      "collected_at": "2026-08-21T22:00:32Z",
-      "status": "raw",
-      "relevance_score": 0.0,
-      "relevance_signals": null,
-      "candidates_mentioned": [],
-      "topics": [],
-      "narrative_cluster_id": null,
-      "duplicate_of": null,
-      "summaries": {
-        "pt-BR": "",
-        "en-US": ""
-      },
-      "content": "Celina Leão (PP) e José Roberto Arruda (PSD) estão empatados na disputa pelo Governo do Distrito Federal (GDF), segundo pesquisa Datafolha divulgada nesta sexta-feira (21/8). A governadora e candidata à reeleição soma 30% das intenções de voto, de acordo com o levantamento. O ex-governador aparece com 28% – considerando a margem de erro de três pontos percentuais, para mais ou para menos, ambos estão tecnicamente empatados. Segundo o Datafolha, Leandro Grass (PT) é o preferido de 11% das intenções de voto. Paula Belmonte (PSDB) tem 4% e Ricardo Cappelli (PSB) soma 3% – eles também estão empatados. Leia também Distrito Federal “É a história dele, não minha”, diz Celina sobre impugnação de Arruda Distrito Federal Em carreata, Arruda promete melhorar trânsito no Paranoá e Itapoã Kiko Caputo (Novo) e Samara Mineiro (UP) tem 2% das intenções de voto, enquanto Elisson (Agir) e Professor Robson (PSTU) somam, cada um, 1%. Já Expedito Mendonça (PCO) não pontuou. 7 imagens Fechar modal. 1 de 7 Leandro Grass visitou a região de Ceilândia nesta sexta-feira (21/8) Nathália Maciel/Metrópoles 2 de 7 Paula cumprimentou e apresentou suas propostas de governo para os eleitores, jovens de escolas públicas e curadores da Bienal. Luís Tajes/Comunicação Paula Belmonte 3 de 7 Ricardo Cappelli (PSB) em seu 1º ato de campanha Divulgação 4 de 7 Kiko Caputo (Novo) Peter Neylon/Divulgação 5 de 7 O candidato defendeu o uso da tecnologia para transformar Brasília no primeiro lugar nas áreas de saúde, segurança e educação HUGO BARRETO / METRÓPOLES @hugobarretophoto 6 de 7 Samara Mineiro é candidata da Unidade Popular Donavan/Reprodução 7 de 7 Professor Robson apresenta suas ideias para a área da educação no Distrito Federal. HUGO BARRETO / METRÓPOLES @hugobarretophoto A pesquisa Datafolha apontou que 11% dos eleitores declararam voto branco ou nulo. Outros 8% estão indecisos. O levantamento ouviu 910 eleitores em 28 regiões administrativas do Distrito Federal de terça-feira (18) a esta sexta (21). A pesquisa, encomendada pela Folha e TV Globo, foi registrada com os códigos DF-07561/2026 e BR-02094/2026 no Tribunal Superior Eleitoral (TSE). Impugnação O Ministério Público apresentou impugnação contra a candidatura de Arruda , citando seis condenações por improbidade administrativa em segunda instância. Segundo o órgão, a inelegibilidade de Arruda vale até dezembro de 2030 – portanto, ele só poderia retornar a disputar eleições no DF em 2034, de acordo com a impugnação. Em documento protocolado no Tribunal Regional Eleitoral do Distrito Federal (TRE-DF), o MP pede o indeferimento do registro da candidatura do candidato. Arruda reagiu alegando que tentam “tirá-lo no tapetão”. O candidato do PSD ao GDF defende que está elegível com base na recente flexibilização da Lei da Ficha Limpa aprovada pelo Congresso Nacional.",
-      "source_category": "mainstream",
-      "sentiment_per_candidate": {},
-      "edit_history": [],
-      "disclaimer_pt": "Análise algorítmica. Não representa pesquisa de opinião.",
-      "disclaimer_en": "Algorithmic analysis. Does not represent polling data.",
-      "sentiment_score": 0.0,
-      "confidence_score": 0.0,
-      "_sentiment_scores": {},
-      "prominence_score": 0.0
-    },
-    {
       "id": "36b8efe18646c950",
       "url": "https://veja.abril.com.br/brasil/tarcisio-x-haddad-os-numeros-da-ultima-pesquisa-datafolha-para-o-governo-de-sao-paulo/",
       "title": "Tarcísio x Haddad: Os números da última pesquisa Datafolha para o governo de São Paulo",
       "source": "Veja",
       "published_at": "2026-08-21T21:40:43Z",
       "collected_at": "2026-08-21T22:00:43Z",
-      "status": "raw",
-      "relevance_score": 0.0,
-      "relevance_signals": null,
-      "candidates_mentioned": [],
-      "topics": [],
+      "status": "validated",
+      "relevance_score": 0.9,
+      "relevance_signals": {
+        "candidate_signal": 0.5,
+        "topic_signal": 0.25,
+        "keyword_signal": 0.15,
+        "source_signal": 0.0
+      },
+      "candidates_mentioned": [
+        "tarcisio"
+      ],
+      "topics": [
+        "eleicoes"
+      ],
       "narrative_cluster_id": null,
       "duplicate_of": null,
       "summaries": {
-        "pt-BR": "",
-        "en-US": ""
+        "pt-BR": "Pesquisa Datafolha mostra Tarcísio de Freitas com 45% das intenções de voto no primeiro turno, ampliando vantagem sobre Fernando Haddad (27%). No segundo turno, Tarcísio lidera com 54% contra 35% de Haddad. A margem de erro é de 2 pontos percentuais.",
+        "en-US": "A Datafolha poll shows Tarcísio de Freitas leading with 45% of first-round voting intentions, widening his advantage over Fernando Haddad (27%). In a hypothetical runoff, Tarcísio leads with 54% against Haddad’s 35%. The margin of error is 2 percentage points."
       },
       "content": "Pesquisa Datafolha divulgada nesta sexta-feira, 21, mostra que Tarcísio de Freitas (Republicanos) ampliou vantagem sobre o principal adversário, Fernando Haddad (PT) , na disputa pelo governo de São Paulo nas eleições 2026, em uma simulação de primeiro turno. De acordo com os números, o atual governador tem 45% das intenções de voto, enquanto o ex-ministro da Fazenda aparece com 27% . Na sequência, aparecem tecnicamente empatados Vera Lúcia (PSTU) , com 4%, Carlos Machado (PCB) e Policial Edjane (Agir) , com 3%, Vivian Mendes (UP) , 2%, e Izadora Dias (PCO) , com 1%. Brancos, nulos ou nenhum representam 11%. Os indecisos são 4%. O levantamento foi registrado no Tribunal Superior Eleitoral ( TSE ) em 15 de agosto, sob o número SP-01806/2026. A coleta ocorreu entre os dias 18 e 21 de agosto. A margem de erro é de 2 pontos percentuais para mais ou para menos, considerando nível de confiança de 95% e uma amostra aleatória simples. A empresa responsável é a Datafolha Instituto de Pesquisas Ltda., contratada pela Globo Comunicação e Participações S.A.. Segundo turno Em uma eventual disputa de segundo turno entre Tarcísio e Haddad, o atual chefe do Poder Executivo paulista aparece com 54% da preferência do eleitorado. Já Haddad soma 35%. Brancos, nulos ou nenhum representam 9%. Os indecisos são 2%. Na última pesquisa Datafolha, Tarcísio tinha 53% das intenções de voto no segundo turno, contra 37% de Haddad. Continua após a publicidade Retrospecto da disputa Em 2022, Tarcísio e Haddad foram para o segundo turno da disputa pelo Palácio dos Bandeirantes depois de um acirrado primeiro turno. Os dois deixaram para trás Rodrigo Garcia (à época no PSDB) , impondo a primeira grande derrota aos tucanos em São Paulo em três décadas. Publicidade",
       "source_category": "magazine",
-      "sentiment_per_candidate": {},
-      "edit_history": [],
+      "sentiment_per_candidate": {
+        "tarcisio": "positivo"
+      },
+      "edit_history": [
+        {
+          "tier": "editor",
+          "at": "2026-08-21T22:19:11Z",
+          "provider": "openrouter",
+          "action": "validated",
+          "changes": [
+            "summary_pt",
+            "summary_en"
+          ]
+        }
+      ],
       "disclaimer_pt": "Análise algorítmica. Não representa pesquisa de opinião.",
       "disclaimer_en": "Algorithmic analysis. Does not represent polling data.",
-      "sentiment_score": 0.0,
-      "confidence_score": 0.0,
-      "_sentiment_scores": {},
-      "prominence_score": 0.0
+      "sentiment_score": 0.3,
+      "confidence_score": 1.0,
+      "_sentiment_scores": {
+        "tarcisio": 0.3
+      },
+      "prominence_score": 0.0,
+      "_ai_provider": "nvidia",
+      "_ai_model": "minimaxai/minimax-m3",
+      "ai_provider_editor": "openrouter/free",
+      "editor_note": null
     },
     {
       "id": "633e826c245524a9",
@@ -645,27 +819,55 @@
       "source": "Estadao Politica",
       "published_at": "2026-08-21T21:40:24Z",
       "collected_at": "2026-08-21T22:00:29Z",
-      "status": "raw",
-      "relevance_score": 0.0,
-      "relevance_signals": null,
-      "candidates_mentioned": [],
-      "topics": [],
+      "status": "validated",
+      "relevance_score": 0.9,
+      "relevance_signals": {
+        "candidate_signal": 0.5,
+        "topic_signal": 0.25,
+        "keyword_signal": 0.15,
+        "source_signal": 0.0
+      },
+      "candidates_mentioned": [
+        "tarcisio"
+      ],
+      "topics": [
+        "eleicoes"
+      ],
       "narrative_cluster_id": null,
       "duplicate_of": null,
       "summaries": {
-        "pt-BR": "",
-        "en-US": ""
+        "pt-BR": "Pesquisa Datafolha mostra Tarcísio de Freitas com 45% das intenções de voto, liderando sobre Fernando Haddad (27%) em primeiro turno. No segundo turno, o governador teria 54% contra 35% do ex-ministro. A margem de erro é de dois pontos percentuais.",
+        "en-US": "A Datafolha poll shows Tarcísio de Freitas leading with 45% of voting intentions, ahead of Fernando Haddad (27%) in the first round. In a runoff, the governor would have 54% against 35% for the former minister. The margin of error is two percentage points."
       },
       "content": "O governador de São Paulo e candidato à reeleição, Tarcísio de Freitas (Republicanos), teria hoje 45% das intenções de voto, contra 27% do ex-ministro Fernando Haddad (PT), em um eventual primeiro turno. É o que mostra a pesquisa Datafolha divulgada nesta segunda-feira, 21. A margem de erro é de dois pontos percentuais para mais ou para menos. No levantamento anterior, Tarcísio aparecia com 46% e Haddad com 30%. Segundo o levantamento, os demais candidatos estão bem distantes dos dois primeiros. Aparecem na sequência: Vera Lúcia (PSTU): 4% Carlos Machado (PCB): 3% Policial Edjane (Agir): 3% Vivian Mendes (UP): 2% Izadora Dias (PCO): 1% Em branco/nulo/nenhum: 11% Indecisos: 4% Em um eventual segundo turno, Tarcísio teria 54% contra 35% de Haddad. No levantamento anterior, o governador tinha 53% e o petista somava 37%. A pesquisa realizou 1.610 entrevistas presenciais em pontos de fluxo, entre os dias 18 e 21 de agosto. A margem de erro é de 2 pontos percentuais para mais ou para menos, considerando um nível de confiança de 95%. O levantamento foi contratado pelo jornal Folha de S. Paulo e pelo grupo Globo e foi registrado no TSE sob o protocolo SP-01806/2026.",
       "source_category": "mainstream",
-      "sentiment_per_candidate": {},
-      "edit_history": [],
+      "sentiment_per_candidate": {
+        "tarcisio": "positivo"
+      },
+      "edit_history": [
+        {
+          "tier": "editor",
+          "at": "2026-08-21T22:19:15Z",
+          "provider": "openrouter",
+          "action": "validated",
+          "changes": [
+            "summary_pt",
+            "summary_en"
+          ]
+        }
+      ],
       "disclaimer_pt": "Análise algorítmica. Não representa pesquisa de opinião.",
       "disclaimer_en": "Algorithmic analysis. Does not represent polling data.",
-      "sentiment_score": 0.0,
-      "confidence_score": 0.0,
-      "_sentiment_scores": {},
-      "prominence_score": 0.0
+      "sentiment_score": 0.3,
+      "confidence_score": 1.0,
+      "_sentiment_scores": {
+        "tarcisio": 0.3
+      },
+      "prominence_score": 0.0,
+      "_ai_provider": "nvidia",
+      "_ai_model": "minimaxai/minimax-m3",
+      "ai_provider_editor": "openrouter/free",
+      "editor_note": null
     },
     {
       "id": "2bdd3eef64ebe08e",
@@ -674,27 +876,67 @@
       "source": "Metropoles",
       "published_at": "2026-08-21T21:39:46Z",
       "collected_at": "2026-08-21T22:00:32Z",
-      "status": "raw",
-      "relevance_score": 0.0,
-      "relevance_signals": null,
-      "candidates_mentioned": [],
-      "topics": [],
+      "status": "validated",
+      "relevance_score": 1.0,
+      "relevance_signals": {
+        "candidate_signal": 0.6,
+        "topic_signal": 0.25,
+        "keyword_signal": 0.15,
+        "source_signal": 0.0
+      },
+      "candidates_mentioned": [
+        "lula",
+        "flavio-bolsonaro",
+        "caiado",
+        "renan-santos",
+        "zema"
+      ],
+      "topics": [
+        "eleicoes"
+      ],
       "narrative_cluster_id": null,
       "duplicate_of": null,
       "summaries": {
-        "pt-BR": "",
-        "en-US": ""
+        "pt-BR": "Pesquisa Datafolha mostra Lula com 39% e Flávio Bolsonaro com 33% no primeiro turno, com diferença de 6 pontos percentuais. A variação está dentro da margem de erro de 2 pontos percentuais. Outros candidatos like Caiado, Renan e Zema aparecem com 5%, 4% e 3%, respectivamente.",
+        "en-US": "Datafolha poll shows Lula at 39% and Flávio Bolsonaro at 33% in the first round, with a 6-percentage-point difference. The variation is within the 2-point margin of error. Other candidates like Caiado, Renan, and Zema appear at 5%, 4%, and 3%, respectively."
       },
       "content": "Pesquisa Datafolha divulgada nesta sexta-feira (21/8), a primeira do instituto após o início do período de campanha eleitoral, mostra que o presidente Luiz Inácio Lula da Silva (PT) segue na liderança nas intenções de voto para o primeiro turno, com 39% dos votos. O senador Flávio Bolsonaro (PL) segue em segundo, com 33%. A diferença entre os dois candidatos caiu de oito pontos percentuais, na pesquisa de julho , para seis pontos. No entanto, a variação está dentro da margem de erro, que é de dois pontos percentuais para mais ou menos. Ao todo, 13 candidatos concorrem ao Palácio do Planalto. Veja os resultados: Luiz Inácio Lula da Silva (PT): 39% (-1 p.p) Flávio Bolsonaro (PL): 33% (+1 p.p) Ronaldo Caiado (PSD): 5% (-1 p.p) Renan Santos (Missão): 4% (+1 p.p) Romeu Zema (Novo): 3% (=) Pablo Marçal (PRTB): 2% Escritor Augusto Cury (Avante): 2% (=) Samara Martins (UP): 1% (=) Rui Costa Pimenta (PCO): 1% Veterinário Wilson Grassi (Democrata): 1% Edmilson Costa (PCB): 1% Clariana Barão (DC): 0% Hertz Dias (PSTU): 0% Em branco/nulo/nenhum: 7% (-1 p.p) Indecisos: 4% (-1 p.p) O levantamento foi encomendado pela Globo e pelo jornal Folha de S.Paulo e ouviu 2.058 pessoas com 16 anos ou mais em todo o país, entre os dias 18 e 20 de agosto. A margem de erro é de dois pontos percentuais, para mais ou para menos, e o nível de confiança é de 95%. A pesquisa está registrada no Tribunal Superior Eleitoral (TSE) sob o código BR-04496/2026.",
       "source_category": "mainstream",
-      "sentiment_per_candidate": {},
-      "edit_history": [],
+      "sentiment_per_candidate": {
+        "lula": "positivo",
+        "flavio-bolsonaro": "positivo",
+        "caiado": "neutro",
+        "renan-santos": "neutro",
+        "zema": "neutro"
+      },
+      "edit_history": [
+        {
+          "tier": "editor",
+          "at": "2026-08-21T22:19:19Z",
+          "provider": "openrouter",
+          "action": "validated",
+          "changes": [
+            "summary_pt",
+            "summary_en"
+          ]
+        }
+      ],
       "disclaimer_pt": "Análise algorítmica. Não representa pesquisa de opinião.",
       "disclaimer_en": "Algorithmic analysis. Does not represent polling data.",
-      "sentiment_score": 0.0,
-      "confidence_score": 0.0,
-      "_sentiment_scores": {},
-      "prominence_score": 0.0
+      "sentiment_score": 0.04,
+      "confidence_score": 1.0,
+      "_sentiment_scores": {
+        "lula": 0.3,
+        "flavio-bolsonaro": 0.2,
+        "caiado": -0.1,
+        "renan-santos": -0.1,
+        "zema": -0.1
+      },
+      "prominence_score": 0.0,
+      "_ai_provider": "nvidia",
+      "_ai_model": "minimaxai/minimax-m3",
+      "ai_provider_editor": "openrouter/free",
+      "editor_note": null
     },
     {
       "id": "6dac42bda0e59623",
@@ -1044,27 +1286,67 @@
       "source": "G1 Politica",
       "published_at": "2026-08-21T21:38:23Z",
       "collected_at": "2026-08-21T22:00:07Z",
-      "status": "raw",
-      "relevance_score": 0.0,
-      "relevance_signals": null,
-      "candidates_mentioned": [],
-      "topics": [],
+      "status": "validated",
+      "relevance_score": 1.0,
+      "relevance_signals": {
+        "candidate_signal": 0.6,
+        "topic_signal": 0.25,
+        "keyword_signal": 0.15,
+        "source_signal": 0.0
+      },
+      "candidates_mentioned": [
+        "lula",
+        "flavio-bolsonaro",
+        "caiado",
+        "zema",
+        "renan-santos"
+      ],
+      "topics": [
+        "eleicoes"
+      ],
       "narrative_cluster_id": null,
       "duplicate_of": null,
       "summaries": {
-        "pt-BR": "",
-        "en-US": ""
+        "pt-BR": "Pesquisa Datafolha aponta Lula com 47% das intenções de voto contra 43% de Flávio Bolsonaro em segundo turno, dentro da margem de erro. O levantamento, encomendado pela Globo e Folha de S.Paulo, também simulou confrontos com outros candidatos, sempre com Lula na lead.",
+        "en-US": "A Datafolha poll shows Lula leading Flávio Bolsonaro 47% to 43% in a potential runoff, within the margin of error. The survey, commissioned by Globo and Folha de S.Paulo, also simulated runoffs against other candidates, with Lula ahead in all scenarios."
       },
       "content": "Lula (PT) e Flávio Bolsonaro (PL) Ricardo Stuckert e Vittor Sales Pesquisa Datafolha divulgada nesta sexta-feira (21) mostra quatro cenários de 2º turno da eleição para a Presidência da República. O levantamento mostra que o presidente Lula (PT) tem 47% das intenções de voto em eventual disputa com Flávio Bolsonaro (PL), que tem 43%. A distância entre eles fica no limite da margem de erro, que é de dois pontos percentuais para mais ou para menos, o que indica maior probabilidade de liderança do petista neste momento da disputa. Veja abaixo os números das simulações de 2º turno: Lula x Flávio Bolsonaro Lula (PT): 47%; Flávio Bolsonaro (PL): 43%; Em branco/nulo/nenhum: 9%; Não sabe: 2%. Intenção de voto para o 2º turno: Lula x Flávio Bolsonaro Arte/g1 Lula x Ronaldo Caiado Lula (PT): 47%; Ronaldo Caiado (PSD): 40%; Em branco/nulo/nenhum: 11%; Indecisos: 3%. Intenção de voto para o 2º turno: Lula x Ronaldo Caiado Arte/g1 Lula x Romeu Zema Lula (PT): 48%; Romeu Zema (Novo): 38%; Em branco/nulo/nenhum: 12%; Indecisos: 2%. Intenção de voto para o 2º turno: Lula x Romeu Zema Arte/g1 Lula x Renan Santos Lula (PT): 47%; Renan Santos (Missão): 37%; Em branco/nulo/nenhum: 14%; Indecisos: 2%. Intenção de voto para o 2º turno: Lula x Renan Santos Arte/g1 O levantamento foi encomendado pela Globo e pelo jornal Folha de S.Paulo e é o primeiro divulgado pelo instituto após o início das campanhas. Datafolha, 1º turno: Lula, 39%; Flávio Bolsonaro, 33%; Ronaldo Caiado; 5%; Renan Santos; 4%; Zema, 3%; Augusto Cury, 2% O Datafolha ouviu 2.058 pessoas de 16 anos ou mais entre os dias 18 e 20 de agosto. A margem de erro é de dois pontos percentuais, para mais ou para menos, e o nível de confiança é de 95%. O número de registro no TSE é BR-04496/2026. Agora no g1 [Esta reportagem está em atualização.] Urna eletrônica Tribunal Superior Eleitoral/TSE",
       "source_category": "mainstream",
-      "sentiment_per_candidate": {},
-      "edit_history": [],
+      "sentiment_per_candidate": {
+        "lula": "positivo",
+        "flavio-bolsonaro": "positivo",
+        "caiado": "neutro",
+        "zema": "neutro",
+        "renan-santos": "neutro"
+      },
+      "edit_history": [
+        {
+          "tier": "editor",
+          "at": "2026-08-21T22:19:22Z",
+          "provider": "openrouter",
+          "action": "validated",
+          "changes": [
+            "summary_pt",
+            "summary_en"
+          ]
+        }
+      ],
       "disclaimer_pt": "Análise algorítmica. Não representa pesquisa de opinião.",
       "disclaimer_en": "Algorithmic analysis. Does not represent polling data.",
-      "sentiment_score": 0.0,
-      "confidence_score": 0.0,
-      "_sentiment_scores": {},
-      "prominence_score": 0.0
+      "sentiment_score": 0.06,
+      "confidence_score": 1.0,
+      "_sentiment_scores": {
+        "lula": 0.4,
+        "flavio-bolsonaro": 0.2,
+        "caiado": -0.1,
+        "zema": -0.1,
+        "renan-santos": -0.1
+      },
+      "prominence_score": 0.0,
+      "_ai_provider": "nvidia",
+      "_ai_model": "minimaxai/minimax-m3",
+      "ai_provider_editor": "openrouter/free",
+      "editor_note": null
     },
     {
       "id": "c5bc44de2593e615",
@@ -1153,35 +1435,6 @@
       "editor_note": null
     },
     {
-      "id": "ccd4dae889948419",
-      "url": "https://oglobo.globo.com/blogs/pulso/post/2026/08/datafolha-rio-paes-lidera-intencoes-de-voto-com-41percent-contra-19percent-de-douglas-ruas.ghtml",
-      "title": "Datafolha Rio: Paes lidera intenções de voto para governador com 41% contra 19% de Douglas Ruas",
-      "source": "O Globo",
-      "published_at": "2026-08-21T21:37:30Z",
-      "collected_at": "2026-08-21T22:00:24Z",
-      "status": "raw",
-      "relevance_score": 0.0,
-      "relevance_signals": null,
-      "candidates_mentioned": [],
-      "topics": [],
-      "narrative_cluster_id": null,
-      "duplicate_of": null,
-      "summaries": {
-        "pt-BR": "",
-        "en-US": ""
-      },
-      "content": "Candidato pela terceira vez ao governo do Rio, o ex-prefeito da capital Eduardo Paes (PSD) lidera com folga a corrida eleitoral deste ano. É o que mostra pesquisa Datafolha, encomendada pela TV Globo e pelo jornal Folha de S. Paulo, divulgada nesta sexta-feira. O aliado do presidente Luiz Inácio Lula da Silva (PT) marca 41% das intenções de voto no primeiro turno. Os adversários que mais se aproximam dele são presidente da Assembleia Legislativa fluminense, Douglas Ruas (PL), e o ex-governador do Rio Anthony Garotinho (Republicanos), que marcam 19% e 9%, respectivamente. Esse é o primeiro levantamento do Datafolha para a disputa de 2026 do governo do Rio. Todos os outros candidatos apareceram empatadas com 2%. Nesse grupo, estão João Jacques Busnello (Missão), Willian Siri (PSOL), André Marinho (Novo), Cyro Garcia (PSTU) e Juliete Pantoja (UP). Há ainda 4% de indecisos e 16% de nulo e branco. O Datafolha entrevistou 1.204 eleitores entre os dias 18 e 21 de agosto no estado. A margem de erro é de três pontos percentuais para mais ou para menos, considerando um nível de confiança de 95%. A pesquisa foi registrada junto à Justiça Eleitoral sob número RJ-02945/2026. Candidatura de Garotinho Na segunda-feira, o Ministério Público Eleitoral pediu o indeferimento da candidatura de Garotinho. A medida acontece após a análise do registro de candidatura do político. A argumentação é que o candidato do Republicanos está inelegível por conta de uma condenação por improbidade administrativa da época em que atuou como secretário de governo do Rio, no governo de sua esposa, Rosinha Garotinho. O processo será ainda analisado pelo Tribunal Regional Eleitoral (TRE-RJ). Garotinho se manifestou nas redes sociais e se defendeu das alegações do MPE. — É um absurdo me condenar num processo onde eu não era secretário de Saúde, ordenador de despesa, que eu não cometi nenhuma ilegalidade — diz o ex-governador do Rio e atual candidato — Foi uma perseguição que nós sofremos por denunciar coisas erradas. Não há absolutamente nada de verdadeiro nessa história que está sendo contada. Initial plugin text",
-      "source_category": "mainstream",
-      "sentiment_per_candidate": {},
-      "edit_history": [],
-      "disclaimer_pt": "Análise algorítmica. Não representa pesquisa de opinião.",
-      "disclaimer_en": "Algorithmic analysis. Does not represent polling data.",
-      "sentiment_score": 0.0,
-      "confidence_score": 0.0,
-      "_sentiment_scores": {},
-      "prominence_score": 0.0
-    },
-    {
       "id": "7fb42d675b69bf39",
       "url": "https://www.metropoles.com/brasil/datafolha-lula-tem-47-e-flavio-bolsonaro-43-no-2o-turno-2",
       "title": "Datafolha: Lula tem 47% e Flávio Bolsonaro, 43%, no 2º turno",
@@ -1243,62 +1496,67 @@
       "editor_note": null
     },
     {
-      "id": "6568f99ca2d3f9c5",
-      "url": "https://oglobo.globo.com/patrocinado/dino/noticia/2026/08/21/cultura-e-confianca-influenciam-negocios-interculturais-1.ghtml",
-      "title": "Cultura e confiança influenciam negócios interculturais",
-      "source": "O Globo",
-      "published_at": "2026-08-21T21:35:54Z",
-      "collected_at": "2026-08-21T22:00:24Z",
-      "status": "raw",
-      "relevance_score": 0.0,
-      "relevance_signals": null,
-      "candidates_mentioned": [],
-      "topics": [],
-      "narrative_cluster_id": null,
-      "duplicate_of": null,
-      "summaries": {
-        "pt-BR": "",
-        "en-US": ""
-      },
-      "content": "Pesquisadores Dina Ribbink e Curtis Grimm publicaram, no Journal of Operations Management, um estudo experimental que analisou negociações entre compradores e fornecedores de origens culturais distintas. O experimento comparou pares de participantes classificados segundo sua cultura de origem, avaliando resultados de negociação, níveis de confiança e estratégias de barganha. Os autores observaram que as diferenças culturais presentes nas duplas influenciaram significativamente os resultados obtidos e alteraram o papel exercido pela confiança durante o processo de barganha. Embora o estudo não afirme que todas as negociações interculturais terão o mesmo desfecho, ele demonstra que a cultura pode ser uma variável relevante nas relações comerciais internacionais. Outra pesquisa, também publicada no Journal of Operations Management, coletou respostas de mais de 600 profissionais de compras atuantes em diferentes países. Os dados revelaram que a confiança e o desempenho organizacional apresentam efeitos divergentes sobre a orientação de longo prazo, dependendo das características culturais dos participantes. Jun Chen, empresário chinês que desenvolve projetos entre Brasil e China, relata que os desafios surgem principalmente nas fases iniciais de aproximação. Segundo ele, ferramentas digitais facilitam a organização de agendas, a troca de documentos e a manutenção de contato, porém nem sempre permitem a compreensão integral de expectativas, protocolos ou estilos de comunicação. \"As ferramentas digitais aproximam agendas, mas o encontro presencial ajuda a compreender as pessoas. Em negócios entre culturas diferentes, ouvir com atenção e conhecer o ambiente do outro pode evitar interpretações erradas\", afirmou Jun Chen. Para Chen, o encontro presencial não substitui contratos ou verificações formais; ele oferece contexto adicional antes que a relação avance para etapas contratuais. A interação cara a cara permite que as partes expliquem objetivos, identifiquem dúvidas e compreendam como cada lado apresenta sua operação, reduzindo o risco de interpretações equivocadas de palavras, silêncios ou protocolos. A UNESCO define comunicação intercultural como um processo que envolve não apenas a linguagem verbal, mas também comportamentos não verbais, uso do espaço, percepção de tempo e aspectos da cultura material. Embora a definição não seja específica ao ambiente empresarial, ela evidencia que a comunicação entre culturas abrange múltiplos elementos além da simples tradução de termos. Em Atibaia, a Galeria China-Brasil, vinculada às atividades de Jun Chen, reúne gastronomia, eventos culturais e encontros profissionais. O ambiente de hospitalidade favorece uma aproximação inicial ao possibilitar conversas que não se iniciam necessariamente com propostas comerciais. \"Em relações interculturais, compreender o contexto do outro reduz ruídos antes de uma negociação\", reiterou Chen, reforçando a importância de combinar ferramentas digitais com interações presenciais para melhorar a clareza e a confiança nas negociações internacionais. A formalização posterior continua dependente de documentação, definição de responsabilidades e análise detalhada de cada projeto. O encontro presencial acrescenta uma camada de compreensão, mas não substitui os instrumentos que transformam a confiança inicial em uma relação empresarial verificável.",
-      "source_category": "mainstream",
-      "sentiment_per_candidate": {},
-      "edit_history": [],
-      "disclaimer_pt": "Análise algorítmica. Não representa pesquisa de opinião.",
-      "disclaimer_en": "Algorithmic analysis. Does not represent polling data.",
-      "sentiment_score": 0.0,
-      "confidence_score": 0.0,
-      "_sentiment_scores": {},
-      "prominence_score": 0.0
-    },
-    {
       "id": "92eb593d2e837f19",
       "url": "https://oglobo.globo.com/blogs/pulso/post/2026/08/pesquisa-datafolha-lula-tem-47percent-e-flavio-bolsonaro-aparece-com-43percent-em-eventual-segundo-turno.ghtml",
       "title": "Pesquisa Datafolha: Lula tem 47%, e Flávio Bolsonaro aparece com 43% em eventual segundo turno",
       "source": "O Globo",
       "published_at": "2026-08-21T21:33:28Z",
       "collected_at": "2026-08-21T22:00:24Z",
-      "status": "raw",
-      "relevance_score": 0.0,
-      "relevance_signals": null,
-      "candidates_mentioned": [],
-      "topics": [],
+      "status": "validated",
+      "relevance_score": 1.0,
+      "relevance_signals": {
+        "candidate_signal": 0.6,
+        "topic_signal": 0.25,
+        "keyword_signal": 0.15,
+        "source_signal": 0.0
+      },
+      "candidates_mentioned": [
+        "lula",
+        "flavio-bolsonaro",
+        "caiado",
+        "renan-santos",
+        "zema"
+      ],
+      "topics": [
+        "eleicoes"
+      ],
       "narrative_cluster_id": null,
       "duplicate_of": null,
       "summaries": {
-        "pt-BR": "",
-        "en-US": ""
+        "pt-BR": "Pesquisa Datafolha mostra empate técnico entre Lula (47%) e Flávio Bolsonaro (43%) em segundo turno, dentro da margem de erro. No primeiro turno, Lula tem 39% e Flávio 33%, com Caiado, Renan Santos e Zema empatados em terceiro lugar.",
+        "en-US": "A Datafolha poll shows a technical tie between Lula (47%) and Flávio Bolsonaro (43%) in a potential runoff, within the margin of error. In the first round, Lula leads with 39% to Flávio's 33%, while Caiado, Renan Santos, and Zema are statistically tied for third."
       },
       "content": "Pesquisa Datafolha divulgada nesta sexta-feira mostra o presidente Luiz Inácio Lula da Silva (PT) e o senador Flávio Bolsonaro (PL) em situação de empate técnico, no limite da margem de erro, nas intenções de voto em um eventual segundo turno da eleição presidencial. De acordo com o levantamento, Lula aparece com 47% neste cenário, enquanto Flávio tem 43%. A margem de erro é de dois pontos. A pesquisa foi contratada pela TV Globo e pelo jornal Folha de S. Paulo, e está registrada no Tribunal Superior Eleitoral (TSE) sob o protocolo BR-04496/2026. Para este levantamento, o Datafolha entrevistou 2.058 pessoas com 16 anos ou mais, em todo o país, entre os dias 18 e 20 de agosto. O índice de confiança é de 95%. O levantamento divulgado nesta sexta é o primeiro realizado pelo Datafolha desde o início da campanha eleitoral. Na rodada anterior feita pelo instituto, e divulgada no fim de julho, Lula tinha 48%, contra 43% de Flávio, na hipótese de um segundo turno. Primeiro turno No primeiro turno, o atual presidente tem 39% das intenções de voto, e Flávio aparece em seguida, com 33%. Ronaldo Caiado (PSD) tem 5% das intenções de voto, Renan Santos (Missão) aparece com 4%, e Romeu Zema (Novo) tem 3%. Esse trio está tecnicamente empatado, de acordo com a margem de erro. Matéria em atualização",
       "source_category": "mainstream",
-      "sentiment_per_candidate": {},
-      "edit_history": [],
+      "sentiment_per_candidate": {
+        "lula": "positivo",
+        "flavio-bolsonaro": "neutro"
+      },
+      "edit_history": [
+        {
+          "tier": "editor",
+          "at": "2026-08-21T22:19:32Z",
+          "provider": "openrouter",
+          "action": "validated",
+          "changes": [
+            "summary_pt",
+            "summary_en"
+          ]
+        }
+      ],
       "disclaimer_pt": "Análise algorítmica. Não representa pesquisa de opinião.",
       "disclaimer_en": "Algorithmic analysis. Does not represent polling data.",
-      "sentiment_score": 0.0,
-      "confidence_score": 0.0,
-      "_sentiment_scores": {},
-      "prominence_score": 0.0
+      "sentiment_score": 0.05,
+      "confidence_score": 1.0,
+      "_sentiment_scores": {
+        "lula": 0.2,
+        "flavio-bolsonaro": -0.1
+      },
+      "prominence_score": 0.0,
+      "_ai_provider": "openrouter",
+      "_ai_model": "openrouter/free",
+      "ai_provider_editor": "openrouter/free",
+      "editor_note": null
     },
     {
       "id": "584ff5869462fb93",
@@ -1482,56 +1740,55 @@
       "source": "O Globo",
       "published_at": "2026-08-21T21:31:31Z",
       "collected_at": "2026-08-21T22:00:24Z",
-      "status": "raw",
-      "relevance_score": 0.0,
-      "relevance_signals": null,
-      "candidates_mentioned": [],
-      "topics": [],
+      "status": "validated",
+      "relevance_score": 0.9,
+      "relevance_signals": {
+        "candidate_signal": 0.5,
+        "topic_signal": 0.25,
+        "keyword_signal": 0.15,
+        "source_signal": 0.0
+      },
+      "candidates_mentioned": [
+        "tarcisio"
+      ],
+      "topics": [
+        "eleicoes"
+      ],
       "narrative_cluster_id": null,
       "duplicate_of": null,
       "summaries": {
-        "pt-BR": "",
-        "en-US": ""
+        "pt-BR": "Pesquisa Datafolha mostra Tarcísio de Freitas (Republicanos) liderando a disputa pelo governo de SP com 45% das intenções de voto, contra 27% de Fernando Haddad (PT). Em cenário de segundo turno, o atual governador venceria com 54% dos votos válidos contra 35% do ex-ministro. A diferença entre os dois se manteve estável em relação a levantamentos anteriores.",
+        "en-US": "Datafolha poll shows Tarcísio de Freitas (Republicanos) leading the São Paulo gubernatorial race with 45% voter intention against 27% for Fernando Haddad (PT). In a projected runoff, the incumbent governor would win with 54% of valid votes versus 35% for the former minister. The gap between them has remained stable compared to previous surveys."
       },
       "content": "Pesquisa Datafolha divulgada nesta sexta (21) aponta que o governador de São Paulo, Tarcísio de Freitas (Republicanos), segue liderando a disputa pela reeleição contra Fernando Haddad (PT), ex-ministro da Fazenda. O atual ocupante do cargo obteve 45% das intenções de voto no levantamento, contra 27% de Fernando Haddad (PT), o segundo colocado. A diferença entre os dois se manteve praticamente estável em relação à situação de julho, quando Tarcísio recebeu 46% das intenções de voto no levantamento, contra 30% de Haddad. Em março, quando o instituto realizou seu primeiro levantamento deste ano, Tarcísio tinha 44%, ante 31% de Haddad. Outros três pré-candidatos aparecem em um distante segundo pelotão. Vera Lucia (PSTU) com 4%, Carlos Machado (PCB) e Policial Edjane (Agir) ficaram com 3% e Vivian Mendes (UP) com 2%. Izadora Dias (PCO) marcou 1%. Brancos, nulos e os que afirmam que não votarão em ninguém somaram 11%, e 4% dos entrevistados se declararam indecisos. Caso a resolução em primeiro turno não ocorra, na projeção de um eventual segundo turno entre Tarcísio e Haddad, o governador venceria com 54% dos votos validos contra 35% do ex-ministro, segundo o Datafolha. A nova pesquisa entrevistou 1.610 eleitores presencialmente entre 18 e 19 de agosto. A pesquisa foi encomendada pelo jornal Folha de S. Paulo e pela Globo. A margem de erro é de dois pontos percentuais, com nível de confiança na amostra de 95%. O levantamento está registrado na Justiça Eleitoral sob os números SP-01806/2026 e BR-07185/2026. Initial plugin text",
       "source_category": "mainstream",
-      "sentiment_per_candidate": {},
-      "edit_history": [],
-      "disclaimer_pt": "Análise algorítmica. Não representa pesquisa de opinião.",
-      "disclaimer_en": "Algorithmic analysis. Does not represent polling data.",
-      "sentiment_score": 0.0,
-      "confidence_score": 0.0,
-      "_sentiment_scores": {},
-      "prominence_score": 0.0
-    },
-    {
-      "id": "d05ba7eba783da60",
-      "url": "https://oglobo.globo.com/rio/noticia/2026/08/21/barbarie-em-copacabana-policia-tenta-identificar-um-quinto-envolvido-em-espancamento-e-morte-de-ciclista-confundido-com-ladrao.ghtml",
-      "title": "Barbárie em Copacabana: polícia tenta identificar um  quinto suspeito de morte de ciclista confundido com ladrão",
-      "source": "O Globo",
-      "published_at": "2026-08-21T21:28:08Z",
-      "collected_at": "2026-08-21T22:00:24Z",
-      "status": "raw",
-      "relevance_score": 0.0,
-      "relevance_signals": null,
-      "candidates_mentioned": [],
-      "topics": [],
-      "narrative_cluster_id": null,
-      "duplicate_of": null,
-      "summaries": {
-        "pt-BR": "",
-        "en-US": ""
+      "sentiment_per_candidate": {
+        "tarcisio": "positivo"
       },
-      "content": "A Polícia Civil investiga a participação de uma quinta pessoa na morte do ciclista Cláudio Rafael Landeiro Moreira, de 37 anos. Portador de um problema cognitivo, ele foi espancado por um segurança e dois entregadores de aplicativo no último dia 11, ao ser confundido com um ladrão de bicicletas em Copacabana, na Zona Sul do Rio. Principal autor da agressão, e um dos encarregados de fazer vigilância clandestina de uma rua do bairro, Davi Santos Machado chegou a filmar o espancamento com um celular enquanto agredia a vitima com golpes de um cassetete. Na Zona Sul: terceiro suspeito de envolvimento na morte de ciclista espancado em Copacabana se entrega à polícia Barbárie em Copacabana: em seis minutos, vítima de espancamento levou 57 pauladas, além de pisões, socos e chutes As cenas foram divulgadas em um grupo de conversas de aplicativo usado por entregadores. Já um segundo segurança é suspeito de participar indiretamente do crime ao retirar a bicicleta usada pelo ciclista do local onde ela começou a ser agredida, na Rua Barata Ribeiro. Dos quatro citados, três já estão presos temporariamente por ordem da Justiça. Um deles se entregou, nesta sexta-feira, aos investigadores da 12ªDP (Copacabana), unidade responsável por apurar o caso. Um quarto identificado teve a prisão temporária decretada e está foragido. O quinto suspeito é um homem de casaco cinza com listras que aparece quando a vítima já estava sendo espancada, num segundo momento, pelo segurança Davi Santos Machado e pelos entregadores Felipe Eduardo dos Santos Silva e Ailton José da Silva. Essas agressões ocorreram na Rua Felipe Oliveira e foram flagradas por uma câmera de segurança. Cláudio Rafael foi espancado até a morte em Copacabana — Foto: Reprodução Reprodução A gravação mostra o homem se aproximando do grupo. Em seguida, ele aparece chutando a cabeça do ciclista. Pouco depois, o suspeito vai embora. As imagens mostram que durante seis dos nove minutos de duração do vídeo o ciclista é agredido com 57 pauladas, chutes e socos. Nesta sexta-feira, Felipe se entregou em uma rua da Tijuca aos policiais da 12ªDP. Pouco depois, ele foi levado para a Delegacia Policial de Copacabana. — A gente deu prioridade a chegar nas pessoas que de fato mataram a vítima. Há outras circunstâncias. Foi um crime bárbaro. Nada vai passar sem ser apurado. Já analisamos e notamos que há um rapaz que vem e chuta a cabeça da vítima. Ele também vai ser alvo da investigação. A gente também quer qualificar essa pessoa. Todas as circunstâncias serão apuradas— disse o delegado Ângelo Lages, da 12ªDP. Imagens mostram espancamento até a morte de homem em Copacabana Além de Felipe, estão presos os seguranças Jorge Luiz Ricardo Dias, que não participou do espancamento mas retirou a bicicleta usada pelo ciclista do local, que pertence a uma irmã da vítima, e Davi Santos Machado. Este último é o homem que aparece em um vídeo desferindo diversos golpes de cassetete em Cláudio Rafael. Já o entregador Ailton José da Silva teve a prisão temporária decretada pelo plantão judiciário e ainda é procurado. Espancamento: abordagem e agressões a homem confundido com bandido duraram mais de nove minutos; uma pessoa foi presa. Veja vídeo Jorge prestou depoimento logo após se apresentar na 12ªDP, nesta quinta-feira, ele contou que faz parte de uma equipe de seguranças contratados por comerciantes de uma rua de Copacabana. Segundo o segurança, ele ainda advertiu o colega sobre a ação que vitimou o ciclista, mas Davi teria continuado rindo do que havia acontecido. Preso na Baixada: segundo acusado de envolvimento na morte de homem confundido com bandido em Copacabana se entrega na DP de Mesquita Como as imagens mostram, Machado abordou Cláudio Rafael, que havia saído de casa perto das 22h30 do dia 11, em Botafogo, também na Zona Sul, para passear: ele usava a bicicleta da irmã.Já em Copacabana, o segurança suspeitou que a vítima tivesse roubado a bicicleta e, ainda na Rua Barata Ribeiro, na altura do número 35, encostou-a na frente de uma loja. Logo em seguida, Jorge Luiz aparece pedalando e atravessando a rua, quando Cláudio tenta evitar que levassem o bem que era de sua irmã. Machado, então, o repele usando um porrete de madeira. Com a mesma arma, o segurança aparece na sessão de espancamento filmada na Rua Felipe de Oliveira, paralela à Barata Ribeiro. Ali, ao contrário do que disse em seu primeiro depoimento, ele protagoniza as agressões, ajudado pelos dois homens de bicicleta e com mochilas de entregadores. Eles alcançam a vítima primeiro, sentada na escada de um prédio, e parecem cercá-la — até a chegada de Machado, ainda munido do porrete. Veja também: violência de agressões a homem confundido com bandido chocou até os policiais: 'São imagens muito fortes', diz delegado Aquilo a que se assiste em seguida são cenas de brutalidade indizível e inexplicável. Acusado injustamente de roubo, Cláudio Rafael, que tinha transtornos psicológicos, segundo a família, sofre as primeiras agressões e tenta escapar — mas é contido pelos entregadores, que o socam enquanto o seguram. O segurança desfere mais três pauladas, erra uma e chega a deixar o porrete cair no chão, mas logo recupera a ferocidade: em uma sequência de 20 segundos, contam-se 15 golpes com o cassetete improvisado, além de dois chutes. A barbárie continua, com breves interrupções em que o trio de agressores filma e tira fotos da vítima no chão. Entre quase seis dezenas de pauladas, Machado acerta uma enquanto aparentemente fala com alguém pelo celular. A certa altura, um quarto personagem, um homem de suéter, se aproxima, dá um chute na cabeça do homem e se afasta. Em alguns momentos, Cláudio ergue as mãos, parece implorar, e em outros tenta se levantar, mas não consegue e rola se contorcendo na calçada. Ele foi deixado ali, agonizando por pelo menos 30 minutos até a chegada dos bombeiros. Deu entrada no Hospital Miguel Couto à 1h, mas não resistiu. — Ao analisar as imagens, todos aqui na delegacia ficaram estarrecidos. São muito fortes — diz o delegado Ângelo Lages, titular da 12ª DP. Em nota, o iFood lamentou a morte de Cláudio Rafael Landeiro e disse que a empresa está colaborando com as autoridades responsáveis pelo caso.\"O iFood reforça que qualquer forma de violência é inaceitável e tem tolerância zero com esse tipo de conduta. A empresa adota uma Política de Combate à Discriminação e à Violência, com regras claras para promover um ambiente ético, seguro e livre de violações de direitos para todos os envolvidos: clientes, entregadores e estabelecimentos parceiros. O descumprimento dessas diretrizes pode resultar em medidas que vão desde advertências à desativação permanente da conta\", diz a nota. Segundo a polícia, os quatro suspeitos de participarem das agressões contra Cláudio Rafael, que já foram identificados, vão responder por homicídio triplamente qualificado: por motivo torpe, meio cruel e impossibilidade de defesa da vítima. O laudo de necrópsia do ciclista mostra lesões múltiplas sofridas pela vítima durante o espancamento. Segundo o documento, Cláudio Rafael teve traumatismo cranioencefálico e hemorragia interna, além de lesões no baço e no rim esquerdo. O ciclista deixou duas irmãs. Uma delas, Fabiane Landeiro, de 25, esteve na 12ªDP (Copacabana), nesta quinta-feira para acompanhar o trabalho da polícia. Ela desabafou e disse estar revoltada com o que aconteceu com o irmão. — O sentimento é de revolta, injustiça e indignação. O que fizeram com o Cláudio foi tortura. Ele foi agredido ainda caído no chão- disse. Bryan Rojtemberg , advogado da família, que acompanha o caso na 12ªDP, também esteve na delegacia, nesta quinta-feira. Na ocasião, ele disse que conhecia a vítima desde criança. —Ele era um menino calmo que ajudava a todos. Foi meu vizinho por muitos anos. O que fizeram com o Cláudio foi uma barbárie— concluiu. Initial plugin text",
-      "source_category": "mainstream",
-      "sentiment_per_candidate": {},
-      "edit_history": [],
+      "edit_history": [
+        {
+          "tier": "editor",
+          "at": "2026-08-21T22:19:42Z",
+          "provider": "openrouter",
+          "action": "validated",
+          "changes": [
+            "summary_pt",
+            "summary_en"
+          ]
+        }
+      ],
       "disclaimer_pt": "Análise algorítmica. Não representa pesquisa de opinião.",
       "disclaimer_en": "Algorithmic analysis. Does not represent polling data.",
-      "sentiment_score": 0.0,
-      "confidence_score": 0.0,
-      "_sentiment_scores": {},
-      "prominence_score": 0.0
+      "sentiment_score": 0.3,
+      "confidence_score": 1.0,
+      "_sentiment_scores": {
+        "tarcisio": 0.3
+      },
+      "prominence_score": 0.0,
+      "_ai_provider": "openrouter",
+      "_ai_model": "openrouter/free",
+      "ai_provider_editor": "openrouter/free",
+      "editor_note": null
     },
     {
       "id": "7099ed40061c3091",
@@ -31083,6 +31340,6 @@
       "editor_note": null
     }
   ],
-  "last_updated": "2026-08-21T22:07:17Z",
-  "total_count": 500
+  "last_updated": "2026-08-21T22:20:30Z",
+  "total_count": 490
 }
