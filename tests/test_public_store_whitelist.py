@@ -2,9 +2,8 @@
 
 Locks the exact set of entries allowed in site/public/data/, the directory that
 ships verbatim to GitHub Pages. Any new file appearing here must be a deliberate,
-reviewed decision (docs/architecture/02-risk-register.md R2). Entries marked
-STATE are operational/internal and are expected to move to state/ in migration
-steps M3-M5; they remain listed until then.
+reviewed decision (docs/architecture/02-risk-register.md R2). Internal pipeline
+state lives in state/ (migration steps M3-M5) and is never listed here.
 """
 
 from __future__ import annotations
@@ -32,8 +31,6 @@ EXPECTED_ENTRIES = frozenset(
         "tse_data.json",
         "transparencia_data.json",
         "weekly_briefing.json",
-        # STATE - internal, pending relocation (M9)
-        "quiz.json.bak",
     }
 )
 
