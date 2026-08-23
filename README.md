@@ -25,7 +25,7 @@ Sources (21 RSS, 8 party sites, 10 polling institutes, YouTube)
       scripts/collect_*.py  (Foca, ~10 min)
                 |
                 v
-       raw articles + editor feedback sync
+        raw articles + editor feedback sync/prune
                 |
                 v
    scripts/summarize.py + analyze_sentiment.py
@@ -42,7 +42,8 @@ Sources (21 RSS, 8 party sites, 10 polling institutes, YouTube)
  curated articles / irrelevant purge
                 |
                 v
- data/*.json  -> schema validation -> git commit
+ site/public/data/*.json + state/  -> git commit
+        (published)      (internal, never served)
                 |
                 v
  React + Vite + vite-plugin-ssg (site/)
@@ -109,8 +110,8 @@ Pop-Location
 
 The ingestion pipeline now supports an editorial feedback file: `state/editor_feedback.json` (committed for auditability, not served on the site).
 
-- Mark an article as irrelevant by setting `"status": "irrelevant"` in `data/articles.json`.
-- On each collect run, `scripts/sync_editor_feedback.py` stores those article IDs in `editor_feedback.json`.
+- Mark an article as irrelevant by setting `"status": "irrelevant"` in `site/public/data/articles.json`.
+- On each collect run, `scripts/sync_editor_feedback.py` stores those article IDs in `editor_feedback.json`, and `scripts/editor_feedback.py --execute` prunes IDs idle for more than 90 days (each ID carries a last-confirmed timestamp; rule lists are never pruned).
 - `scripts/collect_rss.py` skips URLs/IDs/sources/title patterns present in that file.
 - `scripts/build_data.py` publishes only non-irrelevant articles and keeps the feedback list updated.
 
@@ -124,13 +125,13 @@ This mechanism is part of the project's transparency model: irrelevant content i
 
 ## Article Archiving
 
-`data/articles.json` uses a tiered retention strategy to keep the file manageable as articles accumulate:
+`site/public/data/articles.json` uses a tiered retention strategy to keep the file manageable as articles accumulate:
 
 | Tier | Default Age | Behavior |
 |------|-------------|----------|
 | **Hot** | 0–7 days | Full article retained (all fields including `content`) |
 | **Warm** | 7–30 days | `content` field stripped, metadata + summaries preserved |
-| **Cold** | 30+ days | Moved to `data/archives/YYYY-MM.json`, removed from main file |
+| **Cold** | 30+ days | Moved to `site/public/data/archives/YYYY-MM.json`, removed from main file |
 
 Curated articles (`status: "curated"`) get an extra 7 days of hot retention (14 total) since they have been manually reviewed.
 
@@ -145,7 +146,7 @@ python scripts/archive_articles.py --execute
 python scripts/archive_articles.py --execute --hot-days 14 --warm-days 60
 ```
 
-Archive files in `data/archives/` follow the same schema as `articles.json` and are committed alongside the main data files. The archiving step runs automatically in the `collect.yml` workflow after `build_data.py`.
+Archive files in `site/public/data/archives/` follow the same schema as `articles.json` and are committed alongside the main data files. The archiving step runs automatically in the `collect.yml` workflow after `build_data.py`.
 
 ## Required GitHub Secrets
 
