@@ -73,7 +73,7 @@ For local browser tests, install the Python Playwright browser explicitly with `
 - Newsroom-style pipeline with three automated roles: `Foca` (collection), `Editor` (validation/summarization), and `Editor-chefe` (curation/prominence).
 - AI fallback chain (all tasks): Poolside (Laguna S 2.1, reasoning enabled) -> Ollama Cloud (MiniMax M3) -> NVIDIA NIM (MiniMax M3) -> OpenRouter/free.
 - Circuit breaker and per-run AI call limits keep the pipeline running when providers degrade instead of failing closed.
-- Editorial feedback is self-healing: blocked keywords, URLs, sources, and `irrelevant` article IDs are accumulated in `data/editor_feedback.json`.
+- Editorial feedback is self-healing: blocked keywords, URLs, sources, and `irrelevant` article IDs are accumulated in `state/editor_feedback.json`.
 - The public quiz only reveals sources in the result view, never during the questions.
 - Public topic IDs use `politica_externa` for foreign policy. `eleicoes` remains an article-level relevance tag, not a candidate-position or quiz topic.
 
@@ -107,7 +107,7 @@ Pop-Location
 
 ## Editorial feedback loop (self-healing)
 
-The ingestion pipeline now supports an editorial feedback file: `data/editor_feedback.json`.
+The ingestion pipeline now supports an editorial feedback file: `state/editor_feedback.json` (committed for auditability, not served on the site).
 
 - Mark an article as irrelevant by setting `"status": "irrelevant"` in `data/articles.json`.
 - On each collect run, `scripts/sync_editor_feedback.py` stores those article IDs in `editor_feedback.json`.

@@ -34,12 +34,12 @@ except ImportError:  # pragma: no cover - direct script execution path
 logger = logging.getLogger(__name__)
 
 try:
-    from scripts.store import PUB_DATA_DIR as DATA_DIR
+    from scripts.store import PUB_DATA_DIR as DATA_DIR, STATE_DIR
 except ImportError:  # pragma: no cover - direct script execution path
-    from store import PUB_DATA_DIR as DATA_DIR
+    from store import PUB_DATA_DIR as DATA_DIR, STATE_DIR
 SOURCES_FILE = DATA_DIR / "sources.json"
 ARTICLES_FILE = DATA_DIR / "articles.json"
-EDITOR_FEEDBACK_FILE = DATA_DIR / "editor_feedback.json"
+EDITOR_FEEDBACK_FILE = STATE_DIR / "editor_feedback.json"
 
 REQUEST_TIMEOUT_SECONDS = 15
 BRIGHTDATA_ZONE = os.environ.get("BRIGHTDATA_ZONE", "web_unlocker1")
