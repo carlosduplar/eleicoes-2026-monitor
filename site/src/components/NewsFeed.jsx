@@ -96,6 +96,7 @@ function toPublishedLabel(value, language) {
     month: 'short',
     hour: '2-digit',
     minute: '2-digit',
+    timeZone: 'UTC',
   }).format(parsedDate);
 }
 
@@ -152,7 +153,11 @@ function NewsFeed({ selectedCategory }) {
   const lastUpdatedAt = Array.isArray(data)
     ? visibleArticles[0]?.collected_at
     : data?.last_updated || visibleArticles[0]?.collected_at;
-  const updatedMinutes = toMinutesAgo(lastUpdatedAt);
+  const [updatedMinutes, setUpdatedMinutes] = useState(null);
+
+  useEffect(() => {
+    setUpdatedMinutes(toMinutesAgo(lastUpdatedAt));
+  }, [lastUpdatedAt]);
 
   useEffect(() => {
     const debounceId = setTimeout(() => {
@@ -189,7 +194,9 @@ function NewsFeed({ selectedCategory }) {
     <section className="feed-stack">
       <div className="feed-heading">
         <h1>{t('home.feed_title')}</h1>
-        <span>{t('feed.updated_ago', { minutes: updatedMinutes })}</span>
+        {updatedMinutes !== null && (
+          <span>{t('feed.updated_ago', { minutes: updatedMinutes })}</span>
+        )}
       </div>
       <div className="feed-search">
         <input

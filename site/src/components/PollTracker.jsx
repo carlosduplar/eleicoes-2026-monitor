@@ -1,4 +1,4 @@
-import { useMemo, useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import {
   CartesianGrid,
@@ -174,6 +174,10 @@ function PollTracker() {
   const { t, i18n } = useTranslation('common');
   const { data, loading, error } = useData('polls');
   const [selectedInstitute, setSelectedInstitute] = useState(ALL_INSTITUTES);
+  const [chartMounted, setChartMounted] = useState(false);
+  useEffect(() => {
+    setChartMounted(true);
+  }, []);
   const locale = i18n.language === 'en-US' ? 'en-US' : 'pt-BR';
   const polls = useMemo(() => normalizePollPayload(data), [data]);
   const instituteOptions = useMemo(() => getInstituteOptions(polls), [polls]);
@@ -230,38 +234,42 @@ function PollTracker() {
             </select>
           </label>
         </div>
-        <div style={{ width: '100%', height: 400 }}>
-          <ResponsiveContainer width="100%" height="100%">
-            <LineChart data={chartRows} margin={{ top: 12, right: 20, bottom: 12, left: 0 }}>
-              <CartesianGrid strokeDasharray="3 3" />
-              <XAxis dataKey="dateLabel" />
-              <YAxis
-                domain={[0, 100]}
-                label={{ value: t('polls.percentage_label'), angle: -90, position: 'insideLeft' }}
-              />
-              <Tooltip
-                formatter={(value, name) => [`${value}%`, name]}
-                labelFormatter={(value, rows) => {
-                  const entry = rows?.[0]?.payload;
-                  return entry?.dateIso || value;
-                }}
-              />
-              <Legend verticalAlign="bottom" />
-              {candidateSeries.map((candidate) => (
-                <Line
-                  key={candidate.slug}
-                  type="monotone"
-                  dataKey={candidate.slug}
-                  name={candidate.label}
-                  stroke={candidate.color}
-                  strokeWidth={2}
-                  dot={dotVisible}
-                  connectNulls
+        {chartMounted ? (
+          <div style={{ width: '100%', height: 400 }}>
+            <ResponsiveContainer width="100%" height="100%">
+              <LineChart data={chartRows} margin={{ top: 12, right: 20, bottom: 12, left: 0 }}>
+                <CartesianGrid strokeDasharray="3 3" />
+                <XAxis dataKey="dateLabel" />
+                <YAxis
+                  domain={[0, 100]}
+                  label={{ value: t('polls.percentage_label'), angle: -90, position: 'insideLeft' }}
                 />
-              ))}
-            </LineChart>
-          </ResponsiveContainer>
-        </div>
+                <Tooltip
+                  formatter={(value, name) => [`${value}%`, name]}
+                  labelFormatter={(value, rows) => {
+                    const entry = rows?.[0]?.payload;
+                    return entry?.dateIso || value;
+                  }}
+                />
+                <Legend verticalAlign="bottom" />
+                {candidateSeries.map((candidate) => (
+                  <Line
+                    key={candidate.slug}
+                    type="monotone"
+                    dataKey={candidate.slug}
+                    name={candidate.label}
+                    stroke={candidate.color}
+                    strokeWidth={2}
+                    dot={dotVisible}
+                    connectNulls
+                  />
+                ))}
+              </LineChart>
+            </ResponsiveContainer>
+          </div>
+        ) : (
+          <div className="chart-boot-placeholder" style={{ width: '100%', height: 400 }} aria-hidden="true" />
+        )}
         <p className="sentiment-disclaimer">
           <strong>{t('polls.institute_label')}:</strong>{' '}
           {selectedInstitute === ALL_INSTITUTES ? t('polls.filter_all') : selectedInstitute}

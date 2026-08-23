@@ -1,4 +1,4 @@
-import { useMemo } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import {
   BarChart,
@@ -107,6 +107,10 @@ function formatLastUpdated(isoString) {
 function MarketOdds() {
   const { t, i18n } = useTranslation ? useTranslation('common') : { t: (k) => k, i18n: { language: 'pt-BR' } };
   const { data, loading, error } = useData('markets');
+  const [chartMounted, setChartMounted] = useState(false);
+  useEffect(() => {
+    setChartMounted(true);
+  }, []);
   const markets = useMemo(() => normalizeMarketPayload(data), [data]);
   const chartRows = useMemo(() => buildChartRows(markets), [markets]);
   const lastUpdated = useMemo(
@@ -152,27 +156,31 @@ function MarketOdds() {
             </span>
           )}
         </div>
-        <div style={{ width: '100%', height: 400 }}>
-          <ResponsiveContainer width="100%" height="100%">
-            <BarChart data={chartRows} margin={{ top: 12, right: 20, bottom: 12, left: 0 }}>
-              <CartesianGrid strokeDasharray="3 3" />
-              <XAxis dataKey="label" />
-              <YAxis
-                domain={[0, 100]}
-                label={{ value: t?.('markets.probability_label') ?? 'Probabilidade (%)', angle: -90, position: 'insideLeft' }}
-                tickFormatter={(v) => `${v}%`}
-              />
-              <Tooltip
-                formatter={(value) => [`${value}%`, t?.('markets.probability') ?? 'Probabilidade']}
-              />
-              <Bar dataKey="probability" radius={[4, 4, 0, 0]}>
-                {chartRows.map((row) => (
-                  <Cell key={row.slug} fill={row.color} />
-                ))}
-              </Bar>
-            </BarChart>
-          </ResponsiveContainer>
-        </div>
+        {chartMounted ? (
+          <div style={{ width: '100%', height: 400 }}>
+            <ResponsiveContainer width="100%" height="100%">
+              <BarChart data={chartRows} margin={{ top: 12, right: 20, bottom: 12, left: 0 }}>
+                <CartesianGrid strokeDasharray="3 3" />
+                <XAxis dataKey="label" />
+                <YAxis
+                  domain={[0, 100]}
+                  label={{ value: t?.('markets.probability_label') ?? 'Probabilidade (%)', angle: -90, position: 'insideLeft' }}
+                  tickFormatter={(v) => `${v}%`}
+                />
+                <Tooltip
+                  formatter={(value) => [`${value}%`, t?.('markets.probability') ?? 'Probabilidade']}
+                />
+                <Bar dataKey="probability" radius={[4, 4, 0, 0]}>
+                  {chartRows.map((row) => (
+                    <Cell key={row.slug} fill={row.color} />
+                  ))}
+                </Bar>
+              </BarChart>
+            </ResponsiveContainer>
+          </div>
+        ) : (
+          <div className="chart-boot-placeholder" style={{ width: '100%', height: 400 }} aria-hidden="true" />
+        )}
         <p className="sentiment-disclaimer">
           {t?.('markets.source') ?? 'Fonte'} <a href="https://polymarket.com" target="_blank" rel="noopener noreferrer">Polymarket</a>
           {' | '}

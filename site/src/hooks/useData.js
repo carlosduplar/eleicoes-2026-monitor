@@ -1,5 +1,7 @@
 import { useEffect, useState } from 'react';
 
+import { getInitialData } from '@/utils/bootData';
+
 const memoryCache = new Map();
 const buildDataUrl = (filename) => {
   const encodedFilename = encodeURIComponent(filename);
@@ -10,8 +12,9 @@ const buildDataUrl = (filename) => {
 };
 
 export function useData(filename) {
-  const [data, setData] = useState(() => memoryCache.get(filename) ?? null);
-  const [loading, setLoading] = useState(!memoryCache.has(filename));
+  const initialData = getInitialData(filename);
+  const [data, setData] = useState(() => memoryCache.get(filename) ?? initialData ?? null);
+  const [loading, setLoading] = useState(() => !memoryCache.has(filename) && initialData === undefined);
   const [error, setError] = useState(null);
 
   useEffect(() => {
@@ -19,6 +22,35 @@ export function useData(filename) {
       setData(memoryCache.get(filename));
       setLoading(false);
       return undefined;
+    }
+
+    // Boot data is already rendered server-side. Other datasets are final;
+    // articles only get a silent background refresh for the full corpus.
+    if (initialData !== undefined) {
+      if (filename !== 'articles') {
+        setLoading(false);
+        return undefined;
+      }
+      let refreshing = false;
+      const load = async () => {
+        try {
+          const response = await fetch(buildDataUrl(filename));
+          if (!response.ok || refreshing) {
+            return;
+          }
+          const payload = await response.json();
+          memoryCache.set(filename, payload);
+          if (!refreshing) {
+            setData(payload);
+          }
+        } catch {
+          // Keep boot data on refresh failure.
+        }
+      };
+      void load();
+      return () => {
+        refreshing = true;
+      };
     }
 
     let disposed = false;
