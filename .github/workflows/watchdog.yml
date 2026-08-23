@@ -43,28 +43,12 @@ jobs:
         run: python scripts/watchdog.py
 
       - name: Commit watchdog output
-        run: |
-          git config user.name "github-actions[bot]"
-          git config user.email "action@github.com"
-          git add -f site/public/data/pipeline_health.json
-          if git diff --staged --quiet; then
-            echo "No changes to commit."
-            exit 0
-          fi
-          git commit -m "chore(ci): watchdog pipeline health update"
-          for attempt in 1 2 3; do
-            git fetch origin master
-            if ! git pull --rebase --autostash origin master; then
-              git rebase --abort || true
-              echo "Rebase failed while syncing with origin/master."
-              exit 1
-            fi
-            if git push origin HEAD:master; then
-              echo "Push succeeded on attempt ${attempt}."
-              exit 0
-            fi
-            echo "Push failed on attempt ${attempt}; retrying..."
-            sleep 5
-          done
-          echo "Push failed after 3 attempts."
-          exit 1
+        uses: ./.github/actions/bot-data-sync
+        with:
+          workflow_name: watchdog
+          strategy: rebase
+          on_rebase_conflict: abort
+          add_paths: |
+            site/public/data/pipeline_health.json
+            state/sync_log.jsonl
+          commit_message: "chore(ci): watchdog pipeline health update"
