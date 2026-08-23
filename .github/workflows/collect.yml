@@ -135,6 +135,7 @@ jobs:
           git config user.name "github-actions[bot]"
           git config user.email "action@github.com"
           git add -f site/public/data/
+          git add -f state/ 2>/dev/null || true
           git add site/public/feed*.xml 2>/dev/null || true
           if git diff --staged --quiet; then
             echo "No changes to commit."

@@ -42,6 +42,7 @@ def isolated_workspace(tmp_path: Path, monkeypatch: pytest.MonkeyPatch) -> dict[
 
     monkeypatch.setattr(collect_polls, "ROOT_DIR", tmp_path)
     monkeypatch.setattr(collect_polls, "DATA_DIR", data_dir)
+    monkeypatch.setattr(collect_polls, "STATE_DIR", tmp_path / "state")
     monkeypatch.setattr(collect_polls, "SOURCES_FILE", sources_file)
     monkeypatch.setattr(collect_polls, "POLLS_FILE", polls_file)
     monkeypatch.setattr(collect_polls, "PIPELINE_ERRORS_FILE", pipeline_errors_file)
@@ -49,6 +50,7 @@ def isolated_workspace(tmp_path: Path, monkeypatch: pytest.MonkeyPatch) -> dict[
     return {
         "root": tmp_path,
         "data": data_dir,
+        "state": tmp_path / "state",
         "sources": sources_file,
         "polls": polls_file,
         "pipeline_errors": pipeline_errors_file,
@@ -227,7 +229,7 @@ def test_polls_throttled_when_recently_fetched(
         [{"name": "Datafolha", "url": source_url, "active": True}],
     )
     _write_json(
-        isolated_workspace["data"] / "fetch_state.json",
+        isolated_workspace["state"] / "fetch_state.json",
         {source_url: collect_polls.utc_now_iso()},
     )
     monkeypatch.setattr(collect_polls, "_is_weekend", lambda: False)
@@ -317,7 +319,7 @@ def test_polls_record_fetch_state_on_success(
 
     new_count, _, _ = collect_polls.collect_polls()
 
-    state = json.loads((isolated_workspace["data"] / "fetch_state.json").read_text(encoding="utf-8"))
+    state = json.loads((isolated_workspace["state"] / "fetch_state.json").read_text(encoding="utf-8"))
     assert new_count == 1
     assert source_url in state
 

@@ -20,9 +20,9 @@ from bs4 import BeautifulSoup
 logger = logging.getLogger(__name__)
 
 try:
-    from scripts.store import PUB_DATA_DIR as DATA_DIR, ROOT_DIR
+    from scripts.store import PUB_DATA_DIR as DATA_DIR, ROOT_DIR, STATE_DIR
 except ImportError:  # pragma: no cover - direct script execution path
-    from store import PUB_DATA_DIR as DATA_DIR, ROOT_DIR
+    from store import PUB_DATA_DIR as DATA_DIR, ROOT_DIR, STATE_DIR
 SOURCES_FILE = DATA_DIR / "sources.json"
 ARTICLES_FILE = DATA_DIR / "articles.json"
 PIPELINE_ERRORS_FILE = DATA_DIR / "pipeline_errors.json"
@@ -150,7 +150,7 @@ def _append_pipeline_error(*, party_name: str, party_url: str, message: str) -> 
 
 
 def _fetch_state_path() -> Path:
-    return DATA_DIR / "fetch_state.json"
+    return STATE_DIR / "fetch_state.json"
 
 
 def _load_fetch_state() -> dict[str, str]:

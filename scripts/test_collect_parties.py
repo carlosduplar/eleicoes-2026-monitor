@@ -75,12 +75,14 @@ def isolated_workspace(tmp_path: Path, monkeypatch: pytest.MonkeyPatch) -> dict[
 
     monkeypatch.setattr(collect_parties, "ROOT_DIR", tmp_path)
     monkeypatch.setattr(collect_parties, "DATA_DIR", data_dir)
+    monkeypatch.setattr(collect_parties, "STATE_DIR", tmp_path / "state")
     monkeypatch.setattr(collect_parties, "SOURCES_FILE", sources_file)
     monkeypatch.setattr(collect_parties, "ARTICLES_FILE", articles_file)
     monkeypatch.setattr(collect_parties, "PIPELINE_ERRORS_FILE", pipeline_errors_file)
 
     return {
         "data_dir": data_dir,
+        "state_dir": tmp_path / "state",
         "sources": sources_file,
         "articles": articles_file,
         "pipeline_errors": pipeline_errors_file,
@@ -259,7 +261,7 @@ def test_unlocker_source_throttled_when_recently_fetched(
     """A source fetched via Bright Data within the interval is skipped."""
     _seed_unlocker_source(isolated_workspace["sources"])
     _write_json(
-        isolated_workspace["data_dir"] / "fetch_state.json",
+        isolated_workspace["state_dir"] / "fetch_state.json",
         {"https://pt.org.br/noticias/": collect_parties.utc_now_iso()},
     )
     monkeypatch.setenv("BRIGHTDATA_API_KEY", "test-key")
@@ -301,7 +303,7 @@ def test_unlocker_source_fetches_via_brightdata_when_due(
 
     articles = _read_articles(isolated_workspace["articles"])
     state = json.loads(
-        (isolated_workspace["data_dir"] / "fetch_state.json").read_text(encoding="utf-8")
+        (isolated_workspace["state_dir"] / "fetch_state.json").read_text(encoding="utf-8")
     )
     assert new_count == 1
     assert error_count == 0
