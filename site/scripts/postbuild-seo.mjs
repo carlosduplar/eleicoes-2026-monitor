@@ -2,8 +2,8 @@ import fs from 'node:fs';
 import path from 'node:path';
 
 const DIST_DIR = path.resolve(process.cwd(), 'dist');
-const BRAND = 'Portal Eleicoes BR 2026';
-const BASE_DESCRIPTION = 'Portal bilingue para monitoramento de noticias, sentimento e pesquisas das eleicoes BR 2026.';
+const BRAND = 'Portal Eleições BR 2026';
+const BASE_DESCRIPTION = 'Portal bilíngue para monitoramento de notícias, sentimento e pesquisas das eleições BR 2026.';
 const CANONICAL_BASE = 'https://eleicoes2026.com.br';
 
 function collectHtmlFiles(dirPath) {
@@ -64,15 +64,15 @@ function getSeoMeta(routePath) {
 
   if (routePath === '/quiz') {
     return {
-      title: `Quiz de Afinidade Politica | ${BRAND}`,
-      description: `Quiz de Afinidade Politica - ${BASE_DESCRIPTION}`,
+      title: `Quiz de Afinidade Política | ${BRAND}`,
+      description: `Quiz de Afinidade Política - ${BASE_DESCRIPTION}`,
     };
   }
 
   if (routePath === '/quiz/resultado') {
     return {
-      title: `Seu perfil politico | ${BRAND}`,
-      description: `Seu perfil politico - ${BASE_DESCRIPTION}`,
+      title: `Seu perfil político | ${BRAND}`,
+      description: `Seu perfil político - ${BASE_DESCRIPTION}`,
     };
   }
 
@@ -113,7 +113,7 @@ function getSeoMeta(routePath) {
     const rightName = toNameFromSlug(right || '');
     const label = leftName && rightName ? `${leftName} vs ${rightName}` : toNameFromSlug(pair);
     return {
-      title: `${label} | Comparacao | ${BRAND}`,
+      title: `${label} | Comparação | ${BRAND}`,
       description: `${label} - ${BASE_DESCRIPTION}`,
     };
   }

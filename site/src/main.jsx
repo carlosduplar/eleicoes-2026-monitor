@@ -19,23 +19,6 @@ const HelmetProvider = ReactHelmetAsync.HelmetProvider || ReactHelmetAsync.defau
 const DEFAULT_LANGUAGE = 'pt-BR';
 const SUPPORTED_LANGUAGES = ['pt-BR', 'en-US'];
 
-const normalizeLanguage = (language) => (SUPPORTED_LANGUAGES.includes(language) ? language : DEFAULT_LANGUAGE);
-
-const applyDocumentLanguage = (language) => {
-  if (typeof document === 'undefined') {
-    return;
-  }
-  document.documentElement.lang = normalizeLanguage(language);
-};
-
-const getSavedLanguage = () => {
-  if (typeof window === 'undefined') {
-    return DEFAULT_LANGUAGE;
-  }
-  const value = window.localStorage.getItem('lang');
-  return normalizeLanguage(value);
-};
-
 if (!i18n.isInitialized) {
   i18n.use(initReactI18next).init({
     resources: {
@@ -78,17 +61,5 @@ export const createRoot = ViteReactSSG(
   {
     routes: routesWithProviders,
     basename: import.meta.env.BASE_URL.replace(/\/+$/, '') || '/',
-  },
-  ({ isClient }) => {
-    if (!isClient) {
-      return;
-    }
-    applyDocumentLanguage(i18n.language);
-    const savedLanguage = getSavedLanguage();
-    if (savedLanguage !== i18n.language) {
-      void i18n.changeLanguage(savedLanguage);
-    }
-    i18n.off('languageChanged', applyDocumentLanguage);
-    i18n.on('languageChanged', applyDocumentLanguage);
   },
 );
