@@ -19,12 +19,12 @@ except ImportError:  # pragma: no cover - direct script execution path
 logger = logging.getLogger(__name__)
 
 try:
-    from scripts.store import PUB_DATA_DIR as DATA_DIR, SCHEMAS_DIR
+    from scripts.store import PUB_DATA_DIR as DATA_DIR, SCHEMAS_DIR, STATE_DIR
 except ImportError:  # pragma: no cover - direct script execution path
-    from store import PUB_DATA_DIR as DATA_DIR, SCHEMAS_DIR
+    from store import PUB_DATA_DIR as DATA_DIR, SCHEMAS_DIR, STATE_DIR
 SCHEMA_FILE = SCHEMAS_DIR / "articles.schema.json"
 ARTICLES_FILE = DATA_DIR / "articles.json"
-EDITOR_FEEDBACK_FILE = DATA_DIR / "editor_feedback.json"
+EDITOR_FEEDBACK_FILE = STATE_DIR / "editor_feedback.json"
 
 ARTICLE_LIMIT = 500
 DEFAULT_SCHEMA_PATH = "../docs/schemas/articles.schema.json"

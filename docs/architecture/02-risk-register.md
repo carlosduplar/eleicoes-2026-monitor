@@ -17,7 +17,7 @@ Each risk lists: trigger, blast radius, detection method, rollback method, test 
 
 ## R2 - Operational state published to public web root (F2, High, OBSERVED)
 
-- **STATUS 2026-08-23**: M3 landed - ai_usage/fetch_state/youtube_state/.curate_last_run moved to committed `state/` (no longer deployed); remaining: editor_feedback.json (M4), pipeline_errors.json (M5), quiz.json.bak (M9).
+- **STATUS 2026-08-23**: M3+M4 landed - ai_usage/fetch_state/youtube_state/.curate_last_run/editor_feedback.json moved to committed `state/` (no longer deployed); remaining: pipeline_errors.json (M5), quiz.json.bak (M9).
 - **Trigger**: every deploy (unconditional: `public/**` → `dist/**` → Pages artifact).
 - **Blast radius**: public exposure of internal error logs (`pipeline_errors.json`: URLs, content snippets, provider errors), editorial blocklists (`editor_feedback.json` 4.3MB), AI usage counters, fetch state. Repo bloat: multi-MB JSON diffs on most bot commits; slow clones over time. UNKNOWN whether any external consumer depends on these URLs (treat as "assume none" only after checking access logs - not available here).
 - **Detection**: `ls site/dist/data`; repo size trend; any third-party reference scan (UNKNOWN).

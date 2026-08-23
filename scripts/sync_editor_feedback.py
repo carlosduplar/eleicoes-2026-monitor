@@ -12,11 +12,11 @@ except ImportError:  # pragma: no cover - direct script execution path
     import editor_feedback  # type: ignore[no-redef]
 
 try:
-    from scripts.store import PUB_DATA_DIR as DATA_DIR
+    from scripts.store import PUB_DATA_DIR as DATA_DIR, STATE_DIR
 except ImportError:  # pragma: no cover - direct script execution path
-    from store import PUB_DATA_DIR as DATA_DIR
+    from store import PUB_DATA_DIR as DATA_DIR, STATE_DIR
 ARTICLES_FILE = DATA_DIR / "articles.json"
-EDITOR_FEEDBACK_FILE = DATA_DIR / "editor_feedback.json"
+EDITOR_FEEDBACK_FILE = STATE_DIR / "editor_feedback.json"
 
 
 def _load_json(path: Path) -> Any:

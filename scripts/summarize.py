@@ -57,12 +57,12 @@ API_KEY_PATTERN = re.compile(
 )
 
 try:
-    from scripts.store import PUB_DATA_DIR as DATA_DIR
+    from scripts.store import PUB_DATA_DIR as DATA_DIR, STATE_DIR
 except ImportError:  # pragma: no cover - direct script execution path
-    from store import PUB_DATA_DIR as DATA_DIR
+    from store import PUB_DATA_DIR as DATA_DIR, STATE_DIR
 ARTICLES_FILE = DATA_DIR / "articles.json"
 PIPELINE_ERRORS_FILE = DATA_DIR / "pipeline_errors.json"
-EDITOR_FEEDBACK_FILE = DATA_DIR / "editor_feedback.json"
+EDITOR_FEEDBACK_FILE = STATE_DIR / "editor_feedback.json"
 
 DISCLAIMER_PT = "Análise algorítmica. Não representa pesquisa de opinião."
 DISCLAIMER_EN = "Algorithmic analysis. Does not represent polling data."

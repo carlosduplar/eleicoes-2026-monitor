@@ -10,10 +10,10 @@ from pathlib import Path
 from typing import Any
 
 try:
-    from scripts.store import PUB_DATA_DIR as DATA_DIR
+    from scripts.store import PUB_DATA_DIR as DATA_DIR, STATE_DIR
 except ImportError:  # pragma: no cover - direct script execution path
-    from store import PUB_DATA_DIR as DATA_DIR
-EDITOR_FEEDBACK_FILE = DATA_DIR / "editor_feedback.json"
+    from store import PUB_DATA_DIR as DATA_DIR, STATE_DIR
+EDITOR_FEEDBACK_FILE = STATE_DIR / "editor_feedback.json"
 DEFAULT_SCHEMA_PATH = "../docs/schemas/editor_feedback.schema.json"
 
 
