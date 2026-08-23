@@ -41,11 +41,12 @@ Each risk lists: trigger, blast radius, detection method, rollback method, test 
 
 ## R5 - Store path duplicated in 13 modules (+1 cwd-relative outlier) (F5, Medium)
 
+- **STATUS 2026-08-23**: remediated by M1 - `scripts/store.py` is the single definition; 24 modules re-export via `PUB_DATA_DIR` (module attribute names preserved for monkeypatch compat); `generate_rss_feed.py` paths now absolute (cwd-independent). Awaiting merge.
 - **Trigger**: moving/renaming store dir; running `generate_rss_feed.py` from non-root cwd (generate_rss_feed.py:15).
 - **Blast radius**: missed edit = silent write to wrong location or crash; cwd bug = feed generation writes nothing where deploy expects it.
-- **Detection**: grep `DATA_DIR` (68 hits today).
+- **Detection**: grep `DATA_DIR` (68 hits before M1; single definition in scripts/store.py after).
 - **Rollback**: revert constant extraction PR (pure mechanical change).
-- **Test strategy**: after extraction, full pytest suite must stay green unchanged (tests monkeypatch module attributes - extraction must preserve patchability, e.g., module-level indirection).
+- **Test strategy**: full pytest suite green with zero test-file modifications (contract held: 154 passed / 2 known env failures, identical to pre-M1 baseline).
 
 ## R6 - Unbounded growth of editor_feedback.json / pipeline_errors.json (F6, Medium)
 
