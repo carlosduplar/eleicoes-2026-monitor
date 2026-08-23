@@ -115,6 +115,14 @@ export const createRoot = ViteReactSSG(
   async ({ isClient }) => {
     if (isClient) {
       setBootData(window.__BOOT_DATA__ || null);
+      // Force a full client render instead of hydration: guarantees the
+      // prerendered tree is replaced, never duplicated, even when a stale
+      // cached HTML pairs with a fresh JS bundle (Firefox mobile repro).
+      const rootEl = document.getElementById('root');
+      if (rootEl) {
+        delete rootEl.dataset.serverRendered;
+      }
+      document.querySelectorAll(':scope > .app-shell').forEach((node) => node.remove());
       return;
     }
     setBootData(await loadServerBootData());
