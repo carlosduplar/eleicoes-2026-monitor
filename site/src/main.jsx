@@ -42,6 +42,16 @@ async function loadServerBootData() {
     boot[filename] = readJson(filename);
   }
 
+  const readCaseStudy = (language) => {
+    try {
+      return readFileSync(join(process.cwd(), 'public', 'case-study', `${language}.md`), 'utf8');
+    } catch {
+      return null;
+    }
+  };
+  boot.case_study_pt = readCaseStudy('pt-BR');
+  boot.case_study_en = readCaseStudy('en-US');
+
   const articles = readJson('articles');
   const articlesList = Array.isArray(articles)
     ? articles

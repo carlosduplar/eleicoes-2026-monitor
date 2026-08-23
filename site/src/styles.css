@@ -2088,14 +2088,10 @@ p {
   outline-offset: 2px;
 }
 
-/* Mobile slide-down nav drawer */
+/* Mobile slide-down nav drawer (inside sticky header, so it can never be
+   overlapped by the header bar regardless of the header's real height). */
 .nav-drawer {
   display: none;
-  position: fixed;
-  top: var(--nav-height);
-  left: 0;
-  right: 0;
-  z-index: 49;
   background: var(--brand-surface);
   border-bottom: 1px solid var(--border);
   box-shadow: 0 4px 12px rgb(0 0 0 / 0.08);
