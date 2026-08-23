@@ -1,4 +1,5 @@
 import * as ReactHelmetAsync from 'react-helmet-async';
+import { useEffect } from 'react';
 import { Link, Outlet, useLocation } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 
@@ -31,9 +32,33 @@ function toMetaLabelFromSlug(value) {
     .join(' ');
 }
 
+const SUPPORTED_LANGUAGES = ['pt-BR', 'en-US'];
+const DEFAULT_LANGUAGE = 'pt-BR';
+
 function AppShell() {
-  const { t } = useTranslation('common');
+  const { t, i18n } = useTranslation('common');
   const { pathname } = useLocation();
+
+  useEffect(() => {
+    let savedLanguage = null;
+    try {
+      savedLanguage = window.localStorage.getItem('lang');
+    } catch {
+      savedLanguage = null;
+    }
+    const normalized = SUPPORTED_LANGUAGES.includes(savedLanguage) ? savedLanguage : DEFAULT_LANGUAGE;
+    if (normalized !== i18n.language) {
+      void i18n.changeLanguage(normalized);
+    }
+    const applyDocumentLanguage = () => {
+      document.documentElement.lang = i18n.resolvedLanguage || i18n.language;
+    };
+    applyDocumentLanguage();
+    i18n.on('languageChanged', applyDocumentLanguage);
+    return () => {
+      i18n.off('languageChanged', applyDocumentLanguage);
+    };
+  }, [i18n]);
 
   // Strip basename if present in pathname (some environments/routers differ in this)
   const basename = import.meta.env.BASE_URL.replace(/\/+$/, '');
