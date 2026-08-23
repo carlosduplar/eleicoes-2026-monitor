@@ -3,11 +3,14 @@
 from __future__ import annotations
 
 import json
+import logging
 import unicodedata
-from datetime import datetime, timezone
+from datetime import datetime, timedelta, timezone
 from hashlib import sha256
 from pathlib import Path
 from typing import Any
+
+logger = logging.getLogger(__name__)
 
 try:
     from scripts.store import PUB_DATA_DIR as DATA_DIR, STATE_DIR
@@ -15,6 +18,7 @@ except ImportError:  # pragma: no cover - direct script execution path
     from store import PUB_DATA_DIR as DATA_DIR, STATE_DIR
 EDITOR_FEEDBACK_FILE = STATE_DIR / "editor_feedback.json"
 DEFAULT_SCHEMA_PATH = "../docs/schemas/editor_feedback.schema.json"
+DEFAULT_PRUNE_MAX_AGE_DAYS = 90
 
 
 def utc_now_iso() -> str:
@@ -24,6 +28,19 @@ def utc_now_iso() -> str:
         .isoformat()
         .replace("+00:00", "Z")
     )
+
+
+def _parse_timestamp(value: object) -> datetime | None:
+    if not isinstance(value, str) or not value.strip():
+        return None
+    normalized = value.strip().replace("Z", "+00:00")
+    try:
+        parsed = datetime.fromisoformat(normalized)
+    except ValueError:
+        return None
+    if parsed.tzinfo is None:
+        parsed = parsed.replace(tzinfo=timezone.utc)
+    return parsed.astimezone(timezone.utc)
 
 
 def build_article_id(url: str) -> str:
@@ -69,6 +86,7 @@ def _empty_feedback_payload() -> dict[str, Any]:
         "$schema": DEFAULT_SCHEMA_PATH,
         "updated_at": None,
         "irrelevant_article_ids": [],
+        "irrelevant_article_ids_meta": {},
         "blocked_title_keywords": [],
         "blocked_url_substrings": [],
         "blocked_sources": [],
@@ -92,6 +110,21 @@ def normalize_feedback(payload: object) -> dict[str, Any]:
             source.get("irrelevant_article_ids"), lowercase_values=True
         )
     )
+
+    kept_ids = set(normalized["irrelevant_article_ids"])
+    meta_source = source.get("irrelevant_article_ids_meta")
+    meta: dict[str, str] = {}
+    if isinstance(meta_source, dict):
+        for key, value in meta_source.items():
+            if (
+                isinstance(key, str)
+                and key in kept_ids
+                and isinstance(value, str)
+                and _parse_timestamp(value) is not None
+            ):
+                meta[key] = value.strip()
+    normalized["irrelevant_article_ids_meta"] = meta
+
     normalized["blocked_title_keywords"] = sorted(
         _normalize_string_list(
             source.get("blocked_title_keywords"), normalize_text_values=True
@@ -158,6 +191,9 @@ def add_article_id_to_feedback(
 
     current_ids.add(article_id)
     feedback["irrelevant_article_ids"] = sorted(current_ids)
+    meta = feedback.setdefault("irrelevant_article_ids_meta", {})
+    if isinstance(meta, dict):
+        meta[article_id] = utc_now_iso()
     return True
 
 
@@ -212,3 +248,118 @@ def feedback_reason_for_article(
             return "blocked_title_keywords"
 
     return None
+
+
+def prune_editor_feedback(
+    feedback: dict[str, Any],
+    *,
+    max_age_days: int = DEFAULT_PRUNE_MAX_AGE_DAYS,
+    now: datetime | None = None,
+) -> tuple[dict[str, Any], int]:
+    """Drop article IDs whose last confirmation is older than max_age_days.
+
+    IDs without a meta timestamp (legacy entries) are stamped with `now` so
+    they age out gradually instead of disappearing in one shot. Rule lists
+    (keywords/url substrings/sources) are never touched.
+    """
+    reference = now or datetime.now(timezone.utc)
+    legacy_stamp = reference
+    cutoff = reference - timedelta(days=max_age_days)
+
+    ids = _normalize_string_list(
+        feedback.get("irrelevant_article_ids"), lowercase_values=True
+    )
+    meta_source = feedback.get("irrelevant_article_ids_meta")
+    meta: dict[str, str] = dict(meta_source) if isinstance(meta_source, dict) else {}
+
+    kept: list[str] = []
+    for article_id in ids:
+        stamped_at = _parse_timestamp(meta.get(article_id))
+        if stamped_at is None:
+            meta[article_id] = legacy_stamp.isoformat().replace("+00:00", "Z")
+            stamped_at = legacy_stamp
+        if stamped_at >= cutoff:
+            kept.append(article_id)
+        else:
+            meta.pop(article_id, None)
+
+    pruned = dict(feedback)
+    kept_set = set(kept)
+    pruned["irrelevant_article_ids"] = kept
+    pruned["irrelevant_article_ids_meta"] = {
+        key: value for key, value in meta.items() if key in kept_set
+    }
+    removed = len(ids) - len(kept)
+    if removed:
+        logger.info("Pruned %d stale irrelevant article IDs", removed)
+    return normalize_feedback(pruned), removed
+
+
+def main() -> None:
+    import argparse
+
+    parser = argparse.ArgumentParser(
+        description="Prune stale entries from editor_feedback.json"
+    )
+    parser.add_argument(
+        "--dry-run",
+        action="store_true",
+        default=True,
+        help="Preview changes without writing (default)",
+    )
+    parser.add_argument(
+        "--execute",
+        action="store_true",
+        help="Apply pruning to editor_feedback.json",
+    )
+    parser.add_argument(
+        "--max-age-days",
+        type=int,
+        default=DEFAULT_PRUNE_MAX_AGE_DAYS,
+        help=(
+            "Days an unused article ID survives after its last confirmation "
+            f"(default: {DEFAULT_PRUNE_MAX_AGE_DAYS})"
+        ),
+    )
+    args = parser.parse_args()
+
+    logging.basicConfig(level=logging.INFO, format="%(levelname)s: %(message)s")
+
+    if not EDITOR_FEEDBACK_FILE.exists():
+        print("No editor_feedback.json found; nothing to prune.")
+        return
+
+    dry_run = not args.execute
+    feedback = load_editor_feedback(EDITOR_FEEDBACK_FILE)
+    before = len(feedback.get("irrelevant_article_ids", []))
+    rules_before = {
+        key: len(feedback.get(key, []))
+        for key in (
+            "blocked_title_keywords",
+            "blocked_url_substrings",
+            "blocked_sources",
+        )
+    }
+
+    pruned, removed = prune_editor_feedback(
+        feedback, max_age_days=args.max_age_days
+    )
+
+    mode = "DRY RUN" if dry_run else "EXECUTED"
+    print(f"\nEditor feedback prune summary ({mode}):")
+    print(f"  Article IDs: {before} -> {before - removed} ({removed} pruned)")
+    print(f"  Rule lists untouched: {rules_before}")
+    if dry_run:
+        print("\nRe-run with --execute to apply changes.")
+        return
+
+    meta_before = feedback.get("irrelevant_article_ids_meta", {})
+    if removed == 0 and pruned["irrelevant_article_ids_meta"] == meta_before:
+        print("  No changes to write.")
+        return
+
+    save_editor_feedback(pruned, EDITOR_FEEDBACK_FILE)
+
+
+if __name__ == "__main__":
+    main()

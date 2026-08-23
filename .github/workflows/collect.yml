@@ -98,6 +98,9 @@ jobs:
       - name: Sync editorial feedback
         run: python scripts/sync_editor_feedback.py
 
+      - name: Prune stale editorial feedback IDs
+        run: python scripts/editor_feedback.py --execute
+
       - name: Collect sources
         run: |
           python scripts/collect_rss.py

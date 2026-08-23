@@ -28,6 +28,14 @@
         "pattern": "^[a-f0-9]{16}$"
       }
     },
+    "irrelevant_article_ids_meta": {
+      "type": "object",
+      "description": "Map de article_id -> timestamp ISO8601 da ultima confirmacao; usado pela poda de retencao.",
+      "additionalProperties": {
+        "type": "string",
+        "format": "date-time"
+      }
+    },
     "blocked_title_keywords": {
       "type": "array",
       "items": {
