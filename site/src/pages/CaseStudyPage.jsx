@@ -4,6 +4,8 @@ import { useTranslation } from 'react-i18next';
 import { Link } from 'react-router-dom';
 import { marked } from 'marked';
 
+import { getInitialData } from '../utils/bootData';
+
 const Helmet = ReactHelmetAsync.Helmet || ReactHelmetAsync.default?.Helmet;
 
 function slugify(text) {
@@ -115,11 +117,15 @@ function stripLeadingMarkdownH1(markdown) {
 }
 
 function useMarkdownContent(language) {
-  const [content, setContent] = useState(null);
-  const [loading, setLoading] = useState(true);
+  const booted = getInitialData(language === 'en-US' ? 'case_study_en' : 'case_study_pt');
+  const [content, setContent] = useState(() => (typeof booted === 'string' ? booted : null));
+  const [loading, setLoading] = useState(typeof booted !== 'string');
   const [error, setError] = useState(null);
 
   useEffect(() => {
+    if (typeof booted === 'string') {
+      return undefined;
+    }
     const controller = new AbortController();
 
     const load = async () => {

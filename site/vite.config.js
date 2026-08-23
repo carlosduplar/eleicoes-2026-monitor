@@ -8,7 +8,7 @@ const repoRoot = path.resolve(projectRoot, '..');
 const dataDirectory = path.resolve(repoRoot, 'data').replace(/\\/g, '/');
 const basePath = '/eleicoes-2026-monitor/';
 
-function buildBootData() {
+function buildBootData(routePath = '') {
   const dataDir = path.join(projectRoot, 'public', 'data');
   const readJson = (filename) => {
     try {
@@ -21,6 +21,18 @@ function buildBootData() {
   const boot = {};
   for (const filename of ['polls', 'candidates', 'sentiment', 'markets', 'quiz']) {
     boot[filename] = readJson(filename);
+  }
+  if (routePath.includes('caso-de-uso')) {
+    for (const [key, language] of [['case_study_pt', 'pt-BR'], ['case_study_en', 'en-US']]) {
+      try {
+        boot[key] = fs.readFileSync(
+          path.join(projectRoot, 'public', 'case-study', `${language}.md`),
+          'utf8',
+        );
+      } catch {
+        boot[key] = null;
+      }
+    }
   }
   const articles = readJson('articles');
   const articlesList = Array.isArray(articles)
@@ -68,8 +80,8 @@ export default defineConfig(({ command }) => {
       script: 'defer',
       dirStyle: 'nested',
       formatting: 'none',
-      onPageRendered: (_routePath, html) => {
-        const boot = buildBootData();
+      onPageRendered: (routePath, html) => {
+        const boot = buildBootData(routePath);
         if (!boot || Object.keys(boot).length === 0) {
           return html;
         }

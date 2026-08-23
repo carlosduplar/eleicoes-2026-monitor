@@ -76,22 +76,22 @@ function Nav() {
             <HamburgerIcon isOpen={isOpen} />
           </button>
         </div>
+        <div id="nav-drawer" className={`nav-drawer${isOpen ? ' is-open' : ''}`} aria-hidden={!isOpen}>
+          <nav className="container" aria-label={t('nav.aria_label')}>
+            {navItems.map((item) => (
+              <NavLink
+                key={item.to}
+                to={item.to}
+                end={item.end}
+                className={({ isActive }) => `nav-drawer-link${isActive ? ' active' : ''}`}
+                onClick={closeMenu}
+              >
+                {t(`nav.${item.key}`)}
+              </NavLink>
+            ))}
+          </nav>
+        </div>
       </header>
-      <div id="nav-drawer" className={`nav-drawer${isOpen ? ' is-open' : ''}`} aria-hidden={!isOpen}>
-        <nav className="container" aria-label={t('nav.aria_label')}>
-          {navItems.map((item) => (
-            <NavLink
-              key={item.to}
-              to={item.to}
-              end={item.end}
-              className={({ isActive }) => `nav-drawer-link${isActive ? ' active' : ''}`}
-              onClick={closeMenu}
-            >
-              {t(`nav.${item.key}`)}
-            </NavLink>
-          ))}
-        </nav>
-      </div>
       {isOpen && (
         <div
           className="nav-drawer-overlay"
