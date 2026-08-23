@@ -18,13 +18,17 @@ import tweepy
 logger = logging.getLogger(__name__)
 
 try:
+    from scripts import pipeline_errors
+except ImportError:  # pragma: no cover - direct script execution path
+    import pipeline_errors
+try:
     from scripts.store import PUB_DATA_DIR as DATA_DIR, STATE_DIR
 except ImportError:  # pragma: no cover - direct script execution path
     from store import PUB_DATA_DIR as DATA_DIR, STATE_DIR
 SOURCES_FILE = DATA_DIR / "sources.json"
 CANDIDATES_FILE = DATA_DIR / "candidates.json"
 ARTICLES_FILE = DATA_DIR / "articles.json"
-PIPELINE_ERRORS_FILE = DATA_DIR / "pipeline_errors.json"
+PIPELINE_ERRORS_FILE = STATE_DIR / "pipeline_errors.json"
 YOUTUBE_STATE_FILE = STATE_DIR / "youtube_state.json"
 DEFAULT_SCHEMA_PATH = "../docs/schemas/articles.schema.json"
 
@@ -135,6 +139,7 @@ def _append_pipeline_error(*, source: str, message: str) -> None:
         json.dumps(payload, indent=2, ensure_ascii=False) + "\n",
         encoding="utf-8",
     )
+    pipeline_errors.rotate(PIPELINE_ERRORS_FILE)
 
 
 def _normalize_text(value: str) -> str:

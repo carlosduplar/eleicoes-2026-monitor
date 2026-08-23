@@ -12,12 +12,16 @@ from pathlib import Path
 from typing import Any, NotRequired, TypedDict
 
 try:
-    from scripts.store import PUB_DATA_DIR as DATA_DIR, ROOT_DIR
+    from scripts import pipeline_errors
 except ImportError:  # pragma: no cover - direct script execution path
-    from store import PUB_DATA_DIR as DATA_DIR, ROOT_DIR
+    import pipeline_errors
+try:
+    from scripts.store import PUB_DATA_DIR as DATA_DIR, ROOT_DIR, STATE_DIR
+except ImportError:  # pragma: no cover - direct script execution path
+    from store import PUB_DATA_DIR as DATA_DIR, ROOT_DIR, STATE_DIR
 SOURCES_FILE = DATA_DIR / "sources.json"
 MARKETS_FILE = DATA_DIR / "markets.json"
-PIPELINE_ERRORS_FILE = DATA_DIR / "pipeline_errors.json"
+PIPELINE_ERRORS_FILE = STATE_DIR / "pipeline_errors.json"
 DEFAULT_SCHEMA_PATH = "../docs/schemas/markets.schema.json"
 
 CLOB_BASE = "https://clob.polymarket.com"
@@ -289,6 +293,7 @@ def append_pipeline_error(*, source_name: str, source_url: str, message: str) ->
     PIPELINE_ERRORS_FILE.write_text(
         json.dumps(payload, indent=2, ensure_ascii=False) + "\n", encoding="utf-8"
     )
+    pipeline_errors.rotate(PIPELINE_ERRORS_FILE)
 
 
 def collect_markets() -> tuple[int, int, int]:

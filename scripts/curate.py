@@ -24,13 +24,17 @@ except ImportError:  # pragma: no cover - direct script execution path
 logger = logging.getLogger(__name__)
 
 try:
+    from scripts import pipeline_errors
+except ImportError:  # pragma: no cover - direct script execution path
+    import pipeline_errors
+try:
     from scripts.store import PUB_DATA_DIR as DATA_DIR, STATE_DIR
 except ImportError:  # pragma: no cover - direct script execution path
     from store import PUB_DATA_DIR as DATA_DIR, STATE_DIR
 ARTICLES_FILE = DATA_DIR / "articles.json"
 CURATED_FEED_FILE = DATA_DIR / "curated_feed.json"
 WEEKLY_BRIEFING_FILE = DATA_DIR / "weekly_briefing.json"
-PIPELINE_ERRORS_FILE = DATA_DIR / "pipeline_errors.json"
+PIPELINE_ERRORS_FILE = STATE_DIR / "pipeline_errors.json"
 LAST_RUN_FILE = STATE_DIR / ".curate_last_run"
 
 API_KEY_PATTERN = re.compile(
@@ -157,6 +161,7 @@ def _append_pipeline_error(message: str) -> None:
     PIPELINE_ERRORS_FILE.write_text(
         json.dumps(payload, indent=2, ensure_ascii=False) + "\n", encoding="utf-8"
     )
+    pipeline_errors.rotate(PIPELINE_ERRORS_FILE)
 
 
 def _clamp01(value: float) -> float:
