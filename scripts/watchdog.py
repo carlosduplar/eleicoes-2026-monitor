@@ -9,12 +9,13 @@ from pathlib import Path
 from typing import Any
 
 try:
-    from scripts.store import PUB_DATA_DIR as DATA_DIR, ROOT_DIR
+    from scripts.store import PUB_DATA_DIR as DATA_DIR, ROOT_DIR, STATE_DIR
 except ImportError:  # pragma: no cover - direct script execution path
-    from store import PUB_DATA_DIR as DATA_DIR, ROOT_DIR
+    from store import PUB_DATA_DIR as DATA_DIR, ROOT_DIR, STATE_DIR
 
 PIPELINE_HEALTH_FILE = DATA_DIR / "pipeline_health.json"
-PIPELINE_ERRORS_FILE = DATA_DIR / "pipeline_errors.json"
+PIPELINE_ERRORS_FILE = STATE_DIR / "pipeline_errors.json"
+SYNC_LOG_FILE = STATE_DIR / "sync_log.jsonl"
 ARTICLES_FILE = DATA_DIR / "articles.json"
 SENTIMENT_FILE = DATA_DIR / "sentiment.json"
 CURATED_FEED_FILE = DATA_DIR / "curated_feed.json"
@@ -225,6 +226,54 @@ def _summarize_pipeline_errors(now: datetime) -> dict[str, Any]:
     }
 
 
+def _summarize_sync_log(now: datetime) -> dict[str, Any]:
+    """Aggregate bot-data-sync telemetry (JSONL) from the last 24h/7d."""
+    summary: dict[str, Any] = {
+        "exists": SYNC_LOG_FILE.exists(),
+        "pushes_24h": 0,
+        "failed_attempts_24h": 0,
+        "conflicts_resolved_7d": 0,
+        "discarded_theirs_7d": 0,
+        "discarded_events_7d": 0,
+    }
+    if not SYNC_LOG_FILE.exists():
+        return summary
+
+    day_ago = now - timedelta(hours=24)
+    week_ago = now - timedelta(days=7)
+    discarded_event_workflows: set[str] = set()
+
+    for line in SYNC_LOG_FILE.read_text(encoding="utf-8").splitlines():
+        try:
+            entry = json.loads(line)
+        except json.JSONDecodeError:
+            continue
+        if not isinstance(entry, dict):
+            continue
+        parsed = _parse_iso8601(entry.get("at"))
+        if parsed is None:
+            continue
+        outcome = entry.get("outcome")
+        conflicts = entry.get("conflicts_resolved")
+        discarded = entry.get("discarded_theirs")
+        if parsed >= day_ago:
+            if outcome == "pushed":
+                summary["pushes_24h"] = int(summary["pushes_24h"]) + 1
+            elif outcome == "failed":
+                summary["failed_attempts_24h"] = int(summary["failed_attempts_24h"]) + 1
+        if parsed >= week_ago:
+            if isinstance(conflicts, int):
+                summary["conflicts_resolved_7d"] = int(summary["conflicts_resolved_7d"]) + conflicts
+            if isinstance(discarded, int) and discarded > 0:
+                summary["discarded_theirs_7d"] = int(summary["discarded_theirs_7d"]) + discarded
+                workflow = entry.get("workflow")
+                if isinstance(workflow, str):
+                    discarded_event_workflows.add(workflow)
+
+    summary["discarded_events_7d"] = len(discarded_event_workflows)
+    return summary
+
+
 def _summarize_relevance_health() -> dict[str, Any]:
     payload = _load_json(ARTICLES_FILE)
     if isinstance(payload, dict):
@@ -288,6 +337,7 @@ def _status_note(
     workflows: dict[str, dict[str, Any]],
     error_summary: dict[str, Any],
     relevance_summary: dict[str, Any],
+    sync_summary: dict[str, Any] | None = None,
 ) -> str:
     stale_workflows = [
         name for name, details in workflows.items() if details.get("status") == "stale"
@@ -301,7 +351,13 @@ def _status_note(
     zero_relevance = int(relevance_summary.get("zero_relevance_count", 0))
 
     if overall_status == "ok":
-        return "Pipeline health is stable and all monitored outputs are fresh."
+        note = "Pipeline health is stable and all monitored outputs are fresh."
+        if sync_summary and int(sync_summary.get("discarded_theirs_7d", 0)) > 0:
+            note += (
+                f" Note: {sync_summary['discarded_theirs_7d']} generated output(s) were "
+                "replaced by remote versions during sync conflicts in the last 7d."
+            )
+        return note
     if overall_status == "warning":
         if zero_relevance > 0:
             return f"Found {zero_relevance} validated/curated articles with zero relevance_score."
@@ -327,6 +383,7 @@ def main() -> None:
     }
     error_summary = _summarize_pipeline_errors(now)
     relevance_summary = _summarize_relevance_health()
+    sync_summary = _summarize_sync_log(now)
     status = _overall_status(workflows, error_summary, relevance_summary)
 
     health = {
@@ -335,7 +392,8 @@ def main() -> None:
         "workflows": workflows,
         "error_summary": error_summary,
         "relevance_health": relevance_summary,
-        "notes": _status_note(status, workflows, error_summary, relevance_summary),
+        "sync_health": sync_summary,
+        "notes": _status_note(status, workflows, error_summary, relevance_summary, sync_summary),
     }
     PIPELINE_HEALTH_FILE.parent.mkdir(parents=True, exist_ok=True)
     PIPELINE_HEALTH_FILE.write_text(

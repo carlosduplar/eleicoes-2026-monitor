@@ -1,0 +1,168 @@
+name: 'Bot data commit & sync'
+description: >
+  Commit generated data files, synchronize with origin/master and push with retries,
+  preserving each workflow's historical conflict semantics (merge-json union vs rebase),
+  and append one JSONL telemetry line per push attempt to state/sync_log.jsonl.
+
+inputs:
+  workflow_name:
+    description: 'Short name written into sync telemetry.'
+    required: true
+  strategy:
+    description: "'merge' (fetch+merge with optional merge_json resolution) or 'rebase' (pull --rebase --autostash)."
+    required: false
+    default: 'rebase'
+  on_rebase_conflict:
+    description: "'abort' or 'theirs' (theirs keeps remote versions of discard_paths and continues the rebase)."
+    required: false
+    default: 'abort'
+  add_paths:
+    description: 'Newline-separated paths passed to git add -f (missing paths tolerated).'
+    required: true
+  commit_message:
+    description: 'Commit message used for the data refresh.'
+    required: true
+  discard_paths:
+    description: 'Newline-separated paths eligible for the checkout --theirs last-resort fallback.'
+    required: false
+    default: ''
+  merge_json_glob:
+    description: 'Glob whose conflicted matches are resolved by scripts/merge_json.py (collect-style only).'
+    required: false
+    default: ''
+
+outputs:
+  pushed:
+    description: 'true when a data commit reached origin/master.'
+    value: ${{ steps.sync.outputs.pushed }}
+  conflicts_resolved:
+    description: 'Number of conflicted files resolved during this run.'
+    value: ${{ steps.sync.outputs.conflicts_resolved }}
+  discarded_theirs:
+    description: 'Number of local outputs replaced by remote versions in the last-resort fallback.'
+    value: ${{ steps.sync.outputs.discarded_theirs }}
+
+runs:
+  using: composite
+  steps:
+    - id: sync
+      shell: bash
+      env:
+        WORKFLOW_NAME: ${{ inputs.workflow_name }}
+        STRATEGY: ${{ inputs.strategy }}
+        ON_REBASE_CONFLICT: ${{ inputs.on_rebase_conflict }}
+        ADD_PATHS: ${{ inputs.add_paths }}
+        COMMIT_MESSAGE: ${{ inputs.commit_message }}
+        DISCARD_PATHS: ${{ inputs.discard_paths }}
+        MERGE_JSON_GLOB: ${{ inputs.merge_json_glob }}
+      run: |
+        set -uo pipefail
+
+        git config user.name "github-actions[bot]"
+        git config user.email "action@github.com"
+
+        conflicts_resolved=0
+        discarded_theirs=0
+
+        telemetry() {
+          local outcome="$1" attempt="$2"
+          mkdir -p state
+          printf '{"at":"%s","workflow":"%s","attempt":%s,"outcome":"%s","conflicts_resolved":%s,"discarded_theirs":%s}\n' \
+            "$(date -u +%Y-%m-%dT%H:%M:%SZ)" "$WORKFLOW_NAME" "$attempt" "$outcome" \
+            "$conflicts_resolved" "$discarded_theirs" >> state/sync_log.jsonl
+          tail -n 200 state/sync_log.jsonl > state/sync_log.jsonl.tmp \
+            && mv state/sync_log.jsonl.tmp state/sync_log.jsonl || true
+        }
+
+        stage_all() {
+          while IFS= read -r p; do
+            [ -z "$p" ] && continue
+            git add -f "$p" 2>/dev/null || true
+          done <<< "$ADD_PATHS"
+        }
+
+        force_theirs() {
+          while IFS= read -r p; do
+            [ -z "$p" ] && continue
+            if git checkout --theirs "$p" 2>/dev/null; then
+              discarded_theirs=$((discarded_theirs + 1))
+              git add -f "$p" 2>/dev/null || true
+            fi
+          done <<< "$DISCARD_PATHS"
+        }
+
+        stage_all
+        if git diff --staged --quiet; then
+          echo "No changes to commit."
+          echo "pushed=false" >> "$GITHUB_OUTPUT"
+          exit 0
+        fi
+        git commit -m "$COMMIT_MESSAGE"
+
+        attempt=1
+        while [ "$attempt" -le 3 ]; do
+          git fetch origin master
+
+          if [ "$STRATEGY" = "merge" ]; then
+            if git merge origin/master --no-edit; then
+              :
+            else
+              echo "Merge conflict detected, merging JSON files..."
+              for f in $MERGE_JSON_GLOB; do
+                [ -f "$f" ] || continue
+                if grep -q '^<\|^===\|^>>>' "$f" 2>/dev/null; then
+                  echo "Resolving conflict in $f"
+                  git show ":1:$f" > "$f.base" 2>/dev/null || echo "[]" > "$f.base"
+                  git show ":3:$f" > "$f.remote" 2>/dev/null || echo "[]" > "$f.remote"
+                  python scripts/merge_json.py "$f" "$f.remote" "$f"
+                  rm -f "$f.base" "$f.remote"
+                  git add -f "$f"
+                  conflicts_resolved=$((conflicts_resolved + 1))
+                fi
+              done
+
+              if git diff --name-only --diff-filter=U | grep -q .; then
+                echo "Unresolved conflicts remain, using theirs..."
+                force_theirs
+              fi
+
+              git commit -m "chore(ci): resolve merge conflicts" || echo "No conflicts to commit"
+            fi
+          else
+            if ! git pull --rebase --autostash origin master; then
+              if [ "$ON_REBASE_CONFLICT" = "theirs" ]; then
+                echo "Rebase conflict detected. Attempting auto-resolution for generated outputs."
+                force_theirs
+                if ! GIT_EDITOR=true git rebase --continue; then
+                  git rebase --abort || true
+                  echo "Rebase failed after auto-resolution while syncing with origin/master."
+                  telemetry "failed" "$attempt"
+                  exit 1
+                fi
+              else
+                git rebase --abort || true
+                echo "Rebase failed while syncing with origin/master."
+                telemetry "failed" "$attempt"
+                exit 1
+              fi
+            fi
+          fi
+
+          if git push origin HEAD:master; then
+            echo "Push succeeded on attempt ${attempt}."
+            telemetry "pushed" "$attempt"
+            {
+              echo "pushed=true"
+              echo "conflicts_resolved=$conflicts_resolved"
+              echo "discarded_theirs=$discarded_theirs"
+            } >> "$GITHUB_OUTPUT"
+            exit 0
+          fi
+          telemetry "failed" "$attempt"
+          echo "Push failed on attempt ${attempt}; retrying..."
+          sleep 5
+          attempt=$((attempt + 1))
+        done
+
+        echo "Push failed after 3 attempts."
+        exit 1
