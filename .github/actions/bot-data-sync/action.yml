@@ -64,14 +64,31 @@ runs:
         conflicts_resolved=0
         discarded_theirs=0
 
+        # Telemetry is buffered outside git until the data commit has pushed;
+        # a best-effort follow-up commit then persists it (never blocks/fails the run).
         telemetry() {
           local outcome="$1" attempt="$2"
           mkdir -p state
           printf '{"at":"%s","workflow":"%s","attempt":%s,"outcome":"%s","conflicts_resolved":%s,"discarded_theirs":%s}\n' \
             "$(date -u +%Y-%m-%dT%H:%M:%SZ)" "$WORKFLOW_NAME" "$attempt" "$outcome" \
-            "$conflicts_resolved" "$discarded_theirs" >> state/sync_log.jsonl
+            "$conflicts_resolved" "$discarded_theirs" >> state/.sync_pending.jsonl
+        }
+
+        flush_telemetry() {
+          [ -s state/.sync_pending.jsonl ] || return 0
+          touch state/sync_log.jsonl
+          cat state/.sync_pending.jsonl >> state/sync_log.jsonl
+          rm -f state/.sync_pending.jsonl
           tail -n 200 state/sync_log.jsonl > state/sync_log.jsonl.tmp \
             && mv state/sync_log.jsonl.tmp state/sync_log.jsonl || true
+          git add -f state/sync_log.jsonl 2>/dev/null || return 0
+          git diff --staged --quiet && return 0
+          git commit -m "chore(ci): sync telemetry" || return 0
+          git pull --rebase --autostash origin master >/dev/null 2>&1 \
+            && git push origin HEAD:master >/dev/null 2>&1 || {
+              git rebase --abort >/dev/null 2>&1 || true
+              echo "Telemetry follow-up commit dropped (conflict); will retry next run."
+            }
         }
 
         stage_all() {
@@ -137,12 +154,14 @@ runs:
                   git rebase --abort || true
                   echo "Rebase failed after auto-resolution while syncing with origin/master."
                   telemetry "failed" "$attempt"
+                  flush_telemetry
                   exit 1
                 fi
               else
                 git rebase --abort || true
                 echo "Rebase failed while syncing with origin/master."
                 telemetry "failed" "$attempt"
+                flush_telemetry
                 exit 1
               fi
             fi
@@ -151,6 +170,7 @@ runs:
           if git push origin HEAD:master; then
             echo "Push succeeded on attempt ${attempt}."
             telemetry "pushed" "$attempt"
+            flush_telemetry
             {
               echo "pushed=true"
               echo "conflicts_resolved=$conflicts_resolved"
@@ -159,6 +179,7 @@ runs:
             exit 0
           fi
           telemetry "failed" "$attempt"
+          flush_telemetry
           echo "Push failed on attempt ${attempt}; retrying..."
           sleep 5
           attempt=$((attempt + 1))
