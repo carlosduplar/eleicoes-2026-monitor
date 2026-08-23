@@ -24,14 +24,14 @@ except ImportError:  # pragma: no cover - direct script execution path
 logger = logging.getLogger(__name__)
 
 try:
-    from scripts.store import PUB_DATA_DIR as DATA_DIR
+    from scripts.store import PUB_DATA_DIR as DATA_DIR, STATE_DIR
 except ImportError:  # pragma: no cover - direct script execution path
-    from store import PUB_DATA_DIR as DATA_DIR
+    from store import PUB_DATA_DIR as DATA_DIR, STATE_DIR
 ARTICLES_FILE = DATA_DIR / "articles.json"
 CURATED_FEED_FILE = DATA_DIR / "curated_feed.json"
 WEEKLY_BRIEFING_FILE = DATA_DIR / "weekly_briefing.json"
 PIPELINE_ERRORS_FILE = DATA_DIR / "pipeline_errors.json"
-LAST_RUN_FILE = DATA_DIR / ".curate_last_run"
+LAST_RUN_FILE = STATE_DIR / ".curate_last_run"
 
 API_KEY_PATTERN = re.compile(
     r"(key|api_key|apikey|devKey)=[A-Za-z0-9_-]{20,}", re.IGNORECASE

@@ -32,14 +32,10 @@ EXPECTED_ENTRIES = frozenset(
         "tse_data.json",
         "transparencia_data.json",
         "weekly_briefing.json",
-        # STATE - internal, pending relocation to state/ (M3-M5)
-        ".curate_last_run",
-        "ai_usage.json",
+        # STATE - internal, pending relocation to state/ (M4/M5/M9)
         "editor_feedback.json",
-        "fetch_state.json",
         "pipeline_errors.json",
         "quiz.json.bak",
-        "youtube_state.json",
     }
 )
 

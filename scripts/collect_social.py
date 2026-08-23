@@ -18,14 +18,14 @@ import tweepy
 logger = logging.getLogger(__name__)
 
 try:
-    from scripts.store import PUB_DATA_DIR as DATA_DIR
+    from scripts.store import PUB_DATA_DIR as DATA_DIR, STATE_DIR
 except ImportError:  # pragma: no cover - direct script execution path
-    from store import PUB_DATA_DIR as DATA_DIR
+    from store import PUB_DATA_DIR as DATA_DIR, STATE_DIR
 SOURCES_FILE = DATA_DIR / "sources.json"
 CANDIDATES_FILE = DATA_DIR / "candidates.json"
 ARTICLES_FILE = DATA_DIR / "articles.json"
 PIPELINE_ERRORS_FILE = DATA_DIR / "pipeline_errors.json"
-YOUTUBE_STATE_FILE = DATA_DIR / "youtube_state.json"
+YOUTUBE_STATE_FILE = STATE_DIR / "youtube_state.json"
 DEFAULT_SCHEMA_PATH = "../docs/schemas/articles.schema.json"
 
 CANDIDATE_SEARCH_TERMS: dict[str, str] = {}

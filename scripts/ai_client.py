@@ -27,10 +27,10 @@ import openai
 logger = logging.getLogger(__name__)
 
 try:
-    from scripts.store import PUB_DATA_DIR
+    from scripts.store import PUB_DATA_DIR, STATE_DIR
 except ImportError:  # pragma: no cover - direct script execution path
-    from store import PUB_DATA_DIR
-USAGE_FILE = PUB_DATA_DIR / "ai_usage.json"
+    from store import PUB_DATA_DIR, STATE_DIR
+USAGE_FILE = STATE_DIR / "ai_usage.json"
 
 # In-process circuit breaker: skip providers after this many consecutive failures per run.
 # Preflight requests fail fast on 429s; normal requests also fail fast by default so
