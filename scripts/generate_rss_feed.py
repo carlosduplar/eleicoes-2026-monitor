@@ -9,11 +9,16 @@ from pathlib import Path
 from typing import Any, NotRequired, TypedDict
 from xml.etree.ElementTree import Element, ElementTree, SubElement, register_namespace
 
+try:
+    from scripts.store import PUB_DATA_DIR
+except ImportError:  # pragma: no cover - direct script execution path
+    from store import PUB_DATA_DIR
+
 # --- Constants ---
 
 SITE_URL: str = "https://eleicoes2026.com.br"
-ARTICLES_PATH: Path = Path("site/public/data/articles.json")
-OUTPUT_DIR: Path = Path("site/public")
+ARTICLES_PATH: Path = PUB_DATA_DIR / "articles.json"
+OUTPUT_DIR: Path = PUB_DATA_DIR.parent
 FEED_PT_FILENAME: str = "feed.xml"
 FEED_EN_FILENAME: str = "feed-en.xml"
 MAX_ITEMS: int = 50

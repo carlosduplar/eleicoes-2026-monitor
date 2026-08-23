@@ -15,12 +15,13 @@ from .ai_client import extract_candidate_topic_position
 
 logger = logging.getLogger(__name__)
 
-ROOT_DIR = Path(__file__).resolve().parents[1]
-ARTICLES_FILE = ROOT_DIR / "site" / "public" / "data" / "articles.json"
-POSITIONS_FILE = ROOT_DIR / "site" / "public" / "data" / "candidates_positions.json"
-DEFAULT_DRAFT_FILE = (
-    ROOT_DIR / "site" / "public" / "data" / "candidates_positions_draft.json"
-)
+try:
+    from scripts.store import ROOT_DIR, PUB_DATA_DIR
+except ImportError:  # pragma: no cover - direct script execution path
+    from store import ROOT_DIR, PUB_DATA_DIR
+ARTICLES_FILE = PUB_DATA_DIR / "articles.json"
+POSITIONS_FILE = PUB_DATA_DIR / "candidates_positions.json"
+DEFAULT_DRAFT_FILE = PUB_DATA_DIR / "candidates_positions_draft.json"
 SCHEMA_FILE = ROOT_DIR / "docs" / "schemas" / "candidates_positions.schema.json"
 
 

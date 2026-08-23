@@ -56,8 +56,10 @@ API_KEY_PATTERN = re.compile(
     r"(key|api_key|apikey|devKey)=[A-Za-z0-9_-]{20,}", re.IGNORECASE
 )
 
-ROOT_DIR = Path(__file__).resolve().parents[1]
-DATA_DIR = ROOT_DIR / "site" / "public" / "data"
+try:
+    from scripts.store import PUB_DATA_DIR as DATA_DIR
+except ImportError:  # pragma: no cover - direct script execution path
+    from store import PUB_DATA_DIR as DATA_DIR
 ARTICLES_FILE = DATA_DIR / "articles.json"
 PIPELINE_ERRORS_FILE = DATA_DIR / "pipeline_errors.json"
 EDITOR_FEEDBACK_FILE = DATA_DIR / "editor_feedback.json"

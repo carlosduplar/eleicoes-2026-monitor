@@ -17,8 +17,10 @@ from typing import Any
 
 logger = logging.getLogger(__name__)
 
-ROOT_DIR = Path(__file__).resolve().parents[1]
-DATA_DIR = ROOT_DIR / "site" / "public" / "data"
+try:
+    from scripts.store import PUB_DATA_DIR as DATA_DIR
+except ImportError:  # pragma: no cover - direct script execution path
+    from store import PUB_DATA_DIR as DATA_DIR
 ARTICLES_FILE = DATA_DIR / "articles.json"
 ARCHIVES_DIR = DATA_DIR / "archives"
 DEFAULT_SCHEMA_PATH = "../docs/schemas/articles.schema.json"

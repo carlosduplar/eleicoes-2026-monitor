@@ -16,9 +16,12 @@ from .ai_client import generate_quiz_topic_options, validate_quiz_option_quality
 
 logger = logging.getLogger(__name__)
 
-ROOT_DIR = Path(__file__).resolve().parents[1]
-POSITIONS_FILE = ROOT_DIR / "site" / "public" / "data" / "candidates_positions.json"
-QUIZ_FILE = ROOT_DIR / "site" / "public" / "data" / "quiz.json"
+try:
+    from scripts.store import ROOT_DIR, PUB_DATA_DIR
+except ImportError:  # pragma: no cover - direct script execution path
+    from store import ROOT_DIR, PUB_DATA_DIR
+POSITIONS_FILE = PUB_DATA_DIR / "candidates_positions.json"
+QUIZ_FILE = PUB_DATA_DIR / "quiz.json"
 SCHEMA_FILE = ROOT_DIR / "docs" / "schemas" / "quiz.schema.json"
 
 OPTION_IDS = ["opt_a", "opt_b", "opt_c", "opt_d", "opt_e", "opt_f"]
