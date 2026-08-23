@@ -8,9 +8,12 @@ from pathlib import Path
 
 import jsonschema
 
-ROOT_DIR = Path(__file__).resolve().parents[1]
-CANDIDATES_FILE = ROOT_DIR / "site" / "public" / "data" / "candidates.json"
-OUTPUT_FILE = ROOT_DIR / "site" / "public" / "data" / "candidates_positions.json"
+try:
+    from scripts.store import ROOT_DIR, PUB_DATA_DIR
+except ImportError:  # pragma: no cover - direct script execution path
+    from store import ROOT_DIR, PUB_DATA_DIR
+CANDIDATES_FILE = PUB_DATA_DIR / "candidates.json"
+OUTPUT_FILE = PUB_DATA_DIR / "candidates_positions.json"
 SCHEMA_FILE = ROOT_DIR / "docs" / "schemas" / "candidates_positions.schema.json"
 
 TOPICS: list[tuple[str, str, str]] = [

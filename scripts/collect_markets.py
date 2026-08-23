@@ -11,8 +11,10 @@ from datetime import datetime, timezone
 from pathlib import Path
 from typing import Any, NotRequired, TypedDict
 
-ROOT_DIR = Path(__file__).resolve().parents[1]
-DATA_DIR = ROOT_DIR / "site" / "public" / "data"
+try:
+    from scripts.store import PUB_DATA_DIR as DATA_DIR, ROOT_DIR
+except ImportError:  # pragma: no cover - direct script execution path
+    from store import PUB_DATA_DIR as DATA_DIR, ROOT_DIR
 SOURCES_FILE = DATA_DIR / "sources.json"
 MARKETS_FILE = DATA_DIR / "markets.json"
 PIPELINE_ERRORS_FILE = DATA_DIR / "pipeline_errors.json"

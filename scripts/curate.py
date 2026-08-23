@@ -23,8 +23,10 @@ except ImportError:  # pragma: no cover - direct script execution path
 
 logger = logging.getLogger(__name__)
 
-ROOT_DIR = Path(__file__).resolve().parents[1]
-DATA_DIR = ROOT_DIR / "site" / "public" / "data"
+try:
+    from scripts.store import PUB_DATA_DIR as DATA_DIR
+except ImportError:  # pragma: no cover - direct script execution path
+    from store import PUB_DATA_DIR as DATA_DIR
 ARTICLES_FILE = DATA_DIR / "articles.json"
 CURATED_FEED_FILE = DATA_DIR / "curated_feed.json"
 WEEKLY_BRIEFING_FILE = DATA_DIR / "weekly_briefing.json"

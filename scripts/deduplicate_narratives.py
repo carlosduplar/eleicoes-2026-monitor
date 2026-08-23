@@ -15,8 +15,11 @@ except ImportError:  # pragma: no cover - direct script execution path
         cluster_articles_tfidf,
     )
 
-ROOT_DIR = Path(__file__).resolve().parents[1]
-ARTICLES_FILE = ROOT_DIR / "site" / "public" / "data" / "articles.json"
+try:
+    from scripts.store import PUB_DATA_DIR
+except ImportError:  # pragma: no cover - direct script execution path
+    from store import PUB_DATA_DIR
+ARTICLES_FILE = PUB_DATA_DIR / "articles.json"
 
 
 def _load_articles_document() -> tuple[list[dict[str, Any]], dict[str, Any] | None]:

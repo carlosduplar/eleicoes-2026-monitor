@@ -27,12 +27,14 @@ except ImportError:  # pragma: no cover - direct script execution path
 
 logger = logging.getLogger(__name__)
 
-ROOT_DIR = Path(__file__).resolve().parents[1]
-DATA_DIR = ROOT_DIR / "site" / "public" / "data"
+try:
+    from scripts.store import PUB_DATA_DIR as DATA_DIR, SCHEMAS_DIR
+except ImportError:  # pragma: no cover - direct script execution path
+    from store import PUB_DATA_DIR as DATA_DIR, SCHEMAS_DIR
 ARTICLES_FILE = DATA_DIR / "articles.json"
 SENTIMENT_FILE = DATA_DIR / "sentiment.json"
 PIPELINE_ERRORS_FILE = DATA_DIR / "pipeline_errors.json"
-SENTIMENT_SCHEMA_FILE = ROOT_DIR / "docs" / "schemas" / "sentiment.schema.json"
+SENTIMENT_SCHEMA_FILE = SCHEMAS_DIR / "sentiment.schema.json"
 
 API_KEY_PATTERN = re.compile(
     r"(key|api_key|apikey|devKey)=[A-Za-z0-9_-]{20,}", re.IGNORECASE

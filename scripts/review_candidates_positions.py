@@ -10,9 +10,12 @@ from typing import Any
 
 import jsonschema
 
-ROOT_DIR = Path(__file__).resolve().parents[1]
-BASE_FILE = ROOT_DIR / "site" / "public" / "data" / "candidates_positions.json"
-DRAFT_FILE = ROOT_DIR / "site" / "public" / "data" / "candidates_positions_draft.json"
+try:
+    from scripts.store import ROOT_DIR, PUB_DATA_DIR
+except ImportError:  # pragma: no cover - direct script execution path
+    from store import ROOT_DIR, PUB_DATA_DIR
+BASE_FILE = PUB_DATA_DIR / "candidates_positions.json"
+DRAFT_FILE = PUB_DATA_DIR / "candidates_positions_draft.json"
 SCHEMA_FILE = ROOT_DIR / "docs" / "schemas" / "candidates_positions.schema.json"
 
 COMPARE_FIELDS = [

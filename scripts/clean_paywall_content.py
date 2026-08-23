@@ -10,8 +10,11 @@ from sanitize.constants import is_paywall_content
 
 logger = logging.getLogger(__name__)
 
-ROOT_DIR = Path(__file__).resolve().parents[1]
-ARTICLES_FILE = ROOT_DIR / "site" / "public" / "data" / "articles.json"
+try:
+    from scripts.store import PUB_DATA_DIR
+except ImportError:  # pragma: no cover - direct script execution path
+    from store import PUB_DATA_DIR
+ARTICLES_FILE = PUB_DATA_DIR / "articles.json"
 
 
 def _load_articles_document(path: Path) -> tuple[list[dict], dict | None]:
