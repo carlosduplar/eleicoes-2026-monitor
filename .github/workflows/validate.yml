@@ -53,33 +53,17 @@ jobs:
           python scripts/build_data.py
 
       - name: Commit validated outputs
-        run: |
-          git config user.name "github-actions[bot]"
-          git config user.email "action@github.com"
-          git add -f site/public/data/articles.json site/public/data/sentiment.json state/editor_feedback.json 2>/dev/null || true
-          if git diff --staged --quiet; then
-            echo "No changes to commit."
-            exit 0
-          fi
-          git commit -m "chore(ci): editor validated pipeline output"
-          for attempt in 1 2 3; do
-            git fetch origin master
-            if ! git pull --rebase --autostash origin master; then
-              echo "Rebase conflict detected. Attempting auto-resolution for generated outputs."
-              git checkout --theirs site/public/data/articles.json site/public/data/sentiment.json state/editor_feedback.json 2>/dev/null || true
-          git add -f site/public/data/articles.json site/public/data/sentiment.json state/editor_feedback.json 2>/dev/null || true
-              if ! GIT_EDITOR=true git rebase --continue; then
-                git rebase --abort || true
-                echo "Rebase failed after auto-resolution while syncing with origin/master."
-                exit 1
-              fi
-            fi
-            if git push origin HEAD:master; then
-              echo "Push succeeded on attempt ${attempt}."
-              exit 0
-            fi
-            echo "Push failed on attempt ${attempt}; retrying..."
-            sleep 5
-          done
-          echo "Push failed after 3 attempts."
-          exit 1
+        uses: ./.github/actions/bot-data-sync
+        with:
+          workflow_name: editor
+          strategy: rebase
+          on_rebase_conflict: theirs
+          add_paths: |
+            site/public/data/articles.json
+            site/public/data/sentiment.json
+            state/editor_feedback.json
+          commit_message: "chore(ci): editor validated pipeline output"
+          discard_paths: |
+            site/public/data/articles.json
+            site/public/data/sentiment.json
+            state/editor_feedback.json

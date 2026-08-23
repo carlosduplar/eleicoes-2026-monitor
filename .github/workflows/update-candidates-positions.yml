@@ -70,29 +70,15 @@ jobs:
       - name: Extract draft positions
         run: python -m scripts.extract_positions_from_articles --output site/public/data/candidates_positions_draft.json
 
+      - name: Record sync date
+        run: echo "POSITIONS_DATE=$(date -u +%Y-%m-%d)" >> "$GITHUB_ENV"
+
       - name: Commit draft file
-        run: |
-          git config user.name "github-actions[bot]"
-          git config user.email "action@github.com"
-          git add -f site/public/data/candidates_positions_draft.json
-          if git diff --staged --quiet; then
-            echo "No changes to commit."
-            exit 0
-          fi
-          git commit -m "chore: update candidates positions draft $(date -u +%Y-%m-%d)"
-          for attempt in 1 2 3; do
-            git fetch origin master
-            if ! git pull --rebase --autostash origin master; then
-              git rebase --abort || true
-              echo "Rebase failed while syncing with origin/master."
-              exit 1
-            fi
-            if git push origin HEAD:master; then
-              echo "Push succeeded on attempt ${attempt}."
-              exit 0
-            fi
-            echo "Push failed on attempt ${attempt}; retrying..."
-            sleep 5
-          done
-          echo "Push failed after 3 attempts."
-          exit 1
+        uses: ./.github/actions/bot-data-sync
+        with:
+          workflow_name: positions
+          strategy: rebase
+          on_rebase_conflict: abort
+          add_paths: |
+            site/public/data/candidates_positions_draft.json
+          commit_message: "chore: update candidates positions draft ${{ env.POSITIONS_DATE }}"
