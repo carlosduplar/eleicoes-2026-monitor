@@ -1,6 +1,8 @@
 import * as ReactHelmetAsync from 'react-helmet-async';
 import { useTranslation } from 'react-i18next';
 
+import MarketOdds from '@/components/MarketOdds';
+
 const Helmet = ReactHelmetAsync.Helmet || ReactHelmetAsync.default?.Helmet;
 
 function MarketsPage() {
@@ -13,6 +15,7 @@ function MarketsPage() {
     description: t('markets.disclaimer'),
     inLanguage: language,
     url: '/mercados',
+    isBasedOn: '/data/markets.json',
   };
 
   return (
@@ -22,11 +25,7 @@ function MarketsPage() {
         <meta name="description" content={t('markets.disclaimer')} />
         <script type="application/ld+json">{JSON.stringify(datasetJsonLd)}</script>
       </Helmet>
-      <section className="page-section">
-        <h1>{t('markets.title')}</h1>
-        <p>{t('markets.empty')}</p>
-        <p className="text-muted">{t('markets.disclaimer')}</p>
-      </section>
+      <MarketOdds />
     </>
   );
 }

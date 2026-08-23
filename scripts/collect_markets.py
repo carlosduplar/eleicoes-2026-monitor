@@ -114,6 +114,12 @@ def _fetch_json(url: str) -> Any:
         return json.loads(resp.read().decode("utf-8"))
 
 
+GAMMA_API_BASE = "https://gamma-api.polymarket.com"
+EVENT_SLUGS = (
+    "brazil-presidential-election",
+)
+
+
 def is_brazil_election_market(question: str, slug: str) -> bool:
     q_lower = question.lower()
     s_lower = slug.lower()
@@ -123,21 +129,93 @@ def is_brazil_election_market(question: str, slug: str) -> bool:
     return has_brazil and has_election
 
 
-def fetch_markets() -> list[dict[str, Any]]:
-    try:
-        data = _fetch_json(f"{CLOB_BASE}/markets?limit=500&closed=false")
-    except Exception as exc:
-        logger.warning("Failed to fetch markets list: %s", exc)
-        raise
+def _parse_outcome_prices(market: dict[str, Any]) -> tuple[float, float]:
+    raw_prices = market.get("outcomePrices")
+    prices: list[Any] = []
+    if isinstance(raw_prices, str):
+        try:
+            parsed = json.loads(raw_prices)
+            if isinstance(parsed, list):
+                prices = parsed
+        except json.JSONDecodeError:
+            prices = []
+    elif isinstance(raw_prices, list):
+        prices = raw_prices
 
-    results = data.get("results", []) if isinstance(data, dict) else data
-    filtered = [
-        m for m in results
-        if isinstance(m, dict)
-        and is_brazil_election_market(m.get("question", ""), m.get("slug", ""))
-    ]
-    logger.info("Found %d Brazil election markets out of %d total", len(filtered), len(results))
-    return filtered
+    def clamp(value: float) -> float:
+        return round(max(0.0, min(1.0, value)), 4)
+
+    yes_price = clamp(float(prices[0])) if len(prices) > 0 else 0.0
+    no_price = clamp(float(prices[1])) if len(prices) > 1 else clamp(1.0 - yes_price)
+    return yes_price, no_price
+
+
+def fetch_markets() -> list[dict[str, Any]]:
+    collected: list[dict[str, Any]] = []
+
+    for event_slug in EVENT_SLUGS:
+        try:
+            payload = _fetch_json(f"{GAMMA_API_BASE}/events?slug={event_slug}")
+        except Exception as exc:
+            logger.warning("Failed to fetch Gamma event %s: %s", event_slug, exc)
+            continue
+
+        events = payload.get("events") if isinstance(payload, dict) else payload
+        if not isinstance(events, list) or not events:
+            logger.warning("Gamma API returned no event for slug %s", event_slug)
+            continue
+
+        event_markets = events[0].get("markets") if isinstance(events[0], dict) else None
+        if not isinstance(event_markets, list):
+            continue
+
+        for market in event_markets:
+            if not isinstance(market, dict):
+                continue
+            if market.get("closed") or market.get("archived"):
+                continue
+            market_id = str(market.get("id") or "")
+            slug = market.get("slug")
+            if not market_id or not isinstance(slug, str) or not slug:
+                continue
+
+            yes_price, no_price = _parse_outcome_prices(market)
+            question = market.get("groupItemTitle") or market.get("question") or slug
+            try:
+                volume = float(market.get("volumeNum", market.get("volume")) or 0)
+                liquidity = float(market.get("liquidityNum", market.get("liquidity")) or 0)
+            except (TypeError, ValueError):
+                volume, liquidity = 0.0, 0.0
+
+            collected.append(
+                {
+                    "id": market_id,
+                    "condition_id": market.get("conditionId"),
+                    "slug": slug,
+                    "question": str(question).strip(),
+                    "yes_price": yes_price,
+                    "no_price": no_price,
+                    "volume": volume,
+                    "liquidity": liquidity,
+                }
+            )
+
+    logger.info("Found %d Brazil election markets from Gamma events", len(collected))
+    if not collected:
+        logger.warning("No markets found; falling back to CLOB keyword search")
+        try:
+            data = _fetch_json(f"{CLOB_BASE}/markets?limit=500&closed=false")
+        except Exception as exc:
+            logger.warning("Failed to fetch markets list: %s", exc)
+            raise
+
+        results = data.get("results", []) if isinstance(data, dict) else data
+        collected = [
+            m for m in results
+            if isinstance(m, dict)
+            and is_brazil_election_market(m.get("question", ""), m.get("slug", ""))
+        ]
+    return collected
 
 
 def fetch_market_order_book(market_id: str) -> dict[str, Any]:
@@ -234,7 +312,8 @@ def collect_markets() -> tuple[int, int, int]:
             continue
 
         try:
-            order_book = fetch_market_order_book(market_id)
+            has_prices = bool(raw.get("yes_price")) or bool(raw.get("no_price"))
+            order_book = fetch_market_order_book(market_id) if not has_prices else {}
             item = build_market_item(raw, order_book)
             incoming.append(item)
         except Exception as exc:
