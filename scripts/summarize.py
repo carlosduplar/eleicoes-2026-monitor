@@ -57,11 +57,15 @@ API_KEY_PATTERN = re.compile(
 )
 
 try:
+    from scripts import pipeline_errors
+except ImportError:  # pragma: no cover - direct script execution path
+    import pipeline_errors
+try:
     from scripts.store import PUB_DATA_DIR as DATA_DIR, STATE_DIR
 except ImportError:  # pragma: no cover - direct script execution path
     from store import PUB_DATA_DIR as DATA_DIR, STATE_DIR
 ARTICLES_FILE = DATA_DIR / "articles.json"
-PIPELINE_ERRORS_FILE = DATA_DIR / "pipeline_errors.json"
+PIPELINE_ERRORS_FILE = STATE_DIR / "pipeline_errors.json"
 EDITOR_FEEDBACK_FILE = STATE_DIR / "editor_feedback.json"
 
 DISCLAIMER_PT = "Análise algorítmica. Não representa pesquisa de opinião."
@@ -209,6 +213,7 @@ def _append_pipeline_error(
     PIPELINE_ERRORS_FILE.write_text(
         json.dumps(payload, indent=2, ensure_ascii=False) + "\n", encoding="utf-8"
     )
+    pipeline_errors.rotate(PIPELINE_ERRORS_FILE)
 
 
 def _to_clean_string_list(value: object) -> list[str]:

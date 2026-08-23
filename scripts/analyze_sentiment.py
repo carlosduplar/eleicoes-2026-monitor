@@ -28,12 +28,16 @@ except ImportError:  # pragma: no cover - direct script execution path
 logger = logging.getLogger(__name__)
 
 try:
-    from scripts.store import PUB_DATA_DIR as DATA_DIR, SCHEMAS_DIR
+    from scripts import pipeline_errors
 except ImportError:  # pragma: no cover - direct script execution path
-    from store import PUB_DATA_DIR as DATA_DIR, SCHEMAS_DIR
+    import pipeline_errors
+try:
+    from scripts.store import PUB_DATA_DIR as DATA_DIR, SCHEMAS_DIR, STATE_DIR
+except ImportError:  # pragma: no cover - direct script execution path
+    from store import PUB_DATA_DIR as DATA_DIR, SCHEMAS_DIR, STATE_DIR
 ARTICLES_FILE = DATA_DIR / "articles.json"
 SENTIMENT_FILE = DATA_DIR / "sentiment.json"
-PIPELINE_ERRORS_FILE = DATA_DIR / "pipeline_errors.json"
+PIPELINE_ERRORS_FILE = STATE_DIR / "pipeline_errors.json"
 SENTIMENT_SCHEMA_FILE = SCHEMAS_DIR / "sentiment.schema.json"
 
 API_KEY_PATTERN = re.compile(
@@ -211,6 +215,7 @@ def _append_pipeline_error(
     PIPELINE_ERRORS_FILE.write_text(
         json.dumps(payload, indent=2, ensure_ascii=False) + "\n", encoding="utf-8"
     )
+    pipeline_errors.rotate(PIPELINE_ERRORS_FILE)
 
 
 def _normalize_topics(value: object) -> list[str]:

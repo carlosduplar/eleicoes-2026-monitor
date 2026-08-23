@@ -17,7 +17,7 @@ Each risk lists: trigger, blast radius, detection method, rollback method, test 
 
 ## R2 - Operational state published to public web root (F2, High, OBSERVED)
 
-- **STATUS 2026-08-23**: M3+M4 landed - ai_usage/fetch_state/youtube_state/.curate_last_run/editor_feedback.json moved to committed `state/` (no longer deployed); remaining: pipeline_errors.json (M5), quiz.json.bak (M9).
+- **STATUS 2026-08-23**: M3+M4+M5 landed - ai_usage/fetch_state/youtube_state/.curate_last_run/editor_feedback.json/pipeline_errors.json moved to committed `state/` (no longer deployed); error log rotated to newest-500 with monthly archives; remaining: quiz.json.bak (M9).
 - **Trigger**: every deploy (unconditional: `public/**` → `dist/**` → Pages artifact).
 - **Blast radius**: public exposure of internal error logs (`pipeline_errors.json`: URLs, content snippets, provider errors), editorial blocklists (`editor_feedback.json` 4.3MB), AI usage counters, fetch state. Repo bloat: multi-MB JSON diffs on most bot commits; slow clones over time. UNKNOWN whether any external consumer depends on these URLs (treat as "assume none" only after checking access logs - not available here).
 - **Detection**: `ls site/dist/data`; repo size trend; any third-party reference scan (UNKNOWN).
@@ -90,6 +90,7 @@ Each risk lists: trigger, blast radius, detection method, rollback method, test 
 - **Detection**: audit grep of all `_append_pipeline_error` call sites for redaction coverage.
 - **Rollback**: n/a.
 - **Test strategy**: unit test feeding fake error text with key-like substrings through every writer path; assert `[REDACTED]`.
+- **RESOLVED 2026-08-23 (M5a)**: audit found all 7 writers already redact via identical `API_KEY_PATTERN` (OBSERVED, better than the inferred gap); coverage locked by `scripts/test_error_redaction.py` across every writer.
 
 ## Top ordering logic (feeds Phase 2)
 
