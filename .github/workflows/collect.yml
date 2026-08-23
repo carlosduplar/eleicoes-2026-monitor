@@ -131,51 +131,16 @@ jobs:
         run: python scripts/index_to_vertex_search.py || echo "[warn] Vertex indexing failed, continuing"
 
       - name: Commit data updates
-        run: |
-          git config user.name "github-actions[bot]"
-          git config user.email "action@github.com"
-          git add -f site/public/data/
-          git add -f state/ 2>/dev/null || true
-          git add site/public/feed*.xml 2>/dev/null || true
-          if git diff --staged --quiet; then
-            echo "No changes to commit."
-            exit 0
-          fi
-          git commit -m "chore(ci): reporter automated data refresh"
-
-          for attempt in 1 2 3; do
-            git fetch origin master
-
-            if git merge origin/master --no-edit; then
-              echo "Merge succeeded."
-            else
-              echo "Merge conflict detected, merging JSON files..."
-                for f in site/public/data/*.json; do
-                if [[ -f "$f" ]] && grep -q "^<\|^===\|^>>>" "$f" 2>/dev/null; then
-                  echo "Resolving conflict in $f"
-                  git show ":1:$f" > "$f.base" 2>/dev/null || echo "[]" > "$f.base"
-                  git show ":3:$f" > "$f.remote" 2>/dev/null || echo "[]" > "$f.remote"
-                  python scripts/merge_json.py "$f" "$f.remote" "$f"
-                  rm -f "$f.base" "$f.remote"
-                  git add -f "$f"
-                fi
-              done
-
-              if git diff --name-only --diff-filter=U | grep -q .; then
-                echo "Unresolved conflicts remain, using theirs..."
-                git checkout --theirs site/public/data/*.json
-                git add -f site/public/data/*.json
-              fi
-
-              git commit -m "chore(ci): resolve merge conflicts" || echo "No conflicts to commit"
-            fi
-
-            if git push origin HEAD:master; then
-              echo "Push succeeded on attempt ${attempt}."
-              exit 0
-            fi
-            echo "Push failed on attempt ${attempt}; retrying..."
-            sleep 5
-          done
-          echo "Push failed after 3 attempts."
-          exit 1
+        uses: ./.github/actions/bot-data-sync
+        with:
+          workflow_name: collect
+          strategy: merge
+          add_paths: |
+            site/public/data/
+            state/
+            site/public/feed.xml
+            site/public/feed-en.xml
+          commit_message: "chore(ci): reporter automated data refresh"
+          discard_paths: |
+            site/public/data/*.json
+          merge_json_glob: site/public/data/*.json

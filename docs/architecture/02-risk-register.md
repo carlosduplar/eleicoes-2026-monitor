@@ -28,7 +28,7 @@ Each risk lists: trigger, blast radius, detection method, rollback method, test 
 
 - **Trigger**: two writers race despite lock granularity (lock is per-ref and serializes, but each workflow pulls late; long AI steps widen windows). Rebase/merge conflict on `articles.json` etc.
 - **Blast radius**: freshly computed summaries/sentiment discarded by `--theirs` fallbacks (validate.yml:69, collect.yml:165); union-merge may resurrect filtered articles if base/remote semantics diverge. Self-heals partially: next Collect re-collects, next Validate re-summarizes (raw items remain). Curation promotions could be lost permanently until recomputed (deterministic from inputs - INFERRED recoverable).
-- **Detection**: M6 stage A landed - composite action appends JSONL telemetry to `state/sync_log.jsonl` (conflicts_resolved / discarded_theirs per attempt) and watchdog aggregates it into `pipeline_health.json` (`sync_health`, note on recent discards). Remaining workflows adopt in M6 stage B after a green dispatch soak.
+- **Detection**: M6 landed - all six writer workflows emit JSONL telemetry to `state/sync_log.jsonl` (conflicts_resolved / discarded_theirs per attempt) via `.github/actions/bot-data-sync`; watchdog aggregates into `pipeline_health.json` (`sync_health`, note on recent discards). Stage A soaked green (watchdog dispatch x2 incl. telemetry persistence fix); stage B rolled collect/editor/curator/quiz/positions with per-workflow historical conflict semantics preserved.
 - **Rollback**: git history itself (bot commits are granular); `revert` the losing commit.
 - **Test strategy**: characterization tests for `scripts/merge_json.py` union semantics (exists today? no dedicated test file found - gap); dry-run harness replaying a recorded conflict scenario.
 
