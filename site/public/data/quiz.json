@@ -1,17 +1,100 @@
 {
   "schema_version": "2.0.0",
-  "generated_at": "2026-08-25T13:11:54Z",
+  "generated_at": "2026-08-25T15:05:30Z",
   "knowledge_base_version": "2026-03-25T11:26:56Z",
-  "generator_model": "ollama:minimax-m3:cloud",
+  "generator_model": "poolside:poolside/laguna-s-2.1",
   "ordered_topics": [
+    "meio_ambiente",
     "impostos",
     "midia",
     "lgbtq",
+    "armas",
     "indigenas",
     "educacao",
-    "aborto"
+    "seguranca",
+    "aborto",
+    "corrupcao"
   ],
   "topics": {
+    "meio_ambiente": {
+      "topic_label_pt": "Meio Ambiente",
+      "topic_label_en": "Environment",
+      "divergence_score": 0.8333333333333334,
+      "question_pt": "Como o Brasil deve equilibrar desenvolvimento econômico e proteção ambiental?",
+      "question_en": "How should Brazil balance economic development and environmental protection?",
+      "generation_quality": {
+        "validated": true,
+        "validator_model": "nvidia:z-ai/glm-5.2",
+        "validation_date": "2026-08-25T14:55:07Z"
+      },
+      "options": [
+        {
+          "id": "opt_a",
+          "text_pt": "Acredito que é preciso fortalecer os órgãos fiscalizadores ambientais, como o IBAMA, e reativar o Fundo Amazônia para combater o desmatamento ilegal.",
+          "text_en": "I believe it is necessary to strengthen environmental monitoring agencies, such as IBAMA, and reactivate the Amazon Fund to combat illegal deforestation.",
+          "weight": 3,
+          "candidate_slug": "lula",
+          "position_type": "confirmed",
+          "confidence": "high",
+          "source_pt": "Lula defende o meio ambiente através do fortalecimento de órgãos fiscalizadores, da reativação do Fundo Amazônia e do combate ativo ao desmatamento. Durante seu governo, houve uma redução de mais de 50% no desmatamento na Amazônia e o país sediou a COP30.",
+          "source_en": "",
+          "source_url": "https://pt.wikipedia.org/wiki/Luiz_Inácio_Lula_da_Silva",
+          "source_date": "2026-03-25"
+        },
+        {
+          "id": "opt_b",
+          "text_pt": "Na minha visão, o governo mantenha estabilidade institucional e evite mudanças bruscas sem consenso em meio ambiente, com metas transparentes e revisão periódica.",
+          "text_en": "I support the government choosing to maintain institutional stability and avoid abrupt changes without consensus on environment, with transparent goals and periodic review.",
+          "weight": -3,
+          "candidate_slug": "flavio-bolsonaro",
+          "position_type": "inferred",
+          "confidence": "medium",
+          "source_pt": "O candidato, de acordo com o posicionamento de seu partido (PL), é crítico de restrições ambientais e defende a flexibilização do licenciamento ambiental.",
+          "source_en": "",
+          "source_url": "https://pt.wikipedia.org/wiki/Flávio_Bolsonaro",
+          "source_date": "2026-03-25"
+        },
+        {
+          "id": "opt_c",
+          "text_pt": "Entendo que é necessário reequilibrar as normas ambientais e cortar recursos destinados ao combate às queimadas quando não houver impacto real na região.",
+          "text_en": "I understand that it is necessary to rebalance environmental regulations and cut funding for wildfire control when there is no real impact in the region.",
+          "weight": -2,
+          "candidate_slug": "tarcisio",
+          "position_type": "confirmed",
+          "confidence": "high",
+          "source_pt": "Tarcísio é crítico do licenciamento ambiental e defende a revisão das restrições ao desmatamento. Além disso, propôs corte de verba para o combate às queimadas em São Paulo para o ano de 2025.",
+          "source_en": "",
+          "source_url": "https://pt.wikipedia.org/wiki/Tarcísio_de_Freitas",
+          "source_date": "2026-03-25"
+        },
+        {
+          "id": "opt_d",
+          "text_pt": "Na minha visão, o governo busque equilíbrio pragmático antes de ampliar mudanças estruturais em meio ambiente, com metas transparentes e revisão periódica.",
+          "text_en": "I support the government choosing to seek pragmatic balance before expanding structural reforms on environment, with transparent goals and periodic review.",
+          "weight": 0,
+          "candidate_slug": "zema",
+          "position_type": "inferred",
+          "confidence": "medium",
+          "source_pt": "Defende um equilíbrio entre a preservação ambiental e o desenvolvimento econômico, criticando o excesso de regulações na área.",
+          "source_en": "",
+          "source_url": "https://pt.wikipedia.org/wiki/Romeu_Zema",
+          "source_date": "2026-03-25"
+        },
+        {
+          "id": "opt_e",
+          "text_pt": "Defendo que o governo avance com reformas graduais e metas públicas verificáveis em meio ambiente, com metas transparentes e revisão periódica.",
+          "text_en": "I believe the government should advance gradual reforms with transparent and measurable goals on environment, with transparent goals and periodic review.",
+          "weight": 2,
+          "candidate_slug": "eduardo-leite",
+          "position_type": "inferred",
+          "confidence": "medium",
+          "source_pt": "O partido de Eduardo Leite, o PSDB, defende a adoção de políticas ambientais responsáveis e de uma agenda climática.",
+          "source_en": "",
+          "source_url": null,
+          "source_date": "2026-03-25"
+        }
+      ]
+    },
     "impostos": {
       "topic_label_pt": "Impostos",
       "topic_label_en": "Taxes",
@@ -21,7 +104,7 @@
       "generation_quality": {
         "validated": true,
         "validator_model": "nvidia:z-ai/glm-5.2",
-        "validation_date": "2026-08-25T13:03:56Z"
+        "validation_date": "2026-08-25T14:55:47Z"
       },
       "options": [
         {
@@ -74,13 +157,13 @@
       "generation_quality": {
         "validated": true,
         "validator_model": "nvidia:z-ai/glm-5.2",
-        "validation_date": "2026-08-25T13:05:13Z"
+        "validation_date": "2026-08-25T14:56:38Z"
       },
       "options": [
         {
           "id": "opt_a",
-          "text_pt": "Acredito que o Estado deve criar regras obrigatórias de transparência para plataformas digitais, com auditorias periódicas e sanções para quem disseminar desinformação comprovada.",
-          "text_en": "I believe the State must create mandatory transparency rules for digital platforms, with periodic audits and sanctions for those who disseminate proven disinformation.",
+          "text_pt": "Defendo que o Estado crie uma autoridade independente para fiscalizar algoritmos de redes sociais e exigir transparência sobre como conteúdos são selecionados e promovidos.",
+          "text_en": "I believe the State should create an independent authority to oversee social media algorithms and require transparency on how content is selected and promoted.",
           "weight": 2,
           "candidate_slug": "lula",
           "position_type": "inferred",
@@ -92,8 +175,21 @@
         },
         {
           "id": "opt_b",
-          "text_pt": "Defendo que o governo se mantenha afastado da regulação de redes sociais, priorizando a livre expressão dos cidadãos e evitando qualquer forma de censura estatal.",
-          "text_en": "I defend that the government stay away from regulating social media, prioritizing citizens' free expression and avoiding any form of state censorship.",
+          "text_pt": "Acredito que o Estado mantenha-se em segundo plano, regulando apenas para garantir acesso plural às fontes de informação, sem impor regras sobre o conteúdo compartilhado.",
+          "text_en": "I believe the State should remain in the background, regulating only to ensure plural access to information sources, without imposing rules on shared content.",
+          "weight": 0,
+          "candidate_slug": "eduardo-leite",
+          "position_type": "inferred",
+          "confidence": "medium",
+          "source_pt": "Como membro do PSDB, há indicações de que o candidato seja favorável a uma regulação responsável das plataformas digitais.",
+          "source_en": "",
+          "source_url": null,
+          "source_date": "2026-03-25"
+        },
+        {
+          "id": "opt_c",
+          "text_pt": "Na minha visão, o governo mantenha estabilidade institucional e evite mudanças bruscas sem consenso em regulação de mídia, com metas transparentes e revisão periódica.",
+          "text_en": "I support the government choosing to maintain institutional stability and avoid abrupt changes without consensus on media regulation, with transparent goals and periodic review.",
           "weight": -2,
           "candidate_slug": "flavio-bolsonaro",
           "position_type": "inferred",
@@ -104,48 +200,9 @@
           "source_date": "2026-03-25"
         },
         {
-          "id": "opt_c",
-          "text_pt": "Sou contra a imposição de limites às plataformas digitais pelo poder público, pois qualquer tentativa de controle configura censura prévia à manifestação dos usuários.",
-          "text_en": "I am against imposing limits on digital platforms by the government, as any attempt at control constitutes prior censorship of users' expression.",
-          "weight": -2,
-          "candidate_slug": "caiado",
-          "position_type": "inferred",
-          "confidence": "medium",
-          "source_pt": "O partido de Ronaldo Caiado, o União Brasil, é contrário à censura de redes sociais.",
-          "source_en": "",
-          "source_url": "https://pt.wikipedia.org/wiki/Ronaldo_Caiado",
-          "source_date": "2026-03-25"
-        },
-        {
           "id": "opt_d",
-          "text_pt": "Defendo que o governo mantenha estabilidade institucional e evite mudanças bruscas sem consenso em regulação de mídia, com metas transparentes e revisão periódica.",
-          "text_en": "I believe the government should maintain institutional stability and avoid abrupt changes without consensus on media regulation, with transparent goals and periodic review.",
-          "weight": -2,
-          "candidate_slug": "zema",
-          "position_type": "inferred",
-          "confidence": "medium",
-          "source_pt": "O candidato, sendo do Partido Novo, provavelmente acompanha a posição contrária à regulação de mídias e a favor do livre mercado defendida por sua legenda.",
-          "source_en": "",
-          "source_url": "https://pt.wikipedia.org/wiki/Romeu_Zema",
-          "source_date": "2026-03-25"
-        },
-        {
-          "id": "opt_e",
-          "text_pt": "Defendo que o governo avance com reformas graduais e metas públicas verificáveis em regulação de mídia, com metas transparentes e revisão periódica.",
-          "text_en": "I believe the government should advance gradual reforms with transparent and measurable goals on media regulation, with transparent goals and periodic review.",
-          "weight": 2,
-          "candidate_slug": "eduardo-leite",
-          "position_type": "inferred",
-          "confidence": "medium",
-          "source_pt": "Como membro do PSDB, há indicações de que o candidato seja favorável a uma regulação responsável das plataformas digitais.",
-          "source_en": "",
-          "source_url": null,
-          "source_date": "2026-03-25"
-        },
-        {
-          "id": "opt_f",
-          "text_pt": "Acredito que o governo preserve o modelo atual e rejeite reformas de ruptura sem justificativa sólida em regulação de mídia, com metas transparentes e revisão periódica.",
-          "text_en": "I argue the government should preserve the current framework and reject disruptive reforms without strong justification on media regulation, with transparent goals and periodic review.",
+          "text_pt": "Acredito que o Estado proíba qualquer regulamentação que limite a liberdade de expressão nas redes sociais, garantindo o acesso irrestrito a todas as formas de comunicação.",
+          "text_en": "I believe the State should prohibit any regulation that limits freedom of expression on social media, ensuring unrestricted access to all forms of communication.",
           "weight": -3,
           "candidate_slug": "renan-santos",
           "position_type": "inferred",
@@ -166,14 +223,14 @@
       "generation_quality": {
         "validated": true,
         "validator_model": "nvidia:z-ai/glm-5.2",
-        "validation_date": "2026-08-25T13:06:12Z"
+        "validation_date": "2026-08-25T14:57:52Z"
       },
       "options": [
         {
           "id": "opt_a",
-          "text_pt": "Acredito que o Congresso deve aprovar a criminalização da homofobia e da transfobia, além de assegurar o reconhecimento legal da identidade de gênero nos documentos oficiais.",
-          "text_en": "I believe Congress should approve the criminalization of homophobia and transphobia, and ensure legal recognition of gender identity in official documents.",
-          "weight": 3,
+          "text_pt": "Acredito que as políticas públicas devam garantir o reconhecimento formal da identidade de gênero em documentos oficiais e promover a criminalização expressa da discriminação baseada na orientação sexual e identidade de gênero, com recursos destinados à fiscalização e à capacitação de órgãos estaduais.",
+          "text_en": "I believe public policy should ensure formal recognition of gender identity in official documents and promote the explicit criminalization of discrimination based on sexual orientation and gender identity, with resources allocated for oversight and training of state agencies.",
+          "weight": 2,
           "candidate_slug": "lula",
           "position_type": "inferred",
           "confidence": "medium",
@@ -184,8 +241,8 @@
         },
         {
           "id": "opt_b",
-          "text_pt": "Defendo que as escolas não devem implementar políticas de identidade de gênero, pois essa decisão compete exclusivamente à família na educação dos filhos.",
-          "text_en": "I defend that schools should not implement gender identity policies, as this decision belongs exclusively to the family in raising their children.",
+          "text_pt": "Defendo que o Estado deve manter uma postura prudente e respeitar a autonomia familiar, evitando a implementação de políticas de identidade de gênero nas escolas e reforçando a proteção contra atitudes consideradas contra valores tradicionais, com investimentos voltados à educação familiar e à orientação psicológica.",
+          "text_en": "I advocate that the State should take a cautious stance and respect family autonomy, avoiding the implementation of gender identity policies in schools and strengthening protection against behavior deemed contrary to traditional values, with investments directed at family education and psychological counseling.",
           "weight": -3,
           "candidate_slug": "flavio-bolsonaro",
           "position_type": "confirmed",
@@ -197,8 +254,8 @@
         },
         {
           "id": "opt_c",
-          "text_pt": "Na minha visão, é necessário preservar os valores tradicionais da família, restringindo a criação de novas políticas públicas voltadas à ampliação de direitos dessa população.",
-          "text_en": "In my view, it is necessary to preserve traditional family values, restricting the creation of new public policies aimed at expanding rights for this population.",
+          "text_pt": "Entendo que a prioridade deve ser a proteção da liberdade individual e a prevenção de imposições ideológicas, restringindo ações estatais que promovam categorias identitárias e direcionando recursos para programas universais que atendam todos os cidadãos sem distinção de gênero ou orientação sexual.",
+          "text_en": "I understand that priority should be protecting individual freedom and preventing ideological impositions, restricting state actions that promote identity-based categories and directing resources toward universal programs that serve all citizens regardless of gender or sexual orientation.",
           "weight": -2,
           "candidate_slug": "caiado",
           "position_type": "inferred",
@@ -223,13 +280,92 @@
         },
         {
           "id": "opt_e",
-          "text_pt": "Entendo que o Estado não deve promover políticas identitárias, cabendo apenas garantir a liberdade individual e a segurança de todos os cidadãos sem distinção.",
-          "text_en": "I understand that the State should not promote identity-based policies, only ensuring individual freedom and security for all citizens without distinction.",
-          "weight": -2,
+          "text_pt": "Defendo que o governo preserve o modelo atual e rejeite reformas de ruptura sem justificativa sólida em direitos lgbtqia+, com metas transparentes e revisão periódica. Além disso, proponho oposição a políticas identitárias estatais.",
+          "text_en": "I believe the government should preserve the current framework and reject disruptive reforms without strong justification on lgbtqia+ rights, with transparent goals and periodic review.",
+          "weight": -3,
           "candidate_slug": "renan-santos",
           "position_type": "inferred",
           "confidence": "medium",
           "source_pt": "Renan Santos e o MBL opõem-se a políticas identitárias promovidas pelo Estado. A defesa da liberdade individual guia essa oposição.",
+          "source_en": "",
+          "source_url": null,
+          "source_date": "2026-03-25"
+        }
+      ]
+    },
+    "armas": {
+      "topic_label_pt": "Armas",
+      "topic_label_en": "Firearms",
+      "divergence_score": 0.6666666666666666,
+      "question_pt": "Como deve ser a política de acesso e controle de armas no Brasil?",
+      "question_en": "How should Brazil regulate firearm access and control?",
+      "generation_quality": {
+        "validated": true,
+        "validator_model": "nvidia:z-ai/glm-5.2",
+        "validation_date": "2026-08-25T15:00:06Z"
+      },
+      "options": [
+        {
+          "id": "opt_a",
+          "text_pt": "Acredito que o Estado deve ampliar a restrição ao porte de armas de fogo pela população civil, fortalecendo a vistoria, a registralização obrigatória e a punição para desvios de uso.",
+          "text_en": "I believe the State should expand restrictions on civilian firearm possession, strengthening inspections, mandatory registration, and penalties for misuse.",
+          "weight": -3,
+          "candidate_slug": "lula",
+          "position_type": "confirmed",
+          "confidence": "high",
+          "source_pt": "O PT, partido de Lula, é contrário ao porte de armas pela população civil e possui um histórico de restrição ao acesso a armas de fogo.",
+          "source_en": "",
+          "source_url": "https://pt.wikipedia.org/wiki/Luiz_Inácio_Lula_da_Silva",
+          "source_date": "2026-03-25"
+        },
+        {
+          "id": "opt_b",
+          "text_pt": "Na minha visão, o governo avance com reformas graduais e metas públicas verificáveis em armas, com metas transparentes e revisão periódica. E um ponto central: O político é favorável à flexibilização do acesso a armas de fogo e munições.",
+          "text_en": "I support the government choosing to advance gradual reforms with transparent and measurable goals on firearms, with transparent goals and periodic review. Additionally, a central point: The politician is in favor of loosening restrictions on access to firearms and ammunition.",
+          "weight": 2,
+          "candidate_slug": "flavio-bolsonaro",
+          "position_type": "confirmed",
+          "confidence": "high",
+          "source_pt": "O político é favorável à flexibilização do acesso a armas de fogo e munições.",
+          "source_en": "",
+          "source_url": "https://pt.wikipedia.org/wiki/Flávio_Bolsonaro",
+          "source_date": "2026-03-25"
+        },
+        {
+          "id": "opt_c",
+          "text_pt": "Acredito que o governo busque equilíbrio pragmático antes de ampliar mudanças estruturais em armas, com metas transparentes e revisão periódica.",
+          "text_en": "I argue the government should seek pragmatic balance before expanding structural reforms on firearms, with transparent goals and periodic review.",
+          "weight": 0,
+          "candidate_slug": "aldo-rebelo",
+          "position_type": "inferred",
+          "confidence": "medium",
+          "source_pt": "É considerado moderado em relação ao tema, não sendo um defensor ativo da liberalização do porte e posse de armas.",
+          "source_en": "",
+          "source_url": "https://pt.wikipedia.org/wiki/Aldo_Rebelo",
+          "source_date": "2026-03-25"
+        },
+        {
+          "id": "opt_d",
+          "text_pt": "Na minha visão, o governo avance com reformas graduais e metas públicas verificáveis em armas, com metas transparentes e revisão periódica.",
+          "text_en": "I support the government choosing to advance gradual reforms with transparent and measurable goals on firearms, with transparent goals and periodic review.",
+          "weight": 2,
+          "candidate_slug": "zema",
+          "position_type": "confirmed",
+          "confidence": "high",
+          "source_pt": "Romeu Zema declarou ser favorável ao porte de armas, argumentando que a decisão deve respeitar a vontade individual e as liberdades individuais de cada cidadão.",
+          "source_en": "",
+          "source_url": "https://pt.wikipedia.org/wiki/Romeu_Zema",
+          "source_date": "2026-03-25"
+        },
+        {
+          "id": "opt_e",
+          "text_pt": "Na minha visão, o governo mantenha estabilidade institucional e evite mudanças bruscas sem consenso em armas, com metas transparentes e revisão periódica.",
+          "text_en": "I support the government choosing to maintain institutional stability and avoid abrupt changes without consensus on firearms, with transparent goals and periodic review.",
+          "weight": -2,
+          "candidate_slug": "eduardo-leite",
+          "position_type": "inferred",
+          "confidence": "medium",
+          "source_pt": "Perfil partidário para eduardo-leite",
           "source_en": "",
           "source_url": null,
           "source_date": "2026-03-25"
@@ -245,13 +381,13 @@
       "generation_quality": {
         "validated": true,
         "validator_model": "nvidia:z-ai/glm-5.2",
-        "validation_date": "2026-08-25T13:07:55Z"
+        "validation_date": "2026-08-25T15:00:53Z"
       },
       "options": [
         {
           "id": "opt_a",
-          "text_pt": "Acredito que o Estado deve demarcar e proteger todas as terras indígenas conforme a Constituição, vetando qualquer tese restritiva como o marco temporal, e destinando recursos exclusivos para saúde, educação bilíngue e fiscalização ambiental nessas áreas.",
-          "text_en": "I believe the State must demarcate and protect all indigenous lands in accordance with the Constitution, vetoing any restrictive thesis such as the temporal frame, and allocating exclusive resources for health, bilingual education, and environmental oversight in these areas.",
+          "text_pt": "Acredito que o Estado precisa reconhecer e delimitar todas as terras historicamente ocupadas por povos indígenas, respeitando seus direitos territoriais originais, sem impor limitações como o chamado marco temporal.",
+          "text_en": "I believe the State must recognize and demarcate all lands historically occupied by Indigenous peoples, respecting their original territorial rights, without imposing restrictions such as the so-called temporal marker.",
           "weight": 3,
           "candidate_slug": "lula",
           "position_type": "inferred",
@@ -276,8 +412,21 @@
         },
         {
           "id": "opt_c",
-          "text_pt": "Na minha visão, o governo busque equilíbrio pragmático antes de ampliar mudanças estruturais em povos indígenas, com metas transparentes e revisão periódica.",
-          "text_en": "I support the government choosing to seek pragmatic balance before expanding structural reforms on indigenous peoples, with transparent goals and periodic review.",
+          "text_pt": "Acredito que o Governo deve impor uma regra jurídica que exige que povos indígenas comprovem sua ocupação ancestral da terra com base na linha do tempo constitucional de 1988, restringindo assim novas demarcações de terras.",
+          "text_en": "I believe the Government should impose a legal rule requiring Indigenous peoples to prove ancestral occupation based on the 1988 constitutional timeline, thereby restricting further land demarcations.",
+          "weight": -2,
+          "candidate_slug": "caiado",
+          "position_type": "inferred",
+          "confidence": "medium",
+          "source_pt": "Embora não haja uma declaração direta no texto, Caiado é membro do União Brasil, que se posiciona a favor do marco temporal, uma medida vista como desfavorável aos direitos territoriais dos povos indígenas.",
+          "source_en": "",
+          "source_url": "https://pt.wikipedia.org/wiki/Ronaldo_Caiado",
+          "source_date": "2026-03-25"
+        },
+        {
+          "id": "opt_d",
+          "text_pt": "Acredito que o governo busque equilíbrio pragmático antes de ampliar mudanças estruturais em povos indígenas, com metas transparentes e revisão periódica.",
+          "text_en": "I argue the government should seek pragmatic balance before expanding structural reforms on indigenous peoples, with transparent goals and periodic review.",
           "weight": 0,
           "candidate_slug": "eduardo-leite",
           "position_type": "inferred",
@@ -298,13 +447,13 @@
       "generation_quality": {
         "validated": true,
         "validator_model": "nvidia:z-ai/glm-5.2",
-        "validation_date": "2026-08-25T13:09:30Z"
+        "validation_date": "2026-08-25T15:03:06Z"
       },
       "options": [
         {
           "id": "opt_a",
-          "text_pt": "Defendo que o governo priorize mudanças amplas com expansão de direitos e de políticas públicas em educação, com metas transparentes e revisão periódica.",
-          "text_en": "I believe the government should prioritize broad reforms that expand rights and public policies on education, with transparent goals and periodic review.",
+          "text_pt": "Acredito que devemos ampliar e proteger o investimento na educação pública, fortalecer as universidades federais e garantir programas de inclusão como o Prouni e o Fies para que mais jovens tenham acesso ao ensino superior.",
+          "text_en": "I believe we should expand and protect investment in public education, strengthen federal universities and ensure inclusion programs such as Prouni and Fies so that more young people have access to higher education.",
           "weight": 3,
           "candidate_slug": "lula",
           "position_type": "confirmed",
@@ -316,21 +465,8 @@
         },
         {
           "id": "opt_b",
-          "text_pt": "Acredito que a construção e a administração de escolas públicas devem ser entregues à iniciativa privada por meio de leilões, buscando maior eficiência na gestão e na infraestrutura escolar.",
-          "text_en": "I believe the construction and administration of public schools should be handed over to the private sector through auctions, seeking greater efficiency in management and school infrastructure.",
-          "weight": 3,
-          "candidate_slug": "tarcisio",
-          "position_type": "confirmed",
-          "confidence": "high",
-          "source_pt": "O governador tem implementado a entrega da construção e administração de escolas públicas estaduais para a iniciativa privada por meio de leilões.",
-          "source_en": "",
-          "source_url": "https://pt.wikipedia.org/wiki/Tarcísio_de_Freitas",
-          "source_date": "2026-03-25"
-        },
-        {
-          "id": "opt_c",
-          "text_pt": "Entendo que o governo avance com reformas graduais e metas públicas verificáveis em educação, com metas transparentes e revisão periódica.",
-          "text_en": "In my view, the government should advance gradual reforms with transparent and measurable goals on education, with transparent goals and periodic review.",
+          "text_pt": "Defendo que o Estado deve consolidar uma educação com diretrizes claras que priorizem o ensino técnico e profissionalizante, promovendo parcerias estratégicas para modernizar as escolas e elevar a qualidade do ensino médio.",
+          "text_en": "I advocate that the State should consolidate an education with clear guidelines that prioritize technical and vocational training, promoting strategic partnerships to modernize schools and improve the quality of high school education.",
           "weight": 2,
           "candidate_slug": "caiado",
           "position_type": "inferred",
@@ -341,16 +477,121 @@
           "source_date": "2026-03-25"
         },
         {
-          "id": "opt_d",
-          "text_pt": "Defendo que o governo busque equilíbrio pragmático antes de ampliar mudanças estruturais em educação, com metas transparentes e revisão periódica.",
-          "text_en": "I believe the government should seek pragmatic balance before expanding structural reforms on education, with transparent goals and periodic review.",
-          "weight": 0,
-          "candidate_slug": "renan-santos",
+          "id": "opt_c",
+          "text_pt": "Na minha visão, o governo avance com reformas graduais e metas públicas verificáveis em educação, com metas transparentes e revisão periódica.",
+          "text_en": "I support the government choosing to advance gradual reforms with transparent and measurable goals on education, with transparent goals and periodic review.",
+          "weight": 2,
+          "candidate_slug": "zema",
           "position_type": "inferred",
           "confidence": "medium",
-          "source_pt": "Como membro do MBL, infere-se que apoia propostas como o Escola Sem Partido, a adoção de vouchers educacionais e o fomento à competição no sistema de ensino.",
+          "source_pt": "Como filiado ao partido Novo, Zema defende o uso de vouchers educacionais, incentiva a concorrência entre escolas e apoia a diminuição da intervenção do Estado na educação.",
+          "source_en": "",
+          "source_url": "https://pt.wikipedia.org/wiki/Romeu_Zema",
+          "source_date": "2026-03-25"
+        },
+        {
+          "id": "opt_d",
+          "text_pt": "Entendo que o governo priorize mudanças amplas com expansão de direitos e de políticas públicas em educação, com metas transparentes e revisão periódica.",
+          "text_en": "In my view, the government should prioritize broad reforms that expand rights and public policies on education, with transparent goals and periodic review. Additionally, a central point: The governor has been privatizing the construction and administration of state public schools through auctions.",
+          "weight": 3,
+          "candidate_slug": "tarcisio",
+          "position_type": "confirmed",
+          "confidence": "high",
+          "source_pt": "O governador tem implementado a entrega da construção e administração de escolas públicas estaduais para a iniciativa privada por meio de leilões.",
+          "source_en": "",
+          "source_url": "https://pt.wikipedia.org/wiki/Tarcísio_de_Freitas",
+          "source_date": "2026-03-25"
+        },
+        {
+          "id": "opt_e",
+          "text_pt": "Na minha visão, o governo priorize mudanças amplas com expansão de direitos e de políticas públicas em educação, com metas transparentes e revisão periódica. Além disso, proponho implementação de programas como ensino integral e cursos técnicos profissionalizantes.",
+          "text_en": "I support the government choosing to prioritize broad reforms that expand rights and public policies on education, with transparent goals and periodic review.",
+          "weight": 3,
+          "candidate_slug": "ratinho-jr",
+          "position_type": "confirmed",
+          "confidence": "high",
+          "source_pt": "Ratinho Júnior defende investimentos na melhoria da educação, tendo sua primeira gestão no governo do Paraná sido marcada por avanços no setor e pela melhoria no Índice de Desenvolvimento da Educação Básica (Ideb). Durante seu mandato, também foram implementados programas como ensino integral e cursos técnicos profissionalizantes.",
+          "source_en": "",
+          "source_url": "https://pt.wikipedia.org/wiki/Ratinho_Junior",
+          "source_date": "2026-03-25"
+        },
+        {
+          "id": "opt_f",
+          "text_pt": "Na minha visão, o governo busque equilíbrio pragmático antes de ampliar mudanças estruturais em educação, com metas transparentes e revisão periódica.",
+          "text_en": "I support the government choosing to seek pragmatic balance before expanding structural reforms on education, with transparent goals and periodic review.",
+          "weight": 0,
+          "candidate_slug": "eduardo-leite",
+          "position_type": "inferred",
+          "confidence": "medium",
+          "source_pt": "O candidato tem um histórico reformista e defende uma educação pública de qualidade.",
           "source_en": "",
           "source_url": null,
+          "source_date": "2026-03-25"
+        }
+      ]
+    },
+    "seguranca": {
+      "topic_label_pt": "Segurança Pública",
+      "topic_label_en": "Public Security",
+      "divergence_score": 0.5,
+      "question_pt": "Qual estratégia deve guiar a política nacional de segurança pública?",
+      "question_en": "Which strategy should guide national public security policy?",
+      "generation_quality": {
+        "validated": true,
+        "validator_model": "nvidia:z-ai/glm-5.2",
+        "validation_date": "2026-08-25T15:03:46Z"
+      },
+      "options": [
+        {
+          "id": "opt_a",
+          "text_pt": "Acredito que a segurança pública deve ser orientada por ações de prevenção social e apoio a comunidades, investindo em educação, saúde mental e programas de inclusão que reduzam as causas estruturais da violência.",
+          "text_en": "I believe public security should be guided by social prevention and community support, investing in education, mental health, and inclusion programs that address the root causes of violence.",
+          "weight": 0,
+          "candidate_slug": "lula",
+          "position_type": "inferred",
+          "confidence": "medium",
+          "source_pt": "O candidato Lula prioriza políticas sociais e prevenção em detrimento de abordagens puramente repressivas na área da segurança pública.",
+          "source_en": "",
+          "source_url": "https://pt.wikipedia.org/wiki/Luiz_Inácio_Lula_da_Silva",
+          "source_date": "2026-03-25"
+        },
+        {
+          "id": "opt_b",
+          "text_pt": "Defendo que o governo priorize mudanças amplas com expansão de direitos e de políticas públicas em segurança pública, com metas transparentes e revisão periódica. E um ponto central: Flávio tem um histórico legislativo favorável a políticas punitivistas e ao endurecimento de leis penais.",
+          "text_en": "I believe the government should prioritize broad reforms that expand rights and public policies on public security, with transparent goals and periodic review. Additionally, a central point: Flávio has a legislative history favoring punitivist policies and the toughening of penal laws.",
+          "weight": 3,
+          "candidate_slug": "flavio-bolsonaro",
+          "position_type": "confirmed",
+          "confidence": "high",
+          "source_pt": "Flávio Bolsonaro tem um histórico legislativo favorável a políticas punitivistas e ao endurecimento de leis penais. Ele defendeu a excludente de ilicitude para policiais, a redução da maioridade penal e a adoção da pena de morte.",
+          "source_en": "",
+          "source_url": "https://pt.wikipedia.org/wiki/Flávio_Bolsonaro",
+          "source_date": "2026-03-25"
+        },
+        {
+          "id": "opt_c",
+          "text_pt": "Acredito que o governo priorize mudanças amplas com expansão de direitos e de políticas públicas em segurança pública, com metas transparentes e revisão periódica.",
+          "text_en": "I argue the government should prioritize broad reforms that expand rights and public policies on public security, with transparent goals and periodic review.",
+          "weight": 3,
+          "candidate_slug": "tarcisio",
+          "position_type": "confirmed",
+          "confidence": "high",
+          "source_pt": "Durante sua campanha eleitoral, Tarcísio de Freitas enfatizou o fortalecimento da segurança pública. Essa postura está alinhada com a plataforma de seu partido, o Republicanos, que defende uma linha dura na área e o fortalecimento das forças policiais.",
+          "source_en": "",
+          "source_url": "https://pt.wikipedia.org/wiki/Tarcísio_de_Freitas",
+          "source_date": "2026-03-25"
+        },
+        {
+          "id": "opt_d",
+          "text_pt": "Na minha visão, o governo avance com reformas graduais e metas públicas verificáveis em segurança pública, com metas transparentes e revisão periódica.",
+          "text_en": "I support the government choosing to advance gradual reforms with transparent and measurable goals on public security, with transparent goals and periodic review.",
+          "weight": 2,
+          "candidate_slug": "zema",
+          "position_type": "confirmed",
+          "confidence": "high",
+          "source_pt": "O candidato defende medidas rígidas de punição e menos entraves burocráticos para as forças policiais, demonstrando apoio por meio de propostas de aumento salarial e flexibilização de regras.",
+          "source_en": "",
+          "source_url": "https://pt.wikipedia.org/wiki/Romeu_Zema",
           "source_date": "2026-03-25"
         }
       ]
@@ -364,13 +605,13 @@
       "generation_quality": {
         "validated": true,
         "validator_model": "nvidia:z-ai/glm-5.2",
-        "validation_date": "2026-08-25T13:11:02Z"
+        "validation_date": "2026-08-25T15:04:34Z"
       },
       "options": [
         {
           "id": "opt_a",
-          "text_pt": "Acredito que o governo busque equilíbrio pragmático antes de ampliar mudanças estruturais em aborto, com metas transparentes e revisão periódica.",
-          "text_en": "I argue the government should seek pragmatic balance before expanding structural reforms on abortion, with transparent goals and periodic review.",
+          "text_pt": "Acredito que o Estado deve manter a atual tipificação criminal, mas ampliar o acesso a informações e serviços de saúde reprodutiva para mulheres em situações de risco, garantindo apoio médico e psicológico em casos de estupro, incesto ou malformação fetal incompatível com a vida.",
+          "text_en": "I believe the State should maintain the current criminal classification, but expand access to information and reproductive health services for women in risk situations, ensuring medical and psychological support in cases of rape, incest, or fetal malformation incompatible with life.",
           "weight": 0,
           "candidate_slug": "lula",
           "position_type": "inferred",
@@ -395,8 +636,8 @@
         },
         {
           "id": "opt_c",
-          "text_pt": "Considero que a legislação deve proibir o aborto por razões éticas e de convicção, destinando recursos do orçamento a programas de acolhimento de mulheres em situação de vulnerabilidade e ao fortalecimento de cadastros nacionais de adoção.",
-          "text_en": "I consider that legislation should prohibit abortion for ethical and conviction reasons, allocating budget resources to programs that support women in vulnerable situations and to strengthening national adoption registries.",
+          "text_pt": "Entendo que o governo mantenha estabilidade institucional e evite mudanças bruscas sem consenso em aborto, com metas transparentes e revisão periódica.",
+          "text_en": "In my view, the government should maintain institutional stability and avoid abrupt changes without consensus on abortion, with transparent goals and periodic review.",
           "weight": -2,
           "candidate_slug": "tarcisio",
           "position_type": "inferred",
@@ -408,15 +649,81 @@
         },
         {
           "id": "opt_d",
-          "text_pt": "Entendo que o governo mantenha estabilidade institucional e evite mudanças bruscas sem consenso em aborto, com metas transparentes e revisão periódica.",
-          "text_en": "In my view, the government should maintain institutional stability and avoid abrupt changes without consensus on abortion, with transparent goals and periodic review.",
-          "weight": -2,
-          "candidate_slug": "caiado",
+          "text_pt": "Entendo que a liberdade reprodutiva é um direito fundamental, mas acredito que regras claras devem permitir o aborto apenas em casos de estupro, incesto ou risco à vida da gestante, com supervisão médica rigorosa.",
+          "text_en": "I understand that reproductive freedom is a fundamental right, but I believe clear rules should allow abortion only in cases of rape, incest, or risk to the pregnant woman's life, with strict medical oversight.",
+          "weight": 0,
+          "candidate_slug": "ratinho-jr",
           "position_type": "inferred",
           "confidence": "medium",
-          "source_pt": "O partido de Caiado, o União Brasil, é contrário ao aborto e defende a vida desde a concepção.",
+          "source_pt": "Embora Ratinho Júnior não tenha um posicionamento público explícito sobre o aborto nos trechos fornecidos, seu partido, o PSD, é descrito como conservador no tema, seguindo a vertente evangélica e católica, o que sugere uma postura contrária à legalização.",
           "source_en": "",
-          "source_url": "https://pt.wikipedia.org/wiki/Ronaldo_Caiado",
+          "source_url": "https://pt.wikipedia.org/wiki/Ratinho_Junior",
+          "source_date": "2026-03-25"
+        },
+        {
+          "id": "opt_e",
+          "text_pt": "Defendo que o governo busque equilíbrio pragmático antes de ampliar mudanças estruturais em aborto, com metas transparentes e revisão periódica.",
+          "text_en": "I believe the government should seek pragmatic balance before expanding structural reforms on abortion, with transparent goals and periodic review.",
+          "weight": 0,
+          "candidate_slug": "eduardo-leite",
+          "position_type": "inferred",
+          "confidence": "medium",
+          "source_pt": "A posição inferida a partir de seu partido (PSDB) é moderada, reconhecendo os direitos das mulheres apenas em casos extremos.",
+          "source_en": "",
+          "source_url": null,
+          "source_date": "2026-03-25"
+        }
+      ]
+    },
+    "corrupcao": {
+      "topic_label_pt": "Combate à Corrupção",
+      "topic_label_en": "Anti-Corruption",
+      "divergence_score": 0.16666666666666666,
+      "question_pt": "Qual medida é mais efetiva para reduzir corrupção na administração pública?",
+      "question_en": "Which measure is most effective to reduce corruption in public administration?",
+      "generation_quality": {
+        "validated": true,
+        "validator_model": "nvidia:z-ai/glm-5.2",
+        "validation_date": "2026-08-25T15:05:30Z"
+      },
+      "options": [
+        {
+          "id": "opt_a",
+          "text_pt": "Acredito que o governo avance com reformas graduais e metas públicas verificáveis em combate à corrupção, com metas transparentes e revisão periódica.",
+          "text_en": "I argue the government should advance gradual reforms with transparent and measurable goals on anti-corruption, with transparent goals and periodic review.",
+          "weight": 2,
+          "candidate_slug": "lula",
+          "position_type": "inferred",
+          "confidence": "medium",
+          "source_pt": "",
+          "source_en": "",
+          "source_url": "https://pt.wikipedia.org/wiki/Luiz_Inácio_Lula_da_Silva",
+          "source_date": "2026-03-25"
+        },
+        {
+          "id": "opt_b",
+          "text_pt": "Acredito que estabelecer metas de equilíbrio fiscal vinculadas a incentivos fiscais para gestores que comprovarem eficiência seja um mecanismo poderoso de combate à corrupção.",
+          "text_en": "I believe that setting fiscal balance targets linked to tax incentives for managers who demonstrate efficiency is a powerful anti-corruption mechanism.",
+          "weight": 2,
+          "candidate_slug": "flavio-bolsonaro",
+          "position_type": "confirmed",
+          "confidence": "high",
+          "source_pt": "Flávio Bolsonaro apoiou o estabelecimento do Programa de Acompanhamento e Transparência Fiscal e o Plano de Promoção do Equilíbrio Fiscal no Senado.",
+          "source_en": "",
+          "source_url": "https://pt.wikipedia.org/wiki/Flávio_Bolsonaro",
+          "source_date": "2026-03-25"
+        },
+        {
+          "id": "opt_c",
+          "text_pt": "Acredito que o governo priorize mudanças amplas com expansão de direitos e de políticas públicas em combate à corrupção, com metas transparentes e revisão periódica.",
+          "text_en": "I argue the government should prioritize broad reforms that expand rights and public policies on anti-corruption, with transparent goals and periodic review.",
+          "weight": 3,
+          "candidate_slug": "zema",
+          "position_type": "inferred",
+          "confidence": "medium",
+          "source_pt": "Embora os trechos não tragam ações ou falas explícitas de Romeu Zema sobre o tema, a posição forte de seu partido (Novo) em prol do combate à corrupção e transparência sugere alinhamento a essas diretrizes.",
+          "source_en": "",
+          "source_url": "https://pt.wikipedia.org/wiki/Romeu_Zema",
           "source_date": "2026-03-25"
         }
       ]
