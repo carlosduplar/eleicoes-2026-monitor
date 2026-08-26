@@ -2,91 +2,63 @@
   "$schema": "../docs/schemas/articles.schema.json",
   "articles": [
     {
-      "id": "e569e8e0251acf09",
-      "url": "https://noticias.uol.com.br/ultimas-noticias/agencia-estado/2026/08/26/justica-do-df-multa-arruda-por-propaganda-antecipada.htm",
-      "title": "Justiça do DF multa Arruda por propaganda antecipada",
-      "source": "UOL Noticias",
-      "published_at": "2026-08-26T22:07:49Z",
-      "collected_at": "2026-08-26T22:07:49Z",
-      "status": "raw",
-      "relevance_score": 0.0,
-      "relevance_signals": null,
-      "candidates_mentioned": [],
-      "topics": [],
-      "narrative_cluster_id": null,
-      "duplicate_of": null,
-      "summaries": {
-        "pt-BR": "",
-        "en-US": ""
-      },
-      "content": "O ex-governador José Roberto Arruda (PSD) foi condenado na Justiça eleitoral do Distrito Federal a pagar uma multa de R$ 5 mil por propaganda eleitoral antecipada. Ele concorre ao governo do DF e pediu votos em candidato a deputado distrital que também foi condenado na ação.",
-      "source_category": "mainstream",
-      "sentiment_per_candidate": {},
-      "edit_history": [],
-      "disclaimer_pt": "Análise algorítmica. Não representa pesquisa de opinião.",
-      "disclaimer_en": "Algorithmic analysis. Does not represent polling data.",
-      "sentiment_score": 0.0,
-      "confidence_score": 0.0,
-      "_sentiment_scores": {},
-      "prominence_score": 0.0
-    },
-    {
-      "id": "d945605f21d1e49a",
-      "url": "https://noticias.uol.com.br/ultimas-noticias/agencia-estado/2026/08/26/candidato-gelson-merisio-psb-doa-r-1-milhao-a-propria-campanha-e-lidera-autodoacoes-em-sc.htm",
-      "title": "Candidato Gelson Merísio (PSB) doa R$ 1 milhão à própria campanha e lidera autodoações em SC",
-      "source": "UOL Noticias",
-      "published_at": "2026-08-26T22:07:49Z",
-      "collected_at": "2026-08-26T22:07:49Z",
-      "status": "raw",
-      "relevance_score": 0.0,
-      "relevance_signals": null,
-      "candidates_mentioned": [],
-      "topics": [],
-      "narrative_cluster_id": null,
-      "duplicate_of": null,
-      "summaries": {
-        "pt-BR": "",
-        "en-US": ""
-      },
-      "content": "O candidato ao governo de Santa Catarina Gelson Merísio (PSB) colocou R$ 1 milhão do próprio bolso na campanha eleitoral e passou a liderar o ranking de autodoações entre os candidatos ao governo estadual.",
-      "source_category": "mainstream",
-      "sentiment_per_candidate": {},
-      "edit_history": [],
-      "disclaimer_pt": "Análise algorítmica. Não representa pesquisa de opinião.",
-      "disclaimer_en": "Algorithmic analysis. Does not represent polling data.",
-      "sentiment_score": 0.0,
-      "confidence_score": 0.0,
-      "_sentiment_scores": {},
-      "prominence_score": 0.0
-    },
-    {
       "id": "d49585f16cf1fc37",
       "url": "https://noticias.uol.com.br/ultimas-noticias/agencia-estado/2026/08/26/tre-sp-multa-candidato-em-r-75-mil-por-impulsionar-propaganda-negativa-contra-lula-e-haddad.htm",
       "title": "TRE-SP multa candidato em R$ 7,5 mil por impulsionar propaganda negativa contra Lula e Haddad",
       "source": "UOL Noticias",
       "published_at": "2026-08-26T22:07:49Z",
       "collected_at": "2026-08-26T22:07:49Z",
-      "status": "raw",
-      "relevance_score": 0.0,
-      "relevance_signals": null,
-      "candidates_mentioned": [],
-      "topics": [],
+      "status": "validated",
+      "relevance_score": 0.95,
+      "relevance_signals": {
+        "candidate_signal": 0.5,
+        "topic_signal": 0.3,
+        "keyword_signal": 0.15,
+        "source_signal": 0.0
+      },
+      "candidates_mentioned": [
+        "lula"
+      ],
+      "topics": [
+        "eleicoes",
+        "corrupcao",
+        "politica_externa"
+      ],
       "narrative_cluster_id": null,
       "duplicate_of": null,
       "summaries": {
-        "pt-BR": "",
-        "en-US": ""
+        "pt-BR": "O TRE-SP multou o candidato a deputado federal Luiz Camargo (Novo) em R$ 7,5 mil por impulsionar vídeo com propaganda negativa irregular. O conteúdo comparava o governo Lula ao de Nicolás Maduro, criticava Fernando Haddad, o PT e as urnas eletrônicas.",
+        "en-US": "The São Paulo Regional Electoral Court (TRE-SP) fined federal deputy candidate Luiz Camargo (Novo) R$ 7,500 for boosting a video with irregular negative propaganda. The content compared Lula's government to Nicolás Maduro's, criticized Fernando Haddad, the Workers' Party (PT), and electronic voting machines."
       },
       "content": "O Tribunal Regional Eleitoral de São Paulo (TRE-SP) condenou o candidato a deputado federal Luiz Camargo (Novo) a pagar multa de R$ 7,5 mil por propaganda eleitoral irregular. Ele publicou e impulsionou vídeo em que compara o governo Lula ao governo venezuelano de Nicolás Maduro, critica Fernando Haddad (PT), o Partido dos Trabalhadores (PT) e as urnas eletrônicas.",
       "source_category": "mainstream",
-      "sentiment_per_candidate": {},
-      "edit_history": [],
+      "sentiment_per_candidate": {
+        "lula": "negativo"
+      },
+      "edit_history": [
+        {
+          "tier": "editor",
+          "at": "2026-08-26T23:54:31Z",
+          "provider": "openrouter",
+          "action": "validated",
+          "changes": [
+            "summary_pt",
+            "summary_en"
+          ]
+        }
+      ],
       "disclaimer_pt": "Análise algorítmica. Não representa pesquisa de opinião.",
       "disclaimer_en": "Algorithmic analysis. Does not represent polling data.",
-      "sentiment_score": 0.0,
-      "confidence_score": 0.0,
-      "_sentiment_scores": {},
-      "prominence_score": 0.0
+      "sentiment_score": -0.3,
+      "confidence_score": 1.0,
+      "_sentiment_scores": {
+        "lula": -0.3
+      },
+      "prominence_score": 0.0,
+      "_ai_provider": "nvidia",
+      "_ai_model": "minimaxai/minimax-m3",
+      "ai_provider_editor": "openrouter/free",
+      "editor_note": null
     },
     {
       "id": "428827aa08c4ddf9",
@@ -95,27 +67,56 @@
       "source": "Poder360",
       "published_at": "2026-08-26T22:04:23Z",
       "collected_at": "2026-08-26T22:08:09Z",
-      "status": "raw",
-      "relevance_score": 0.0,
-      "relevance_signals": null,
-      "candidates_mentioned": [],
-      "topics": [],
+      "status": "validated",
+      "relevance_score": 0.65,
+      "relevance_signals": {
+        "candidate_signal": 0.5,
+        "topic_signal": 0.05,
+        "keyword_signal": 0.05,
+        "source_signal": 0.05
+      },
+      "candidates_mentioned": [
+        "lula"
+      ],
+      "topics": [
+        "impostos",
+        "economia"
+      ],
       "narrative_cluster_id": null,
       "duplicate_of": null,
       "summaries": {
-        "pt-BR": "",
-        "en-US": ""
+        "pt-BR": "O presidente da Câmara, Hugo Motta, indicou o deputado Reginaldo Lopes (PT-MG) para presidir a comissão mista que analisará a MP que extingue a \"taxa das blusinhas\". A comissão será instalada em 1º de setembro, após acordo entre Lula, Alcolumbre e Motta. A medida precisa ser aprovada até 8 de setembro para não perder validade.",
+        "en-US": "Chamber President Hugo Motta appointed Deputy Reginaldo Lopes (PT-MG) to chair the joint committee analyzing the MP that eliminates the 'blusinhas tax'. The committee will be installed on September 1st, following an agreement between Lula, Alcolumbre, and Motta. The measure must be approved by September 8th to remain valid."
       },
       "content": "O presidente da Câmara dos Deputados, Hugo Motta (Republicanos-PB), indicou nesta 4ª feira (26.ago.2026) o deputado Reginaldo Lopes (PT-MG) para presidir a comissão mista sobre a chamada taxa das blusinhas –imposto de importação de 20% sobre compras internacionais de até US$ 50 feitas por pessoas físicas. O colegiado irá analisar a Medida Provisória do Executivo que acaba com a taxa. Ficou acertado entre o presidente Luiz Inácio Lula da Silva (PT), o presidente do Senado Davi Alcolumbre (União Brasil-AP) e Motta de que a comissão será instalada na 3ª feira (1º.set.2026). Os 3 se reuniram em almoço reservado no Palácio da Alvorada nesta tarde. A escolha de Reginaldo já era esperada e atende a uma preferência direta do Planalto, que articulava a nomeação de um aliado para conduzir os trabalhos no colegiado. Pelo arranjo acertado entre as Casas, a presidência da comissão mista fica sob responsabilidade de um deputado, enquanto a relatoria do texto caberá a um senador a ser indicado. Pelo regimento, o Senado e a Câmara tem de revezar na indicação das presidencias e relatorias das comissões mistas. TAXA DAS BLUSINHAS Editada pelo governo federal em maio de 2026, a MP reduziu a zero a alíquota do Imposto de Importação para compras internacionais de até US$ 50 realizadas por meio de empresas participantes do programa Remessa Conforme (como Shein, Shopee e AliExpress). A medida precisa ser aprovada pelas duas Casas até 8 de setembro de 2026 para não perder a validade.",
       "source_category": "politics",
-      "sentiment_per_candidate": {},
-      "edit_history": [],
+      "sentiment_per_candidate": {
+        "lula": "neutro"
+      },
+      "edit_history": [
+        {
+          "tier": "editor",
+          "at": "2026-08-26T23:54:41Z",
+          "provider": "openrouter",
+          "action": "validated",
+          "changes": [
+            "summary_pt",
+            "summary_en"
+          ]
+        }
+      ],
       "disclaimer_pt": "Análise algorítmica. Não representa pesquisa de opinião.",
       "disclaimer_en": "Algorithmic analysis. Does not represent polling data.",
-      "sentiment_score": 0.0,
-      "confidence_score": 0.0,
-      "_sentiment_scores": {},
-      "prominence_score": 0.0
+      "sentiment_score": 0.1,
+      "confidence_score": 1.0,
+      "_sentiment_scores": {
+        "lula": 0.1
+      },
+      "prominence_score": 0.0,
+      "_ai_provider": "nvidia",
+      "_ai_model": "minimaxai/minimax-m3",
+      "ai_provider_editor": "openrouter/free",
+      "editor_note": null
     },
     {
       "id": "d27b709f2767d4d8",
@@ -124,56 +125,57 @@
       "source": "JOTA",
       "published_at": "2026-08-26T22:02:57Z",
       "collected_at": "2026-08-26T22:08:12Z",
-      "status": "raw",
-      "relevance_score": 0.0,
-      "relevance_signals": null,
-      "candidates_mentioned": [],
-      "topics": [],
+      "status": "validated",
+      "relevance_score": 0.85,
+      "relevance_signals": {
+        "candidate_signal": 0.5,
+        "topic_signal": 0.25,
+        "keyword_signal": 0.05,
+        "source_signal": 0.05
+      },
+      "candidates_mentioned": [
+        "lula"
+      ],
+      "topics": [
+        "economia",
+        "politica_externa",
+        "eleicoes"
+      ],
       "narrative_cluster_id": null,
       "duplicate_of": null,
       "summaries": {
-        "pt-BR": "",
-        "en-US": ""
+        "pt-BR": "O presidente do Senado, Davi Alcolumbre, anunciou que pautará na próxima semana o projeto de lei que cria o marco legal dos minerais críticos e o regime especial para data centers (Redata), após reunião com Lula e Hugo Motta. As duas propostas, estagnadas no Senado, serão priorizadas com possíveis ajustes, enquanto a PEC do fim da escala 6×1 segue em tramitação na CCJ.",
+        "en-US": "Senate President Davi Alcolumbre announced he will schedule the critical minerals bill and the Data Center Infrastructure Act (Redata) for next week, following a meeting with Lula and Hugo Motta. Both proposals, stalled in the Senate, will be prioritized pending potential amendments, while the PEC to end the 6×1 workday continues in the CCJ."
       },
       "content": "O presidente do Senado, Davi Alcolumbre (União-AP), disse nesta quarta-feira (26/8) que vai pautar na próxima semana o projeto de lei que cria o marco legal dos minerais críticos e o regime especial para a implementação de data centers, o Redata . Conheça o JOTA PRO Poder, plataforma de monitoramento que oferece transparência e previsibilidade para empresas As duas propostas estão travadas há meses no Senado. O anúncio foi feito após encontro de Alcolumbre com o presidente Lula (PT) e o presidente da Câmara, Hugo Motta (Republicanos-PB), no Palácio da Alvorada. Na reunião, os três também discutiram a PEC do fim da escala 6×1, a PEC da Segurança e a medida provisória que zerou a chamada taxa das blusinhas para compras de até US$ 50. Minerais críticos e Redata Alcolumbre lembrou que há outro texto sobre minerais críticos em tramitação no Senado, de autoria de Renan Calheiros (MDB-AL), mas se comprometeu a dar andamento à proposta aprovada pela Câmara. O presidente do Senado indicou, porém, que o texto pode sofrer resistência e afirmou que discutirá eventuais mudanças com os senadores. “Quero me comprometer também que esta matéria estará pautada na semana que vem. Vamos fazer um esforço com todos os colegas senadores que desejam fazer algum tipo de alteração em relação a esse assunto, sentar numa mesa, discutir o que é possível, o que não é possível”, afirmou a jornalistas. Em relação ao Redata, explicou que a proposta não foi votada anteriormente porque chegou ao Senado no último dia de vigência da medida provisória, sem tempo para que os senadores analisassem o texto e apresentassem alterações. Segundo ele, esse foi o único motivo para a falta de deliberação. Lula defendeu as duas propostas como estratégicas para a soberania nacional. Sobre o Redata, afirmou que o programa pode atrair investimentos de até R$ 500 bilhões para a instalação de data centers no Brasil. Motta também destacou que a medida permitiria manter no país dados da população brasileira. PEC 6×1 Lula reforçou que o fim da escala 6×1 é uma das prioridades de seu governo e pediu a Alcolumbre e Motta a aprovação da PEC antes das eleições. “O fim da escala 6×1 será uma coisa muito importante para o Brasil. Eu diria para as mulheres que trabalham e para os homens que trabalham, porque vão ter mais tempo de cuidar dos seus”, disse. Na sequência, Alcolumbre afirmou que a proposta já foi encaminhada à Comissão de Constituição e Justiça (CCJ) e que o relator, Omar Aziz (PSD-AM), prepara o relatório para apresentá-lo na próxima quarta-feira (2/9). O presidente do Senado ressaltou, contudo, que a proposta seguirá o rito regimental. PEC da Segurança O presidente do Senado acrescentou que a PEC da Segurança também deverá ser apreciada pela CCJ na próxima semana. O texto é tratado pelo governo como passo necessário para a criação do Ministério da Segurança Pública, outra prioridade de Lula. “A votação dessa PEC da Segurança vai dar a oportunidade, como o senhor mesmo já se comprometeu, de criar o Ministério da Segurança, que terá o apoio, digo desde já, do Congresso Nacional”, afirmou Alcolumbre. Lula disse que, após a aprovação da PEC, criará imediatamente o Ministério da Segurança Pública. Segundo o presidente, o governo discutirá um orçamento para a pasta e buscará pactuar com estados e municípios o modelo de segurança e o papel de cada ente federativo. Taxa das blusinhas Alcolumbre e Motta também se comprometeram a acelerar a votação da medida provisória editada por Lula que zerou a chamada taxa das blusinhas para compras de até US$ 50. A MP perde a validade no início de setembro e ainda precisa passar por uma comissão mista e pelos plenários da Câmara e do Senado. Conheça o JOTA PRO Eleições, cobertura eleitoral especial do JOTA que oferece transparência e previsibilidade para empresas Segundo Motta, a comissão será instalada “o mais rápido possível”, com presidência indicada pela Câmara e relatoria pelo Senado, para que a análise seja concluída durante o esforço concentrado da próxima semana. Os presidentes das duas Casas não informaram, contudo, quem será o relator da medida, definição que ainda estava pendente. Alcolumbre afirmou que o colegiado deve ser instalado provavelmente na terça-feira (1º/9) e garantiu que a proposta será analisada a tempo. “Esta MP vai ser deliberada no esforço concentrado, não vai caducar. Vai ser deliberada na comissão especial, que vamos instalar provavelmente na terça. Precisa ser deliberada na comissão, depois no plenário da Câmara e depois no Senado”, disse.",
       "source_category": "politics",
-      "sentiment_per_candidate": {},
-      "edit_history": [],
-      "disclaimer_pt": "Análise algorítmica. Não representa pesquisa de opinião.",
-      "disclaimer_en": "Algorithmic analysis. Does not represent polling data.",
-      "sentiment_score": 0.0,
-      "confidence_score": 0.0,
-      "_sentiment_scores": {},
-      "prominence_score": 0.0
-    },
-    {
-      "id": "56eb68a9280912c9",
-      "url": "https://www.metropoles.com/sao-paulo/professor-de-futsal-e-preso-por-crimes-contra-adolescentes-na-internet",
-      "title": "Professor de futsal é preso por crimes contra adolescentes na internet",
-      "source": "Metropoles",
-      "published_at": "2026-08-26T22:02:37Z",
-      "collected_at": "2026-08-26T22:08:07Z",
-      "status": "raw",
-      "relevance_score": 0.0,
-      "relevance_signals": null,
-      "candidates_mentioned": [],
-      "topics": [],
-      "narrative_cluster_id": null,
-      "duplicate_of": null,
-      "summaries": {
-        "pt-BR": "",
-        "en-US": ""
+      "sentiment_per_candidate": {
+        "lula": "positivo"
       },
-      "content": "Um professor de futsal foi preso nesta quarta-feira (26/8), em Guarulhos, na Grande São Paulo , durante uma operação da Polícia Civil que investiga crimes contra a dignidade sexual de crianças e adolescentes praticados pela internet. A investigação é conduzida pela Delegacia de Defesa da Mulher ( DDM ) de São José do Rio Preto e começou após a identificação de três adolescentes que moram no município, no interior paulista. Segundo a Polícia Civil, o homem, é investigado por usar perfis falsos em redes sociais e aplicativos de mensagens para se aproximar de crianças e adolescentes. 3 imagens Fechar modal. 1 de 3 Divulgação / Polícia Civil 2 de 3 Investigação começou após três adolescentes denunciarem o profressor à polícia o compartilhamento de conteúdos íntimos na internet Divulgação / Polícia Civil 3 de 3 Divulgação / Polícia Civil De acordo com a apuração, após conquistar a confiança das vítimas, ele teria induzido os adolescentes a produzir e enviar conteúdos de cunho sexual. A polícia investiga ainda se, posteriormente, o suspeito utilizava ameaças e constrangimentos para obter novos arquivos íntimos. A investigação também aponta que o material era armazenado e compartilhado pela internet. Leia também Demétrio Vecchioli Justiça Eleitoral manda Zé Dirceu apagar propaganda com Zé Gotinha São Paulo MPSP denuncia Arthur do Val por incitação ao crime após comentário em vídeo São Paulo Instituto Pró-Vítima pede à PGR federalização do caso Mariana Ferrer São Paulo Com 23 casos, SP amplia vacinação contra o sarampo em três cidades Prisão do professor A Polícia Civil solicitou à Justiça a prisão preventiva do investigado e mandados de busca e apreensão, que foram cumpridos durante a Operação Offside. Além da prisão preventiva, o homem também foi autuado em flagrante após a polícia encontrar conteúdos de interesse da investigação em aparelhos eletrônicos apreendidos durante a ação, segundo a corporação. Os dispositivos serão encaminhados para perícia. A análise deve ajudar os investigadores a aprofundar o caso e verificar a existência de outras possíveis vítimas. O homem permanece à disposição da Justiça. A investigação continua.",
-      "source_category": "mainstream",
-      "sentiment_per_candidate": {},
-      "edit_history": [],
+      "edit_history": [
+        {
+          "tier": "editor",
+          "at": "2026-08-26T23:54:51Z",
+          "provider": "openrouter",
+          "action": "validated",
+          "changes": [
+            "summary_pt",
+            "summary_en"
+          ]
+        }
+      ],
       "disclaimer_pt": "Análise algorítmica. Não representa pesquisa de opinião.",
       "disclaimer_en": "Algorithmic analysis. Does not represent polling data.",
-      "sentiment_score": 0.0,
-      "confidence_score": 0.0,
-      "_sentiment_scores": {},
-      "prominence_score": 0.0
+      "sentiment_score": 0.2,
+      "confidence_score": 1.0,
+      "_sentiment_scores": {
+        "lula": 0.2
+      },
+      "prominence_score": 0.0,
+      "_ai_provider": "nvidia",
+      "_ai_model": "minimaxai/minimax-m3",
+      "ai_provider_editor": "openrouter/free",
+      "editor_note": null
     },
     {
       "id": "830c946a31c28cce",
@@ -182,27 +184,57 @@
       "source": "O Antagonista",
       "published_at": "2026-08-26T22:00:48Z",
       "collected_at": "2026-08-26T22:08:14Z",
-      "status": "raw",
-      "relevance_score": 0.0,
-      "relevance_signals": null,
-      "candidates_mentioned": [],
-      "topics": [],
+      "status": "validated",
+      "relevance_score": 0.6,
+      "relevance_signals": {
+        "candidate_signal": 0.5,
+        "topic_signal": 0.0,
+        "keyword_signal": 0.05,
+        "source_signal": 0.05
+      },
+      "candidates_mentioned": [
+        "lula"
+      ],
+      "topics": [
+        "economia",
+        "politica_externa",
+        "meio_ambiente"
+      ],
       "narrative_cluster_id": null,
       "duplicate_of": null,
       "summaries": {
-        "pt-BR": "",
-        "en-US": ""
+        "pt-BR": "O presidente Lula (PT) defendeu a regulação da exploração de terras raras no Brasil, alegando que empresas estrangeiras, como uma mineradora dos EUA, avançam sobre esses recursos estratégicos sem regras claras. A declaração foi feita após reunião com os presidentes do Senado e da Câmara.",
+        "en-US": "President Lula (PT) called for regulation of rare earth exploration in Brazil, stating foreign companies, including a US miner, are advancing on these strategic resources without clear rules. The statement followed a meeting with the presidents of the Senate and the Chamber of Deputies."
       },
       "content": "O presidente Lula (PT) afirmou nesta quarta-feira, 26, que “tem muita gente estrangeira” comprando terras raras sem que o Brasil regulamente a exploração desses recursos naturais. A declaração do petista foi dada após um almoço no Palácio da Alvorada com os presidentes do Senado, Davi Alcolumbre (União), e da Câmara dos Deputados, Hugo Motta (Republicanos-PB).... The post Lula pede regulação de terras raras após avanço de mineradora dos EUA appeared first on O Antagonista .",
       "source_category": "politics",
-      "sentiment_per_candidate": {},
-      "edit_history": [],
+      "sentiment_per_candidate": {
+        "lula": "positivo"
+      },
+      "edit_history": [
+        {
+          "tier": "editor",
+          "at": "2026-08-26T23:55:13Z",
+          "provider": "openrouter",
+          "action": "validated",
+          "changes": [
+            "summary_pt",
+            "summary_en"
+          ]
+        }
+      ],
       "disclaimer_pt": "Análise algorítmica. Não representa pesquisa de opinião.",
       "disclaimer_en": "Algorithmic analysis. Does not represent polling data.",
-      "sentiment_score": 0.0,
-      "confidence_score": 0.0,
-      "_sentiment_scores": {},
-      "prominence_score": 0.0
+      "sentiment_score": 0.4,
+      "confidence_score": 1.0,
+      "_sentiment_scores": {
+        "lula": 0.4
+      },
+      "prominence_score": 0.0,
+      "_ai_provider": "nvidia",
+      "_ai_model": "minimaxai/minimax-m3",
+      "ai_provider_editor": "openrouter/free",
+      "editor_note": null
     },
     {
       "id": "7c36e7ff373cb456",
@@ -211,27 +243,56 @@
       "source": "O Globo",
       "published_at": "2026-08-26T21:52:03Z",
       "collected_at": "2026-08-26T22:07:59Z",
-      "status": "raw",
-      "relevance_score": 0.0,
-      "relevance_signals": null,
-      "candidates_mentioned": [],
-      "topics": [],
+      "status": "validated",
+      "relevance_score": 0.7,
+      "relevance_signals": {
+        "candidate_signal": 0.5,
+        "topic_signal": 0.1,
+        "keyword_signal": 0.1,
+        "source_signal": 0.0
+      },
+      "candidates_mentioned": [
+        "flavio-bolsonaro"
+      ],
+      "topics": [
+        "corrupcao",
+        "previdencia"
+      ],
       "narrative_cluster_id": null,
       "duplicate_of": null,
       "summaries": {
-        "pt-BR": "",
-        "en-US": ""
+        "pt-BR": "Deputados do PT (Alencar Santana e Rogério Correia) encaminharam notícia-crime à Polícia Federal pedindo investigação sobre possíveis relações entre o escritório de advocacia do senador Flávio Bolsonaro e investigados na operação contra desvios do INSS. A iniciativa dos parlamentares petistas busca apurar eventuais conexões entre o senador e o esquema de fraudes no instituto.",
+        "en-US": "PT deputies Alencar Santana and Rogério Correia filed a crime report with the Federal Police requesting an investigation into possible connections between Senator Flávio Bolsonaro's law office and individuals under investigation in the INSS fraud operation. The move by the PT lawmakers aims to probe alleged links between the senator and the benefit-fraud scheme."
       },
       "content": "Os deputados federais Alencar Santana (PT-SP) e Rogério Correia (PT-MG) encaminharam à Polícia Federal uma notícia de fato para que sejam investigadas se há possíveis relações entre o senador Flávio Bolsonaro, seu escritório de advocacia e investigados na operação sobre desvios do INSS. Matéria exclusiva para assinantes. Para ter acesso completo, acesse o link da matéria e faça o seu cadastro.",
       "source_category": "mainstream",
-      "sentiment_per_candidate": {},
-      "edit_history": [],
+      "sentiment_per_candidate": {
+        "flavio-bolsonaro": "negativo"
+      },
+      "edit_history": [
+        {
+          "tier": "editor",
+          "at": "2026-08-26T23:55:22Z",
+          "provider": "openrouter",
+          "action": "validated",
+          "changes": [
+            "summary_pt",
+            "summary_en"
+          ]
+        }
+      ],
       "disclaimer_pt": "Análise algorítmica. Não representa pesquisa de opinião.",
       "disclaimer_en": "Algorithmic analysis. Does not represent polling data.",
-      "sentiment_score": 0.0,
-      "confidence_score": 0.0,
-      "_sentiment_scores": {},
-      "prominence_score": 0.0
+      "sentiment_score": -0.5,
+      "confidence_score": 1.0,
+      "_sentiment_scores": {
+        "flavio-bolsonaro": -0.5
+      },
+      "prominence_score": 0.0,
+      "_ai_provider": "nvidia",
+      "_ai_model": "minimaxai/minimax-m3",
+      "ai_provider_editor": "openrouter/free",
+      "editor_note": null
     },
     {
       "id": "3af4d9eaa57dde70",
@@ -240,56 +301,56 @@
       "source": "O Globo",
       "published_at": "2026-08-26T21:52:03Z",
       "collected_at": "2026-08-26T22:07:59Z",
-      "status": "raw",
-      "relevance_score": 0.0,
-      "relevance_signals": null,
-      "candidates_mentioned": [],
-      "topics": [],
+      "status": "validated",
+      "relevance_score": 0.9,
+      "relevance_signals": {
+        "candidate_signal": 0.5,
+        "topic_signal": 0.25,
+        "keyword_signal": 0.15,
+        "source_signal": 0.0
+      },
+      "candidates_mentioned": [
+        "flavio-bolsonaro"
+      ],
+      "topics": [
+        "eleicoes",
+        "midia"
+      ],
       "narrative_cluster_id": null,
       "duplicate_of": null,
       "summaries": {
-        "pt-BR": "",
-        "en-US": ""
+        "pt-BR": "O TSE julgará na próxima semana, em sessão presencial, ação que questiona vídeo deepfake de Jair Bolsonaro exibido na convenção do PL. O caso, considerado um dos principais testes sobre inteligência artificial nas eleições de 2026, poderá estabelecer parâmetros para o uso de conteúdo sintético na campanha. A defesa de Flávio Bolsonaro argumenta que o vídeo não configura deepfake proibido, enquanto a Federação Brasil da Esperança (PT, PCdoB e PV) sustenta que a proibição se aplica independentemente da identificação da tecnologia.",
+        "en-US": "Brazil's Superior Electoral Court (TSE) will hold an in-person hearing next week to judge a case challenging a deepfake video of former president Jair Bolsonaro shown at the PL convention. Considered one of the key tests on artificial intelligence in the 2026 elections, the ruling is expected to set parameters for synthetic content in campaigns. Flávio Bolsonaro's defense argues the video does not constitute a prohibited deepfake, while the Brazil of Hope Federation (PT, PCdoB, PV) contends the ban applies regardless of disclosure of the technology."
       },
       "content": "O Tribunal Superior Eleitoral (TSE) vai julgar presencialmente na próxima semana a ação que questiona o uso de um vídeo produzido com inteligência artificial para reproduzir a imagem e a voz do ex-presidente Jair Bolsonaro durante a convenção que oficializou a candidatura de Flávio Bolsonaro (PL) à Presidência. O GLOBO confirmou reservadamente com interlocutores do relator do processo e presidente do TSE, o ministro Kassio Nunes Marques, que pretende levar o caso ao plenário presencial na próxima semana. O dia do julgamento, no entanto, ainda não foi definido. A ação foi apresentada pela Federação Brasil da Esperança, formada por PT, PCdoB e PV, contra o vídeo exibido durante a convenção do PL, em 25 de julho. Na peça, uma representação digital de Jair Bolsonaro declara apoio à candidatura do filho. O conteúdo informa no início que a imagem e a voz do ex-presidente foram produzidas por inteligência artificial. O caso é considerado um dos principais testes do TSE sobre o uso de inteligência artificial nas eleições de 2026. A resolução que disciplina a propaganda eleitoral proíbe o uso, para favorecer ou prejudicar candidaturas, de conteúdo sintético em áudio ou vídeo criado ou manipulado digitalmente para substituir ou alterar imagem ou voz — definido pela norma como deepfake. A defesa de Flávio sustenta que o vídeo não deve ser enquadrado como deepfake proibido porque não tinha a intenção de enganar o eleitor e deixava explícito que se tratava de uma simulação produzida por inteligência artificial. A Federação Brasil da Esperança, por outro lado, argumenta que a proibição prevista pelo TSE alcança o conteúdo mesmo quando há autorização da pessoa retratada e identificação do uso da tecnologia. O julgamento deve servir para o TSE estabelecer parâmetros para casos semelhantes durante a campanha.",
       "source_category": "mainstream",
-      "sentiment_per_candidate": {},
-      "edit_history": [],
-      "disclaimer_pt": "Análise algorítmica. Não representa pesquisa de opinião.",
-      "disclaimer_en": "Algorithmic analysis. Does not represent polling data.",
-      "sentiment_score": 0.0,
-      "confidence_score": 0.0,
-      "_sentiment_scores": {},
-      "prominence_score": 0.0
-    },
-    {
-      "id": "3446c509496b9691",
-      "url": "https://www.metropoles.com/colunas/claudia-meireles/baile-do-bb-celebra-sexta-edicao-em-noite-prestigiada-e-filantropica",
-      "title": "Baile do BB celebra sexta edição em noite prestigiada e filantrópica",
-      "source": "Metropoles",
-      "published_at": "2026-08-26T21:49:45Z",
-      "collected_at": "2026-08-26T22:08:08Z",
-      "status": "raw",
-      "relevance_score": 0.0,
-      "relevance_signals": null,
-      "candidates_mentioned": [],
-      "topics": [],
-      "narrative_cluster_id": null,
-      "duplicate_of": null,
-      "summaries": {
-        "pt-BR": "",
-        "en-US": ""
+      "sentiment_per_candidate": {
+        "flavio-bolsonaro": "negativo"
       },
-      "content": "Consolidado no calendário social paulista, o Baile do BB comemorou sua sexta edição no último sábado (22/8) no bairro Bela Vista, em São Paulo . Idealizado por Beto Pacheco e Tiago Moura, a edição 2026 seguiu a temática Dancing in the Moonlight que envolveu os convidados em todo o simbolismo lunar. Leia também Claudia Meireles Família de bilionário brasileiro é vítima de assalto em Saint-Tropez Claudia Meireles Harry e Meghan Markle chegam ao Reino Unido; saiba onde família vai morar Claudia Meireles Aos 95 anos, pioneiro Gilberto Salomão celebra a dedicação e o amor ao DF A noite prestigiada contou com a presença de empresários, artistas e personalidades da mídia, como Camila Queiroz, Klebber Toledo, Roberta Miranda, Lucas Leto, Marcos Pitombo, Oscar Emboaba, Paulo André, Mileide Mihaile, Amanda Meirelles, Nanda Marques e Quitéria Chagas. Camila Queiroz e Klebber Toledo no Baile do BB Para a coluna, Thiago Moura ressaltou que a noite foi um lembrete do porquê deu início ao baile ao lado de Beto Pacheco. “Ver tantas pessoas reunidas celebrando e, ao mesmo tempo, contribuindo para transformar a realidade dos atendimentos pela Casa Santa Teresinha é uma emoção difícil de explicar. Essa é uma instituição que realiza um trabalho muito necessário”, disse. Leilão do Baile do BB arrecada mais de um milhão em doações Para a gala de 2026, o Baile reiterou seu compromisso com a filantropia. Um leilão prestigiado realizado durante o evento arrecadou pouco mais R$ 1 milhão para a beneficiária Casa Santa Terezinha, que atende crianças e adolescentes com genodermatoses e doenças raras que afetam pele. À coluna, o idealizador do evento, Beto Pacheco, não escondeu o orgulho ao conseguir arrecadações tão expressivas e disse que o sentimento é não apenas de gratidão, como também de responsabilidade. Beto Pacheco e Thiago Moura “Cada pessoa que esteve conosco fez parte desse resultado. É a prova de que, quando unimos pessoas em torno de um propósito verdadeiro, uma noite de celebração pode deixar um impacto que permanece por muito tempo”, declarou. O leilão comandado por Camila Queiroz e Klebber Toledo contou com itens exclusivos, que incluíram peças cedidas pela Kura Art, experiências exclusivas no Carnaval de Salvador, além da oportunidade de subir no trio de Carlinhos Brown. Gala animada Na decoração, o grande destaque foi a imponente lua cenográfica instalada no centro do salão. Nas mesas, composições elegantes com arranjos de metalizados e futurísticos complementaram o mobiliário que mesclou a transparência e a madeira. Visão geral do salão do Baile do BB Lua posicionada acima da cabine do DJ chamou atenção na cenografia O maestro Renato Misiuk foi o responsável pelo repertório da noite, inspirada em grande nomes da música, como Madonna. Nas pickups, outros DJs também passaram pela cabine para animar os convidados. Veja alguns cliques dos convidados do Baile do BB, realizado em São Paulo: Roberta Miranda e Lidiana Campos Paulo André Mileide Mihaile Amanda Meirelles Lucas Leto Sabrina Paiva Fabi Mizzer Neusinha Saad Aline Guella e Eduardo Faci Lorena Campello Cadu Lindner Camila Yunes Jessica Lobo Giovanna Barduco Nanda Marques Para saber mais, siga o perfil de Vida&Estilo no Instagram.",
-      "source_category": "mainstream",
-      "sentiment_per_candidate": {},
-      "edit_history": [],
+      "edit_history": [
+        {
+          "tier": "editor",
+          "at": "2026-08-26T23:55:26Z",
+          "provider": "openrouter",
+          "action": "validated",
+          "changes": [
+            "summary_pt",
+            "summary_en"
+          ]
+        }
+      ],
       "disclaimer_pt": "Análise algorítmica. Não representa pesquisa de opinião.",
       "disclaimer_en": "Algorithmic analysis. Does not represent polling data.",
-      "sentiment_score": 0.0,
-      "confidence_score": 0.0,
-      "_sentiment_scores": {},
-      "prominence_score": 0.0
+      "sentiment_score": -0.3,
+      "confidence_score": 1.0,
+      "_sentiment_scores": {
+        "flavio-bolsonaro": -0.3
+      },
+      "prominence_score": 0.0,
+      "_ai_provider": "nvidia",
+      "_ai_model": "minimaxai/minimax-m3",
+      "ai_provider_editor": "openrouter/free",
+      "editor_note": null
     },
     {
       "id": "7376be3643bf193b",
@@ -311,64 +372,6 @@
       },
       "source_category": "magazine",
       "content": "Política Governo brasileiro lamenta mortes em avalanche no Nepal e na China A tragédia resultou em ao menos 157 pessoas mortas e centenas de desaparecidas Por Agência Brasil 26.08.2026 18h49 Deslizamento no Nepal. Foto: Prakash Mathema/AFP Apoie Siga-nos no O governo brasileiro lamentou nesta quarta-feira 26 as mortes causadas por deslizamentos de terra e inundações no Nepal e na região Administrativa Autônoma do Tibete, na China. A tragédia resultou em ao menos 157 pessoas mortas e centenas de desaparecidas . Em nota, o Ministério das Relações Exteriores (MRE) informou que, até o momento, não há registro de brasileiros entre as vítimas. “O governo brasileiro expressa profundo pesar e solidariedade às famílias das vítimas, ao povo e ao governo do Nepal e da China”, disse Itamaraty, em nota. O MRE informou ainda que a Embaixada do Brasil em Katmandu, capital do Nepal, e a Embaixada do Brasil em Pequim, capital da China, acompanham com atenção os desdobramentos da calamidade no país. “O plantão consular da Embaixada do Brasil em Katmandu (telefone +977 9801032381 ) poderá prestar assistência consular a cidadãos brasileiros em situação de emergência no Nepal”, diz a nota. Já os brasileiros que estiverem na Região Administrativa Autônoma do Tibete, na China, podem entrar em contato com o plantão consular da Embaixada do Brasil em Pequim (telefone +86 138 0121 0722 ). Câmeras de segurança registraram o momento em que pessoas fugiam enquanto uma avalanche de lama e água arrastava prédios e pontes em um vale, no distrito de Rasuwa. O local fica no Himalaia, na fronteira entre o Nepal e o condado de Gyirong, na região chinesa do Tibete. O porto de Gyirong também foi destruído pelo desastre. A avalanche que atingiu o Tibete e o Nepal teria relação com o acúmulo de grandes volumes de gelo e rocha, em razão de chuvas que atingiram a região. Recomendadas A nova pesquisa AtlasIntel sobre a disputa entre Haddad e Tarcísio em São Paulo TRE-SP multa candidato por impulsionar propaganda contra Lula e Haddad Após reunião com Lula, Alcolumbre promete votação da MP da taxa das blusinhas na próxima semana Mais Lidas Agência Brasil Agência de notícias brasileira, pública e de acesso livre, gerida pela Empresa Brasil de Comunicação (EBC). ENTENDA MAIS SOBRE: deslizamento de terra , Itamaraty , MRE , nepal , Jornalismo crítico e inteligente. Todos os dias, no seu e-mail Assine nossa newsletter Assine nossa newsletter e receba um boletim matinal exclusivo Assinar Inscreva-se Apoie o jornalismo que chama as coisas pelo nome Muita gente esqueceu o que escreveu, disse ou defendeu. Nós não. O compromisso de CartaCapital com os princípios do bom jornalismo permanece o mesmo. O combate à desigualdade nos importa. A denúncia das injustiças importa. Importa uma democracia digna do nome. Importa o apego à verdade factual e a honestidade. Estamos aqui, há mais de 30 anos, porque nos importamos. Como nossos fiéis leitores, CartaCapital segue atenta. Se o bom jornalismo também importa para você, nos ajude a seguir lutando. Assine a edição semanal de CartaCapital ou contribua com o quanto puder. Única Mensal Anual R$25 R$50 R$100 R$200 Outro Quero apoiar Jornalismo crítico e inteligente. Todos os dias, no seu e-mail Assine nossa newsletter Assine nossa newsletter e receba um boletim matinal exclusivo Assinar Inscreva-se",
-      "sentiment_per_candidate": {},
-      "edit_history": [],
-      "disclaimer_pt": "Análise algorítmica. Não representa pesquisa de opinião.",
-      "disclaimer_en": "Algorithmic analysis. Does not represent polling data.",
-      "sentiment_score": 0.0,
-      "confidence_score": 0.0,
-      "_sentiment_scores": {},
-      "prominence_score": 0.0
-    },
-    {
-      "id": "9c2c994e79ec9893",
-      "url": "https://www.metropoles.com/esportes/savinho-marca-em-estreia-e-tottenham-goleia-pela-copa-da-liga-inglesa",
-      "title": "Savinho marca em estreia e Tottenham goleia pela Copa da Liga Inglesa",
-      "source": "Metropoles",
-      "published_at": "2026-08-26T21:48:56Z",
-      "collected_at": "2026-08-26T22:08:08Z",
-      "status": "raw",
-      "relevance_score": 0.0,
-      "relevance_signals": null,
-      "candidates_mentioned": [],
-      "topics": [],
-      "narrative_cluster_id": null,
-      "duplicate_of": null,
-      "summaries": {
-        "pt-BR": "",
-        "en-US": ""
-      },
-      "content": "Pela 2ª rodada da Copa da Liga Inglesa, o Tottenham venceu o Charlton, time da segunda divisão da Inglaterra, por 5 x 1, nesta quarta-feira (26/8), no Tottenham Hotspur Stadium . Os Spurs estufaram as redes com Mikey Moore, Solanke, Danso, Savinho e Ben Davies , enquanto os visitantes fizeram o seu com Lloyd Jones. Destaque para o ponta brasileiro, que entrou aos 26 minutos do segundo tempo e anotou um gol e uma assistência . Esta foi a sua primeira partida pelo time de Londres. Into round three! 🙌 pic.twitter.com/6D7yZVUCKm — Tottenham Hotspur (@SpursOfficial) August 26, 2026 Leia também Esportes Tottenham anuncia a contratação do atacante brasileiro Savinho Esportes Vice-campeão do mundo com a Argentina, Romero se despede do Tottenham Esportes Técnico levou time do Tottenham para beber em meio à luta contra o Z-3 O gol de Savinho aconteceu aos 37 minutos do segundo tempo. Ele recebeu pela direita, cortou para o meio, passou por dois adversários e chutou cruzado. Já aos 40, o brasileiro fez boa jogada individual dentro da área e bateu em direção a meta, porém, a bola desviou em Ben Devies e morreu nas redes. O Tottenham anunciou a contratação do atacante na manhã dessa terça-feira (25/8). O jogador de 22 anos deixou o Manchester City após duas temporadas. Segundo o jornal Sky Sports, a negociação foi fechada por 85 milhões de libras (aproximadamente R$ 597 milhões), sendo 75 milhões inicias e 10 milhões em bônus.",
-      "source_category": "mainstream",
-      "sentiment_per_candidate": {},
-      "edit_history": [],
-      "disclaimer_pt": "Análise algorítmica. Não representa pesquisa de opinião.",
-      "disclaimer_en": "Algorithmic analysis. Does not represent polling data.",
-      "sentiment_score": 0.0,
-      "confidence_score": 0.0,
-      "_sentiment_scores": {},
-      "prominence_score": 0.0
-    },
-    {
-      "id": "4804f6c899c01415",
-      "url": "https://www.poder360.com.br/poder-justica/stf-suspende-julgamento-sobre-poder-do-mpf-de-requisitar-pericias/",
-      "title": "STF suspende julgamento sobre poder do MPF de requisitar perícias",
-      "source": "Poder360",
-      "published_at": "2026-08-26T21:47:59Z",
-      "collected_at": "2026-08-26T22:08:09Z",
-      "status": "raw",
-      "relevance_score": 0.0,
-      "relevance_signals": null,
-      "candidates_mentioned": [],
-      "topics": [],
-      "narrative_cluster_id": null,
-      "duplicate_of": null,
-      "summaries": {
-        "pt-BR": "",
-        "en-US": ""
-      },
-      "content": "O Supremo Tribunal Federal suspendeu, nesta 4ª feira (26.ago.2026), o julgamento da ADI (Ação Direta de Inconstitucionalidade) 5982, que trata do alcance do poder de o Ministério Público Federal requisitar a órgãos públicos estaduais exames, perícias, serviços temporários de funcionários e recursos materiais. A análise foi interrompida para aguardar os votos dos ministros Luiz Fux e Edson Fachin, presidente da Corte. Até o momento, não há maioria formada sobre a admissibilidade da matéria nem sobre o mérito. No exame preliminar para decidir se a ação reúne as condições jurídicas para ser analisada, há 5 votos a favor do conhecimento do processo e 3 pelo arquivamento sem análise do mérito. Votaram pelo conhecimento da ADI os ministros Nunes Marques (relator), Gilmar Mendes, André Mendonça, Flávio Dino e Cármen Lúcia. Já os ministros Cristiano Zanin, Alexandre de Moraes e Dias Toffoli defenderam o não conhecimento da ação por entenderem que o poder de requisição do Ministério Público é disciplinado por diversas outras leis federais e estaduais não questionadas no processo. A controvérsia chegou ao Supremo por meio de ação ajuizada pelo governo de Santa Catarina contra dispositivos da lei complementar 75 de 1993, que estabelece as atribuições do Ministério Público da União. O questionamento foca nos incisos 2 e 3 do artigo 8º da norma, que autorizam o órgão a fazer requisições à administração pública, além de solicitar serviços temporários de servidores e meios materiais para atividades específicas. O QUE ESTÁ EM ANÁLISE No mérito, os ministros debatem se as solicitações do MPF aos Estados têm caráter de ordem obrigatória ou se os órgãos estaduais podem recusar os pedidos de forma fundamentada. Todos os ministros que analisaram o mérito concordam que o órgão pode requisitar perícias e documentos, mas divergem sobre as regras de contestação. O ministro Cristiano Zanin ponderou que o Ministério Público pode fazer requisições diretamente para instruir apurações sem necessidade de autorização judicial prévia. No entanto, ressaltou que eventuais alegações de abuso, ilegalidade ou desproporcionalidade devem ser submetidas ao Poder Judiciário pelo órgão requisitado, em vez de permitir uma recusa unilateral da administração estadual. O ministro Alexandre de Moraes acompanhou esse entendimento e destacou que a Carta Magna outorga ao órgão instrumentos para a proteção do patrimônio público e do meio ambiente. Por outro lado, o relator, ministro Nunes Marques, e os ministros Gilmar Mendes, Flávio Dino e Cármen Lúcia entenderam que a requisição de serviços de servidores e meios materiais deve funcionar como solicitação, permitindo a recusa motivada pelo órgão estadual. Para Cármen Lúcia, a exigência de justificativa para eventual negativa estimula o diálogo entre as instituições sem comprometer a atuação do Ministério Público.",
-      "source_category": "politics",
       "sentiment_per_candidate": {},
       "edit_history": [],
       "disclaimer_pt": "Análise algorítmica. Não representa pesquisa de opinião.",
@@ -414,27 +417,55 @@
       "source": "Agencia Brasil",
       "published_at": "2026-08-26T21:47:00Z",
       "collected_at": "2026-08-26T22:08:30Z",
-      "status": "raw",
-      "relevance_score": 0.0,
-      "relevance_signals": null,
-      "candidates_mentioned": [],
-      "topics": [],
+      "status": "validated",
+      "relevance_score": 0.75,
+      "relevance_signals": {
+        "candidate_signal": 0.5,
+        "topic_signal": 0.05,
+        "keyword_signal": 0.1,
+        "source_signal": 0.1
+      },
+      "candidates_mentioned": [
+        "lula"
+      ],
+      "topics": [
+        "impostos"
+      ],
       "narrative_cluster_id": null,
       "duplicate_of": null,
       "summaries": {
-        "pt-BR": "",
-        "en-US": ""
+        "pt-BR": "Hugo Motta indicou Reginaldo Lopes (PT-MG) como presidente da comissão mista que analisará a MP que encerra a taxa das blusinhas. O anúncio ocorre após reunião com Lula e Davi Alcolumbre, que marcou votação na próxima semana. A mp também suspende a cobrança de 20% sobre compras internacionais de até US$ 50.",
+        "en-US": "Hugo Motta appointed Reginaldo Lopes (PT-MG) as head of the joint committee reviewing the MP ending the so-called 'blusinhas tax'. The announcement followed a meeting with Lula and Davi Alcolumbre, who scheduled voting for next week. The MP also suspends a 20% fee on international purchases up to US$ 50."
       },
       "content": "O presidente da Câmara dos Deputados, Hugo Motta (Republicanos-PB), anunciou nesta quarta-feira (26) o deputado Reginaldo Lopes (PT-MG) como presidente da comissão mista que vai analisar a Medida Provisória 1357/26 , que a acaba com a chamada taxa das blusinhas. O anúncio foi feito após almoço no Palácio da Alvorada , com o presidente Luiz Inácio Lula da Silva e o presidente do Senado, Davi Alcolumbre (União-AP). Notícias relacionadas: Governo fará esforço por fim da taxa das blusinhas, diz Durigan. CCJ do Senado prevê votação da PEC da Segurança na próxima semana. A MP suspende a cobrança do imposto federal de importação de 20% sobre compras internacionais de até US$ 50. O texto tem que ser votado ainda em setembro, do contrário perderá a validade. “Indiquei o deputado @ReginaldoLopes (PT/MG) para a Presidência da Comissão Mista que analisará a medida. A relatoria é de atribuição do Senado Federal. Em diálogo com os presidentes @LulaOficial e @davialcolumbre, acordamos votar a matéria na próxima semana. O fim da taxa é uma demanda da população e vai aliviar o bolso de milhões de brasileiros que compram pela internet”, escreveu Motta em uma rede social . A MP deve ser votada no esforço concentrado do Congresso Nacional marcado para a próxima semana. Além do fim da taxa das blusinhas, na reunião desta quarta-feira foi acordada a votação de outras matérias. Os temas definidos foram : votação da Proposta de Emenda à Constituição 221/19 do fim da escala de trabalho 6X1; PEC 18/25 , da Segurança Pública; votação do Projeto de Lei 278/26 , que estabelece o Regime Especial de Tributação para Serviços de Datacenter (Redata); PL 2780/24 , que estabelece a Política Nacional de Minerais Críticos e Estratégicos. Após a reunião, Lula comemorou o acordo e disse que o entendimento do esforço concentrado, marcado para a semana de 31 de agosto a 4 de setembro, foca nas pautas prioritárias para a sociedade brasileira. “O que é importante é que a gente tenha a dimensão do que é prioritário e votar essas coisas que vocês vão colocar na pauta é uma prioridade do povo brasileiro”, disse Lula ao final do almoço. * Colaborou Pedro Rafael Vilela",
       "source_category": "institutional",
-      "sentiment_per_candidate": {},
-      "edit_history": [],
+      "sentiment_per_candidate": {
+        "lula": "positivo"
+      },
+      "edit_history": [
+        {
+          "tier": "editor",
+          "at": "2026-08-26T23:56:00Z",
+          "provider": "openrouter",
+          "action": "validated",
+          "changes": [
+            "summary_pt",
+            "summary_en"
+          ]
+        }
+      ],
       "disclaimer_pt": "Análise algorítmica. Não representa pesquisa de opinião.",
       "disclaimer_en": "Algorithmic analysis. Does not represent polling data.",
-      "sentiment_score": 0.0,
-      "confidence_score": 0.0,
-      "_sentiment_scores": {},
-      "prominence_score": 0.0
+      "sentiment_score": 0.4,
+      "confidence_score": 1.0,
+      "_sentiment_scores": {
+        "lula": 0.4
+      },
+      "prominence_score": 0.0,
+      "_ai_provider": "nvidia",
+      "_ai_model": "minimaxai/minimax-m3",
+      "ai_provider_editor": "openrouter/free",
+      "editor_note": null
     },
     {
       "id": "65ee5e68015a7d75",
@@ -472,27 +503,60 @@
       "source": "Estadao Politica",
       "published_at": "2026-08-26T21:41:36Z",
       "collected_at": "2026-08-26T22:08:06Z",
-      "status": "raw",
-      "relevance_score": 0.0,
-      "relevance_signals": null,
-      "candidates_mentioned": [],
-      "topics": [],
+      "status": "validated",
+      "relevance_score": 1.0,
+      "relevance_signals": {
+        "candidate_signal": 0.6,
+        "topic_signal": 0.3,
+        "keyword_signal": 0.15,
+        "source_signal": 0.0
+      },
+      "candidates_mentioned": [
+        "lula",
+        "flavio-bolsonaro"
+      ],
+      "topics": [
+        "eleicoes",
+        "impostos",
+        "economia"
+      ],
       "narrative_cluster_id": null,
       "duplicate_of": null,
       "summaries": {
-        "pt-BR": "",
-        "en-US": ""
+        "pt-BR": "Lula firmou pacto com Hugo Motta (Câmara) e Davi Alcolumbre (Senado) para aprovar pautas populares como fim da escala 6x1 e isenção de impostos para data centers antes das eleições. O acordo inclui apoio mútuo: Lula apoia a recondução dos presidentes das Casas em 2027, e eles trabalham pela reeleição de Lula, visando vitória no primeiro turno.",
+        "en-US": "Lula signed a pact with Chamber President Hugo Motta and Senate President Davi Alcolumbre to advance popular measures like ending the 6x1 workweek and tax breaks for data centers before elections. The deal includes mutual support: Lula backs their 2027 reelection as House and Senate leaders, while they work for Lula's reelection, aiming for a first-round victory."
       },
       "content": "BRASÍLIA – O pacto político firmado nesta quarta-feira entre o presidente Luiz Inácio Lula da Silva e os presidentes da Câmara, Hugo Motta (Republicanos-PB), e do Senado, Davi Alcolumbre (União Brasil-AP), teve como pano de fundo as eleições de outubro. Na tentativa de ajudar Lula a ter uma agenda positiva na campanha, tanto Alcolumbre como Motta vão pôr na pauta de votação da próxima semana temas com apelo popular, como o fim da escala de trabalho 6X1 e a Medida Provisória que trata do fim da chamada “taxa das blusinhas”. O Congresso terá os últimos dias de trabalho antes das eleições na semana que vai de 31 de agosto a 4 de setembro. Será nesse período de esforço concentrado que a Câmara e o Senado darão andamento à agenda de interesse do governo. Na lista de temas que Alcolumbre concordou em tirar da gaveta está também a Proposta de Emenda à Constituição (PEC) da Segurança Pública, o projeto que cria a política nacional de minerais críticos e estratégicos e, além disso, o que concede isenção de impostos federais para estimular a instalação e ampliação de data centers no Brasil. O freio de arrumação entre o Palácio do Planalto e o Congresso foi anunciado por Lula após um almoço com Motta e Alcolumbre, que durou duas horas e meia, no Palácio da Alvorada. O presidente saiu do encontro chamando tanto o chefe da Câmara como o comandante do Senado – dois expoentes do Centrão – de “companheiros”. Ao posar para fotos de mãos dados com os dois, Lula era só sorrisos. “Poderia dizer juntos para sempre”, afirmou ele. Nenhum desses acenos, porém, foram feitos sem contrapartida. O acordo passou pela promessa de Lula de apoiar a recondução de Motta à presidência da Câmara e de Alcolumbre ao comando do Senado, em fevereiro de 2027. Na outra ponta, os dois se comprometeram a trabalhar pela reeleição de Lula. Diante das dificuldades enfrentadas pelo presidente por causa das investigações envolvendo seu filho Fábio Luís Lula da Silva, suspeito de tráfico de influência, há um movimento em curso na campanha petista para tentar garantir a vitória de Lula no primeiro turno. Alcolumbre e Motta tentarão dar agora um empurrão nessa ofensiva. O anúncio do acordo irritou o senador Flávio Bolsonaro (PL-RJ), principal adversário de Lula. Flávio tenta mobilizar a oposição para impedir que o fim da escala 6x1 seja votada. A proposta que muda a jornada de trabalho e dá mais dois dias de descanso aos trabalhadores é uma das principais bandeiras da campanha de Lula. Não é certo que ela seja votada no plenário na semana que vem, mas o simples fato de Alcolumbre despachá-la para análise da Comissão de Constituição e Justiça (CCJ) já é um avanço). Alcolumbre estava travando várias pautas de interesse do Palácio do Planalto desde o fim de abril, quando o Senado rejeitou a indicação do advogado-geral da União, Jorge Messias, para ocupar uma cadeira no Supremo Tribunal Federal (STF). Lula ficou inconformado e passou mais de três meses sem falar com o presidente do Senado. A reaproximação entre os dois só foi feita depois de um jantar que teve como anfitrião o ministro do STF Alexandre de Moraes. Enquanto Lula e Alcolumbre não se falavam, Motta aproveitou para estreitar os laços com o presidente. A Câmara votou várias pautas enviadas pelo e despachou para o Senado, onde até agora elas estavam paradas. No último dia 10, Motta fez outro gesto e declarou publicamente apoio à reeleição de Lula. Agora, espera que o presidente ajude a eleger o seu pai, Nabor Wanderley (Republicanos), ex-prefeito de Patos (PB), a uma vaga ao Senado./ COLABOROU WILTON JUNIOR",
       "source_category": "mainstream",
-      "sentiment_per_candidate": {},
-      "edit_history": [],
+      "sentiment_per_candidate": {
+        "lula": "positivo",
+        "flavio-bolsonaro": "negativo"
+      },
+      "edit_history": [
+        {
+          "tier": "editor",
+          "at": "2026-08-26T23:56:05Z",
+          "provider": "openrouter",
+          "action": "validated",
+          "changes": [
+            "summary_pt",
+            "summary_en"
+          ]
+        }
+      ],
       "disclaimer_pt": "Análise algorítmica. Não representa pesquisa de opinião.",
       "disclaimer_en": "Algorithmic analysis. Does not represent polling data.",
-      "sentiment_score": 0.0,
-      "confidence_score": 0.0,
-      "_sentiment_scores": {},
-      "prominence_score": 0.0
+      "sentiment_score": 0.1,
+      "confidence_score": 1.0,
+      "_sentiment_scores": {
+        "lula": 0.5,
+        "flavio-bolsonaro": -0.3
+      },
+      "prominence_score": 0.0,
+      "_ai_provider": "nvidia",
+      "_ai_model": "minimaxai/minimax-m3",
+      "ai_provider_editor": "openrouter/free",
+      "editor_note": null
     },
     {
       "id": "fee370ca78abebc9",
@@ -501,27 +565,55 @@
       "source": "CartaCapital",
       "published_at": "2026-08-26T21:40:55Z",
       "collected_at": "2026-08-26T22:08:18Z",
-      "status": "raw",
-      "relevance_score": 0.0,
-      "relevance_signals": null,
-      "candidates_mentioned": [],
-      "topics": [],
+      "status": "validated",
+      "relevance_score": 0.9,
+      "relevance_signals": {
+        "candidate_signal": 0.5,
+        "topic_signal": 0.25,
+        "keyword_signal": 0.15,
+        "source_signal": 0.0
+      },
+      "candidates_mentioned": [
+        "tarcisio"
+      ],
+      "topics": [
+        "eleicoes"
+      ],
       "narrative_cluster_id": null,
       "duplicate_of": null,
       "summaries": {
-        "pt-BR": "",
-        "en-US": ""
+        "pt-BR": "Nova pesquisa AtlasIntel sobre a disputa pelo governo de São Paulo será divulgada na terça-feira, com 1.800 entrevistas. Segundo Quaest anterior, Tarcísio de Freitas lidera com 40% contra 27% de Fernando Haddad no primeiro turno.",
+        "en-US": "New AtlasIntel poll on São Paulo gubernatorial race to be released Tuesday with 1,800 interviews. Previous Quaest poll showed Tarcísio de Freitas leading with 40% versus 27% for Fernando Haddad in first round."
       },
       "source_category": "magazine",
       "content": "CartaExpressa A nova pesquisa AtlasIntel sobre a disputa entre Haddad e Tarcísio em São Paulo Os levantamentos mostram o governador na liderança da corrida ao Palácio dos Bandeirantes Por CartaCapital 26.08.2026 18h40 Debate entre Tarcísio de Freitas e Fernando Haddad, em São Paulo, em 9 de agosto de 2026. Foto: Renato Pizzutto/Band Apoie Siga-nos no Eleições 2026 O instituto AtlasIntel deve divulgar na próxima terça-feira 1º uma nova pesquisa de intenção de voto para o governo de São Paulo. Serão 1.800 entrevistas entre quinta e segunda, com margem de erro de dois pontos percentuais. O levantamento também atualizará o cenário da disputa pelas duas vagas paulistas no Senado e as intenções de voto no estado para presidente da República. O governador de São Paulo e candidato à reeleição, Tarcísio de Freitas (Republicanos), lidera a disputa, segundo as pesquisas. Uma sondagem Quaest publicada na terça-feira 25 mostra o bolsonarista com 40% no primeiro turno, ante 27% do segundo colocado, o ex-ministro da Fazenda Fernando Haddad (PT). Siga a Carta no Discover e receba as notícias que realmente importam. Seguir no Google Recomendadas Lula reage e vai ao TSE contra Renan Santos e Caiado por ataques em debate Ciro Gomes chama Renan Santos, do MBL, de ‘talento’ e ‘interessante para os jovens’ Quaest: Arthur Lira tem 20% para o Senado em Alagoas; Renan marca 18% Saiba as datas dos próximos debates entre presidenciáveis Mais Lidas CartaCapital Há 32 anos, a maior referência progressista em jornalismo no Brasil. ENTENDA MAIS SOBRE: Eleições 2026 , Fernando Haddad , São Paulo , Tarcísio de Freitas , Jornalismo crítico e inteligente. Todos os dias, no seu e-mail Assine nossa newsletter Assine nossa newsletter e receba um boletim matinal exclusivo Assinar Inscreva-se Apoie o jornalismo que chama as coisas pelo nome Muita gente esqueceu o que escreveu, disse ou defendeu. Nós não. O compromisso de CartaCapital com os princípios do bom jornalismo permanece o mesmo. O combate à desigualdade nos importa. A denúncia das injustiças importa. Importa uma democracia digna do nome. Importa o apego à verdade factual e a honestidade. Estamos aqui, há mais de 30 anos, porque nos importamos. Como nossos fiéis leitores, CartaCapital segue atenta. Se o bom jornalismo também importa para você, nos ajude a seguir lutando. Assine a edição semanal de CartaCapital ou contribua com o quanto puder. Única Mensal Anual R$25 R$50 R$100 R$200 Outro Quero apoiar Leia também Política Tarcísio ignora omissão de Flávio Bolsonaro sobre ‘Dark Horse’: ‘Já está esclarecido’ Por Leonardo Miazzo Política Quaest: Tarcísio lidera disputa para o governo de SP com 40%; Haddad tem 27% Por CartaCapital Política Tarcísio cancela participação no ‘Roda Viva’ desta segunda-feira Por Wendal Carmo Política Haddad chama de ‘esquisito’ Datafolha que mostra Tarcísio 18 pontos à frente em São Paulo Por CartaCapital Jornalismo crítico e inteligente. Todos os dias, no seu e-mail Assine nossa newsletter Assine nossa newsletter e receba um boletim matinal exclusivo Assinar Inscreva-se",
-      "sentiment_per_candidate": {},
-      "edit_history": [],
+      "sentiment_per_candidate": {
+        "tarcisio": "positivo"
+      },
+      "edit_history": [
+        {
+          "tier": "editor",
+          "at": "2026-08-26T23:56:10Z",
+          "provider": "openrouter",
+          "action": "validated",
+          "changes": [
+            "summary_pt",
+            "summary_en"
+          ]
+        }
+      ],
       "disclaimer_pt": "Análise algorítmica. Não representa pesquisa de opinião.",
       "disclaimer_en": "Algorithmic analysis. Does not represent polling data.",
-      "sentiment_score": 0.0,
-      "confidence_score": 0.0,
-      "_sentiment_scores": {},
-      "prominence_score": 0.0
+      "sentiment_score": 0.2,
+      "confidence_score": 1.0,
+      "_sentiment_scores": {
+        "tarcisio": 0.2
+      },
+      "prominence_score": 0.0,
+      "_ai_provider": "nvidia",
+      "_ai_model": "minimaxai/minimax-m3",
+      "ai_provider_editor": "openrouter/free",
+      "editor_note": null
     },
     {
       "id": "18bb97437e6b5f0d",
@@ -530,27 +622,56 @@
       "source": "Estadao Politica",
       "published_at": "2026-08-26T21:40:29Z",
       "collected_at": "2026-08-26T22:08:06Z",
-      "status": "raw",
-      "relevance_score": 0.0,
-      "relevance_signals": null,
-      "candidates_mentioned": [],
-      "topics": [],
+      "status": "validated",
+      "relevance_score": 0.6,
+      "relevance_signals": {
+        "candidate_signal": 0.5,
+        "topic_signal": 0.05,
+        "keyword_signal": 0.05,
+        "source_signal": 0.0
+      },
+      "candidates_mentioned": [
+        "lula"
+      ],
+      "topics": [
+        "politica_externa",
+        "impostos"
+      ],
       "narrative_cluster_id": null,
       "duplicate_of": null,
       "summaries": {
-        "pt-BR": "",
-        "en-US": ""
+        "pt-BR": "A campanha de Lula avalia a adoção da tarifa zero no transporte público em um possível quarto mandato, embora reconheça a complexidade operacional e fiscal da medida. O governo estuda fontes alternativas de financiamento, como tributação de externalidades do transporte individual, reformulação do vale-transporte e destinação de recursos da Cide.",
+        "en-US": "Lula's campaign is considering zero-fare public transportation in a potential fourth term, while acknowledging the operational and fiscal complexity of the measure. The government is studying alternative funding sources, such as taxing individual transport externalities, restructuring transit vouchers, and allocating Cide fuel tax resources."
       },
       "content": "O assessor na Secretaria Nacional de Mobilidade Urbana do Ministério das Cidades, Giancarlo Gama, que representava a campanha do presidenta Luiz Inácio Lula da Silva (PT) em evento da ANPTrilhos, afirmou nesta quarta-feira, 26, que a discussão sobre a adoção da tarifa zero no transporte público poderá avançar em um eventual quarto mandato, embora reconheça que a medida é complexa do ponto de vista operacional e fiscal. Afirmou que o governo tem estudado alternativas para ampliar o financiamento do transporte coletivo e acompanha com atenção o debate sobre gratuidade universal. “A gente está falando da tarifa zero. Estruturar isso tem uma complexidade muito grande, mas, com certeza, o governo do presidente Lula tem olhado para isso com muito carinho”, disse. Segundo Gama, o tema não foi incorporado explicitamente ao plano de governo por exigir uma discussão mais aprofundada sobre fontes permanentes de financiamento para custear a operação dos sistemas de transporte público. O assessor ressaltou, contudo, que há um compromisso da campanha com a ampliação dos investimentos no setor, tanto em infraestrutura quanto no financiamento da operação dos serviços. Gama mencionou a possibilidade de utilizar receitas oriundas da tributação de externalidades associadas ao transporte individual para financiar o transporte coletivo. Ele citou ainda a reformulação do vale-transporte e a destinação de recursos da Contribuição de Intervenção no Domínio Econômico (Cide) sobre combustíveis para o setor. Segundo ele, a reformulação do vale-transporte também é uma das discussões mais relevantes para a construção de uma fonte estável de financiamento do sistema. Modelos em avaliação incluem contribuições vinculadas ao número de trabalhadores ou à folha salarial das empresas.",
       "source_category": "mainstream",
-      "sentiment_per_candidate": {},
-      "edit_history": [],
+      "sentiment_per_candidate": {
+        "lula": "positivo"
+      },
+      "edit_history": [
+        {
+          "tier": "editor",
+          "at": "2026-08-26T23:56:14Z",
+          "provider": "openrouter",
+          "action": "validated",
+          "changes": [
+            "summary_pt",
+            "summary_en"
+          ]
+        }
+      ],
       "disclaimer_pt": "Análise algorítmica. Não representa pesquisa de opinião.",
       "disclaimer_en": "Algorithmic analysis. Does not represent polling data.",
-      "sentiment_score": 0.0,
-      "confidence_score": 0.0,
-      "_sentiment_scores": {},
-      "prominence_score": 0.0
+      "sentiment_score": 0.3,
+      "confidence_score": 1.0,
+      "_sentiment_scores": {
+        "lula": 0.3
+      },
+      "prominence_score": 0.0,
+      "_ai_provider": "nvidia",
+      "_ai_model": "minimaxai/minimax-m3",
+      "ai_provider_editor": "openrouter/free",
+      "editor_note": null
     },
     {
       "id": "75c3044080f23a77",
@@ -617,56 +738,56 @@
       "source": "CartaCapital",
       "published_at": "2026-08-26T21:36:10Z",
       "collected_at": "2026-08-26T22:08:18Z",
-      "status": "raw",
-      "relevance_score": 0.0,
-      "relevance_signals": null,
-      "candidates_mentioned": [],
-      "topics": [],
+      "status": "validated",
+      "relevance_score": 0.9,
+      "relevance_signals": {
+        "candidate_signal": 0.5,
+        "topic_signal": 0.25,
+        "keyword_signal": 0.15,
+        "source_signal": 0.0
+      },
+      "candidates_mentioned": [
+        "lula"
+      ],
+      "topics": [
+        "eleicoes",
+        "midia"
+      ],
       "narrative_cluster_id": null,
       "duplicate_of": null,
       "summaries": {
-        "pt-BR": "",
-        "en-US": ""
+        "pt-BR": "O TRE-SP multou em R$ 7,5 mil o candidato a deputado federal Luiz Camargo (Novo) por impulsionamento pago de vídeo com ataques a Lula, Haddad e ao PT. O conteúdo incluía comparações com a Venezuela e insinuações de fraude nas urnas eletrônicas. O candidato pode recorrer ao TSE.",
+        "en-US": "The TRE-SP fined federal deputy candidate Luiz Camargo (Novo) R$7,500 for paid promotion of a video attacking Lula, Haddad, and the PT. The content included comparisons with Venezuela and insinuations of fraud in electronic voting. The candidate may appeal to the TSE."
       },
       "source_category": "magazine",
       "content": "Justiça TRE-SP multa candidato por impulsionar propaganda contra Lula e Haddad A legislação eleitoral brasileira proíbe o impulsionamento pago de conteúdos nas redes sociais que visem criticar, ofender ou degradar a imagem de adversários políticos Por Maiara Marinho 26.08.2026 18h36 Fernando Haddad e Lula em 19 de março de 2026. Foto: Paulo Pinto/Agência Brasil Apoie Siga-nos no Eleições 2026 O Tribunal Regional Eleitoral de São Paulo aplicou, no último domingo 23, uma multa no valor de 7,5 mil reais ao candidato a deputado federal do Novo Luiz Camargo . A punição foi motivada pela prática ilícita de impulsionamento pago de conteúdo com propaganda eleitoral negativa dirigida a adversários políticos. De acordo com o entendimento da Justiça Eleitoral, a infração ocorreu devido ao pagamento feito pelo candidato para ampliar o alcance de um vídeo publicado nas redes sociais. A gravação trazia ataques diretos ao presidente Lula (PT), ao candidato ao governo de São Paulo Fernando Haddad (PT) e ao PT. Entre os conteúdos abordados no material impulsionado, estavam comparações entre a situação socioeconômica e política do Brasil e a da Venezuela, além de insinuações a respeito de supostas fraudes na votação por meio das urnas eletrônicas. Como a legislação eleitoral brasileira proíbe o impulsionamento pago de conteúdos nas redes sociais que visem criticar, ofender ou degradar a imagem de adversários políticos, o TRE-SP determinou a aplicação da multa ao candidato, que pode recorrer ao Tribunal Superior Eleitoral. Recomendadas O que há por trás das mudanças de posição de Nunes Marques e Mendonça no TSE Lula reage e vai ao TSE contra Renan Santos e Caiado por ataques em debate Pablo Marçal consegue reverter uma de suas condenações, mas segue inelegível Mendonça propõe tese sobre deepfakes e deve ter maioria no TSE Mais Lidas Maiara Marinho Repórter de CartaCapital baseada em Brasília, cobrindo o Poder Judiciário. Possui menção honrosa pela Agência LivreJor e mestrado em Comunicação e Cultura na UFRJ. Publicações em Le Monde Diplomatique Brasil, UOL e Repórter Brasil. ENTENDA MAIS SOBRE: Eleições 2026 , Fernando Haddad , Lula , TRE-SP , Jornalismo crítico e inteligente. Todos os dias, no seu e-mail Assine nossa newsletter Assine nossa newsletter e receba um boletim matinal exclusivo Assinar Inscreva-se Apoie o jornalismo que chama as coisas pelo nome Muita gente esqueceu o que escreveu, disse ou defendeu. Nós não. O compromisso de CartaCapital com os princípios do bom jornalismo permanece o mesmo. O combate à desigualdade nos importa. A denúncia das injustiças importa. Importa uma democracia digna do nome. Importa o apego à verdade factual e a honestidade. Estamos aqui, há mais de 30 anos, porque nos importamos. Como nossos fiéis leitores, CartaCapital segue atenta. Se o bom jornalismo também importa para você, nos ajude a seguir lutando. Assine a edição semanal de CartaCapital ou contribua com o quanto puder. Única Mensal Anual R$25 R$50 R$100 R$200 Outro Quero apoiar Leia também Justiça Messias tenta desarmar conflito entre PF e Mendonça antes que ele chegue ao STF Por Maiara Marinho Justiça O que há por trás das mudanças de posição de Nunes Marques e Mendonça no TSE Por Maiara Marinho Justiça ‘Já não temos muita esperança’, diz Paulo Galo às vésperas de julgamento no STF Por Maiara Marinho Jornalismo crítico e inteligente. Todos os dias, no seu e-mail Assine nossa newsletter Assine nossa newsletter e receba um boletim matinal exclusivo Assinar Inscreva-se",
-      "sentiment_per_candidate": {},
-      "edit_history": [],
-      "disclaimer_pt": "Análise algorítmica. Não representa pesquisa de opinião.",
-      "disclaimer_en": "Algorithmic analysis. Does not represent polling data.",
-      "sentiment_score": 0.0,
-      "confidence_score": 0.0,
-      "_sentiment_scores": {},
-      "prominence_score": 0.0
-    },
-    {
-      "id": "f09330cd71a726ca",
-      "url": "https://www.metropoles.com/colunas/grande-angular/suposto-chefe-de-gabinete-do-odio-fez-reunioes-na-sede-do-governo-de-pe",
-      "title": "Suposto chefe de \"gabinete do ódio\" fez reuniões na sede do governo de PE",
-      "source": "Metropoles",
-      "published_at": "2026-08-26T21:35:44Z",
-      "collected_at": "2026-08-26T22:08:08Z",
-      "status": "raw",
-      "relevance_score": 0.0,
-      "relevance_signals": null,
-      "candidates_mentioned": [],
-      "topics": [],
-      "narrative_cluster_id": null,
-      "duplicate_of": null,
-      "summaries": {
-        "pt-BR": "",
-        "en-US": ""
+      "sentiment_per_candidate": {
+        "lula": "positivo"
       },
-      "content": "Suspeito de coordenar “gabinete do ódio” de ataque a adversários da governadora de Pernambuco e candidata à reeleição, Raquel Lyra (PSD) , Amisadai Andrade da Silva esteve na sede do governo ao menos em duas ocasiões, conforme documentos obtidos pelo Metrópoles . Os relatórios sobre a entrada de pessoas no Palácio do Campo das Princesas registram ida de Amisadai ( foto em destaque ) para a Casa Civil, no dia 22 de julho de 2024. Na ocasião, ele se identificou como servidor da Caixa Econômica Federal. Em 30 de setembro do mesmo ano, ingressou no palácio como representante do Portal da Prefeitura, que recebeu R$ 642,5 mil do governo de Pernambuco durante a gestão de Raquel Lyra. 2 imagens Fechar modal. 1 de 2 Os relatórios sobre a entrada de pessoas no Palácio do Campo das Princesas registram ida de Amisadai (foto em destaque) para a Casa Civil, no dia 22 de julho de 2024. Na ocasião, ele se identificou como servidor da Caixa Econômica Federal Reprodução 2 de 2 Em 30 de setembro do mesmo ano, ingressou no palácio como representante do Portal da Prefeitura, que recebeu R$ 642,5 mil do governo de Pernambuco durante a gestão de Raquel Lyra Reprodução Amisadai é servidor da Caixa Econômica Federal e estava cedido para a Secretaria de Turismo de Pernambuco. Após reportagem da TV Record revelar investigação da Polícia Federal sobre uma rede supostamente ligada a Amisadai com 300 canais on-line que atuariam com notícias falsas contra adversários de Raquel Lyra , a governadora exonerou ele do governo, nesta quarta-feira (26/8). Durante sabatina nesta quarta-feira (26/8), a Raquel Lyra refutou informação de Amisadai de que ele teria se encontrado com ela e cobrou “provas”. Questionada do motivo pelo qual Amisadai estava lotado na Secretaria de Turismo, Raquel Lyra afirmou que o governo “é composto não sei por quantos mil cargos comissionados e efetivos”. A governadora ainda disse que ela é alvo de ataques e denunciou mais de 400 “perfis robotizados”. Um vídeo divulgado pela Record mostra Amisadai dizendo que opera rede de páginas e perfis que se dedicam a “desidratar” João Campos (PSB), principal adversário de Raquel Lyra na disputa pelo governo estadual. “O governo Estado enxergou na gente, também a gente fez reunião com o Palácio, enxergou a gente como um canal para a gente tentar desidratar ele (João Campos)”, disse. O pagamento pelo suposto serviço viria de contratos de publicidade firmados pelo governo de Raquel Lyra, de acordo com a apuração. A reportagem tenta contato com o governo de Pernambuco e Amisadai. O espaço permanece aberto para eventuais manifestações.",
-      "source_category": "mainstream",
-      "sentiment_per_candidate": {},
-      "edit_history": [],
+      "edit_history": [
+        {
+          "tier": "editor",
+          "at": "2026-08-26T23:56:20Z",
+          "provider": "openrouter",
+          "action": "validated",
+          "changes": [
+            "summary_pt",
+            "summary_en"
+          ]
+        }
+      ],
       "disclaimer_pt": "Análise algorítmica. Não representa pesquisa de opinião.",
       "disclaimer_en": "Algorithmic analysis. Does not represent polling data.",
-      "sentiment_score": 0.0,
-      "confidence_score": 0.0,
-      "_sentiment_scores": {},
-      "prominence_score": 0.0
+      "sentiment_score": 0.2,
+      "confidence_score": 1.0,
+      "_sentiment_scores": {
+        "lula": 0.2
+      },
+      "prominence_score": 0.0,
+      "_ai_provider": "openrouter",
+      "_ai_model": "openrouter/free",
+      "ai_provider_editor": "openrouter/free",
+      "editor_note": null
     },
     {
       "id": "48596cc32543606c",
@@ -22546,6 +22667,6 @@
       "editor_note": null
     }
   ],
-  "last_updated": "2026-08-26T22:49:59Z",
-  "total_count": 500
+  "last_updated": "2026-08-26T23:57:58Z",
+  "total_count": 493
 }
