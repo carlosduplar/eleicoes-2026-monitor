@@ -1,40 +1,40 @@
 {
-  "checked_at": "2026-08-28T21:02:08Z",
+  "checked_at": "2026-08-29T14:30:40Z",
   "status": "warning",
   "workflows": {
     "foca_collect": {
-      "status": "stale",
+      "status": "ok",
       "path": "site/public/data/articles.json",
       "exists": true,
-      "last_update": "2026-08-28T15:03:53Z",
-      "age_minutes": 358,
+      "last_update": "2026-08-29T13:41:04Z",
+      "age_minutes": 49,
       "stale_after_minutes": 120,
-      "details": "foca_collect data is older than expected freshness window"
+      "details": "foca_collect data freshness is within expected window"
     },
     "editor_validate": {
       "status": "stale",
       "path": "site/public/data/sentiment.json",
       "exists": true,
-      "last_update": "2026-08-28T09:50:24Z",
-      "age_minutes": 671,
+      "last_update": "2026-08-29T10:04:46Z",
+      "age_minutes": 265,
       "stale_after_minutes": 180,
       "details": "editor_validate data is older than expected freshness window"
     },
     "editor_chefe_curate": {
-      "status": "stale",
+      "status": "ok",
       "path": "site/public/data/curated_feed.json",
       "exists": true,
-      "last_update": "2026-08-28T15:03:53Z",
-      "age_minutes": 358,
+      "last_update": "2026-08-29T13:41:04Z",
+      "age_minutes": 49,
       "stale_after_minutes": 240,
-      "details": "editor_chefe_curate data is older than expected freshness window"
+      "details": "editor_chefe_curate data freshness is within expected window"
     },
     "weekly_briefing": {
       "status": "ok",
       "path": "site/public/data/weekly_briefing.json",
       "exists": true,
-      "last_update": "2026-08-28T15:03:53Z",
-      "age_minutes": 358,
+      "last_update": "2026-08-29T13:41:04Z",
+      "age_minutes": 49,
       "stale_after_minutes": 1440,
       "details": "weekly_briefing data freshness is within expected window"
     },
@@ -42,8 +42,8 @@
       "status": "ok",
       "path": "site/public/data/quiz.json",
       "exists": true,
-      "last_update": "2026-08-28T15:14:45Z",
-      "age_minutes": 347,
+      "last_update": "2026-08-29T13:51:54Z",
+      "age_minutes": 38,
       "stale_after_minutes": 2160,
       "details": "quiz_refresh data freshness is within expected window"
     },
@@ -52,33 +52,33 @@
       "path": "site/public/data/polls.json",
       "exists": true,
       "last_update": "2026-03-23T14:00:00Z",
-      "age_minutes": 227942,
+      "age_minutes": 228990,
       "stale_after_minutes": 1440,
       "details": "polls_collect data is older than expected freshness window"
     }
   },
   "error_summary": {
     "exists": true,
-    "total_errors": 650,
-    "last_24h_errors": 0,
+    "total_errors": 653,
+    "last_24h_errors": 3,
     "by_tier": {
       "editor": 536,
-      "foca": 114
+      "foca": 117
     },
-    "last_error_at": "2026-08-26T22:15:12Z"
+    "last_error_at": "2026-08-29T10:05:11Z"
   },
   "relevance_health": {
-    "checked_articles": 120,
+    "checked_articles": 112,
     "zero_relevance_count": 0,
     "sample_article_ids": []
   },
   "sync_health": {
     "exists": true,
-    "pushes_24h": 8,
+    "pushes_24h": 16,
     "failed_attempts_24h": 0,
     "conflicts_resolved_7d": 0,
     "discarded_theirs_7d": 0,
     "discarded_events_7d": 0
   },
-  "notes": "Stale outputs detected: foca_collect, editor_validate, editor_chefe_curate, polls_collect."
+  "notes": "Stale outputs detected: editor_validate, polls_collect."
 }
