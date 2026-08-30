@@ -296,6 +296,26 @@ def append_pipeline_error(*, source_name: str, source_url: str, message: str) ->
     pipeline_errors.rotate(PIPELINE_ERRORS_FILE)
 
 
+def _archive_markets_snapshot(markets: list[MarketItem]) -> None:
+    """Persist daily snapshot for historical odds trend."""
+    try:
+        archive_dir = DATA_DIR / "archives"
+        archive_dir.mkdir(parents=True, exist_ok=True)
+        today = datetime.now(timezone.utc).strftime("%Y-%m-%d")
+        archive_file = archive_dir / f"markets-{today}.json"
+        payload = {
+            "$schema": DEFAULT_SCHEMA_PATH,
+            "markets": markets,
+            "last_updated": utc_now_iso(),
+            "total_count": len(markets),
+        }
+        archive_file.write_text(
+            json.dumps(payload, indent=2, ensure_ascii=False) + "\n", encoding="utf-8"
+        )
+    except Exception as exc:  # pragma: no cover - archival is best-effort
+        logger.warning("Failed to archive markets snapshot: %s", exc)
+
+
 def collect_markets() -> tuple[int, int, int]:
     logger.info("Starting Polymarket market collection...")
     document = load_markets_document()
@@ -332,18 +352,41 @@ def collect_markets() -> tuple[int, int, int]:
             )
             continue
 
-    existing_ids = {m["id"] for m in document.markets if isinstance(m, dict)}
-    merged = list(document.markets)
+    # Upsert: update existing prices instead of append-only (fix stale odds)
+    existing_by_id: dict[str, MarketItem] = {
+        str(m["id"]): m for m in document.markets if isinstance(m, dict) and isinstance(m.get("id"), str)
+    }
     added = 0
+    updated = 0
     for item in incoming:
-        if item["id"] not in existing_ids:
-            merged.append(item)
-            existing_ids.add(item["id"])
+        item_id = item["id"]
+        if item_id in existing_by_id:
+            # Update mutable fields, keep id/slug stable
+            existing = existing_by_id[item_id]
+            # Detect change to count updated, but always refresh collected_at/prices
+            if (
+                existing.get("yes_price") != item["yes_price"]
+                or existing.get("no_price") != item["no_price"]
+                or existing.get("volume") != item["volume"]
+                or existing.get("liquidity") != item["liquidity"]
+            ):
+                updated += 1
+            existing.update(item)
+        else:
+            existing_by_id[item_id] = item
             added += 1
 
-    document.markets = merged
+    document.markets = list(existing_by_id.values())
     save_markets_document(document)
-    logger.info("Markets: %d new, %d total, %d errors", added, len(merged), errors)
+    # Daily historical snapshot (approved in planning)
+    _archive_markets_snapshot(document.markets)
+    logger.info(
+        "Markets: %d new, %d updated, %d total, %d errors",
+        added,
+        updated,
+        len(document.markets),
+        errors,
+    )
     return added, len(raw_markets), errors
 
 

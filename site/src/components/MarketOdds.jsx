@@ -43,6 +43,26 @@ const CANDIDATE_SLUGS = [
   'renan-santos',
 ];
 
+const CANDIDATE_LABELS = {
+  lula: 'Lula',
+  'flavio-bolsonaro': 'Flávio Bolsonaro',
+  tarcisio: 'Tarcísio',
+  caiado: 'Caiado',
+  zema: 'Zema',
+  'ratinho-jr': 'Ratinho Jr',
+  'eduardo-leite': 'Eduardo Leite',
+  'aldo-rebelo': 'Aldo Rebelo',
+  'renan-santos': 'Renan Santos',
+};
+
+function stripAccents(value) {
+  return value.normalize('NFD').replace(/[\u0300-\u036f]/g, '');
+}
+
+function normalizeForMatch(value) {
+  return stripAccents(value.toLowerCase());
+}
+
 function normalizeMarketPayload(payload) {
   const items = Array.isArray(payload) ? payload : payload?.markets;
   if (!Array.isArray(items)) {
@@ -59,9 +79,13 @@ function normalizeMarketPayload(payload) {
 }
 
 function parseCandidateFromQuestion(question) {
-  const lower = question.toLowerCase();
+  const lower = normalizeForMatch(question);
+  // Alias for Ratinho naming variance (Polymarket uses "Ratinho Júnior" vs slug "ratinho-jr")
+  if (lower.includes('ratinho') && (lower.includes('junior') || lower.includes('jr'))) {
+    return 'ratinho-jr';
+  }
   for (const slug of CANDIDATE_SLUGS) {
-    const name = slug.replace(/-/g, ' ');
+    const name = normalizeForMatch(slug.replace(/-/g, ' '));
     const parts = name.split(' ');
     if (parts.every((p) => lower.includes(p))) {
       return slug;
@@ -85,7 +109,7 @@ function buildChartRows(markets) {
   return Object.entries(byCandidate)
     .map(([slug, data]) => ({
       slug,
-      label: slug.replace(/-/g, ' ').replace(/\b\w/g, (c) => c.toUpperCase()),
+      label: CANDIDATE_LABELS[slug] || slug.replace(/-/g, ' ').replace(/\b\w/g, (c) => c.toUpperCase()),
       probability: Math.round((data.total / data.count) * 100),
       color: CANDIDATE_COLORS[slug] || '#4A5568',
     }))
@@ -113,10 +137,19 @@ function MarketOdds() {
   }, []);
   const markets = useMemo(() => normalizeMarketPayload(data), [data]);
   const chartRows = useMemo(() => buildChartRows(markets), [markets]);
-  const lastUpdated = useMemo(
-    () => (markets.length > 0 ? formatLastUpdated(markets[0]?.collected_at) : ''),
-    [markets],
-  );
+  const lastUpdated = useMemo(() => {
+    const wrapped = Array.isArray(data) ? null : data;
+    if (wrapped && typeof wrapped.last_updated === 'string') {
+      return formatLastUpdated(wrapped.last_updated);
+    }
+    if (markets.length === 0) return '';
+    const newest = markets.reduce((latest, item) => {
+      const ts = item.collected_at;
+      if (!ts) return latest;
+      return !latest || ts > latest ? ts : latest;
+    }, '');
+    return formatLastUpdated(newest);
+  }, [data, markets]);
 
   if (loading) {
     return (

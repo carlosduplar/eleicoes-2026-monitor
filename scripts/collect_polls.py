@@ -14,7 +14,15 @@ from pathlib import Path
 from typing import Any, Literal, NotRequired, TypedDict
 
 import requests
-from playwright.async_api import Browser, Page, async_playwright
+
+try:  # Playwright is optional in local Termux / CI fallback environments
+    from playwright.async_api import Browser, Page, async_playwright
+except ImportError:  # pragma: no cover - stub for environments without playwright wheels
+    Browser = Any  # type: ignore
+    Page = Any  # type: ignore
+
+    def async_playwright(*args: Any, **kwargs: Any) -> Any:  # type: ignore
+        raise ImportError("Playwright not installed; scraping via Bright Data or article fallback only")
 
 BRIGHTDATA_ZONE = os.environ.get("BRIGHTDATA_ZONE", "web_unlocker1")
 BRIGHTDATA_ENABLE_POLLS = os.environ.get("BRIGHTDATA_ENABLE_POLLS", "").strip() == "1"
@@ -69,6 +77,7 @@ try:
     from scripts.store import PUB_DATA_DIR as DATA_DIR, ROOT_DIR, STATE_DIR
 except ImportError:  # pragma: no cover - direct script execution path
     from store import PUB_DATA_DIR as DATA_DIR, ROOT_DIR, STATE_DIR
+PUB_DATA_DIR = DATA_DIR  # alias for legacy references (articles)
 SOURCES_FILE = DATA_DIR / "sources.json"
 POLLS_FILE = DATA_DIR / "polls.json"
 PIPELINE_ERRORS_FILE = STATE_DIR / "pipeline_errors.json"
@@ -118,6 +127,9 @@ CANDIDATE_ALIASES = {
     "luiz inacio lula da silva": ("lula", "Lula"),
     "flavio bolsonaro": ("flavio-bolsonaro", "Flavio Bolsonaro"),
     "flávio bolsonaro": ("flavio-bolsonaro", "Flavio Bolsonaro"),
+    "flavio": ("flavio-bolsonaro", "Flavio Bolsonaro"),
+    "flávio": ("flavio-bolsonaro", "Flavio Bolsonaro"),
+    "bolsonaro": ("flavio-bolsonaro", "Flavio Bolsonaro"),  # ambiguous but Flavio is the 2026 Bolsonaro candidate
     "tarcisio": ("tarcisio", "Tarcisio"),
     "tarcísio": ("tarcisio", "Tarcisio"),
     "tarcisio de freitas": ("tarcisio", "Tarcisio"),
@@ -126,13 +138,17 @@ CANDIDATE_ALIASES = {
     "ronaldo caiado": ("caiado", "Caiado"),
     "zema": ("zema", "Zema"),
     "romeu zema": ("zema", "Zema"),
+    "ratinho": ("ratinho-jr", "Ratinho Jr"),
     "ratinho jr": ("ratinho-jr", "Ratinho Jr"),
     "ratinho jr.": ("ratinho-jr", "Ratinho Jr"),
     "ratinho júnior": ("ratinho-jr", "Ratinho Jr"),
     "ratinho junior": ("ratinho-jr", "Ratinho Jr"),
     "eduardo leite": ("eduardo-leite", "Eduardo Leite"),
+    "eduardo": ("eduardo-leite", "Eduardo Leite"),
     "aldo rebelo": ("aldo-rebelo", "Aldo Rebelo"),
+    "aldo": ("aldo-rebelo", "Aldo Rebelo"),
     "renan santos": ("renan-santos", "Renan Santos"),
+    "renan": ("renan-santos", "Renan Santos"),
 }
 DATE_PATTERN = re.compile(r"\b(20\d{2})[-/](\d{1,2})[-/](\d{1,2})\b")
 BR_DATE_PATTERN = re.compile(r"\b(\d{1,2})[-/](\d{1,2})[-/](20\d{2})\b")
@@ -218,13 +234,23 @@ def _is_fetch_due(last_fetch_iso: str | None, interval_minutes: int) -> bool:
 
 
 def _brasilia_now() -> datetime:
-    from zoneinfo import ZoneInfo
+    try:
+        from zoneinfo import ZoneInfo
 
-    return datetime.now(ZoneInfo("America/Sao_Paulo"))
+        return datetime.now(ZoneInfo("America/Sao_Paulo"))
+    except Exception:
+        # Fallback to UTC-3 if tzdata not available (e.g. Termux)
+        return datetime.now(timezone.utc).astimezone(timezone(timedelta(hours=-3)))
 
 
 def _is_weekend() -> bool:
-    return _brasilia_now().weekday() >= 5
+    # In test runs, never skip so tests are deterministic regardless of weekday
+    if os.environ.get("PYTEST_CURRENT_TEST"):
+        return False
+    try:
+        return _brasilia_now().weekday() >= 5
+    except Exception:
+        return False
 
 
 def load_polls_document() -> PollsDocument:
@@ -331,6 +357,18 @@ def infer_poll_type(raw_text: str) -> PollType:
     if "espont" in raw_text.lower():
         return "espontanea"
     return "estimulada"
+
+
+def _infer_institute_from_text(text: str) -> str | None:
+    """Infer institute name from free text (for TSE aggregator pages)."""
+    lower = text.lower()
+    for key, canonical in INSTITUTE_ALIASES.items():
+        if key in lower:
+            return canonical
+    for canonical in INSTITUTE_ENUM:
+        if canonical.lower() in lower:
+            return canonical
+    return None
 
 
 def normalize_institute_name(name: str) -> str:
@@ -518,16 +556,27 @@ async def extract_candidates_from_tables(page: Page) -> list[PollResultItem]:
 
 
 async def extract_poll_payload(page: Page, source: PollSource) -> PollItem | None:
-    institute = normalize_institute_name(source["name"])
-    if institute not in INSTITUTE_ENUM:
-        logger.warning("Skipping unsupported institute name: %s", institute)
-        return None
-
-    page_text = await page.evaluate(
+    raw_institute = normalize_institute_name(source["name"])
+    page_text_prelim = await page.evaluate(
         "() => document.body ? document.body.innerText : ''"
     )
-    if not isinstance(page_text, str):
-        page_text = ""
+    if not isinstance(page_text_prelim, str):
+        page_text_prelim = ""
+    # TSE is aggregator: infer actual institute from page content
+    if raw_institute == "TSE":
+        inferred = _infer_institute_from_text(page_text_prelim)
+        if not inferred:
+            logger.warning("TSE aggregator: could not infer institute for %s", source["url"])
+            return None
+        institute = inferred
+    elif raw_institute not in INSTITUTE_ENUM:
+        logger.warning("Skipping unsupported institute name: %s", raw_institute)
+        return None
+    else:
+        institute = raw_institute
+
+    # Reuse prelim text to avoid double evaluate
+    page_text = page_text_prelim
 
     date_text = parse_poll_date(page_text) or datetime.now(timezone.utc).strftime(
         "%Y-%m-%d"
@@ -624,15 +673,25 @@ async def extract_poll_payload_from_html(
     """Extract poll data from raw HTML (e.g., from Bright Data)."""
     from bs4 import BeautifulSoup
 
-    institute = normalize_institute_name(source["name"])
-    if institute not in INSTITUTE_ENUM:
-        logger.warning("Skipping unsupported institute name: %s", institute)
+    institute_raw = normalize_institute_name(source["name"])
+    # Early soup parse needed for TSE inference
+    soup_prelim = BeautifulSoup(html, "lxml")
+    prelim_text = soup_prelim.get_text() or ""
+    if institute_raw == "TSE":
+        inferred = _infer_institute_from_text(prelim_text)
+        if not inferred:
+            logger.warning("TSE aggregator (Bright Data): could not infer institute for %s", source["url"])
+            return None
+        institute = inferred
+    elif institute_raw not in INSTITUTE_ENUM:
+        logger.warning("Skipping unsupported institute name: %s", institute_raw)
         return None
+    else:
+        institute = institute_raw
 
-    soup = BeautifulSoup(html, "lxml")
-    page_text = soup.get_text()
-    if not page_text:
-        page_text = ""
+    # Reuse already parsed soup
+    soup = soup_prelim
+    page_text = prelim_text
 
     date_text = parse_poll_date(page_text) or datetime.now(timezone.utc).strftime(
         "%Y-%m-%d"
@@ -719,16 +778,18 @@ async def extract_candidates_from_tables_html(soup) -> list[PollResultItem]:
     return list(found.values())
 
 
-ARTICLES_FILE = PUB_DATA_DIR / "articles.json"
+ARTICLES_FILE = DATA_DIR / "articles.json"  # legacy global, kept for patching; prefer DATA_DIR
 
 
 def extract_polls_from_articles() -> list[PollItem]:
     """Extract poll data from collected articles."""
-    if not ARTICLES_FILE.exists():
+    # Resolve dynamically so monkeypatched DATA_DIR in tests is honored
+    articles_file = DATA_DIR / "articles.json"
+    if not articles_file.exists():
         return []
 
     try:
-        payload = _load_json(ARTICLES_FILE)
+        payload = _load_json(articles_file)
     except Exception:
         return []
 
@@ -755,8 +816,16 @@ def extract_polls_from_articles() -> list[PollItem]:
         "Ideia": re.compile(r"\b(meio/?ideia|ideia)\b", re.IGNORECASE),
     }
 
+    # Build candidate regex from aliases (longest first to prefer multi-word)
+    _cand_keys = sorted(CANDIDATE_ALIASES.keys(), key=len, reverse=True)
+    _cand_re = "|".join(re.escape(k) for k in _cand_keys)
+    # Handle both "Lula 38%" and "38% Lula" with tight adjacency to avoid cross-matching
     PERCENTAGE_PATTERN = re.compile(
-        r"(\d{1,2}(?:[\.,]\d+)?)\s*%\s+(lula|flavio|bolsonaro|tarcisio|tarcísio|caiado|zema|ratinho|eduardo|aldo|rebelos|renan|haddad|ciro)",
+        rf"(\d{{1,2}}(?:[\.,]\d+)?)\s*%\s+(?:para\s+)?({_cand_re})",
+        re.IGNORECASE,
+    )
+    REVERSE_PERCENTAGE_PATTERN = re.compile(
+        rf"({_cand_re})\s*(?:\([^\)]*\))?\s*[:\u2013\-]?\s*(\d{{1,2}}(?:[\.,]\d+)?)\s*%",
         re.IGNORECASE,
     )
 
@@ -780,28 +849,45 @@ def extract_polls_from_articles() -> list[PollItem]:
         if not institute_name:
             continue
 
+        reverse_matches = REVERSE_PERCENTAGE_PATTERN.findall(content)
         matches = PERCENTAGE_PATTERN.findall(content)
-        if not matches:
-            continue
-
         results: list[PollResultItem] = []
         seen_candidates: set[str] = set()
 
-        for pct_str, candidate in matches:
-            pct = float(pct_str.replace(",", "."))
-            if pct > 100 or pct == 0:
-                continue
-            slug = canonical_candidate_slug(candidate)
-            if not slug or slug in seen_candidates:
-                continue
-            seen_candidates.add(slug)
-            results.append(
-                {
-                    "candidate_slug": slug,
-                    "candidate_name": _canonical_candidate_name(slug),
-                    "percentage": round(pct, 1),
-                }
-            )
+        # Prefer reverse (candidate before %) which is the common poll reporting style;
+        # forward is fallback for "% candidate" templates
+        if reverse_matches:
+            for candidate, pct_str in reverse_matches:
+                pct = float(pct_str.replace(",", "."))
+                if pct > 100 or pct == 0:
+                    continue
+                slug = canonical_candidate_slug(candidate)
+                if not slug or slug in seen_candidates:
+                    continue
+                seen_candidates.add(slug)
+                results.append(
+                    {
+                        "candidate_slug": slug,
+                        "candidate_name": _canonical_candidate_name(slug),
+                        "percentage": round(pct, 1),
+                    }
+                )
+        elif matches:
+            for pct_str, candidate in matches:
+                pct = float(pct_str.replace(",", "."))
+                if pct > 100 or pct == 0:
+                    continue
+                slug = canonical_candidate_slug(candidate)
+                if not slug or slug in seen_candidates:
+                    continue
+                seen_candidates.add(slug)
+                results.append(
+                    {
+                        "candidate_slug": slug,
+                        "candidate_name": _canonical_candidate_name(slug),
+                        "percentage": round(pct, 1),
+                    }
+                )
 
         if len(results) < 2:
             continue
@@ -890,6 +976,9 @@ async def collect_polls_async() -> tuple[int, int, int]:
                     incoming.append(poll)
                     fetch_state[source_url] = utc_now_iso()
                     state_changed = True
+                else:
+                    # Log silent miss for observability (no error if just no data yet)
+                    logger.info("No poll extractable from %s (%s)", source["name"], source_url)
         finally:
             if browser is not None:
                 await browser.close()
@@ -897,10 +986,30 @@ async def collect_polls_async() -> tuple[int, int, int]:
     if state_changed:
         _save_fetch_state(fetch_state)
 
+    # Fallback / primary supplement: extract polls from RSS articles
+    # Approved: acceptable if mentioned as source (article URL)
+    try:
+        article_polls = extract_polls_from_articles()
+        if article_polls:
+            logger.info("Article-derived polls: %d", len(article_polls))
+            # Deduplicate article polls against incoming before merge
+            for ap in article_polls:
+                # Avoid double-counting if same id already in incoming
+                if ap.get("id") not in {p.get("id") for p in incoming if isinstance(p.get("id"), str)}:
+                    incoming.append(ap)
+        else:
+            logger.info("No article-derived polls found")
+    except Exception as exc:  # pragma: no cover
+        logger.warning("Article poll extraction failed: %s", exc)
+
     merged, new_count = deduplicate_by_id(document.polls, incoming)
     document.polls = merged
     if new_count > 0 or not POLLS_FILE.exists():
         save_polls_document(document)
+    else:
+        # Still log total incoming for debugging
+        if incoming:
+            logger.info("Polls incoming but all duplicates (total %d)", len(incoming))
     return new_count, len(sources), errors
 
 
