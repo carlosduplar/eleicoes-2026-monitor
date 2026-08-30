@@ -249,24 +249,13 @@ def _is_fetch_due(last_fetch_iso: str | None, interval_minutes: int) -> bool:
     return elapsed >= timedelta(minutes=interval_minutes)
 
 
-def _brasilia_now() -> datetime:
-    try:
-        from zoneinfo import ZoneInfo
-
-        return datetime.now(ZoneInfo("America/Sao_Paulo"))
-    except Exception:
-        # Fallback to UTC-3 if tzdata not available (e.g. Termux)
-        return datetime.now(timezone.utc).astimezone(timezone(timedelta(hours=-3)))
-
-
 def _is_weekend() -> bool:
-    # In test runs, never skip so tests are deterministic regardless of weekday
-    if os.environ.get("PYTEST_CURRENT_TEST"):
-        return False
-    try:
-        return _brasilia_now().weekday() >= 5
-    except Exception:
-        return False
+    """Weekend limitation removed: polls run every day (2026-08-30).
+
+    Kept for backward compatibility with tests that monkeypatch it;
+    always returns False so institute scraping is never skipped.
+    """
+    return False
 
 
 def load_polls_document() -> PollsDocument:
@@ -935,27 +924,6 @@ async def collect_polls_async() -> tuple[int, int, int]:
     errors = 0
     fetch_state = _load_fetch_state()
     state_changed = False
-
-    # Weekend: skip institute scraping but still harvest article-derived polls
-    # (approved to keep article polls even on weekends, near election)
-    if _is_weekend():
-        logger.info("Weekend: skipping institute poll scraping until next weekday, but harvesting article polls")
-        try:
-            article_polls = extract_polls_from_articles()
-            if article_polls:
-                logger.info("Weekend article-derived polls: %d", len(article_polls))
-                incoming.extend(article_polls)
-            else:
-                logger.info("Weekend: no article-derived polls found")
-        except Exception as exc:  # pragma: no cover
-            logger.warning("Weekend article poll extraction failed: %s", exc)
-        if incoming:
-            merged, new_count = deduplicate_by_id(document.polls, incoming)
-            document.polls = merged
-            if new_count > 0 or not POLLS_FILE.exists():
-                save_polls_document(document)
-            return new_count, len(sources), errors
-        return 0, len(sources), 0
 
     brightdata_key = (
         os.environ.get("BRIGHTDATA_API_KEY", "").strip()

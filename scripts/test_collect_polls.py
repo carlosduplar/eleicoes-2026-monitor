@@ -207,15 +207,49 @@ def test_institute_failure_does_not_crash(isolated_workspace: dict[str, Path], m
 
 
 def test_polls_skipped_on_weekend(isolated_workspace: dict[str, Path], monkeypatch: pytest.MonkeyPatch) -> None:
+    """Weekend limitation removed: polls run 7 days a week (2026-08-30)."""
     _seed_sources(
         isolated_workspace["sources"],
         [{"name": "Datafolha", "url": "https://example.com/datafolha", "active": True}],
     )
+    # Even on weekend, institute scraping must run (no skip).
     monkeypatch.setattr(collect_polls, "_is_weekend", lambda: True)
+
+    class FakeBrowser:
+        async def close(self) -> None:
+            return None
+
+    class FakeChromium:
+        async def launch(self, headless: bool = True, channel: str | None = None) -> FakeBrowser:
+            del channel
+            return FakeBrowser()
+
+    class FakePlaywright:
+        chromium = FakeChromium()
+
+        async def __aenter__(self) -> "FakePlaywright":
+            return self
+
+        async def __aexit__(self, exc_type, exc, tb) -> None:
+            return None
+
+    async def fake_scrape_source(browser: Any, source: dict[str, Any], timeout_ms: int = 30000) -> dict[str, Any]:
+        return {
+            "id": collect_polls.build_poll_id("Datafolha", "2026-03-01"),
+            "institute": "Datafolha",
+            "published_at": "2026-03-01T00:00:00Z",
+            "collected_at": "2026-03-10T10:00:00Z",
+            "type": "estimulada",
+            "source_url": source["url"],
+            "results": [{"candidate_slug": "lula", "candidate_name": "Lula", "percentage": 35.0}],
+        }
+
+    monkeypatch.setattr(collect_polls, "async_playwright", lambda: FakePlaywright())
+    monkeypatch.setattr(collect_polls, "scrape_source", fake_scrape_source)
 
     new_count, source_count, error_count = collect_polls.collect_polls()
 
-    assert new_count == 0
+    assert new_count == 1
     assert source_count == 1
     assert error_count == 0
 
