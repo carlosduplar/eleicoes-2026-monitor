@@ -914,15 +914,32 @@ def extract_polls_from_articles() -> list[PollItem]:
 
 async def collect_polls_async() -> tuple[int, int, int]:
     sources = load_active_poll_sources()
-    if _is_weekend():
-        logger.info("Weekend: skipping poll collection until next weekday")
-        return 0, len(sources), 0
-
     document = load_polls_document()
     incoming: list[PollItem] = []
     errors = 0
     fetch_state = _load_fetch_state()
     state_changed = False
+
+    # Weekend: skip institute scraping but still harvest article-derived polls
+    # (approved to keep article polls even on weekends, near election)
+    if _is_weekend():
+        logger.info("Weekend: skipping institute poll scraping until next weekday, but harvesting article polls")
+        try:
+            article_polls = extract_polls_from_articles()
+            if article_polls:
+                logger.info("Weekend article-derived polls: %d", len(article_polls))
+                incoming.extend(article_polls)
+            else:
+                logger.info("Weekend: no article-derived polls found")
+        except Exception as exc:  # pragma: no cover
+            logger.warning("Weekend article poll extraction failed: %s", exc)
+        if incoming:
+            merged, new_count = deduplicate_by_id(document.polls, incoming)
+            document.polls = merged
+            if new_count > 0 or not POLLS_FILE.exists():
+                save_polls_document(document)
+            return new_count, len(sources), errors
+        return 0, len(sources), 0
 
     brightdata_key = (
         os.environ.get("BRIGHTDATA_API_KEY", "").strip()
