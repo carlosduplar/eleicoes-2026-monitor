@@ -56,8 +56,31 @@ function CandidatesPage() {
         {candidates.map((candidate) => {
           const statusKey = (candidate?.status || 'pre-candidate').replace('-', '_');
           const chipColor = candidate?.color || CANDIDATE_COLORS[candidate?.slug] || '#4A5568';
+          const photoUrl = typeof candidate?.photo_url === 'string' ? candidate.photo_url.trim() : '';
+          const initials = (candidate?.name || candidate?.slug || '?').slice(0, 1).toUpperCase();
           return (
             <article className="candidate-list-card" key={candidate.slug}>
+              <div className="candidate-portrait-wrap" style={{ borderColor: chipColor }}>
+                {photoUrl ? (
+                  <img
+                    className="candidate-portrait"
+                    src={photoUrl}
+                    alt={candidate.full_name || candidate.name}
+                    loading="lazy"
+                    onError={(e) => {
+                      e.currentTarget.style.display = 'none';
+                      const fallback = e.currentTarget.nextElementSibling;
+                      if (fallback) fallback.style.display = 'flex';
+                    }}
+                  />
+                ) : null}
+                <span
+                  className="candidate-portrait-fallback"
+                  style={{ backgroundColor: chipColor, display: photoUrl ? 'none' : 'flex' }}
+                >
+                  {initials}
+                </span>
+              </div>
               <div className="candidate-list-head">
                 <span className="candidate-list-dot" style={{ backgroundColor: chipColor }} />
                 <div>

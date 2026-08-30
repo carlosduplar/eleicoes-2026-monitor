@@ -221,18 +221,41 @@ This section documents what did not work as expected after the initial 1.0 deliv
 
 **Lesson:** A fallback is only useful when its health check, request format, and runtime path are identical to production. Keep probes observational, prefer runner-provided browsers when available, and bound external API latency so one provider cannot consume the whole CI budget.
 
+### 2026-08-30 -- Polls & Markets: TSE as primary and Flávio odds fix
+
+**What happened:** `site/public/data/pipeline_health.json` reported `polls_collect: stale` since 2026-03-11 (watchdog) and `/markets` showed no odds for Flávio Bolsonaro despite Polymarket pricing at 33.65%. On Sundays `collect.yml` produced `polls.json` with 0 entries because a weekend early-return discarded article-extracted polls as well. Accent/alias normalization (`ratinho`, `flavio-bolsonaro`) failed on patterns like `"Lula (PT) – 39%"`.
+
+**What we did:**
+- `scripts/collect_polls.py`: promoted the TSE aggregator to primary source, activated all 10 institutes in `site/public/data/sources.json` (adding Futura, Ipsos, MDA, Ideia `active: true`), fixed institute inference for TSE data, added accent/alias normalization for candidate names, tightened the percentage regex for `"Name (Party) – XX%"`, and wired `extract_polls_from_articles()` as a fallback even when institute scraping is skipped.
+- Weekend fix: the Saturday/Sunday `return` now skips only institute scraping but still runs `extract_polls_from_articles()` and merges into `polls.json` (commit `2af5ca559`).
+- `scripts/collect_markets.py`: changed from `append` to `upsert` for existing market prices and added a daily snapshot to `site/public/data/archives/markets-YYYY-MM-DD.json`.
+- `site/src/components/MarketOdds.jsx`: accent stripping, `ratinho` alias, corrected probability labels, `last_updated` from payload — Flávio odds now visible on `/markets`.
+
+**Lesson:** In an election year, polling has heterogeneous primaries (TSE aggregator + institutes + article text); relying on a single collection path leaves the dashboard stale on weekends. Text normalization (accents, aliases, em dash) is a prerequisite for candidate matching, not post-processing. Markets need `upsert`, not `append`, to reflect live pricing.
+
+### 2026-08-30 -- News feed: validated-only and removal of "Validated" badge
+
+**What happened:** The feed (`site/src/components/NewsFeed.jsx`) rendered `raw` + `validated` + `curated` (except `irrelevant`), i.e., 253/500 articles on 2026-08-30 still without bilingual summaries (`status: raw`, `relevance_score: 0.0`, `Under review`). This diluted editorial signal and showed titles without analyzed context. The green "✓ Validated" badge on every validated card became visual noise once most cards were validated.
+
+**What we did:**
+- `site/src/components/NewsFeed.jsx`: changed filter from `status !== 'irrelevant'` to `status === 'validated' || status === 'curated'` (247/500 in snapshot; 102 validated + 145 curated). Both `articles` and `displayedArticles` (search) use the same filter; `useSearch` operates only on the validated corpus. Removed `statusToClass.validated` and `isValidated`/`statusLabel` logic — only the category badge and, when `curated`, the gold "Editor's Highlight" badge remain. `statusKey` default is now `'validated'`.
+- `site/src/styles.css`: removed `.status-raw` and `.status-validated` (kept only `.status-curated`); `--status-raw`/`--status-valid` remain as design tokens but unused in the feed.
+- `site/src/locales/{pt-BR,en-US}/common.json`: keys `feed.validated` and `feed.raw_badge` kept for compatibility but no longer rendered in the feed (only `feed.curated` is shown).
+
+**Lesson:** Staged publication (PLAN.md Option A: raw with title only) maximizes speed, but for a generalist feed readers expect already-analyzed content. Raising the bar to "validated-only" improves editorial density and simplifies UX (one fewer badge) without changing the state machine — `raw` stays in `site/public/data/articles.json` for audit/reprocessing, just not served to readers.
+
 ---
 
 ## Project numbers
-At the current snapshot (2026-08-19), the measurable baseline is:
+At the current snapshot (2026-08-30), the measurable baseline is:
 
-- 17 phases completed (16 main + Phase 17 Vertex AI Search extension).
-- 620+ commits in repository history.
-- 21 active RSS sources in `data/sources.json`, plus 8 party sources and 10 polling institute sources.
-- 9 candidates modeled in `data/candidates.json`.
-- 6 GitHub Actions workflows: collect (10min), validate (30min), curate (hourly), deploy, update-quiz, watchdog.
-- 4 article statuses: `raw`, `validated`, `curated`, `irrelevant`.
-- An automated editorial feedback mechanism filtering irrelevant content.
+- 17 phases completed (16 main + Phase 17 Vertex AI Search extension) + post-M9 hotfixes.
+- 700+ commits in history (bots + humans) at 2026-08-30.
+- 21 active RSS sources in `site/public/data/sources.json`, plus 8 party sources and 10 polling institutes (TSE aggregator as active primary since 2026-08-30).
+- 13 official candidates (TSE 2026-08-15) modeled in `site/public/data/candidates.json` (+ `candidates_positions.json`/`_draft`), with TSE portraits at `site/public/images/candidates/*.jpg`.
+- 7 GitHub Actions workflows: collect (15min cron `0-3,8-23 UTC`), validate (30min), curate (hourly, 90min gate), deploy (workflow_run), update-quiz, update-candidates-positions, watchdog.
+- 4 article statuses: `raw`, `validated`, `curated`, `irrelevant` — public feed shows only `validated`+`curated` (247/500 on 2026-08-30) since 2026-08-30; `raw` stays on disk for audit.
+- Automated editorial feedback (`state/editor_feedback.json`, 90-day prune, M8) filtering irrelevant content.
 - Circuit breaker and per-run AI call limits for pipeline resilience.
 - Seed script (`seed_candidates_positions.py`) for baseline candidate position population from Wikipedia, Câmara/Senado APIs, and AI synthesis.
 - Unified AI chain with reasoning enabled: `poolside/laguna-s-2.1` -> `minimax-m3:cloud` (Ollama) -> `minimaxai/minimax-m3` (NVIDIA NIM) -> `openrouter/free`.
@@ -240,6 +263,6 @@ At the current snapshot (2026-08-19), the measurable baseline is:
 These numbers are not marketing decoration; they demonstrate that the system was shipped, operated under real conditions, and iteratively corrected based on production feedback.
 
 ## Current status
-The portal is live and operating continuously. The AI provider chain has been reordered based on empirical reliability data. Content quality has improved through the editorial feedback loop. CI/CD race conditions are managed but not fully eliminated. The system processes hundreds of articles daily across 21 RSS sources, 8 party websites, 10 polling institutes, and YouTube, with automated bilingual summarization, sentiment analysis, and quiz position extraction.
+The portal is live and operating continuously. The AI provider chain has been reordered based on empirical reliability data. Content quality has improved through the editorial feedback loop and, since 2026-08-30, a validated-only feed (editorial bar raised). Polls refresh daily (including weekends via article fallback) and markets show Flávio Bolsonaro odds (Polymarket). CI/CD race conditions are managed but not fully eliminated. The system processes hundreds of articles daily across 21 RSS sources, 8 party websites, 10 polling institutes (TSE primary) and YouTube, with automated bilingual summarization, sentiment analysis, and quiz position extraction.
 
-The next focus areas are monitoring long-term provider stability, expanding editorial feedback rules, and evaluating whether the Vertex AI Search integration (Phase 17) delivers measurable user value.
+The next focus areas are monitoring validated-feed coverage vs. freshness, long-term provider stability, expanding editorial feedback rules, and evaluating whether the Vertex AI Search integration (Phase 17) delivers measurable user value.

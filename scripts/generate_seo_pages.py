@@ -15,14 +15,14 @@ BASE_URL: str = "https://eleicoes2026.com.br"
 SITEMAP_NS: str = "http://www.sitemaps.org/schemas/sitemap/0.9"
 
 COMPARISON_PAIRS: list[tuple[str, str]] = [
-    ("lula", "tarcisio"),
+    ("lula", "flavio-bolsonaro"),
     ("lula", "caiado"),
-    ("tarcisio", "caiado"),
-    ("tarcisio", "ratinho-jr"),
     ("lula", "zema"),
-    ("caiado", "ratinho-jr"),
-    ("lula", "ratinho-jr"),
-    ("tarcisio", "zema"),
+    ("caiado", "zema"),
+    ("renan-santos", "pablo-marcal"),
+    ("augusto-cury", "edmilson-costa"),
+    ("hertz-dias", "samara-martins"),
+    ("wilson-grassi", "clariana-barao"),
 ]
 
 STATIC_ROUTES: list[dict[str, str]] = [
@@ -119,7 +119,7 @@ def main() -> None:
     """Entry point. Reads candidates, generates sitemap, prints summary."""
 
     repo_root = Path(__file__).resolve().parent.parent
-    candidates = load_candidates(repo_root / "data")
+    candidates = load_candidates(repo_root / "site" / "public" / "data")
     today = date.today().isoformat()
     sitemap_root = build_sitemap(candidates, today)
     count = write_sitemap(sitemap_root, repo_root / "site" / "public" / "sitemap.xml")

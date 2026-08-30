@@ -402,16 +402,6 @@ p {
   padding: 0.2rem 0.55rem;
 }
 
-.feed-status-badge.status-raw {
-  background: rgb(246 173 85 / 15%);
-  color: var(--status-raw);
-}
-
-.feed-status-badge.status-validated {
-  background: rgb(72 187 120 / 15%);
-  color: var(--status-valid);
-}
-
 .feed-status-badge.status-curated {
   background: rgb(184 150 30 / 16%);
   color: var(--status-curated);
@@ -868,6 +858,62 @@ p {
   padding: 1.1rem 1.25rem;
 }
 
+.candidate-hero-layout {
+  display: flex;
+  gap: 1.25rem;
+  align-items: flex-start;
+}
+
+.candidate-hero-portrait-wrap {
+  width: 160px;
+  height: 200px;
+  flex-shrink: 0;
+  border-radius: 8px;
+  overflow: hidden;
+  border: 3px solid var(--brand-navy);
+  background: var(--brand-muted);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.candidate-hero-portrait {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: top center;
+  display: block;
+}
+
+.candidate-hero-portrait-fallback {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 2.5rem;
+  font-weight: 700;
+  color: #fff;
+}
+
+.candidate-hero-info {
+  flex: 1;
+  min-width: 0;
+}
+
+@media (max-width: 600px) {
+  .candidate-hero-layout {
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+  }
+
+  .candidate-hero-portrait-wrap {
+    width: 180px;
+    height: 225px;
+  }
+}
+
 .candidate-hero h1,
 .comparison-header h1 {
   font-size: clamp(1.45rem, 1.2rem + 0.7vw, 1.9rem);
@@ -1175,10 +1221,53 @@ p {
 }
 
 .candidate-list-card {
-  padding: 0.9rem;
+  padding: 0;
   display: flex;
   flex-direction: column;
   gap: 0.55rem;
+  overflow: hidden;
+}
+
+.candidate-portrait-wrap {
+  width: 100%;
+  aspect-ratio: 4 / 3;
+  background: var(--brand-muted);
+  overflow: hidden;
+  border-bottom: 4px solid var(--brand-navy);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.candidate-portrait {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: top center;
+  display: block;
+}
+
+.candidate-portrait-fallback {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 2rem;
+  font-weight: 700;
+  color: #fff;
+}
+
+.candidate-list-card .candidate-list-head,
+.candidate-list-card .candidate-list-party,
+.candidate-list-card .candidate-status,
+.candidate-list-card .candidate-profile-link {
+  margin-left: 0.9rem;
+  margin-right: 0.9rem;
+}
+
+.candidate-list-card .candidate-profile-link {
+  margin-bottom: 0.9rem;
 }
 
 .candidate-list-head {

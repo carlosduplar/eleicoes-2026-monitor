@@ -7,6 +7,14 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 
 ### Added
 
+- **2026-08-30 — Candidate portraits from TSE (official) + official list alignment** (`site/public/data/candidates.json`, `site/public/data/tse_data.json`, `site/public/images/candidates/*.jpg`, `site/src/pages/CandidatesPage.jsx`, `site/src/pages/CandidatePage.jsx`, `site/src/styles.css`, `docs/schemas/candidates.schema.json`, `site/vite.config.js`).
+  - Filtered candidate roster to 13 official TSE registrations (protocoladas até 2026-08-15 19h, fonte TSE via G1 2026-08-17 / Agência Brasil 2026-08-28): kept Lula (PT), Flávio Bolsonaro (PL), Renan Santos (Missão), Caiado (PSD — updated from União Brasil), Zema (Novo); removed speculative entries Tarcísio (Republicanos), Ratinho Jr (PSD), Eduardo Leite (PSD), Aldo Rebelo (DC); added 8 official names: Augusto Cury (Avante), Edmilson Costa (PCB), Hertz Dias (PSTU), Samara Martins (UP), Wilson Grassi (Democrata), Clariana Barão (DC), Rui Costa Pimenta (PCO), Pablo Marçal (PRTB). Updated `PLAN.md` and `README.md` tables accordingly.
+  - Bundled 13 official TSE-style portraits (sourced from DivulgaCandContas 2022/2026 via Wikimedia Commons, 600px optimized, ~740KB total) at `site/public/images/candidates/<slug>.jpg` and served at `/eleicoes-2026-monitor/images/candidates/<slug>.jpg`.
+  - `site/public/data/candidates.json` + `site/public/data/tse_data.json` now set `photo_url` to local TSE portrait path for each of the 13 official candidates. Previously `null` due to TSE API 403.
+  - `CandidatesPage.jsx` (`/candidatos`): 4:3 portrait header with party-color border, lazy loading, fallback to initials (`candidate-portrait-wrap` / `candidate-portrait-fallback`).
+  - `CandidatePage.jsx` (`/candidato/[slug]`): hero layout with 160×200 portrait (`candidate-hero-layout` / `candidate-hero-portrait-wrap`) and party-color border, eager loading, fallback.
+  - `site/src/styles.css`: added `candidate-portrait*` and `candidate-hero-*` styles, responsive stacking <600px.
+
 - Poolside (Laguna S 2.1) wired as the primary AI provider in `scripts/ai_client.py` (`POOLSIDE_API_KEY`, base URL `https://inference.poolside.ai/v1`, model `poolside/laguna-s-2.1`, reasoning enabled).
 - Phase 18: Government data integration (TSE + Portal da Transparência).
   - `scripts/collect_tse.py`: collects 2022 presidential results from TSE CDN and DivulgaCandContas REST API for all 9 tracked candidates.
@@ -24,6 +32,18 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 - `docs/SEED_SOURCES.md`: documents seed data sources, licensing, and editorial transparency protocol.
 
 ### Changed
+
+- **2026-08-30 — News feed: validated-only display** (`site/src/components/NewsFeed.jsx`, `site/src/styles.css`).
+  - `NewsFeed` now filters to `status` in `["validated", "curated"]` (was `!== "irrelevant"`). Raw articles (253/500 in current snapshot) no longer appear in the public feed; only Editor-validated content (`validated`: 102 + `curated`: 145) is shown. Search (`useSearch`) operates on the same filtered corpus.
+  - Removed the green "Validado / Validated" status badge (`status-validated` CSS + `t('feed.validated')` rendering) — redundant when every visible card is validated. Category badge + gold "Destaque da Redação / Editor's Highlight" (`curated`) badge remain. Raw badge (`Em apuração / Under review`, `status-raw`) is no longer rendered in the feed (data state `raw` still exists in `site/public/data/articles.json` and in `docs/schemas/articles.schema.json`).
+  - Rationale: staged publication (PLAN.md Option A: raw visible with title only) was hiding signal under 50% unprocessed titles; validated-only feed raises editorial bar and simplifies UX.
+
+- **2026-08-30 — Polls + Markets hotfix** (`scripts/collect_polls.py`, `scripts/collect_markets.py`, `site/src/components/MarketOdds.jsx`, `site/public/data/sources.json`).
+  - `collect_polls.py`: promoted TSE aggregator to primary source, activated all 10 polling institutes (added Futura, Ipsos, MDA, Ideia active in `sources.json`), fixed institute inference for TSE data, added accent/alias normalization for candidate names (`ratinho`, `flavio-bolsonaro`), tightened percentage regex for patterns like `"Lula (PT) – 39%"`, and wired `extract_polls_from_articles()` as fallback so article-embedded polls are harvested even when institute scraping is skipped.
+  - `collect_polls.py` weekend fix: weekend early-return previously discarded article-derived polls (Sunday Collect produced 0 polls). Now weekend skips only institute scraping, still runs article harvesting and merges into `site/public/data/polls.json`.
+  - `collect_markets.py`: changed from append-only to upsert for existing market prices, added daily archive snapshot to `site/public/data/archives/markets-YYYY-MM-DD.json`.
+  - `MarketOdds.jsx`: strip accents + alias `ratinho`, corrected probability labels, sources `last_updated` from payload instead of client time, so Flávio Bolsonaro Polymarket odds (33.65%) are now visible on `/mercados`.
+  - Fixes: `site/public/data/pipeline_health.json: polls_collect stale since 2026-03-11` watchdog alert and missing Flávio odds on Markets page.
 
 - AI provider chain unified on a single free-first fallback for all tasks: `poolside/laguna-s-2.1` (Poolside, reasoning enabled) -> `minimax-m3:cloud` (Ollama Cloud) -> `minimaxai/minimax-m3` (NVIDIA NIM) -> `openrouter/free` (OpenRouter).
 - Removed Google AI Studio (Gemini), Vertex AI, and Xiaomi MiMo provider code from `scripts/ai_client.py`; dropped `GEMINI_API_KEY`, `VERTEX_API_KEY`, `VERTEX_BASE_URL`, `VERTEX_ACCESS_TOKEN`, and `XIAOMI_MIMO_API_KEY` from all workflows and docs. Vertex AI Search article indexing (`collect.yml` -> `index_to_vertex_search.py`) is unchanged.

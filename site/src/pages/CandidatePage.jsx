@@ -96,13 +96,41 @@ function toDateLabel(value, language) {
 
 function CandidateHero({ candidate, t }) {
   const statusKey = statusTranslationKey(candidate.status);
+  const chipColor = candidate.color || CANDIDATE_COLORS[candidate.slug] || '#4A5568';
+  const photoUrl = typeof candidate?.photo_url === 'string' ? candidate.photo_url.trim() : '';
+  const initials = (candidate?.name || candidate?.slug || '?').slice(0, 1).toUpperCase();
   return (
-    <header className="candidate-hero" style={{ borderTopColor: candidate.color || CANDIDATE_COLORS[candidate.slug] }}>
-      <h1>{candidate.full_name}</h1>
-      <p>
-        <strong>{t('party_label')}:</strong> {candidate.party}
-      </p>
-      <span className="candidate-status">{t(statusKey)}</span>
+    <header className="candidate-hero" style={{ borderTopColor: chipColor }}>
+      <div className="candidate-hero-layout">
+        <div className="candidate-hero-portrait-wrap" style={{ borderColor: chipColor }}>
+          {photoUrl ? (
+            <img
+              className="candidate-hero-portrait"
+              src={photoUrl}
+              alt={candidate.full_name || candidate.name}
+              loading="eager"
+              onError={(e) => {
+                e.currentTarget.style.display = 'none';
+                const fallback = e.currentTarget.nextElementSibling;
+                if (fallback) fallback.style.display = 'flex';
+              }}
+            />
+          ) : null}
+          <span
+            className="candidate-hero-portrait-fallback"
+            style={{ backgroundColor: chipColor, display: photoUrl ? 'none' : 'flex' }}
+          >
+            {initials}
+          </span>
+        </div>
+        <div className="candidate-hero-info">
+          <h1>{candidate.full_name}</h1>
+          <p>
+            <strong>{t('party_label')}:</strong> {candidate.party}
+          </p>
+          <span className="candidate-status">{t(statusKey)}</span>
+        </div>
+      </div>
     </header>
   );
 }
