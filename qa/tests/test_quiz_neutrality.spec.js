@@ -4,13 +4,17 @@ import { expect, test } from '../../site/node_modules/@playwright/test/index.js'
 const CANDIDATE_SLUGS = [
   'lula',
   'flavio-bolsonaro',
-  'tarcisio',
-  'caiado',
-  'zema',
-  'ratinho-jr',
-  'eduardo-leite',
-  'aldo-rebelo',
   'renan-santos',
+  'caiado',
+  'augusto-cury',
+  'zema',
+  'edmilson-costa',
+  'hertz-dias',
+  'samara-martins',
+  'wilson-grassi',
+  'clariana-barao',
+  'rui-costa-pimenta',
+  'pablo-marcal',
 ];
 
 test.describe('Quiz neutrality', () => {

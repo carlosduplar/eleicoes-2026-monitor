@@ -221,18 +221,41 @@ Esta seção documenta o que não funcionou como esperado após a entrega inicia
 
 **Lição:** Um fallback só é útil quando sua checagem de saúde, formato de requisição e caminho de execução são equivalentes à produção. Probes devem ser observacionais; browsers fornecidos pelo runner devem ser preferidos quando disponíveis; e a latência de APIs externas precisa de limite para que um provedor não consuma todo o orçamento do CI.
 
+### 2026-08-30 -- Pesquisas e Mercados: TSE como primário e odds de Flávio visíveis
+
+**O que aconteceu:** `site/public/data/pipeline_health.json` acusava `polls_collect: stale` desde 2026-03-11 (watchdog) e `/mercados` não mostrava odds para Flávio Bolsonaro apesar da Polymarket cotar 33,65%. No domingo, `collect.yml` produziu `polls.json` com 0 entradas porque o `early-return` de fim de semana descartava também os polls extraídos de artigos. Normalização de acentos e aliases (`ratinho`, `flavio-bolsonaro`) falhava em padrões como `"Lula (PT) – 39%"`.
+
+**O que fizemos:**
+- `scripts/collect_polls.py`: promovemos o agregador TSE como fonte primária, ativamos todos os 10 institutos em `site/public/data/sources.json` (adição de Futura, Ipsos, MDA, Ideia com `active: true`), corrigimos inferência de instituto para dados TSE, adicionamos normalização de acentos e aliases de candidatos, apertamos a regex de porcentagem para o padrão `"Nome (Partido) – XX%"`, e ligamos `extract_polls_from_articles()` como fallback mesmo quando o scraping de institutos é pulado.
+- Correção de fim de semana: o `return` de sábado/domingo agora pula apenas o scraping de institutos, mas ainda executa `extract_polls_from_articles()` e faz merge em `polls.json` (commit `2af5ca559`).
+- `scripts/collect_markets.py`: troca de `append` para `upsert` em cotações existentes e snapshot diário em `site/public/data/archives/markets-YYYY-MM-DD.json`.
+- `site/src/components/MarketOdds.jsx`: strip de acentos, alias `ratinho`, correção de labels, `last_updated` vindo do payload — odds de Flávio agora aparecem em `/mercados`.
+
+**Lição:** Pesquisas em ano eleitoral têm fontes primárias heterogêneas (TSE agregador + institutos + texto de matérias); depender de um único caminho de coleta deixa o dashboard stale no fim de semana. Normalização de texto (acentos, aliases, travessão) é pré-requisito para casamento de candidatos, não pós-processamento. Mercados precisam de `upsert`, não `append`, para refletir preço atual.
+
+### 2026-08-30 -- Feed de notícias: apenas validadas e remoção do selo "Validado"
+
+**O que aconteceu:** O feed (`site/src/components/NewsFeed.jsx`) exibia `raw` + `validated` + `curated` (exceto `irrelevant`), ou seja, 253/500 artigos em 2026-08-30 ainda sem sumário bilíngue (`status: raw`, `relevance_score: 0.0`, `Em apuração`). Isso diluía o sinal editorial e exibia títulos sem contexto analisado. O selo verde "✓ Validado" ocupava espaço em todo card validado, tornando-se ruído visual quando a maioria dos cards já era validada.
+
+**O que fizemos:**
+- `site/src/components/NewsFeed.jsx`: filtro alterado de `status !== 'irrelevant'` para `status === 'validated' || status === 'curated'` (247/500 no snapshot; 102 validadas + 145 curadas). Tanto `articles` quanto `displayedArticles` (busca) usam o mesmo filtro; `useSearch` opera apenas sobre o corpus validado. Removido `statusToClass.validated` e a lógica `isValidated`/`statusLabel` — apenas o selo de categoria e, quando `curated`, o selo dourado "Destaque da Redação" permanecem. `statusKey` default virou `'validated'`.
+- `site/src/styles.css`: removidos `.status-raw` e `.status-validated` (mantido apenas `.status-curated`); `--status-raw`/`--status-valid` seguem como tokens de design mas sem uso no feed.
+- `site/src/locales/{pt-BR,en-US}/common.json`: chaves `feed.validated` e `feed.raw_badge` mantidas para compatibilidade mas não mais renderizadas no feed (apenas `feed.curated` é exibida).
+
+**Lição:** Publicação estagiada (PLAN.md Option A: raw com título apenas) maximiza velocidade, mas em feed generalista o usuário espera conteúdo já analisado. Elevar a barra para "somente validadas" melhora densidade editorial e simplifica UX (um selo a menos) sem mudar a máquina de estados — `raw` segue em `site/public/data/articles.json` para auditoria e reprocessamento, apenas não é servido ao leitor.
+
 ---
 
 ## Números do projeto
-No recorte atual (2026-08-19), os números consolidados são:
+No recorte atual (2026-08-30), os números consolidados são:
 
-- 17 fases completas (16 principais + Phase 17 extensão Vertex AI Search).
-- 620+ commits no histórico do repositório.
-- 21 fontes RSS ativas em `data/sources.json`, além de 8 fontes partidárias e 10 institutos de pesquisa.
-- 9 candidatos modelados em `data/candidates.json`.
-- 6 workflows no GitHub Actions: collect (10min), validate (30min), curate (horário), deploy, update-quiz, watchdog.
-- 4 status de artigo: `raw`, `validated`, `curated`, `irrelevant`.
-- Mecanismo automatizado de feedback editorial filtrando conteúdo irrelevante.
+- 17 fases completas (16 principais + Phase 17 extensão Vertex AI Search) + hotfixes pós-M9.
+- 700+ commits no histórico (bots + humanos) em 2026-08-30.
+- 21 fontes RSS ativas em `site/public/data/sources.json`, além de 8 fontes partidárias e 10 institutos de pesquisa (TSE agregador como primário ativo desde 2026-08-30).
+- 13 candidatos oficiais (TSE 2026-08-15) modelados em `site/public/data/candidates.json` (+ `candidates_positions.json`/`_draft`), com retratos TSE em `site/public/images/candidates/*.jpg`.
+- 7 workflows no GitHub Actions: collect (15min cron `0-3,8-23 UTC`), validate (30min), curate (horário, gate 90min), deploy (workflow_run), update-quiz, update-candidates-positions, watchdog.
+- 4 status de artigo: `raw`, `validated`, `curated`, `irrelevant` — feed público exibe apenas `validated`+`curated` (247/500 em 2026-08-30) desde 2026-08-30; `raw` permanece em disco para auditoria.
+- Mecanismo automatizado de feedback editorial (`state/editor_feedback.json`, prune 90 dias, M8) filtrando conteúdo irrelevante.
 - Circuit breaker e limites por execução de chamadas de IA para resiliência do pipeline.
 - Script de seed (`seed_candidates_positions.py`) para populacao baseline de posicoes de candidatos a partir de Wikipedia, Camara/Senado e sintese IA.
 - Cadeia de IA unificada com reasoning habilitado: `poolside/laguna-s-2.1` -> `minimax-m3:cloud` (Ollama) -> `minimaxai/minimax-m3` (NVIDIA NIM) -> `openrouter/free`.
@@ -240,6 +263,6 @@ No recorte atual (2026-08-19), os números consolidados são:
 Esses números importam menos como marketing e mais como prova de que o sistema foi publicado, operou sob condições reais e foi corrigido iterativamente com base em feedback de produção.
 
 ## Status atual
-O portal está no ar e operando continuamente. A cadeia de provedores de IA foi reordenada com base em dados empíricos de confiabilidade. A qualidade de conteúdo melhorou com o loop de feedback editorial. Condições de corrida no CI/CD são gerenciadas mas não totalmente eliminadas. O sistema processa centenas de artigos diariamente de 21 fontes RSS, 8 sites partidários, 10 institutos de pesquisa e YouTube, com sumarização bilíngue automatizada, análise de sentimento e extração de posições para quiz.
+O portal está no ar e operando continuamente. A cadeia de provedores de IA foi reordenada com base em dados empíricos de confiabilidade. A qualidade de conteúdo melhorou com o loop de feedback editorial e, desde 2026-08-30, com o feed restrito a artigos validados (elevação da barra editorial). Pesquisas voltaram a atualizar diariamente (incluindo fim de semana via fallback de artigos) e mercados exibem odds de Flávio Bolsonaro (Polymarket). Condições de corrida no CI/CD são gerenciadas mas não totalmente eliminadas. O sistema processa centenas de artigos diariamente de 21 fontes RSS, 8 sites partidários, 10 institutos de pesquisa (TSE primário) e YouTube, com sumarização bilíngue automatizada, análise de sentimento e extração de posições para quiz.
 
-Os próximos focos são monitorar estabilidade de longo prazo dos provedores, expandir regras de feedback editorial e avaliar se a integração do Vertex AI Search (Phase 17) entrega valor mensurável para o usuário.
+Os próximos focos são monitorar estabilidade do feed validado (cobertura vs frescor), estabilidade de longo prazo dos provedores, expandir regras de feedback editorial e avaliar se a integração do Vertex AI Search (Phase 17) entrega valor mensurável para o usuário.

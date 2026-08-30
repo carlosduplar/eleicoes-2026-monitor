@@ -49,14 +49,18 @@ BANNED_EVENT_TERMS = (
 BANNED_NAME_TERMS = (
     "lula",
     "bolsonaro",
-    "tarcísio",
-    "tarcisio",
     "caiado",
     "zema",
-    "ratinho",
-    "eduardo leite",
-    "aldo rebelo",
     "renan santos",
+    "augusto cury",
+    "edmilson costa",
+    "hertz dias",
+    "samara martins",
+    "wilson grassi",
+    "clariana barao",
+    "clariana zacarkim",
+    "rui costa pimenta",
+    "pablo marcal",
 )
 BANNED_PARTY_TERMS = (
     "pt",

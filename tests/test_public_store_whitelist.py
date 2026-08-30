@@ -58,12 +58,13 @@ def test_archives_layout_is_monthly_json() -> None:
     archives = PUB_DATA_DIR / "archives"
     if not archives.is_dir():
         return
-    pattern = re.compile(r"^articles-\d{4}-\d{2}\.json$")
+    pattern = re.compile(r"^(articles-\d{4}-\d{2}|markets-\d{4}-\d{2}-\d{2})\.json$")
     offenders = [
         entry.name
         for entry in archives.iterdir()
         if not (entry.is_file() and pattern.match(entry.name))
     ]
     assert not offenders, (
-        "data/archives/ expects YYYY-MM.json files only:\n  " + "\n  ".join(offenders)
+        "data/archives/ expects monthly article archives (articles-YYYY-MM.json) and daily market snapshots (markets-YYYY-MM-DD.json) only:\n  "
+        + "\n  ".join(offenders)
     )

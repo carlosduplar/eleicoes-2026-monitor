@@ -8,7 +8,7 @@ Build a bilingual (pt-BR + en-US) near-real-time monitoring portal for Brazil's 
 
 Opus 4.6 plans; gpt-5.3-codex implements. 16 phases, commit after each. Wireframes (Phase 0) are complete (HTML standalone files). Implementation starts at Phase 1 (Core scaffold).
 
-Architecture follows a "newsroom" metaphor: Foca (collector, 10min) -> Editor (validator, 30min) -> Editor-chefe (curator, ~90min). Articles progress through `raw -> validated -> curated` states. UI decision: **Option A — staged publication** (raw articles appear with title only, validated get summaries, curated get prominence badges).
+Architecture follows a "newsroom" metaphor: Foca (collector, 10min) -> Editor (validator, 30min) -> Editor-chefe (curator, ~90min). Articles progress through `raw -> validated -> curated` states. UI decision: **Option A — staged publication** (raw articles appear with title only, validated get summaries, curated get prominence badges) — **amended 2026-08-30**: public news feed (`site/src/components/NewsFeed.jsx`) now displays only `validated` + `curated` (raw hidden, "Validado" badge removed as redundant; curated gold badge retained). Data states unchanged; only reader-facing filter changed.
 
 ## Assumptions Made
 
@@ -37,19 +37,23 @@ Architecture follows a "newsroom" metaphor: Foca (collector, 10min) -> Editor (v
 }
 ```
 
-## Candidate Colors
+## Candidate Colors (official TSE 2026-08-15 — 13 candidaturas protocoladas)
 
 | Slug | Name | Party | Hex | Status |
 |------|------|-------|-----|--------|
 | lula | Lula | PT | #CC0000 | pre-candidate |
 | flavio-bolsonaro | Flavio Bolsonaro | PL | #002776 | pre-candidate |
-| tarcisio | Tarcisio de Freitas | Republicanos | #1A3A6B | speculated |
-| caiado | Ronaldo Caiado | Uniao Brasil | #FF8200 | pre-candidate |
-| zema | Romeu Zema | Novo | #FF6600 | pre-candidate |
-| ratinho-jr | Ratinho Jr | PSD | #0066CC | speculated |
-| eduardo-leite | Eduardo Leite | PSD | #4488CC | pre-candidate |
-| aldo-rebelo | Aldo Rebelo | DC | #5C6BC0 | pre-candidate |
 | renan-santos | Renan Santos | Missao | #26A69A | pre-candidate |
+| caiado | Ronaldo Caiado | PSD | #FF8200 | pre-candidate |
+| augusto-cury | Augusto Cury | Avante | #003B8E | pre-candidate |
+| zema | Romeu Zema | Novo | #FF6600 | pre-candidate |
+| edmilson-costa | Edmilson Costa | PCB | #E30613 | pre-candidate |
+| hertz-dias | Hertz Dias | PSTU | #FF0000 | pre-candidate |
+| samara-martins | Samara Martins | UP | #8B0000 | pre-candidate |
+| wilson-grassi | Wilson Grassi | Democrata | #00A651 | pre-candidate |
+| clariana-barao | Clariana Barão | DC | #5C6BC0 | pre-candidate |
+| rui-costa-pimenta | Rui Costa Pimenta | PCO | #D50000 | pre-candidate |
+| pablo-marcal | Pablo Marçal | PRTB | #003366 | pre-candidate |
 
 ---
 

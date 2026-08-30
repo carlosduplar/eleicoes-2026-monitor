@@ -52,7 +52,7 @@ Sources (21 RSS, 8 party sites, 10 polling institutes, YouTube)
       GitHub Pages + Cloudflare CDN
 ```
 
-Publication states are explicit in the data: `raw -> validated -> curated`, plus `irrelevant` for items automatically filtered out of the public feed.
+Publication states are explicit in the data: `raw -> validated -> curated`, plus `irrelevant` for items automatically filtered out of the public feed. The public news feed (`site/src/components/NewsFeed.jsx`) displays only `validated` + `curated` articles (since 2026-08-30); `raw` items remain in `site/public/data/articles.json` for audit/reprocessing but are hidden from the reader. The green "Validado / Validated" badge was removed because it was redundant once every visible card is validated — only the category badge and the gold "Destaque da Redação / Editor's Highlight" (`curated`) badge remain.
 
 ## CI execution and scraping fallbacks
 
@@ -163,19 +163,25 @@ Archive files in `site/public/data/archives/` follow the same schema as `article
 
 The methodology page and case study document the current preferred AI provider order for public transparency. The table above lists the secrets referenced by workflows in this repository.
 
-## Pre-candidates (March 2026)
+## Official candidates (TSE — registro protocolado até 2026-08-15)
 
-| Name | Party | Status |
-|---|---|---|
-| Luiz Inacio Lula da Silva | PT | pre-candidate |
-| Flavio Nantes Bolsonaro | PL | pre-candidate |
-| Tarcisio Gomes de Freitas | Republicanos | speculated |
-| Ronaldo Ramos Caiado | Uniao Brasil | pre-candidate |
-| Romeu Zema Neto | Novo | pre-candidate |
-| Carlos Roberto Massa Junior | PSD | speculated |
-| Eduardo Figueiredo Cavalheiro Leite | PSD | pre-candidate |
-| Jose Aldo Rebelo Figueiredo | DC | pre-candidate |
-| Renan Franco Santos | Missao | pre-candidate |
+> 13 candidaturas à Presidência protocoladas no TSE até 19h de 2026-08-15 (fonte: TSE DivulgaCandContas via G1/Agência Brasil 2026-08-17; julgamento virtual a partir de 2026-08-31). Lista oficial substitui a lista especulativa de 9 pré-candidatos de março de 2026.
+
+| Name | Party | Status | Photo |
+|---|---|---|---|
+| Luiz Inácio Lula da Silva | PT | pre-candidate | ![Lula](/eleicoes-2026-monitor/images/candidates/lula.jpg) |
+| Flávio Nantes Bolsonaro | PL | pre-candidate | ![Flávio](/eleicoes-2026-monitor/images/candidates/flavio-bolsonaro.jpg) |
+| Renan Franco Santos | Missão | pre-candidate | ![Renan](/eleicoes-2026-monitor/images/candidates/renan-santos.jpg) |
+| Ronaldo Ramos Caiado | PSD | pre-candidate | ![Caiado](/eleicoes-2026-monitor/images/candidates/caiado.jpg) |
+| Augusto Cury | Avante | pre-candidate | ![Augusto Cury](/eleicoes-2026-monitor/images/candidates/augusto-cury.jpg) |
+| Romeu Zema Neto | Novo | pre-candidate | ![Zema](/eleicoes-2026-monitor/images/candidates/zema.jpg) |
+| Edmilson Costa | PCB | pre-candidate | ![Edmilson](/eleicoes-2026-monitor/images/candidates/edmilson-costa.jpg) |
+| Hertz Dias | PSTU | pre-candidate | ![Hertz](/eleicoes-2026-monitor/images/candidates/hertz-dias.jpg) |
+| Samara Martins | UP | pre-candidate | ![Samara](/eleicoes-2026-monitor/images/candidates/samara-martins.jpg) |
+| Wilson Grassi | Democrata | pre-candidate | ![Wilson](/eleicoes-2026-monitor/images/candidates/wilson-grassi.jpg) |
+| Clariana Zacarkim Barão | DC | pre-candidate | ![Clariana](/eleicoes-2026-monitor/images/candidates/clariana-barao.jpg) |
+| Rui Costa Pimenta | PCO | pre-candidate | ![Rui](/eleicoes-2026-monitor/images/candidates/rui-costa-pimenta.jpg) |
+| Pablo Marçal | PRTB | pre-candidate | ![Pablo](/eleicoes-2026-monitor/images/candidates/pablo-marcal.jpg) |
 
 ## Architecture Decision Records
 

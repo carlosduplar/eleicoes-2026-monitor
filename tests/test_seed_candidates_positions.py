@@ -29,7 +29,7 @@ def _fake_response(status_code: int = 200, payload: object | None = None) -> obj
 
 def test_fetch_party_snippets_known_candidate_and_topic() -> None:
     """Returns a non-empty list for a known candidate/topic pair."""
-    result = seed.fetch_party_snippets("tarcisio", "armas")
+    result = seed.fetch_party_snippets("lula", "armas")
     assert isinstance(result, list)
     assert len(result) == 1
     assert result[0]  # non-empty string
@@ -48,7 +48,7 @@ def test_fetch_party_snippets_unknown_topic_returns_empty() -> None:
 
 
 def test_fetch_party_snippets_all_candidates_have_profiles() -> None:
-    """All nine candidates in PARTY_IDEOLOGICAL_PROFILES have an armas entry."""
+    """All official candidates in PARTY_IDEOLOGICAL_PROFILES have an armas entry."""
     for slug in seed.CANDIDATE_WIKI_TITLES:
         result = seed.fetch_party_snippets(slug, "armas")
         assert isinstance(result, list), f"Expected list for {slug}"
@@ -185,7 +185,7 @@ def test_seed_positions_skip_web_search_does_not_call_fetch_web_snippets(
                 "topic_label_pt": "armas",
                 "topic_label_en": "guns",
                 "candidates": {
-                    "tarcisio": {
+                    "lula": {
                         "stance": "unknown",
                         "position_type": "unknown",
                         "summary_pt": None,
@@ -257,7 +257,7 @@ def test_seed_positions_warns_when_brave_key_missing(
                 "topic_label_pt": "armas",
                 "topic_label_en": "guns",
                 "candidates": {
-                    "tarcisio": {
+                    "lula": {
                         "stance": "unknown",
                         "position_type": "unknown",
                         "summary_pt": None,
@@ -313,7 +313,7 @@ def test_seed_positions_sources_include_party_profile(
     monkeypatch: pytest.MonkeyPatch,
     capsys: pytest.CaptureFixture,
 ) -> None:
-    """dry-run output for tarcisio/armas includes 'party_profile' in sources."""
+    """dry-run output for lula/armas includes 'party_profile' in sources."""
     positions_payload = {
         "schema_version": "2.0.0",
         "updated_at": "2026-01-01T00:00:00Z",
@@ -323,7 +323,7 @@ def test_seed_positions_sources_include_party_profile(
                 "topic_label_pt": "armas",
                 "topic_label_en": "guns",
                 "candidates": {
-                    "tarcisio": {
+                    "lula": {
                         "stance": "unknown",
                         "position_type": "unknown",
                         "summary_pt": None,

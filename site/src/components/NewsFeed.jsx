@@ -6,8 +6,6 @@ import { useSearch } from '@/hooks/useSearch';
 import MethodologyBadge from './MethodologyBadge';
 
 const statusToClass = {
-  raw: 'status-raw',
-  validated: 'status-validated',
   curated: 'status-curated',
 };
 const PAGE_SIZE = 20;
@@ -122,7 +120,10 @@ function NewsFeed({ selectedCategory }) {
 
   const articles = useMemo(() => {
     return normalizeArticles(data).filter(
-      (article) => article && typeof article === 'object' && article.status !== 'irrelevant',
+      (article) =>
+        article &&
+        typeof article === 'object' &&
+        (article.status === 'validated' || article.status === 'curated'),
     );
   }, [data]);
 
@@ -139,7 +140,10 @@ function NewsFeed({ selectedCategory }) {
 
   const displayedArticles = useMemo(() => {
     return (debouncedQuery ? searchResults : visibleArticles).filter(
-      (article) => article && typeof article === 'object' && article.status !== 'irrelevant',
+      (article) =>
+        article &&
+        typeof article === 'object' &&
+        (article.status === 'validated' || article.status === 'curated'),
     );
   }, [debouncedQuery, searchResults, visibleArticles]);
 
@@ -227,23 +231,17 @@ function NewsFeed({ selectedCategory }) {
         const sourceName = toSourceName(article, t('feed.unknown_source'));
         const snippet = toSnippet(article, language, t('feed.analysis_in_progress'));
         const articleUrl = toArticleUrl(article);
-        const statusKey = article.status || 'raw';
-        const isValidated = statusKey === 'validated';
+        const statusKey = article.status || 'validated';
         const isCurated = statusKey === 'curated';
-        const statusLabel = isValidated
-          ? `\u2713 ${t('feed.validated')}`
-          : isCurated
-            ? t('feed.curated')
-            : t('feed.raw_badge');
 
         return (
           <article key={article.id || article.url || article.title} className="feed-card">
             <div className="feed-card-content">
               <div className="feed-card-badges">
                 <span className="feed-category-badge">{t(`feed.categories.${sourceCategory}`)}</span>
-                <span className={`feed-status-badge ${statusToClass[statusKey] || statusToClass.raw}`}>
-                  {statusLabel}
-                </span>
+                {isCurated ? (
+                  <span className={`feed-status-badge ${statusToClass.curated}`}>{t('feed.curated')}</span>
+                ) : null}
               </div>
               <h3>
                 {articleUrl ? (
