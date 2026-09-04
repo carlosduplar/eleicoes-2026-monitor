@@ -5855,7 +5855,39 @@
       "institute": "MDA",
       "source_url": "https://mda.pesquisa.cnt.org.br/",
       "message": "Page.goto: net::ERR_NAME_NOT_RESOLVED at https://mda.pesquisa.cnt.org.br/\nCall log:\n  - navigating to \"https://mda.pesquisa.cnt.org.br/\", waiting until \"domcontentloaded\"\n"
+    },
+    {
+      "at": "2026-09-04T07:59:59Z",
+      "tier": "foca",
+      "script": "collect_parties.py",
+      "party_name": "PT",
+      "party_url": "https://pt.org.br/noticias/",
+      "message": "403 Client Error: Forbidden for url: https://pt.org.br/noticias/"
+    },
+    {
+      "at": "2026-09-04T08:00:03Z",
+      "tier": "foca",
+      "script": "collect_parties.py",
+      "party_name": "Novo",
+      "party_url": "https://novo.org.br/noticias/",
+      "message": "403 Client Error: Forbidden for url: https://novo.org.br/noticias/"
+    },
+    {
+      "at": "2026-09-04T08:00:46Z",
+      "tier": "foca",
+      "script": "collect_polls.py",
+      "institute": "MDA",
+      "source_url": "https://mda.pesquisa.cnt.org.br/",
+      "message": "Page.goto: net::ERR_NAME_NOT_RESOLVED at https://mda.pesquisa.cnt.org.br/\nCall log:\n  - navigating to \"https://mda.pesquisa.cnt.org.br/\", waiting until \"domcontentloaded\"\n"
+    },
+    {
+      "at": "2026-09-04T08:05:10Z",
+      "tier": "editor",
+      "script": "summarize.py",
+      "article_id": "c048ef11a6399c10",
+      "provider": null,
+      "message": "All AI providers failed (poolside: Provider returned only prose reasoning_content with no JSON.; ollama: Error code: 402 - {'error': {'message': 'this model requires a subscription or extra usage, upgrade for access at https://ollama.com/upgrade or add extra usage at https://ollama.com/settings (ref: bb341728-983b-4c53-b04e-dc5eb80cdd0d)', 'type': 'api_error', 'param': None, 'code': None}}; nvidia: Request timed out.; openrouter: Error code: 400 - {'error': {'message': 'Reasoning is mandatory for this endpoint and cannot be disabled.', 'code': 400, 'metadata': {'provider_name': None}}})."
     }
   ],
-  "last_checked": "2026-09-04T03:09:34Z"
+  "last_checked": "2026-09-04T08:05:10Z"
 }
