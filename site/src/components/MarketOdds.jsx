@@ -34,25 +34,33 @@ import MethodologyBadge from './MethodologyBadge';
 const CANDIDATE_SLUGS = [
   'lula',
   'flavio-bolsonaro',
-  'tarcisio',
-  'caiado',
-  'zema',
-  'ratinho-jr',
-  'eduardo-leite',
-  'aldo-rebelo',
   'renan-santos',
+  'caiado',
+  'augusto-cury',
+  'zema',
+  'edmilson-costa',
+  'hertz-dias',
+  'samara-martins',
+  'wilson-grassi',
+  'clariana-barao',
+  'rui-costa-pimenta',
+  'pablo-marcal',
 ];
 
 const CANDIDATE_LABELS = {
   lula: 'Lula',
   'flavio-bolsonaro': 'Flávio Bolsonaro',
-  tarcisio: 'Tarcísio',
-  caiado: 'Caiado',
-  zema: 'Zema',
-  'ratinho-jr': 'Ratinho Jr',
-  'eduardo-leite': 'Eduardo Leite',
-  'aldo-rebelo': 'Aldo Rebelo',
   'renan-santos': 'Renan Santos',
+  caiado: 'Ronaldo Caiado',
+  'augusto-cury': 'Augusto Cury',
+  zema: 'Romeu Zema',
+  'edmilson-costa': 'Edmilson Costa',
+  'hertz-dias': 'Hertz Dias',
+  'samara-martins': 'Samara Martins',
+  'wilson-grassi': 'Wilson Grassi',
+  'clariana-barao': 'Clariana Barão',
+  'rui-costa-pimenta': 'Rui Costa Pimenta',
+  'pablo-marcal': 'Pablo Marçal',
 };
 
 function stripAccents(value) {
@@ -80,10 +88,6 @@ function normalizeMarketPayload(payload) {
 
 function parseCandidateFromQuestion(question) {
   const lower = normalizeForMatch(question);
-  // Alias for Ratinho naming variance (Polymarket uses "Ratinho Júnior" vs slug "ratinho-jr")
-  if (lower.includes('ratinho') && (lower.includes('junior') || lower.includes('jr'))) {
-    return 'ratinho-jr';
-  }
   for (const slug of CANDIDATE_SLUGS) {
     const name = normalizeForMatch(slug.replace(/-/g, ' '));
     const parts = name.split(' ');
