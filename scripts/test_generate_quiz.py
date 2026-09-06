@@ -281,12 +281,35 @@ def test_fallback_option_uses_topic_summary_and_actions() -> None:
         stance="favor",
         variant_offset=0,
     )
-    assert "educação" in text_pt.lower()
-    assert "education" in text_en.lower()
-    assert "ensino técnico" in text_pt.lower() or "tempo integral" in text_pt.lower()
+    # Fallback substance comes from per-topic instruments, never raw summaries
+    # (which leak third-person phrasing), so it must be topic-specific...
+    assert any(
+        marker in text_pt.lower()
+        for marker in (
+            "universidades federais",
+            "ensino técnico",
+            "alfabetização",
+            "tempo integral",
+        )
+    )
+    assert any(
+        marker in text_en.lower()
+        for marker in (
+            "education",
+            "school",
+            "university",
+            "literacy",
+            "vocational",
+            "training",
+        )
+    )
+    # ...and must not echo the summary phrasing.
+    assert "infraestrutura escolar" not in text_pt.lower()
     assert not text_pt.lower().startswith(
         "o governo deveria adotar uma política pública clara e estável em que"
     )
+    passes, failures = generate_quiz._local_quality_check(text_pt, text_en)
+    assert passes, f"Fallback must pass local quality: {failures}"
 
 
 def test_build_topic_options_replaces_duplicate_generated_texts(
@@ -428,9 +451,12 @@ def test_build_topic_options_parse_error_switches_to_local_only(
     assert validation_degraded is True
 
 
-def test_build_topic_options_local_first_ignores_ai_non_parse_failures(
+def test_build_topic_options_rejects_ai_rejected_option_uses_fallback(
     monkeypatch: pytest.MonkeyPatch,
 ) -> None:
+    """An explicit AI validator rejection drops the generated text and a
+    deterministic fallback is used instead (only transport/parse problems
+    degrade to local-only)."""
     known_positions = [
         {
             "candidate_slug": "lula",
@@ -442,14 +468,22 @@ def test_build_topic_options_local_first_ignores_ai_non_parse_failures(
             "sources": [],
         }
     ]
+    generated_pt = (
+        "Defendo que o governo amplie investimentos em educação técnica e adote "
+        "metas públicas com avaliação periódica."
+    )
+    generated_en = (
+        "I support the government expanding investment in technical education and "
+        "adopting public targets with periodic evaluation."
+    )
     monkeypatch.setattr(
         generate_quiz,
         "generate_quiz_topic_options",
         lambda **kwargs: {
             "options": [
                 {
-                    "text_pt": "Defendo que o governo amplie investimentos em educação técnica e adote metas públicas com avaliação periódica.",
-                    "text_en": "I support the government expanding investment in technical education and adopting public targets with periodic evaluation.",
+                    "text_pt": generated_pt,
+                    "text_en": generated_en,
                     "mapped_position": 1,
                     "stance": "favor",
                     "weight": 2,
@@ -460,22 +494,27 @@ def test_build_topic_options_local_first_ignores_ai_non_parse_failures(
             "_parse_error": False,
         },
     )
-    monkeypatch.setattr(
-        generate_quiz,
-        "validate_quiz_option_quality",
-        lambda **kwargs: {"passes_all": False, "failures": ["4"], "details": "strict"},
-    )
+    def fake_validate(**kwargs: object) -> dict[str, object]:
+        if kwargs.get("text_pt") == generated_pt:
+            return {"passes_all": False, "failures": ["4"], "details": "strict"}
+        return {"passes_all": True, "failures": [], "details": "ok"}
 
-    options, _, _, validation_degraded, _ = generate_quiz.build_topic_options(
-        topic_id="educacao",
-        topic_label_pt="Educação",
-        topic_label_en="Education",
-        question_pt="Qual caminho deve orientar os investimentos em educação no país?",
-        question_en="Which path should guide education investments in the country?",
-        known_positions=known_positions,
+    monkeypatch.setattr(generate_quiz, "validate_quiz_option_quality", fake_validate)
+
+    options, _, _, validation_degraded, fallback_count = (
+        generate_quiz.build_topic_options(
+            topic_id="educacao",
+            topic_label_pt="Educação",
+            topic_label_en="Education",
+            question_pt="Qual caminho deve orientar os investimentos em educação no país?",
+            question_en="Which path should guide education investments in the country?",
+            known_positions=known_positions,
+        )
     )
 
     assert len(options) == 1
+    assert options[0]["text_pt"] != generated_pt
+    assert fallback_count == 1
     assert validation_degraded is False
 
 
@@ -698,7 +737,7 @@ def test_fallback_party_hint_rejected() -> None:
 
 
 def test_fallback_does_not_append_raw_party_summary() -> None:
-    text_pt, _ = generate_quiz._fallback_option_text(
+    text_pt, text_en = generate_quiz._fallback_option_text(
         topic_id="lgbtq",
         topic_label_pt="Direitos LGBTQIA+",
         topic_label_en="LGBTQIA+ Rights",
@@ -709,10 +748,19 @@ def test_fallback_does_not_append_raw_party_summary() -> None:
         stance="against",
         variant_offset=0,
     )
+    # Summaries are never echoed: no party, name or stance wording leaks.
     assert "partido" not in text_pt.lower()
     assert "ronaldo" not in text_pt.lower()
     assert "conservadora" not in text_pt.lower()
-    assert "lgbtq" in text_pt.lower() or "identidade" in text_pt.lower()
+    assert "ronaldo" not in text_en.lower()
+    assert "party" not in text_en.lower()
+    # ...yet the option is still topic-specific via instruments.
+    assert any(
+        marker in text_pt.lower()
+        for marker in ("saúde", "violência", "emprego", "psicossocial")
+    )
+    passes, _ = generate_quiz._local_quality_check(text_pt, text_en)
+    assert passes
 
 
 @pytest.mark.parametrize(
@@ -749,11 +797,12 @@ def test_core_similarity_high_for_near_duplicates() -> None:
     assert generate_quiz._core_similarity(core_a, core_b) >= 0.85
 
 
-def test_build_topic_options_rejects_same_stance_fallback_duplicates(
+def test_build_topic_options_same_stance_fallbacks_stay_distinct(
     monkeypatch: pytest.MonkeyPatch,
 ) -> None:
-    """Two same-stance candidates without differentiating hints must not both
-    be emitted as near-identical fallback templates."""
+    """Two same-stance candidates without differentiating hints each get a
+    topic-specific instrument, so both are kept with distinct texts (no more
+    near-identical "reformas graduais" templates)."""
     known_positions = [
         {
             "candidate_slug": "lula",
@@ -796,9 +845,15 @@ def test_build_topic_options_rejects_same_stance_fallback_duplicates(
         )
     )
 
-    assert len(options) == 1
-    assert options[0]["candidate_slug"] == "lula"
-    assert fallback_count == 1
+    assert len(options) == 2
+    assert options[0]["text_pt"] != options[1]["text_pt"]
+    assert options[0]["candidate_slug"] != options[1]["candidate_slug"]
+    for option in options:
+        passes, failures = generate_quiz._local_quality_check(
+            str(option["text_pt"]), str(option["text_en"])
+        )
+        assert passes, f"Fallback must pass local quality: {failures}"
+    assert fallback_count == 2
     assert validation_degraded is True
 
 
@@ -984,3 +1039,170 @@ def test_main_drops_degraded_fallback_heavy_topic(
     payload = json.loads(quiz_file.read_text(encoding="utf-8"))
     assert "economia" not in payload["ordered_topics"]
     assert "saude" in payload["ordered_topics"]
+
+
+@pytest.mark.parametrize(
+    ("text_pt", "text_en", "failure"),
+    [
+        (
+            "Defendo que o governo avance com reformas graduais, pois Ronaldo tem postura conservadora e metas claras.",
+            "I believe the government should advance gradual reforms with clear targets.",
+            "candidate_reference",
+        ),
+        (
+            "Acredito que o governo fortaleça a fiscalização com metas claras e avaliação periódica dos resultados.",
+            "Additionally, a central point: Flávio supported the fiscal transparency program with clear targets.",
+            "candidate_reference",
+        ),
+        (
+            "Acredito que o Estado fortaleça órgãos de fiscalização ambiental, como o IBAMA, com metas claras e auditoria.",
+            "I believe the State should strengthen environmental enforcement agencies with clear targets and audits.",
+            "bio_reference",
+        ),
+        (
+            "Defendo que o governo amplie o orçamento das universidades e garanta o Prouni e o Fies com metas claras.",
+            "I believe the government should expand university budgets and keep Prouni and Fies with clear targets.",
+            "bio_reference",
+        ),
+        (
+            "Na minha visão, o governo avance com reformas graduais e metas públicas verificáveis em armas com avaliação.",
+            "I support the government choosing to advance gradual reforms on firearms. Additionally, a central point: The politician is in favor of loosening restrictions.",
+            "template_appendage",
+        ),
+        (
+            "Entendo que não há informações suficientes para determinar uma posição clara sobre educação com metas públicas.",
+            "I understand there is not enough information to determine a clear stance on education with public targets.",
+            "third_person_leak",
+        ),
+        (
+            "Defendo que o governo avance com reformas e metas claras, mas concordo em não perseguir quem acidentalmente interrompe.",
+            "I believe the government should advance reforms with clear targets and not prosecute those who accidentally interrupt.",
+            "broken_continuation",
+        ),
+        (
+            "Defendo que o governo avance com reformas graduais e metas públicas com avaliação periódica dos resultados.",
+            "I believe the government should advance gradual reforms with public targets. A second sentence appears only here. A third sentence appears only here too.",
+            "en_pt_mismatch",
+        ),
+    ],
+)
+def test_local_quality_rejects_observed_quiz_leaks(
+    text_pt: str, text_en: str, failure: str
+) -> None:
+    passes, failures = generate_quiz._local_quality_check(text_pt, text_en)
+    assert not passes, f"Expected failure for: {text_pt[:60]}"
+    assert failure in failures
+
+
+def test_weight_polarity_mismatch_rejected() -> None:
+    assert not generate_quiz._weight_matches_mapped_stance(3, "strongly_against")
+    assert not generate_quiz._weight_matches_mapped_stance(-2, "favor")
+    assert not generate_quiz._weight_matches_mapped_stance(2, "against")
+    assert generate_quiz._weight_matches_mapped_stance(3, "strongly_favor")
+    assert generate_quiz._weight_matches_mapped_stance(-3, "strongly_against")
+    assert generate_quiz._weight_matches_mapped_stance(0, "neutral")
+    assert generate_quiz._weight_matches_mapped_stance(2, "favor")
+
+
+def test_build_topic_options_rejects_polarity_inversion(
+    monkeypatch: pytest.MonkeyPatch,
+) -> None:
+    """A pro-LGBTQ text mapped onto an anti-LGBTQ candidate must not be
+    emitted: the inverted weight would score users toward the wrong candidate."""
+    known_positions = [
+        {
+            "candidate_slug": "flavio-bolsonaro",
+            "position_type": "confirmed",
+            "stance": "strongly_against",
+            "summary_pt": "Oposição a políticas de identidade de gênero.",
+            "summary_en": "Opposition to gender identity policies.",
+            "key_actions": [],
+            "sources": [],
+        }
+    ]
+    monkeypatch.setattr(
+        generate_quiz,
+        "generate_quiz_topic_options",
+        lambda **kwargs: {
+            "options": [
+                {
+                    "text_pt": "Acredito que o Estado deve assegurar acesso equitativo à saúde e educação com programas de apoio.",
+                    "text_en": "I believe the state should ensure equitable access to health and education with support programs.",
+                    "mapped_position": 1,
+                    "stance": "strongly_favor",
+                    "weight": 3,
+                }
+            ],
+            "_ai_provider": "vertex",
+            "_ai_model": "gemini-3.1-pro",
+            "_parse_error": False,
+        },
+    )
+    monkeypatch.setattr(
+        generate_quiz,
+        "validate_quiz_option_quality",
+        lambda **kwargs: {"passes_all": True, "failures": [], "details": "ok"},
+    )
+
+    options, _, _, _, fallback_count = generate_quiz.build_topic_options(
+        topic_id="lgbtq",
+        topic_label_pt="Direitos LGBTQIA+",
+        topic_label_en="LGBTQIA+ Rights",
+        question_pt="Qual deve ser a prioridade das políticas públicas para direitos LGBTQIA+?",
+        question_en="What should be the priority of public policy for LGBTQIA+ rights?",
+        known_positions=known_positions,
+    )
+
+    assert len(options) == 1
+    assert options[0]["weight"] < 0
+    assert fallback_count == 1
+
+
+def test_fallback_topic_variety_no_shared_template(
+    monkeypatch: pytest.MonkeyPatch,
+) -> None:
+    """A full-fallback topic must yield pairwise-distinct options: the variant
+    loop resolves instrument collisions so no two options share a template."""
+    stances = ["strongly_favor", "favor", "neutral", "against", "strongly_against"]
+    known_positions = [
+        {
+            "candidate_slug": f"cand-{index}",
+            "position_type": "confirmed",
+            "stance": stance,
+            "summary_pt": "",
+            "summary_en": "",
+            "key_actions": [],
+            "sources": [],
+        }
+        for index, stance in enumerate(stances)
+    ]
+    monkeypatch.setattr(
+        generate_quiz,
+        "generate_quiz_topic_options",
+        lambda **kwargs: (_ for _ in ()).throw(RuntimeError("provider down")),
+    )
+    monkeypatch.setattr(
+        generate_quiz,
+        "validate_quiz_option_quality",
+        lambda **kwargs: (_ for _ in ()).throw(RuntimeError("validator offline")),
+    )
+
+    options, _, _, _, _ = generate_quiz.build_topic_options(
+        topic_id="armas",
+        topic_label_pt="Armas",
+        topic_label_en="Firearms",
+        question_pt="Como deve ser a política de acesso e controle de armas no Brasil?",
+        question_en="How should Brazil regulate firearm access and control?",
+        known_positions=known_positions,
+    )
+
+    assert len(options) == len(stances)
+    cores = [
+        generate_quiz._content_core(str(option["text_pt"])) for option in options
+    ]
+    for index, core_a in enumerate(cores):
+        for core_b in cores[index + 1 :]:
+            assert (
+                generate_quiz._core_similarity(core_a, core_b)
+                < generate_quiz.CORE_SIMILARITY_THRESHOLD
+            ), f"Near-duplicate fallback cores: {core_a[:60]} / {core_b[:60]}"

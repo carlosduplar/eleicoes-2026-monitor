@@ -1385,6 +1385,10 @@ def generate_quiz_topic_options(
     system = (
         "Você é designer de quiz político. "
         "Crie opções em primeira pessoa, neutras e ideológicas, sem citar candidatos. "
+        "Anonimato total: nunca use nomes ou sobrenomes (inclusive primeiros nomes "
+        "como Ronaldo, Flávio, Romeu, Renan), cargos (governador, ministro, "
+        "deputado, senador, presidente), programas ou órgãos próprios (IBAMA, "
+        "Prouni, Fies, Fundo Amazônia, COP30) nem feitos de governo. "
         "Responda APENAS com JSON válido."
     )
     user = f"""Topic: {topic_id} — {topic_label_pt} / {topic_label_en}
@@ -1395,16 +1399,23 @@ Known positions:
 {chr(10).join(position_lines)}
 
 Rules:
-1) Nunca mencionar candidato, partido ou biografia.
+1) Nunca mencionar candidato, partido ou biografia: sem nomes (nem primeiro
+   nome), sem cargos, sem programas/órgãos próprios, sem feitos de governo.
 2) Nunca descrever evento jornalístico, investigação ou pesquisa eleitoral.
 3) Opções em primeira pessoa (ex.: "O governo deveria...", "Acredito que...").
+   Proibido terceira pessoa ("o político", "o candidato", "the politician")
+   e apêndices como "E um ponto central:" / "Additionally, a central point:".
 4) PT-BR com diacríticos corretos.
 5) Cada opção deve ser distinta e corresponder a uma posição.
 6) Cada opção deve conter pelo menos uma medida concreta de política pública (ação, regra, investimento, fiscalização, incentivo ou restrição).
 7) Proibido usar a abertura literal: "O governo deveria adotar uma política pública clara e estável em que".
-8) Não repetir estrutura de frase entre opções; varie a formulação inicial e o verbo principal.
+8) Não repetir estrutura de frase entre opções; varie a formulação inicial e o verbo principal. Cada abertura (Defendo que / Acredito que / Entendo que / Na minha visão / Considero que / Para mim / Minha posição é que / Sustento que) pode aparecer no máximo 1 vez por tópico.
 9) mapped_position não pode se repetir.
 10) Gere exatamente {expected_options} opções.
+11) text_en deve ser tradução fiel de text_pt: mesmo número de frases, sem
+    cláusulas extras.
+12) O peso deve seguir a direção da posição mapeada (favor→positivo,
+    neutral→0, against→negativo); nunca inverta a polaridade.
 
 Return JSON array:
 [
@@ -1504,14 +1515,16 @@ Option en-US: "{text_en}"
 Weight: {weight}
 
 Checklist:
-1. Sem nomes de candidatos/partidos
-2. Sem detalhes biográficos de cargo
-3. Não é descrição de evento jornalístico
-4. É posição ideológica em primeira pessoa
-5. Português com diacríticos adequados
-6. Tamanho de 15 a 80 palavras em pt-BR
-7. Tradução en-US é consistente com pt-BR
-8. Direção do peso é coerente com o texto
+1. Sem nomes de candidatos/partidos (inclusive primeiros nomes: Ronaldo, Flávio, Romeu, Renan)
+2. Sem detalhes biográficos de cargo (governador, ministro, deputado, senador, presidente)
+3. Sem programas/órgãos próprios ou feitos de governo (IBAMA, Prouni, Fies, Fundo Amazônia, COP30)
+4. Não é descrição de evento jornalístico
+5. É posição ideológica em primeira pessoa (sem "o político", "o candidato", "ponto central")
+6. Português com diacríticos adequados
+7. Tamanho de 15 a 80 palavras em pt-BR
+8. Tradução en-US é consistente com pt-BR (mesmas frases, sem cláusula extra)
+9. Direção do peso é coerente com o texto
+10. Não repete template genérico ("reformas graduais", "equilíbrio pragmático", "metas transparentes e revisão periódica")
 
 Return JSON:
 {{
