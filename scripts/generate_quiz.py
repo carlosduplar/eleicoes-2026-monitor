@@ -5,6 +5,7 @@ from __future__ import annotations
 import json
 import logging
 import re
+import unicodedata
 from hashlib import sha256
 from datetime import datetime, timezone
 from pathlib import Path
@@ -48,19 +49,89 @@ BANNED_EVENT_TERMS = (
 )
 BANNED_NAME_TERMS = (
     "lula",
+    "luiz inacio",
+    "luiz inácio",
+    "inacio lula",
+    "inácio lula",
     "bolsonaro",
+    "jair",
+    "flavio",
+    "flávio",
     "caiado",
+    "ronaldo",
     "zema",
+    "romeu",
     "renan santos",
+    "renan",
     "augusto cury",
+    "augusto",
+    "cury",
     "edmilson costa",
+    "edmilson",
     "hertz dias",
+    "hertz",
     "samara martins",
+    "samara",
     "wilson grassi",
+    "wilson",
     "clariana barao",
-    "clariana zacarkim",
+    "clariana",
+    "barao",
+    "barão",
+    "zacarkim",
     "rui costa pimenta",
+    "rui pimenta",
+    "pimenta",
     "pablo marcal",
+    "pablo",
+    "marcal",
+    "marçal",
+)
+# Office titles, program/agency proper nouns and government-history phrases
+# that de-anonymize an option even without naming the candidate (strict mode).
+BANNED_BIO_TERMS = (
+    "ibama",
+    "icmbio",
+    "funai",
+    "fundo amazonia",
+    "fundo amazônia",
+    "amazon fund",
+    "ministerio do meio ambiente",
+    "ministério do meio ambiente",
+    "ministry of the environment",
+    "cop30",
+    "cop 30",
+    "prouni",
+    "fies",
+    "escola sem partido",
+    "excludente de ilicitude",
+    "maioridade penal",
+    "pena de morte",
+    "governador",
+    "governadora",
+    "ex-governador",
+    "presidente",
+    "ex-presidente",
+    "ministro",
+    "ministra",
+    "deputado",
+    "deputada",
+    "senador",
+    "senadora",
+    "prefeito",
+    "vereadora",
+    "vereador",
+    "durante seu governo",
+    "during his government",
+    "during her government",
+    "no meu governo",
+    "quando fui",
+    "meu mandato",
+    "minha gestao como",
+    "minha gestão como",
+    "governo lula",
+    "governo bolsonaro",
+    "como membro do governo",
 )
 BANNED_PARTY_TERMS = (
     "pt",
@@ -151,7 +222,7 @@ BANNED_OPTION_OPENINGS_EN = (
     "the government should adopt a clear and stable public policy in which",
 )
 
-CORE_SIMILARITY_THRESHOLD = 0.85
+CORE_SIMILARITY_THRESHOLD = 0.6
 MAX_FALLBACK_SHARE = 1.0 / 3.0
 
 # Intro phrases stripped from option texts before deduplication so that
@@ -167,6 +238,11 @@ _CORE_INTROS_PT = (
     "na minha visao,",
     "na minha visao",
     "considero que",
+    "para mim,",
+    "para mim",
+    "minha posição é que",
+    "minha posicao e que",
+    "sustento que",
     "prefiro que",
     "quero que",
     "sou favorável a que",
@@ -179,15 +255,31 @@ _CORE_INTROS_EN = (
     "i argue the government should",
     "in my view, the government should",
     "i support the government choosing to",
+    "i maintain the government should",
+    "my position is the government should",
+    "i hold the government should",
+    "i contend the government should",
     "i understand that the government should",
     "i consider that the government should",
     "the government should",
     "the state should",
 )
 _CORE_TAILS = (
+    "com avaliação independente e dados públicos",
+    "com metas anuais e auditoria externa",
+    "com revisão periódica e relatório público",
+    "com transparência orçamentária total",
+    "com indicadores trimestrais públicos",
+    "com prazo definido e prestação de contas",
     "com metas transparentes e revisão periódica",
     "com metas transparentes e avaliação periódica",
     "com metas objetivas e revisão periódica",
+    "with independent evaluation and public data",
+    "with annual targets and external audit",
+    "with periodic review and public reporting",
+    "with full budget transparency",
+    "with public quarterly indicators",
+    "with a set deadline and accountability",
     "with transparent goals and periodic review",
     "with transparent targets and periodic review",
     "with objective targets and periodic review",
@@ -195,6 +287,10 @@ _CORE_TAILS = (
 
 _THIRD_PERSON_LEAK_PATTERNS = (
     r"\bo\s+candidato\b",
+    r"\ba\s+candidata\b",
+    r"\bcandidat[oa]s?\b",
+    r"\bo\s+pol[ií]tico\b",
+    r"\ba\s+pol[ií]tica\s+(?:é|e|defende|apoia|apoiam|afirma|diz|quer|pretende)\b",
     r"\bseu\s+partido\b",
     r"\bsua\s+legenda\b",
     r"\bo\s+partido\b",
@@ -202,9 +298,19 @@ _THIRD_PERSON_LEAK_PATTERNS = (
     r"\bcomo\s+membro\b",
     r"\bintegrante\b",
     r"\bn[aã]o\s+h[aá]\s+men[cç][aã]o\b",
+    r"\bn[aã]o\s+h[aá]\s+informa",
+    r"\binforma[cç][oõ]es?\s+suficientes\b",
+    r"\bnot\s+enough\s+information\b",
+    r"\bcomo\s+promulgado\b",
+    r"\bcomo\s+governador\b",
+    r"\bdurante\s+(seu|meu)\s+governo\b",
+    r"\bquando\s+fui\b",
     r"\bpode\s+ser\s+inferid",
     r"\bprovavelmente\b",
     r"\bthe\s+candidate\b",
+    r"\bthe\s+politician\b",
+    r"\bcandidate\s+(prioritizes?|supports?|is|opposes?)\b",
+    r"\bpolitician\s+(is|supports?|favors?|favours?)\b",
     r"\bhis\s+party\b",
     r"\bher\s+party\b",
     r"\bthe\s+party\b",
@@ -214,6 +320,14 @@ _THIRD_PERSON_LEAK_PATTERNS = (
     r"\baccording\s+to\s+wikipedia\b",
     r"\bdados\s+da\s+wikipedia\b",
     r"\bdata\s+from\s+wikipedia\b",
+)
+# Template-appendage phrasing from the old fallback generator. These markers
+# are banned outright: they break first-person voice, leak third-person
+# summaries, and caused PT/EN divergence (appendage present in one language).
+_TEMPLATE_APPENDAGE_PATTERNS = (
+    r"e\s+um\s+ponto\s+central",
+    r"additionally,?\s+a\s+central\s+point",
+    r"al[eé]m\s+disso,?\s+proponho",
 )
 
 # Hint fragments (summary/action excerpts) that cannot compose grammatically
@@ -471,6 +585,14 @@ def _normalize_word_count(text: str) -> int:
     return len([chunk for chunk in re.split(r"\s+", text.strip()) if chunk])
 
 
+def _strip_accents(value: str) -> str:
+    return "".join(
+        char
+        for char in unicodedata.normalize("NFKD", value)
+        if not unicodedata.combining(char)
+    )
+
+
 def _looks_like_first_person_position(text_pt: str) -> bool:
     starters = (
         "o governo",
@@ -491,6 +613,10 @@ def _looks_like_first_person_position(text_pt: str) -> bool:
         "quero que",
         "na minha visão",
         "na minha visao",
+        "para mim",
+        "minha posição",
+        "minha posicao",
+        "sustento que",
         "não apoio que",
     )
     normalized = re.sub(r"\s+", " ", text_pt.strip().lower())
@@ -498,13 +624,18 @@ def _looks_like_first_person_position(text_pt: str) -> bool:
 
 
 def _contains_banned_terms(text: str, banned_terms: tuple[str, ...]) -> bool:
-    normalized = text.lower()
+    normalized = _strip_accents(text.lower())
     for term in banned_terms:
-        if len(term) <= 3 and term.isalpha():
-            if re.search(rf"\b{re.escape(term)}\b", normalized):
+        folded = _strip_accents(term.lower())
+        if len(folded) <= 3 and folded.isalpha():
+            if re.search(rf"\b{re.escape(folded)}\b", normalized):
                 return True
             continue
-        if term in normalized:
+        if " " in folded:
+            if folded in normalized:
+                return True
+            continue
+        if re.search(rf"\b{re.escape(folded)}\b", normalized):
             return True
     return False
 
@@ -570,6 +701,10 @@ def _core_similarity(core_a: str, core_b: str) -> float:
     return len(tokens_a & tokens_b) / len(tokens_a | tokens_b)
 
 
+def _sentence_count(text: str) -> int:
+    return len([chunk for chunk in re.split(r"[.!?…]+", text) if chunk.strip()])
+
+
 def _local_quality_check(text_pt: str, text_en: str) -> tuple[bool, list[str]]:
     failures: list[str] = []
     word_count = _normalize_word_count(text_pt)
@@ -583,6 +718,10 @@ def _local_quality_check(text_pt: str, text_en: str) -> tuple[bool, list[str]]:
         text_en, BANNED_NAME_TERMS
     ):
         failures.append("candidate_reference")
+    if _contains_banned_terms(text_pt, BANNED_BIO_TERMS) or _contains_banned_terms(
+        text_en, BANNED_BIO_TERMS
+    ):
+        failures.append("bio_reference")
     if _contains_party_reference(text_pt) or _contains_party_reference(text_en):
         failures.append("party_reference")
     if _contains_banned_terms(text_pt, BANNED_EVENT_TERMS):
@@ -597,10 +736,18 @@ def _local_quality_check(text_pt: str, text_en: str) -> tuple[bool, list[str]]:
         ):
             failures.append("third_person_leak")
             break
+    for appendage_pattern in _TEMPLATE_APPENDAGE_PATTERNS:
+        if re.search(appendage_pattern, normalized_pt) or re.search(
+            appendage_pattern, normalized_en
+        ):
+            failures.append("template_appendage")
+            break
+    if abs(_sentence_count(text_pt) - _sentence_count(text_en)) > 1:
+        failures.append("en_pt_mismatch")
     broken_continuation_patterns = (
         r"\b(isso\s+inclui\s+[a-zéêãõ]{1,4}\s)",  # "Isso inclui é", "Isso inclui o"
         r"\b(tamb[eé]m\s+[eé]\s+essencial\s+[a-zéêãõ]{1,4}\s)",  # "Também é essencial apoiou"
-        r"\b(\b[a-zéêãõ]{1,3}\b\s){3,}",  # 3+ single-char words in a row (glue fragments)
+        r"\b(\b[a-zéêãõ]{1,2}\b\s){3,}",  # 3+ one/two-char words in a row (glue fragments like "é a o")
         r",\s*,",  # double comma
         r"apoiou\s+a\s+reforma|defendeu\s+a\s+reforma|apoia\s+a\s+reforma|votou\s+a\s+favor\s+do\s+processo",
         r"dados\s+da\s+wikipedia",
@@ -608,6 +755,8 @@ def _local_quality_check(text_pt: str, text_en: str) -> tuple[bool, list[str]]:
         r"\bpolicy\s+for\b.*\bshould\s+(?:supports|advocates|prefers|defends)\b",
         r"\bi\s+believe\s+the\s+policy\s+for\b",
         r"^\s*here\s+is\s+the\s+json\s+requested\b",
+        r"\bacidentalmente\b",  # nonsense qualifier ("acidentalmente interrompem")
+        r"\baccidentally\s+interrupt\b",
     )
     for pat in broken_continuation_patterns:
         if re.search(pat, normalized_pt) or re.search(pat, normalized_en):
@@ -616,20 +765,249 @@ def _local_quality_check(text_pt: str, text_en: str) -> tuple[bool, list[str]]:
     return (len(failures) == 0, failures)
 
 
-_STANCE_FALLBACK_PT = {
-    "strongly_favor": "priorize mudanças amplas com expansão de direitos e de políticas públicas",
-    "favor": "avance com reformas graduais e metas públicas verificáveis",
-    "neutral": "busque equilíbrio pragmático antes de ampliar mudanças estruturais",
-    "against": "mantenha estabilidade institucional e evite mudanças bruscas sem consenso",
-    "strongly_against": "preserve o modelo atual e rejeite reformas de ruptura sem justificativa sólida",
+# Stance direction verbs for the deterministic fallback. The verb carries the
+# stance; the per-topic instrument carries the substance. Instruments are bare
+# noun phrases (no leading article) so every verb composes grammatically.
+_STANCE_VERB_PT = {
+    "strongly_favor": "amplie recursos para",
+    "favor": "fortaleça",
+    "neutral": "avalie com critérios técnicos",
+    "against": "restrinja",
+    "strongly_against": "impeça novas obrigações em",
 }
-_STANCE_FALLBACK_EN = {
-    "strongly_favor": "prioritize broad reforms that expand rights and public policies",
-    "favor": "advance gradual reforms with transparent and measurable goals",
-    "neutral": "seek pragmatic balance before expanding structural reforms",
-    "against": "maintain institutional stability and avoid abrupt changes without consensus",
-    "strongly_against": "preserve the current framework and reject disruptive reforms without strong justification",
+_STANCE_VERB_EN = {
+    "strongly_favor": "expand funding for",
+    "favor": "strengthen",
+    "neutral": "review against technical criteria",
+    "against": "limit",
+    "strongly_against": "block new mandates on",
 }
+
+_FALLBACK_INTROS_PT = [
+    "Defendo que",
+    "Acredito que",
+    "Entendo que",
+    "Na minha visão,",
+    "Considero que",
+    "Para mim,",
+    "Minha posição é que",
+    "Sustento que",
+]
+_FALLBACK_INTROS_EN = [
+    "I believe the government should",
+    "I argue the government should",
+    "In my view, the government should",
+    "I support the government choosing to",
+    "I maintain the government should",
+    "My position is the government should",
+    "I hold the government should",
+    "I contend the government should",
+]
+
+_FALLBACK_CLOSINGS_PT = [
+    "com avaliação independente e dados públicos",
+    "com metas anuais e auditoria externa",
+    "com revisão periódica e relatório público",
+    "com transparência orçamentária total",
+    "com indicadores trimestrais públicos",
+    "com prazo definido e prestação de contas",
+]
+_FALLBACK_CLOSINGS_EN = [
+    "with independent evaluation and public data",
+    "with annual targets and external audit",
+    "with periodic review and public reporting",
+    "with full budget transparency",
+    "with public quarterly indicators",
+    "with a set deadline and accountability",
+]
+
+# Concrete, stance-neutral policy instruments per topic (bare noun phrases).
+# The stance verb provides direction; the instrument provides substance so two
+# same-topic options never share the generic "reformas graduais" template.
+_TOPIC_INSTRUMENTS_PT: dict[str, list[str]] = {
+    "economia": [
+        "investimento em infraestrutura com seleção por retorno auditado e concessões reguladas",
+        "controle de gastos com limite fiscal e revisão anual de subsídios",
+        "crédito a pequenas empresas com garantia pública e juros condicionados a emprego",
+        "simplificação de tributos sobre consumo com unificação e devolução a baixa renda",
+    ],
+    "seguranca": [
+        "policiamento comunitário com câmeras corporais e metas públicas de letalidade",
+        "progressão de penas condicionada a trabalho e estudo com monitoramento eletrônico",
+        "inteligência contra facções com integração de bancos de dados e operações conjuntas",
+        "prevenção à violência com escolas de tempo integral e iluminação em áreas críticas",
+    ],
+    "saude": [
+        "financiamento da saúde pública com piso vinculado e ordem de espera publicada",
+        "atenção básica com equipes de saúde da família e visitas domiciliares ampliadas",
+        "compra centralizada de medicamentos com pregão nacional e estoque monitorado",
+        "telemedicina pública com prontuário único e consultas agendadas por aplicativo",
+    ],
+    "educacao": [
+        "orçamento de universidades federais com avaliação de desempenho e vagas ampliadas",
+        "ensino técnico com vagas vinculadas a arranjos produtivos e estágio remunerado",
+        "alfabetização na idade certa com material nacional e tutoria individual",
+        "escolas de tempo integral com refeição, transporte e atividades culturais",
+    ],
+    "meio_ambiente": [
+        "fiscalização do desmatamento com operações anuais, multas públicas e embargo imediato",
+        "licenciamento ambiental com prazos máximos e decisões publicadas na internet",
+        "recuperação de áreas degradadas com fundo auditado e metas por bioma",
+        "crédito a produção de baixo carbono condicionado a compromissos verificáveis",
+    ],
+    "corrupcao": [
+        "transparência de gastos com portal em tempo real e auditoria externa anual",
+        "carreiras técnicas com concurso público e proteção legal a denunciantes",
+        "licitações eletrônicas com atas públicas e disputa aberta de preços",
+        "corregedorias independentes com prazos máximos de apuração e punição publicada",
+    ],
+    "armas": [
+        "registro nacional de armas com rastreio balístico e renovação periódica",
+        "fiscalização de clubes de tiro com vistorias anuais e limite de munição",
+        "campanhas de entrega voluntária com indenização e destruição pública do arsenal",
+        "porte restrito a categorias funcionais com avaliação psicológica periódica",
+    ],
+    "previdencia": [
+        "idade mínima com transição por pontos e pedágio proporcional ao tempo restante",
+        "alíquota progressiva com teto vinculado ao salário mínimo",
+        "revisão de benefícios por incapacidade com perícia periódica e reabilitação",
+        "previdência complementar pública com adesão automática e portabilidade",
+    ],
+    "politica_externa": [
+        "acordos comerciais com cotas agrícolas e salvaguardas contra concorrência desleal",
+        "cooperação ambiental com fundo internacional auditado e metas compartilhadas",
+        "atuação multilateral com votos publicados e candidaturas a conselhos",
+        "proteção a brasileiros no exterior com consulados de plantão e repatriação",
+    ],
+    "lgbtq": [
+        "atendimento especializado à saúde com protocolo nacional e ambulatórios regionais",
+        "combate à violência com delegacias capacitadas e estatísticas públicas",
+        "inclusão no emprego com aprendizagem profissional e metas de contratação",
+        "apoio psicossocial com centros de referência e linha nacional de ajuda",
+    ],
+    "aborto": [
+        "atendimento nos casos previstos em lei com protocolo hospitalar e prazo máximo",
+        "saúde materna com pré-natal universal e maternidades regionalizadas",
+        "educação sexual nas escolas com material científico e formação docente",
+        "apoio à gestante com licença estendida e vagas garantidas em creches",
+    ],
+    "indigenas": [
+        "demarcação de terras com laudos antropológicos e prazo judicial definido",
+        "saúde indígena com distritos sanitários e equipes permanentes",
+        "educação bilíngue com material próprio e formação de professores nativos",
+        "fiscalização contra garimpo ilegal com operações conjuntas e embargo",
+    ],
+    "impostos": [
+        "progressividade com isenção até faixa salarial e alíquota maior no topo",
+        "simplificação com imposto único sobre consumo e devolução a baixa renda",
+        "revisão de isenções setoriais com custo-benefício publicado anualmente",
+        "tributação de lucros distribuídos com tabela anual e compensação",
+    ],
+    "midia": [
+        "transparência de algoritmos com relatórios públicos e auditoria independente",
+        "moderação de conteúdo com direito de resposta e prazos de recurso",
+        "fomento ao jornalismo local com fundo público e editais abertos",
+        "proteção de dados pessoais com autoridade independente e multas publicadas",
+    ],
+}
+_TOPIC_INSTRUMENTS_EN: dict[str, list[str]] = {
+    "economia": [
+        "public infrastructure investment screened by audited returns and regulated concessions",
+        "spending control with a fiscal cap and annual subsidy review",
+        "small-business credit with public guarantees tied to job creation",
+        "consumption-tax simplification with unification and rebates for low earners",
+    ],
+    "seguranca": [
+        "community policing with body cameras and public lethality targets",
+        "sentence progression tied to work and study with electronic monitoring",
+        "anti-gang intelligence with integrated databases and joint operations",
+        "violence prevention with full-day schools and lighting in critical areas",
+    ],
+    "saude": [
+        "public health funding with a binding floor and published waiting lists",
+        "primary care with expanded family-health teams and home visits",
+        "centralized drug procurement with national bidding and monitored stock",
+        "public telemedicine with unified records and app-based scheduling",
+    ],
+    "educacao": [
+        "federal university budgets tied to performance reviews and expanded seats",
+        "vocational training linked to local industry with paid internships",
+        "on-time literacy with national materials and individual tutoring",
+        "full-day schools with meals, transport and cultural activities",
+    ],
+    "meio_ambiente": [
+        "deforestation enforcement with annual operations, public fines and swift embargoes",
+        "environmental licensing with maximum deadlines and published decisions",
+        "degraded-land recovery with an audited fund and per-biome targets",
+        "low-carbon credit conditioned on verifiable commitments",
+    ],
+    "corrupcao": [
+        "spending transparency with a real-time portal and annual external audit",
+        "technical civil-service careers with exams and whistleblower protection",
+        "electronic procurement with public minutes and open price competition",
+        "independent internal affairs with maximum inquiry deadlines and published sanctions",
+    ],
+    "armas": [
+        "a national firearms registry with ballistic tracing and periodic renewal",
+        "shooting-club oversight with annual inspections and ammo limits",
+        "voluntary gun buybacks with compensation and public destruction",
+        "carry permits restricted to duty categories with periodic psychological review",
+    ],
+    "previdencia": [
+        "a minimum retirement age with points-based transition and proportional toll",
+        "progressive contribution rates with a cap tied to the minimum wage",
+        "disability-benefit review with periodic exams and rehabilitation",
+        "public supplementary pensions with automatic enrollment and portability",
+    ],
+    "politica_externa": [
+        "trade deals with farm quotas and safeguards against unfair competition",
+        "environmental cooperation with an audited international fund and shared targets",
+        "multilateral engagement with published votes and board candidacies",
+        "protection of citizens abroad with on-call consulates and repatriation",
+    ],
+    "lgbtq": [
+        "specialized health care with a national protocol and regional clinics",
+        "anti-violence enforcement with trained precincts and public statistics",
+        "job inclusion with apprenticeships and hiring targets",
+        "psychosocial support with reference centers and a national helpline",
+    ],
+    "aborto": [
+        "hospital care in cases allowed by law with a binding protocol and maximum wait",
+        "maternal health with universal prenatal care and regional maternity units",
+        "school sex education with scientific materials and teacher training",
+        "support for pregnant people with extended leave and guaranteed daycare",
+    ],
+    "indigenas": [
+        "land demarcation with anthropological reports and a set judicial deadline",
+        "indigenous health with sanitary districts and permanent teams",
+        "bilingual education with dedicated materials and native-teacher training",
+        "enforcement against illegal mining with joint operations and embargoes",
+    ],
+    "impostos": [
+        "progressivity with a salary-band exemption and higher top rates",
+        "simplification with a single consumption tax and low-earner rebates",
+        "sectoral-exemption review with annually published cost-benefit analysis",
+        "taxation of distributed profits with an annual schedule and offsets",
+    ],
+    "midia": [
+        "algorithmic transparency with public reports and independent audit",
+        "content moderation with right of reply and appeal deadlines",
+        "local-journalism funding with a public fund and open calls",
+        "personal-data protection with an independent authority and published fines",
+    ],
+}
+_GENERIC_INSTRUMENTS_PT = [
+    "regras claras com fiscalização e metas públicas verificáveis",
+    "investimento focalizado com auditoria e resultados publicados",
+    "coordenação federativa com repasses condicionados a desempenho",
+    "participação social com consultas públicas e conselhos deliberativos",
+]
+_GENERIC_INSTRUMENTS_EN = [
+    "clear rules with enforcement and verifiable public targets",
+    "targeted investment with audits and published results",
+    "federal coordination with performance-conditioned transfers",
+    "civic participation with public consultations and empowered councils",
+]
 
 
 def _sanitize_fallback_fragment(
@@ -717,63 +1095,65 @@ def _fallback_option_text(
     stance: str = "neutral",
     variant_offset: int = 0,
 ) -> tuple[str, str]:
-    pt_intros = [
-        "Defendo que",
-        "Acredito que",
-        "Entendo que",
-        "Na minha visão,",
-    ]
-    en_intros = [
-        "I believe the government should",
-        "I argue the government should",
-        "In my view, the government should",
-        "I support the government choosing to",
-    ]
+    """Deterministic topic-specific fallback option.
+
+    Substance comes from per-topic instruments (never from raw summaries, so
+    third-person leaks such as names, parties or offices cannot pass through).
+    Variety comes from rotating intro + instrument + closing; the stance verb
+    carries the direction. Both languages are single sentences by
+    construction, keeping PT/EN parity.
+    """
+    del summary_pt, summary_en, key_actions, topic_label_pt, topic_label_en
     stance_key = stance if stance in STANCE_TO_WEIGHT else "neutral"
     seed_raw = f"{topic_id}:{candidate_slug}:{stance_key}:{variant_offset}"
     seed = int(sha256(seed_raw.encode("utf-8")).hexdigest()[:8], 16)
-    intro_index = seed % len(pt_intros)
 
-    topic_pt = topic_label_pt.strip().lower() or topic_id.replace("_", " ")
-    topic_en = topic_label_en.strip().lower() or topic_id.replace("_", " ")
-    summary_hint_pt = _extract_summary_hint(summary_pt) if summary_pt else None
-    summary_hint_en = _extract_summary_hint(summary_en) if summary_en else None
-    action_hint_pt = _extract_action_hint(key_actions)
+    instruments_pt = _TOPIC_INSTRUMENTS_PT.get(topic_id, _GENERIC_INSTRUMENTS_PT)
+    instruments_en = _TOPIC_INSTRUMENTS_EN.get(topic_id, _GENERIC_INSTRUMENTS_EN)
+    instrument_count = min(len(instruments_pt), len(instruments_en))
+    stance_order = list(STANCE_TO_WEIGHT)
+    intro_index = (seed + variant_offset) % len(_FALLBACK_INTROS_PT)
+    instrument_index = (
+        stance_order.index(stance_key) + seed // len(_FALLBACK_INTROS_PT) + variant_offset
+    ) % (instrument_count or 1)
+    closing_index = (seed // 64 + variant_offset * 3) % len(_FALLBACK_CLOSINGS_PT)
 
-    pt_desc = _STANCE_FALLBACK_PT.get(stance_key, _STANCE_FALLBACK_PT["neutral"])
-    en_desc = _STANCE_FALLBACK_EN.get(stance_key, _STANCE_FALLBACK_EN["neutral"])
+    verb_pt = _STANCE_VERB_PT[stance_key]
+    verb_en = _STANCE_VERB_EN[stance_key]
     text_pt = (
-        f"{pt_intros[intro_index]} o governo {pt_desc} em {topic_pt}, "
-        "com metas transparentes e revisão periódica."
+        f"{_FALLBACK_INTROS_PT[intro_index]} o governo {verb_pt} "
+        f"{instruments_pt[instrument_index]}, "
+        f"{_FALLBACK_CLOSINGS_PT[closing_index]}."
     )
     text_en = (
-        f"{en_intros[intro_index]} {en_desc} on {topic_en}, "
-        "with transparent goals and periodic review."
+        f"{_FALLBACK_INTROS_EN[intro_index]} {verb_en} "
+        f"{instruments_en[instrument_index]}, "
+        f"{_FALLBACK_CLOSINGS_EN[closing_index]}."
     )
-    if summary_hint_pt and _hint_fragment_ok(summary_hint_pt, "pt"):
-        text_pt += f" E um ponto central: {summary_hint_pt}."
-    if (
-        action_hint_pt
-        and summary_hint_pt != action_hint_pt
-        and _hint_fragment_ok(action_hint_pt, "pt")
-    ):
-        text_pt += f" Além disso, proponho {action_hint_pt.lower()}."
-    if summary_hint_en and _hint_fragment_ok(summary_hint_en, "en"):
-        text_en += f" Additionally, a central point: {summary_hint_en}."
     text_pt = _truncate_words(text_pt, max_words=80)
     text_en = _truncate_words(text_en, max_words=80)
-
-    if _normalize_word_count(text_pt) < 15:
-        text_pt = (
-            f"Acredito que o governo {pt_desc} em {topic_pt}, "
-            "com metas transparentes e revisão periódica."
-        )
-    if _normalize_word_count(text_en) < 15:
-        text_en = (
-            f"I believe the government should {en_desc} on {topic_en}, "
-            "with transparent goals and periodic review."
-        )
     return text_pt, text_en
+
+
+def _weight_group(weight: int) -> str:
+    if weight > 0:
+        return "positive"
+    if weight < 0:
+        return "negative"
+    return "zero"
+
+
+def _weight_matches_mapped_stance(weight: int, mapped_stance: object) -> bool:
+    """Reject AI weights whose polarity contradicts the known position stance.
+
+    Catches polarity inversions such as a pro-LGBTQ text (weight +3) mapped
+    onto an anti-LGBTQ candidate: the option would score users toward the
+    wrong candidate.
+    """
+    expected = STANCE_TO_WEIGHT.get(str(mapped_stance))
+    if expected is None:
+        return True
+    return _weight_group(weight) == _weight_group(expected)
 
 
 def _best_source(
@@ -860,10 +1240,17 @@ def build_topic_options(
         text_pt: str,
         text_en: str,
         weight: int,
-    ) -> None:
+    ) -> bool:
+        """Run the AI validator; return True when the option may be accepted.
+
+        An explicit validator rejection (`passes_all=False`) now rejects the
+        option so a fallback is tried instead. Only transport problems
+        (exceptions, parse errors) fall back to local-only validation and mark
+        the run degraded.
+        """
         nonlocal validation_degraded, ai_validation_enabled
         if not ai_validation_enabled:
-            return
+            return True
         try:
             validation = validate_quiz_option_quality(
                 topic_id=topic_id,
@@ -879,7 +1266,7 @@ def build_topic_options(
             )
             validation_degraded = True
             ai_validation_enabled = False
-            return
+            return True
         if validation.get("_parse_error"):
             logger.info(
                 "Validator parse failure for topic=%s; switching to local-only validation.",
@@ -887,6 +1274,15 @@ def build_topic_options(
             )
             validation_degraded = True
             ai_validation_enabled = False
+            return True
+        if not validation.get("passes_all"):
+            logger.info(
+                "Validator rejected option for topic=%s: %s",
+                topic_id,
+                validation.get("failures"),
+            )
+            return False
+        return True
 
     def _try_append_option(
         *,
@@ -897,6 +1293,15 @@ def build_topic_options(
     ) -> bool:
         local_pass, _ = _local_quality_check(text_pt, text_en)
         if not local_pass:
+            return False
+        if not _weight_matches_mapped_stance(weight, mapped_position.get("stance")):
+            logger.warning(
+                "Rejecting option for topic=%s candidate=%s: weight %d contradicts stance %s",
+                topic_id,
+                mapped_position.get("candidate_slug"),
+                weight,
+                mapped_position.get("stance"),
+            )
             return False
 
         fingerprint_pt = _normalize_option_fingerprint(text_pt)
@@ -912,7 +1317,10 @@ def build_topic_options(
             if _core_similarity(core_en, existing_en) >= CORE_SIMILARITY_THRESHOLD:
                 return False
 
-        _run_optional_ai_validation(text_pt=text_pt, text_en=text_en, weight=weight)
+        if not _run_optional_ai_validation(
+            text_pt=text_pt, text_en=text_en, weight=weight
+        ):
+            return False
 
         source_pt, source_en, source_url, source_date = _best_source(mapped_position)
         source_pt = _clean_source_text(source_pt)
@@ -984,6 +1392,12 @@ def build_topic_options(
                 break
             continue
 
+        # Fallback uses the mapped known-position stance (never the AI-claimed
+        # one) so weight and direction always agree with the knowledge base.
+        mapped_stance = str(mapped_position.get("stance", "neutral"))
+        if mapped_stance not in STANCE_TO_WEIGHT:
+            mapped_stance = "neutral"
+        fallback_weight = STANCE_TO_WEIGHT[mapped_stance]
         summary_pt = _normalize_text(mapped_position.get("summary_pt")) or ""
         summary_en = _normalize_text(mapped_position.get("summary_en")) or ""
         key_actions = mapped_position.get("key_actions")
@@ -999,14 +1413,14 @@ def build_topic_options(
                 summary_pt=summary_pt,
                 summary_en=summary_en,
                 key_actions=key_actions,
-                stance=str(stance),
+                stance=mapped_stance,
                 variant_offset=variant_offset,
             )
             if _try_append_option(
                 mapped_position=mapped_position,
                 text_pt=fallback_pt,
                 text_en=fallback_en,
-                weight=weight,
+                weight=fallback_weight,
             ):
                 fallback_selected = True
                 fallback_count += 1
