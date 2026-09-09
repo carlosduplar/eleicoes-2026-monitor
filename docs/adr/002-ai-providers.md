@@ -3,7 +3,7 @@
 **Status:** Aceito  
 **Data:** 2026-03-06  
 **Decisor:** Opus 4.6 (Arquiteto)  
-**Atualizado:** 2026-08-20 - Poolside (Laguna S 2.1) e o provider primario para todas as tarefas; Google AI Studio (Gemini), Vertex AI e Xiaomi MiMo removidos do codigo e dos workflows.
+**Atualizado:** 2026-08-20 - Poolside (Laguna S 2.1) e o provider primario para todas as tarefas; Google AI Studio (Gemini), Vertex AI e Xiaomi MiMo removidos do codigo e dos workflows. 2026-09-09 - NVIDIA NIM removido da cadeia; fallback atual e Poolside -> Ollama Cloud -> OpenRouter/free.
 
 ## Contexto
 
@@ -21,8 +21,7 @@ Cadeia de fallback hierarquica com Alto Raciocinio (High Reasoning) habilitado p
 |---|---|---|---|---|---|---|
 | 1 | Poolside | `https://inference.poolside.ai/v1` | `poolside/laguna-s-2.1` | Reasoning (padrão) | Terminal-Bench 2.1: **70.2** | Gratuito |
 | 2 | Ollama Cloud | `https://ollama.com/v1` | `minimax-m3:cloud` | High Reasoning | AA Intel: **45.4** | Gratuito |
-| 3 | NVIDIA NIM | `https://integrate.api.nvidia.com/v1` | `minimaxai/minimax-m3` | High Reasoning | AA Intel: **45.4** | Gratuito (Créditos dev) |
-| 4 | OpenRouter | `https://openrouter.ai/api/v1` | `openrouter/free` | Provider-dependent | — | Gratuito |
+| 3 | OpenRouter | `https://openrouter.ai/api/v1` | `openrouter/free` | Provider-dependent | — | Gratuito |
 
 > Poolside Laguna S 2.1 nao esta indexado no Artificial Analysis (agentic index); a posicao e ancorada pelo Terminal-Bench 2.1 oficial (70.2), que e um dos componentes do indice AA.
 
@@ -30,9 +29,9 @@ Cadeia de fallback hierarquica com Alto Raciocinio (High Reasoning) habilitado p
 
 | Papel | Frequencia | Modelo Primario | Fallbacks |
 |---|---|---|---|
-| Foca (coletor) | 10 min | Laguna S 2.1 (Poolside) | MiniMax-M3 (Ollama) $\rightarrow$ MiniMax-M3 (NIM) $\rightarrow$ OpenRouter/free |
-| Editor (validador) | 30 min | Laguna S 2.1 (Poolside) | MiniMax-M3 (Ollama) $\rightarrow$ MiniMax-M3 (NIM) $\rightarrow$ OpenRouter/free |
-| Editor-chefe (curador) | ~90 min | Laguna S 2.1 (Poolside) | MiniMax-M3 (Ollama) $\rightarrow$ MiniMax-M3 (NIM) $\rightarrow$ OpenRouter/free |
+| Foca (coletor) | 10 min | Laguna S 2.1 (Poolside) | MiniMax-M3 (Ollama) $\rightarrow$ OpenRouter/free |
+| Editor (validador) | 30 min | Laguna S 2.1 (Poolside) | MiniMax-M3 (Ollama) $\rightarrow$ OpenRouter/free |
+| Editor-chefe (curador) | ~90 min | Laguna S 2.1 (Poolside) | MiniMax-M3 (Ollama) $\rightarrow$ OpenRouter/free |
 
 ## Rastreador de Uso
 
@@ -45,7 +44,6 @@ Usado para:
 | Secret | Provider | Obrigatorio |
 |--------|----------|------------|
 | `POOLSIDE_API_KEY` | Poolside | Sim |
-| `NVIDIA_API_KEY` | NVIDIA NIM | Sim (Fase 2) |
 | `OPENROUTER_API_KEY` | OpenRouter | Sim (Fase 2) |
 | `OLLAMA_API_KEY` | Ollama Cloud | Sim (Fase 2) |
 | `TWITTER_BEARER_TOKEN` | Twitter API v2 | Opcional (Fase 14) |
@@ -64,7 +62,6 @@ Usado para:
 ### Variaveis de ambiente obrigatorias
 
 - `POOLSIDE_API_KEY`
-- `NVIDIA_API_KEY`
 - `OPENROUTER_API_KEY`
 - `OLLAMA_API_KEY`
 

@@ -43,7 +43,7 @@ knowledge base for candidate policy positions.
 
 | Attribute | Value |
 |---|---|
-| **Provider** | Poolside (Laguna S 2.1), with Ollama MiniMax-M3, NVIDIA MiniMax-M3, and OpenRouter/free fallbacks |
+| **Provider** | Poolside (Laguna S 2.1), with Ollama MiniMax-M3 and OpenRouter/free fallbacks |
 | **Auth required** | API key via environment variable |
 | **Data provided** | Synthesized position summaries from provided snippets or training knowledge |
 | **Evidence flow** | Web evidence is supplied upstream via Source F (Brave Search) and remains auditable in `sources_used` / `editor_notes` |

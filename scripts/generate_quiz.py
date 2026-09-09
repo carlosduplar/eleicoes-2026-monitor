@@ -1569,7 +1569,7 @@ def main() -> None:
                 "validator_model": (
                     "local:heuristic-fallback"
                     if validation_degraded
-                    else "nvidia:z-ai/glm-5.2"
+                    else (generator_model_used or "ai:fallback-chain")
                 ),
                 "validation_date": datetime.now(timezone.utc)
                 .replace(microsecond=0)

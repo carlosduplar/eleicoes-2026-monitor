@@ -72,7 +72,7 @@ For local browser tests, install the Python Playwright browser explicitly with `
 
 - Independent project with no party affiliation or electoral funding; methodology, limitations, and error reporting are part of the product surface.
 - Newsroom-style pipeline with three automated roles: `Foca` (collection), `Editor` (validation/summarization), and `Editor-chefe` (curation/prominence).
-- AI fallback chain (all tasks): Poolside (Laguna S 2.1, reasoning enabled) -> Ollama Cloud (MiniMax M3) -> NVIDIA NIM (MiniMax M3) -> OpenRouter/free.
+- AI fallback chain (all tasks): Poolside (Laguna S 2.1, reasoning enabled) -> Ollama Cloud (MiniMax M3) -> OpenRouter/free.
 - Circuit breaker and per-run AI call limits keep the pipeline running when providers degrade instead of failing closed.
 - Editorial feedback is self-healing: blocked keywords, URLs, sources, and `irrelevant` article IDs are accumulated in `state/editor_feedback.json`.
 - The public quiz only reveals sources in the result view, never during the questions.
@@ -155,7 +155,6 @@ Archive files in `site/public/data/archives/` follow the same schema as `article
 | `BRIGHTDATA_API_KEY` | `collect.yml` | Bright Data API key for fallback scraping |
 | `BRIGHTDATA_ZONE` | `collect.yml` | Bright Data zone identifier |
 | `POOLSIDE_API_KEY` | `collect.yml`, `validate.yml`, `curate.yml`, `update-quiz.yml`, `update-candidates-positions.yml` | Poolside provider (Laguna S 2.1, primary) |
-| `NVIDIA_API_KEY` | `collect.yml`, `validate.yml`, `curate.yml`, `update-quiz.yml`, `update-candidates-positions.yml` | NVIDIA NIM provider |
 | `OPENROUTER_API_KEY` | `collect.yml`, `validate.yml`, `curate.yml`, `update-quiz.yml`, `update-candidates-positions.yml` | OpenRouter provider |
 | `OLLAMA_API_KEY` | `collect.yml`, `validate.yml`, `curate.yml`, `update-quiz.yml`, `update-candidates-positions.yml` | Ollama Cloud provider |
 | `TWITTER_BEARER_TOKEN` | `collect.yml` | Social collection token |

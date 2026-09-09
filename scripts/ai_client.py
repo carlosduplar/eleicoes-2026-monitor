@@ -1,8 +1,7 @@
 """AI client with multi-provider fallback and usage tracking.
 
 Tasks route through a single free-first fallback chain:
-Poolside (Laguna S 2.1) -> Ollama Cloud (MiniMax M3) -> NVIDIA NIM (MiniMax M3)
--> OpenRouter/free.
+Poolside (Laguna S 2.1) -> Ollama Cloud (MiniMax M3) -> OpenRouter/free.
 
 The quiz runner can perform a short streaming preflight before its first model
 call. The preflight measures time-to-first-token (TTFT) and total latency for
@@ -163,13 +162,6 @@ def _provider_chain_for_task(task: str) -> list[ProviderConfig]:
             "base_url": "https://ollama.com/v1",
             "key_env": "OLLAMA_API_KEY",
             "model": "minimax-m3:cloud",
-            "paid": False,
-        },
-        {
-            "name": "nvidia",
-            "base_url": "https://integrate.api.nvidia.com/v1",
-            "key_env": "NVIDIA_API_KEY",
-            "model": "minimaxai/minimax-m3",
             "paid": False,
         },
         _openrouter_provider(),
@@ -728,21 +720,13 @@ def _call_with_fallback_for_task(
             }
         except Exception as exc:
             error_messages.append(f"{name}: {exc}")
-            if name == "nvidia" and _is_not_found_error(exc):
-                with _circuit_breaker_lock:
-                    _provider_failure_counts[name] = _CIRCUIT_BREAKER_THRESHOLD
-                logger.info(
-                    "[AI] %s unavailable (404). Opening circuit breaker for this run.",
-                    name,
+            # For all errors (including persisted 429s after retry), increment
+            # the failure counter normally — do not hard-trip the circuit breaker.
+            with _circuit_breaker_lock:
+                _provider_failure_counts[name] = (
+                    _provider_failure_counts.get(name, 0) + 1
                 )
-            else:
-                # For all other errors (including persisted 429s after retry), increment
-                # the failure counter normally — do not hard-trip the circuit breaker.
-                with _circuit_breaker_lock:
-                    _provider_failure_counts[name] = (
-                        _provider_failure_counts.get(name, 0) + 1
-                    )
-                logger.warning("[AI] %s failed: %s", name, exc)
+            logger.warning("[AI] %s failed: %s", name, exc)
 
     error_details = (
         "; ".join(error_messages) if error_messages else "no providers configured"
@@ -779,11 +763,6 @@ def _extract_last_json_value(
 def _extract_last_json_block(text: str) -> str | None:
     """Return the last parseable JSON object found in *text*, or None."""
     return _extract_last_json_value(text, dict)
-
-
-def _is_not_found_error(exc: Exception) -> bool:
-    message = str(exc).lower()
-    return "404" in message and "not found" in message
 
 
 def _is_rate_limit_error(exc: Exception) -> bool:

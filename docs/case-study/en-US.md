@@ -24,7 +24,7 @@ The ingestion model follows a newsroom metaphor with three roles. Foca (collecto
 
 Publication stages are explicit in the data itself: `raw`, `validated`, `curated`, and `irrelevant`. In `raw`, the portal prioritizes speed and transparency over polish: title, source, and timestamp can already be visible while analysis is still in progress. In `validated`, bilingual summaries and richer metadata are attached. In `curated`, the story gets an additional automated prominence layer. Articles flagged as `irrelevant` are removed from the public feed via an automated editorial feedback mechanism. This staged funnel avoids unnecessary blocking and delivers incremental value instead of waiting for perfect completeness.
 
-The AI chain is built for resilience and cost control based on Artificial Analysis benchmarks and live production data. For all tasks (summarization, sentiment, position extraction, quiz generation/validation), the chain is: Poolside (Laguna S 2.1, reasoning enabled) -> Ollama Cloud (MiniMax M3) -> NVIDIA NIM (MiniMax M3) -> OpenRouter/free. A circuit breaker detects provider failures early and a per-run limit caps total AI calls to avoid runaway costs. The non-negotiable rule is that AI errors must not stop the pipeline. If a call fails, the system logs the error, tries the next provider, and continues. If all providers fail, the article still remains in a coherent state rather than being silently dropped. This approach prioritizes operational continuity and reduces single-vendor risk.
+The AI chain is built for resilience and cost control based on Artificial Analysis benchmarks and live production data. For all tasks (summarization, sentiment, position extraction, quiz generation/validation), the chain is: Poolside (Laguna S 2.1, reasoning enabled) -> Ollama Cloud (MiniMax M3) -> OpenRouter/free. A circuit breaker detects provider failures early and a per-run limit caps total AI calls to avoid runaway costs. The non-negotiable rule is that AI errors must not stop the pipeline. If a call fails, the system logs the error, tries the next provider, and continues. If all providers fail, the article still remains in a coherent state rather than being silently dropped. This approach prioritizes operational continuity and reduces single-vendor risk.
 
 ## Technical decisions recorded
 ADRs 000 through 006 are the decision backbone of the portal. ADR 000 established wireframes as the visual source of truth, including component mapping and shared design tokens. That decision reduced UI rework because each phase could implement against concrete references, not subjective memory.
@@ -258,7 +258,7 @@ At the current snapshot (2026-08-30), the measurable baseline is:
 - Automated editorial feedback (`state/editor_feedback.json`, 90-day prune, M8) filtering irrelevant content.
 - Circuit breaker and per-run AI call limits for pipeline resilience.
 - Seed script (`seed_candidates_positions.py`) for baseline candidate position population from Wikipedia, Câmara/Senado APIs, and AI synthesis.
-- Unified AI chain with reasoning enabled: `poolside/laguna-s-2.1` -> `minimax-m3:cloud` (Ollama) -> `minimaxai/minimax-m3` (NVIDIA NIM) -> `openrouter/free`.
+- Unified AI chain with reasoning enabled: `poolside/laguna-s-2.1` -> `minimax-m3:cloud` (Ollama) -> `openrouter/free`.
 
 These numbers are not marketing decoration; they demonstrate that the system was shipped, operated under real conditions, and iteratively corrected based on production feedback.
 

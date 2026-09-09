@@ -39,7 +39,6 @@ def test_provider_chain_is_poolside_first_with_minimax_fallbacks() -> None:
     assert provider_models == [
         ("poolside", "poolside/laguna-s-2.1"),
         ("ollama", "minimax-m3:cloud"),
-        ("nvidia", "minimaxai/minimax-m3"),
         ("openrouter", "openrouter/free"),
     ]
 
