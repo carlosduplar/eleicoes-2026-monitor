@@ -1,6 +1,6 @@
 {
-  "updated_at": "2026-09-12T08:05:12Z",
-  "article_count": 120,
+  "updated_at": "2026-09-12T08:06:16Z",
+  "article_count": 125,
   "methodology_url": "/metodologia",
   "disclaimer_pt": "Análise algorítmica do tom das notícias coletadas. Não representa pesquisa de opinião.",
   "disclaimer_en": "Algorithmic analysis of collected news tone. Does not represent opinion polling.",
@@ -10,7 +10,9 @@
       "educacao": 0.0,
       "eleicoes": 0.0273,
       "impostos": 0.0,
+      "meio_ambiente": 0.0,
       "midia": 0.025,
+      "politica_externa": 0.0,
       "previdencia": 0.0,
       "saude": 0.0,
       "seguranca": 0.0
@@ -18,24 +20,37 @@
     "caiado": {
       "corrupcao": 0.25,
       "economia": 0.3,
-      "educacao": 0.0,
+      "educacao": -0.5,
       "eleicoes": 0.05,
-      "impostos": 0.0,
+      "impostos": -0.5,
+      "meio_ambiente": -1.0,
       "midia": 0.0667,
-      "politica_externa": 0.3,
+      "politica_externa": -0.35,
       "previdencia": 0.0,
-      "saude": 0.0333,
-      "seguranca": 0.0
+      "saude": -0.225,
+      "seguranca": -0.5
     },
     "clariana-barao": {
       "corrupcao": 0.0,
+      "educacao": 0.0,
       "eleicoes": 0.0,
-      "midia": 0.0
+      "impostos": 0.0,
+      "meio_ambiente": 0.0,
+      "midia": 0.0,
+      "politica_externa": 0.0,
+      "saude": 0.0,
+      "seguranca": 0.0
     },
     "edmilson-costa": {
       "corrupcao": 0.0,
+      "educacao": 0.0,
       "eleicoes": 0.0,
-      "midia": 0.0
+      "impostos": 0.0,
+      "meio_ambiente": 0.0,
+      "midia": 0.0,
+      "politica_externa": 0.0,
+      "saude": 0.0,
+      "seguranca": 0.0
     },
     "eduardo-leite": {
       "economia": -0.2,
@@ -46,7 +61,7 @@
       "corrupcao": -0.4293,
       "economia": -0.2273,
       "educacao": 0.0,
-      "eleicoes": -0.3198,
+      "eleicoes": -0.3138,
       "impostos": 0.0,
       "midia": -0.4519,
       "politica_externa": -0.1769,
@@ -60,17 +75,17 @@
       "midia": 0.0
     },
     "lula": {
-      "corrupcao": 0.1022,
-      "economia": 0.1333,
-      "educacao": 0.0,
-      "eleicoes": 0.1047,
-      "impostos": 0.15,
-      "meio_ambiente": -0.3,
+      "corrupcao": 0.1104,
+      "economia": 0.12,
+      "educacao": 0.5,
+      "eleicoes": 0.1298,
+      "impostos": 0.4333,
+      "meio_ambiente": 0.35,
       "midia": 0.1,
-      "politica_externa": 0.0188,
-      "previdencia": 0.2,
-      "saude": 0.0,
-      "seguranca": 0.1643
+      "politica_externa": 0.13,
+      "previdencia": 0.2333,
+      "saude": 0.3333,
+      "seguranca": 0.2687
     },
     "pablo-marcal": {
       "corrupcao": -0.8,
@@ -82,21 +97,34 @@
       "educacao": 0.0,
       "eleicoes": -0.1,
       "impostos": 0.0,
+      "meio_ambiente": 0.0,
       "midia": -0.27,
       "politica_externa": 0.0,
       "previdencia": 0.0,
       "saude": 0.0,
-      "seguranca": -0.15
+      "seguranca": -0.1
     },
     "rui-costa-pimenta": {
       "corrupcao": 0.0,
+      "educacao": 0.0,
       "eleicoes": 0.01,
-      "midia": 0.0
+      "impostos": 0.0,
+      "meio_ambiente": 0.0,
+      "midia": 0.0,
+      "politica_externa": 0.0,
+      "saude": 0.0,
+      "seguranca": 0.0
     },
     "samara-martins": {
       "corrupcao": 0.0,
+      "educacao": 0.0,
       "eleicoes": 0.025,
-      "midia": 0.0
+      "impostos": 0.0,
+      "meio_ambiente": 0.0,
+      "midia": 0.0,
+      "politica_externa": 0.0,
+      "saude": 0.0,
+      "seguranca": 0.0
     },
     "tarcisio": {
       "corrupcao": 0.05,
@@ -109,15 +137,23 @@
     },
     "wilson-grassi": {
       "corrupcao": 0.0,
+      "educacao": 0.0,
       "eleicoes": 0.0,
-      "midia": 0.0
+      "impostos": 0.0,
+      "meio_ambiente": 0.0,
+      "midia": 0.0,
+      "politica_externa": 0.0,
+      "saude": 0.0,
+      "seguranca": 0.0
     },
     "zema": {
       "corrupcao": 0.1,
       "educacao": 0.0,
       "eleicoes": 0.0333,
       "impostos": 0.0,
+      "meio_ambiente": 0.0,
       "midia": 0.05,
+      "politica_externa": 0.0,
       "previdencia": 0.0,
       "saude": 0.0,
       "seguranca": 0.0
@@ -125,20 +161,23 @@
   },
   "by_source": {
     "augusto-cury": {
+      "institutional": 0.0,
       "magazine": 0.0,
       "mainstream": 0.0375,
       "politics": 0.0
     },
     "caiado": {
-      "institutional": 0.0,
+      "institutional": -0.5,
       "magazine": 0.0,
       "mainstream": 0.0667,
       "politics": 0.0
     },
     "clariana-barao": {
+      "institutional": 0.0,
       "mainstream": 0.0
     },
     "edmilson-costa": {
+      "institutional": 0.0,
       "mainstream": 0.0
     },
     "eduardo-leite": {
@@ -148,15 +187,16 @@
       "institutional": 0.0,
       "international": -0.725,
       "magazine": -0.385,
-      "mainstream": -0.263,
+      "mainstream": -0.2539,
       "politics": -0.4194
     },
     "hertz-dias": {
       "mainstream": 0.0
     },
     "lula": {
+      "institutional": 1.0,
       "magazine": 0.115,
-      "mainstream": 0.07,
+      "mainstream": 0.1088,
       "politics": 0.2
     },
     "pablo-marcal": {
@@ -165,14 +205,17 @@
       "politics": -0.8
     },
     "renan-santos": {
+      "institutional": 0.0,
       "magazine": 0.0,
       "mainstream": -0.125,
       "politics": 0.0
     },
     "rui-costa-pimenta": {
+      "institutional": 0.0,
       "mainstream": 0.01
     },
     "samara-martins": {
+      "institutional": 0.0,
       "mainstream": 0.025
     },
     "tarcisio": {
@@ -180,9 +223,11 @@
       "politics": 0.1
     },
     "wilson-grassi": {
+      "institutional": 0.0,
       "mainstream": 0.0
     },
     "zema": {
+      "institutional": 0.0,
       "magazine": 0.0,
       "mainstream": 0.04,
       "politics": 0.0
