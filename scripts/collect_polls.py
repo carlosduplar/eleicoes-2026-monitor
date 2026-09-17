@@ -159,6 +159,14 @@ CANDIDATE_ALIASES = {
 DATE_PATTERN = re.compile(r"\b(20\d{2})[-/](\d{1,2})[-/](\d{1,2})\b")
 BR_DATE_PATTERN = re.compile(r"\b(\d{1,2})[-/](\d{1,2})[-/](20\d{2})\b")
 
+# National-scope TSE registration, e.g. BR-01720/2026. State polls carry a
+# state prefix instead (SP-00959/2026, MG-04716/2026). Article extraction only
+# accepts pieces citing a national code; this filters state-race coverage.
+# NOTE: it does not filter metric confusion (honesty/rejection/approval
+# readings) or subgroup tables in BR-coded national-poll articles — those need
+# the sum gate, the blocklist, and (future) metric/scenario parsing.
+POLL_NATIONAL_REGISTRATION_PATTERN = re.compile(r"BR-\d{5}/2026", re.IGNORECASE)
+
 # Validation gate for poll totals (2026-09-17).
 # Article-derived extraction merges every "candidate + %" mention on the page
 # (multiple 1st/2nd-round scenarios, per-state and per-segment breakdowns,
@@ -177,6 +185,9 @@ POLLS_BLOCKLIST = frozenset(
         ("Datafolha", "2026-09-11"),
         ("Datafolha", "2026-09-14"),
         ("Datafolha", "2026-09-15"),
+        ("AtlasIntel", "2026-08-31"),  # column-shifted table harvest (Flavio 7.8%)
+        ("Quaest", "2026-09-07"),  # income-subgroup table as national (Lula 76%)
+        ("Quaest", "2026-09-16"),  # honesty-attribute readings as votes (no Lula)
     }
 )
 
@@ -932,6 +943,14 @@ def extract_polls_from_articles() -> list[PollItem]:
                 break
 
         if not institute_name:
+            continue
+
+        if not POLL_NATIONAL_REGISTRATION_PATTERN.search(content):
+            logger.debug(
+                "Skipping %s article without national TSE code: %s",
+                institute_name,
+                url,
+            )
             continue
 
         reverse_matches = REVERSE_PERCENTAGE_PATTERN.findall(content)

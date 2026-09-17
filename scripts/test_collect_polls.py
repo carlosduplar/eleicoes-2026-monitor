@@ -459,22 +459,29 @@ def test_article_extraction_discards_merged_poll(
             "title": "Quaest 2o turno cenarios",
             "content": (
                 "Quaest cenario 1 Lula 48,7% Flavio Bolsonaro 42,1%. "
-                "Cenario 2 Lula 47,6% Zema 46,4%. Cenario 3 Lula 48,4% Caiado 41,5%."
+                "Cenario 2 Lula 47,6% Zema 46,4%. Cenario 3 Lula 48,4% Caiado 41,5%. "
+                "Registro BR-01720/2026."
             ),
             "url": "https://example.com/merged",
             "published_at": "2026-09-08T10:00:00Z",
         },
         {
             "title": "Datafolha 1o turno",
-            "content": "Datafolha Lula 39% Flavio Bolsonaro 33% Caiado 5%",
+            "content": "Datafolha Lula 39% Flavio Bolsonaro 33% Caiado 5%. Registro BR-03607/2026.",
             "url": "https://example.com/valid",
             "published_at": "2026-09-05T10:00:00Z",
         },
         {
             "title": "Quaest blocklisted",
-            "content": "Quaest Lula 40% Flavio Bolsonaro 30%",
+            "content": "Quaest Lula 40% Flavio Bolsonaro 30%. Registro BR-01720/2026.",
             "url": "https://example.com/blocked",
             "published_at": "2026-09-11T10:00:00Z",
+        },
+        {
+            "title": "Quaest sem registro",
+            "content": "Quaest Lula 40% Flavio Bolsonaro 30%.",
+            "url": "https://example.com/nocode",
+            "published_at": "2026-09-05T10:00:00Z",
         },
     ]
     _write_json(isolated_workspace["data"] / "articles.json", {"articles": articles})
