@@ -127,9 +127,9 @@ def test_idempotent_double_run(isolated_workspace: dict[str, Path], monkeypatch:
 
     async def fake_scrape_source(browser: Any, source: dict[str, Any], timeout_ms: int = 30000) -> dict[str, Any]:
         return {
-            "id": collect_polls.build_poll_id("Datafolha", "2026-03-01"),
+            "id": collect_polls.build_poll_id("Datafolha", "2026-09-05"),
             "institute": "Datafolha",
-            "published_at": "2026-03-01T00:00:00Z",
+            "published_at": "2026-09-05T00:00:00Z",
             "collected_at": "2026-03-10T10:00:00Z",
             "type": "estimulada",
             "source_url": source["url"],
@@ -182,9 +182,9 @@ def test_institute_failure_does_not_crash(isolated_workspace: dict[str, Path], m
         if "bad" in source["url"]:
             raise TimeoutError("timed out")
         return {
-            "id": collect_polls.build_poll_id("Quaest", "2026-03-02"),
+            "id": collect_polls.build_poll_id("Quaest", "2026-09-06"),
             "institute": "Quaest",
-            "published_at": "2026-03-02T00:00:00Z",
+            "published_at": "2026-09-06T00:00:00Z",
             "collected_at": "2026-03-10T10:00:00Z",
             "type": "estimulada",
             "source_url": source["url"],
@@ -235,9 +235,9 @@ def test_polls_skipped_on_weekend(isolated_workspace: dict[str, Path], monkeypat
 
     async def fake_scrape_source(browser: Any, source: dict[str, Any], timeout_ms: int = 30000) -> dict[str, Any]:
         return {
-            "id": collect_polls.build_poll_id("Datafolha", "2026-03-01"),
+            "id": collect_polls.build_poll_id("Datafolha", "2026-09-05"),
             "institute": "Datafolha",
-            "published_at": "2026-03-01T00:00:00Z",
+            "published_at": "2026-09-05T00:00:00Z",
             "collected_at": "2026-03-10T10:00:00Z",
             "type": "estimulada",
             "source_url": source["url"],
@@ -339,9 +339,9 @@ def test_polls_record_fetch_state_on_success(
 
     async def fake_scrape_source(browser: Any, source: dict[str, Any], timeout_ms: int = 30000) -> dict[str, Any]:
         return {
-            "id": collect_polls.build_poll_id("Datafolha", "2026-03-01"),
+            "id": collect_polls.build_poll_id("Datafolha", "2026-09-05"),
             "institute": "Datafolha",
-            "published_at": "2026-03-01T00:00:00Z",
+            "published_at": "2026-09-05T00:00:00Z",
             "collected_at": "2026-03-10T10:00:00Z",
             "type": "estimulada",
             "source_url": source["url"],
@@ -394,3 +394,89 @@ def test_polls_schema_valid(isolated_workspace: dict[str, Path]) -> None:
     validator = Draft7Validator(schema)
     errors = [err.message for err in validator.iter_errors(saved_payload)]
     assert not errors, errors[:5]
+
+
+def _result(slug: str, pct: float) -> dict[str, Any]:
+    return {"candidate_slug": slug, "candidate_name": slug, "percentage": pct}
+
+
+def _poll(
+    institute: str, date: str, results: list[dict[str, Any]]
+) -> dict[str, Any]:
+    return {
+        "id": collect_polls.build_poll_id(institute, date),
+        "institute": institute,
+        "published_at": f"{date}T00:00:00Z",
+        "collected_at": "2026-09-17T00:00:00Z",
+        "type": "estimulada",
+        "results": results,
+    }
+
+
+def test_poll_total_gate_boundary() -> None:
+    assert collect_polls.is_poll_total_valid([_result("lula", 40.0)]) is True
+    assert (
+        collect_polls.is_poll_total_valid([_result("lula", 60.0), _result("x", 40.0)])
+        is True
+    )
+    assert (
+        collect_polls.is_poll_total_valid(
+            [_result("lula", 60.0), _result("x", 40.1)]
+        )
+        is False
+    )
+
+
+def test_prune_polls_cutoff_blocklist_and_total() -> None:
+    polls = [
+        _poll("Quaest", "2026-08-26", [_result("lula", 40.0)]),  # before cutoff
+        _poll("Quaest", "2026-09-11", [_result("lula", 40.0)]),  # blocklisted
+        _poll(
+            "Real Time Big Data", "2026-09-15", [_result("lula", 40.0)]
+        ),  # blocklisted
+        _poll("Datafolha", "2026-09-07", [_result("lula", 40.0)]),  # blocklisted
+        _poll(
+            "Quaest",
+            "2026-09-02",
+            [_result("lula", 50.0), _result("flavio-bolsonaro", 60.0)],
+        ),  # merged, sum 110
+        _poll(
+            "Datafolha",
+            "2026-09-05",
+            [_result("lula", 39.0), _result("flavio-bolsonaro", 33.0)],
+        ),  # valid partial total
+    ]
+    kept, removed = collect_polls.prune_polls(polls)
+    assert removed == {"before_cutoff": 1, "blocklisted": 3, "total_exceeds_100": 1}
+    assert [p["id"] for p in kept] == [polls[5]["id"]]
+
+
+def test_article_extraction_discards_merged_poll(
+    isolated_workspace: dict[str, Path],
+) -> None:
+    articles = [
+        {
+            "title": "Quaest 2o turno cenarios",
+            "content": (
+                "Quaest cenario 1 Lula 48,7% Flavio Bolsonaro 42,1%. "
+                "Cenario 2 Lula 47,6% Zema 46,4%. Cenario 3 Lula 48,4% Caiado 41,5%."
+            ),
+            "url": "https://example.com/merged",
+            "published_at": "2026-09-08T10:00:00Z",
+        },
+        {
+            "title": "Datafolha 1o turno",
+            "content": "Datafolha Lula 39% Flavio Bolsonaro 33% Caiado 5%",
+            "url": "https://example.com/valid",
+            "published_at": "2026-09-05T10:00:00Z",
+        },
+        {
+            "title": "Quaest blocklisted",
+            "content": "Quaest Lula 40% Flavio Bolsonaro 30%",
+            "url": "https://example.com/blocked",
+            "published_at": "2026-09-11T10:00:00Z",
+        },
+    ]
+    _write_json(isolated_workspace["data"] / "articles.json", {"articles": articles})
+    extracted = collect_polls.extract_polls_from_articles()
+    assert [p["source_url"] for p in extracted] == ["https://example.com/valid"]

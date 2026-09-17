@@ -5,6 +5,15 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 
 ## [Unreleased]
 
+### Fixed
+
+- **2026-09-17 — Poll validation gate + bogus-poll purge** (`scripts/collect_polls.py`, `scripts/test_collect_polls.py`, `site/public/data/polls.json`, `site/src/locales/*/methodology.json`).
+  - Root cause: `extract_polls_from_articles()` harvests every "candidate + %" mention on the page with no distinction of office (president vs. governor/senate), scenario (1st vs. 2nd round, per-state and per-segment breakdowns, with/without-Marçal variants, trend history), metric (vote intention vs. rejection/approval), or geography (state vs. national). First-%-per-candidate wins, so merged polls routinely sum past 100% (observed 133–273%). A second defect misattributes institute by dict-order first match, so any article mentioning "Datafolha" in passing (even a comparison sentence inside a Quaest piece) is stored as Datafolha; Tarcísio appears in "presidential" polls because he now leads the São Paulo governor race (Quaest ~42%) and governor + presidential numbers from the same article are merged.
+  - New gate: a poll is kept only if published on/after 2026-08-27, not on the confirmed-bogus blocklist (Quaest 2026-09-11, Real Time Big Data 2026-09-15, Datafolha 2026-09-07/09-11/09-14/09-15), and its candidate percentages sum to at most 100% (totals below 100% are kept — partial reporting is normal). Enforced in `extract_poll_payload()`, `extract_poll_payload_from_html()`, `extract_polls_from_articles()`, incoming-poll filtering, and `prune_polls()` self-healing of stored data on every run.
+  - `site/public/data/polls.json`: 56 → 35 polls on the live snapshot (5 pre-cutoff, 6 blocklisted — Quaest 09-11, Real Time Big Data 09-15 and Datafolha 09-07/09-11/09-14/09-15, three of which passed the sum gate — plus 10 merged over-100% polls caught by the gate).
+  - `CANDIDATE_ALIASES` trimmed to the 13 TSE-confirmed presidential candidates: Tarcísio, Ratinho Jr, Eduardo Leite and Aldo Rebelo no longer resolve, so governor-race numbers (e.g. Quaest SP Tarcísio 42%) cannot leak into presidential polls.
+  - Methodology pages (pt-BR/en-US) now document the cutoff and the sum gate.
+
 ### Added
 
 - **2026-08-30 — Candidate portraits from TSE (official) + official list alignment** (`site/public/data/candidates.json`, `site/public/data/tse_data.json`, `site/public/images/candidates/*.jpg`, `site/src/pages/CandidatesPage.jsx`, `site/src/pages/CandidatePage.jsx`, `site/src/styles.css`, `docs/schemas/candidates.schema.json`, `site/vite.config.js`).

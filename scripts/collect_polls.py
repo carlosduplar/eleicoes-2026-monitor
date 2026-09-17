@@ -103,6 +103,7 @@ INSTITUTE_ALIASES = {
     "datafolha": "Datafolha",
     "genial/quaest": "Quaest",
     "genial quaest": "Quaest",
+    "ouaest": "Quaest",  # common typo observed in reports; map to Quaest
     "atlas intel": "AtlasIntel",
     "paraná pesquisas": "Parana Pesquisas",
     "parana pesquisas": "Parana Pesquisas",
@@ -151,23 +152,86 @@ CANDIDATE_ALIASES = {
     "rui costa pimenta": ("rui-costa-pimenta", "Rui Costa Pimenta"),
     "pablo marcal": ("pablo-marcal", "Pablo Marçal"),
     "pablo": ("pablo-marcal", "Pablo Marçal"),
-    # Historical (kept for archived articles, not in official 13 2026 list)
-    "tarcisio": ("tarcisio", "Tarcisio"),
-    "tarcísio": ("tarcisio", "Tarcisio"),
-    "tarcisio de freitas": ("tarcisio", "Tarcisio"),
-    "tarcísio de freitas": ("tarcisio", "Tarcisio"),
-    "ratinho": ("ratinho-jr", "Ratinho Jr"),
-    "ratinho jr": ("ratinho-jr", "Ratinho Jr"),
-    "ratinho jr.": ("ratinho-jr", "Ratinho Jr"),
-    "ratinho júnior": ("ratinho-jr", "Ratinho Jr"),
-    "ratinho junior": ("ratinho-jr", "Ratinho Jr"),
-    "eduardo leite": ("eduardo-leite", "Eduardo Leite"),
-    "eduardo": ("eduardo-leite", "Eduardo Leite"),
-    "aldo rebelo": ("aldo-rebelo", "Aldo Rebelo"),
-    "aldo": ("aldo-rebelo", "Aldo Rebelo"),
+    # Strictly the 13 TSE-confirmed 2026 presidential candidates (2026-09-17):
+    # former pre-candidates (Tarcisio, Ratinho Jr, Eduardo Leite, Aldo Rebelo)
+    # no longer resolve, so governor-race numbers can't leak into presidential polls.
 }
 DATE_PATTERN = re.compile(r"\b(20\d{2})[-/](\d{1,2})[-/](\d{1,2})\b")
 BR_DATE_PATTERN = re.compile(r"\b(\d{1,2})[-/](\d{1,2})[-/](20\d{2})\b")
+
+# Validation gate for poll totals (2026-09-17).
+# Article-derived extraction merges every "candidate + %" mention on the page
+# (multiple 1st/2nd-round scenarios, per-state and per-segment breakdowns,
+# rejection numbers), so merged polls routinely sum past 100%.
+# A single stimulated scenario must fit within 100%; anything above is
+# necessarily a merge artifact and is discarded. Totals below 100% are kept:
+# articles often report only the leading candidates.
+POLLS_MIN_PUBLISHED_DATE = "2026-08-27"
+POLLS_MAX_TOTAL_PERCENTAGE = 100.0
+# (institute, yyyy-mm-dd) pairs manually confirmed as bogus; never (re-)ingest.
+POLLS_BLOCKLIST = frozenset(
+    {
+        ("Quaest", "2026-09-11"),
+        ("Real Time Big Data", "2026-09-15"),
+        ("Datafolha", "2026-09-07"),
+        ("Datafolha", "2026-09-11"),
+        ("Datafolha", "2026-09-14"),
+        ("Datafolha", "2026-09-15"),
+    }
+)
+
+
+def poll_results_total(results: list[PollResultItem]) -> float:
+    total = 0.0
+    for item in results:
+        try:
+            total += float(item.get("percentage", 0.0))
+        except (TypeError, ValueError):
+            continue
+    return round(total, 2)
+
+
+def is_poll_total_valid(results: list[PollResultItem]) -> bool:
+    return poll_results_total(results) <= POLLS_MAX_TOTAL_PERCENTAGE + 1e-9
+
+
+def is_poll_blocklisted(institute: str, published_date: str) -> bool:
+    return (institute, published_date[:10]) in POLLS_BLOCKLIST
+
+
+def should_keep_poll(poll: PollItem) -> bool:
+    """Date-cutoff + blocklist + sum<=100% gate for a fully built poll."""
+    published = str(poll.get("published_at", ""))[:10]
+    if published < POLLS_MIN_PUBLISHED_DATE:
+        return False
+    if is_poll_blocklisted(str(poll.get("institute", "")), published):
+        return False
+    results = poll.get("results", [])
+    if not isinstance(results, list):
+        return False
+    return is_poll_total_valid(results)
+
+
+def prune_polls(polls: list[PollItem]) -> tuple[list[PollItem], dict[str, int]]:
+    """Split stored polls into (kept, removal counts by reason)."""
+    kept: list[PollItem] = []
+    removed = {"before_cutoff": 0, "blocklisted": 0, "total_exceeds_100": 0}
+    for poll in polls:
+        if not isinstance(poll, dict):
+            continue
+        published = str(poll.get("published_at", ""))[:10]
+        if published < POLLS_MIN_PUBLISHED_DATE:
+            removed["before_cutoff"] += 1
+            continue
+        if is_poll_blocklisted(str(poll.get("institute", "")), published):
+            removed["blocklisted"] += 1
+            continue
+        results = poll.get("results", [])
+        if not isinstance(results, list) or not is_poll_total_valid(results):
+            removed["total_exceeds_100"] += 1
+            continue
+        kept.append(poll)
+    return kept, removed
 
 
 def utc_now_iso() -> str:
@@ -595,6 +659,14 @@ async def extract_poll_payload(page: Page, source: PollSource) -> PollItem | Non
         results = await extract_candidates_from_tables(page)
     if not results:
         return None
+    if not is_poll_total_valid(results):
+        logger.warning(
+            "Discarding %s poll (%s): candidate total %.1f%% exceeds 100%%",
+            institute,
+            date_text,
+            poll_results_total(results),
+        )
+        return None
 
     poll: PollItem = {
         "id": build_poll_id(institute, date_text),
@@ -709,6 +781,14 @@ async def extract_poll_payload_from_html(
     if not results:
         results = await extract_candidates_from_tables_html(soup)
     if not results:
+        return None
+    if not is_poll_total_valid(results):
+        logger.warning(
+            "Discarding %s poll (%s): candidate total %.1f%% exceeds 100%%",
+            institute,
+            date_text,
+            poll_results_total(results),
+        )
         return None
 
     poll: PollItem = {
@@ -897,6 +977,26 @@ def extract_polls_from_articles() -> list[PollItem]:
         if len(results) < 2:
             continue
 
+        if published < POLLS_MIN_PUBLISHED_DATE:
+            continue
+        if is_poll_blocklisted(institute_name, published):
+            logger.warning(
+                "Discarding blocklisted poll: %s (%s) from %s",
+                institute_name,
+                published,
+                url,
+            )
+            continue
+        if not is_poll_total_valid(results):
+            logger.warning(
+                "Discarding %s poll (%s): candidate total %.1f%% exceeds 100%% (%s)",
+                institute_name,
+                published,
+                poll_results_total(results),
+                url,
+            )
+            continue
+
         poll_id = build_poll_id(institute_name, published)
         if poll_id in seen_polls:
             continue
@@ -974,7 +1074,14 @@ async def collect_polls_async() -> tuple[int, int, int]:
                     )
                     continue
                 if poll is not None:
-                    incoming.append(poll)
+                    if not should_keep_poll(poll):
+                        logger.warning(
+                            "Discarding incoming %s poll (%s): failed validation gate",
+                            poll.get("institute"),
+                            str(poll.get("published_at", ""))[:10],
+                        )
+                    else:
+                        incoming.append(poll)
                     fetch_state[source_url] = utc_now_iso()
                     state_changed = True
                 else:
@@ -1004,8 +1111,11 @@ async def collect_polls_async() -> tuple[int, int, int]:
         logger.warning("Article poll extraction failed: %s", exc)
 
     merged, new_count = deduplicate_by_id(document.polls, incoming)
-    document.polls = merged
-    if new_count > 0 or not POLLS_FILE.exists():
+    pruned, removed = prune_polls(merged)
+    if any(removed.values()):
+        logger.info("Pruned stored polls: %s", removed)
+    document.polls = pruned
+    if new_count > 0 or not POLLS_FILE.exists() or any(removed.values()):
         save_polls_document(document)
     else:
         # Still log total incoming for debugging
