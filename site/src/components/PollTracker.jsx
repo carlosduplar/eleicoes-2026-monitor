@@ -37,7 +37,7 @@ import MethodologyBadge from './MethodologyBadge';
  *   source_url?: string,
  *   results: PollResult[]
  * }} Poll
- * @typedef {{ dateLabel: string, dateIso: string } & Record<string, string | number>} PollChartRow
+ * @typedef {{ dateLabel: string, dateIso: string, institutes: string[], tseRegistrations: string[] } & Record<string, string | number | string[]>} PollChartRow
  */
 
 const ALL_INSTITUTES = '__ALL__';
@@ -133,37 +133,43 @@ function buildCandidateSeries(polls) {
 }
 
 function buildChartRows(polls, selectedInstitute, locale) {
-  /** @type {Map<string, Record<string, { sum: number, count: number }>>} */
+  /** @type {Map<string, { sums: Record<string, { sum: number, count: number }>, institutes: Set<string>, tseRegistrations: Set<string> }>} */
   const byDate = new Map();
   polls
     .filter((poll) => selectedInstitute === ALL_INSTITUTES || poll.institute === selectedInstitute)
     .forEach((poll) => {
       const dateIso = poll.published_at.slice(0, 10);
       if (!byDate.has(dateIso)) {
-        byDate.set(dateIso, {});
+        byDate.set(dateIso, { sums: {}, institutes: new Set(), tseRegistrations: new Set() });
       }
-      const candidates = byDate.get(dateIso);
-      if (!candidates) {
+      const bucket = byDate.get(dateIso);
+      if (!bucket) {
         return;
       }
+      bucket.institutes.add(poll.institute);
+      if (typeof poll.tse_registration === 'string' && poll.tse_registration.length > 0) {
+        bucket.tseRegistrations.add(poll.tse_registration);
+      }
       poll.results.forEach((result) => {
-        if (!candidates[result.candidate_slug]) {
-          candidates[result.candidate_slug] = { sum: 0, count: 0 };
+        if (!bucket.sums[result.candidate_slug]) {
+          bucket.sums[result.candidate_slug] = { sum: 0, count: 0 };
         }
-        candidates[result.candidate_slug].sum += result.percentage;
-        candidates[result.candidate_slug].count += 1;
+        bucket.sums[result.candidate_slug].sum += result.percentage;
+        bucket.sums[result.candidate_slug].count += 1;
       });
     });
 
   return Array.from(byDate.entries())
     .sort((a, b) => a[0].localeCompare(b[0]))
-    .map(([dateIso, entries]) => {
+    .map(([dateIso, bucket]) => {
       /** @type {PollChartRow} */
       const row = {
         dateIso,
         dateLabel: formatDateLabel(`${dateIso}T00:00:00Z`, locale),
+        institutes: Array.from(bucket.institutes).sort((a, b) => a.localeCompare(b)),
+        tseRegistrations: Array.from(bucket.tseRegistrations).sort((a, b) => a.localeCompare(b)),
       };
-      Object.entries(entries).forEach(([slug, value]) => {
+      Object.entries(bucket.sums).forEach(([slug, value]) => {
         row[slug] = Number((value.sum / value.count).toFixed(2));
       });
       return row;
@@ -202,6 +208,43 @@ function PollLegendContent({ candidates, hiddenSlugs, onToggle }) {
         );
       })}
     </ul>
+  );
+}
+
+/**
+ * Custom tooltip: date with polling institute(s) in parentheses, candidate
+ * values, and TSE registration number(s) in small type at the end.
+ * Hidden (legend-toggled-off) lines are already excluded from `payload`.
+ */
+function PollTooltipContent({ active, payload }) {
+  if (!active || !Array.isArray(payload) || payload.length === 0) {
+    return null;
+  }
+  const row = payload[0]?.payload || {};
+  const institutes = Array.isArray(row.institutes) ? row.institutes : [];
+  const registrations = Array.isArray(row.tseRegistrations) ? row.tseRegistrations : [];
+  return (
+    <div className="poll-tooltip">
+      <p className="poll-tooltip-title">
+        {row.dateIso || ''}
+        {institutes.length > 0 ? ` (${institutes.join(', ')})` : ''}
+      </p>
+      <ul className="poll-tooltip-items">
+        {payload.map((entry) => (
+          <li key={String(entry.dataKey)}>
+            <span
+              className="poll-tooltip-dot"
+              style={{ background: entry.color }}
+              aria-hidden="true"
+            />
+            {entry.name}: {entry.value}%
+          </li>
+        ))}
+      </ul>
+      {registrations.length > 0 && (
+        <p className="poll-tooltip-reg">{registrations.join(', ')}</p>
+      )}
+    </div>
   );
 }
 
@@ -291,13 +334,7 @@ function PollTracker() {
                   domain={[0, 100]}
                   label={{ value: t('polls.percentage_label'), angle: -90, position: 'insideLeft' }}
                 />
-                <Tooltip
-                  formatter={(value, name) => [`${value}%`, name]}
-                  labelFormatter={(value, rows) => {
-                    const entry = rows?.[0]?.payload;
-                    return entry?.dateIso || value;
-                  }}
-                />
+                <Tooltip content={<PollTooltipContent />} />
                 <Legend
                   verticalAlign="bottom"
                   content={
