@@ -14,6 +14,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
   - `CANDIDATE_ALIASES` trimmed to the 13 TSE-confirmed presidential candidates: Tarcísio, Ratinho Jr, Eduardo Leite and Aldo Rebelo no longer resolve, so governor-race numbers (e.g. Quaest SP Tarcísio 42%) cannot leak into presidential polls.
   - Article extraction now requires a national TSE registration code (`BR-00000/2026`) in the piece; state-race coverage citing only state codes (SP-/MG-/RJ-/PE-…) is skipped. Known limit: BR-coded national-poll articles can still mix metrics (honesty/rejection readings) or subgroup tables — those stay covered by the sum gate and blocklist.
   - Dropped three confirmed-bogus outliers: AtlasIntel 2026-08-31 (column-shifted `NUM% - Name` table harvest — every candidate inherited the next row's share, hence Flávio 7.8%), Quaest 2026-09-07 (income-subgroup table as national — Lula 76%), Quaest 2026-09-16 (honesty-attribute readings as votes — Lula missing). `polls.json` now 32 polls.
+  - Fixed the column shift at its root: the forward pattern now accepts dash/colon separators (`33,7% - Flavio`), and orientation selection prefers the reading covering more candidates (tie-break: valid then larger total). Verified against the 08-31 Atlas article: reverse reproduces the bogus poll exactly (total 55.5) while forward recovers the true table (total 99.8) and wins 10 candidates to 9.
   - Methodology pages (pt-BR/en-US) now document the cutoff and the sum gate.
 
 ### Added

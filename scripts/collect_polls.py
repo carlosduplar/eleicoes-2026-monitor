@@ -915,9 +915,10 @@ def extract_polls_from_articles() -> list[PollItem]:
     # Build candidate regex from aliases (longest first to prefer multi-word)
     _cand_keys = sorted(CANDIDATE_ALIASES.keys(), key=len, reverse=True)
     _cand_re = "|".join(re.escape(k) for k in _cand_keys)
-    # Handle both "Lula 38%" and "38% Lula" with tight adjacency to avoid cross-matching
+    # Handle "Lula 38%", "38% Lula" and number-first tables ("38% - Lula",
+    # "38%: Lula") with tight adjacency to avoid cross-matching
     PERCENTAGE_PATTERN = re.compile(
-        rf"(\d{{1,2}}(?:[\.,]\d+)?)\s*%\s+(?:para\s+)?({_cand_re})",
+        rf"(\d{{1,2}}(?:[\.,]\d+)?)\s*%\s*[-–—:]?\s*(?:para\s+)?({_cand_re})",
         re.IGNORECASE,
     )
     REVERSE_PERCENTAGE_PATTERN = re.compile(
@@ -955,43 +956,71 @@ def extract_polls_from_articles() -> list[PollItem]:
 
         reverse_matches = REVERSE_PERCENTAGE_PATTERN.findall(content)
         matches = PERCENTAGE_PATTERN.findall(content)
-        results: list[PollResultItem] = []
-        seen_candidates: set[str] = set()
 
-        # Prefer reverse (candidate before %) which is the common poll reporting style;
-        # forward is fallback for "% candidate" templates
-        if reverse_matches:
-            for candidate, pct_str in reverse_matches:
-                pct = float(pct_str.replace(",", "."))
+        def _build_results(
+            pairs: list[tuple[str, str]],
+        ) -> list[PollResultItem]:
+            built: list[PollResultItem] = []
+            seen: set[str] = set()
+            for candidate, pct_str in pairs:
+                try:
+                    pct = float(pct_str.replace(",", "."))
+                except ValueError:
+                    continue
                 if pct > 100 or pct == 0:
                     continue
                 slug = canonical_candidate_slug(candidate)
-                if not slug or slug in seen_candidates:
+                if not slug or slug in seen:
                     continue
-                seen_candidates.add(slug)
-                results.append(
+                seen.add(slug)
+                built.append(
                     {
                         "candidate_slug": slug,
                         "candidate_name": _canonical_candidate_name(slug),
                         "percentage": round(pct, 1),
                     }
                 )
-        elif matches:
-            for pct_str, candidate in matches:
-                pct = float(pct_str.replace(",", "."))
-                if pct > 100 or pct == 0:
-                    continue
-                slug = canonical_candidate_slug(candidate)
-                if not slug or slug in seen_candidates:
-                    continue
-                seen_candidates.add(slug)
-                results.append(
-                    {
-                        "candidate_slug": slug,
-                        "candidate_name": _canonical_candidate_name(slug),
-                        "percentage": round(pct, 1),
-                    }
-                )
+            return built
+
+        reverse_results = _build_results(reverse_matches)
+        forward_results = _build_results(
+            [(candidate, pct_str) for pct_str, candidate in matches]
+        )
+        # Orientation selection (2026-09-17): number-first tables ("33,7% -
+        # Flavio") also satisfy the candidate-first regex shifted by one row,
+        # attributing each row's share to the previous candidate. Prefer the
+        # orientation covering more candidates; on ties prefer a valid
+        # (<=100%) total, then the larger total. The sum gate below still
+        # discards merged multi-scenario harvests either way.
+        if len(forward_results) < 2:
+            results = reverse_results
+        elif len(reverse_results) < 2:
+            results = forward_results
+        elif len(forward_results) != len(reverse_results):
+            results = (
+                forward_results
+                if len(forward_results) > len(reverse_results)
+                else reverse_results
+            )
+        elif is_poll_total_valid(forward_results) != is_poll_total_valid(
+            reverse_results
+        ):
+            results = (
+                forward_results
+                if is_poll_total_valid(forward_results)
+                else reverse_results
+            )
+        elif poll_results_total(forward_results) != poll_results_total(
+            reverse_results
+        ):
+            results = (
+                forward_results
+                if poll_results_total(forward_results)
+                > poll_results_total(reverse_results)
+                else reverse_results
+            )
+        else:
+            results = reverse_results
 
         if len(results) < 2:
             continue

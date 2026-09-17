@@ -487,3 +487,48 @@ def test_article_extraction_discards_merged_poll(
     _write_json(isolated_workspace["data"] / "articles.json", {"articles": articles})
     extracted = collect_polls.extract_polls_from_articles()
     assert [p["source_url"] for p in extracted] == ["https://example.com/valid"]
+
+
+def test_article_number_first_table_not_shifted(
+    isolated_workspace: dict[str, Path],
+) -> None:
+    """Regression: `43,4% - Lula` tables must not shift shares by one row."""
+    articles = [
+        {
+            "title": "AtlasIntel 1o turno",
+            "content": (
+                "AtlasIntel 1o turno 43,4% - Lula (PT) 33,7% - Flavio Bolsonaro (PL) "
+                "7,8% - Augusto Cury 7,6% - Renan Santos 2,0% - Caiado. "
+                "Registro BR-07972/2026."
+            ),
+            "url": "https://example.com/table",
+            "published_at": "2026-09-13T10:00:00Z",
+        },
+    ]
+    _write_json(isolated_workspace["data"] / "articles.json", {"articles": articles})
+    (poll,) = collect_polls.extract_polls_from_articles()
+    by_slug = {r["candidate_slug"]: r["percentage"] for r in poll["results"]}
+    assert by_slug["lula"] == 43.4
+    assert by_slug["flavio-bolsonaro"] == 33.7
+    assert by_slug["augusto-cury"] == 7.8
+
+
+def test_article_orientation_tie_prefers_larger_valid_total(
+    isolated_workspace: dict[str, Path],
+) -> None:
+    articles = [
+        {
+            "title": "Quaest parcial",
+            "content": (
+                "Quaest Lula 30% Flavio Bolsonaro 28%. "
+                "Tabela 45% - Lula 44% - Flavio Bolsonaro. "
+                "Registro BR-01720/2026."
+            ),
+            "url": "https://example.com/tie",
+            "published_at": "2026-09-12T10:00:00Z",
+        },
+    ]
+    _write_json(isolated_workspace["data"] / "articles.json", {"articles": articles})
+    (poll,) = collect_polls.extract_polls_from_articles()
+    by_slug = {r["candidate_slug"]: r["percentage"] for r in poll["results"]}
+    assert by_slug["lula"] == 45.0
