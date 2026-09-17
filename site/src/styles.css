@@ -533,6 +533,56 @@ p {
   color: #ffffff;
 }
 
+.poll-legend {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 0.35rem 0.25rem;
+  list-style: none;
+  margin: 0.5rem 0 0;
+  padding: 0;
+}
+
+.poll-legend-item {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  border: 0;
+  border-radius: 999px;
+  background: transparent;
+  color: inherit;
+  font-size: 0.8rem;
+  padding: 0.35rem 0.6rem;
+  cursor: pointer;
+}
+
+.poll-legend-item:hover {
+  background: var(--border);
+}
+
+.poll-legend-item:focus-visible {
+  outline: 2px solid var(--brand-navy);
+  outline-offset: 2px;
+}
+
+.poll-legend-swatch {
+  width: 0.7rem;
+  height: 0.7rem;
+  border-radius: 50%;
+  background: var(--poll-legend-color);
+  flex: none;
+}
+
+.poll-legend-item.is-off {
+  color: var(--text-secondary);
+  opacity: 0.55;
+  text-decoration: line-through;
+}
+
+.poll-legend-item.is-off .poll-legend-swatch {
+  background: var(--text-secondary);
+}
+
 .sentiment-disclaimer {
   color: var(--text-secondary);
   font-size: 0.84rem;

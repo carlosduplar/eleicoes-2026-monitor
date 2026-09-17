@@ -170,10 +170,57 @@ function buildChartRows(polls, selectedInstitute, locale) {
     });
 }
 
+/**
+ * Clickable legend: toggles a candidate's line on/off.
+ * Recharts injects extra props (payload, etc.) via cloneElement; only the
+ * documented ones below are used.
+ *
+ * @param {{
+ *   candidates: Array<{ slug: string, label: string, color: string }>,
+ *   hiddenSlugs: Set<string>,
+ *   onToggle: (slug: string) => void
+ * }} props
+ */
+function PollLegendContent({ candidates, hiddenSlugs, onToggle }) {
+  return (
+    <ul className="poll-legend">
+      {candidates.map((candidate) => {
+        const hidden = hiddenSlugs.has(candidate.slug);
+        return (
+          <li key={candidate.slug}>
+            <button
+              type="button"
+              className={hidden ? 'poll-legend-item is-off' : 'poll-legend-item'}
+              style={{ '--poll-legend-color': candidate.color }}
+              aria-pressed={!hidden}
+              onClick={() => onToggle(candidate.slug)}
+            >
+              <span className="poll-legend-swatch" aria-hidden="true" />
+              {candidate.label}
+            </button>
+          </li>
+        );
+      })}
+    </ul>
+  );
+}
+
 function PollTracker() {
   const { t, i18n } = useTranslation('common');
   const { data, loading, error } = useData('polls');
   const [selectedInstitute, setSelectedInstitute] = useState(ALL_INSTITUTES);
+  const [hiddenSlugs, setHiddenSlugs] = useState(() => new Set());
+  const toggleCandidate = (slug) => {
+    setHiddenSlugs((prev) => {
+      const next = new Set(prev);
+      if (next.has(slug)) {
+        next.delete(slug);
+      } else {
+        next.add(slug);
+      }
+      return next;
+    });
+  };
   const [chartMounted, setChartMounted] = useState(false);
   useEffect(() => {
     setChartMounted(true);
@@ -251,7 +298,16 @@ function PollTracker() {
                     return entry?.dateIso || value;
                   }}
                 />
-                <Legend verticalAlign="bottom" />
+                <Legend
+                  verticalAlign="bottom"
+                  content={
+                    <PollLegendContent
+                      candidates={candidateSeries}
+                      hiddenSlugs={hiddenSlugs}
+                      onToggle={toggleCandidate}
+                    />
+                  }
+                />
                 {candidateSeries.map((candidate) => (
                   <Line
                     key={candidate.slug}
@@ -262,6 +318,7 @@ function PollTracker() {
                     strokeWidth={2}
                     dot={dotVisible}
                     connectNulls
+                    hide={hiddenSlugs.has(candidate.slug)}
                   />
                 ))}
               </LineChart>
