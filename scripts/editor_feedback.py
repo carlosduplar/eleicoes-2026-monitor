@@ -18,7 +18,7 @@ except ImportError:  # pragma: no cover - direct script execution path
     from store import PUB_DATA_DIR as DATA_DIR, STATE_DIR
 EDITOR_FEEDBACK_FILE = STATE_DIR / "editor_feedback.json"
 DEFAULT_SCHEMA_PATH = "../docs/schemas/editor_feedback.schema.json"
-DEFAULT_PRUNE_MAX_AGE_DAYS = 90
+DEFAULT_PRUNE_MAX_AGE_DAYS = 30
 
 
 def utc_now_iso() -> str:
@@ -151,15 +151,40 @@ def load_editor_feedback(path: Path = EDITOR_FEEDBACK_FILE) -> dict[str, Any]:
     return normalize_feedback(payload)
 
 
+def _semantic_snapshot(payload: dict[str, Any]) -> dict[str, Any]:
+    snapshot = dict(normalize_feedback(payload))
+    snapshot.pop("updated_at", None)
+    return snapshot
+
+
+def feedback_semantically_equal(a: object, b: object) -> bool:
+    return _semantic_snapshot(a if isinstance(a, dict) else {}) == _semantic_snapshot(
+        b if isinstance(b, dict) else {}
+    )
+
+
 def save_editor_feedback(
     payload: dict[str, Any], path: Path = EDITOR_FEEDBACK_FILE
-) -> None:
+) -> bool:
     normalized = normalize_feedback(payload)
+    new_semantic = dict(normalized)
+    new_semantic.pop("updated_at", None)
+    if path.exists():
+        try:
+            existing = normalize_feedback(json.loads(path.read_text(encoding="utf-8")))
+        except (ValueError, OSError):
+            existing = None
+        if existing is not None:
+            old_semantic = dict(existing)
+            old_semantic.pop("updated_at", None)
+            if new_semantic == old_semantic:
+                return False
     normalized["updated_at"] = utc_now_iso()
     path.parent.mkdir(parents=True, exist_ok=True)
     path.write_text(
         json.dumps(normalized, indent=2, ensure_ascii=False) + "\n", encoding="utf-8"
     )
+    return True
 
 
 def article_id_from_payload(article: dict[str, Any]) -> str | None:
@@ -341,9 +366,7 @@ def main() -> None:
         )
     }
 
-    pruned, removed = prune_editor_feedback(
-        feedback, max_age_days=args.max_age_days
-    )
+    pruned, removed = prune_editor_feedback(feedback, max_age_days=args.max_age_days)
 
     mode = "DRY RUN" if dry_run else "EXECUTED"
     print(f"\nEditor feedback prune summary ({mode}):")

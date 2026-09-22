@@ -103,8 +103,9 @@ def unpublish_by_id(article_ids: list[str], tier: str = "editor") -> int:
                 title = article.get("title", "<no title>")
                 print(f"  Unpublished: {aid} — {title}")
 
-    editor_feedback.add_irrelevant_article_ids(feedback, articles)
-    editor_feedback.save_editor_feedback(feedback, EDITOR_FEEDBACK_FILE)
+    added = editor_feedback.add_irrelevant_article_ids(feedback, articles)
+    if added > 0:
+        editor_feedback.save_editor_feedback(feedback, EDITOR_FEEDBACK_FILE)
 
     if modified > 0:
         _save_articles(articles, wrapper)
@@ -128,8 +129,9 @@ def unpublish_by_url(urls: list[str], tier: str = "editor") -> int:
                 title = article.get("title", "<no title>")
                 print(f"  Unpublished: {article.get('id', '?')} — {title}")
 
-    editor_feedback.add_irrelevant_article_ids(feedback, articles)
-    editor_feedback.save_editor_feedback(feedback, EDITOR_FEEDBACK_FILE)
+    added = editor_feedback.add_irrelevant_article_ids(feedback, articles)
+    if added > 0:
+        editor_feedback.save_editor_feedback(feedback, EDITOR_FEEDBACK_FILE)
 
     if modified > 0:
         _save_articles(articles, wrapper)

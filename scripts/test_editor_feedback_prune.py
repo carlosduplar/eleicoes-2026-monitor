@@ -61,9 +61,9 @@ def test_rules_survive_prune() -> None:
 def test_fresh_entries_survive_stale_pruned() -> None:
     stale_id, fresh_id, boundary_id = "b" * 16, "c" * 16, "d" * 16
     meta = {
-        stale_id: _iso(NOW - timedelta(days=91)),
+        stale_id: _iso(NOW - timedelta(days=31)),
         fresh_id: _iso(NOW - timedelta(days=1)),
-        boundary_id: _iso(NOW - timedelta(days=90)),
+        boundary_id: _iso(NOW - timedelta(days=30)),
     }
     pruned, removed = _prune(_payload([stale_id, fresh_id, boundary_id], meta))
     assert removed == 1
@@ -125,14 +125,18 @@ def test_payload_after_prune_matches_schema() -> None:
     jsonschema.validate(pruned, schema)
 
 
-def test_cli_execute_prunes_file(tmp_path: Path, monkeypatch: pytest.MonkeyPatch) -> None:
+def test_cli_execute_prunes_file(
+    tmp_path: Path, monkeypatch: pytest.MonkeyPatch
+) -> None:
     target = tmp_path / "editor_feedback.json"
     stale_id, fresh_id = "1" * 16, "2" * 16
     meta = {
         stale_id: _iso(NOW - timedelta(days=91)),
         fresh_id: _iso(NOW - timedelta(days=1)),
     }
-    target.write_text(json.dumps(_payload([stale_id, fresh_id], meta)), encoding="utf-8")
+    target.write_text(
+        json.dumps(_payload([stale_id, fresh_id], meta)), encoding="utf-8"
+    )
     monkeypatch.setattr(editor_feedback, "EDITOR_FEEDBACK_FILE", target)
     monkeypatch.setattr(sys, "argv", ["editor_feedback.py", "--execute"])
 
@@ -142,7 +146,9 @@ def test_cli_execute_prunes_file(tmp_path: Path, monkeypatch: pytest.MonkeyPatch
         kwargs.pop("now", None)
         return real_prune(feedback, now=NOW, **kwargs)
 
-    monkeypatch.setattr(editor_feedback, "prune_editor_feedback", prune_with_fixed_clock)
+    monkeypatch.setattr(
+        editor_feedback, "prune_editor_feedback", prune_with_fixed_clock
+    )
 
     editor_feedback.main()
 
@@ -157,9 +163,7 @@ def test_cli_dry_run_leaves_file_unchanged(
 ) -> None:
     target = tmp_path / "editor_feedback.json"
     stale_id = "3" * 16
-    payload = _payload(
-        [stale_id], {stale_id: _iso(NOW - timedelta(days=91))}
-    )
+    payload = _payload([stale_id], {stale_id: _iso(NOW - timedelta(days=91))})
     target.write_text(json.dumps(payload), encoding="utf-8")
     monkeypatch.setattr(editor_feedback, "EDITOR_FEEDBACK_FILE", target)
     monkeypatch.setattr(sys, "argv", ["editor_feedback.py"])
@@ -170,8 +174,41 @@ def test_cli_dry_run_leaves_file_unchanged(
         kwargs.pop("now", None)
         return real_prune(feedback, now=NOW, **kwargs)
 
-    monkeypatch.setattr(editor_feedback, "prune_editor_feedback", prune_with_fixed_clock)
+    monkeypatch.setattr(
+        editor_feedback, "prune_editor_feedback", prune_with_fixed_clock
+    )
 
     editor_feedback.main()
 
     assert json.loads(target.read_text(encoding="utf-8")) == payload
+
+
+def test_save_skips_write_when_semantically_equal(tmp_path: Path) -> None:
+    target = tmp_path / "editor_feedback.json"
+    payload = _payload(["a" * 16], {"a" * 16: _iso(NOW)})
+    target.write_text(json.dumps(payload), encoding="utf-8")
+    before = target.read_text(encoding="utf-8")
+    assert editor_feedback.save_editor_feedback(payload, target) is False
+    assert target.read_text(encoding="utf-8") == before
+
+
+def test_save_updates_timestamp_only_on_change(tmp_path: Path) -> None:
+    target = tmp_path / "editor_feedback.json"
+    payload = _payload(["a" * 16], {"a" * 16: _iso(NOW)})
+    assert editor_feedback.save_editor_feedback(payload, target) is True
+    first = json.loads(target.read_text(encoding="utf-8"))
+    assert first["updated_at"] is not None
+    changed = dict(payload)
+    changed["irrelevant_article_ids"] = ["a" * 16, "b" * 16]
+    changed["irrelevant_article_ids_meta"] = {
+        "a" * 16: _iso(NOW),
+        "b" * 16: _iso(NOW),
+    }
+    assert editor_feedback.save_editor_feedback(changed, target) is True
+
+
+def test_semantic_equal_ignores_updated_at() -> None:
+    a = _payload(["a" * 16])
+    b = dict(a)
+    b["updated_at"] = "2099-01-01T00:00:00Z"
+    assert editor_feedback.feedback_semantically_equal(a, b) is True
