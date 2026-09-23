@@ -231,7 +231,55 @@
       "institute": "MDA",
       "source_url": "https://mda.pesquisa.cnt.org.br/",
       "message": "Page.goto: net::ERR_NAME_NOT_RESOLVED at https://mda.pesquisa.cnt.org.br/\nCall log:\n  - navigating to \"https://mda.pesquisa.cnt.org.br/\", waiting until \"domcontentloaded\"\n"
+    },
+    {
+      "at": "2026-09-23T21:09:25Z",
+      "tier": "foca",
+      "script": "collect_parties.py",
+      "party_name": "PT",
+      "party_url": "https://pt.org.br/noticias/",
+      "message": "403 Client Error: Forbidden for url: https://pt.org.br/noticias/"
+    },
+    {
+      "at": "2026-09-23T21:09:30Z",
+      "tier": "foca",
+      "script": "collect_parties.py",
+      "party_name": "Novo",
+      "party_url": "https://novo.org.br/noticias/",
+      "message": "403 Client Error: Forbidden for url: https://novo.org.br/noticias/"
+    },
+    {
+      "at": "2026-09-23T21:09:39Z",
+      "tier": "foca",
+      "script": "collect_parties.py",
+      "party_name": "DC",
+      "party_url": "https://www.fundacaodemocratacrista.org.br/categoria/noticias/",
+      "message": "523 Server Error: <none> for url: https://www.fundacaodemocratacrista.org.br/categoria/noticias/"
+    },
+    {
+      "at": "2026-09-23T21:10:18Z",
+      "tier": "foca",
+      "script": "collect_polls.py",
+      "institute": "Quaest",
+      "source_url": "https://quaest.com.br/pesquisas/",
+      "message": "Page.goto: Timeout 30000ms exceeded.\nCall log:\n  - navigating to \"https://quaest.com.br/pesquisas/\", waiting until \"domcontentloaded\"\n"
+    },
+    {
+      "at": "2026-09-23T21:10:37Z",
+      "tier": "foca",
+      "script": "collect_polls.py",
+      "institute": "MDA",
+      "source_url": "https://mda.pesquisa.cnt.org.br/",
+      "message": "Page.goto: net::ERR_NAME_NOT_RESOLVED at https://mda.pesquisa.cnt.org.br/\nCall log:\n  - navigating to \"https://mda.pesquisa.cnt.org.br/\", waiting until \"domcontentloaded\"\n"
+    },
+    {
+      "at": "2026-09-23T21:13:17Z",
+      "tier": "editor",
+      "script": "summarize.py",
+      "article_id": "22cb8ccd65b0acb9",
+      "provider": null,
+      "message": "All AI providers failed (poolside: Error code: 500 - {'error': 'Internal Server Error'}; ollama: Error code: 402 - {'error': {'message': 'this model is not included in your free usage, add usage credits to pay as you go: https://ollama.com/settings or upgrade for included usage: https://ollama.com/upgrade (ref: 9ac091a3-e1fa-43c8-9167-ad379aed119f)', 'type': 'api_error', 'param': None, 'code': None}}; nvidia: Error code: 410 - {'type': 'about:blank', 'title': 'Gone', 'status': 410, 'detail': \"The model 'minimaxai/minimax-m3' has reached its end of life on 2026-09-09T09:00:00Z and is no longer available.\"}; openrouter: Error code: 429 - {'error': {'message': 'Provider returned error', 'code': 429, 'metadata': {'raw': 'qwen/qwen3.8-27b:free is temporarily rate-limited upstream. Please retry shortly, or add your own key to accumulate your rate limits: https://openrouter.ai/settings/integrations', 'provider_name': 'ModelRun', 'is_byok': False, 'provider_error_code': '429', 'limit_source': 'upstream_provider_shared_pool', 'remedy_hint': 'Retry shortly, add your own provider key (https://openrouter.ai/settings/integrations), or route to another provider with provider routing: https://openrouter.ai/docs/features/provider-routing', 'previous_errors': [{'code': 429, 'message': 'Provider returned error', 'provider_name': 'Decart', 'raw': 'z-ai/glm-5.2:free is temporarily rate-limited upstream. Please retry shortly, or add your own key to accumulate your rate limits: https://openrouter.ai/settings/integrations'}]}}, 'user_id': 'user_2xNZXSUw4mIc0P2xT1roN9u5Ct2'})."
     }
   ],
-  "last_checked": "2026-09-23T18:03:50Z"
+  "last_checked": "2026-09-23T21:13:17Z"
 }
