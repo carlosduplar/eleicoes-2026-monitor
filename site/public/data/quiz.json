@@ -1,9 +1,10 @@
 {
   "schema_version": "2.0.0",
-  "generated_at": "2026-09-24T22:14:09Z",
+  "generated_at": "2026-09-25T01:22:03Z",
   "knowledge_base_version": "2026-08-30T14:11:08Z",
   "generator_model": "poolside:poolside/laguna-s-2.1",
   "ordered_topics": [
+    "meio_ambiente",
     "midia",
     "impostos",
     "lgbtq",
@@ -12,9 +13,89 @@
     "previdencia",
     "educacao",
     "seguranca",
-    "aborto"
+    "aborto",
+    "corrupcao"
   ],
   "topics": {
+    "meio_ambiente": {
+      "topic_label_pt": "Meio Ambiente",
+      "topic_label_en": "Environment",
+      "divergence_score": 0.8333333333333334,
+      "question_pt": "Como o Brasil deve equilibrar desenvolvimento econômico e proteção ambiental?",
+      "question_en": "How should Brazil balance economic development and environmental protection?",
+      "generation_quality": {
+        "validated": true,
+        "validator_model": "nvidia:z-ai/glm-5.2",
+        "validation_date": "2026-09-25T01:13:31Z"
+      },
+      "options": [
+        {
+          "id": "opt_a",
+          "text_pt": "Acredito que o Estado precisa fortalecer a fiscalização ambiental, reativar recursos destinados à conservação e intensificar o combate ao desmatimento ilegal, garantindo que o crescimento econômico não comprometa a preservação dos ecossistemas.",
+          "text_en": "I believe the State needs to strengthen environmental enforcement, reactivate resources for conservation, and intensify the fight against illegal deforestation, ensuring that economic growth does not compromise the preservation of ecosystems.",
+          "weight": 3,
+          "candidate_slug": "lula",
+          "position_type": "confirmed",
+          "confidence": "high",
+          "source_pt": "Lula defende o meio ambiente através do fortalecimento de órgãos fiscalizadores, da reativação do Fundo Amazônia e do combate ativo ao desmatamento. Durante seu governo, houve uma redução de mais de 50% no desmatamento na Amazônia e o país sediou a COP30.",
+          "source_en": "",
+          "source_url": "https://pt.wikipedia.org/wiki/Luiz_Inácio_Lula_da_Silva",
+          "source_date": "2026-03-25"
+        },
+        {
+          "id": "opt_b",
+          "text_pt": "Defendo que o licenciamento ambiental deve ser mais flexível, com prazos curtos e exigências reduzidas, permitindo que empresas ampliem sua produção sem burocracia excessiva.",
+          "text_en": "I advocate that environmental licensing should be more flexible, with shorter deadlines and reduced requirements, allowing companies to expand production without excessive bureaucracy.",
+          "weight": -3,
+          "candidate_slug": "flavio-bolsonaro",
+          "position_type": "inferred",
+          "confidence": "medium",
+          "source_pt": "O candidato, de acordo com o posicionamento de seu partido (PL), é crítico de restrições ambientais e defende a flexibilização do licenciamento ambiental.",
+          "source_en": "",
+          "source_url": "https://pt.wikipedia.org/wiki/Flávio_Bolsonaro",
+          "source_date": "2026-03-25"
+        },
+        {
+          "id": "opt_c",
+          "text_pt": "Entendo que é necessário equilibrar a preservação ambiental e o desenvolvimento econômico, evitando regulamentações excessiveiras que impactem negativamente a produtividade do setor agrícola e rural.",
+          "text_en": "I understand that it is necessary to balance environmental preservation and economic development, avoiding overly strict regulations that negatively impact the productivity of the agricultural and rural sectors.",
+          "weight": 0,
+          "candidate_slug": "zema",
+          "position_type": "inferred",
+          "confidence": "medium",
+          "source_pt": "Defende um equilíbrio entre a preservação ambiental e o desenvolvimento econômico, criticando o excesso de regulações na área.",
+          "source_en": "",
+          "source_url": "https://pt.wikipedia.org/wiki/Romeu_Zema",
+          "source_date": "2026-03-25"
+        },
+        {
+          "id": "opt_d",
+          "text_pt": "Defendo que o governo avalie com critérios técnicos crédito a produção de baixo carbono condicionado a compromissos verificáveis, com metas anuais e auditoria externa.",
+          "text_en": "I believe the government should review against technical criteria low-carbon credit conditioned on verifiable commitments, with annual targets and external audit.",
+          "weight": 0,
+          "candidate_slug": "renan-santos",
+          "position_type": "inferred",
+          "confidence": "medium",
+          "source_pt": "Renan Santos e o MBL frequentemente criticam o ativismo ambiental politizado, enfatizando a importância do desenvolvimento econômico. Eles argumentam que políticas ambientais excessivamente rígidas podem impedir o progresso econômico.",
+          "source_en": "",
+          "source_url": null,
+          "source_date": "2026-03-25"
+        },
+        {
+          "id": "opt_e",
+          "text_pt": "Minha posição é que o governo restrinja fiscalização do desmatamento com operações anuais, multas públicas e embargo imediato, com indicadores trimestrais públicos.",
+          "text_en": "I hold the government should limit deforestation enforcement with annual operations, public fines and swift embargoes, with public quarterly indicators.",
+          "weight": -2,
+          "candidate_slug": "caiado",
+          "position_type": "inferred",
+          "confidence": "medium",
+          "source_pt": "Como governador, Ronaldo Caiado promulgou uma lei que autoriza a extração e o beneficiamento de amianto para exportação, uma prática alvo de questionamentos judiciais devido aos impactos ambientais e de saúde. Além disso, seu partido mantém uma postura crítica a restrições ambientais que considera excessivas.",
+          "source_en": "",
+          "source_url": "https://pt.wikipedia.org/wiki/Ronaldo_Caiado",
+          "source_date": "2026-03-25"
+        }
+      ]
+    },
     "midia": {
       "topic_label_pt": "Regulação de Mídia",
       "topic_label_en": "Media Regulation",
@@ -24,13 +105,13 @@
       "generation_quality": {
         "validated": true,
         "validator_model": "nvidia:z-ai/glm-5.2",
-        "validation_date": "2026-09-24T22:06:54Z"
+        "validation_date": "2026-09-25T01:14:12Z"
       },
       "options": [
         {
           "id": "opt_a",
-          "text_pt": "Defendo que o Estado crie órgãos independentes para fiscalizar algoritmos de redes sociais, exigindo transparência e combater notícias falsas por meio de regras claras.",
-          "text_en": "I defend that the State should create independent bodies to oversee social media algorithms, requiring transparency and combating fake news through clear rules.",
+          "text_pt": "Defendo que o Estado crie uma autoridade independente para fiscalizar algoritmos de redes sociais e exigir transparência sobre como conteúdos são selecionados e promovidos.",
+          "text_en": "I defend that the State create an independent authority to monitor social media algorithms and require transparency on how content is selected and promoted.",
           "weight": 2,
           "candidate_slug": "lula",
           "position_type": "inferred",
@@ -42,8 +123,8 @@
         },
         {
           "id": "opt_b",
-          "text_pt": "Acredito que o Estado limite sua intervenção a incentivos fiscais para empresas que adotarem auto-regulação voluntária de conteúdo, sem impor restrições obrigatórias.",
-          "text_en": "I believe the State should limit its intervention to tax incentives for companies that voluntarily adopt content self-regulation, without imposing mandatory restrictions.",
+          "text_pt": "Na minha visão, o Estado não deve impor regras sobre o conteúdo publicado nas redes sociais, respeitando a liberdade de expressão e deixando que usuários e empresas se responsabilizem por suas postagens.",
+          "text_en": "In my view, the State should not impose rules on content published on social media, respecting freedom of expression and letting users and companies be responsible for their posts.",
           "weight": -2,
           "candidate_slug": "flavio-bolsonaro",
           "position_type": "inferred",
@@ -55,8 +136,21 @@
         },
         {
           "id": "opt_c",
-          "text_pt": "Defendo que o governo restrinja transparência de algoritmos com relatórios públicos e auditoria independente, com metas anuais e auditoria externa.",
-          "text_en": "I believe the government should limit algorithmic transparency with public reports and independent audit, with annual targets and external audit.",
+          "text_pt": "Minha posição é que o Estado evite qualquer interferência na regulação de plataformas digitais, permitindo que o mercado livre e a iniciativa privada determinem como as redes sociais operam.",
+          "text_en": "My position is that the State avoid any interference in regulating digital platforms, allowing the free market and private initiative to determine how social networks operate.",
+          "weight": -3,
+          "candidate_slug": "renan-santos",
+          "position_type": "inferred",
+          "confidence": "medium",
+          "source_pt": "Como integrante do MBL, Renan Santos defende a liberdade de expressão irrestrita e se posiciona fortemente contra a regulação das plataformas de mídia.",
+          "source_en": "",
+          "source_url": null,
+          "source_date": "2026-03-25"
+        },
+        {
+          "id": "opt_d",
+          "text_pt": "Para mim, o governo restrinja moderação de conteúdo com direito de resposta e prazos de recurso, com avaliação independente e dados públicos.",
+          "text_en": "My position is the government should limit content moderation with right of reply and appeal deadlines, with independent evaluation and public data.",
           "weight": -2,
           "candidate_slug": "caiado",
           "position_type": "inferred",
@@ -67,9 +161,9 @@
           "source_date": "2026-03-25"
         },
         {
-          "id": "opt_d",
-          "text_pt": "Minha posição é que o Estado priorize leis de proteção de dados e privacidade, mas não interfira no conteúdo publicado, respeitando a liberdade de expressão individual.",
-          "text_en": "My position is that the State should prioritize data protection and privacy laws, but not interfere with published content, respecting individual freedom of expression.",
+          "id": "opt_e",
+          "text_pt": "Considero que o governo restrinja transparência de algoritmos com relatórios públicos e auditoria independente, com metas anuais e auditoria externa.",
+          "text_en": "I maintain the government should limit algorithmic transparency with public reports and independent audit, with annual targets and external audit.",
           "weight": -2,
           "candidate_slug": "zema",
           "position_type": "inferred",
@@ -77,19 +171,6 @@
           "source_pt": "O candidato, sendo do Partido Novo, provavelmente acompanha a posição contrária à regulação de mídias e a favor do livre mercado defendida por sua legenda.",
           "source_en": "",
           "source_url": "https://pt.wikipedia.org/wiki/Romeu_Zema",
-          "source_date": "2026-03-25"
-        },
-        {
-          "id": "opt_e",
-          "text_pt": "Sustento que o Estado proíba qualquer regulação que limite o acesso a informações, mantendo todas as plataformas digitais livres de censura ou restrições sobre conteúdo.",
-          "text_en": "I sustain that the State should prohibit any regulation limiting access to information, keeping all digital platforms free from censorship or content restrictions.",
-          "weight": -3,
-          "candidate_slug": "renan-santos",
-          "position_type": "inferred",
-          "confidence": "medium",
-          "source_pt": "Como integrante do MBL, Renan Santos defende a liberdade de expressão irrestrita e se posiciona fortemente contra a regulação das plataformas de mídia.",
-          "source_en": "",
-          "source_url": null,
           "source_date": "2026-03-25"
         }
       ]
@@ -103,13 +184,13 @@
       "generation_quality": {
         "validated": true,
         "validator_model": "nvidia:z-ai/glm-5.2",
-        "validation_date": "2026-09-24T22:07:50Z"
+        "validation_date": "2026-09-25T01:14:42Z"
       },
       "options": [
         {
           "id": "opt_a",
-          "text_pt": "Defendo que a carga tributária sobre grandes fortunas e empresas poderosa seja aumentada para financiar programas sociais essenciais, como saúde e educação básica.",
-          "text_en": "I defend that the tax burden on large fortunes and powerful companies should be increased to fund essential social programs, such as health and basic education.",
+          "text_pt": "Defendo que a carga tributária deve ser progressiva, cobrando mais dos que têm maior capacidade de pagar e investindo os recursos arrecadados em programas sociais e infraestrutura básica.",
+          "text_en": "I advocate that the tax burden must be progressive, charging more from those with greater ability to pay and investing the raised resources in social programs and basic infrastructure.",
           "weight": 2,
           "candidate_slug": "lula",
           "position_type": "inferred",
@@ -121,8 +202,8 @@
         },
         {
           "id": "opt_b",
-          "text_pt": "Acredito que o governo restrinja tributação de lucros distribuídos com tabela anual e compensação, com revisão periódica e relatório público.",
-          "text_en": "I argue the government should limit taxation of distributed profits with an annual schedule and offsets, with periodic review and public reporting.",
+          "text_pt": "Entendo que o governo restrinja tributação de lucros distribuídos com tabela anual e compensação, com indicadores trimestrais públicos.",
+          "text_en": "In my view, the government should limit taxation of distributed profits with an annual schedule and offsets, with public quarterly indicators.",
           "weight": -2,
           "candidate_slug": "flavio-bolsonaro",
           "position_type": "inferred",
@@ -134,9 +215,9 @@
         },
         {
           "id": "opt_c",
-          "text_pt": "Entendo que a prioridade deve ser a simplificação do sistema tributário, reduzindo burocracias e eliminando tributos que não trazem benefícios diretos à população, como o comboio da malha logística.",
-          "text_en": "I understand that the priority should be simplifying the tax system, reducing bureaucracy and eliminating taxes that do not bring direct benefits to the population, such as the logistics chain levy.",
-          "weight": -2,
+          "text_pt": "Entendo que a prioridade fiscal deve ser a simplificação de todos os tributos em um único imposto sobre consumo, reduzindo a burocracia e eliminando múltiplas cobranças sobre o mesmo bem.",
+          "text_en": "I understand that the fiscal priority should be simplifying all taxes into a single consumption tax, reducing bureaucracy and eliminating multiple charges on the same good.",
+          "weight": -3,
           "candidate_slug": "zema",
           "position_type": "inferred",
           "confidence": "medium",
@@ -147,8 +228,8 @@
         },
         {
           "id": "opt_d",
-          "text_pt": "Acredito que o governo impeça novas obrigações em simplificação com imposto único sobre consumo e devolução a baixa renda, com prazo definido e prestação de contas.",
-          "text_en": "I argue the government should block new mandates on simplification with a single consumption tax and low-earner rebates, with a set deadline and accountability.",
+          "text_pt": "Minha posição é que o Estado precisa reduzir drasticamente sua presença econômica, transferindo recursos para o setor privado e diminuindo a arrecadação total em ao menos 50% em cinco anos.",
+          "text_en": "My position is that the State needs to drastically reduce its economic presence, transferring resources to the private sector and decreasing total collection by at least 50% in five years.",
           "weight": -3,
           "candidate_slug": "renan-santos",
           "position_type": "confirmed",
@@ -169,13 +250,13 @@
       "generation_quality": {
         "validated": true,
         "validator_model": "nvidia:z-ai/glm-5.2",
-        "validation_date": "2026-09-24T22:08:19Z"
+        "validation_date": "2026-09-25T01:15:42Z"
       },
       "options": [
         {
           "id": "opt_a",
-          "text_pt": "Defendo que o Estado promova leis que garantam a todos o acesso equitativo a serviços de saúde, educação e emprego, reconhecendo plenamente a identidade de gênero e protegendo a comunidade contra qualquer forma de discriminação.",
-          "text_en": "I advocate that the State promote laws ensuring equal access to health, education and employment services for all, fully recognizing gender identity and protecting the community against any form of discrimination.",
+          "text_pt": "Na minha visão, o governo fortaleça atendimento especializado à saúde com protocolo nacional e ambulatórios regionais, com prazo definido e prestação de contas.",
+          "text_en": "I support the government choosing to strengthen specialized health care with a national protocol and regional clinics, with a set deadline and accountability.",
           "weight": 2,
           "candidate_slug": "lula",
           "position_type": "inferred",
@@ -187,8 +268,8 @@
         },
         {
           "id": "opt_b",
-          "text_pt": "Na minha visão, o governo impeça novas obrigações em apoio psicossocial com centros de referência e linha nacional de ajuda, com avaliação independente e dados públicos.",
-          "text_en": "I support the government choosing to block new mandates on psychosocial support with reference centers and a national helpline, with independent evaluation and public data.",
+          "text_pt": "Minha posição é que o governo impeça novas obrigações em combate à violência com delegacias capacitadas e estatísticas públicas, com transparência orçamentária total.",
+          "text_en": "I hold the government should block new mandates on anti-violence enforcement with trained precincts and public statistics, with full budget transparency.",
           "weight": -3,
           "candidate_slug": "flavio-bolsonaro",
           "position_type": "confirmed",
@@ -200,8 +281,21 @@
         },
         {
           "id": "opt_c",
-          "text_pt": "Para mim, não deve haver investimento estatal em programas específicos destinados a grupos baseados em identidade de gênero, e prefiro que os recursos sejam direcionados a políticas sociais universais que beneficiem toda a população.",
-          "text_en": "To me, there should be no state investment in specific programs targeted at groups based on gender identity, and I prefer that resources be allocated to universal social policies that benefit the entire population.",
+          "text_pt": "Minha posição é que o governo restrinja apoio psicossocial com centros de referência e linha nacional de ajuda, com metas anuais e auditoria externa.",
+          "text_en": "I hold the government should limit psychosocial support with reference centers and a national helpline, with annual targets and external audit.",
+          "weight": -2,
+          "candidate_slug": "caiado",
+          "position_type": "inferred",
+          "confidence": "medium",
+          "source_pt": "O partido de Ronaldo Caiado tem postura conservadora e é contrário a políticas de identidade de gênero. Como ele é integrante do União Brasil, infere-se que ele seja contra o aumento dos direitos da população LGBTQIA+.",
+          "source_en": "",
+          "source_url": "https://pt.wikipedia.org/wiki/Ronaldo_Caiado",
+          "source_date": "2026-03-25"
+        },
+        {
+          "id": "opt_d",
+          "text_pt": "Na minha visão, o governo deve assegurar que nenhuma política pública impeça o exercício da liberdade individual, evitando que normas ideológicas obriguem instituições a adotar práticas contrárias a sua conciência. Para mim, a prioridade é que o Estado respeite a diversidade sem estabelecer regras que obriguem a aceitação de determinadas visões de mundo, especialmente na educação e na saúde. Minha posição é que políticas afirmativas baseadas em identidade devem ser rejeionadas por violar o princípio da isonomia entre os cidadãos.",
+          "text_en": "In my view, the government must ensure that no public policy prevents the exercise of individual freedom, avoiding norms that force institutions to adopt practices contrary to their conscience. For me, the priority is that the State respects diversity without establishing rules that force the acceptance of certain worldviews, especially in education and health. My position is that affirmative policies based on identity should be rejected for violating the principle of equality among citizens.",
           "weight": -2,
           "candidate_slug": "renan-santos",
           "position_type": "inferred",
@@ -209,19 +303,6 @@
           "source_pt": "Renan Santos e o MBL opõem-se a políticas identitárias promovidas pelo Estado. A defesa da liberdade individual guia essa oposição.",
           "source_en": "",
           "source_url": null,
-          "source_date": "2026-03-25"
-        },
-        {
-          "id": "opt_d",
-          "text_pt": "Na minha visão, políticas públicas não devem promover ou institucionalizar identidades de gênero, rejeitando qualquer currículo ou normativa que traga esse conteúdo para dentro das escolas ou órgãos estatais.",
-          "text_en": "In my view, public policies should not promote or institutionalize gender identities, rejecting any curriculum or regulatory measure that introduces this content into schools or state agencies.",
-          "weight": -3,
-          "candidate_slug": "caiado",
-          "position_type": "inferred",
-          "confidence": "medium",
-          "source_pt": "O partido de Ronaldo Caiado tem postura conservadora e é contrário a políticas de identidade de gênero. Como ele é integrante do União Brasil, infere-se que ele seja contra o aumento dos direitos da população LGBTQIA+.",
-          "source_en": "",
-          "source_url": "https://pt.wikipedia.org/wiki/Ronaldo_Caiado",
           "source_date": "2026-03-25"
         }
       ]
@@ -235,27 +316,14 @@
       "generation_quality": {
         "validated": true,
         "validator_model": "nvidia:z-ai/glm-5.2",
-        "validation_date": "2026-09-24T22:09:04Z"
+        "validation_date": "2026-09-25T01:16:30Z"
       },
       "options": [
         {
           "id": "opt_a",
-          "text_pt": "Defendo que o país mantenha políticas restritivas ao porte civil de armas, limitando a comercialização a fins específicos como caça e esportes, e ampliando a fiscalização de estabelecimentos licenciados.",
-          "text_en": "I defend that the country maintains restrictive policies on civilian gun ownership, limiting sales to specific purposes such as hunting and sports, and increasing oversight of licensed establishments.",
-          "weight": -3,
-          "candidate_slug": "lula",
-          "position_type": "confirmed",
-          "confidence": "high",
-          "source_pt": "O PT, partido de Lula, é contrário ao porte de armas pela população civil e possui um histórico de restrição ao acesso a armas de fogo.",
-          "source_en": "",
-          "source_url": "https://pt.wikipedia.org/wiki/Luiz_Inácio_Lula_da_Silva",
-          "source_date": "2026-03-25"
-        },
-        {
-          "id": "opt_b",
-          "text_pt": "Acredito que o acesso a armas de fogo e munições deva ser flexibilizado, reduzindo burocracias para a obtenção de licenças e permitindo o porte em mais situações, especialmente em áreas rurais.",
-          "text_en": "I believe that access to firearms and ammunition should be liberalized, reducing bureaucracy for obtaining licenses and allowing carry in more situations, especially in rural areas.",
-          "weight": 3,
+          "text_pt": "Defendo que o acesso a armas de fogo seja permitido para todos os cidadãos aptos, com capacitação obrigatória e emissão rápida de licenças, e que o Estado promova programas de segurança e defesa pessoal como direito fundamental.",
+          "text_en": "I defend that access to firearms be allowed for all eligible citizens, with mandatory training and swift license issuance, and that the State promote personal safety and self-defense programs as a fundamental right.",
+          "weight": 2,
           "candidate_slug": "flavio-bolsonaro",
           "position_type": "confirmed",
           "confidence": "high",
@@ -265,9 +333,22 @@
           "source_date": "2026-03-25"
         },
         {
+          "id": "opt_b",
+          "text_pt": "Acredito que o porte de armas deva ser facultado com restrito contingente de segurança: exames periciais regulares, armazenamento adequado e registro centralizado, garantindo liberdade individual com responsabilidade social.",
+          "text_en": "I believe that carrying arms should be permitted under a restricted security framework: regular psychophysical exams, proper storage and centralized registration, ensuring individual freedom with social responsibility.",
+          "weight": 2,
+          "candidate_slug": "zema",
+          "position_type": "confirmed",
+          "confidence": "high",
+          "source_pt": "Romeu Zema declarou ser favorável ao porte de armas, argumentando que a decisão deve respeitar a vontade individual e as liberdades individuais de cada cidadão.",
+          "source_en": "",
+          "source_url": "https://pt.wikipedia.org/wiki/Romeu_Zema",
+          "source_date": "2026-03-25"
+        },
+        {
           "id": "opt_c",
-          "text_pt": "Minha posição é que agricultores e trabalhadores rurais devam ter facilidade para adquirir armas de fogo para proteger suas propriedades e vidas, com isenção de exigências burocráticas em zoneamentos agrícolas.",
-          "text_en": "My position is that farmers and rural workers should have easy access to firearms to protect their properties and lives, with exemption from bureaucratic requirements in agricultural zones.",
+          "text_pt": "Na minha visão, o porte de armas é especialmente necessário no campo, onde produtores rurais precisam se proteger de invasões e criminosos, e o Estado deve oferecer apoio técnico e logístico para essa defesa.",
+          "text_en": "In my view, carrying arms is especially necessary in rural areas, where producers must protect themselves from invasions and criminals, and the State should provide technical and logistical support for this defense.",
           "weight": 2,
           "candidate_slug": "caiado",
           "position_type": "confirmed",
@@ -279,21 +360,8 @@
         },
         {
           "id": "opt_d",
-          "text_pt": "Na minha visão, cada cidadão deve decidir livremente se deseja portar uma arma, desde que respeite diretrizes básicas de segurança, sem interferência excessiva do Estado na escolha individual.",
-          "text_en": "In my view, each citizen should freely decide whether to carry a gun, provided they respect basic safety guidelines, without excessive state interference in personal choice.",
-          "weight": 2,
-          "candidate_slug": "zema",
-          "position_type": "confirmed",
-          "confidence": "high",
-          "source_pt": "Romeu Zema declarou ser favorável ao porte de armas, argumentando que a decisão deve respeitar a vontade individual e as liberdades individuais de cada cidadão.",
-          "source_en": "",
-          "source_url": "https://pt.wikipedia.org/wiki/Romeu_Zema",
-          "source_date": "2026-03-25"
-        },
-        {
-          "id": "opt_e",
-          "text_pt": "Entendo que a liberalização do porte de armas fortalece a autodeclínio da população e combate o crime organizado, ao permitir que pessoas leais à lei se defendam com eficiência e rapidez.",
-          "text_en": "I understand that liberalizing gun carry strengthens self-defense among the population and combats organized crime, by allowing law-abiding people to defend themselves efficiently and quickly.",
+          "text_pt": "Considero que o porte de armas deve ser amplamente liberalizado, com redução de burocracias e eliminação de impostos sobre munições, estimulando a economia de defesa e fortalecendo a cultura de autodefesa cidadã.",
+          "text_en": "I consider that carrying arms should be widely liberalized, with reduced bureaucracy and elimination of taxes on ammunition, stimulating the defense economy and strengthening the culture of citizen self-defense.",
           "weight": 2,
           "candidate_slug": "renan-santos",
           "position_type": "inferred",
@@ -301,6 +369,19 @@
           "source_pt": "Como integrante do MBL, o candidato é associado a uma postura favorável à liberalização do porte de armas.",
           "source_en": "",
           "source_url": null,
+          "source_date": "2026-03-25"
+        },
+        {
+          "id": "opt_e",
+          "text_pt": "Minha posição é que o porte de armas pela população civil deve ser proibido, com desarmamento efetivo, recolhimento de armas ilegais e forte investimento em polícias comunitárias e prevenção à violência.",
+          "text_en": "My position is that civilian carrying of arms should be prohibited, with effective disarmament, seizure of illegal weapons and strong investment in community policing and violence prevention.",
+          "weight": -2,
+          "candidate_slug": "lula",
+          "position_type": "confirmed",
+          "confidence": "high",
+          "source_pt": "O PT, partido de Lula, é contrário ao porte de armas pela população civil e possui um histórico de restrição ao acesso a armas de fogo.",
+          "source_en": "",
+          "source_url": "https://pt.wikipedia.org/wiki/Luiz_Inácio_Lula_da_Silva",
           "source_date": "2026-03-25"
         }
       ]
@@ -314,14 +395,14 @@
       "generation_quality": {
         "validated": true,
         "validator_model": "nvidia:z-ai/glm-5.2",
-        "validation_date": "2026-09-24T22:10:14Z"
+        "validation_date": "2026-09-25T01:18:05Z"
       },
       "options": [
         {
           "id": "opt_a",
-          "text_pt": "Defendo que se reconheça, de forma juridicamente segura, a titulação de terras tradicionalmente ocupadas por comunidades indígenas, por meio de demarcações que assegurem uso, proteção e conservação. Também acredito que recursos orçamentários devam ser destinados a projetos de saúde, educação e infraestrutura que respeitem a cultura e a autonomia desses povos, com participação direta na gestão desses recursos.",
-          "text_en": "I defend that the titling of lands traditionally occupied by indigenous communities should be legally recognized in a secure manner, through demarcations that ensure use, protection and conservation. I also believe that budgetary resources should be allocated to health, education and infrastructure projects that respect the culture and autonomy of these peoples, with direct participation in the management of these resources.",
-          "weight": 2,
+          "text_pt": "Defendo que o Estado reconheça integralmente a soberania territorial dos povos indígenas, garantindo a demarcação imediata de todas as terras tradicionais em processos ágeis e sem mediação de interesses externos. Acredito que os direitos sociais e culturais desses povos devem prevalecer sobre qualquer projeto econômico que ameaçe sua existência.",
+          "text_en": "I defend that the State fully recognize the territorial sovereignty of indigenous peoples, ensuring the immediate demarcation of all traditional lands through swift processes without external interests' interference. I believe that the social and cultural rights of these peoples should prevail over any economic project that threatens their existence.",
+          "weight": 3,
           "candidate_slug": "lula",
           "position_type": "inferred",
           "confidence": "medium",
@@ -332,8 +413,8 @@
         },
         {
           "id": "opt_b",
-          "text_pt": "Entendo que o governo restrinja fiscalização contra garimpo ilegal com operações conjuntas e embargo, com avaliação independente e dados públicos.",
-          "text_en": "In my view, the government should limit enforcement against illegal mining with joint operations and embargoes, with independent evaluation and public data.",
+          "text_pt": "Acredito que o governo restrinja saúde indígena com distritos sanitários e equipes permanentes, com indicadores trimestrais públicos.",
+          "text_en": "I argue the government should limit indigenous health with sanitary districts and permanent teams, with public quarterly indicators.",
           "weight": -2,
           "candidate_slug": "flavio-bolsonaro",
           "position_type": "confirmed",
@@ -345,8 +426,8 @@
         },
         {
           "id": "opt_c",
-          "text_pt": "Minha posição é que o governo restrinja demarcação de terras com laudos antropológicos e prazo judicial definido, com indicadores trimestrais públicos.",
-          "text_en": "I hold the government should limit land demarcation with anthropological reports and a set judicial deadline, with public quarterly indicators.",
+          "text_pt": "Considero que o governo restrinja educação bilíngue com material próprio e formação de professores nativos, com transparência orçamentária total.",
+          "text_en": "I maintain the government should limit bilingual education with dedicated materials and native-teacher training, with full budget transparency.",
           "weight": -2,
           "candidate_slug": "caiado",
           "position_type": "inferred",
@@ -358,8 +439,8 @@
         },
         {
           "id": "opt_d",
-          "text_pt": "Na minha visão, o governo restrinja saúde indígena com distritos sanitários e equipes permanentes, com avaliação independente e dados públicos.",
-          "text_en": "I support the government choosing to limit indigenous health with sanitary districts and permanent teams, with independent evaluation and public data.",
+          "text_pt": "Considero que a proteção do meio ambiente e da propriedade privada deve equilibrar as relações de terras indígenas, exigindo que concessões ambientais e de infraestrutura sigam normas de impacto zero, mas sem reconhecimento automático de novas áreas indígenas.",
+          "text_en": "I consider that environmental and private property protection should balance indigenous land relations, requiring that environmental and infrastructure concessions follow zero-impact standards, but without automatic recognition of new indigenous areas.",
           "weight": -2,
           "candidate_slug": "zema",
           "position_type": "inferred",
@@ -371,8 +452,8 @@
         },
         {
           "id": "opt_e",
-          "text_pt": "Na minha visão, o governo restrinja educação bilíngue com material próprio e formação de professores nativos, com indicadores trimestrais públicos.",
-          "text_en": "I support the government choosing to limit bilingual education with dedicated materials and native-teacher training, with public quarterly indicators.",
+          "text_pt": "Para mim, o foco principal deve ser a erradicação da pobreza e da marginalização social dos povos indígenas, oferecendo acesso universal a saúde, educação e emprego, enquanto se respeita a autonomia territorial apenas para comunidades que comprovem vínculo ancestral ativo com seus territórios.",
+          "text_en": "For me, the main focus should be eradicating poverty and social marginalization of indigenous peoples, providing universal access to health, education and employment, while respecting territorial autonomy only for communities that prove active ancestral ties with their territories.",
           "weight": -2,
           "candidate_slug": "renan-santos",
           "position_type": "inferred",
@@ -393,13 +474,13 @@
       "generation_quality": {
         "validated": true,
         "validator_model": "nvidia:z-ai/glm-5.2",
-        "validation_date": "2026-09-24T22:10:47Z"
+        "validation_date": "2026-09-25T01:18:38Z"
       },
       "options": [
         {
           "id": "opt_a",
-          "text_pt": "Defendo que o sistema previdenciário volte a valorizar contribuições mínimas e garantir aposentadorias acima do salário mínimo, revertendo regras que aprofundaram desigualdades.",
-          "text_en": "I defend that the social security system return to valuing minimum contributions and guarantee pensions above the minimum wage, reversing rules that deepened inequalities.",
+          "text_pt": "Defendo que o sistema previdenciário precise ser revisado para corrigir distorções geradas por regras que favorecem setores privilegiados, garantindo equilíbrio fiscal sem cortar direitos dos trabalhadores mais vulneráveis.",
+          "text_en": "I defend that the social security system needs to be reviewed to correct distortions generated by rules that favor privileged sectors, ensuring fiscal balance without cutting rights of the most vulnerable workers.",
           "weight": -3,
           "candidate_slug": "lula",
           "position_type": "confirmed",
@@ -411,8 +492,8 @@
         },
         {
           "id": "opt_b",
-          "text_pt": "Acredito que é preciso aprofundar reformas já aprovadas, como fixar idade mínima mais elevada e privatizar parcialmente a administração de recursos previdenciários para gerar mais eficiência.",
-          "text_en": "I believe it is necessary to deepen reforms already approved, such as establishing a higher minimum age and partially privatizing the management of social security resources to generate greater efficiency.",
+          "text_pt": "Acredito que a estabilidade do sistema previdenciário depende de políticas que asseguram a contribuição justa e o tempo mínimo necessário para aposentadoria, evitando sobrecarga futura e mantendo a universalidade do benefício.",
+          "text_en": "I believe that the stability of the social security system depends on policies that ensure fair contribution and the minimum required time for retirement, avoiding future overload and maintaining the universality of the benefit.",
           "weight": 3,
           "candidate_slug": "flavio-bolsonaro",
           "position_type": "confirmed",
@@ -424,8 +505,8 @@
         },
         {
           "id": "opt_c",
-          "text_pt": "Entendo que a unica regra precisa ser: quem contribuiu durante toda a vida deve receber uma aposentadoria digna, sem cortes ou reajustes que reduzam o benefício já garantido.",
-          "text_en": "I understand that the only rule should be: whoever contributed throughout their entire life should receive a dignified pension, without cuts or adjustments that reduce the already guaranteed benefit.",
+          "text_pt": "Entendo que a reforma já promulgada deve ser mantida com ajustes pontuais, especialmente na proteção de idades mais baixas e na garantia de transição justa para setores com longa carreira.",
+          "text_en": "I understand that the already enacted reform should be maintained with targeted adjustments, particularly in protecting lower ages and ensuring a fair transition for sectors with long careers.",
           "weight": 2,
           "candidate_slug": "zema",
           "position_type": "confirmed",
@@ -437,8 +518,8 @@
         },
         {
           "id": "opt_d",
-          "text_pt": "Na minha visão, é urgente privatizar totalmente o sistema previdenciário, permitindo que cada trabalhador invista suas contribuições em fundos privados de previdência, com supervisão regulatória independente.",
-          "text_en": "In my view, it is urgent to fully privatize the social security system, allowing each worker to invest their contributions in private pension funds, with independent regulatory oversight.",
+          "text_pt": "Na minha visão, o sistema previdenciário deve abrir espaço para que trabalhadores possam aplicar parte de suas contribuições em fundos privados, aumentando diversificação e permitindo que cada um escolha a melhor estratégia para sua aposentadoria.",
+          "text_en": "In my view, the social security system should allow workers to allocate part of their contributions into private funds, increasing diversification and enabling each person to choose the best strategy for their retirement.",
           "weight": 2,
           "candidate_slug": "renan-santos",
           "position_type": "inferred",
@@ -459,13 +540,13 @@
       "generation_quality": {
         "validated": true,
         "validator_model": "nvidia:z-ai/glm-5.2",
-        "validation_date": "2026-09-24T22:11:28Z"
+        "validation_date": "2026-09-25T01:19:14Z"
       },
       "options": [
         {
           "id": "opt_a",
-          "text_pt": "Defendo que os recursos públicos sejam direcionados prioritariamente para a educação pública, fortalecendo as universidades federais e mantendo programas de inclusão no ensino superior.",
-          "text_en": "I defend that public resources should be prioritized for public education, strengthening federal universities and maintaining inclusion programs in higher education.",
+          "text_pt": "Defendo que o Estado amplihe o financiamento direto às universidades públicas e garanta vagas remuneradas em instituições federais, fortalecendo a educação superior acessível a todos os estudantes.",
+          "text_en": "I defend that the State increases direct funding to public universities and guarantees paid places in federal institutions, strengthening higher education accessible to all students.",
           "weight": 3,
           "candidate_slug": "lula",
           "position_type": "confirmed",
@@ -477,8 +558,21 @@
         },
         {
           "id": "opt_b",
-          "text_pt": "Acredito que a educação técnica e profissionalizante deve receber investimentos estratégicos para ampliar a qualificação da força de trabalho e reduzir a evasão escolar.",
-          "text_en": "I believe that technical and vocational education should receive strategic investments to enhance workforce qualifications and reduce school dropout rates.",
+          "text_pt": "Acredito que é preciso ouvir todas as partes envolvidas na educação — professores, famílias e especialistas — para ent entender quais políticas funcionam de fato, sem impor diretrizes ideológicas a priori.",
+          "text_en": "I believe it is necessary to listen to all parties involved in education — teachers, families, and experts — to understand which policies actually work, without imposing ideological guidelines a priori.",
+          "weight": 0,
+          "candidate_slug": "flavio-bolsonaro",
+          "position_type": "inferred",
+          "confidence": "medium",
+          "source_pt": "Embora o texto cite a posição do partido de Flávio Bolsonaro (PL), que defende o movimento Escola Sem Partido e é contrário a conteúdo ideológico nas escolas, os trechos fornecidos não contêm informações claras e diretas sobre as posições de Flávio Bolsonaro em relação a políticas públicas de educação.",
+          "source_en": "",
+          "source_url": "https://pt.wikipedia.org/wiki/Flávio_Bolsonaro",
+          "source_date": "2026-03-25"
+        },
+        {
+          "id": "opt_c",
+          "text_pt": "Entendo que o foco deve estar na formação técnica e profissionalizante, criando parcerias entre escolas e empresas para garantir que os jovens tenham acesso a qualificações que conectam diretamente ao mercado de trabalho.",
+          "text_en": "I understand that the focus should be on technical and vocational training, creating partnerships between schools and companies to ensure that young people have access to qualifications that directly connect to the job market.",
           "weight": 2,
           "candidate_slug": "caiado",
           "position_type": "inferred",
@@ -489,9 +583,9 @@
           "source_date": "2026-03-25"
         },
         {
-          "id": "opt_c",
-          "text_pt": "Na minha visão, o Estado deve incentivar a oferta de vouchers educacionais e promover a concorrência entre instituições de ensino, Diminuindo sua própria intervenção no setor.",
-          "text_en": "In my view, the State should encourage educational vouchers and promote competition among educational institutions, reducing its own intervention in the sector.",
+          "id": "opt_d",
+          "text_pt": "Na minha visão, o Estado deve incentivar a liberdade de escolha por meio de vouchers educacionais, permitindo que famílias utilizar os recursos públicos em instituições particulares ou privadas que melhor atendam às necessidades de cada aluno.",
+          "text_en": "In my view, the State should encourage freedom of choice through educational vouchers, allowing families to use public resources in private institutions that best meet the needs of each student.",
           "weight": 2,
           "candidate_slug": "zema",
           "position_type": "inferred",
@@ -502,9 +596,9 @@
           "source_date": "2026-03-25"
         },
         {
-          "id": "opt_d",
-          "text_pt": "Entendo que as escolas devem seguir diretrizes claras de ensino, sem carga ideológica, e que o currículo deve ser fiscalizado para garantir o foco em conteúdo acadêmico e técnico.",
-          "text_en": "I understand that schools should follow clear teaching guidelines, without ideological charge, and that the curriculum should be monitored to ensure focus on academic and technical content.",
+          "id": "opt_e",
+          "text_pt": "Sustento que é fundamental garantir transparência e fiscalização rigorosa sobre como os recursos educacionais são aplicados, assegurando que cada real investido chegue efetivamente às escolas e aos professores que estão na sala de aula.",
+          "text_en": "I hold that it is essential to ensure transparency and strict oversight of how educational resources are applied, ensuring that every invested real effectively reaches schools and teachers who are in the classroom.",
           "weight": 0,
           "candidate_slug": "renan-santos",
           "position_type": "inferred",
@@ -512,19 +606,6 @@
           "source_pt": "Como membro do MBL, infere-se que apoia propostas como o Escola Sem Partido, a adoção de vouchers educacionais e o fomento à competição no sistema de ensino.",
           "source_en": "",
           "source_url": null,
-          "source_date": "2026-03-25"
-        },
-        {
-          "id": "opt_e",
-          "text_pt": "Minha posição é que o sistema educacional deve ser regulado para assegurar padrões mínimos nacionais, com supervisão centralizada e restrição a práticas pedagógicas que não atendam aos critérios oficiais.",
-          "text_en": "My position is that the educational system should be regulated to ensure minimum national standards, with centralized oversight and restrictions on teaching practices that do not meet official criteria.",
-          "weight": 0,
-          "candidate_slug": "flavio-bolsonaro",
-          "position_type": "inferred",
-          "confidence": "medium",
-          "source_pt": "Embora o texto cite a posição do partido de Flávio Bolsonaro (PL), que defende o movimento Escola Sem Partido e é contrário a conteúdo ideológico nas escolas, os trechos fornecidos não contêm informações claras e diretas sobre as posições de Flávio Bolsonaro em relação a políticas públicas de educação.",
-          "source_en": "",
-          "source_url": "https://pt.wikipedia.org/wiki/Flávio_Bolsonaro",
           "source_date": "2026-03-25"
         }
       ]
@@ -538,13 +619,13 @@
       "generation_quality": {
         "validated": true,
         "validator_model": "nvidia:z-ai/glm-5.2",
-        "validation_date": "2026-09-24T22:12:05Z"
+        "validation_date": "2026-09-25T01:20:17Z"
       },
       "options": [
         {
           "id": "opt_a",
-          "text_pt": "Acredito que a segurança pública deve ser guiada por investimentos em educação, saúde e inclusão social, reduzindo desigualdades que alimentam a violência.",
-          "text_en": "I believe public security should be guided by investments in education, health, and social inclusion, reducing inequalities that fuel violence.",
+          "text_pt": "Acredito que a prioridade deve ser inverter a lógica do Estado punidor, investindo mais em educação, saúde mental e programas comunitários de prevenção ao invés de reforçar a repressão policial.",
+          "text_en": "I believe the priority should be to invert the logic of the punitive state, investing more in education, mental health and community prevention programs instead of reinforcing police repression.",
           "weight": 0,
           "candidate_slug": "lula",
           "position_type": "inferred",
@@ -556,6 +637,32 @@
         },
         {
           "id": "opt_b",
+          "text_pt": "Defendo que o Estado deve ampliar o armamento legal da popação civil e endurecer as penas para crimes graves, garantindo mais poder de intervenção às forças de segurança.",
+          "text_en": "I advocate that the State should expand legal civilian firearm ownership and toughen sentences for serious crimes, granting greater intervention power to security forces.",
+          "weight": 3,
+          "candidate_slug": "renan-santos",
+          "position_type": "inferred",
+          "confidence": "medium",
+          "source_pt": "O candidato, associado ao MBL, defende o endurecimento de penas criminais e o armamento da população civil.",
+          "source_en": "",
+          "source_url": null,
+          "source_date": "2026-03-25"
+        },
+        {
+          "id": "opt_c",
+          "text_pt": "Entendo que é necessária uma política de segurança que flexibilize as regras de atuação policial, reduzindo burocráticas e ampliando sua autonomia para combater o crime organizado.",
+          "text_en": "I understand that a security policy is needed that eases police operational rules, reducing bureaucracy and increasing autonomy to combat organized crime.",
+          "weight": 3,
+          "candidate_slug": "zema",
+          "position_type": "confirmed",
+          "confidence": "high",
+          "source_pt": "O candidato defende medidas rígidas de punição e menos entraves burocráticos para as forças policiais, demonstrando apoio por meio de propostas de aumento salarial e flexibilização de regras.",
+          "source_en": "",
+          "source_url": "https://pt.wikipedia.org/wiki/Romeu_Zema",
+          "source_date": "2026-03-25"
+        },
+        {
+          "id": "opt_d",
           "text_pt": "Defendo que o governo amplie recursos para progressão de penas condicionada a trabalho e estudo com monitoramento eletrônico, com prazo definido e prestação de contas.",
           "text_en": "I believe the government should expand funding for sentence progression tied to work and study with electronic monitoring, with a set deadline and accountability.",
           "weight": 3,
@@ -568,9 +675,9 @@
           "source_date": "2026-03-25"
         },
         {
-          "id": "opt_c",
-          "text_pt": "Considero que o Estado deve ampliar a capacitação e o armamento das forças de segurança, permitindo ações mais eficazes contra o crime organizado.",
-          "text_en": "I consider that the state should expand the training and armament of security forces, enabling more effective actions against organized crime.",
+          "id": "opt_e",
+          "text_pt": "Para mim, é imprescindível elevar os salários dos servidores de segurança pública e oferecer benefícios como vale-alimentação e transporte, valorizando o profissional que atua na linha de frente.",
+          "text_en": "To me, it is essential to raise the salaries of public security personnel and offer benefits such as food and transportation allowances, valuing the frontline professional.",
           "weight": 3,
           "candidate_slug": "caiado",
           "position_type": "inferred",
@@ -578,32 +685,6 @@
           "source_pt": "Caiado adota uma retórica firme em segurança pública, alinhada com as posições de seu partido, que defende o endurecimento de penas e o fortalecimento policial.",
           "source_en": "",
           "source_url": "https://pt.wikipedia.org/wiki/Ronaldo_Caiado",
-          "source_date": "2026-03-25"
-        },
-        {
-          "id": "opt_d",
-          "text_pt": "Para mim, o governo amplie recursos para prevenção à violência com escolas de tempo integral e iluminação em áreas críticas, com transparência orçamentária total.",
-          "text_en": "My position is the government should expand funding for violence prevention with full-day schools and lighting in critical areas, with full budget transparency.",
-          "weight": 3,
-          "candidate_slug": "zema",
-          "position_type": "confirmed",
-          "confidence": "high",
-          "source_pt": "O candidato defende medidas rígidas de punição e menos entraves burocráticos para as forças policiais, demonstrando apoio por meio de propostas de aumento salarial e flexibilização de regras.",
-          "source_en": "",
-          "source_url": "https://pt.wikipedia.org/wiki/Romeu_Zema",
-          "source_date": "2026-03-25"
-        },
-        {
-          "id": "opt_e",
-          "text_pt": "Sustento que o endurecimento das penas deve ser acompanhado de modernização do sistema prisional, com mais recursos para reinserção social dos presos.",
-          "text_en": "I hold that harsher penalties must be accompanied by modernization of the prison system, with more resources for the social reintegration of inmates.",
-          "weight": 3,
-          "candidate_slug": "renan-santos",
-          "position_type": "inferred",
-          "confidence": "medium",
-          "source_pt": "O candidato, associado ao MBL, defende o endurecimento de penas criminais e o armamento da população civil.",
-          "source_en": "",
-          "source_url": null,
           "source_date": "2026-03-25"
         }
       ]
@@ -617,39 +698,26 @@
       "generation_quality": {
         "validated": true,
         "validator_model": "nvidia:z-ai/glm-5.2",
-        "validation_date": "2026-09-24T22:12:58Z"
+        "validation_date": "2026-09-25T01:21:14Z"
       },
       "options": [
         {
           "id": "opt_a",
-          "text_pt": "Para mim, o governo avalie com critérios técnicos atendimento nos casos previstos em lei com protocolo hospitalar e prazo máximo, com indicadores trimestrais públicos.",
-          "text_en": "My position is the government should review against technical criteria hospital care in cases allowed by law with a binding protocol and maximum wait, with public quarterly indicators.",
-          "weight": 0,
-          "candidate_slug": "lula",
+          "text_pt": "Defendo que o Estado amplo e protege a vida desde a concepção, penalizando qualquer forma de interrupção da gravidez, inclusive em casos de estupro ou risco à mãe. Acredito que toda menina e mulher que deseje continuar com o bebê deve receber apoio materno, assistência médica integral e acesso a adotantes responsáveis.",
+          "text_en": "I defend that the State safeguards life from conception, penalizing any form of pregnancy interruption, including in cases of rape or risk to the mother. I believe that every girl and woman who wishes to carry the baby should receive maternal support, comprehensive medical care, and access to responsible adoptive families.",
+          "weight": -3,
+          "candidate_slug": "renan-santos",
           "position_type": "inferred",
           "confidence": "medium",
-          "source_pt": "Embora o debate interno exista, a posição oficial evita a liberalização ampla do aborto, defendendo a descriminalização apenas em casos específicos.",
+          "source_pt": "Renan Santos, como membro do MBL, é contrário ao aborto, seguindo a posição conservadora do movimento.",
           "source_en": "",
-          "source_url": "https://pt.wikipedia.org/wiki/Luiz_Inácio_Lula_da_Silva",
+          "source_url": null,
           "source_date": "2026-03-25"
         },
         {
           "id": "opt_b",
-          "text_pt": "Minha posição é que o governo impeça novas obrigações em saúde materna com pré-natal universal e maternidades regionalizadas, com prazo definido e prestação de contas.",
-          "text_en": "I hold the government should block new mandates on maternal health with universal prenatal care and regional maternity units, with a set deadline and accountability.",
-          "weight": -3,
-          "candidate_slug": "flavio-bolsonaro",
-          "position_type": "inferred",
-          "confidence": "medium",
-          "source_pt": "Flávio Bolsonaro é filiado ao Partido Liberal (PL), que se posiciona publicamente de forma contrária ao aborto em qualquer circunstância e defende a vida desde a concepção.",
-          "source_en": "",
-          "source_url": "https://pt.wikipedia.org/wiki/Flávio_Bolsonaro",
-          "source_date": "2026-03-25"
-        },
-        {
-          "id": "opt_c",
-          "text_pt": "Considero que a atual legislação deve ser mantida, porém com maior fiscalização e investimentos em programas de apoio à gestante para reduzir as demandas não intencionais.",
-          "text_en": "I consider that the current legislation should be maintained, but with greater oversight and investments in support programs for pregnant women to reduce unintended demands.",
+          "text_pt": "Entendo que o governo restrinja educação sexual nas escolas com material científico e formação docente, com transparência orçamentária total.",
+          "text_en": "In my view, the government should limit school sex education with scientific materials and teacher training, with full budget transparency.",
           "weight": -2,
           "candidate_slug": "caiado",
           "position_type": "inferred",
@@ -660,14 +728,106 @@
           "source_date": "2026-03-25"
         },
         {
+          "id": "opt_c",
+          "text_pt": "Para mim, o governo avalie com critérios técnicos atendimento nos casos previstos em lei com protocolo hospitalar e prazo máximo, com avaliação independente e dados públicos.",
+          "text_en": "My position is the government should review against technical criteria hospital care in cases allowed by law with a binding protocol and maximum wait, with independent evaluation and public data.",
+          "weight": 0,
+          "candidate_slug": "lula",
+          "position_type": "inferred",
+          "confidence": "medium",
+          "source_pt": "Embora o debate interno exista, a posição oficial evita a liberalização ampla do aborto, defendendo a descriminalização apenas em casos específicos.",
+          "source_en": "",
+          "source_url": "https://pt.wikipedia.org/wiki/Luiz_Inácio_Lula_da_Silva",
+          "source_date": "2026-03-25"
+        },
+        {
           "id": "opt_d",
-          "text_pt": "Minha posição é que o governo restrinja apoio à gestante com licença estendida e vagas garantidas em creches, com indicadores trimestrais públicos.",
-          "text_en": "I hold the government should limit support for pregnant people with extended leave and guaranteed daycare, with public quarterly indicators.",
-          "weight": -2,
+          "text_pt": "Na minha visão, o governo impeça novas obrigações em saúde materna com pré-natal universal e maternidades regionalizadas, com avaliação independente e dados públicos.",
+          "text_en": "I support the government choosing to block new mandates on maternal health with universal prenatal care and regional maternity units, with independent evaluation and public data.",
+          "weight": -3,
+          "candidate_slug": "flavio-bolsonaro",
+          "position_type": "inferred",
+          "confidence": "medium",
+          "source_pt": "Flávio Bolsonaro é filiado ao Partido Liberal (PL), que se posiciona publicamente de forma contrária ao aborto em qualquer circunstância e defende a vida desde a concepção.",
+          "source_en": "",
+          "source_url": "https://pt.wikipedia.org/wiki/Flávio_Bolsonaro",
+          "source_date": "2026-03-25"
+        }
+      ]
+    },
+    "corrupcao": {
+      "topic_label_pt": "Combate à Corrupção",
+      "topic_label_en": "Anti-Corruption",
+      "divergence_score": 0.16666666666666666,
+      "question_pt": "Qual medida é mais efetiva para reduzir corrupção na administração pública?",
+      "question_en": "Which measure is most effective to reduce corruption in public administration?",
+      "generation_quality": {
+        "validated": true,
+        "validator_model": "nvidia:z-ai/glm-5.2",
+        "validation_date": "2026-09-25T01:22:03Z"
+      },
+      "options": [
+        {
+          "id": "opt_a",
+          "text_pt": "Defendo que a administração pública precise de transparência em tempo real, com todos os contratos e despesas publicados em um sistema acessível e atualizado, para que a sociedade possa monitorar e punir desvios de forma imediata.",
+          "text_en": "I advocate that public administration needs real-time transparency, with all contracts and expenditures published in an accessible and updated system, so that society can monitor and punish deviations immediately.",
+          "weight": 3,
+          "candidate_slug": "lula",
+          "position_type": "inferred",
+          "confidence": "medium",
+          "source_pt": "",
+          "source_en": "",
+          "source_url": "https://pt.wikipedia.org/wiki/Luiz_Inácio_Lula_da_Silva",
+          "source_date": "2026-03-25"
+        },
+        {
+          "id": "opt_b",
+          "text_pt": "Acredito que a implantação de um mecanismo automático de alocação de recursos com base em critérios objetivos e previamente definidos reduzirá a possibilidade de favorecimento pessoal e político na distribuição de verbas públicas.",
+          "text_en": "I believe that the implementation of an automatic resource allocation mechanism based on objective and previously defined criteria will reduce the possibility of personal and political favoring in the distribution of public funds.",
+          "weight": 2,
+          "candidate_slug": "flavio-bolsonaro",
+          "position_type": "confirmed",
+          "confidence": "high",
+          "source_pt": "Flávio Bolsonaro apoiou o estabelecimento do Programa de Acompanhamento e Transparência Fiscal e o Plano de Promoção do Equilíbrio Fiscal no Senado.",
+          "source_en": "",
+          "source_url": "https://pt.wikipedia.org/wiki/Flávio_Bolsonaro",
+          "source_date": "2026-03-25"
+        },
+        {
+          "id": "opt_c",
+          "text_pt": "Entendo que o governo fortaleça licitações eletrônicas com atas públicas e disputa aberta de preços, com transparência orçamentária total.",
+          "text_en": "In my view, the government should strengthen electronic procurement with public minutes and open price competition, with full budget transparency.",
+          "weight": 2,
+          "candidate_slug": "caiado",
+          "position_type": "inferred",
+          "confidence": "medium",
+          "source_pt": "O partido de Caiado, o União Brasil, defende um discurso anticorrupção e de transparência pública. Caiado também foi um dos principais articuladores do processo de impeachment de Dilma Rousseff.",
+          "source_en": "",
+          "source_url": "https://pt.wikipedia.org/wiki/Ronaldo_Caiado",
+          "source_date": "2026-03-25"
+        },
+        {
+          "id": "opt_d",
+          "text_pt": "Na minha visão, a obrigatoriedade de declaracao de bens e interesses de todos os agentes públicos, juntamente com a publicidade de suas movimentacoes financeiras, cria um ambiente onde a probabilidade de corrupcao se torna insignificante.",
+          "text_en": "In my view, the mandatory declaration of assets and interests of all public agents, together with the publication of their financial movements, creates an environment where the likelihood of corruption becomes insignificant.",
+          "weight": 3,
+          "candidate_slug": "zema",
+          "position_type": "inferred",
+          "confidence": "medium",
+          "source_pt": "Embora os trechos não tragam ações ou falas explícitas de Romeu Zema sobre o tema, a posição forte de seu partido (Novo) em prol do combate à corrupção e transparência sugere alinhamento a essas diretrizes.",
+          "source_en": "",
+          "source_url": "https://pt.wikipedia.org/wiki/Romeu_Zema",
+          "source_date": "2026-03-25"
+        },
+        {
+          "id": "opt_e",
+          "text_pt": "Considero que a adotar uma politica de protecao e valorizacao dos servicos publicos essenciais, como saude, educacao e seguranca, o Estado reduz a dependencia de intermediarios e, consequentemente, os pontos de insercao de praticas corruptas.",
+          "text_en": "I consider that by adopting a policy of protection and appreciation of essential public services, such as health, education and security, the State reduces the dependence on intermediaries and, consequently, the points of insertion of corrupt practices.",
+          "weight": 2,
           "candidate_slug": "renan-santos",
           "position_type": "inferred",
           "confidence": "medium",
-          "source_pt": "Renan Santos, como membro do MBL, é contrário ao aborto, seguindo a posição conservadora do movimento.",
+          "source_pt": "Embora não haja menção a Renan Santos individualmente, ele é uma figura de destaque do MBL, um movimento com forte discurso anticorrupção e origem na oposição ao PT.",
           "source_en": "",
           "source_url": null,
           "source_date": "2026-03-25"
