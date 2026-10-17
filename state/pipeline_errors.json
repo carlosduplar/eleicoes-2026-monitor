@@ -4103,7 +4103,39 @@
       "article_id": "3388f7dcf5aaf967",
       "provider": null,
       "message": "All AI providers failed (poolside: Provider returned only prose reasoning_content with no JSON.; ollama: Error code: 402 - {'error': {'message': 'This model is not in the Free plan. Pro is $20/month for $60 of usage, with no 5-hour or weekly caps: https://ollama.com/upgrade. Try gemma4:31b-cloud, which is in the Free plan. (ref: 6d318459-4135-4250-9a1d-f38106d28168)', 'type': 'api_error', 'param': None, 'code': None}}; nvidia: Error code: 410 - {'type': 'about:blank', 'title': 'Gone', 'status': 410, 'detail': \"The model 'minimaxai/minimax-m3' has reached its end of life on 2026-09-09T09:00:00Z and is no longer available.\"}; openrouter: Provider response has no choices.)."
+    },
+    {
+      "at": "2026-10-17T20:12:49Z",
+      "tier": "foca",
+      "script": "collect_parties.py",
+      "party_name": "Novo",
+      "party_url": "https://novo.org.br/noticias/",
+      "message": "403 Client Error: Forbidden for url: https://novo.org.br/noticias/"
+    },
+    {
+      "at": "2026-10-17T20:12:59Z",
+      "tier": "foca",
+      "script": "collect_parties.py",
+      "party_name": "DC",
+      "party_url": "https://www.fundacaodemocratacrista.org.br/categoria/noticias/",
+      "message": "523 Server Error: <none> for url: https://www.fundacaodemocratacrista.org.br/categoria/noticias/"
+    },
+    {
+      "at": "2026-10-17T20:13:00Z",
+      "tier": "foca",
+      "script": "collect_parties.py",
+      "party_name": "Missao",
+      "party_url": "https://www.missaoapoio.com.br/noticias",
+      "message": "HTTPSConnectionPool(host='www.missaoapoio.com.br', port=443): Max retries exceeded with url: /noticias (Caused by NameResolutionError(\"HTTPSConnection(host='www.missaoapoio.com.br', port=443): Failed to resolve 'www.missaoapoio.com.br' ([Errno -2] Name or service not known)\"))"
+    },
+    {
+      "at": "2026-10-17T20:13:39Z",
+      "tier": "foca",
+      "script": "collect_polls.py",
+      "institute": "MDA",
+      "source_url": "https://mda.pesquisa.cnt.org.br/",
+      "message": "Page.goto: net::ERR_NAME_NOT_RESOLVED at https://mda.pesquisa.cnt.org.br/\nCall log:\n  - navigating to \"https://mda.pesquisa.cnt.org.br/\", waiting until \"domcontentloaded\"\n"
     }
   ],
-  "last_checked": "2026-10-17T17:59:13Z"
+  "last_checked": "2026-10-17T20:13:39Z"
 }
