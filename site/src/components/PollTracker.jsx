@@ -41,6 +41,10 @@ import MethodologyBadge from './MethodologyBadge';
  */
 
 const ALL_INSTITUTES = '__ALL__';
+const ROUND_FIRST = 'first';
+const ROUND_SECOND = 'second';
+/** Last day a poll is attributed to the first round (inclusive). */
+const FIRST_ROUND_LAST_DAY = '2026-10-05';
 
 function normalizePollPayload(payload) {
   /** @type {unknown[]} */
@@ -103,6 +107,17 @@ function normalizePollPayload(payload) {
 
 function getInstituteOptions(polls) {
   return Array.from(new Set(polls.map((poll) => poll.institute))).sort((a, b) => a.localeCompare(b));
+}
+
+/**
+ * Scope polls to one of the two election rounds: first round is everything
+ * published up to (and including) the day before the second-round period.
+ */
+function filterPollsByRound(polls, round) {
+  return polls.filter((poll) => {
+    const day = poll.published_at.slice(0, 10);
+    return round === ROUND_FIRST ? day <= FIRST_ROUND_LAST_DAY : day > FIRST_ROUND_LAST_DAY;
+  });
 }
 
 function formatDateLabel(publishedAt, locale) {
@@ -251,6 +266,7 @@ function PollTooltipContent({ active, payload }) {
 function PollTracker() {
   const { t, i18n } = useTranslation('common');
   const { data, loading, error } = useData('polls');
+  const [selectedRound, setSelectedRound] = useState(ROUND_SECOND);
   const [selectedInstitute, setSelectedInstitute] = useState(ALL_INSTITUTES);
   const [hiddenSlugs, setHiddenSlugs] = useState(() => new Set());
   const toggleCandidate = (slug) => {
@@ -270,9 +286,10 @@ function PollTracker() {
   }, []);
   const locale = i18n.language === 'en-US' ? 'en-US' : 'pt-BR';
   const polls = useMemo(() => normalizePollPayload(data), [data]);
-  const instituteOptions = useMemo(() => getInstituteOptions(polls), [polls]);
-  const chartRows = useMemo(() => buildChartRows(polls, selectedInstitute, locale), [polls, selectedInstitute, locale]);
-  const candidateSeries = useMemo(() => buildCandidateSeries(polls), [polls]);
+  const roundPolls = useMemo(() => filterPollsByRound(polls, selectedRound), [polls, selectedRound]);
+  const instituteOptions = useMemo(() => getInstituteOptions(roundPolls), [roundPolls]);
+  const chartRows = useMemo(() => buildChartRows(roundPolls, selectedInstitute, locale), [roundPolls, selectedInstitute, locale]);
+  const candidateSeries = useMemo(() => buildCandidateSeries(roundPolls), [roundPolls]);
   const dotVisible = chartRows.length < 5;
 
   if (loading) {
@@ -293,7 +310,7 @@ function PollTracker() {
     );
   }
 
-  if (polls.length === 0 || chartRows.length === 0 || candidateSeries.length === 0) {
+  if (roundPolls.length === 0 || chartRows.length === 0 || candidateSeries.length === 0) {
     return (
       <section className="sentiment-stack">
         <article className="feed-state-card">{t('polls.empty')}</article>
@@ -307,22 +324,40 @@ function PollTracker() {
       <article className="sentiment-card">
         <div className="sentiment-head">
           <h1>{t('polls.title')}</h1>
-          <label htmlFor="poll-institute-filter">
-            <span className="sr-only">{t('polls.institute_label')}</span>
-            <select
-              id="poll-institute-filter"
-              className="sentiment-toggle"
-              value={selectedInstitute}
-              onChange={(event) => setSelectedInstitute(event.target.value)}
-            >
-              <option value={ALL_INSTITUTES}>{t('polls.filter_all')}</option>
-              {instituteOptions.map((institute) => (
-                <option key={institute} value={institute}>
-                  {institute}
-                </option>
-              ))}
-            </select>
-          </label>
+          <div className="sentiment-filters">
+            <label htmlFor="poll-round-filter">
+              <span className="sr-only">{t('polls.round_label')}</span>
+              <select
+                id="poll-round-filter"
+                className="sentiment-toggle"
+                value={selectedRound}
+                onChange={(event) => {
+                  setSelectedRound(event.target.value);
+                  // Institutes differ per round; reset to avoid an empty chart.
+                  setSelectedInstitute(ALL_INSTITUTES);
+                }}
+              >
+                <option value={ROUND_FIRST}>{t('polls.round_first')}</option>
+                <option value={ROUND_SECOND}>{t('polls.round_second')}</option>
+              </select>
+            </label>
+            <label htmlFor="poll-institute-filter">
+              <span className="sr-only">{t('polls.institute_label')}</span>
+              <select
+                id="poll-institute-filter"
+                className="sentiment-toggle"
+                value={selectedInstitute}
+                onChange={(event) => setSelectedInstitute(event.target.value)}
+              >
+                <option value={ALL_INSTITUTES}>{t('polls.filter_all')}</option>
+                {instituteOptions.map((institute) => (
+                  <option key={institute} value={institute}>
+                    {institute}
+                  </option>
+                ))}
+              </select>
+            </label>
+          </div>
         </div>
         {chartMounted ? (
           <div style={{ width: '100%', height: 400 }}>

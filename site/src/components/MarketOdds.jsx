@@ -5,6 +5,8 @@ import {
   Bar,
   CartesianGrid,
   Cell,
+  LineChart,
+  Line,
   ResponsiveContainer,
   Tooltip,
   XAxis,
@@ -132,15 +134,94 @@ function formatLastUpdated(isoString) {
   return `${d}/${mo} ${h}:${m} UTC`;
 }
 
+/**
+ * @typedef {{ last_updated?: string, series?: Array<Record<string, number | string>> }} MarketsHistory
+ */
+
+function normalizeHistoryPayload(payload) {
+  if (!payload || typeof payload !== 'object' || !Array.isArray(payload.series)) {
+    return [];
+  }
+  return payload.series.filter(
+    (row) => row && typeof row === 'object' && typeof row.date === 'string',
+  );
+}
+
+function getHistoryCandidates(rows) {
+  const seen = new Set();
+  for (const row of rows) {
+    for (const key of Object.keys(row)) {
+      if (key !== 'date' && typeof row[key] === 'number') {
+        seen.add(key);
+      }
+    }
+  }
+  return Array.from(seen);
+}
+
+function formatHistoryDateLabel(dateIso, locale) {
+  const day = dateIso.slice(8, 10);
+  const month = dateIso.slice(5, 7);
+  return locale.startsWith('en') ? `${month}/${day}` : `${day}/${month}`;
+}
+
+function buildHistoryRows(rows, locale) {
+  return rows.map((row) => {
+    const { date, ...values } = row;
+    return { dateLabel: formatHistoryDateLabel(date, locale), ...values };
+  });
+}
+
+function MarketHistoryChart({ mounted, rows, candidates, locale, t }) {
+  if (!mounted || rows.length === 0 || candidates.length === 0) {
+    return <div className="chart-boot-placeholder" style={{ width: '100%', height: 360 }} aria-hidden="true" />;
+  }
+
+  const chartRows = buildHistoryRows(rows, locale);
+
+  return (
+    <div style={{ width: '100%', height: 360 }}>
+      <ResponsiveContainer width="100%" height="100%">
+        <LineChart data={chartRows} margin={{ top: 12, right: 20, bottom: 12, left: 0 }}>
+          <CartesianGrid strokeDasharray="3 3" />
+          <XAxis dataKey="dateLabel" />
+          <YAxis
+            domain={[0, 100]}
+            label={{ value: t?.('markets.probability_label') ?? 'Probabilidade (%)', angle: -90, position: 'insideLeft' }}
+            tickFormatter={(v) => `${v}%`}
+          />
+          <Tooltip formatter={(value, name) => [`${value}%`, name]} />
+          {candidates.map((slug) => (
+            <Line
+              key={slug}
+              type="monotone"
+              dataKey={slug}
+              name={CANDIDATE_LABELS[slug] || slug}
+              stroke={CANDIDATE_COLORS[slug] || '#4A5568'}
+              strokeWidth={2}
+              dot={chartRows.length < 10}
+              connectNulls
+            />
+          ))}
+        </LineChart>
+      </ResponsiveContainer>
+    </div>
+  );
+}
+
 function MarketOdds() {
   const { t, i18n } = useTranslation ? useTranslation('common') : { t: (k) => k, i18n: { language: 'pt-BR' } };
   const { data, loading, error } = useData('markets');
+  const { data: historyData } = useData('markets_history');
   const [chartMounted, setChartMounted] = useState(false);
   useEffect(() => {
     setChartMounted(true);
   }, []);
   const markets = useMemo(() => normalizeMarketPayload(data), [data]);
   const chartRows = useMemo(() => buildChartRows(markets), [markets]);
+  const locale = i18n?.language === 'en-US' ? 'en-US' : 'pt-BR';
+  const historyRows = useMemo(() => normalizeHistoryPayload(historyData), [historyData]);
+  const historyCandidates = useMemo(() => getHistoryCandidates(historyRows), [historyRows]);
   const lastUpdated = useMemo(() => {
     const wrapped = Array.isArray(data) ? null : data;
     if (wrapped && typeof wrapped.last_updated === 'string') {
@@ -184,6 +265,33 @@ function MarketOdds() {
 
   return (
     <section className="sentiment-stack">
+      {historyRows.length > 0 && historyCandidates.length > 0 && (
+        <article className="sentiment-card">
+          <div className="sentiment-head">
+            <h2 className="market-history-title">
+              {t?.('markets.history_title') ?? 'Probabilidade histórica'}
+            </h2>
+            {(() => {
+              const updated = historyData && typeof historyData === 'object'
+                ? historyData.last_updated
+                : '';
+              const stamp = formatLastUpdated(updated);
+              return stamp ? (
+                <span className="sentiment-updated">
+                  {t?.('markets.last_updated') ?? 'Atualizado'} {stamp}
+                </span>
+              ) : null;
+            })()}
+          </div>
+          <MarketHistoryChart
+            mounted={chartMounted}
+            rows={historyRows}
+            candidates={historyCandidates}
+            locale={locale}
+            t={t}
+          />
+        </article>
+      )}
       <article className="sentiment-card">
         <div className="sentiment-head">
           <h1>{t?.('markets.title') ?? 'Odds dos Mercados'}</h1>

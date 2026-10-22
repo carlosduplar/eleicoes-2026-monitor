@@ -4,6 +4,7 @@ from __future__ import annotations
 
 import json
 import logging
+import re
 from dataclasses import dataclass
 from datetime import datetime, timezone
 from pathlib import Path
@@ -24,6 +25,11 @@ except ImportError:  # pragma: no cover - direct script execution path
     from store import PUB_DATA_DIR as DATA_DIR, SCHEMAS_DIR, STATE_DIR
 SCHEMA_FILE = SCHEMAS_DIR / "articles.schema.json"
 ARTICLES_FILE = DATA_DIR / "articles.json"
+MARKETS_FILE = DATA_DIR / "markets.json"
+MARKETS_HISTORY_FILE = DATA_DIR / "markets_history.json"
+MARKETS_ARCHIVE_DIR = DATA_DIR / "archives"
+MARKETS_ARCHIVE_RE = re.compile(r"^markets-(\d{4}-\d{2}-\d{2})\.json$")
+ELECTION_SLUG_SUFFIX = "-win-the-2026-brazilian-presidential-election"
 EDITOR_FEEDBACK_FILE = STATE_DIR / "editor_feedback.json"
 
 ARTICLE_LIMIT = 500
@@ -230,9 +236,119 @@ def consolidate_articles() -> tuple[int, int, int]:
     return len(published_articles), duplicates_removed, trimmed_count
 
 
+# Polymarket slug names for tracked presidential candidates. Polymarket strips
+# accented characters from names ("flvio" for "Flávio"), so map site slugs
+# explicitly instead of guessing. Markets without a mapping (e.g. staffed
+# placeholders or withdrawn pre-candidates) are intentionally excluded.
+POLYMARKET_CANDIDATE_MARKETS: dict[str, str] = {
+    "lula": "luiz-incio-lula-da-silva",
+    "flavio-bolsonaro": "flvio-bolsonaro",
+    "augusto-cury": "augusto-cury",
+    "pablo-marcal": "pablo-marcal",
+    "renan-santos": "renan-santos",
+    "zema": "romeu-zema",
+    "caiado": "ronaldo-caiado",
+}
+
+_MARKET_SLUGS_BY_CANDIDATE = {
+    candidate: f"will-{person_slug}{ELECTION_SLUG_SUFFIX}"
+    for candidate, person_slug in POLYMARKET_CANDIDATE_MARKETS.items()
+}
+_SLUG_TO_CANDIDATE = {
+    market_slug: candidate for candidate, market_slug in _MARKET_SLUGS_BY_CANDIDATE.items()
+}
+
+
+def _markets_history_row(markets: list[Any]) -> dict[str, float]:
+    """Average implied probability (%) per tracked candidate for one snapshot."""
+    by_candidate: dict[str, list[float]] = {}
+    for market in markets:
+        if not isinstance(market, dict):
+            continue
+        candidate = _SLUG_TO_CANDIDATE.get(market.get("slug"))
+        if candidate is None:
+            continue
+        yes_price = market.get("yes_price")
+        if not isinstance(yes_price, (int, float)) or not 0 <= yes_price <= 1:
+            continue
+        by_candidate.setdefault(candidate, []).append(float(yes_price) * 100)
+
+    return {
+        candidate: round(sum(values) / len(values), 1)
+        for candidate, values in by_candidate.items()
+    }
+
+
+def compile_markets_history() -> int:
+    """Build markets_history.json from the daily archive snapshots + current file."""
+    rows: dict[str, dict[str, float]] = {}
+
+    if MARKETS_ARCHIVE_DIR.is_dir():
+        archive_files = sorted(
+            path
+            for path in MARKETS_ARCHIVE_DIR.glob("markets-*.json")
+            if MARKETS_ARCHIVE_RE.match(path.name)
+        )
+        for path in archive_files:
+            match = MARKETS_ARCHIVE_RE.match(path.name)
+            if match is None:
+                continue
+            try:
+                payload = _load_json(path)
+            except (ValueError, OSError):
+                logger.warning("Skipping malformed markets archive: %s", path.name)
+                continue
+            day_markets = payload.get("markets", []) if isinstance(payload, dict) else payload
+            row = _markets_history_row(day_markets if isinstance(day_markets, list) else [])
+            if row:
+                rows[match.group(1)] = row  # later same-day files win
+
+    if not rows and MARKETS_FILE.exists():
+        try:
+            current = _load_json(MARKETS_FILE)
+        except (ValueError, OSError):
+            current = None
+        day_markets = current.get("markets", []) if isinstance(current, dict) else current
+        row = _markets_history_row(day_markets if isinstance(day_markets, list) else [])
+        if row:
+            rows[datetime.now(timezone.utc).strftime("%Y-%m-%d")] = row
+
+    history_rows = [
+        {"date": date, **rows[date]} for date in sorted(rows) if rows[date]
+    ]
+
+    last_updated = ""
+    if MARKETS_FILE.exists():
+        try:
+            markets_document = _load_json(MARKETS_FILE)
+        except (ValueError, OSError):
+            markets_document = None
+        if isinstance(markets_document, dict) and isinstance(
+            markets_document.get("last_updated"), str
+        ):
+            last_updated = markets_document["last_updated"]
+
+    MARKETS_HISTORY_FILE.write_text(
+        json.dumps(
+            {
+                "last_updated": last_updated,
+                "series": history_rows,
+            },
+            indent=2,
+            ensure_ascii=False,
+        )
+        + "\n",
+        encoding="utf-8",
+    )
+
+    print(f"Markets history: {len(history_rows)} daily snapshots")
+    return len(history_rows)
+
+
 def main() -> None:
     logging.basicConfig(level=logging.INFO, format="%(levelname)s: %(message)s")
     consolidate_articles()
+    compile_markets_history()
 
 
 if __name__ == "__main__":
