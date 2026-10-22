@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 
-const TARGET_DATE_UTC = Date.UTC(2026, 9, 4);
+const TARGET_DATE_UTC = Date.UTC(2026, 9, 25);
 
 function getDaysUntilElection() {
   const now = new Date();
@@ -24,7 +24,7 @@ function CountdownTimer() {
     <div className="countdown-bar">
       <span>
         {'\u{1F4C5} '}
-        {t('countdown.days_to_first_round', { days: daysValue })} {'\u00B7'} {t('countdown.date')}
+        {t('countdown.days_to_second_round', { days: daysValue })} {'\u00B7'} {t('countdown.date')}
       </span>
     </div>
   );
