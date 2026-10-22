@@ -61,9 +61,9 @@ def test_rules_survive_prune() -> None:
 def test_fresh_entries_survive_stale_pruned() -> None:
     stale_id, fresh_id, boundary_id = "b" * 16, "c" * 16, "d" * 16
     meta = {
-        stale_id: _iso(NOW - timedelta(days=31)),
+        stale_id: _iso(NOW - timedelta(days=91)),
         fresh_id: _iso(NOW - timedelta(days=1)),
-        boundary_id: _iso(NOW - timedelta(days=30)),
+        boundary_id: _iso(NOW - timedelta(days=90)),
     }
     pruned, removed = _prune(_payload([stale_id, fresh_id, boundary_id], meta))
     assert removed == 1
@@ -125,18 +125,14 @@ def test_payload_after_prune_matches_schema() -> None:
     jsonschema.validate(pruned, schema)
 
 
-def test_cli_execute_prunes_file(
-    tmp_path: Path, monkeypatch: pytest.MonkeyPatch
-) -> None:
+def test_cli_execute_prunes_file(tmp_path: Path, monkeypatch: pytest.MonkeyPatch) -> None:
     target = tmp_path / "editor_feedback.json"
     stale_id, fresh_id = "1" * 16, "2" * 16
     meta = {
         stale_id: _iso(NOW - timedelta(days=91)),
         fresh_id: _iso(NOW - timedelta(days=1)),
     }
-    target.write_text(
-        json.dumps(_payload([stale_id, fresh_id], meta)), encoding="utf-8"
-    )
+    target.write_text(json.dumps(_payload([stale_id, fresh_id], meta)), encoding="utf-8")
     monkeypatch.setattr(editor_feedback, "EDITOR_FEEDBACK_FILE", target)
     monkeypatch.setattr(sys, "argv", ["editor_feedback.py", "--execute"])
 
@@ -146,9 +142,7 @@ def test_cli_execute_prunes_file(
         kwargs.pop("now", None)
         return real_prune(feedback, now=NOW, **kwargs)
 
-    monkeypatch.setattr(
-        editor_feedback, "prune_editor_feedback", prune_with_fixed_clock
-    )
+    monkeypatch.setattr(editor_feedback, "prune_editor_feedback", prune_with_fixed_clock)
 
     editor_feedback.main()
 
@@ -174,9 +168,7 @@ def test_cli_dry_run_leaves_file_unchanged(
         kwargs.pop("now", None)
         return real_prune(feedback, now=NOW, **kwargs)
 
-    monkeypatch.setattr(
-        editor_feedback, "prune_editor_feedback", prune_with_fixed_clock
-    )
+    monkeypatch.setattr(editor_feedback, "prune_editor_feedback", prune_with_fixed_clock)
 
     editor_feedback.main()
 

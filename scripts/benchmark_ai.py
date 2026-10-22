@@ -363,7 +363,7 @@ def run_benchmark(iterations: int = 3) -> BenchmarkSummary:
     print("AI PROVIDER BENCHMARK")
     print("=" * 70)
     print(f"\nIterations per test: {iterations}")
-    print("\nRequired env vars: NVIDIA_API_KEY, OLLAMA_API_KEY, OPENROUTER_API_KEY")
+    print("\nRequired env vars: POOLSIDE_API_KEY, NVIDIA_API_KEY, OLLAMA_API_KEY, OPENROUTER_API_KEY")
     print()
 
     all_providers = _provider_chain("summarization")

@@ -18,7 +18,7 @@ except ImportError:  # pragma: no cover - direct script execution path
     from store import PUB_DATA_DIR as DATA_DIR, STATE_DIR
 EDITOR_FEEDBACK_FILE = STATE_DIR / "editor_feedback.json"
 DEFAULT_SCHEMA_PATH = "../docs/schemas/editor_feedback.schema.json"
-DEFAULT_PRUNE_MAX_AGE_DAYS = 30
+DEFAULT_PRUNE_MAX_AGE_DAYS = 90
 
 
 def utc_now_iso() -> str:
@@ -366,7 +366,9 @@ def main() -> None:
         )
     }
 
-    pruned, removed = prune_editor_feedback(feedback, max_age_days=args.max_age_days)
+    pruned, removed = prune_editor_feedback(
+        feedback, max_age_days=args.max_age_days
+    )
 
     mode = "DRY RUN" if dry_run else "EXECUTED"
     print(f"\nEditor feedback prune summary ({mode}):")
