@@ -1,7 +1,5 @@
 name: Update Quiz Positions
 on:
-  schedule:
-    - cron: '0 3 * * *'
   workflow_dispatch:
 concurrency:
   group: repo-write-${{ github.ref }}
